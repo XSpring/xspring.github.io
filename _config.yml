@@ -1,16 +1,16 @@
 # Site settings
-title:          My Notes
-description:    "Minimal Jekyll theme for storytellers"
-url:            "https://chesterhow.github.io"
+title:          Loc's Notes
+description:    "Another boring blog from a lazy blogger"
+url:            "https://xspring.github.io"
 
 # Google Analytics
 google_analytics: 
 
 # Author
 author:
-  name:         Chester How
-  url:          https://chester.how
-  email:        chesterhow@gmail.com
+  name:         Loc Do
+  url:          
+  email:        
 
 # Build settings
 markdown:       kramdown
