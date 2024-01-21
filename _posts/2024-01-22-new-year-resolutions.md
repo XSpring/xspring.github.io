@@ -55,3 +55,4 @@ A list of things to get done in 2024. <!--more-->
 ## 2024/12
 1. TBD
 
+That's it for now.
