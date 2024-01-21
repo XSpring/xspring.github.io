@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "New Year's Resolutions for 2024"
+title: "New Year's Resolutions"
 author: "DHL"
 tags: resolutions
 excerpt_separator: <!--more-->
