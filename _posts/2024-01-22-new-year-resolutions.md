@@ -2,7 +2,7 @@
 layout: post
 title: "New Year's Resolutions for 2024"
 author: "DHL"
-tags: resolutions, 
+tags: resolutions
 excerpt_separator: <!--more-->
 ---
 
