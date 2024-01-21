@@ -14,7 +14,7 @@ A repository for my thoughts in QA format.
 I have started to forget things recently. Not sure why. Age ? Depression ? Stress ? or maybe a combination of them.. So I need a place to document and store my thoughts and memories. For later references, if needed.
 
 ### Why go digital instead of papers ? 
-More cost efficient, more convenient, more comfortable and more environnmental friendly.
+More cost efficient, more convenient, more comfortable and more environmental friendly.
 
 ### Why in QA format ?
 I am lazy to write long essay. English and writing are not my forte also. Plus, QA form helps me to organize thoughts better, and to quickly grase  the idea I want to look for. At least it works for me.
