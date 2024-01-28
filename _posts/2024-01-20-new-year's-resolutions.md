@@ -38,6 +38,6 @@ Dimension | Resolution | Date Added | Date Modified | Reason | Status |
 **Connection (C3)**| | | | | Opening|
 **Competence (C4)**| | | | | Opening|
 **Courage (C5)**| | | | | Opening|
-
+{:.table-striped}
 
 That's it for now.
