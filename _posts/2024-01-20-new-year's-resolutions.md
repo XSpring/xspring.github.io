@@ -31,13 +31,13 @@ Without further ado, in 2024 I want to achieve / improve the following 5C-dimens
 
 The 2024's Resolutions are below.
 
-Dimension | Resolution | Date Added | Date Modified | Reason | Status |
---- | --- | --- | --- | --- | :---: |
-**Communication (C1)**| | | | | Opening|
-**Concentration (C2)**| | | | | Opening|
-**Connection (C3)**| | | | | Opening|
-**Competence (C4)**| | | | | Opening|
-**Courage (C5)**| | | | | Opening|
+|Dimension | Resolution | Date Added | Date Modified | Reason | Status |
+|--- | --- | --- | --- | --- | :---: |
+|**Communication (C1)**| | | | | Opening|
+|**Concentration (C2)**| | | | | Opening|
+|**Connection (C3)**| | | | | Opening|
+|**Competence (C4)**| | | | | Opening|
+|**Courage (C5)**| | | | | Opening|
 {:.table-striped}
 
 That's it for now.
