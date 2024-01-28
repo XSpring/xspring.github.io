@@ -38,6 +38,7 @@ The 2024's Resolutions are below.
 |**Connection (C3)**| | | | | Opening|
 |**Competence (C4)**| | | | | Opening|
 |**Courage (C5)**| | | | | Opening|
-{:.table-striped}
+{:.mbtablestyle}
+
 
 That's it for now.
