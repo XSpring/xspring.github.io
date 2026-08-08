@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PSI via batched OPRF: how KKRT16 makes private set intersection fast</title>
+<meta name="description" content="Study notes on Kolesnikov-Kumaresan-Rosulek-Trieu (CCS 2016): the batched oblivious PRF mechanism, why communication is O(n) not O(n squared), and what implementing it actually requires.">
+<style>
+/* ============================================================
+   Long-form note — self-contained stylesheet, no dependencies.
+   Colours are CSS custom properties so inline SVG figures theme
+   correctly in both schemes. Never hard-code a colour in an SVG.
+   ============================================================ */
+
+:root {
+  --bg:        #fbfaf7;
+  --surface:   #ffffff;
+  --surface-2: #f3f1ec;
+  --ink:       #1c1b19;
+  --ink-soft:  #4a4741;
+  --ink-faint: #85807a;
+  --rule:      #ddd8d0;
+  --rule-soft: #ebe7e0;
+  --accent:    #8c2f1d;
+  --accent-bg: #f7ece8;
+  --cool:      #2c5468;
+  --cool-bg:   #e9f0f3;
+  --warn:      #8a6d18;
+  --warn-bg:   #faf3df;
+  --good:      #2f5d3a;
+
+  --serif: "Iowan Old Style", "Charter", "Georgia", "Times New Roman", serif;
+  --sans:  ui-sans-serif, -apple-system, "Segoe UI", "Inter", "Helvetica Neue", sans-serif;
+  --mono:  ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+
+  --measure: 34rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:        #14150f;
+    --surface:   #1b1c16;
+    --surface-2: #23241d;
+    --ink:       #e8e5dc;
+    --ink-soft:  #b6b2a6;
+    --ink-faint: #837f74;
+    --rule:      #35362d;
+    --rule-soft: #292a22;
+    --accent:    #d98368;
+    --accent-bg: #2a1d18;
+    --cool:      #7fb0c6;
+    --cool-bg:   #16242b;
+    --warn:      #d4b45c;
+    --warn-bg:   #292213;
+    --good:      #7cae88;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 2rem; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.075rem;
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------- layout ---------- */
+
+.wrap {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 68rem) {
+  .wrap { grid-template-columns: minmax(0,1fr) 15rem; align-items: start; }
+  .note { grid-column: 1; }
+  .toc  { grid-column: 2; position: sticky; top: 2rem; }
+}
+
+.note > * { max-width: var(--measure); }
+.note > .full, .note > figure, .note > .statstrip,
+.note > .tablewrap, .note > .rules { max-width: 46rem; }
+
+/* ---------- table of contents ---------- */
+
+.toc {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  border-left: 2px solid var(--rule);
+  padding-left: 1rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
+.toc h2 {
+  font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-faint); margin: 0 0 0.85rem; font-weight: 600;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 0 0 0.5rem; }
+.toc li.sub { padding-left: 0.9rem; font-size: 0.74rem; }
+.toc a { color: var(--ink-soft); text-decoration: none; }
+.toc a:hover { color: var(--accent); }
+
+@media (max-width: 67.99rem) {
+  .toc {
+    border-left: none; border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule); padding: 1.25rem 0; max-height: none;
+  }
+}
+
+/* ---------- frame ---------- */
+
+.kicker {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); margin: 0 0 1rem;
+}
+.kicker .sep { color: var(--ink-faint); margin: 0 0.5rem; }
+.kicker .subject { color: var(--ink-faint); font-weight: 500; }
+
+h1 {
+  font-size: clamp(2rem, 5vw, 2.9rem);
+  line-height: 1.12; letter-spacing: -0.02em;
+  font-weight: 600; margin: 0 0 1rem;
+}
+
+.dateline {
+  font-family: var(--sans); font-size: 0.78rem;
+  color: var(--ink-faint); margin: 0 0 2rem;
+}
+
+.lede {
+  font-size: 1.2rem; line-height: 1.58; color: var(--ink-soft);
+  margin: 0 0 2.5rem;
+}
+.lede strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- stat strip ---------- */
+
+.statstrip {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule); margin: 0 0 3rem;
+}
+@media (max-width: 40rem) { .statstrip { grid-template-columns: repeat(2, 1fr); } }
+.stat { background: var(--surface); padding: 1.1rem 1rem; }
+.stat .v {
+  display: block; font-family: var(--sans); font-size: 1.5rem;
+  font-weight: 650; line-height: 1.1; letter-spacing: -0.02em;
+  color: var(--accent); margin-bottom: 0.35rem;
+}
+.stat .l {
+  display: block; font-family: var(--sans); font-size: 0.74rem;
+  line-height: 1.35; color: var(--ink-faint);
+}
+
+/* ---------- headings ---------- */
+
+h2 {
+  font-size: 1.5rem; line-height: 1.25; font-weight: 600;
+  letter-spacing: -0.015em; margin: 3.5rem 0 1rem;
+  padding-top: 1.25rem; border-top: 1px solid var(--rule);
+}
+h3 {
+  font-size: 1.13rem; font-weight: 650; margin: 2.25rem 0 0.75rem;
+}
+h2 .num, h3 .num { color: var(--ink-faint); font-weight: 500; margin-right: 0.4em; }
+
+p { margin: 0 0 1.15rem; }
+
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+a:hover { border-bottom-color: var(--accent); }
+
+strong { font-weight: 650; }
+
+/* ---------- callouts ---------- */
+
+.callout {
+  margin: 2rem 0; padding: 1.15rem 1.35rem;
+  background: var(--surface); border: 1px solid var(--rule);
+  border-left: 3px solid var(--ink-faint);
+  font-size: 0.98rem;
+}
+.callout .ct {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 650;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-faint); margin: 0 0 0.5rem;
+}
+.callout p:last-child { margin-bottom: 0; }
+
+.callout.caveat  { border-left-color: var(--warn); background: var(--warn-bg); }
+.callout.caveat .ct  { color: var(--warn); }
+.callout.key     { border-left-color: var(--accent); background: var(--accent-bg); }
+.callout.key .ct     { color: var(--accent); }
+.callout.reading { border-left-color: var(--cool); background: var(--cool-bg); }
+.callout.reading .ct { color: var(--cool); }
+.callout.scope   { border-left-color: var(--ink-faint); background: var(--surface-2); }
+
+/* ---------- pull quote ---------- */
+
+blockquote.pull {
+  margin: 2.25rem 0; padding: 0 0 0 1.35rem;
+  border-left: 3px solid var(--accent);
+  font-size: 1.12rem; line-height: 1.5; font-style: italic;
+  color: var(--ink);
+}
+blockquote.pull p { margin: 0 0 0.6rem; }
+blockquote.pull cite {
+  display: block; font-family: var(--sans); font-size: 0.76rem;
+  font-style: normal; color: var(--ink-faint); letter-spacing: 0.01em;
+}
+
+/* ---------- tables ---------- */
+
+.tablewrap { margin: 2rem 0; overflow-x: auto; }
+table {
+  width: 100%; border-collapse: collapse;
+  font-family: var(--sans); font-size: 0.86rem; line-height: 1.45;
+}
+th {
+  text-align: left; font-weight: 650; font-size: 0.72rem;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint);
+  padding: 0.6rem 0.9rem 0.6rem 0; border-bottom: 1.5px solid var(--rule);
+  vertical-align: bottom;
+}
+td {
+  padding: 0.75rem 0.9rem 0.75rem 0; border-bottom: 1px solid var(--rule-soft);
+  vertical-align: top; color: var(--ink-soft);
+}
+td:first-child { color: var(--ink); font-weight: 550; }
+.tcap {
+  font-family: var(--sans); font-size: 0.74rem; color: var(--ink-faint);
+  margin-top: 0.6rem;
+}
+
+/* ---------- figures ---------- */
+
+figure {
+  margin: 2.75rem 0; padding: 1.35rem;
+  background: var(--surface); border: 1px solid var(--rule);
+}
+figure .fig-title {
+  font-family: var(--sans); font-size: 0.95rem; font-weight: 650;
+  margin: 0 0 0.2rem; color: var(--ink);
+}
+figure .fig-sub {
+  font-family: var(--sans); font-size: 0.78rem; color: var(--ink-faint);
+  margin: 0 0 1.1rem;
+}
+figure svg { display: block; width: 100%; height: auto; }
+figure figcaption {
+  font-family: var(--sans); font-size: 0.74rem; line-height: 1.5;
+  color: var(--ink-faint); margin-top: 1rem;
+  padding-top: 0.75rem; border-top: 1px solid var(--rule-soft);
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* SVG helper classes — figures must use these, never literal colours */
+.s-ink   { fill: var(--ink); }
+.s-soft  { fill: var(--ink-soft); }
+.s-faint { fill: var(--ink-faint); }
+.s-acc   { fill: var(--accent); }
+.s-cool  { fill: var(--cool); }
+.s-warn  { fill: var(--warn); }
+.s-panel { fill: var(--surface-2); }
+.s-accbg { fill: var(--accent-bg); }
+.s-coolbg{ fill: var(--cool-bg); }
+.k-rule  { stroke: var(--rule); fill: none; }
+.k-ink   { stroke: var(--ink); fill: none; }
+.k-acc   { stroke: var(--accent); fill: none; }
+.k-cool  { stroke: var(--cool); fill: none; }
+.k-faint { stroke: var(--ink-faint); fill: none; }
+.t-label { font-family: var(--sans); font-size: 11px; }
+.t-small { font-family: var(--sans); font-size: 9.5px; }
+.t-big   { font-family: var(--sans); font-size: 18px; font-weight: 650; }
+.t-head  { font-family: var(--sans); font-size: 10px; font-weight: 650;
+           letter-spacing: 0.09em; }
+
+/* ---------- numbered rule cards ---------- */
+
+.rules { margin: 2.25rem 0; display: grid; gap: 1px; background: var(--rule);
+         border: 1px solid var(--rule); }
+.rule { background: var(--surface); padding: 1.05rem 1.25rem;
+        display: grid; grid-template-columns: 2.25rem 1fr; gap: 0.5rem; }
+.rule .n {
+  font-family: var(--sans); font-size: 0.92rem; font-weight: 650;
+  color: var(--accent); line-height: 1.4;
+}
+.rule .h { font-family: var(--sans); font-size: 0.95rem; font-weight: 650;
+           margin: 0 0 0.3rem; line-height: 1.35; }
+.rule .d { font-family: var(--sans); font-size: 0.84rem; color: var(--ink-soft);
+           margin: 0; line-height: 1.5; }
+.rules-group {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 650;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint);
+  background: var(--surface-2); padding: 0.55rem 1.25rem;
+}
+
+/* ---------- closing + summary ---------- */
+
+.summary { margin: 2.25rem 0; padding: 1.35rem; background: var(--surface-2);
+           border: 1px solid var(--rule); }
+.summary .ct {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 650;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint);
+  margin: 0 0 0.75rem;
+}
+.summary ol { margin: 0; padding-left: 1.2rem; font-size: 0.95rem; }
+.summary li { margin-bottom: 0.5rem; }
+
+/* ---------- sources ---------- */
+
+.sources { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+.sources h2 { border: none; padding-top: 0; margin-top: 0; font-size: 1.1rem; }
+.sources ol { font-family: var(--sans); font-size: 0.82rem; line-height: 1.55;
+              padding-left: 1.4rem; color: var(--ink-soft); }
+.sources li { margin-bottom: 0.6rem; }
+.sources .tier {
+  display: inline-block; font-size: 0.62rem; font-weight: 650;
+  letter-spacing: 0.06em; padding: 0.05rem 0.35rem; border-radius: 2px;
+  border: 1px solid var(--rule); color: var(--ink-faint); margin-right: 0.4rem;
+  vertical-align: 1px;
+}
+
+.limits { margin-top: 2.5rem; font-family: var(--sans); font-size: 0.82rem;
+          line-height: 1.55; color: var(--ink-faint); }
+.limits h2 { border: none; padding-top: 0; font-size: 1.1rem; color: var(--ink); }
+
+@media print {
+  .toc { display: none; }
+  .wrap { display: block; max-width: none; }
+  a { color: inherit; border: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<article class="note">
+
+  <p class="kicker">Cryptography &amp; MPC<span class="sep">·</span><span class="subject">Private set intersection</span></p>
+
+  <h1>Private set intersection, made cheap: how KKRT16's batched OPRF works</h1>
+
+  <p class="dateline">8 August 2026 · ~12 min read</p>
+
+  <p class="lede">Two parties hold sets and want the overlap — without revealing anything else.
+  The classic approach costs expensive public-key operations per element. Kolesnikov, Kumaresan,
+  Rosulek and Trieu (CCS 2016) showed the overlap can be computed with
+  <strong>nothing but fast symmetric-key operations, by turning every element into an
+  unlinkable tag that only one party can verify</strong>. The cost: communication that grows
+  with the size of the sets, not the product of their sizes.</p>
+
+  <div class="statstrip">
+    <div class="stat"><span class="v" data-claim="E-004">3.5&times;</span><span class="l">OT cost of each batched OPRF instance</span></div>
+    <div class="stat"><span class="v" data-claim="E-006">3.8 s</span><span class="l">to intersect two 2^20 sets</span></div>
+    <div class="stat"><span class="v" data-claim="E-007">3.1&ndash;3.6&times;</span><span class="l">faster than the prior OT-based PSI</span></div>
+    <div class="stat"><span class="v" data-claim="E-016">O(n)</span><span class="l">communication, linear in set sum</span></div>
+  </div>
+
+  <h2 id="scene"><span class="num">I.</span> Two rosters, one overlap</h2>
+
+  <p>Two hospitals want to know which patients they share, without either learning who the
+  other treats. A payroll provider and a bank want the list of employees who are also
+  customers, without exposing the full employee roll. Ad platforms and data brokers want
+  overlapping audiences without shipping their entire lists to each other. Each case is the
+  same shape: two sets in, one intersection out, and <em>nothing else</em> about the inputs
+  allowed to cross.</p>
+
+  <p>That last clause is what separates the problem from ordinary database work. If the
+  parties could just show each other their lists, the intersection is a five-line join —
+  which is exactly what the insecure approach does, and exactly what "private set
+  intersection" (PSI) forbids. PSI is the primitive that computes
+  <strong data-claim="E-001">the intersection of two private sets, learning nothing about the
+  other party's set beyond the common elements</strong>.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead>
+      <tr><th>Setting</th><th>Party A's set</th><th>Party B's set</th><th>What A+B want</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Healthcare</td><td>Patient IDs</td><td>Patient IDs</td><td>Shared patients, nothing about the rest</td>
+      </tr>
+      <tr>
+        <td>Finance</td><td>Employee IDs</td><td>Customer IDs</td><td>Employees who are customers</td>
+      </tr>
+      <tr>
+        <td>Advertising</td><td>Audience lists</td><td>Audience lists</td><td>Overlapping audiences</td>
+      </tr>
+    </tbody>
+    </table>
+    <p class="tcap">PSI is used wherever two organisations hold identifiers over the same people and neither may reveal its own full list.</p>
+  </div>
+
+  <p>Now the question this note answers. Before reading the paper you might guess that
+  computing an intersection of an n-element set and an m-element set must cost work
+  proportional to the <em>product</em> n&times;m — every element of one set compared against
+  every element of the other. The central fact of the whole OT-based PSI family, KKRT16
+  included, is that it doesn't. Understanding <em>why</em> it doesn't is what this note is
+  for.</p>
+
+  <h2 id="mechanism"><span class="num">II.</span> Safe tags, then compare inside bins</h2>
+
+  <h3 id="mechanism-1"><span class="num">1.</span> A tag only one side can verify</h3>
+
+  <p>Imagine you want to check whether someone is on a list, but you may not show the list,
+  and they may not say outright who they are. The trick: both sides agree to run every
+  element through a one-way function — a scrambled fingerprint. If two elements are equal,
+  their fingerprints are equal; if they differ, the fingerprints look like noise.</p>
+
+  <p>But a plain fingerprint is not enough, because the party computing it can check its own
+  elements against the other party's fingerprints. So the function is keyed, and the key is
+  hidden. Cryptography calls this an
+  <strong data-claim="E-002">oblivious PRF (OPRF)</strong> — a pseudorandom function where one
+  party (the receiver) learns the output for its own inputs but not the key, while the other
+  (the sender) keeps the key but never learns which inputs it was applied to.</p>
+
+  <p>Spell out what that gives you. The receiver takes its element, feeds it into the OPRF,
+  and gets a tag. The sender, holding the key, can compute the tag for any element of its
+  choosing. Now the sender sends <em>its</em> tags — but these tags are useless to the
+  receiver, because without the key the receiver cannot tell which element produced which
+  tag. The receiver can only compare: <em>does my tag for this element appear among yours?</em>
+  If it does, the element is shared. That single asymmetry — one side computes tags, the
+  other can verify them but cannot reverse them — is the whole protocol.</p>
+
+  <figure>
+    <p class="fig-title">The OPRF asymmetry that makes PSI work</p>
+    <p class="fig-sub">Each party learns a different half; neither can recover the other's elements</p>
+    <p class="sr-only">The sender holds the secret key s and a set Y. The receiver holds a set X and, through an oblivious evaluation, obtains the tag F(s,x) for each of its elements x. The sender also computes tags F(s,y) for its own elements y and sends them. The receiver can compare its own tags against the sender's list and finds the matches, but cannot reverse a tag to an element.</p>
+    <svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram of the two parties: sender keeps key and tags its set; receiver gets tags for its own elements via an oblivious PRF and compares">
+      <defs>
+        <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0 0 L10 5 L0 10 z" fill="var(--ink-faint)"/>
+        </marker>
+      </defs>
+
+      <rect x="8" y="16" width="290" height="268" rx="3" class="s-panel"/>
+      <text x="24" y="42" class="t-head s-faint">SENDER — HOLDS KEY</text>
+      <text x="24" y="66" class="t-label s-ink">Secret key s (never sent)</text>
+      <text x="24" y="90" class="t-label s-soft">Set Y = { y1, y2, y3 }</text>
+      <text x="24" y="150" class="t-label s-soft">Computes F(s, y1), F(s, y2), F(s, y3)</text>
+      <rect x="24" y="164" width="150" height="60" rx="3" class="s-coolbg"/>
+      <text x="36" y="188" class="t-small s-ink">tag(y1)  tag(y2)  tag(y3)</text>
+      <text x="36" y="206" class="t-small s-soft">sent to receiver</text>
+
+      <rect x="342" y="16" width="290" height="268" rx="3" class="s-accbg"/>
+      <text x="358" y="42" class="t-head s-acc">RECEIVER — HOLDS TAGS</text>
+      <text x="358" y="66" class="t-label s-ink">Set X = { x1, x2, x3 }</text>
+      <text x="358" y="90" class="t-label s-soft">Oblivious eval: gets F(s, x1)..</text>
+      <text x="358" y="110" class="t-small s-soft">without learning s, without sending X</text>
+      <rect x="358" y="126" width="150" height="60" rx="3" class="s-coolbg"/>
+      <text x="370" y="150" class="t-small s-ink">tag(x1)  tag(x2)  tag(x3)</text>
+      <text x="370" y="168" class="t-small s-soft">compared locally</text>
+
+      <text x="358" y="212" class="t-small s-soft">tag(x1) &isin; { tag(y1)..tag(y3) }</text>
+      <text x="358" y="230" class="t-small s-soft">&rArr; x1 is shared</text>
+      <circle cx="382" cy="204" r="4" class="s-acc"/>
+
+      <path d="M174 194 L338 194" class="k-faint" stroke-width="1.5" marker-end="url(#ar)"/>
+      <text x="256" y="184" class="t-small s-faint" text-anchor="middle">tags only</text>
+
+      <text x="24" y="262" class="t-small s-faint">Sender sees the key, never the receiver's</text>
+      <text x="24" y="278" class="t-small s-faint">inputs; receiver sees tags, never the key.</text>
+    </svg>
+    <figcaption>Arrows show data flow only. The receiver's inputs never leave the receiver's side; the key never leaves the sender's side.</figcaption>
+  </figure>
+
+  <p>That is the "oblivious" part. The remaining problem is the n&times;m one: comparing every
+  receiver element against every sender element is quadratic. Hashing-to-bins is what fixes
+  that, and it's the second half of the mechanism.</p>
+
+  <h3 id="mechanism-2"><span class="num">2.</span> Batching: charging the whole thing to OT</h3>
+
+  <p>An OPRF evaluated once on one element is already interesting. But KKRT16's headline move
+  is that the tags for the <em>entire receiver set</em> are produced in one go, using
+  <strong data-claim="E-003">oblivious transfer (OT) extension</strong> — a way to amplify a
+  small number of base OTs into a large batch of them using only cheap symmetric-key
+  operations. The paper's own accounting is blunt:
+  <strong data-claim="E-004">realizing m OPRF instances costs roughly the same as realizing
+  3.5m ordinary 1-out-of-2 OTs</strong>, where "ordinary OT" already comes from a fast
+  extension.</p>
+
+  <p>Why this matters: before OT extension, each oblivious transfer needed a public-key
+  operation, so per-element work was heavy. After extension, the public-key cost is paid once
+  (for the seed OTs) and every generated OT is cheap. KKRT16 inherits that speed and then
+  improves on it by making the OPRF <em>batched</em> — one extension run produces tags for
+  the whole set, so the cost per element is a handful of symmetric operations, not a
+  signature or an exponentiation.</p>
+
+  <aside class="callout key">
+    <p class="ct">The thing to keep</p>
+    <p>KKRT16 is fast because it never needs a public-key operation per element. It pays for a
+    few seed OTs once, then manufactures the tags it needs with symmetric-key work — which is
+    orders of magnitude cheaper per element than the Diffie–Hellman-style approach.</p>
+  </aside>
+
+  <h3 id="mechanism-3"><span class="num">3.</span> Bins: turning quadratic into linear</h3>
+
+  <p>Here is the mechanism's second half. The receiver doesn't keep its tags in one big
+  pile. It first scatters its elements into a hash table with <strong>Cuckoo hashing</strong> —
+  a hash scheme that guarantees each bin holds at most one element by evicting and reinserting
+  on collision. The sender, by contrast, uses plain (simple) hashing: each of its elements is
+  copied into <em>every</em> bin its hash functions point to.</p>
+
+  <p>Why the asymmetry? A shared element must land in a bin both parties check. If the
+  receiver's element sits in bin h(x) and the sender's copy is also in bin h(x), the two
+  tags meet there and match. Because the sender puts its elements in all candidate bins,
+  a shared element can never be missed; because the receiver uses Cuckoo hashing, no bin
+  ever holds more than one receiver element, so the comparison count stays tiny.
+  <strong data-claim="E-009">The receiver gets one tag per bin; the sender sends the tags of
+  all the elements mapped into each bin</strong>. A receiver element is compared only against
+  the handful of sender elements in its own bin — not against all m sender elements.</p>
+
+  <figure>
+    <p class="fig-title">Why it's the sum, not the product</p>
+    <p class="fig-sub">Receiver items land one-per-bin; sender items fan out to every candidate bin, so any match is found with O(1) comparisons per item</p>
+    <p class="sr-only">A hash table with bins B0 through B7. The receiver element x1 is placed alone in bin B2. The sender element y2 (equal to x1) is placed into bins B2 and B5. Because both map to B2, their tags meet in B2 and match. Each receiver item is compared only to the sender items in its own bin, a constant number, so the total work is proportional to the number of items, not to the product of both sets' sizes.</p>
+    <svg viewBox="0 0 640 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Illustration of bins: receiver element in one bin, matching sender element duplicated into that bin and another">
+      <text x="8" y="22" class="t-head s-faint">HASH BINS</text>
+
+      <g>
+        <rect x="8" y="34" width="300" height="30" rx="3" class="s-panel"/>
+        <text x="18" y="54" class="t-label s-ink">B0</text>
+        <rect x="8" y="70" width="300" height="30" rx="3" class="s-panel"/>
+        <text x="18" y="90" class="t-label s-ink">B1</text>
+        <rect x="8" y="106" width="300" height="30" rx="3" class="s-accbg"/>
+        <text x="18" y="126" class="t-label s-acc">B2</text>
+        <text x="70" y="126" class="t-small s-ink">recv tag(x1)</text>
+        <text x="180" y="126" class="t-small s-acc">send tag(y2)&nbsp;&nbsp;&larr; MATCH</text>
+        <rect x="8" y="142" width="300" height="30" rx="3" class="s-panel"/>
+        <text x="18" y="162" class="t-label s-ink">B3</text>
+        <rect x="8" y="178" width="300" height="30" rx="3" class="s-panel"/>
+        <text x="18" y="198" class="t-label s-ink">B4</text>
+        <rect x="8" y="214" width="300" height="30" rx="3" class="s-panel"/>
+        <text x="18" y="234" class="t-label s-ink">B5</text>
+        <text x="70" y="234" class="t-small s-soft">send tag(y2) (duplicate)</text>
+      </g>
+
+      <text x="330" y="54" class="t-label s-ink">Receiver</text>
+      <text x="330" y="74" class="t-small s-soft">Cuckoo hashing: each item</text>
+      <text x="330" y="90" class="t-small s-soft">in exactly one bin &rArr; one</text>
+      <text x="330" y="106" class="t-small s-soft">tag to compare per bin.</text>
+
+      <text x="330" y="150" class="t-label s-ink">Sender</text>
+      <text x="330" y="170" class="t-small s-soft">Simple hashing: each item in</text>
+      <text x="330" y="186" class="t-small s-soft">all bins its hashes point to,</text>
+      <text x="330" y="202" class="t-small s-soft">so a match can never be missed.</text>
+      <text x="330" y="222" class="t-small s-soft">Bin width stays small.</text>
+    </svg>
+    <figcaption>Bin width (items per bin) is a constant, so each receiver item is compared against a constant number of sender items — O(n) comparisons total, not O(n&times;m).</figcaption>
+  </figure>
+
+  <p>The effect compounds. Because every bin holds a bounded number of items, the total
+  comparison work — and with it the communication — is proportional to the number of bins,
+  which is proportional to the number of elements. <strong data-claim="E-015">Matching happens
+  inside bins with O(1) candidates per item, so the whole protocol communicates in the sum of
+  the set sizes, not their product</strong>. A stash-free Cuckoo table for n elements uses on
+  the order of <strong data-claim="E-014">1.27n bins</strong> in a common 3-hash configuration,
+  which is where the "n" in the cost formula comes from.</p>
+
+  <h2 id="arithmetic"><span class="num">III.</span> The arithmetic: what "fast" means</h2>
+
+  <p>The paper is concrete about its performance, and the numbers matter more for what they
+  imply than for themselves. On the authors' own implementation,
+  <strong data-claim="E-006">the intersection of two sets of 2^20 (about one million) elements
+  is computed in 3.8 seconds</strong> — on a single machine with the two parties simulated,
+  single-threaded per party. The important detail is that this is
+  <strong data-claim="E-005">independent of the bit-length of the items</strong>: 32-bit or
+  128-bit identifiers cost the same, because the tags the protocol moves are fixed-width
+  regardless of the elements they came from. That bit-length independence was itself the
+  improvement over the previous OT-extension PSI of Pinkas et al.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead>
+      <tr><th>Number</th><th>What it means</th><th>Translation</th></tr>
+    </thead>
+    <tbody>
+      <tr data-claim="E-004">
+        <td>3.5m OTs</td>
+        <td>Cost of m batched OPRF instances</td>
+        <td>Each tag you manufacture costs about 3.5 oblivious transfers, all symmetric after setup.</td>
+      </tr>
+      <tr data-claim="E-006">
+        <td>3.8 s</td>
+        <td>Intersection of two 2^20 sets</td>
+        <td>A million-item match in a few seconds on commodity hardware; the hard part becomes network, not CPU.</td>
+      </tr>
+      <tr data-claim="E-007">
+        <td>3.1&ndash;3.6&times;</td>
+        <td>Faster than Pinkas et al. (Usenix 2015)</td>
+        <td>Roughly triple the throughput of the prior state of the art, on 128-bit items at scale.</td>
+      </tr>
+      <tr data-claim="E-008">
+        <td>4.3&times;</td>
+        <td>Slower than insecure naive hashing (large sets)</td>
+        <td>You are within 4&times; of the no-privacy baseline — the cost of the security is a small multiple, not an order of magnitude.</td>
+      </tr>
+      <tr data-claim="E-016">
+        <td>O(n)</td>
+        <td>Communication in set size</td>
+        <td>Doubling both sets doubles the bytes moved; it does not quadruple them.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="tcap">Headline figures as reported by the KKRT16 authors on their own hardware; see the caveats in the sources section.</p>
+  </div>
+
+  <p>Here is the worked version of the reader test. Two sets of size n each. A naive
+  all-pairs comparison needs n&times;n tag comparisons and, depending on the encoding, could
+  force a party to send n&times;n of something. KKRT16's bins reduce that to n bins with a
+  bounded number of tags per bin, so the bytes sent are proportional to n — the sum of the
+  set sizes — with a small constant. Which part is inherent? The linearity is inherent to the
+  whole hash-to-bins family: any scheme that splits both sets into the same O(n) bins and only
+  compares within bins is going to be linear. The specific constant — how wide the bins are,
+  how many hashes, the tag width — is a property of the particular construction and can be
+  tuned.</p>
+
+  <p>There is a second half of the story that the headline speed undersells:
+  <strong data-claim="E-012">OT-based PSI is fast, but it moves more bytes than
+  Diffie–Hellman-based PSI</strong>. The speed advantage is real; the communication
+  advantage is not. If your network is the bottleneck and your elements are short, the DH
+  approach can win on total bytes. KKRT16 wins when the computation is the constraint,
+  which makes it the usual choice for large-set workloads where both parties are on a fast
+  LAN.</p>
+
+  <h2 id="boundaries"><span class="num">IV.</span> Where this stops being true</h2>
+
+  <h3 id="boundaries-1"><span class="num">1.</span> The security model is semi-honest</h3>
+
+  <p>The single most important boundary is the threat model. The whole construction is proven
+  secure in the <strong data-claim="E-010">semi-honest model</strong> — the adversary follows
+  the protocol faithfully and only inspects its transcript, trying to learn more than it
+  should. That is a much weaker adversary than a <em>malicious</em> one who can send arbitrary
+  messages. And the difference is not merely theoretical: a party that deviates can extract
+  real information. SecretFlow's own documentation puts it plainly —
+  <strong data-claim="E-011">KKRT16 "may be attacked in the malicious model," and it recommends
+  using it as one-way PSI, where only one party learns the result</strong>.</p>
+
+  <aside class="callout caveat">
+    <p class="ct">Semi-honest means exactly what it says</p>
+    <p>If your counterparty could benefit from cheating — not just from watching — you need a
+    maliciously secure protocol, and you pay for it. The entire speed story of KKRT16
+    is bought with the semi-honest assumption.</p>
+  </aside>
+
+  <h3 id="boundaries-2"><span class="num">2.</span> Set sizes are public</h3>
+
+  <p>The protocol assumes the parties' set sizes are known. The hash table has roughly as many
+  bins as elements, and the number of bins and transfers is visible to both sides, so
+  <strong data-claim="E-017">the cardinalities are public inputs — what stays hidden are the
+  element values themselves</strong>. If your use case treats "how many customers you have" as
+  confidential, this is a leak you need to design around, not a subtlety the protocol handles
+  for you.</p>
+
+  <h3 id="boundaries-3"><span class="num">3.</span> The advantage is at scale</h3>
+
+  <p>The speedup over prior work is reported on large sets of 128-bit items. On small sets the
+  overheads — the seed OTs, the hashing, the round trips — are proportionally larger, and the
+  gap narrows or inverts. "Faster than DH-based" is a claim about the regime the paper
+  benchmarked, not a universal law. One independent Go implementation (Optable's) reports a
+  <strong data-claim="E-013">roughly 100&times; single-core speedup (300 s vs 3 s) on a
+  million-record match</strong>, which is the right order of magnitude to expect — but it is a
+  vendor figure, not a peer-reviewed measurement, so treat it as magnitude, not precision.</p>
+
+  <div class="tablewrap">
+  <table>
+    <thead>
+      <tr><th>Idea</th><th>Common misunderstanding</th><th>Correct use</th></tr>
+    </thead>
+    <tbody>
+      <tr data-claim="E-011">
+        <td>Semi-honest security</td>
+        <td>"The protocol is secure; that's enough."</td>
+        <td>It is secure only if parties follow the protocol. For adversarial counterparts, treat it as one-way or choose malicious security.</td>
+      </tr>
+      <tr data-claim="E-016">
+        <td>O(n) communication</td>
+        <td>"So communication is tiny."</td>
+        <td>It is linear, not constant — and it can be larger than DH-PSI's bytes. Linear beats quadratic, not nothing.</td>
+      </tr>
+      <tr data-claim="E-012">
+        <td>"Faster"</td>
+        <td>"Faster everywhere."</td>
+        <td>Faster at scale on computation-bound setups. On short elements with tight bandwidth, DH-PSI can win.</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="tcap">Common misreadings and their corrections, grounded in the evidence entries listed.</p>
+  </div>
+
+  <h2 id="counter"><span class="num">V.</span> The counter-section: "it's just hashing, why is this a paper?"</h2>
+
+  <p>By now you might be thinking: hash both sets, compare the hashes. Where's the
+  cryptography? Anyone can hash a list and compare. This is the obvious conclusion a reader
+  draws, and it is exactly wrong — the paper's content lives entirely in the word
+  <em>oblivious</em>.</p>
+
+  <p>Try the naive version and watch it fail. Both parties hash their elements with a
+  public hash function and exchange the digests. The parties can then compare — but they have
+  revealed <em>all</em> their elements' hashes, and since the domain is enumerable (identifiers
+  are phone numbers, IDs, emails), any adversary can brute-force every candidate identifier
+  against the received hashes and reconstruct the whole set. The naive scheme leaks everything.
+  That is not a PSI protocol; it is a broken one.</p>
+
+  <p>The fix is exactly the OPRF. The tags must be computed under a key the receiver does not
+  have, so the receiver cannot brute-force the sender's tags — it sees random-looking values
+  it can only compare, never decode. <strong data-claim="E-002">The sender's tags are
+  verifiable by the receiver (equal elements produce equal tags) but not invertible, because
+  the key is withheld</strong>. The hashing is the same hashing anyone could do; the
+  obliviousness is what makes it private, and the obliviousness is what the batched OT
+  construction supplies. That construction is the paper.</p>
+
+  <blockquote class="pull" data-claim="E-003">
+    <p>Our protocol uses a novel adaptation of 1-out-of-2 OT-extension protocols, and is
+    particularly efficient when used to generate a large batch of OPRF instances.</p>
+    <cite>Kolesnikov, Kumaresan, Rosulek &amp; Trieu, <em>Efficient Batched Oblivious PRF</em> (CCS 2016)</cite>
+  </blockquote>
+
+  <p>Put plainly: anyone can hash; the paper is about how to get the <em>privacy</em> of a keyed
+  hash into a form cheap enough to run a million times. That is the entire content of the
+  result, and the batching is not a performance footnote — it is what makes the protocol
+  affordable at all.</p>
+
+  <aside class="callout scope">
+    <p class="ct">What this counter-section is not</p>
+    <p>It is not an argument that KKRT16 is weak. It is the opposite: an argument that the
+    interesting part is the obliviousness, and that a reader who sees only "hash and compare"
+    has understood a different, insecure protocol.</p>
+  </aside>
+
+  <h2 id="rules"><span class="num">VI.</span> Working rules for choosing and using it</h2>
+
+  <div class="rules">
+    <div class="rule">
+      <span class="n">01</span>
+      <div>
+        <p class="h">Match the threat model to the relationship</p>
+        <p class="d">Semi-honest security is the right fit for mutually-distrustful-but-following institutions; it is the wrong fit when one party has an incentive to cheat, because a malicious adversary can break it.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="n">02</span>
+      <div>
+        <p class="h">Budget for bytes, not just seconds</p>
+        <p class="d">OT-based PSI is fast and chatty; DH-based PSI is slow and quiet. If bandwidth is your binding constraint, the faster protocol may still be the wrong one.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="n">03</span>
+      <div>
+        <p class="h">Price the cost by set sizes, not by element width</p>
+        <p class="d">Communication grows with the number of elements and is independent of how long the identifiers are — so buy more cost when sets grow, not when IDs grow.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="n">04</span>
+      <div>
+        <p class="h">Treat a wrapped library as a binary, not a contract</p>
+        <p class="d">An existing implementation (SecretFlow, libPSI, Optable's Go port) gives you the speed and the security model it was built with; verify the parameter defaults and the threat model before relying on them.</p>
+      </div>
+    </div>
+    <div class="rule">
+      <span class="n">05</span>
+      <div>
+        <p class="h">Expect linearity, and make sure it holds</p>
+        <p class="d">If a vendor's "linear" protocol starts behaving quadratically on your data — many bins, deep Cuckoo failures, huge elements — something is wrong with the parameters, and the formula you rely on has broken.</p>
+      </div>
+    </div>
+  </div>
+
+  <p>Closing, briefly: the mechanism is a keyed, one-way tag per element, produced in a batch
+  with symmetric-key work, compared inside Cuckoo-hashed bins so the cost stays linear.
+  The strongest evidence is the paper's own: roughly
+  <strong data-claim="E-004">3.5 OTs per tag</strong>, and a
+  <strong data-claim="E-006">million-element intersection in under four seconds</strong>.
+  The boundaries are equally clear: it is semi-honest,
+  set sizes are public, and the advantage concentrates at scale.</p>
+
+  <div class="summary">
+    <p class="ct">Practical summary</p>
+    <ol>
+      <li>PSI = compute the intersection of two private sets, revealing nothing else.</li>
+      <li>An OPRF makes tags that one side can verify but neither side can decode.</li>
+      <li>Hashing-to-bins cuts comparison work from O(n&times;m) to O(n) — communication follows the sum, not the product.</li>
+      <li>KKRT16 is fast (<strong data-claim="E-006">3.8 s for 2^20</strong>) because it uses only symmetric-key ops after a one-time OT setup.</li>
+      <li>It is semi-honest only: for adversarial parties, treat it as one-way or use maliciously secure PSI.</li>
+    </ol>
+  </div>
+
+  <section class="sources" id="sources">
+    <h2>Sources</h2>
+    <ol>
+      <li><span class="tier">A</span> Vladimir Kolesnikov, Ranjit Kumaresan, Mike Rosulek, Ni Trieu,
+        <a href="https://eprint.iacr.org/2016/799">Efficient Batched Oblivious PRF with Applications to Private Set Intersection</a>
+        (2016), ACM CCS 2016, pp. 818–829.</li>
+      <li><span class="tier">A</span> Benny Pinkas, Thomas Schneider, Gil Segev, Michael Zohner,
+        <a href="https://www.usenix.org/system/files/conference/usenixsecurity14/sec14-paper-pinkas.pdf">Faster Private Set Intersection Based on OT Extension</a>
+        (2014), USENIX Security 2014.</li>
+      <li><span class="tier">A</span> Ni Trieu / osu-crypto,
+        <a href="https://github.com/osu-crypto/BaRK-OPRF">Batched Oblivious PRF (BaRK-OPRF) implementation</a>
+        (2016), GitHub — the authors' implementation and its reported timings.</li>
+      <li><span class="tier">A</span> Kolesnikov et al.,
+        <a href="https://eprint.iacr.org/2022/1465.pdf">Private Data Cleaning (Cuckoo hashing parameter analysis)</a>
+        (2022), IACR ePrint 2022/1465.</li>
+      <li><span class="tier">B</span> Ant Group (SecretFlow),
+        <a href="https://secretflow.readthedocs.io/en/stable/user_guide/psi.html">Private Set Intersection (PSI) user guide</a> —
+        protocol list and OT-vs-DH tradeoff note.</li>
+      <li><span class="tier">B</span> Ant Group (SecretFlow SPU),
+        <a href="https://secret-flow.antgroup.com/docs/spu/en/development/psi.html">PSI QuickStart</a> —
+        semi-honest warning for KKRT16.</li>
+      <li><span class="tier">B</span> Stanford CS course note,
+        <a href="https://cs.stanford.edu/~rishig/courses/ref/l13a.pdf">An Overview of Cuckoo Hashing</a> —
+        O(1) lookup and bin properties.</li>
+      <li><span class="tier">C</span> Optable,
+        <a href="https://github.com/Optable/match/blob/main/pkg/kkrtpsi/README.md">kkrtpsi package README</a> —
+        independent Go implementation and its reported speedup figure.</li>
+    </ol>
+  </section>
+
+  <section class="limits" id="limits">
+    <h2>What this note does not cover</h2>
+    <p>Per the brief: no alternative PSI protocols (DH-based, other OT-based, FHE-based) beyond
+    the few sentences needed for contrast; no formal security proofs or game-based definitions;
+    and no step-by-step SecretFlow/PSI API instructions. The performance figures come from the
+    authors' own hardware and one vendor port; neither is an independent third-party benchmark.
+    The paper's full text was fetched but its PDF text could not be machine-extracted, so
+    mechanism details were cross-checked against the authors' implementation README and the
+    SecretFlow documentation rather than direct quotation of the paper's body.</p>
+  </section>
+
+</article>
+
+<nav class="toc" aria-label="Contents">
+  <h2>Contents</h2>
+  <ol>
+    <li><a href="#scene">I. Two rosters, one overlap</a></li>
+    <li><a href="#mechanism">II. Safe tags, then compare inside bins</a></li>
+    <li class="sub"><a href="#mechanism-1">1. A tag only one side can verify</a></li>
+    <li class="sub"><a href="#mechanism-2">2. Batching: charging it to OT</a></li>
+    <li class="sub"><a href="#mechanism-3">3. Bins: turning quadratic into linear</a></li>
+    <li><a href="#arithmetic">III. The arithmetic: what "fast" means</a></li>
+    <li><a href="#boundaries">IV. Where this stops being true</a></li>
+    <li class="sub"><a href="#boundaries-1">1. The security model is semi-honest</a></li>
+    <li class="sub"><a href="#boundaries-2">2. Set sizes are public</a></li>
+    <li class="sub"><a href="#boundaries-3">3. The advantage is at scale</a></li>
+    <li><a href="#counter">V. "It's just hashing, why is this a paper?"</a></li>
+    <li><a href="#rules">VI. Working rules</a></li>
+    <li><a href="#sources">Sources</a></li>
+    <li><a href="#limits">What this note does not cover</a></li>
+  </ol>
+</nav>
+
+</div>
+</body>
+</html>
