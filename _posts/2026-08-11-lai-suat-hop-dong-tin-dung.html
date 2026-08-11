@@ -195,7 +195,13 @@
   .mm-fab{display:none;position:fixed;bottom:24px;right:24px;z-index:200;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-size:1.3rem;box-shadow:0 8px 24px rgba(239,68,68,.4);align-items:center;justify-content:center}
   @media(max-width:1023px){.mm-fab{display:flex}.minimap{display:none;top:0;right:0;left:0;bottom:0;width:auto;max-height:none;border-radius:0;border:none;transform:translateY(20px)}body.nav-mobile-open .minimap{display:block;opacity:1;transform:translateY(0);pointer-events:auto}body.nav-mobile-open .mm-fab{display:none}}
   .mm-overlay-close{display:none;position:absolute;top:14px;right:16px;font-size:1.6rem;background:none;border:none;color:var(--muted);cursor:pointer;line-height:1}
-  @media(max-width:1023px){.mm-overlay-close{display:block}}
+  @media(max-width:1023px){.mm-collapse{display:none}.mm-restore{display:none!important}}
+  .mm-head-right{display:flex;align-items:center;gap:8px}
+  .mm-collapse{background:none;border:none;color:var(--muted);cursor:pointer;font-size:1rem;line-height:1;padding:2px 7px;border-radius:6px;transition:.15s}
+  .mm-collapse:hover{color:#fff;background:rgba(255,255,255,.06)}
+  .mm-restore{display:none;position:fixed;top:24px;right:24px;z-index:150;width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:#cbd5e1;cursor:pointer;font-size:1.2rem;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:.2s}
+  .mm-restore:hover{color:#fbbf24;border-color:var(--blue);background:var(--bg2)}
+  @media(min-width:1024px){body.minimap-collapsed .minimap{display:none}body.minimap-collapsed .mm-restore{display:flex}}
   .to-top{position:fixed;bottom:24px;left:24px;z-index:200;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s}
   body.nav-active .to-top.show,body.loaded .to-top.show{opacity:1;transform:translateY(0);pointer-events:auto}
   .to-top:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
@@ -641,7 +647,7 @@
       <thead><tr><th>Mục đích vay</th><th>Lãi suất 2026</th><th>Cơ chế đặc thù</th></tr></thead>
       <tbody>
         <tr><td><strong>Mua nhà ở xã hội</strong></td><td>4,6%/năm (15 NHTM)</td><td>QĐ 3944/QĐ-NHNN, thấp hơn cho vay thương mại 3–5 điểm %</td></tr>
-        <tr><td><strong>Người dưới 35 tuổi</strong></td><td>6,5%/năm 5 năm đầu</td><td>Gói 120.000 tỷ, sau 5 năm thả nổi</td></tr>
+        <tr><td><strong>Người dưới 35 tuổi</strong></td><td>6,5%/năm 5 năm đầu → 7,5%/năm 10 năm tiếp</td><td>9 NHTM, trần NHNN ấn định 6 tháng/lần</td></tr>
         <tr><td><strong>Lĩnh vực ưu tiên</strong></td><td>~3,9%/năm (trần 4%)</td><td>Nông nghiệp, xuất khẩu, DN nhỏ — trần theo QĐ 1125/QĐ-NHNN</td></tr>
         <tr><td><strong>Mua nhà thương mại</strong></td><td>8,5–11% ưu đãi → 13–15%</td><td>Thả nổi LSTK + biên độ 3,3–3,5%</td></tr>
         <tr><td><strong>Vay tiêu dùng</strong></td><td>10–20%</td><td>Thường cao hơn, nhiều phí, ít thế chấp</td></tr>
@@ -900,7 +906,10 @@
 <aside class="minimap" id="minimap" aria-label="Mục lục điều hướng">
   <div class="mm-head">
     <span class="mm-title">Mục lục</span>
-    <span class="mm-pct" id="mmPct">0%</span>
+    <div class="mm-head-right">
+      <span class="mm-pct" id="mmPct">0%</span>
+      <button class="mm-collapse" id="mmCollapse" aria-label="Thu gọn mục lục" title="Thu gọn mục lục">−</button>
+    </div>
   </div>
   <div class="mm-search">
     <input type="text" id="mmSearch" placeholder="Lọc mục lục..." autocomplete="off">
@@ -966,6 +975,7 @@
 </aside>
 
 <button class="mm-fab" id="mmFab" aria-label="Mở mục lục">☰</button>
+<button class="mm-restore" id="mmRestore" aria-label="Mở rộng mục lục" title="Mở rộng mục lục">☰</button>
 <button class="to-top" id="toTop" aria-label="Lên đầu trang">↑</button>
 <button class="pres-btn" id="presBtn" aria-label="Trình chiếu" title="Trình chiếu">📽️</button>
 <div class="progress-bar" id="progressBar"></div>
@@ -1531,6 +1541,25 @@ viz.chart('chartSoSanhNha', {
 
   fab.addEventListener('click', () => body.classList.add('nav-mobile-open'));
   closeBtn.addEventListener('click', () => body.classList.remove('nav-mobile-open'));
+
+  // Collapse/expand minimap (desktop), persist choice
+  const collapseBtn = document.getElementById('mmCollapse');
+  const restoreBtn = document.getElementById('mmRestore');
+  let mmCollapsed = false;
+  try { mmCollapsed = localStorage.getItem('mm-collapsed') === '1'; } catch (e) {}
+  function applyCollapse(){
+    body.classList.toggle('minimap-collapsed', mmCollapsed);
+    if (collapseBtn) collapseBtn.textContent = mmCollapsed ? '☰' : '−';
+  }
+  applyCollapse();
+  if (collapseBtn) collapseBtn.addEventListener('click', () => {
+    mmCollapsed = true; applyCollapse();
+    try { localStorage.setItem('mm-collapsed', '1'); } catch (e) {}
+  });
+  if (restoreBtn) restoreBtn.addEventListener('click', () => {
+    mmCollapsed = false; applyCollapse();
+    try { localStorage.setItem('mm-collapsed', '0'); } catch (e) {}
+  });
 
   allLinks.forEach(a => {
     a.addEventListener('click', () => {
