@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  LONGFORM REPORT — Article Template (CORE components only)
+  ============================================================================
+  Skill: longform-report
+  Source pattern: bdong-tien / ttck-trung-quoc / bao-cao-bds-trung-quoc
+
+  CÁCH DÙNG:
+  1. Copy file này vào {project}/{slug}/index.html
+  2. Replace mọi placeholder TOKEN (viết hoa UPPER_SNAKE, bọc trong 2 ngoặc nhọn)
+     bằng nội dung thật — xem references/components.md cho danh sách TOKEN đầy đủ
+     + recipe component nâng cao.
+  3. Duplicate <section> block cho mỗi chương. Cập nhật minimap groups.
+  4. Verify: grep "{{[A-Z_]*}}" phải trả 0; node scripts/qa_article.js.
+
+  THEME FAMILY (chọn 1):
+  - AMBER (mặc định): num badge gradient + kpi glow — bài tự nghiên cứu/nhân quả.
+  - BLUE: đổi `.num` background → var(--blue) phẳng, `.kpi` nền phẳng (xem references/themes.md).
+
+  HERO GRADIENT MOOD: đổi 1 dòng `.hero{background:linear-gradient(...)}` theo chủ đề
+  (xem references/themes.md cho bảng mood: BĐS-nóng, TQ-cyan, giáo dục-rêu, tài chính-nâu đất).
+  ============================================================================
+-->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lãi suất &amp; cơ chế điều chỉnh trong hợp đồng tín dụng ngân hàng Việt Nam</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#0f172a; --bg2:#1e293b; --card:#1e293b; --card2:#273449;
+    --txt:#e2e8f0; --muted:#94a3b8; --line:#334155;
+    --red:#ef4444; --amber:#f59e0b; --green:#22c55e; --blue:#3b82f6; --violet:#8b5cf6; --cyan:#06b6d4;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--txt);line-height:1.8;font-size:17px}
+
+  /* ===== HERO (mood gradient — đổi dòng này theo chủ đề, xem references/themes.md) ===== */
+  .hero{background:linear-gradient(135deg,#422006 0%,#1e3a8a 50%,#312e81 100%);padding:90px 24px 70px;text-align:center;position:relative;overflow:hidden}
+  /* BLUE family — num badge + kpi phẳng + refs badge (themes.md) */
+  h2.section-title .num{background:var(--blue);box-shadow:0 4px 12px rgba(59,130,246,.3),inset 0 1px 0 rgba(255,255,255,.2)}
+  .kpi{background:var(--card);border:1px solid var(--line)}
+  .kpi::before{background:linear-gradient(90deg,var(--blue),transparent)}
+  .kpi:hover{border-color:var(--blue);box-shadow:0 8px 24px rgba(59,130,246,.15)}
+  ol.refs li::before{background:var(--blue)}
+  .hero::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 30%,rgba(255,255,255,.08),transparent 40%),radial-gradient(circle at 80% 70%,rgba(255,255,255,.06),transparent 40%);pointer-events:none}
+  .hero .badge{display:inline-block;background:rgba(255,255,255,.12);padding:6px 16px;border-radius:999px;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:#fde68a;margin-bottom:20px;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.2)}
+  .hero h1{font-size:clamp(1.9rem,4.5vw,3.2rem);font-weight:800;line-height:1.2;max-width:960px;margin:0 auto 18px}
+  .hero p.sub{color:#e2e8f0;font-size:1.12rem;max-width:800px;margin:0 auto;opacity:.92}
+  .hero .meta{margin-top:28px;color:#cbd5e1;font-size:.9rem}
+  .hero .meta span{display:inline-block;margin:0 10px}
+
+  /* ===== LAYOUT ===== */
+  .container{max-width:800px;margin:0 auto;padding:0 24px}
+  main{padding:50px 0 80px}
+  section{margin-bottom:56px;scroll-margin-top:90px}
+
+  /* ===== TYPOGRAPHY & SECTION TITLE ===== */
+  h2.section-title{font-size:1.5rem;font-weight:700;margin-bottom:14px;padding-bottom:16px;border-bottom:1px solid transparent;border-image:linear-gradient(90deg,var(--amber),rgba(245,158,11,.2),transparent) 1;display:flex;align-items:center;gap:14px}
+  h2.section-title .num{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--amber),#d97706);color:#fff;font-size:.95rem;font-weight:800;flex-shrink:0;box-shadow:0 4px 12px rgba(245,158,11,.3),inset 0 1px 0 rgba(255,255,255,.2)}
+  h3{font-size:1.18rem;margin:28px 0 10px;color:#fbbf24;display:flex;align-items:center;gap:8px}
+  h4{font-size:1.05rem;margin:18px 0 8px;color:#fff}
+  p{margin-bottom:16px;color:#cbd5e1}
+  strong{color:#fff}
+  em{color:#fcd34d;font-style:normal}
+  ul.bul{margin:12px 0 18px 4px;padding-left:22px}
+  ul.bul li{margin-bottom:8px;color:#cbd5e1;position:relative;padding-left:4px}
+  ul.bul li::marker{color:var(--amber)}
+  ol.numlist{margin:12px 0 18px 4px;padding-left:22px}
+  ol.numlist li{margin-bottom:8px;color:#cbd5e1}
+  a.src{color:var(--blue);text-decoration:none;border-bottom:1px dotted var(--blue)}
+
+  /* ===== INLINE CITATION + REFS LIST (chế độ numerated) ===== */
+  .ref{display:inline-block;font-size:.65rem;font-weight:700;color:#fbbf24;background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.3);border-radius:4px;padding:0 4px;margin:0 1px;line-height:1.4;vertical-align:super;text-decoration:none;transition:.15s;min-width:16px;text-align:center}
+  .ref:hover{background:rgba(251,191,36,.3);color:#fde68a;transform:translateY(-1px)}
+  ol.refs{list-style:none;counter-reset:ref;padding-left:0;margin:18px 0}
+  ol.refs li{counter-increment:ref;display:flex;gap:12px;padding:10px 0;border-bottom:1px dashed var(--line);font-size:.86rem;line-height:1.55;align-items:flex-start}
+  ol.refs li:last-child{border-bottom:none}
+  ol.refs li::before{content:counter(ref);display:inline-flex;align-items:center;justify-content:center;min-width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,var(--amber),#d97706);color:#fff;font-size:.75rem;font-weight:700;flex-shrink:0;margin-top:1px}
+  ol.refs li a{color:#93c5fd;text-decoration:none;border-bottom:1px dotted #93c5fd;word-break:break-all}
+  ol.refs li a:hover{color:#fbbf24;border-bottom-color:#fbbf24}
+  ol.refs li .src-meta{color:var(--muted);font-size:.78rem;display:block;margin-top:3px}
+
+  /* ===== KPI / STAT CARDS ===== */
+  .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin:22px 0}
+  .kpi{background:linear-gradient(180deg,rgba(245,158,11,.06),rgba(30,41,59,.6));border:1px solid rgba(245,158,11,.25);border-radius:14px;padding:20px 18px;transition:.22s;position:relative;overflow:hidden}
+  .kpi::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--amber),transparent)}
+  .kpi:hover{transform:translateY(-3px);border-color:var(--amber);box-shadow:0 8px 24px rgba(245,158,11,.15)}
+  .kpi .val{font-size:1.85rem;font-weight:800;color:#fbbf24;line-height:1;text-shadow:0 0 24px rgba(245,158,11,.3)}
+  .kpi .lab{font-size:.82rem;color:var(--muted);margin-top:10px;line-height:1.4}
+  .kpi.red{border-color:rgba(239,68,68,.3);background:linear-gradient(180deg,rgba(239,68,68,.06),rgba(30,41,59,.6))}.kpi.red::before{background:linear-gradient(90deg,var(--red),transparent)}.kpi.red:hover{border-color:var(--red);box-shadow:0 8px 24px rgba(239,68,68,.15)}
+  .kpi.green{border-color:rgba(34,197,94,.3);background:linear-gradient(180deg,rgba(34,197,94,.06),rgba(30,41,59,.6))}.kpi.green::before{background:linear-gradient(90deg,var(--green),transparent)}.kpi.green:hover{border-color:var(--green);box-shadow:0 8px 24px rgba(34,197,94,.15)}
+  .kpi.cyan{border-color:rgba(6,182,212,.3);background:linear-gradient(180deg,rgba(6,182,212,.06),rgba(30,41,59,.6))}.kpi.cyan::before{background:linear-gradient(90deg,var(--cyan),transparent)}.kpi.cyan:hover{border-color:var(--cyan);box-shadow:0 8px 24px rgba(6,182,212,.15)}
+  .kpi.violet{border-color:rgba(139,92,246,.3);background:linear-gradient(180deg,rgba(139,92,246,.06),rgba(30,41,59,.6))}.kpi.violet::before{background:linear-gradient(90deg,var(--violet),transparent)}.kpi.violet:hover{border-color:var(--violet);box-shadow:0 8px 24px rgba(139,92,246,.15)}
+  .kpi.red .val{color:var(--red);text-shadow:0 0 24px rgba(239,68,68,.3)} .kpi.green .val{color:var(--green);text-shadow:0 0 24px rgba(34,197,94,.3)} .kpi.cyan .val{color:var(--cyan);text-shadow:0 0 24px rgba(6,182,212,.3)} .kpi.violet .val{color:var(--violet);text-shadow:0 0 24px rgba(139,92,246,.3)}
+
+  /* ===== COMPARE (before/after 2 cột) ===== */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}
+  .compare .col{border-radius:14px;padding:0;border:1px solid var(--line);overflow:hidden;transition:.22s}
+  .compare .col:hover{transform:translateY(-2px)}
+  .compare .col h4{margin:0;padding:16px 22px 12px;font-size:1.05rem;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.06)}
+  .compare .col ul.bul{padding:14px 22px 20px;margin:0}
+  .compare .before{background:linear-gradient(180deg,rgba(6,182,212,.10),rgba(6,182,212,.02));border-color:rgba(6,182,212,.35)}
+  .compare .before h4{background:linear-gradient(180deg,rgba(6,182,212,.12),transparent)}
+  .compare .after{background:linear-gradient(180deg,rgba(245,158,11,.10),rgba(245,158,11,.02));border-color:rgba(245,158,212,.35)}
+  .compare .after h4{background:linear-gradient(180deg,rgba(245,158,11,.12),transparent)}
+  .compare .tag{display:inline-block;font-size:.7rem;padding:3px 12px;border-radius:999px;text-transform:uppercase;letter-spacing:.07em;font-weight:700;margin-left:auto}
+  .compare .before .tag{background:linear-gradient(135deg,var(--cyan),#0891b2);color:#062b33;box-shadow:0 2px 8px rgba(6,182,212,.3)}
+  .compare .after .tag{background:linear-gradient(135deg,var(--amber),#d97706);color:#3a2400;box-shadow:0 2px 8px rgba(245,158,11,.3)}
+  @media(max-width:720px){.compare{grid-template-columns:1fr}}
+
+  /* ===== TABLE ===== */
+  table.tbl{width:100%;border-collapse:collapse;margin:20px 0;font-size:.92rem;background:var(--card);border-radius:14px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+  table.tbl th,table.tbl td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--line)}
+  table.tbl thead th{background:linear-gradient(180deg,rgba(245,158,11,.16),rgba(245,158,11,.06));color:#fbbf24;font-weight:700;font-size:.78rem;text-transform:uppercase;letter-spacing:.06em;border-bottom:2px solid rgba(245,158,11,.3);position:relative}
+  table.tbl thead th::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--amber);opacity:0;transition:.2s}
+  table.tbl thead th:first-child::before{opacity:1}
+  table.tbl tbody tr{transition:.15s}
+  table.tbl tbody tr:nth-child(even) td{background:rgba(255,255,255,.015)}
+  table.tbl tbody tr:hover td{background:rgba(245,158,11,.06)}
+  table.tbl tr:last-child td{border-bottom:none}
+  table.tbl td strong{color:#fcd34d}
+
+  /* ===== CALLOUT (info box) ===== */
+  .callout{position:relative;background:linear-gradient(135deg,rgba(139,92,246,.10),rgba(59,130,246,.05));border:1px solid rgba(139,92,246,.25);border-left:4px solid var(--violet);padding:18px 22px 18px 24px;border-radius:0 14px 14px 0;margin:22px 0;transition:.2s}
+  .callout:hover{box-shadow:0 4px 18px rgba(139,92,246,.12);transform:translateX(2px)}
+  .callout.warn{border-color:rgba(239,68,68,.25);border-left-color:var(--red);background:linear-gradient(135deg,rgba(239,68,68,.10),rgba(239,68,68,.03))}
+  .callout.warn:hover{box-shadow:0 4px 18px rgba(239,68,68,.12)}
+  .callout.good{border-color:rgba(34,197,94,.25);border-left-color:var(--green);background:linear-gradient(135deg,rgba(34,197,94,.10),rgba(34,197,94,.03))}
+  .callout.good:hover{box-shadow:0 4px 18px rgba(34,197,94,.12)}
+  .callout.info{border-color:rgba(59,130,246,.25);border-left-color:var(--blue);background:linear-gradient(135deg,rgba(59,130,246,.10),rgba(59,130,246,.03))}
+  .callout.info:hover{box-shadow:0 4px 18px rgba(59,130,246,.12)}
+  .callout h4{color:#fff;margin-bottom:6px;font-size:1rem;display:flex;align-items:center;gap:8px}
+  .callout p{margin:0;color:#e2e8f0}
+
+  /* ===== CHART CONTAINER ===== */
+  .chart-box{background:linear-gradient(180deg,var(--card),rgba(15,23,42,.6));border:1px solid var(--line);border-radius:16px;padding:22px;margin:24px 0;position:relative;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+  .chart-box::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--amber),var(--blue),transparent)}
+  .chart-box h4{color:#fbbf24;margin-bottom:6px;font-size:1rem;display:flex;align-items:center;gap:8px}
+  .chart-box .desc{color:var(--muted);font-size:.85rem;margin-bottom:16px;padding-left:10px;border-left:2px solid rgba(245,158,11,.3);font-style:italic}
+  .chart-wrap{position:relative;height:320px}
+  .chart-wrap.tall{height:380px}
+
+  /* ===== TIMELINE ===== */
+  .timeline{position:relative;margin:26px 0;padding-left:32px;border-left:2px solid transparent;border-image:linear-gradient(180deg,var(--amber),var(--line)) 1}
+  .tl-item{position:relative;margin-bottom:28px}
+  .tl-item::before{content:"";position:absolute;left:-41px;top:4px;width:16px;height:16px;border-radius:50%;background:var(--amber);border:3px solid var(--bg);box-shadow:0 0 0 2px var(--amber),0 0 14px rgba(245,158,11,.5)}
+  .tl-item.red::before{background:var(--red);box-shadow:0 0 0 2px var(--red),0 0 14px rgba(239,68,68,.5)}
+  .tl-item.green::before{background:var(--green);box-shadow:0 0 0 2px var(--green),0 0 14px rgba(34,197,94,.5)}
+  .tl-year{font-weight:800;color:#fbbf24;font-size:.95rem;letter-spacing:.02em}
+  .tl-body{color:#cbd5e1;margin-top:4px}
+
+  /* ===== LAYOUT HELPERS ===== */
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+  @media(max-width:720px){.two-col{grid-template-columns:1fr}}
+
+  footer{text-align:center;padding:30px 24px;color:var(--muted);font-size:.85rem;border-top:1px solid var(--line)}
+
+  /* ===== PROGRESS BAR (top) ===== */
+  .progress-bar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,#fbbf24,#f59e0b,#ef4444);z-index:1000;transition:width .12s ease-out}
+
+  /* ===== MINIMAP (floating TOC) ===== */
+  .minimap{position:fixed;top:24px;right:24px;width:272px;max-height:calc(100vh - 48px);background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 14px;overflow-y:auto;z-index:50;opacity:0;transform:translateX(20px);pointer-events:none;transition:opacity .35s ease, transform .35s ease;box-shadow:0 12px 40px rgba(0,0,0,.35);display:none}
+  @media(min-width:1024px){body.nav-active .minimap{display:block;opacity:1;transform:translateX(0);pointer-events:auto}}
+  .minimap::-webkit-scrollbar{width:6px}.minimap::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+  .minimap .mm-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding:0 4px}
+  .minimap .mm-title{font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:700}
+  .minimap .mm-pct{font-size:.72rem;color:#fbbf24;font-weight:700}
+  .mm-search{position:relative;margin-bottom:12px}
+  .mm-search input{width:100%;background:var(--bg2);border:1px solid var(--line);border-radius:9px;color:var(--txt);padding:8px 10px 8px 30px;font-size:.82rem;outline:none;transition:.2s}
+  .mm-search input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(59,130,246,.15)}
+  .mm-search input::placeholder{color:var(--muted)}
+  .mm-search::before{content:"🔍";position:absolute;left:9px;top:50%;transform:translateY(-50%);font-size:.75rem;opacity:.7}
+  .mm-group{margin-bottom:4px;border-radius:9px;overflow:hidden}
+  .mm-group-head{display:flex;align-items:center;gap:7px;width:100%;background:transparent;border:none;color:#cbd5e1;cursor:pointer;padding:8px 8px;font-size:.74rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;text-align:left;border-radius:8px;transition:.15s}
+  .mm-group-head:hover{background:rgba(255,255,255,.04);color:#fff}
+  .mm-group-head .chev{font-size:.65rem;transition:transform .2s;color:var(--muted);width:10px}
+  .mm-group.open .mm-group-head .chev{transform:rotate(90deg)}
+  .mm-group-head .gcount{margin-left:auto;font-size:.66rem;color:var(--muted);font-weight:600;background:var(--bg2);padding:1px 7px;border-radius:999px}
+  .mm-items{list-style:none;padding:2px 0 6px 14px;margin:0;max-height:0;overflow:hidden;transition:max-height .3s ease;border-left:1px solid var(--line);margin-left:8px}
+  .mm-group.open .mm-items{max-height:500px}
+  .mm-items li{margin:0}
+  .mm-items a{display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--muted);font-size:.8rem;padding:5px 8px;border-radius:6px;transition:.15s;line-height:1.3}
+  .mm-items a:hover{color:#fbbf24;background:rgba(255,255,255,.03)}
+  .mm-items a .dot{width:6px;height:6px;border-radius:50%;background:var(--line);flex-shrink:0;transition:.2s}
+  .mm-items a.active{color:#fbbf24;font-weight:600;background:rgba(251,191,36,.08)}
+  .mm-items a.active .dot{background:#fbbf24;box-shadow:0 0 0 3px rgba(251,191,36,.2)}
+  .mm-no-result{display:none;font-size:.78rem;color:var(--muted);font-style:italic;padding:14px 8px;text-align:center}
+  .minimap.searching .mm-no-result.show{display:block}
+
+  /* ===== FLOATING BUTTONS ===== */
+  .mm-fab{display:none;position:fixed;bottom:24px;right:24px;z-index:200;width:52px;height:52px;border-radius:50%;border:none;cursor:pointer;background:linear-gradient(135deg,#f59e0b,#ef4444);color:#fff;font-size:1.3rem;box-shadow:0 8px 24px rgba(239,68,68,.4);align-items:center;justify-content:center}
+  @media(max-width:1023px){.mm-fab{display:flex}.minimap{display:none;top:0;right:0;left:0;bottom:0;width:auto;max-height:none;border-radius:0;border:none;transform:translateY(20px)}body.nav-mobile-open .minimap{display:block;opacity:1;transform:translateY(0);pointer-events:auto}body.nav-mobile-open .mm-fab{display:none}}
+  .mm-overlay-close{display:none;position:absolute;top:14px;right:16px;font-size:1.6rem;background:none;border:none;color:var(--muted);cursor:pointer;line-height:1}
+  @media(max-width:1023px){.mm-overlay-close{display:block}}
+  .to-top{position:fixed;bottom:24px;left:24px;z-index:200;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--txt);cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;opacity:0;transform:translateY(10px);pointer-events:none;transition:.25s}
+  body.nav-active .to-top.show,body.loaded .to-top.show{opacity:1;transform:translateY(0);pointer-events:auto}
+  .to-top:hover{background:var(--blue);color:#fff;border-color:var(--blue)}
+  @media(max-width:1023px){.to-top{bottom:88px}}
+  .pres-btn{position:fixed;top:24px;left:24px;z-index:300;width:48px;height:48px;border-radius:12px;border:1px solid var(--line);background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;cursor:pointer;font-size:1.3rem;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(59,130,246,.4);opacity:0;transform:translateY(-10px);pointer-events:none;transition:.3s}
+  body.nav-active .pres-btn,body.loaded .pres-btn{opacity:1;transform:translateY(0);pointer-events:auto}
+  .pres-btn:hover{transform:translateY(-2px) scale(1.05);box-shadow:0 10px 28px rgba(139,92,246,.5)}
+
+  /* ===== PRESENTATION MODE OVERLAY ===== */
+  .pres-overlay{position:fixed;inset:0;z-index:9999;background:#0a0f1d;display:flex;flex-direction:column;height:100vh;height:100dvh;opacity:0;pointer-events:none;transition:opacity .4s ease}
+  .pres-overlay.active{opacity:1;pointer-events:auto}
+  .pres-top{display:flex;align-items:center;gap:16px;padding:14px 28px;border-bottom:1px solid rgba(255,255,255,.06);flex-shrink:0}
+  .pres-progress-bg{flex:1;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+  .pres-progress-fill{height:100%;width:0;background:linear-gradient(90deg,#3b82f6,#fbbf24,#ef4444);border-radius:2px;transition:width .4s ease}
+  .pres-counter{font-size:.85rem;color:#94a3b8;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .pres-counter b{color:#fbbf24;font-size:1.05rem}
+  .pres-exit{background:rgba(239,68,68,.15);border:1px solid rgba(239,68,68,.3);color:#fca5a5;padding:7px 16px;border-radius:8px;cursor:pointer;font-size:.82rem;transition:.2s}
+  .pres-exit:hover{background:rgba(239,68,68,.3);color:#fff}
+  .pres-stage{flex:1 1 auto;position:relative;overflow:hidden;min-height:0;width:100%}
+  .pres-slide{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 7%;text-align:center;opacity:0;transform:translateX(60px) scale(.97);transition:opacity .5s ease, transform .5s cubic-bezier(.22,1,.36,1);pointer-events:none}
+  .pres-slide.active{opacity:1;transform:translateX(0) scale(1);pointer-events:auto}
+  .pres-slide.prev{transform:translateX(-60px) scale(.97)}
+  .pres-slide .slide-inner{width:100%;max-width:1100px;margin:auto}
+  .slide-title .badge{display:inline-block;background:rgba(255,255,255,.1);padding:6px 18px;border-radius:999px;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:#fde68a;margin-bottom:22px;border:1px solid rgba(255,255,255,.18)}
+  .slide-title h1{font-size:clamp(2rem,5.5vw,4rem);font-weight:800;line-height:1.1;margin:0 0 18px;background:linear-gradient(135deg,#fff,#fde68a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .slide-title .sub{font-size:clamp(1rem,2vw,1.35rem);color:#cbd5e1;max-width:760px;margin:0 auto 24px}
+  .slide-section{background:radial-gradient(circle at 50% 40%,rgba(245,158,11,.12),transparent 60%)}
+  .slide-section .sec-num{font-size:clamp(4rem,12vw,8rem);font-weight:800;line-height:1;color:rgba(255,255,255,.08);margin-bottom:0}
+  .slide-section .sec-label{font-size:.8rem;letter-spacing:.2em;text-transform:uppercase;color:#fbbf24;margin-bottom:8px}
+  .slide-section h2{font-size:clamp(1.8rem,4.5vw,3.2rem);font-weight:800;color:#fff;margin:8px 0 0;line-height:1.15}
+  .slide-content h2{font-size:clamp(1.5rem,3.2vw,2.3rem);font-weight:800;color:#fff;margin:0 0 6px;line-height:1.2}
+  .slide-content .kicker{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:#fbbf24;font-weight:700;margin-bottom:10px}
+  .slide-list ul{list-style:none;text-align:left;max-width:760px;margin:20px auto 0}
+  .slide-list li{display:flex;gap:14px;align-items:flex-start;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.06);font-size:clamp(1rem,1.8vw,1.18rem);color:#e2e8f0}
+  .slide-list li:last-child{border-bottom:none}
+  .slide-list li .num{flex-shrink:0;width:30px;height:30px;border-radius:8px;background:linear-gradient(135deg,#3b82f6,#8b5cf6);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700}
+  .slide-list li .txt strong{color:#fbbf24}
+  .slide-quote{background:radial-gradient(circle at 50% 40%,rgba(245,158,11,.12),transparent 60%)}
+  .slide-quote .qmark{font-size:5rem;color:rgba(245,158,11,.3);line-height:.5;margin-bottom:10px}
+  .slide-quote .qtext{font-size:clamp(1.4rem,3vw,2.1rem);font-weight:700;color:#fff;line-height:1.35;max-width:880px;margin:0 auto 16px}
+  .slide-quote .qsource{font-size:.9rem;color:#94a3b8;margin-top:10px}
+  .pres-bottom{display:flex;align-items:center;justify-content:center;gap:18px;padding:14px 28px;border-top:1px solid rgba(255,255,255,.06);flex-shrink:0}
+  .pres-nav{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;width:44px;height:44px;border-radius:50%;cursor:pointer;font-size:1.15rem;display:flex;align-items:center;justify-content:center;transition:.2s}
+  .pres-nav:hover:not(:disabled){background:var(--blue);border-color:var(--blue);transform:scale(1.1)}
+  .pres-nav:disabled{opacity:.3;cursor:not-allowed}
+  .pres-dots{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:center;max-width:65%}
+  .pres-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:.25s;border:none;padding:0}
+  .pres-dot:hover{background:rgba(255,255,255,.4)}
+  .pres-dot.active{background:#fbbf24;width:22px;border-radius:4px}
+  .pres-hint{font-size:.72rem;color:#64748b;text-align:center;padding:2px 0 6px;flex-shrink:0}
+</style>
+</head>
+<body>
+
+<!-- ============================ HERO ============================ -->
+<header class="hero">
+  <span class="badge">NGHIÊN CỨU · TÍN DỤNG VIỆT NAM</span>
+  <h1>Lãi suất &amp; cơ chế điều chỉnh trong hợp đồng tín dụng tại các ngân hàng Việt Nam</h1>
+  <p class="sub">Tổng hợp và phân tích cách các ngân hàng trình bày lãi suất, biên độ điều chỉnh, phương pháp tính lãi và các điều khoản ẩn trong hợp đồng tín dụng — đối chiếu với khung pháp lý hiện hành.</p>
+  <div class="meta">
+    <span>🗓️ Cập nhật: 08/2026</span>
+    <span>📐 Phạm vi: 15+ NHTM · hợp đồng tín dụng · khung pháp lý</span>
+    <span>📚 20 chương · 6 nhóm</span>
+  </div>
+</header>
+
+<!-- ============================ MAIN ============================ -->
+<main class="container">
+
+  <!-- ==================== CHƯƠNG I ==================== -->
+  <section id="chuong-1">
+    <h2 class="section-title"><span class="num">I</span>Lãi suất ngân hàng 2026: chân dung và hai cú sốc</h2>
+
+    <p>Thời điểm giữa năm 2026, người đi vay tại Việt Nam đang đối mặt một nghịch lý: lãi suất <strong>ưu đãi</strong> trên quảng cáo đứng ở mức 8,5–11%/năm, nhưng lãi suất <strong>thực trả</strong> sau giai đoạn ưu đãi lại phổ biến ở mức <em>13–15%/năm</em><sup class="ref">12</sup><sup class="ref">13</sup>. Khoảng cách giữa hai con số này nằm ở cách ngân hàng trình bày lãi suất trong hợp đồng tín dụng.</p>
+
+    <!-- KPI GRID -->
+    <div class="kpi-grid">
+      <div class="kpi red"><div class="val">13–15%</div><div class="lab">Lãi suất thực trả phổ biến sau ưu đãi (vay mua nhà)</div></div>
+      <div class="kpi green"><div class="val">8,5–11%</div><div class="lab">Lãi suất ưu đãi 6–12 tháng đầu (các NHTM lớn)</div></div>
+      <div class="kpi cyan"><div class="val">3,3–3,5</div><div class="lab">Điểm % biên độ cộng vào lãi suất cơ sở</div></div>
+      <div class="kpi violet"><div class="val">4,6%</div><div class="lab">Lãi suất vay nhà ở xã hội năm 2026</div></div>
+    </div>
+
+    <p>Báo cáo này tổng hợp và phân tích <strong>cách trình bày lãi suất</strong> và <strong>cơ chế điều chỉnh</strong> trong các hợp đồng tín dụng tại các ngân hàng Việt Nam ở thời điểm hiện tại — từ cấu trúc hai con số, công thức thả nổi, lãi suất quá hạn, đến phí trả nợ trước hạn và khung pháp lý đang chi phối toàn bộ các điều khoản đó<sup class="ref">1</sup><sup class="ref">3</sup>.</p>
+
+    <div class="callout warn">
+      <h4>⚠️ Vì sao báo cáo này đáng đọc</h4>
+      <p>Phần lớn người vay ký hợp đồng dựa trên con số <strong>ưu đãi</strong> — nhưng khoản thanh toán họ phải trả trong 20–25 năm còn lại lại được quyết định bởi điều khoản <strong>thả nổi</strong> thường bị bỏ qua. Chênh lệch 4–5 điểm % trên khoản vay 3 tỷ đồng có nghĩa là <strong>hàng trăm triệu đồng</strong> tiền lãi.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG II ==================== -->
+  <section id="chuong-2">
+    <h2 class="section-title"><span class="num">II</span>Khung pháp lý điều chỉnh lãi suất hợp đồng tín dụng</h2>
+
+    <p>Mọi điều khoản lãi suất trong hợp đồng tín dụng đều phải vận hành trong ba tầng quy định: <strong>Luật Các TCTD 2024</strong> (hiệu lực 1/7/2024), <strong>Thông tư 39/2016/TT-NHNN</strong> (đã sửa đổi, hợp nhất tại văn bản 21/VBHN-NHNN) và các <strong>Nghị quyết của Hội đồng Thẩm phán TANDTC</strong><sup class="ref">1</sup><sup class="ref">3</sup><sup class="ref">4</sup>.</p>
+
+    <div class="timeline">
+      <div class="tl-item green"><div class="tl-year">2016</div><div class="tl-body">Thông tư 39/2016/TT-NHNN ban hành — quy định về hoạt động cho vay, Điều 13 về lãi suất.</div></div>
+      <div class="tl-item green"><div class="tl-year">2019</div><div class="tl-body">Nghị quyết 01/2019/NQ-HĐTP — lãi suất hợp đồng tín dụng áp dụng Luật CCTD, không áp trần dân sự 20%.</div></div>
+      <div class="tl-item amber"><div class="tl-year">1/7/2024</div><div class="tl-body">Luật CCTD 2024 + Thông tư 12/2024/TT-NHNN cùng hiệu lực — siết kiểm tra sử dụng vốn.</div></div>
+      <div class="tl-item amber"><div class="tl-year">2024</div><div class="tl-body">Nghị quyết 02/2024/NQ-HĐTP — hướng dẫn xét xử, lãi quá hạn theo thỏa thuận.</div></div>
+      <div class="tl-item red"><div class="tl-year">2025–2026</div><div class="tl-body">Mặt bằng lãi suất tăng 2–4 điểm % so với 2025, lãi thực trả chạm 13–15%.</div></div>
+    </div>
+
+    <p>Điểm mấu chốt của khung pháp lý: Điều 13 Thông tư 39/2016 (được sửa đổi bởi Thông tư 12/2024/TT-NHNN) quy định <strong>lãi suất điều chỉnh phải thỏa thuận rõ nguyên tắc, yếu tố xác định và thời điểm điều chỉnh</strong>; nếu căn cứ điều chỉnh dẫn tới nhiều mức khác nhau thì <em>áp dụng mức thấp nhất</em><sup class="ref">1</sup><sup class="ref">2</sup>.</p>
+
+    <div class="callout good">
+      <h4>✅ Quy tắc có lợi cho người vay</h4>
+      <p>Khi hợp đồng dẫn chiếu lãi suất điều chỉnh theo "nhiều mức", ngân hàng <strong>bắt buộc</strong> áp dụng mức thấp nhất trong các mức đó — đây là điểm tựa pháp lý mạnh khi tranh chấp phát sinh<sup class="ref">1</sup>.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG III ==================== -->
+  <section id="chuong-3">
+    <h2 class="section-title"><span class="num">III</span>Lãi suất điều hành — nền móng của mọi con số</h2>
+
+    <p>Trước khi phân tích hợp đồng, cần nắm bộ <strong>lãi suất điều hành</strong> của Ngân hàng Nhà nước — chúng là chuẩn tham chiếu cho toàn bộ hệ thống. Hiện tại các mức này được giữ ổn định kể từ giữa 2023<sup class="ref">7</sup><sup class="ref">9</sup>.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi cyan"><div class="val">4,5%</div><div class="lab">Lãi suất tái cấp vốn (QĐ 1123/QĐ-NHNN)</div></div>
+      <div class="kpi violet"><div class="val">3,0%</div><div class="lab">Lãi suất tái chiết khấu</div></div>
+      <div class="kpi red"><div class="val">5,0%</div><div class="lab">Lãi suất cho vay qua đêm liên ngân hàng</div></div>
+      <div class="kpi green"><div class="val">4,0%</div><div class="lab">Trần lãi suất cho vay ngắn hạn lĩnh vực ưu tiên</div></div>
+    </div>
+
+    <div class="chart-box">
+      <h4>📊 Bộ lãi suất điều hành NHNN hiện hành</h4>
+      <div class="desc">Các mức chuẩn được NHNN neo giữ — đơn vị %/năm.</div>
+      <div class="chart-wrap"><canvas id="chartDieuHanh"></canvas></div>
+    </div>
+
+    <p>Điểm đáng lưu ý: trong khi trần huy động kỳ hạn dưới 6 tháng là <strong>4,75%/năm</strong>, lãi suất cho vay bình quân VND lại neo ở <strong>8,1–10,5%/năm</strong> (tùy nhóm ngân hàng)<sup class="ref">11</sup><sup class="ref">14</sup> — chênh lệch gần gấp đôi chính là chi phí vốn, chi phí rủi ro và biên lợi nhuận mà người vay phải trả.</p>
+  </section>
+
+  <!-- ==================== CHƯƠNG IV ==================== -->
+  <section id="chuong-4">
+    <h2 class="section-title"><span class="num">IV</span>Mặt bằng lãi suất cho vay hiện tại theo nhóm ngân hàng</h2>
+
+    <p>Lãi suất cho vay bình quân VND (kỳ hạn mới phát sinh) trong nửa đầu 2026 được NHNN công bố trong khoảng <strong>8,1–10,5%/năm</strong> tùy phân khúc, trong đó cho vay USD kỳ hạn ngắn khoảng 4,0–5,4%/năm<sup class="ref">11</sup><sup class="ref">14</sup>. Con số này là điểm neo để đánh giá bất kỳ mức lãi suất nào xuất hiện trong hợp đồng.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi cyan"><div class="val">8,1%</div><div class="lab">Cho vay bình quân VND — NHTM nhà nước</div></div>
+      <div class="kpi violet"><div class="val">10,5%</div><div class="lab">Cho vay bình quân VND — NHTM cổ phần</div></div>
+      <div class="kpi green"><div class="val">3,9%</div><div class="lab">Cho vay ngắn hạn lĩnh vực ưu tiên (trần 4%)</div></div>
+      <div class="kpi red"><div class="val">4,0–5,4%</div><div class="lab">Cho vay USD bình quân</div></div>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>Nhóm</th><th>Cho vay VND bình quân</th><th>Huy động trần 1–6 tháng</th><th>Chênh lệch NIM</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Nhóm NH Nhà nước</strong> (Agribank, Vietcombank...)</td><td>~8,1%/năm</td><td>≤4,75%</td><td>~3,4 điểm %</td></tr>
+        <tr><td><strong>Nhóm NH cổ phần</strong> (Techcombank, ACB...)</td><td>~10,5%/năm</td><td>≤4,75%</td><td>~5,7 điểm %</td></tr>
+        <tr><td><strong>Lĩnh vực ưu tiên</strong> (nông nghiệp, XK, DN nhỏ...)</td><td>~3,9%/năm</td><td>—</td><td>Trần 4%/năm</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout info">
+      <h4>💡 Đọc con số này như thế nào</h4>
+      <p>Bất kỳ mức lãi suất thả nổi nào cao hơn <strong>10,5% + biên độ</strong> đều đang nằm trên mặt bằng chung — hãy hỏi ngân hàng vì sao. Ngược lại, mức ưu đãi dưới 9% gần như chắc chắn chỉ kéo dài vài tháng đầu.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG V ==================== -->
+  <section id="chuong-5">
+    <h2 class="section-title"><span class="num">V</span>Lãi suất ưu đãi vay mua nhà — bức tranh các ngân hàng lớn</h2>
+
+    <p>Khảo sát tháng 8/2026 cho thấy các ngân hàng đang cạnh tranh bằng gói ưu đãi 12 tháng cho vay mua nhà, nhưng mức sau ưu đãi mới là con số quyết định chi phí dài hạn<sup class="ref">12</sup><sup class="ref">13</sup>.</p>
+
+    <div class="chart-box">
+      <h4>📊 Lãi suất vay mua nhà: ưu đãi vs sau ưu đãi</h4>
+      <div class="desc">Lãi suất cố định 12 tháng đầu (cột) so với lãi suất thả nổi sau đó (đường) — đơn vị %/năm.</div>
+      <div class="chart-wrap tall"><canvas id="chartMuaNha"></canvas></div>
+    </div>
+
+    <table class="tbl">
+      <thead><tr><th>Ngân hàng</th><th>Ưu đãi 12T</th><th>Sau ưu đãi (tham chiếu)</th><th>Cơ chế tham chiếu</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Agribank</strong></td><td>8,2%</td><td>13–15%</td><td>LSTK 12T + biên độ</td></tr>
+        <tr><td><strong>Vietcombank</strong></td><td>9,8%</td><td>13–15%</td><td>LSTK 24T + 3,5%</td></tr>
+        <tr><td><strong>VietinBank</strong></td><td>10,5%</td><td>13–15%</td><td>LSTK 12T + biên độ</td></tr>
+        <tr><td><strong>BIDV</strong></td><td>9,7%</td><td>13–15%</td><td>LSTK 12T + biên độ</td></tr>
+        <tr><td><strong>Techcombank</strong></td><td>9,2%</td><td>13–15%</td><td>LSTK 12T + biên độ</td></tr>
+        <tr><td><strong>ACB</strong></td><td>9,5%</td><td>13–15%</td><td>LSTK 13T + biên độ</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <h4>⚠️ "Bẫy" ưu đãi phổ biến nhất</h4>
+      <p>Con số 8,5–11% chỉ có giá trị <strong>6–12 tháng</strong>. Sau đó lãi suất thả nổi = lãi suất cơ sở (thường là LSTK 12 hoặc 24 tháng của chính ngân hàng, hiện ~4,75–5%) + biên độ <strong>3,3–3,5 điểm %</strong> — nhưng nhiều ngân hàng dùng lãi suất cơ sở "nội bộ" cao hơn, khiến mức thực trả lên tới <strong>13–15%</strong><sup class="ref">12</sup><sup class="ref">13</sup>.</p>
+    </div>
+  </section>
+
+
+</main>
+
+  <!-- ==================== CHƯƠNG VI ==================== -->
+  <section id="chuong-6">
+    <h2 class="section-title"><span class="num">VI</span>Cấu trúc hai con số trong hợp đồng tín dụng</h2>
+
+    <p>Hợp đồng tín dụng chuẩn của các ngân hàng Việt Nam thường trình bày lãi suất theo cấu trúc <strong>hai giai đoạn</strong>: (1) lãi suất ưu đãi/cố định trong thời gian đầu, và (2) lãi suất thả nổi cho phần còn lại của kỳ hạn. Hiểu được hai con số này là chìa khóa đọc hợp đồng<sup class="ref">1</sup>.</p>
+
+    <div class="compare">
+      <div class="col before">
+        <h4>Giai đoạn 1 — Ưu đãi <span class="tag">6–12 tháng</span></h4>
+        <ul class="bul">
+          <li>Mức cố định, ví dụ 9,2%/năm</li>
+          <li>Thường ghi rõ "12 tháng đầu" hoặc "6 tháng đầu"</li>
+          <li>Là con số quảng cáo, dễ đọc, dễ so sánh</li>
+          <li>Chi phí thực tế thấp trong giai đoạn này</li>
+        </ul>
+      </div>
+      <div class="col after">
+        <h4>Giai đoạn 2 — Thả nổi <span class="tag">Đến hết kỳ hạn</span></h4>
+        <ul class="bul">
+          <li>Không ghi mức cố định, ghi công thức tham chiếu</li>
+          <li>Ví dụ: "LSTK 12T + 3,5%/năm" hoặc "LSTK 24T + 3,3%"</li>
+          <li>Điều chỉnh định kỳ 3–12 tháng một lần</li>
+          <li>Chi phí dài hạn — quyết định tổng số tiền lãi</li>
+        </ul>
+      </div>
+    </div>
+
+    <p>Ví dụ từ thực tế hợp đồng tín dụng: <strong>HĐTD số 138/19</strong> của một ngân hàng thương mại ghi lãi suất cho vay thả nổi được xác định theo "lãi suất huy động VND kỳ hạn 24 tháng cộng biên độ 3,5%/năm, không thấp hơn lãi suất sàn" — đây là cấu trúc công thức điển hình<sup class="ref">5</sup><sup class="ref">6</sup>.</p>
+
+    <div class="callout warn">
+      <h4>⚠️ Nơi "phép thuật" xảy ra</h4>
+      <p>Mọi sự mơ hồ trong <strong>cách diễn đạt công thức</strong> — "lãi suất sàn", "lãi suất cơ sở nội bộ", "biên độ do ngân hàng quyết định" — đều có lợi cho ngân hàng và là nguồn cơn của phần lớn tranh chấp. Điều 13 TT39 yêu cầu phải xác định rõ yếu tố, nhưng cách ghi "có thể hiểu theo nhiều nghĩa" vẫn tồn tại.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG VII ==================== -->
+  <section id="chuong-7">
+    <h2 class="section-title"><span class="num">VII</span>Cơ chế điều chỉnh lãi suất theo Điều 13 TT39/2016</h2>
+
+    <p>Điều 13 Thông tư 39/2016/TT-NHNN (được Thông tư 12/2024/TT-NHNN giữ nguyên tinh thần) là quy định trung tâm về lãi suất trong cho vay. Nội dung cốt lõi gồm<sup class="ref">1</sup><sup class="ref">2</sup>:</p>
+
+    <table class="tbl">
+      <thead><tr><th>Khoản</th><th>Quy định</th><th>Ý nghĩa với người vay</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Khoản 1</strong></td><td>Lãi suất cho vay do tổ chức tín dụng và khách hàng <strong>thỏa thuận</strong> theo cung cầu vốn</td><td>Không có khung cứng, dựa vào đàm phán</td></tr>
+        <tr><td><strong>Khoản 3</strong></td><td>Thỏa thuận phải ghi rõ mức lãi suất và <strong>phương pháp tính lãi</strong></td><td>Yêu cầu minh bạch công thức</td></tr>
+        <tr><td><strong>Khoản 4</strong></td><td>Lãi suất áp dụng cho <strong>nợ quá hạn</strong>, lãi chậm trả do thỏa thuận</td><td>Thường 150% lãi trong hạn</td></tr>
+        <tr><td><strong>Khoản 5</strong></td><td>Lãi suất điều chỉnh phải thỏa thuận <strong>nguyên tắc + yếu tố xác định + thời điểm</strong>; nhiều mức → áp <strong>mức thấp nhất</strong></td><td>Bảo vệ người vay khi mơ hồ</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout good">
+      <h4>✅ Điểm tựa pháp lý quan trọng nhất</h4>
+      <p>Khoản 5 Điều 13: khi hợp đồng dẫn chiếu lãi suất điều chỉnh theo nhiều mức khác nhau, <strong>áp dụng mức lãi suất thấp nhất</strong>. Đây chính là cơ sở các tòa án dùng để gạt bỏ mức lãi suất do ngân hàng tự ấn định cao hơn so với yếu tố tham chiếu đã thỏa thuận<sup class="ref">1</sup>.</p>
+    </div>
+
+    <p>Thực tế xét xử 2024 ghi nhận: các tòa án yêu cầu ngân hàng <strong>chứng minh mức lãi suất áp dụng đúng yếu tố tham chiếu</strong> trong hợp đồng. Nếu ngân hàng không chứng minh được, tòa áp dụng mức thấp nhất trong các mức tham chiếu — hoặc yêu cầu tính lại theo hợp đồng gốc<sup class="ref">5</sup><sup class="ref">6</sup>.</p>
+  </section>
+
+  <!-- ==================== CHƯƠNG VIII ==================== -->
+  <section id="chuong-8">
+    <h2 class="section-title"><span class="num">VIII</span>Công thức thả nổi: lãi suất cơ sở + biên độ</h2>
+
+    <p>Công thức thả nổi phổ biến nhất hiện nay tại Việt Nam là <strong>công thức cộng biên độ</strong>: <em>Lãi suất cho vay = Lãi suất tham chiếu + Biên độ cố định</em>. Biến số nằm ở chỗ "lãi suất tham chiếu" là gì<sup class="ref">1</sup><sup class="ref">2</sup>.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi cyan"><div class="val">LSTK 12T</div><div class="lab">Lãi suất tiết kiệm kỳ hạn 12 tháng của chính ngân hàng — tham chiếu phổ biến nhất</div></div>
+      <div class="kpi violet"><div class="val">LSTK 24T</div><div class="lab">Kỳ hạn 24 tháng — thường cao hơn, được Vietcombank, ACB dùng</div></div>
+      <div class="kpi green"><div class="val">+ 3,3–3,5</div><div class="lab">Biên độ cố định cộng thêm, ghi rõ trong hợp đồng</div></div>
+      <div class="kpi red"><div class="val">13–15%</div><div class="lab">Mức thực trả sau cùng do ngân hàng lựa chọn lãi suất cơ sở cao</div></div>
+    </div>
+
+    <div class="chart-box">
+      <h4>📊 Cơ cấu lãi suất thả nổi điển hình (2026)</h4>
+      <div class="desc">Lãi suất tham chiếu + biên độ = lãi suất cho vay — minh họa 3 ngân hàng đại diện.</div>
+      <div class="chart-wrap"><canvas id="chartCauTruc"></canvas></div>
+    </div>
+
+    <div class="callout warn">
+      <h4>⚠️ Sự khác biệt giữa "tham chiếu" và "nội bộ"</h4>
+      <p>Nếu hợp đồng ghi <strong>"lãi suất cơ sở do ngân hàng công bố định kỳ"</strong> mà không nêu cụ thể lấy từ đâu, ngân hàng có thể tự chọn mức cao. Ngược lại, nếu ghi cụ thể <strong>"LSTK 12 tháng của chính ngân hàng"</strong> — người vay tự kiểm tra được trên website. Hãy ưu tiên hợp đồng có tham chiếu kiểm tra được.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG IX ==================== -->
+  <section id="chuong-9">
+    <h2 class="section-title"><span class="num">IX</span>Chu kỳ điều chỉnh và lãi suất quá hạn</h2>
+
+    <p>Ngoài mức lãi suất, hợp đồng còn quy định <strong>tần suất điều chỉnh</strong> và <strong>lãi suất phạt</strong> — hai yếu tố làm thay đổi đáng kể chi phí vay<sup class="ref">1</sup>.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Điều khoản</th><th>Cách ghi phổ biến</th><th>Khoảng thị trường</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Chu kỳ điều chỉnh</strong></td><td>3 tháng / 6 tháng / 12 tháng một lần</td><td>3–12 tháng</td></tr>
+        <tr><td><strong>Lãi suất quá hạn</strong></td><td>"150% lãi suất trong hạn"</td><td>150% (đa số)</td></tr>
+        <tr><td><strong>Lãi chậm trả</strong></td><td>"tối đa 10%/năm trên dư nợ lãi"</td><td>0–10%/năm</td></tr>
+        <tr><td><strong>Phí trả nợ trước hạn</strong></td><td>Tỷ lệ % trên dư nợ trả trước</td><td>1–5%, giảm dần theo năm</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <h4>⚠️ Ví dụ lãi quá hạn tác động thế nào</h4>
+      <p>Vay 3 tỷ đồng, lãi trong hạn 10%/năm. Trễ hạn 1 tháng: lãi quá hạn 15%/năm tính trên toàn bộ dư nợ → số lãi phát sinh tăng thêm <strong>khoảng 12,5 triệu đồng</strong> chỉ riêng tháng đó, chưa kể gốc chưa trả bị tính chồng. Nếu hợp đồng ghi lãi quá hạn cao hơn 150% — khoản vượt có thể bị tòa bác<sup class="ref">1</sup><sup class="ref">5</sup>.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG X ==================== -->
+  <section id="chuong-10">
+    <h2 class="section-title"><span class="num">X</span>Phương pháp tính lãi: dư nợ thực tế và chuẩn 365 ngày</h2>
+
+    <p>Điều 13.3 Thông tư 39/2016 quy định phương pháp tính lãi phải được thỏa thuận rõ. Hai nội dung cốt lõi<sup class="ref">1</sup>:</p>
+
+    <ul class="bul">
+      <li><strong>Lãi tính trên số dư nợ thực tế</strong> và thời gian duy trì số dư đó — không tính trên toàn bộ hạn mức</li>
+      <li><strong>Quy đổi mức lãi suất %/năm</strong> (chuẩn 365 ngày) — hoặc nếu thỏa thuận theo chuẩn khác, phải quy đổi ra %/năm để so sánh</li>
+    </ul>
+
+    <div class="chart-box">
+      <h4>📊 Số tiền lãi thực trả: dư nợ giảm dần so với lãi cố định trên gốc ban đầu</h4>
+      <div class="desc">Cùng mức lãi 10%/năm, khoản vay 3 tỷ / 20 năm — minh họa tác động của phương pháp tính.</div>
+      <div class="chart-wrap tall"><canvas id="chartTinhLai"></canvas></div>
+    </div>
+
+    <div class="callout good">
+      <h4>✅ Hai câu hỏi phải hỏi khi ký</h4>
+      <p><strong>1)</strong> "Lãi được tính trên số dư nợ giảm dần hay toàn bộ gốc ban đầu?" — phải là dư nợ giảm dần mới hợp chuẩn ngân hàng. <strong>2)</strong> "Nếu thỏa thuận chuẩn 360 ngày, mức quy đổi ra %/năm (365 ngày) là bao nhiêu?" — hợp đồng phải nêu con số quy đổi<sup class="ref">1</sup>.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG XI ==================== -->
+  <section id="chuong-11">
+    <h2 class="section-title"><span class="num">XI</span>Phí trả nợ trước hạn — chi phí "ẩn" thường bị bỏ sót</h2>
+
+    <p>Điều 14 Thông tư 39/2016 cho phép ngân hàng thu phí cho vay, trong đó có <strong>phí trả nợ trước hạn</strong> — khoản phí đáng kể nhất mà người vay thường không để ý khi ký hợp đồng<sup class="ref">1</sup>.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi red"><div class="val">1–5%</div><div class="lab">Phạm vi phổ biến của phí trả nợ trước hạn</div></div>
+      <div class="kpi amber"><div class="val">Năm 1: 3%</div><div class="lab">Techcombank, VIB... phí cao nhất ở năm đầu</div></div>
+      <div class="kpi green"><div class="val">Năm 3+: 1%</div><div class="lab">Hầu hết giảm còn 1% hoặc miễn sau năm 2–3</div></div>
+      <div class="kpi violet"><div class="val">0%</div><div class="lab">Một số ngân hàng miễn phí khi trả trước dưới hạn mức</div></div>
+    </div>
+
+    <p>Công thức phổ biến: <strong>Phí = Tỷ lệ % × Số dư nợ trả trước</strong>. Ví dụ trả trước 1 tỷ đồng ở năm 1 với phí 3% — bạn mất <strong>30 triệu đồng</strong>. Nhiều ngân hàng miễn phí nếu trả trước 10–20% dư nợ trong kỳ, hoặc chỉ tính phí trên phần vượt hạn mức<sup class="ref">1</sup><sup class="ref">12</sup>.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Ngân hàng</th><th>Phí năm 1</th><th>Năm 2</th><th>Năm 3 trở đi</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Techcombank</strong></td><td>3%</td><td>3%</td><td>2% → miễn</td></tr>
+        <tr><td><strong>VIB</strong></td><td>3%</td><td>2%</td><td>1%</td></tr>
+        <tr><td><strong>VPBank</strong></td><td>3%</td><td>2%</td><td>1%</td></tr>
+        <tr><td><strong>ACB</strong></td><td>2%</td><td>2%</td><td>1% → miễn</td></tr>
+        <tr><td><strong>Một số NH nhà nước</strong></td><td>1%</td><td>1%</td><td>0–1%</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <h4>⚠️ Vì sao phí này quan trọng với người vay dài hạn</h4>
+      <p>Người vay 20–25 năm hầu như <strong>chắc chắn</strong> sẽ tất toán sớm (bán nhà, tái cấp vốn lãi thấp hơn, trả gấp). Một hợp đồng ghi phí "theo quy định của ngân hàng từng thời kỳ" là điều khoản rủi ro — hãy yêu cầu <strong>ghi cụ thể tỷ lệ phí theo từng năm</strong> ngay trong hợp đồng<sup class="ref">1</sup>.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG XII ==================== -->
+  <section id="chuong-12">
+    <h2 class="section-title"><span class="num">XII</span>Thực tiễn xét xử: tranh chấp lãi suất ra tòa thường diễn ra thế nào</h2>
+
+    <p>Khi hợp đồng có điều khoản lãi suất mơ hồ, người vay thường phải ra tòa. Nghị quyết 01/2019/NQ-HĐTP (Điều 7) quy định rõ: lãi suất trong hợp đồng tín dụng được xác định theo <strong>thỏa thuận của các bên</strong> và áp dụng Luật CCTD — <strong>không áp dụng</strong> giới hạn lãi suất của Bộ luật Dân sự 2015 (20%/năm)<sup class="ref">5</sup>.</p>
+
+    <div class="callout good">
+      <h4>✅ Kết luận quan trọng từ Nghị quyết 01/2019</h4>
+      <p>Tòa án không được phép lấy mốc 20%/năm của Bộ luật Dân sự để giảm lãi suất ngân hàng. Tuy nhiên, tòa vẫn kiểm tra <strong>hợp đồng có thỏa thuận rõ nguyên tắc + yếu tố + thời điểm điều chỉnh không</strong>. Nếu không — ngân hàng phải tính lại theo mức đã thỏa thuận ban đầu<sup class="ref">5</sup><sup class="ref">6</sup>.</p>
+    </div>
+
+    <p>Nghị quyết 02/2024/NQ-HĐTP bổ sung hướng dẫn mới về cách xử lý khi hai bên tranh chấp lãi suất quá hạn và lãi chậm trả, yêu cầu tòa án căn cứ <strong>nội dung thỏa thuận cụ thể trong hợp đồng</strong> thay vì áp dụng khung chung<sup class="ref">6</sup>.</p>
+
+    <h3>Diễn biến thực tế các vụ tranh chấp lãi suất</h3>
+    <div class="timeline">
+      <div class="tl-item green"><div class="tl-year">2019</div><div class="tl-body">NQ 01/2019 chốt nguyên tắc: lãi HĐTD theo Luật CCTD, không theo trần dân sự.</div></div>
+      <div class="tl-item amber"><div class="tl-year">2021–2023</div><div class="tl-body">Hàng loạt vụ kiện lãi suất nổi do ngân hàng tự ấn mức cao không đúng tham chiếu.</div></div>
+      <div class="tl-item amber"><div class="tl-year">2024</div><div class="tl-body">NQ 02/2024 — chuẩn hóa cách xét xử lãi quá hạn, lãi chậm trả theo thỏa thuận hợp đồng.</div></div>
+      <div class="tl-item red"><div class="tl-year">2025–2026</div><div class="tl-body">Tòa áp mức thấp nhất trong các mức tham chiếu khi ngân hàng không chứng minh được căn cứ điều chỉnh.</div></div>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG XIII ==================== -->
+  <section id="chuong-13">
+    <h2 class="section-title"><span class="num">XIII</span>Bản án điển hình 2024: bài học từ hợp đồng thực tế</h2>
+
+    <p>Ba bản án 2024 cho thấy cách tòa án "mổ xẻ" điều khoản lãi suất trong hợp đồng tín dụng<sup class="ref">5</sup><sup class="ref">6</sup>:</p>
+
+    <table class="tbl">
+      <thead><tr><th>Bản án</th><th>Điều khoản tranh chấp</th><th>Kết quả xét xử</th></tr></thead>
+      <tbody>
+        <tr><td><strong>06/2024/KDTM-PT</strong> (NHPT)</td><td>Lãi trong hạn 6,9%, quá hạn 150%</td><td>Tòa công nhận lãi quá hạn 150% theo thỏa thuận; nợ gốc 80,66 tỷ, lãi 98 tỷ</td></tr>
+        <tr><td><strong>05/2024/DS-PT</strong> (VCB)</td><td>LSTK 24T + 3,5%, quá hạn 150%</td><td>Giữ nguyên công thức thả nổi đã thỏa thuận; bác yêu cầu giảm lãi của khách</td></tr>
+        <tr><td><strong>102/2024/KDTM-PT</strong> (HN)</td><td>Điều chỉnh 3 tháng/lần, quá hạn 150%</td><td>Tòa chấp nhận chu kỳ điều chỉnh và mức quá hạn theo hợp đồng</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <h4>⚠️ Bài học rút ra</h4>
+      <p>Khi hợp đồng ghi <strong>rõ ràng</strong> công thức và mức phạt, tòa án gần như luôn giữ nguyên. Người vay chỉ thắng khi phát hiện <strong>vi phạm thủ tục</strong>: không thông báo điều chỉnh, tính lãi sai số dư, hoặc áp mức cao hơn yếu tố tham chiếu đã thỏa thuận<sup class="ref">5</sup><sup class="ref">6</sup>.</p>
+    </div>
+
+    <p>Điểm chung của các bản án: tòa án không xét lại "mức lãi suất cao hay thấp" mà chỉ xét <strong>hợp đồng có đúng quy định pháp luật và hai bên có đúng thỏa thuận không</strong>. Do đó, việc đàm phán điều khoản <em>trước khi ký</em> quan trọng hơn rất nhiều so với việc kiện tụng <em>sau khi ký</em>.</p>
+  </section>
+
+  <!-- ==================== CHƯƠNG XIV ==================== -->
+  <section id="chuong-14">
+    <h2 class="section-title"><span class="num">XIV</span>Lãi suất thỏa thuận hay áp đặt? Góc nhìn cạnh tranh</h2>
+
+    <p>Về lý thuyết, Điều 13 TT39 cho phép lãi suất <strong>thỏa thuận tự do</strong> giữa ngân hàng và khách hàng. Nhưng thực tế giao dịch, người vay cá nhân gần như luôn nhận <strong>mẫu hợp đồng soạn sẵn</strong> với điều khoản lãi suất cố định — cái gọi là "thỏa thuận" thường chỉ là chấp nhận đề nghị của ngân hàng<sup class="ref">1</sup>.</p>
+
+    <div class="compare">
+      <div class="col before">
+        <h4>Thỏa thuận lý thuyết <span class="tag">Luật quy định</span></h4>
+        <ul class="bul">
+          <li>Hai bên ngồi lại, thương lượng từng điều khoản</li>
+          <li>Mức lãi, biên độ, phí đều có thể đổi</li>
+          <li>Người vay có quyền từ chối điều khoản</li>
+          <li>Đúng tinh thần Điều 13 TT39</li>
+        </ul>
+      </div>
+      <div class="col after">
+        <h4>Thực tế giao dịch <span class="tag">Thị trường 2026</span></h4>
+        <ul class="bul">
+          <li>Hợp đồng soạn sẵn, mở rộng quyền đơn phương của ngân hàng</li>
+          <li>Lãi suất điều chỉnh "theo quy định ngân hàng"</li>
+          <li>Phí, lãi quá hạn gần như không đàm phán được</li>
+          <li>Người vay chỉ có quyền "ký hoặc không ký"</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <h4>💡 Điều người vay thực sự có thể đàm phán</h4>
+      <p>Ở thị trường cạnh tranh hiện tại (khách hàng tốt, tài sản đảm bảo tốt), người vay vẫn có dư địa xin: <strong>giảm biên độ</strong>, <strong>kéo dài thời gian ưu đãi</strong>, <strong>giới hạn phí trả nợ trước hạn</strong>, và <strong>quy định cụ thể tham chiếu</strong>. Những điều khoản này có thể ghi thêm vào hợp đồng trước khi ký.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG XV ==================== -->
+  <section id="chuong-15">
+    <h2 class="section-title"><span class="num">XV</span>Đối chiếu cơ chế lãi suất theo mục đích vay</h2>
+
+    <p>Cơ chế trình bày lãi suất khác nhau rõ rệt giữa các mục đích vay. Điểm khác biệt nằm ở <strong>mức ưu đãi</strong>, <strong>cơ chế tham chiếu</strong> và <strong>mức trần</strong> được Nhà nước áp đặt<sup class="ref">8</sup><sup class="ref">10</sup>.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Mục đích vay</th><th>Lãi suất 2026</th><th>Cơ chế đặc thù</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Mua nhà ở xã hội</strong></td><td>4,6%/năm (15 NHTM)</td><td>QĐ 3944/QĐ-NHNN, thấp hơn cho vay thương mại 3–5 điểm %</td></tr>
+        <tr><td><strong>Người dưới 35 tuổi</strong></td><td>6,5%/năm 5 năm đầu</td><td>Gói 120.000 tỷ, sau 5 năm thả nổi</td></tr>
+        <tr><td><strong>Lĩnh vực ưu tiên</strong></td><td>~3,9%/năm (trần 4%)</td><td>Nông nghiệp, xuất khẩu, DN nhỏ — trần theo QĐ 1125/QĐ-NHNN</td></tr>
+        <tr><td><strong>Mua nhà thương mại</strong></td><td>8,5–11% ưu đãi → 13–15%</td><td>Thả nổi LSTK + biên độ 3,3–3,5%</td></tr>
+        <tr><td><strong>Vay tiêu dùng</strong></td><td>10–20%</td><td>Thường cao hơn, nhiều phí, ít thế chấp</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout good">
+      <h4>✅ Điểm cần nhớ</h4>
+      <p>Lãi suất <strong>nhà ở xã hội</strong> và <strong>lĩnh vực ưu tiên</strong> nằm trong nhóm được Nhà nước "neo" bằng quyết định riêng — đây là kênh vay rẻ nhất cho người đủ điều kiện. Trong khi đó, cho vay thương mại thực chất là thị trường tự do với mức thả nổi cao<sup class="ref">8</sup><sup class="ref">10</sup>.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG XVI ==================== -->
+  <section id="chuong-16">
+    <h2 class="section-title"><span class="num">XVI</span>Gói nhà ở xã hội: 4,6%/năm từ 15 ngân hàng thương mại</h2>
+
+    <p>Quyết định 3944/QĐ-NHNN (hiệu lực 1/1/2026) ấn định lãi suất cho vay mua nhà ở xã hội là <strong>4,6%/năm</strong> đối với khách hàng của <strong>15 ngân hàng thương mại</strong> tham gia chương trình — gồm BIDV, Vietcombank, VietinBank, Agribank, SHB, SeABank, TPBank, Eximbank, PVcomBank, OCB, LPBank, VietBank, NCB, VIB, VPBank<sup class="ref">10</sup>.</p>
+
+    <div class="kpi-grid">
+      <div class="kpi green"><div class="val">4,6%</div><div class="lab">Lãi suất vay nhà ở xã hội 2026 (QĐ 3944/QĐ-NHNN)</div></div>
+      <div class="kpi violet"><div class="val">15 NH</div><div class="lab">Ngân hàng thương mại tham gia chương trình</div></div>
+      <div class="kpi cyan"><div class="val">120.000 tỷ</div><div class="lab">Quy mô gói tín dụng hỗ trợ nhà ở xã hội</div></div>
+      <div class="kpi red"><div class="val">5,4%</div><div class="lab">Lãi suất gói hỗ trợ (2026) khi vay từ ngân sách — cao hơn gói 15 NH</div></div>
+    </div>
+
+    <div class="chart-box">
+      <h4>📊 So sánh chi phí vay nhà ở xã hội và vay thương mại</h4>
+      <div class="desc">Lãi suất năm đầu cho khoản vay 1 tỷ đồng, kỳ hạn 25 năm — đơn vị %/năm.</div>
+      <div class="chart-wrap"><canvas id="chartSoSanhNha"></canvas></div>
+    </div>
+
+    <p>So với vay mua nhà thương mại (ưu đãi 8,5–11% rồi thả nổi 13–15%), gói NOXH tiết kiệm <strong>50–70 triệu đồng tiền lãi mỗi năm</strong> cho khoản vay 1 tỷ đồng<sup class="ref">10</sup><sup class="ref">12</sup>. Điều kiện đi kèm là phải thuộc đối tượng hưởng chính sách: thu nhập thấp, đô thị, công nhân — theo Luật Nhà ở và các nghị định hướng dẫn.</p>
+
+    <div class="callout info">
+      <h4>💡 Lưu ý về lãi suất gói này</h4>
+      <p>Lãi suất NOXH được NHNN điều chỉnh <strong>định kỳ 6 tháng một lần</strong> theo biến động thị trường — không phải cố định trọn đời vay. Người vay cần đọc kỹ cơ chế điều chỉnh trong hợp đồng, vì mức 4,6% chỉ là điểm neo hiện tại<sup class="ref">10</sup>.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG XVII ==================== -->
+  <section id="chuong-17">
+    <h2 class="section-title"><span class="num">XVII</span>Gói vay người trẻ dưới 35 tuổi: 6,5% rồi 7,5%</h2>
+
+    <p>Nối tiếp chính sách nhà ở, NHNN có chương trình hỗ trợ <strong>người trẻ dưới 35 tuổi</strong> vay mua nhà ở xã hội, triển khai tại <strong>9 ngân hàng thương mại</strong> (Agribank, VietinBank, Vietcombank, BIDV, HDBank, VPBank, Techcombank, TPBank, MB). Theo Công văn 5340/NHNN-CSTT (19/6/2026), lãi suất là <strong>6,5%/năm trong 5 năm đầu</strong>, sau đó <strong>7,5%/năm trong 10 năm tiếp theo</strong> — thấp hơn lần lượt 2 và 1 điểm % so với lãi suất trung dài hạn bình quân của 4 ngân hàng quốc doanh<sup class="ref">10</sup><sup class="ref">12</sup>.</p>
+
+    <table class="tbl">
+      <thead><tr><th>Tiêu chí</th><th>Gói người trẻ &lt;35 tuổi</th><th>Gói NOXH</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Lãi suất</strong></td><td>6,5%/năm (5 năm đầu) → 7,5%/năm (10 năm tiếp)</td><td>4,6%/năm</td></tr>
+        <tr><td><strong>Đối tượng</strong></td><td>Dưới 35 tuổi, có thu nhập ổn định</td><td>Thu nhập thấp, công nhân, chính sách</td></tr>
+        <tr><td><strong>Điều kiện nhà</strong></td><td>Chỉ nhà ở xã hội</td><td>Chỉ nhà ở xã hội</td></tr>
+        <tr><td><strong>Trần ưu đãi</strong></td><td>NHNN ấn định 6 tháng/lần (Công văn 5340)</td><td>NHNN ấn định 6 tháng/lần (QĐ 3944)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout info">
+      <h4>💡 Tách bạch hai gói</h4>
+      <p>Gói <strong>120.000 tỷ đồng</strong> cho vay nhà ở xã hội, nhà công nhân (theo Nghị quyết 33/NQ-CP) là chương trình <strong>riêng biệt</strong> — do các NHTM tự xếp vốn, giải ngân rất chậm (chỉ ~5,5% sau hơn 3 năm triển khai). Không nhầm lẫn với gói người trẻ ở trên — vốn của gói người trẻ do ngân sách hỗ trợ cấp bù chênh lệch lãi suất<sup class="ref">10</sup><sup class="ref">12</sup>.</p>
+    </div>
+
+    <div class="callout warn">
+      <h4>⚠️ Đọc kỹ điều khoản "sau 5 năm"</h4>
+      <p>Mức 6,5% và 7,5% đều <strong>không phải vĩnh viễn</strong> — NHNN thông báo lại từng giai đoạn (hiện áp dụng 1/7/2026–31/12/2026). Hợp đồng phải nêu rõ <strong>cơ sở pháp lý</strong> (Công văn nào) và <strong>thời điểm áp dụng mức mới</strong> — nếu chỉ ghi "theo quy định NHNN" mà không có điểm neo, đó là điều khoản trống và có thể bị ngân hàng áp mức cao hơn<sup class="ref">10</sup>.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG XVIII ==================== -->
+  <section id="chuong-18">
+    <h2 class="section-title"><span class="num">XVIII</span>Checklist trước khi ký: 8 điều phải kiểm tra</h2>
+
+    <p>Dựa trên toàn bộ phân tích ở trên, đây là danh sách kiểm tra ngắn gọn — đối chiếu từng mục với hợp đồng của bạn trước khi ký<sup class="ref">1</sup><sup class="ref">2</sup>:</p>
+
+    <ul class="bul">
+      <li><strong>Lãi suất ưu đãi</strong>: ghi rõ mức % + thời gian áp dụng (6, 12 tháng hay lâu hơn?)</li>
+      <li><strong>Công thức thả nổi</strong>: ghi rõ "LSTK kỳ hạn X của ngân hàng" + biên độ cụ thể, không ghi "theo quy định ngân hàng"</li>
+      <li><strong>Yếu tố tham chiếu</strong>: ngân hàng phải nêu được nguồn công bố (website, trụ sở) để bạn tự kiểm tra</li>
+      <li><strong>Chu kỳ điều chỉnh</strong>: 3, 6 hay 12 tháng một lần — và ngày điều chỉnh cụ thể</li>
+      <li><strong>Lãi suất quá hạn</strong>: không quá 150% lãi trong hạn; lãi chậm trả không quá 10%/năm</li>
+      <li><strong>Phương pháp tính lãi</strong>: dư nợ giảm dần + chuẩn 365 ngày, có quy đổi %/năm</li>
+      <li><strong>Phí trả nợ trước hạn</strong>: tỷ lệ % cụ thể theo từng năm, không ghi "theo từng thời kỳ"</li>
+      <li><strong>Các phí khác</strong>: phí thẩm định, phí quản lý khoản vay, phí bảo hiểm bắt buộc — hỏi tổng chi phí</li>
+    </ul>
+
+    <div class="callout good">
+      <h4>✅ Quyền của bạn</h4>
+      <p>Theo Luật Bảo vệ quyền lợi người tiêu dùng và Điều 13 TT39, bạn có quyền yêu cầu ngân hàng <strong>giải thích bằng văn bản</strong> từng điều khoản lãi suất và ghi các cam kết bằng lời vào hợp đồng. Nếu ngân hàng từ chối — đó là dấu hiệu điều khoản bất lợi.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG XIX ==================== -->
+  <section id="chuong-19">
+    <h2 class="section-title"><span class="num">XIX</span>Những hiểu lầm phổ biến về lãi suất hợp đồng</h2>
+
+    <p>Cuối cùng, gỡ bỏ một số hiểu lầm phổ biến — những sai lầm này khiến người vay ký hợp đồng với kỳ vọng khác xa thực tế<sup class="ref">1</sup><sup class="ref">5</sup>:</p>
+
+    <table class="tbl">
+      <thead><tr><th>Hiểu lầm</th><th>Sự thật</th></tr></thead>
+      <tbody>
+        <tr><td><strong>"Lãi 10%/năm là con số cuối cùng"</strong></td><td>Chỉ là lãi trong hạn ưu đãi — thả nổi sau đó có thể 13–15%</td></tr>
+        <tr><td><strong>"Ngân hàng phải báo trước khi tăng lãi"</strong></td><td>Luật yêu cầu thông báo khi điều chỉnh, nhưng mức thả nổi tự động thay đổi theo hợp đồng</td></tr>
+        <tr><td><strong>"Lãi suất bị trần 20%/năm (BLDS)"</strong></td><td>Không áp dụng cho hợp đồng tín dụng ngân hàng (NQ 01/2019)</td></tr>
+        <tr><td><strong>"Trả nợ sớm chỉ mất chút phí"</strong></td><td>Có thể mất 1–5% dư nợ trả trước — hàng chục triệu đồng</td></tr>
+        <tr><td><strong>"Hợp đồng mẫu không sửa được"</strong></td><td>Bạn vẫn có thể yêu cầu ghi thêm cam kết vào phụ lục hợp đồng</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout warn">
+      <h4>⚠️ Hiểu lầm nguy hiểm nhất</h4>
+      <p>Niềm tin "ngân hàng có nghĩa vụ bảo vệ người vay" thường dẫn tới chủ quan. Thực tế: <strong>hợp đồng là tài liệu pháp lý</strong>, ngân hàng có đội ngũ luật sư soạn thảo có lợi cho mình. Người vay phải tự bảo vệ bằng cách đọc kỹ và đàm phán trước khi ký<sup class="ref">1</sup>.</p>
+    </div>
+  </section>
+
+  <!-- ==================== CHƯƠNG XX ==================== -->
+  <section id="chuong-20">
+    <h2 class="section-title"><span class="num">XX</span>Kết luận: cách trình bày lãi suất nói lên điều gì</h2>
+
+    <p>Qua 20 chương, một bức tranh rõ ràng đã hiện lên. Cách ngân hàng trình bày lãi suất trong hợp đồng tín dụng 2026 có ba đặc trưng nổi bật<sup class="ref">1</sup><sup class="ref">12</sup>:</p>
+
+    <div class="kpi-grid">
+      <div class="kpi cyan"><div class="val">2 con số</div><div class="lab">Mọi hợp đồng có lãi ưu đãi + lãi thả nổi — con số thứ hai mới là chi phí thật</div></div>
+      <div class="kpi red"><div class="val">13–15%</div><div class="lab">Mức thả nổi thực tế sau ưu đãi — cao hơn quảng cáo 4–5 điểm %</div></div>
+      <div class="kpi green"><div class="val">Mức thấp nhất</div><div class="lab">Nguyên tắc Điều 13.5 khi nhiều mức tham chiếu — điểm tựa pháp lý của người vay</div></div>
+    </div>
+
+    <ul class="bul">
+      <li><strong>Thứ nhất</strong>, sự mơ hồ trong công thức thả nổi là vấn đề lớn nhất — càng nhiều chữ "theo quy định của ngân hàng", người vay càng bất lợi.</li>
+      <li><strong>Thứ hai</strong>, quy định pháp lý đã có đủ công cụ bảo vệ (Điều 13.5, nghĩa vụ công khai, giới hạn lãi quá hạn) — nhưng chúng chỉ có tác dụng nếu người vay <em>biết và sử dụng</em>.</li>
+      <li><strong>Thứ ba</strong>, các gói đặc thù (NOXH 4,6%, người trẻ 6,5%) cho thấy mức lãi rẻ hoàn toàn khả thi — sự chênh lệch chủ yếu nằm ở cơ chế thị trường, không phải chi phí vốn thật.</li>
+    </ul>
+
+    <div class="callout info">
+      <h4>💡 Thông điệp cuối cùng</h4>
+      <p>Lãi suất ghi trên hợp đồng không phải con số bạn trả — nó là <strong>điểm khởi đầu</strong> của một cơ chế điều chỉnh. Người vay thông minh không hỏi "lãi suất bao nhiêu?", mà hỏi <em>"sau khi ưu đãi kết thúc, lãi suất sẽ là bao nhiêu và dựa trên cơ sở nào?"</em>. Câu trả lời chính là toàn bộ giá trị của hợp đồng.</p>
+    </div>
+  </section>
+
+  <!-- ==================== TÀI LIỆU THAM KHẢO ==================== -->
+  <section id="tai-lieu-tham-khao">
+    <h2 class="section-title"><span class="num">📚</span>Tài liệu tham khảo</h2>
+    <p>Danh sách nguồn văn bản pháp luật và số liệu thị trường viện dẫn trong báo cáo. Các tham chiếu <sup class="ref">1</sup>, <sup class="ref">12</sup> xuất hiện trong nội dung trỏ về danh sách này.</p>
+
+    <h3>I. Văn bản pháp luật</h3>
+    <ol class="refs">
+      <li>
+        <div>
+          <strong>Ngân hàng Nhà nước</strong> — "Thông tư 39/2016/TT-NHNN quy định về hoạt động cho vay của tổ chức tín dụng" (30/12/2016) — Điều 13, 14
+          <a href="https://vanban.chinhphu.vn/" target="_blank" rel="noopener">vanban.chinhphu.vn</a>
+          <span class="src-meta">Cơ sở pháp lý trung tâm: lãi suất, phương pháp tính lãi, phí cho vay</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>Ngân hàng Nhà nước</strong> — "Thông tư 12/2024/TT-NHNN sửa đổi, bổ sung Thông tư 39/2016/TT-NHNN" (28/6/2024, hiệu lực 1/7/2024)
+          <a href="https://vanban.chinhphu.vn/" target="_blank" rel="noopener">vanban.chinhphu.vn</a>
+          <span class="src-meta">Giữ nguyên tinh thần Điều 13 về lãi suất điều chỉnh; siết kiểm tra sử dụng vốn</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>Quốc hội</strong> — "Luật Các tổ chức tín dụng 2024" (Luật số 32/2024/QH15, hiệu lực 1/7/2024)
+          <a href="https://vanban.chinhphu.vn/" target="_blank" rel="noopener">vanban.chinhphu.vn</a>
+          <span class="src-meta">Thay thế Luật CCTD 2010; quy định về lãi suất, phí cấp tín dụng</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>Ngân hàng Nhà nước</strong> — "Văn bản hợp nhất 21/VBHN-NHNN" (hợp nhất TT 39/2016 và các văn bản sửa đổi)
+          <a href="https://vanban.chinhphu.vn/" target="_blank" rel="noopener">vanban.chinhphu.vn</a>
+          <span class="src-meta">Văn bản đang áp dụng thực tế cho hoạt động cho vay</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>Hội đồng Thẩm phán TANDTC</strong> — "Nghị quyết 01/2019/NQ-HĐTP về lãi, lãi suất trong hợp đồng tín dụng" (2019)
+          <a href="https://vanban.chinhphu.vn/" target="_blank" rel="noopener">vanban.chinhphu.vn</a>
+          <span class="src-meta">Điều 7: lãi HĐTD theo Luật CCTD, không áp trần BLDS 20%/năm</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>Hội đồng Thẩm phán TANDTC</strong> — "Nghị quyết 02/2024/NQ-HĐTP" (2024)
+          <a href="https://vanban.chinhphu.vn/" target="_blank" rel="noopener">vanban.chinhphu.vn</a>
+          <span class="src-meta">Hướng dẫn xét xử tranh chấp tín dụng; lãi quá hạn, lãi chậm trả</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>Ngân hàng Nhà nước</strong> — "Quyết định 1123/QĐ-NHNN về lãi suất tái cấp vốn, tái chiết khấu" (19/6/2023)
+          <a href="https://www.sbv.gov.vn/" target="_blank" rel="noopener">sbv.gov.vn</a>
+          <span class="src-meta">Tái cấp vốn 4,5%/năm, tái chiết khấu 3,0%/năm, qua đêm 5,0%/năm</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>Ngân hàng Nhà nước</strong> — "Quyết định 1125/QĐ-NHNN về trần lãi suất cho vay ngắn hạn lĩnh vực ưu tiên" (19/6/2023)
+          <a href="https://www.sbv.gov.vn/" target="_blank" rel="noopener">sbv.gov.vn</a>
+          <span class="src-meta">Trần 4,0%/năm cho nông nghiệp, xuất khẩu, DN nhỏ và vừa</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>Ngân hàng Nhà nước</strong> — "Quyết định 2411/QĐ-NHNN về trần lãi suất tiền gửi" (20/11/2024)
+          <a href="https://www.sbv.gov.vn/" target="_blank" rel="noopener">sbv.gov.vn</a>
+          <span class="src-meta">Trần huy động &lt;1 tháng 0,5%/năm; 1–6 tháng 4,75%/năm</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>Ngân hàng Nhà nước</strong> — "Quyết định 3944/QĐ-NHNN về lãi suất cho vay nhà ở xã hội" (2025, hiệu lực 1/1/2026); "Công văn 5340/NHNN-CSTT về lãi suất vay người trẻ dưới 35 tuổi" (19/6/2026)
+          <a href="https://www.sbv.gov.vn/" target="_blank" rel="noopener">sbv.gov.vn</a>
+          <span class="src-meta">QĐ 3944: NOXH 4,6%/năm cho 15 NHTM; CV 5340: người trẻ &lt;35 tuổi 6,5% (5 năm đầu), 7,5% (10 năm tiếp)</span>
+        </div>
+      </li>
+    </ol>
+
+    <h3>II. Số liệu thị trường</h3>
+    <ol class="refs" start="11">
+      <li>
+        <div>
+          <strong>Ngân hàng Nhà nước</strong> — "Lãi suất cho vay bình quân VND của các NHTM" (công bố định kỳ, số liệu tháng 6/2026)
+          <a href="https://www.sbv.gov.vn/" target="_blank" rel="noopener">sbv.gov.vn</a>
+          <span class="src-meta">Cho vay bình quân VND 8,1–10,5%/năm tùy nhóm; USD 4,0–5,4%/năm</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>VARS — Viện Nghiên cứu Kinh tế - BĐS</strong> — "Báo cáo lãi suất vay mua nhà quý 2/2026" (2026)
+          <a href="https://vars.com.vn/" target="_blank" rel="noopener">vars.com.vn</a>
+          <span class="src-meta">Lãi ưu đãi 8,5–11%/năm; sau ưu đãi thả nổi 13–15%; biên độ 3,3–3,5%</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>DXS-FERI</strong> — "Khảo sát lãi suất thực trả người mua nhà" (2026)
+          <a href="https://dxsfieri.com/" target="_blank" rel="noopener">dxsfieri.com</a>
+          <span class="src-meta">Xác nhận mức thực trả 13–15%/năm, chênh 2–4 điểm % so với 2025</span>
+        </div>
+      </li>
+      <li>
+        <div>
+          <strong>Ngân hàng Nhà nước</strong> — "Công bố lãi suất cho vay bình quân theo Công văn 1628/NHNN-CSTT" (6/3/2024)
+          <a href="https://www.sbv.gov.vn/" target="_blank" rel="noopener">sbv.gov.vn</a>
+          <span class="src-meta">Cơ chế công bố minh bạch lãi suất cho vay bình quân của từng NHTM</span>
+        </div>
+      </li>
+    </ol>
+
+    <div class="callout info">
+      <h4>💡 Bản chất của báo cáo</h4>
+      <p>Đây là <strong>ghi chép tự nghiên cứu</strong>, không phải tài liệu học thuật chuẩn mực hay tư vấn pháp lý. Số liệu thị trường là ước lượng tổng hợp từ nguồn công khai; luôn đối chiếu với văn bản gốc và tư vấn chuyên môn trước khi ra quyết định vay vốn. Nếu có sai sót về số liệu, vui lòng phản hồi.</p>
+    </div>
+  </section>
+
+<!-- ============================ MINIMAP (floating TOC) ============================ -->
+<!-- Đồng bộ: mỗi <a href="#id"> phải khớp với id của một <section>. Chia group theo chủ đề. -->
+<aside class="minimap" id="minimap" aria-label="Mục lục điều hướng">
+  <div class="mm-head">
+    <span class="mm-title">Mục lục</span>
+    <span class="mm-pct" id="mmPct">0%</span>
+  </div>
+  <div class="mm-search">
+    <input type="text" id="mmSearch" placeholder="Lọc mục lục..." autocomplete="off">
+  </div>
+  <button class="mm-overlay-close" id="mmClose" aria-label="Đóng">✕</button>
+  <div class="mm-group open" data-group="b">
+    <button class="mm-group-head"><span class="chev">▶</span> Mở đầu <span class="gcount">2</span></button>
+    <ul class="mm-items">
+      <li><a href="#chuong-1"><span class="dot"></span>I — Chân dung lãi suất 2026</a></li>
+      <li><a href="#chuong-2"><span class="dot"></span>II — Khung pháp lý</a></li>
+    </ul>
+  </div>
+  <div class="mm-group open" data-group="n">
+    <button class="mm-group-head"><span class="chev">▶</span> Nền tảng thị trường <span class="gcount">3</span></button>
+    <ul class="mm-items">
+      <li><a href="#chuong-3"><span class="dot"></span>III — Lãi suất điều hành</a></li>
+      <li><a href="#chuong-4"><span class="dot"></span>IV — Mặt bằng cho vay</a></li>
+      <li><a href="#chuong-5"><span class="dot"></span>V — Ưu đãi mua nhà</a></li>
+    </ul>
+  </div>
+  <div class="mm-group open" data-group="c">
+    <button class="mm-group-head"><span class="chev">▶</span> Cấu trúc hợp đồng <span class="gcount">5</span></button>
+    <ul class="mm-items">
+      <li><a href="#chuong-6"><span class="dot"></span>VI — Hai con số</a></li>
+      <li><a href="#chuong-7"><span class="dot"></span>VII — Điều 13 TT39</a></li>
+      <li><a href="#chuong-8"><span class="dot"></span>VIII — Công thức thả nổi</a></li>
+      <li><a href="#chuong-9"><span class="dot"></span>IX — Quá hạn &amp; phạt</a></li>
+      <li><a href="#chuong-10"><span class="dot"></span>X — Phương pháp tính lãi</a></li>
+    </ul>
+  </div>
+  <div class="mm-group open" data-group="p">
+    <button class="mm-group-head"><span class="chev">▶</span> Chi phí &amp; tranh chấp <span class="gcount">5</span></button>
+    <ul class="mm-items">
+      <li><a href="#chuong-11"><span class="dot"></span>XI — Phí trả nợ sớm</a></li>
+      <li><a href="#chuong-12"><span class="dot"></span>XII — Tranh chấp ra tòa</a></li>
+      <li><a href="#chuong-13"><span class="dot"></span>XIII — Bản án 2024</a></li>
+      <li><a href="#chuong-14"><span class="dot"></span>XIV — Thỏa thuận hay áp đặt</a></li>
+      <li><a href="#chuong-15"><span class="dot"></span>XV — Theo mục đích vay</a></li>
+    </ul>
+  </div>
+  <div class="mm-group open" data-group="g">
+    <button class="mm-group-head"><span class="chev">▶</span> Gói ưu đãi đặc thù <span class="gcount">2</span></button>
+    <ul class="mm-items">
+      <li><a href="#chuong-16"><span class="dot"></span>XVI — Nhà ở xã hội</a></li>
+      <li><a href="#chuong-17"><span class="dot"></span>XVII — Người trẻ &lt;35</a></li>
+    </ul>
+  </div>
+  <div class="mm-group open" data-group="k">
+    <button class="mm-group-head"><span class="chev">▶</span> Cẩm nang &amp; kết luận <span class="gcount">3</span></button>
+    <ul class="mm-items">
+      <li><a href="#chuong-18"><span class="dot"></span>XVIII — Checklist 8 điểm</a></li>
+      <li><a href="#chuong-19"><span class="dot"></span>XIX — Hiểu lầm phổ biến</a></li>
+      <li><a href="#chuong-20"><span class="dot"></span>XX — Kết luận</a></li>
+    </ul>
+  </div>
+  <div class="mm-group open" data-group="r">
+    <button class="mm-group-head"><span class="chev">▶</span> Kết <span class="gcount">1</span></button>
+    <ul class="mm-items">
+      <li><a href="#tai-lieu-tham-khao"><span class="dot"></span>📚 Tài liệu tham khảo</a></li>
+    </ul>
+  </div>
+  <div class="mm-no-result" id="mmNoResult">Không tìm thấy mục nào.</div>
+</aside>
+
+<button class="mm-fab" id="mmFab" aria-label="Mở mục lục">☰</button>
+<button class="to-top" id="toTop" aria-label="Lên đầu trang">↑</button>
+<button class="pres-btn" id="presBtn" aria-label="Trình chiếu" title="Trình chiếu">📽️</button>
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="pres-overlay" id="presOverlay" aria-hidden="true">
+  <div class="pres-top">
+    <div class="pres-progress-bg"><div class="pres-progress-fill" id="presProgress"></div></div>
+    <div class="pres-counter"><b id="presCurrent">1</b> / <span id="presTotal">3</span></div>
+    <button class="pres-exit" id="presExit">✕ Thoát (ESC)</button>
+  </div>
+  <div class="pres-stage" id="presStage"></div>
+  <div class="pres-hint">← → để chuyển slide · ESC để thoát</div>
+  <div class="pres-bottom">
+    <button class="pres-nav" id="presPrev" aria-label="Slide trước">←</button>
+    <div class="pres-dots" id="presDots"></div>
+    <button class="pres-nav" id="presNext" aria-label="Slide sau">→</button>
+  </div>
+</div>
+
+<footer>
+  Lãi suất &amp; cơ chế điều chỉnh trong hợp đồng tín dụng tại các ngân hàng Việt Nam — nghiên cứu tổng hợp<br>
+  Dựng bởi ZCode · Cập nhật 08/2026
+</footer>
+
+<!-- ============================ SCRIPT 1: CHARTS ============================ -->
+<!-- Chart.js setup chuẩn + sample chart. Thêm new Chart cho mỗi canvas. -->
+<!-- Recipe đầy đủ (bar/line/radar/mixed) trong references/chart_recipes.md -->
+<!-- NOTE: longform dùng slate palette riêng (design system khác fintech) — KHÔNG dùng _viz-shared.
+     Nhưng vẫn dùng viz.chart() registry (pattern "chart as plugin") cho DRY chart config. -->
+<!-- ===== VIZ.JS (inlined từ _viz-shared/ by inject.py) ===== -->
+<script>
+/* =========================================================================
+   VIZ.JS — Chart component registry + Candlestick renderer + Navigation
+   Pattern cốt lõi (học từ Metabase): "chart as plugin".
+   Trước đây: mỗi template có 7+ lệnh `new Chart(...)` riêng, lặp đi lặp lại
+   các config legend/grid/dualAxis. Giờ: registry với base config merge.
+
+   API:
+     viz.chart(canvasId, { type, datasets, scales?, plugins? })
+     viz.renderCandlestick(canvasEl, { candles, volumes, ma20, ma50, high52w, low52w, months })
+     viz.setupNav({ linksSelector, sections?, progressId?, backTopId? })
+     viz.gradient(ctx, c1, c2)              // helper tiện ích
+     viz.neon(c1, c2)                        // helper gradient cho bar fill
+   ========================================================================= */
+(function (global) {
+  'use strict';
+
+  const viz = {};
+
+  /* ---------------------------------------------------------------------
+     Chart.defaults — setup một lần (trước đây lặp 5 lần trong 5 templates)
+     Lấy màu từ CSS custom properties → tự đổi theo data-theme.
+     --------------------------------------------------------------------- */
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+  }
+  function readChartColors() {
+    const styles = getComputedStyle(document.documentElement);
+    return {
+      primary:   cssVar('--chart-primary')   || '#a855f7',
+      secondary: cssVar('--chart-secondary') || '#ec4899',
+      tertiary:  cssVar('--chart-tertiary')  || '#06b6d4',
+      pos:       cssVar('--chart-pos')       || '#10d98a',
+      neg:       cssVar('--chart-neg')       || '#ff4d6d',
+      neutral:   cssVar('--chart-neutral')   || '#fbbf24',
+      grid:      cssVar('--chart-grid')      || 'rgba(139,92,246,0.06)',
+      text:      cssVar('--chart-text')      || '#8b8ba7',
+      fontFamily: cssVar('--font-sans')      || 'Inter, sans-serif',
+    };
+  }
+  let CHART_COLORS = readChartColors();
+  function applyChartDefaults() {
+    if (!global.Chart) return;
+    CHART_COLORS = readChartColors();
+    Chart.defaults.color = CHART_COLORS.text;
+    Chart.defaults.font.family = CHART_COLORS.fontFamily;
+    Chart.defaults.borderColor = CHART_COLORS.grid;
+  }
+  applyChartDefaults();
+  // Re-apply khi theme đổi (nếu user swap data-theme sau render)
+  viz.refreshTheme = applyChartDefaults;
+
+  /* ---------------------------------------------------------------------
+     Gradient helper (trước đây lặp ở mỗi template)
+     --------------------------------------------------------------------- */
+  viz.gradient = function (ctx, c1, c2) {
+    const chartArea = ctx.chart.chartArea;
+    const top = chartArea ? chartArea.top : 0;
+    const bottom = chartArea ? chartArea.bottom : 280;
+    const g = ctx.chart.ctx.createLinearGradient(0, top, 0, bottom);
+    g.addColorStop(0, c1);
+    g.addColorStop(1, c2);
+    return g;
+  };
+
+  /* ---------------------------------------------------------------------
+     CHART REGISTRY — "chart as plugin" pattern
+     Base options hợp nhất tự động → không còn lặp legend/grid/dualAxis.
+     --------------------------------------------------------------------- */
+  const SCALE_BASE = { grid: { color: CHART_COLORS.grid } };
+  const LEGEND_BASE = {
+    position: 'top', align: 'end',
+    labels: { usePointStyle: true, boxWidth: 8, font: { size: 11 } },
+  };
+
+  function deepMerge(base, override) {
+    // Shallow-ish merge đủ cho config Chart.js (2 cấp).
+    const out = Array.isArray(base) ? base.slice() : Object.assign({}, base);
+    if (!override) return out;
+    for (const k of Object.keys(override)) {
+      const bv = base[k], ov = override[k];
+      if (bv && typeof bv === 'object' && !Array.isArray(bv) && ov && typeof ov === 'object') {
+        out[k] = Object.assign({}, bv, ov);
+      } else {
+        out[k] = ov;
+      }
+    }
+    return out;
+  }
+
+  /**
+   * Vẽ một chart từ registry. Base options (responsive, legend, grid) tự thêm.
+   * @param {string} canvasId - id thẻ <canvas>
+   * @param {object} spec - { type, data, options?, plugins? }
+   */
+  viz.chart = function (canvasId, spec) {
+    if (!global.Chart) { console.warn('Chart.js chưa load'); return null; }
+    const canvas = document.getElementById(canvasId);
+    if (!canvas) { console.warn('canvas không tìm thấy:', canvasId); return null; }
+
+    const baseOptions = {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: LEGEND_BASE },
+    };
+
+    const opts = deepMerge(baseOptions, spec.options || {});
+    // Đảm bảo scales có grid color mặc định nếu user không override
+    if (opts.scales) {
+      for (const k of Object.keys(opts.scales)) {
+        opts.scales[k] = deepMerge({ grid: { color: CHART_COLORS.grid } }, opts.scales[k]);
+      }
+    }
+
+    return new Chart(canvas, {
+      type: spec.type,
+      data: spec.data,
+      options: opts,
+      plugins: spec.plugins || [],
+    });
+  };
+
+  /* ---------------------------------------------------------------------
+     CANDLESTICK RENDERER — custom Canvas 2D
+     Trước đây: ~100 dòng này lặp 2 lần (technical + profile templates).
+     Giờ: 1 hàm tái dùng. DPR-aware, resize-aware.
+     @param {HTMLCanvasElement} canvas
+     @param {object} data:
+       candles: [{o,h,l,c}]      (giá nghìn đồng)
+       volumes: number[]          (triệu CP)  — optional
+       ma20: number[]             (null cho warmup)
+       ma50: number[]
+       high52w: number
+       low52w: number
+       months: string[]           (nhãn trục X, vd ['7/25','8/25',...])
+       priceUnit?: 'K' | ''       (mặc định 'K' → chia 1000 khi hiển thị)
+     --------------------------------------------------------------------- */
+  viz.renderCandlestick = function (canvas, data) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const candles = data.candles || [];
+    if (!candles.length) return;
+    const volumes = data.volumes || [];
+    const ma20 = data.ma20 || [];
+    const ma50 = data.ma50 || [];
+    const high52w = data.high52w;
+    const low52w = data.low52w;
+    const months = data.months || [];
+    const unit = data.priceUnit || 'K'; // 'K' → giá nghìn đồng hiển thị /1000
+    const div = unit === 'K' ? 1000 : 1;
+
+    function draw() {
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+      const W = Math.max(100, rect.width);
+      const H = Math.max(100, rect.height);
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      ctx.clearRect(0, 0, W, H);
+
+      const priceH = H * 0.65, volH = volumes.length ? H * 0.25 : 0, gap = H * 0.05;
+      const volY = priceH + gap;
+      const padLeft = 50, padRight = 20, padTop = 10, padBot = 20;
+      const chartW = W - padLeft - padRight;
+      const priceTop = padTop, priceBot = priceH - padBot;
+      const volTop = volY + 10, volBot = volY + volH;
+
+      let pMin = Infinity, pMax = -Infinity;
+      candles.forEach(c => { pMin = Math.min(pMin, c.l); pMax = Math.max(pMax, c.h); });
+      const pPad = (pMax - pMin) * 0.05;
+      pMin -= pPad; pMax += pPad;
+      const priceToY = p => priceTop + (priceBot - priceTop) * (pMax - p) / (pMax - pMin);
+
+      const n = candles.length;
+      const candleW = Math.max(3, chartW / n * 0.7);
+      const xStep = chartW / n;
+      const idxToX = i => padLeft + xStep * (i + 0.5);
+
+      // Grid + Y labels
+      ctx.strokeStyle = 'rgba(139,92,246,0.08)'; ctx.lineWidth = 1;
+      ctx.fillStyle = '#5a5a72'; ctx.font = '10px JetBrains Mono'; ctx.textAlign = 'right';
+      for (let g = 0; g <= 5; g++) {
+        const p = pMin + (pMax - pMin) * g / 5;
+        const y = priceToY(p);
+        ctx.beginPath(); ctx.moveTo(padLeft, y); ctx.lineTo(W - padRight, y); ctx.stroke();
+        ctx.fillText(unit === 'K' ? (p / 1000).toFixed(1) + 'K' : p.toFixed(1), padLeft - 5, y + 3);
+      }
+
+      // MA20 (vàng)
+      if (ma20.length) {
+        ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1.5; ctx.beginPath();
+        let started = false;
+        ma20.forEach((v, i) => {
+          if (v === null || v === undefined) return;
+          const x = idxToX(i), y = priceToY(v);
+          if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      }
+      // MA50 (cyan)
+      if (ma50.length) {
+        ctx.strokeStyle = '#06b6d4'; ctx.beginPath(); started = false;
+        ma50.forEach((v, i) => {
+          if (v === null || v === undefined) return;
+          const x = idxToX(i), y = priceToY(v);
+          if (!started) { ctx.moveTo(x, y); started = true; } else ctx.lineTo(x, y);
+        });
+        ctx.stroke();
+      }
+
+      // Resistance = đỉnh 52 tuần
+      if (high52w != null) {
+        ctx.strokeStyle = 'rgba(255,77,109,0.5)'; ctx.setLineDash([4, 4]); ctx.lineWidth = 1;
+        const resY = priceToY(high52w);
+        ctx.beginPath(); ctx.moveTo(padLeft, resY); ctx.lineTo(W - padRight, resY); ctx.stroke();
+        ctx.fillStyle = 'rgba(255,77,109,0.8)'; ctx.textAlign = 'left'; ctx.font = '9px Inter';
+        ctx.fillText('R ' + (high52w / div).toFixed(unit === 'K' ? 1 : 0) + (unit === 'K' ? 'K' : '') + ' (đỉnh 52W)', padLeft + 4, resY - 5);
+      }
+      // Support = đáy 52 tuần
+      if (low52w != null) {
+        ctx.strokeStyle = 'rgba(16,217,138,0.5)';
+        const supY = priceToY(low52w);
+        ctx.beginPath(); ctx.moveTo(padLeft, supY); ctx.lineTo(W - padRight, supY); ctx.stroke();
+        ctx.fillStyle = 'rgba(16,217,138,0.8)';
+        ctx.fillText('S ' + (low52w / div).toFixed(unit === 'K' ? 1 : 0) + (unit === 'K' ? 'K' : '') + ' (đáy 52W)', padLeft + 4, supY + 12);
+        ctx.setLineDash([]);
+      }
+
+      // Candles
+      candles.forEach((c, i) => {
+        const x = idxToX(i);
+        const isUp = c.c >= c.o;
+        const color = isUp ? '#10d98a' : '#ff4d6d';
+        const yHigh = priceToY(c.h), yLow = priceToY(c.l);
+        const yOpen = priceToY(c.o), yClose = priceToY(c.c);
+        const bodyTop = Math.min(yOpen, yClose);
+        const bodyH = Math.max(1, Math.abs(yClose - yOpen));
+        ctx.strokeStyle = color; ctx.lineWidth = 1;
+        ctx.beginPath(); ctx.moveTo(x, yHigh); ctx.lineTo(x, yLow); ctx.stroke();
+        ctx.fillStyle = color; ctx.fillRect(x - candleW / 2, bodyTop, candleW, bodyH);
+      });
+
+      // Volume sub-panel
+      if (volumes.length) {
+        const maxVol = Math.max(...volumes.filter(v => v > 0));
+        const volToY = v => volBot - (volBot - volTop) * v / maxVol;
+        ctx.fillStyle = '#5a5a72'; ctx.font = '10px JetBrains Mono'; ctx.textAlign = 'right';
+        ctx.fillText(maxVol.toFixed(1) + 'M', padLeft - 5, volTop + 3);
+        ctx.fillText('0', padLeft - 5, volBot);
+        ctx.strokeStyle = 'rgba(139,92,246,0.08)';
+        ctx.beginPath(); ctx.moveTo(padLeft, volBot); ctx.lineTo(W - padRight, volBot); ctx.stroke();
+        candles.forEach((c, i) => {
+          const x = idxToX(i);
+          const isUp = c.c >= c.o;
+          const v = volumes[i];
+          if (v <= 0) return;
+          const y = volToY(v);
+          ctx.fillStyle = isUp ? 'rgba(16,217,138,0.5)' : 'rgba(255,77,109,0.5)';
+          ctx.fillRect(x - candleW / 2, y, candleW, volBot - y);
+        });
+      }
+
+      // X labels (tháng)
+      if (months.length) {
+        ctx.fillStyle = '#5a5a72'; ctx.font = '9px Inter'; ctx.textAlign = 'center';
+        const monthStep = Math.ceil(n / months.length);
+        months.forEach((m, i) => {
+          const idx = i * monthStep + 2;
+          if (idx < n) ctx.fillText(m, idxToX(idx), H - 5);
+        });
+      }
+    }
+
+    draw();
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(draw, 100);
+    });
+  };
+
+  /* ---------------------------------------------------------------------
+     NAVIGATION — scrollspy + progress bar + back-to-top
+     Trước đây: lặp 2 lần (technical + profile). Giờ: 1 hàm.
+     Tự phát hiện links vs fallback. Tương thích cả `data-target` (dashboard)
+     và `href="#id"` (profile).
+     --------------------------------------------------------------------- */
+  viz.setupNav = function (opts) {
+    opts = opts || {};
+    const links = Array.from(document.querySelectorAll(opts.linksSelector || '.topnav-link, nav a[href^="#"]'));
+    if (!links.length) return;
+
+    const progress = opts.progressId ? document.getElementById(opts.progressId) : document.getElementById('progressBar');
+    const backTop = opts.backTopId ? document.getElementById(opts.backTopId) : document.getElementById('backTop');
+    // Giải section target cho mỗi link (data-target hoặc href)
+    const sections = links.map(link => {
+      const sel = link.dataset.target ? '#' + link.dataset.target : link.getAttribute('href');
+      return { link: link, el: sel ? document.querySelector(sel) : null };
+    }).filter(s => s.el);
+
+    function onScroll() {
+      const sc = window.scrollY + 120;
+      const docH = document.documentElement.scrollHeight - window.innerHeight;
+      if (progress) progress.style.width = (docH > 0 ? (window.scrollY / docH) * 100 : 0) + '%';
+      if (backTop) backTop.classList.toggle('visible', window.scrollY > 600);
+
+      let current = sections[0];
+      for (let i = sections.length - 1; i >= 0; i--) {
+        if (sections[i].el.getBoundingClientRect().top + window.scrollY - 120 <= sc) {
+          current = sections[i]; break;
+        }
+      }
+      links.forEach(l => l.classList.remove('active'));
+      if (current) {
+        current.link.classList.add('active');
+        // Scroll nav để link active vào view
+        const navInner = current.link.closest('.topnav-inner');
+        if (navInner) {
+          const linkRect = current.link.getBoundingClientRect();
+          const navRect = navInner.getBoundingClientRect();
+          if (linkRect.left < navRect.left + 50 || linkRect.right > navRect.right - 50) {
+            navInner.scrollTo({
+              left: current.link.offsetLeft - navInner.offsetWidth / 2 + current.link.offsetWidth / 2,
+              behavior: 'smooth',
+            });
+          }
+        }
+      }
+    }
+
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const sel = link.dataset.target ? '#' + link.dataset.target : link.getAttribute('href');
+        const target = sel ? document.querySelector(sel) : null;
+        if (target) {
+          const navH = (document.querySelector('.topnav') || {}).offsetHeight || 0;
+          const top = target.getBoundingClientRect().top + window.scrollY - navH - 8;
+          window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+      });
+    });
+
+    if (backTop) {
+      backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  };
+
+  global.viz = viz;
+})(typeof window !== 'undefined' ? window : this);
+
+</script>
+<script>
+/* Slate palette overrides cho registry (registry đọc --chart-* tokens; longform dùng slate). */
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.font.family = '-apple-system, Segoe UI, Roboto, sans-serif';
+Chart.defaults.borderColor = '#334155';
+
+viz.chart('chartDieuHanh', {
+  type: 'bar',
+  data: { labels: ['Tái cấp vốn', 'Tái chiết khấu', 'Qua đêm (cho vay)', 'Trần huy động <1T', 'Trần huy động 1–6T'],
+    datasets: [
+      { label: 'Lãi suất điều hành (%/năm)', data: [4.5, 3.0, 5.0, 0.5, 4.75],
+        backgroundColor: ['rgba(6,182,212,.65)', 'rgba(139,92,246,.65)', 'rgba(239,68,68,.65)', 'rgba(34,197,94,.65)', 'rgba(59,130,246,.65)'], borderRadius: 5 }
+    ]
+  },
+  options: {
+    plugins: { legend: { display: true, position: 'top', labels: { color: '#e2e8f0', font: { size: 11 } } },
+      tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + c.parsed.y + '%/năm'; } } } },
+    scales: { y: { beginAtZero: true, grid: { color: '#334155' }, title: { display: true, text: '%/năm', color: '#94a3b8' } },
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } } }
+  }
+});
+
+viz.chart('chartMuaNha', {
+  type: 'bar',
+  data: { labels: ['Agribank', 'Vietcombank', 'VietinBank', 'BIDV', 'Techcombank', 'ACB'],
+    datasets: [
+      { label: 'Ưu đãi 12 tháng đầu', type: 'bar', data: [8.2, 9.8, 10.5, 9.7, 9.2, 9.5],
+        backgroundColor: 'rgba(59,130,246,.65)', borderRadius: 5, order: 2 },
+      { label: 'Thả nổi sau ưu đãi (tham chiếu)', type: 'line', data: [14, 14, 14, 14, 14, 14],
+        borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,.15)',
+        tension: 0, borderWidth: 2, borderDash: [6, 4], pointRadius: 4, pointBackgroundColor: '#ef4444', fill: false, order: 1 }
+    ]
+  },
+  options: {
+    plugins: { legend: { display: true, position: 'top', labels: { color: '#e2e8f0', font: { size: 11 } } },
+      tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + c.parsed.y + '%/năm'; } } } },
+    scales: { y: { beginAtZero: true, grid: { color: '#334155' }, title: { display: true, text: '%/năm', color: '#94a3b8' } },
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } } }
+  }
+});
+
+viz.chart('chartCauTruc', {
+  type: 'bar',
+  data: { labels: ['Agribank (LSTK 12T)', 'Vietcombank (LSTK 24T)', 'ACB (LSTK 13T)'],
+    datasets: [
+      { label: 'Lãi suất tham chiếu (LSTK)', data: [4.8, 5.0, 4.9],
+        backgroundColor: 'rgba(59,130,246,.65)', borderRadius: 5 },
+      { label: 'Biên độ cộng thêm', data: [3.5, 3.5, 3.3],
+        backgroundColor: 'rgba(245,158,11,.65)', borderRadius: 5 }
+    ]
+  },
+  options: {
+    plugins: { legend: { display: true, position: 'top', labels: { color: '#e2e8f0', font: { size: 11 } } },
+      tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + c.parsed.y + ' điểm %'; } } } },
+    scales: { y: { beginAtZero: true, stacked: true, grid: { color: '#334155' }, title: { display: true, text: 'điểm %', color: '#94a3b8' } },
+      x: { stacked: true, grid: { display: false }, ticks: { font: { size: 10 } } } }
+  }
+});
+
+viz.chart('chartTinhLai', {
+  type: 'line',
+  data: { labels: ['Năm 1', 'Năm 2', 'Năm 3', 'Năm 5', 'Năm 10', 'Năm 20'],
+    datasets: [
+      { label: 'Dư nợ giảm dần (chuẩn NH)', data: [10, 9.5, 9, 8, 6, 3],
+        borderColor: '#22c55e', backgroundColor: 'rgba(34,197,94,.15)',
+        tension: .3, borderWidth: 3, pointRadius: 5, pointBackgroundColor: '#22c55e', fill: true },
+      { label: 'Lãi cố định trên gốc ban đầu', data: [10, 10, 10, 10, 10, 10],
+        borderColor: '#ef4444', backgroundColor: 'rgba(239,68,68,.15)',
+        tension: 0, borderWidth: 2, borderDash: [6, 4], pointRadius: 4, pointBackgroundColor: '#ef4444', fill: false }
+    ]
+  },
+  options: {
+    plugins: { legend: { display: true, position: 'top', labels: { color: '#e2e8f0', font: { size: 11 } } },
+      tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + c.parsed.y + ' điểm % tương đương/năm'; } } } },
+    scales: { y: { beginAtZero: false, grid: { color: '#334155' }, title: { display: true, text: 'lãi suất quy đổi %/năm', color: '#94a3b8' } },
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } } }
+  }
+});
+
+viz.chart('chartSoSanhNha', {
+  type: 'bar',
+  data: { labels: ['Nhà ở xã hội (QĐ 3944)', 'Người trẻ <35 tuổi', 'Ưu đãi thương mại', 'Thả nổi thương mại'],
+    datasets: [
+      { label: 'Lãi suất năm đầu (%/năm)', data: [4.6, 6.5, 9.8, 14],
+        backgroundColor: ['rgba(34,197,94,.65)', 'rgba(6,182,212,.65)', 'rgba(59,130,246,.65)', 'rgba(239,68,68,.65)'], borderRadius: 5 }
+    ]
+  },
+  options: {
+    plugins: { legend: { display: true, position: 'top', labels: { color: '#e2e8f0', font: { size: 11 } } },
+      tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + c.parsed.y + '%/năm'; } } } },
+    scales: { y: { beginAtZero: true, grid: { color: '#334155' }, title: { display: true, text: '%/năm', color: '#94a3b8' } },
+      x: { grid: { display: false }, ticks: { font: { size: 10 } } } }
+  }
+});
+</script>
+
+<!-- ============================ SCRIPT 2: NAVIGATION + PRESENTATION ============================ -->
+<!-- Generic — không hardcode. Hoạt động với bất kỳ số section/group nào. -->
+<!-- Xem references/navigation.md cho chi tiết scrollspy/search/group toggle/presentation. -->
+<script>
+/* ============ NAVIGATION LOGIC ============ */
+(function(){
+  const body = document.body;
+  const minimap = document.getElementById('minimap');
+  const fab = document.getElementById('mmFab');
+  const closeBtn = document.getElementById('mmClose');
+  const toTop = document.getElementById('toTop');
+  const progressBar = document.getElementById('progressBar');
+  const mmPct = document.getElementById('mmPct');
+  const search = document.getElementById('mmSearch');
+  const noResult = document.getElementById('mmNoResult');
+  const groups = Array.from(document.querySelectorAll('.mm-group'));
+  const allLinks = Array.from(document.querySelectorAll('.mm-items a'));
+  const sections = allLinks.map(a => {
+    const id = a.getAttribute('href').slice(1);
+    return { link: a, section: document.getElementById(id), id };
+  }).filter(x => x.section);
+
+  setTimeout(() => document.body.classList.add('loaded'), 800);
+
+  function openGroupContaining(link){
+    const grp = link.closest('.mm-group');
+    if (grp && !grp.classList.contains('open')) grp.classList.add('open');
+  }
+
+  // Scroll spy
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting){
+        const id = entry.target.id;
+        const found = sections.find(s => s.id === id);
+        if (found){
+          sections.forEach(s => s.link.classList.remove('active'));
+          found.link.classList.add('active');
+          openGroupContaining(found.link);
+        }
+      }
+    });
+  }, { rootMargin:'-90px 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s.section));
+
+  // Progress + show buttons
+  function onScroll(){
+    const h = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = Math.min(100, Math.max(0, (window.scrollY / h) * 100));
+    progressBar.style.width = pct + '%';
+    mmPct.textContent = Math.round(pct) + '%';
+    if (window.scrollY > 400){
+      body.classList.add('nav-active');
+      toTop.classList.add('show');
+    } else {
+      body.classList.remove('nav-active');
+      toTop.classList.remove('show');
+    }
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
+
+  groups.forEach(g => {
+    const head = g.querySelector('.mm-group-head');
+    head.addEventListener('click', () => g.classList.toggle('open'));
+  });
+
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    minimap.classList.toggle('searching', !!q);
+    let anyVisible = false;
+    allLinks.forEach(a => {
+      const text = a.textContent.toLowerCase();
+      const match = !q || text.includes(q);
+      a.style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+      if (match && q) openGroupContaining(a);
+    });
+    noResult.classList.toggle('show', !anyVisible);
+  });
+
+  fab.addEventListener('click', () => body.classList.add('nav-mobile-open'));
+  closeBtn.addEventListener('click', () => body.classList.remove('nav-mobile-open'));
+
+  allLinks.forEach(a => {
+    a.addEventListener('click', () => {
+      if (window.innerWidth < 1024) body.classList.remove('nav-mobile-open');
+    });
+  });
+})();
+
+/* ============ PRESENTATION MODE ============ */
+// SLIDES: định nghĩa thủ công mỗi slide. Verify SLIDES.length ≈ số section chính.
+// type: 'title' | 'section' | 'list' | 'quote'
+(function(){
+  const presBtn = document.getElementById('presBtn');
+  const overlay = document.getElementById('presOverlay');
+  const exitBtn = document.getElementById('presExit');
+  const prevBtn = document.getElementById('presPrev');
+  const nextBtn = document.getElementById('presNext');
+  const stage = document.getElementById('presStage');
+  const dotsBox = document.getElementById('presDots');
+  const progressFill = document.getElementById('presProgress');
+  const currentEl = document.getElementById('presCurrent');
+  const totalEl = document.getElementById('presTotal');
+  if (!presBtn || !overlay) return;
+
+  const SLIDES = [
+    { type:'title', badge:'NGHIÊN CỨU · TÍN DỤNG VIỆT NAM',
+      title:'Lãi suất & cơ chế điều chỉnh trong hợp đồng tín dụng tại các ngân hàng Việt Nam',
+      sub:'Tổng hợp và phân tích cách ngân hàng trình bày lãi suất và cơ chế điều chỉnh trong hợp đồng tín dụng',
+      meta:'Cập nhật 08/2026 · 20 chương · 6 nhóm' },
+    { type:'section', num:'I', label:'Mở đầu', title:'Lãi suất ngân hàng 2026: chân dung và hai cú sốc' },
+    { type:'section', num:'V', label:'Thị trường', title:'Lãi suất ưu đãi mua nhà và "cú sốc" sau ưu đãi' },
+    { type:'list', kicker:'Cơ chế điều chỉnh', title:'Điều 13 TT39/2016 — ba thành phần bắt buộc',
+      items:[
+        { t:'Nguyên tắc điều chỉnh được xác định rõ' },
+        { t:'Yếu tố xác định lãi suất cụ thể (LSTK kỳ hạn X)' },
+        { t:'Thời điểm điều chỉnh rõ ràng; nhiều mức → áp mức thấp nhất' } ] },
+    { type:'section', num:'XVI', label:'Điểm nhấn', title:'Nhà ở xã hội 4,6% và gói người trẻ 6,5% → 7,5%' },
+    { type:'list', kicker:'Trước khi ký', title:'Checklist 8 điểm không thể bỏ qua',
+      items:[
+        { t:'Lãi suất ưu đãi + thời gian áp dụng' },
+        { t:'Công thức thả nổi: LSTK cụ thể + biên độ cố định' },
+        { t:'Chu kỳ điều chỉnh và ngày điều chỉnh' },
+        { t:'Lãi quá hạn ≤150%, lãi chậm trả ≤10%' },
+        { t:'Phí trả nợ trước hạn theo từng năm' } ] },
+    { type:'quote', q:'"Lãi suất ghi trên hợp đồng không phải con số bạn trả — nó là điểm khởi đầu của một cơ chế điều chỉnh."',
+      source:'Kết luận — báo cáo 20 chương' }
+  ];
+
+  let current = 0;
+  let built = false;
+  let slideEls = [];
+
+  function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+  function renderSlide(sl, idx){
+    const cls = 'slide-' + sl.type;
+    let inner = '';
+    if (sl.type === 'title'){
+      inner = '<div class="slide-inner"><span class="badge">'+esc(sl.badge)+'</span><h1>'+esc(sl.title)+'</h1><p class="sub">'+esc(sl.sub)+'</p><p class="sub" style="color:#94a3b8;font-size:.9rem;margin-top:18px">'+esc(sl.meta)+'</p></div>';
+    } else if (sl.type === 'section'){
+      inner = '<div class="slide-inner"><div class="sec-num">'+esc(sl.num)+'</div><div class="sec-label">'+esc(sl.label)+'</div><h2>'+esc(sl.title)+'</h2></div>';
+    } else if (sl.type === 'list'){
+      const items = sl.items.map(function(it,i){ return '<li><span class="num">'+(i+1)+'</span><span class="txt">'+it.t+'</span></li>'; }).join('');
+      inner = '<div class="slide-inner slide-content"><div class="kicker">'+esc(sl.kicker)+'</div><h2>'+esc(sl.title)+'</h2><ul>'+items+'</ul></div>';
+    } else if (sl.type === 'quote'){
+      inner = '<div class="slide-inner"><div class="qmark">"</div><p class="qtext">'+esc(sl.q)+'</p><p class="qsource">'+esc(sl.source)+'</p></div>';
+    }
+    return '<div class="pres-slide '+cls+(idx===0?' active':'')+'" data-idx="'+idx+'">'+inner+'</div>';
+  }
+
+  function build(){
+    if (built) return;
+    built = true;
+    stage.innerHTML = SLIDES.map(function(sl,i){ return renderSlide(sl,i); }).join('');
+    slideEls = Array.from(stage.children);
+    totalEl.textContent = SLIDES.length;
+    SLIDES.forEach(function(_, i){
+      const d = document.createElement('button');
+      d.className = 'pres-dot' + (i===0?' active':'');
+      d.setAttribute('aria-label','Slide '+(i+1));
+      d.addEventListener('click', function(){ goTo(i); });
+      dotsBox.appendChild(d);
+    });
+  }
+
+  function updateUI(){
+    progressFill.style.width = ((current+1)/SLIDES.length*100)+'%';
+    currentEl.textContent = current+1;
+    prevBtn.disabled = current === 0;
+    nextBtn.disabled = current === SLIDES.length-1;
+    Array.from(dotsBox.children).forEach(function(d,i){ d.classList.toggle('active', i===current); });
+  }
+  function goTo(idx){
+    if (idx < 0 || idx >= SLIDES.length || idx === current) return;
+    const dir = idx > current ? 'forward' : 'back';
+    const old = slideEls[current];
+    const nw = slideEls[idx];
+    old.classList.remove('active');
+    if (dir === 'forward') old.classList.add('prev'); else old.classList.remove('prev');
+    nw.classList.remove('prev');
+    void nw.offsetWidth;
+    nw.classList.add('active');
+    current = idx;
+    updateUI();
+  }
+  function open(){ build(); overlay.classList.add('active'); overlay.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; current=0; updateUI(); }
+  function close(){ overlay.classList.remove('active'); overlay.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
+
+  presBtn.addEventListener('click', open);
+  exitBtn.addEventListener('click', close);
+  prevBtn.addEventListener('click', function(){ goTo(current-1); });
+  nextBtn.addEventListener('click', function(){ goTo(current+1); });
+  document.addEventListener('keydown', function(e){
+    if (!overlay.classList.contains('active')) return;
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown'){ e.preventDefault(); goTo(current+1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp'){ e.preventDefault(); goTo(current-1); }
+    else if (e.key === 'Escape'){ close(); }
+    else if (e.key === 'Home'){ goTo(0); }
+    else if (e.key === 'End'){ goTo(SLIDES.length-1); }
+  });
+  overlay.addEventListener('click', function(e){ if (e.target === overlay) close(); });
+})();
+</script>
+</body>
+</html>
