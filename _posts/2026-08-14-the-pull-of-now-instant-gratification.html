@@ -1,0 +1,2090 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Pull of Now — Understanding Instant Gratification</title>
+<meta name="description" content="A long-form educational note on instant gratification: what it is, why every brain discounts the future, how the attention economy weaponizes it, the marshmallow-test correction, and how to design around it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg:            #FDFBF7;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #2D3748;
+  --text-muted:    #718096;
+  --text-strong:   #1A202C;
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  --accent2:        #B7791F;
+  --accent2-strong: #975A16;
+  --accent2-soft:   #FEEBC8;
+  --border:        #E4DFD5;
+  --sidenote-bg:   #EDF2F7;
+  --code-bg:       #EDF2F7;
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #1A202C;
+  --bg-elevated:   #2D3748;
+  --bg-sunken:     #171923;
+  --text:          #E2E8F0;
+  --text-muted:    #A0AEC0;
+  --text-strong:   #F7FAFC;
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent2:        #F6AD55;
+  --accent2-strong: #FBD38D;
+  --accent2-soft:   #4A2E14;
+  --border:        #2D3748;
+  --sidenote-bg:   #2A2F3A;
+  --code-bg:       #2A2F3A;
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: var(--line);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition), color var(--transition);
+}
+
+.progress-bar{
+  position: fixed; top:0; left:0; right:0;
+  height: 3px;
+  background: transparent;
+  z-index: 100;
+}
+.progress-bar__fill{
+  height:100%;
+  width:0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+
+.app{
+  display:grid;
+  grid-template-columns: minmax(220px, 20%) minmax(0, 1fr) minmax(240px, 20%);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 32px 128px;
+}
+
+.navigator{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding-right: 8px;
+}
+.navigator::-webkit-scrollbar{width:6px}
+.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+.canvas{
+  max-width: var(--measure);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.marginalia{
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+body.focus-mode .navigator,
+body.focus-mode .marginalia{
+  display:none;
+}
+body.focus-mode .app{
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+@media (max-width: 960px){
+  .app{
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px 96px;
+  }
+  .navigator{
+    position: relative;
+    top: 0;
+    max-height: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .marginalia{
+    order: 3;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+}
+
+.navigator__meta{
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.navigator__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+.navigator__reading-time{
+  color: var(--text);
+  font-size: 13px;
+}
+
+.toc{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc li{margin: 2px 0}
+.toc a{
+  display: block;
+  padding: 6px 10px;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition);
+  line-height: 1.4;
+}
+.toc a:hover{
+  color: var(--text);
+  background: var(--sidenote-bg);
+}
+.toc a.is-active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--sidenote-bg);
+  font-weight: 500;
+}
+.toc .toc-l3{ padding-left: 20px; font-size: 13px }
+
+.canvas h1{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin: 8px 0 16px;
+  letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--text-strong);
+  margin: 56px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+.canvas h2:first-of-type{ border-top: none; padding-top: 0 }
+.canvas h3{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-strong);
+  margin: 32px 0 12px;
+  scroll-margin-top: 24px;
+}
+.canvas p{ margin: 0 0 16px }
+.canvas strong{ color: var(--text-strong); font-weight: 700 }
+.canvas em{ font-style: italic }
+.canvas a{
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.canvas a:hover{ color: var(--accent-strong) }
+
+.source{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--sidenote-bg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all var(--transition);
+}
+.source::before{ content: "↗ "; opacity: .6 }
+.source:hover{
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+.bar-chart__caption{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+.bar-chart__caption a{ color: var(--text-muted); text-decoration: underline dotted }
+.bar-chart__caption a:hover{ color: var(--accent) }
+.provenance-note{
+  margin: 32px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--sidenote-bg);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-left: 3px solid var(--text-muted);
+}
+
+.canvas ul, .canvas ol{
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.canvas li{ margin: 4px 0 }
+
+.canvas blockquote{
+  margin: 24px 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--sidenote-bg);
+  color: var(--text);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+}
+
+.canvas code{
+  font-family: var(--font-mono);
+  font-size: .9em;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.canvas pre{
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 24px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  position: relative;
+}
+.canvas pre code{ background: transparent; padding: 0 }
+
+.hook{
+  margin: 24px 0 48px;
+  padding: 24px 28px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.hook__label{
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.meta-block{
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.meta-block h4{
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.meta-block ul{ margin: 0; padding-left: 20px }
+.meta-block li{ margin: 4px 0; color: var(--text) }
+
+.callout{
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--info);
+  background: var(--info-bg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+}
+.callout__label{
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.callout--tip{ border-left-color: var(--success); background: var(--success-bg) }
+.callout--tip .callout__label{ color: var(--success) }
+.callout--warn{ border-left-color: var(--warn); background: var(--warn-bg) }
+.callout--warn .callout__label{ color: var(--warn) }
+.callout--danger{ border-left-color: var(--danger); background: var(--danger-bg) }
+.callout--danger .callout__label{ color: var(--danger) }
+
+.feynman{
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+}
+.feynman::before{
+  content: "🧒 Explain in one sentence:";
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.term{
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+  position: relative;
+}
+.term:hover::after{
+  content: attr(data-def);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-strong);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-style: normal;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  z-index: 10;
+  box-shadow: var(--shadow);
+  line-height: 1.4;
+}
+
+.sidenote{
+  margin: 24px 0;
+  padding: 12px 14px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.sidenote strong{ color: var(--text); display: block; margin-bottom: 4px; font-weight: 600 }
+
+.flip-card{
+  perspective: 1000px;
+  height: 180px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+.flip-card__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg) }
+
+.flip-card__face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__front{
+  background: var(--bg-elevated);
+}
+.flip-card__back{
+  background: var(--accent);
+  color: white;
+  transform: rotateY(180deg);
+}
+.flip-card__label{
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.flip-card__back .flip-card__label{ color: rgba(255,255,255,.85) }
+.flip-card__content{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.deep-dive{
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+.deep-dive > summary{
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  transition: background var(--transition);
+}
+.deep-dive > summary::-webkit-details-marker{ display: none }
+.deep-dive > summary::before{
+  content: "▶";
+  color: var(--accent);
+  font-size: 10px;
+  transition: transform var(--transition);
+}
+.deep-dive[open] > summary::before{ transform: rotate(90deg) }
+.deep-dive > summary:hover{ background: var(--sidenote-bg) }
+.deep-dive__label{
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  margin-right: auto;
+}
+.deep-dive > *:not(summary){
+  padding: 0 18px 16px;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideDown{
+  from{ opacity: 0; transform: translateY(-8px) }
+  to  { opacity: 1; transform: translateY(0) }
+}
+
+.bar-chart{
+  margin: 32px 0;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.bar-chart__title{
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 16px;
+}
+.bar-row{
+  display: grid;
+  grid-template-columns: 200px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.bar-label{ color: var(--text) }
+.bar-track{
+  background: var(--sidenote-bg);
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill{
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  border-radius: 4px;
+  transition: width 400ms cubic-bezier(.4,0,.2,1);
+}
+.bar-row:hover .bar-fill{ filter: brightness(1.15) }
+.bar-value{ color: var(--text-muted); font-weight: 600; text-align: right }
+
+@media (max-width: 640px){
+  .bar-row{ grid-template-columns: 110px 1fr 40px; font-size: 13px }
+}
+
+.concept-flow{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 32px 0;
+}
+.concept-flow__step{
+  padding: 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.concept-flow__step:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.concept-flow__num{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.concept-flow__arrow{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 20px;
+  user-select: none;
+}
+@media (max-width: 640px){
+  .concept-flow{ grid-template-columns: 1fr; }
+  .concept-flow__arrow{ transform: rotate(90deg); justify-self: center }
+}
+
+.glossary{ margin: 32px 0 }
+.glossary dl{ margin: 0 }
+.glossary dt{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: 16px;
+  font-size: 15px;
+}
+.glossary dd{
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 15px;
+  padding-left: 0;
+}
+
+.quiz{
+  margin: 56px 0 24px;
+  padding: 32px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.quiz h2{
+  font-family: var(--font-sans);
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.quiz__intro{
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.quiz fieldset{
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.quiz legend{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.quiz__option{
+  display: block;
+  padding: 12px 16px;
+  margin: 6px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  transition: all var(--transition);
+  position: relative;
+  padding-left: 44px;
+}
+.quiz__option::before{
+  content: "";
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  transition: all var(--transition);
+}
+.quiz__option:hover{ border-color: var(--accent); background: var(--sidenote-bg) }
+.quiz__option input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.quiz__option:has(input:checked){
+  border-color: var(--accent);
+  background: var(--sidenote-bg);
+}
+.quiz__option:has(input:checked)::before{
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg-elevated);
+}
+.quiz__option.correct-answer{
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--text-strong);
+}
+.quiz__option.correct-answer::before{
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 3px var(--success-bg);
+}
+.quiz__option.incorrect-answer{
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+.quiz__option.incorrect-answer::before{
+  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: inset 0 0 0 3px var(--danger-bg);
+}
+
+.quiz__explanation{
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__explanation{ display: block }
+
+.quiz__actions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.btn{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--transition);
+}
+.btn:hover{ background: var(--accent-strong); border-color: var(--accent-strong) }
+.btn--ghost{ background: transparent; color: var(--accent) }
+.btn--ghost:hover{ background: var(--sidenote-bg); color: var(--accent-strong) }
+
+.quiz__score{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__score{ display: block }
+
+.controls{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+}
+.control-btn{
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  padding: 0;
+}
+.control-btn:hover{
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.control-btn svg{ width: 18px; height: 18px }
+.control-btn[data-active="true"]{ background: var(--accent); color: white }
+
+@media print{
+  .navigator, .marginalia, .controls, .progress-bar, .quiz__actions{ display: none !important }
+  .app{ grid-template-columns: 1fr; max-width: none; padding: 0 }
+  body{ background: white; color: black; font-size: 12pt }
+  .canvas h1, .canvas h2, .canvas h3{ page-break-after: avoid }
+  .flip-card{ height: auto }
+  .flip-card__inner{ transform: none !important; height: auto }
+  .flip-card__face{ position: static; padding: 8px 0; box-shadow: none; border: none }
+  .flip-card__back{ display: block; background: white; color: black }
+  .deep-dive[open] > *:not(summary){ animation: none }
+}
+
+.orbit{
+  margin: 0 0 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.orbit__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+.orbit__track{
+  position: relative;
+  padding-left: 22px;
+}
+.orbit__track::before{
+  content: "";
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.orbit__node{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--transition);
+  user-select: none;
+}
+.orbit__node::before{
+  content: "";
+  position: absolute;
+  left: -22px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  transition: all var(--transition);
+  box-sizing: border-box;
+}
+.orbit__node[data-reached="true"]::before{
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.orbit__node[data-active="true"]{
+  color: var(--text-strong);
+  font-weight: 600;
+}
+.orbit__node[data-active="true"]::before{
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.orbit__node:hover{ color: var(--text) }
+
+.premortem{
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--accent2-soft);
+  border-left: 4px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text);
+}
+.premortem__label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 8px;
+}
+.premortem__wrong{ text-decoration: line-through; color: var(--text-muted) }
+.premortem__truth{ font-weight: 600; color: var(--text-strong) }
+
+.scaffold{
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.scaffold__concept{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scaffold__concept::before{
+  content: "◆";
+  color: var(--accent);
+  font-size: 12px;
+}
+.scaffold__row{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px 16px;
+  margin: 12px 0;
+  align-items: start;
+}
+.scaffold__row-label{
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 4px;
+}
+.scaffold__row-body{ font-size: 15px; line-height: 1.65 }
+.scaffold__row-body p:last-child{ margin-bottom: 0 }
+
+.scaffold__probe{
+  margin: 8px 0 0;
+  border: 1px dashed var(--accent2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  overflow: hidden;
+}
+.scaffold__probe > summary{
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent2-strong);
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  user-select: none;
+  transition: background var(--transition);
+}
+.scaffold__probe > summary::-webkit-details-marker{ display: none }
+.scaffold__probe > summary::before{
+  content: "🤔 Probe";
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent2-strong);
+}
+.scaffold__probe[open] > summary::after{
+  content: "";
+  position: absolute;
+}
+.scaffold__probe > summary:hover{ background: var(--accent2-soft) }
+.scaffold__resolve{
+  padding: 12px 14px 14px 14px;
+  background: var(--accent2-soft);
+  border-top: 1px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.scaffold__resolve::before{
+  content: "💡 Resolve";
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+.checkpoint{
+  margin: 32px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+}
+.checkpoint__label{
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.checkpoint__question{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.checkpoint textarea{
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--transition);
+  box-sizing: border-box;
+}
+.checkpoint textarea:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.checkpoint__actions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.checkpoint__expert{
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  display: none;
+}
+.checkpoint.is-revealed .checkpoint__expert{ display: block; animation: slideDown 300ms cubic-bezier(.4,0,.2,1) }
+.checkpoint__expert-label{
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.checkpoint__saved{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.launchpad{
+  margin: 48px 0 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.launchpad::before{
+  content: "🚀";
+  position: absolute;
+  top: -16px; right: -8px;
+  font-size: 96px;
+  opacity: .06;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+.launchpad__label{
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--accent2);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.launchpad__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+.launchpad__problem{
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.launchpad__hints{
+  border-top: 1px dashed var(--border);
+  padding-top: 20px;
+  font-family: var(--font-sans);
+}
+.launchpad__hints-label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: block;
+}
+.launchpad__hint{
+  margin: 10px 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-left: 3px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  display: none;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.launchpad__hint.is-visible{ display: block }
+.launchpad__hint-label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 4px;
+  letter-spacing: .08em;
+}
+.launchpad__reveal{
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all var(--transition);
+}
+.launchpad__reveal:hover{
+  background: var(--accent2);
+  color: white;
+}
+.launchpad__reveal:disabled{
+  opacity: .4;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+.canvas .term-amp{
+  border-bottom: 1px dashed var(--accent2);
+  cursor: help;
+  transition: background var(--transition);
+}
+.canvas .term-amp:hover,
+.canvas .term-amp.is-active{
+  background: var(--accent2-soft);
+  border-bottom-color: var(--accent2-strong);
+}
+.amplifier{
+  position: sticky;
+  top: 24px;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: var(--accent2-soft);
+  border: 1px solid var(--accent2);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  min-height: 96px;
+  transition: opacity var(--transition);
+}
+.amplifier__label{
+  display: block;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 6px;
+}
+.amplifier__term{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+  display: block;
+  font-size: 14px;
+}
+.amplifier__body{ margin: 0 }
+.amplifier__empty{ color: var(--text-muted); font-style: italic }
+.amp-notes{ display: none }
+
+.footer{
+  max-width: var(--measure);
+  margin: 64px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-align: center;
+}
+.kbd{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+</style>
+</head>
+<body><div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Table of contents">
+    <div class="navigator__meta">
+      <p class="navigator__title">Reading time</p>
+      <p class="navigator__reading-time" id="readingTime">~ 30 min</p>
+    </div>
+
+    <div class="orbit" aria-label="Learning phases">
+      <p class="orbit__title">Learning path</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Anchor</div>
+        <div class="orbit__node" data-target="bridge">2 · Bridge</div>
+        <div class="orbit__node" data-target="exposition">3 · Construct</div>
+        <div class="orbit__node" data-target="application">4 · Apply</div>
+        <div class="orbit__node" data-target="boundary">5 · Boundary</div>
+        <div class="orbit__node" data-target="synthesis">6 · Fade</div>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="toc" id="toc"></ul>
+    </nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <h1>The Pull of Now — Understanding Instant Gratification</h1>
+
+    <div class="hook">
+      <span class="hook__label">🎣 The hook</span>
+      <p>At 9:14 p.m. you open your phone to check one notification. At 10:51 you look up, and the hour in between is… blank. You consumed the whole hour and cannot say what it contained. If that has ever happened to you, you are not broken — you are standing in front of a machine that has spent fifty years learning to pull exactly this lever. This note tells the story of that lever: what instant gratification is, why every human brain is built to reach for it, who profits from it, what the famous marshmallow experiment got right and badly wrong, and — at the end — what it takes to build a life that is not run by it.</p>
+    </div>
+
+    <div class="meta-block">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>You have ever opened an app "just for a minute" and lost an hour — you are the subject of this note.</li>
+        <li>A basic sense that rewards and delays shape behavior. No psychology background needed.</li>
+        <li>Willingness to try the hidden <strong>Probe</strong> questions before peeking at the answers — that is where the learning happens.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>By the end you will be able to…</h4>
+      <ul>
+        <li><strong>Identify</strong> the three ingredients that make an immediate reward feel irresistible.</li>
+        <li><strong>Explain</strong> why delayed rewards are systematically undervalued, even when they are identical in size.</li>
+        <li><strong>Contrast</strong> the brain's reflexive and planning systems, and predict which one wins under time pressure.</li>
+        <li><strong>Apply</strong> the idea of friction to explain why "phone in another room" beats "I won't check it."</li>
+        <li><strong>Evaluate</strong> why the marshmallow test's reputation overstates what it actually predicts.</li>
+        <li><strong>Design</strong> one commitment device for a real goal of your own.</li>
+      </ul>
+    </div>
+
+    <!-- =====================================================
+         STATE 1 — Epistemic Baseline
+         ===================================================== -->
+    <h2 id="baseline">Chapter 1 · The foundational truth</h2>
+    <p>In a small playroom at Stanford's Bing Nursery School in the late 1960s, four-year-olds were offered a deal: eat one marshmallow now, or wait a few minutes and get two. A researcher left the room and watched through a one-way mirror. Some children ate instantly. Some covered their eyes. Some turned around and hummed songs. The experiment — run between 1968 and 1974 with about 550 children — became the most famous test of willpower in psychology: the <strong>marshmallow test</strong>. <a class="source" href="https://bingschool.stanford.edu/news/bing-marshmallow-studies-50-years-continuing-research" target="_blank" rel="noopener">Bing Nursery School, 2015</a></p>
+    <p>Here is the foundational truth this note is built on: <strong>instant gratification</strong> is the preference for a smaller reward that arrives <em>now</em> over a larger reward that arrives <em>later</em>. It is not a character flaw, not a modern invention, and not something only the undisciplined do. It is a property of every human decision system — one of the most replicated regularities in behavioral science. When a four-year-old grabs one marshmallow, she is not failing; she is demonstrating, in miniature, a mechanism you exercised this morning.</p>
+    <p>And you already know it intimately. The notification you check mid-sentence. The "one more episode" that becomes three. The snack at your desk even though lunch is twenty minutes away. These are not unrelated lapses; they are the same mechanism firing under different costumes. What made the marshmallow study famous was a follow-up finding: children who waited longer tended, years later, to score higher on grades and on the SAT. <a class="source" href="https://bingschool.stanford.edu/news/bing-marshmallow-studies-50-years-continuing-research" target="_blank" rel="noopener">Shoda, Mischel &amp; Peake, 1990</a> That claim launched an industry of willpower training — and it turned out to be dramatically overstated. The correction, in Chapter 5, is one of the most instructive episodes in modern psychology.</p>
+
+    <!-- =====================================================
+         STATE 2 — Cognitive Bridge
+         ===================================================== -->
+    <h2 id="bridge">Chapter 2 · A familiar bridge</h2>
+    <p>Picture two ways to feed yourself tonight. The first is the <strong>vending machine</strong>: glass-fronted, lit up, visible from across the room. You put coins in, it clicks, and a snack drops in seconds. The snack is engineered — salty, sweet, crunchy — and the machine's placement is engineered too: at eye level, on your path, impossible to miss. Its entire design goal is to make a two-second transaction as frictionless and as tempting as possible.</p>
+    <p>The second is the <strong>garden</strong>. It is empty today. If you plant seeds now, water them, and wait, you will harvest more food — better food — in weeks. But standing here in the dark, there is nothing to eat, nothing to see, no satisfying click. The garden offers a larger reward; it just refuses to deliver on your timescale.</p>
+    <p>Call this the <strong>Garden and the Vending Machine</strong> model. It will carry the whole note. The machine is <strong>instant gratification</strong>: present, loud, immediate. The garden is <strong>delayed gratification</strong>: real, larger, invisible at the moment of choice. Your hunger pangs are the <strong>reflexive pull</strong> that walks you to the machine; the quieter voice that keeps mentioning dinner is the <strong>planning voice</strong>.</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>A cue — the lit-up machine, the red notification</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>A craving — hunger pangs spike, the hand reaches</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>A transaction — instant snack, one more scroll</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+      <p><span class="premortem__wrong">Instant gratification is weak character — people who grab the marshmallow are simply undisciplined.</span></p>
+      <p>This is wrong because every human brain, including the most disciplined, discounts the future; what differs between people is mostly their environment and their tricks, not their essence.</p>
+      <p><span class="premortem__truth">What's actually true:</span> instant gratification is a default neural setting. The environment decides how loudly it plays — which is why the same person can be disciplined in one setting and helpless in another.</p>
+    </div>
+
+    <!-- =====================================================
+         STATE 3 — Scaffolded Exposition
+         ===================================================== -->
+    <h2 id="exposition">Chapter 3 · Why "Now" Is So Loud</h2>
+    <p>The bridge gives us the scenery — machine, garden, hunger, planning voice. Now we meet the two laws that run the show: why the machine is so loud, and why the planning voice is so easy to ignore. Each concept below passes through <strong>State → Illustrate → Probe → Resolve</strong>. The Probe is a hidden reveal — try to answer it in your head before expanding.</p>
+
+    <!-- Scaffold Card 1 -->
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Law 1 — temporal discounting</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body"><p>A reward's felt value shrinks as its arrival moves further into the future — even when the reward itself is identical. Psychologists call this <strong class="term-amp" data-note="temporal-discounting">temporal discounting</strong>.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body"><p>Two offers with the same yearly return. Offer A: $100 today or $110 in one month. Offer B: $100 today or $110 in one year. Most people take the money now in A, and wait comfortably in B — even though B is the exact same 10% annual return. The reward has not changed; only your distance from it has — and that alone flipped your choice. This is a classic, well-replicated demonstration in behavioral economics of how people choose money across time.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Same rate again: $100 now, or $200 in ten years (about 7% a year). If discounting worked like a flat interest rate, the ten-year offer should look as attractive as the one-year one. Would you take it?</summary>
+        <div class="scaffold__resolve"><p>Most people still take the $100 now. Same mathematics, opposite feeling — which tells us the curve is not flat. The near future is discounted hard and fast; the far future is discounted even harder but in a "someday" blur. This asymmetry is precisely the machinery instant gratification runs on: the longer the wait, the more the reward's felt size collapses, so <em>now</em> is always the loudest point on the map.</p></div>
+      </details>
+    </section>
+    <div class="feynman">A dollar in your hand right now feels bigger than the same dollar next week — and ten dollars ten years from now feels like it belongs to someone else — so the part of you that wants things always picks the hand that is open today.</div>
+
+    <div class="checkpoint" data-checkpoint-id="cp1">
+      <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+      <p class="checkpoint__question">Close the page for a moment and explain <strong>temporal discounting</strong> in your own words — including why "now" is disproportionately loud. Write it before checking.</p>
+      <textarea placeholder="Write your answer in your own words before checking…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Expert answer</span>
+        <p>Temporal discounting is the shrinking of a reward's felt value as its arrival recedes into the future. Its shape matters: value falls fastest near the present, so "today" is disproportionately loud, and that asymmetry — not a flat rate — is what makes the vending machine beat the garden.</p>
+      </div>
+    </div>
+
+    <!-- Scaffold Card 2 -->
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Law 2 — the two systems</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body"><p>Choices are produced by two systems that fight for the wheel: a fast <strong>reflexive system</strong> that reacts to whatever is present, and a slow <strong>planning system</strong> that simulates the future. The reflexive system always moves first.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body"><p>Back in the Bing playroom, Mischel's team noticed something. Children who focused on how the marshmallow would taste — "sweet, chewy, yummy" — rang the bell and caved within a minute or two. Children who covered their eyes, sang, or reimagined the marshmallow as "puffy, like a cotton ball" could wait far longer — nearly 18 minutes in later versions of the task, by pretending the treat was a photograph. <a class="source" href="https://bingschool.stanford.edu/news/bing-marshmallow-studies-50-years-continuing-research" target="_blank" rel="noopener">Bing Nursery School, 2015</a> The difference was not raw willpower — it was which system had sensory material to work with. The reflexive system feeds on the sight, smell, and thought of the treat. Starve it, and it loses interest.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>If the reflexive system always votes first, then during a moment of temptation the battle is already lost — so what is the point of trying to "be strong" in the moment?</summary>
+        <div class="scaffold__resolve"><p>Exactly — and that is the liberating discovery. You do not win by arguing with the craving at the moment of temptation; you win by making sure the craving never starts. The children who turned their backs were not flexing willpower; they were removing the input the reflexive system runs on. The planning system does not beat the reflexive system in a fair fight — it wins by changing the arena. This is why "I'll just resist" fails and "I'll put the phone in another room" works.</p></div>
+      </details>
+    </section>
+    <div class="feynman">There is a part of your brain that grabs candy the instant it sees candy, and a part that thinks about tomorrow — the grabbing part is faster, so you cannot out-argue it; you have to put the candy out of sight.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Deep dive</span> The curve, the reversal, and the molecule</summary>
+      <p>If a reward's value declined at a steady yearly rate — economists' <strong>exponential discounting</strong> — your choices today would match the choices you make in advance. They don't. Here is the classic demonstration (a well-known behavioral-economics finding): people asked to choose between $50 in a week and $60 in eight days often pick the $50, because the wait is too long for $10. But people asked to choose between $50 in 52 weeks and $60 in 53 weeks pick the $60. Identical 10-day gap, identical $10 — and the choice flips, because when the gap sits far away it feels small. This flip, <strong>preference reversal</strong>, is the signature of <strong>hyperbolic discounting</strong>: value falls fast near the present and flattens far away, so the self that plans to be patient in the future reliably caves in the present.</p>
+      <p>Now add the chemistry. The signal that makes all of this feel physically urgent is <strong class="term-amp" data-note="dopamine">dopamine</strong>. It is routinely mislabeled "the pleasure molecule," but it more closely tracks <em>wanting</em> — anticipation — than <em>liking</em>. It spikes at the sight of the reward and before the payoff, not during it. That is why a slot machine keeps a hand on the lever: dopamine rewards the chase, and the chase is what the reflexive system is built for. Intermittent, unpredictable payoffs are the most dopamine-rich schedule known — the reason <em>variable rewards</em> are the core design pattern of the machine that sells "now."</p>
+    </details>
+
+    <!-- =====================================================
+         STATE 4 — Contextual Application
+         ===================================================== -->
+    <h2 id="application">Chapter 4 · The Machine That Sells "Now"</h2>
+    <p>So far we have watched two laws operate in a quiet nursery-school room. But these laws scale. Point them at a global industry, and you get the world your thumb actually lives in.</p>
+    <p>The bridge's vending machine was a metaphor. In the real world, the machine is a business model. Economist Herbert Simon described the economics of it in 1971: information is now cheap and unlimited, so the scarce resource is no longer the information but the <strong class="term-amp" data-note="attention-economy">attention</strong> of the person receiving it — "a wealth of information creates a poverty of attention." <a class="source" href="https://veryinteractive.net/pdfs/simon_designing-organizations-for-an-information-rich-world.pdf" target="_blank" rel="noopener">Simon, 1971</a> Attention became a currency, and an entire industry formed to mint it. The result is the <strong>attention economy</strong>.</p>
+    <p>Consider a concrete evening. It is 9:14 p.m. Maya, a graduate student, opens Instagram to check one message. That is the cue — the lit-up machine. Her reflexive system votes for the scroll. The feed loads, and here is what she meets:</p>
+    <ul>
+      <li><strong>Infinite scroll</strong> — no natural stopping point. The machine never runs out of snack.</li>
+      <li><strong>Variable rewards</strong> <span class="term-amp" data-note="variable-reward">— unpredictable payoffs</span>. She cannot know whether the next post is funny, interesting, or dull, and that uncertainty is precisely the hook: intermittent, unpredictable wins are the strongest habit-forming schedule psychologists know — the same mechanism that keeps gamblers at slot machines. Researchers who study platform design make the comparison literally, calling social media "digital slot machines." <a class="source" href="https://link.springer.com/article/10.1007/s11245-024-10031-0" target="_blank" rel="noopener">Topoi, 2024</a></li>
+      <li><strong>Autoplay and pull-to-refresh</strong> — the interface itself keeps acting, so she never has to make a decision.</li>
+    </ul>
+    <p>At 10:51 she looks up. An hour and a half, mostly blank. This is not a failure of her character; it is the product, working as designed.</p>
+    <p>How well does it work? In a 2025 experiment at the University of Chicago, researchers had 76 Netflix users turn off autoplay and measured what happened. Disabling the auto-start of the next episode — inserting a single beat of friction — cut average daily watching by about <strong>21 minutes</strong> and shortened sessions by about <strong>18 minutes</strong>. Lead author Brennan Schaffner put the mechanism plainly: "The 5-second autoplay countdown is hardly enough time for viewers to consider, or even just re-visit, their original intentions." <a class="source" href="https://news.uchicago.edu/story/uchicago-scientists-study-hidden-cost-netflixs-autoplay" target="_blank" rel="noopener">Univ. of Chicago, 2025</a></p>
+    <p>The aggregate numbers are the landscape you live in. By the end of 2025, U.S. mobile users averaged <strong>6.3 hours</strong> of phone use per day, up from 5.5 hours in early 2023. <a class="source" href="https://apptopia.com/en/insights/americans-now-spend-6-3-hours-per-day-on-their-phones-up-an-hour-from-january-2023/" target="_blank" rel="noopener">Apptopia, 2026</a> A 2025 survey found Americans check their phones roughly <strong>200 times a day</strong> — about once every five waking minutes — and 45.8% describe themselves as addicted. <a class="source" href="https://www.statesman.com/business/technology/article/screentime-americans-phone-checks-5-min-21266440.php" target="_blank" rel="noopener">Reviews.org via the Statesman, 2025</a></p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">What Americans say about their phones (2025)</div>
+      <div class="bar-row">
+        <div class="bar-label">Phone within 10 min of waking</div>
+        <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+        <div class="bar-value">85%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Phone while watching TV</div>
+        <div class="bar-track"><div class="bar-fill" style="width:87%"></div></div>
+        <div class="bar-value">87%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Phone at work</div>
+        <div class="bar-track"><div class="bar-fill" style="width:72%"></div></div>
+        <div class="bar-value">72%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Never 24 h without a phone</div>
+        <div class="bar-track"><div class="bar-fill" style="width:53%"></div></div>
+        <div class="bar-value">53%</div>
+      </div>
+      <p class="bar-chart__caption">Source: <a href="https://www.statesman.com/business/technology/article/screentime-americans-phone-checks-5-min-21266440.php" target="_blank" rel="noopener">Reviews.org survey, reported by the Austin American-Statesman</a>, Dec 30, 2025.</p>
+    </div>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Active recall — Question</span>
+          <div class="flip-card__content">Your feed feels rewarding even when the videos are forgettable. Why does the scroll itself keep pulling?</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Answer</span>
+          <div class="flip-card__content">Intermittent reinforcement. The scroll's reward is not any single video — it is the slot-machine suspense of "maybe the next one is great." A predictable feed would bore you in minutes; an unpredictable one keeps the reflexive system pulling the lever, dopamine chasing the next unknown.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================
+         STATE 5 — Boundary Testing
+         ===================================================== -->
+    <h2 id="boundary">Chapter 5 · The Hidden Costs — and the Overcorrection</h2>
+    <p>The machine is powerful, but before you decide what to do about it, we need to correct a famous error — because the most influential story about delayed gratification over-promised, and understanding why is itself the lesson.</p>
+    <p>If you have heard of the marshmallow test, you have probably heard that waiting predicted <em>everything</em>: higher grades, higher SAT scores, better life outcomes. That story powered a small industry of willpower training. And then the science caught up with the story.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Common misconception</span>
+      <p>"The marshmallow test predicts your future success." In 2018, psychologist Tyler Watts and colleagues replicated the design on a larger, more diverse sample. The original correlations were halved; and once they controlled for family background, early cognitive ability, and home environment, the link shrank by about two-thirds — and vanished almost entirely for behavioral outcomes. Their conclusion: interventions that only teach a child to wait will "probably have very small effects." <a class="source" href="https://escholarship.org/uc/item/9k92888p" target="_blank" rel="noopener">Watts, Duncan &amp; Quan, 2018</a> The child who waits is not mainly displaying character — she is displaying a family and an environment that made waiting <em>safe</em> and <em>worth it</em>.</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Edge case 1 — delay is not always the winning move</span>
+      <p>The marshmallow children who "failed" may have been rationally reading the room: if the environment is unpredictable and promises do not reliably pay, the treat you can hold is worth more than the treat you cannot. Context is not noise here — it is the signal (author's synthesis). Likewise, an adult who delays <em>everything</em> — joy, friendship, rest — until "later" is running a different pathology. The garden model is not a moral scorecard. Sometimes the machine is the right stop.</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Edge case 2 — friction cuts both ways</span>
+      <p>If adding friction reduces bad habits, removing friction amplifies good ones. But tools that add friction can feel bad: in a 2024 study, users who had to react to each post to keep scrolling remembered the content significantly better — yet more than half found the friction frustrating. Effective design has to respect the taste of the medicine (author's synthesis of the reported results).</p>
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Predict</span>
+      <p>Before reading the last chapter, predict: what happens if you remove every step of friction from a habit you actually <em>want</em> — running shoes by the bed, a pre-packed lunch, an automatic savings transfer? Write your prediction in one sentence, then read on to see how the two systems make it work.</p>
+    </div>
+
+    <!-- =====================================================
+         CHAPTER 6 — Practical Toolkit
+         ===================================================== -->
+    <h2 id="toolkit">Chapter 6 · Working With It, Not Against It</h2>
+    <p>Now we finally get to use the model. Chapter 3 gave us the two laws; Chapter 4 showed how industry weaponizes them; Chapter 5 corrected our biggest mistake about them. The last move is practical: work with the machine and the garden, not against your own brain. Each technique below passes through the same <strong>State → Illustrate → Probe → Resolve</strong> loop.</p>
+
+    <section class="scaffold" id="toolkit-1">
+      <h3 class="scaffold__concept">Tool 1 — friction</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body"><p><strong>Friction</strong> is any step that raises the effort between an impulse and its completion. It taxes the reflexive system — which wants the shortest path — while giving the planning system time to speak.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body"><p>The Netflix experiment again, flipped: adding about 24 seconds of friction between episodes cut daily watching by 21 minutes. Now point the same lever at your own garden: phone in another room while you work (the reflexive system cannot reach the machine), running shoes laid out tonight (the garden path loses its weeds), a scheduled bank transfer for savings (you never "decide" to save — it is already done). Each is the same device aimed at a different side of the model.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>A five-second countdown, a closed door, a folder on a shelf — these are trivially easy to overcome. If they are that weak, why do they work at all?</summary>
+        <div class="scaffold__resolve"><p>They do not need to stop you — they need to <em>interrupt</em> you. The reflexive system runs on automaticity; the moment you must make a deliberate choice, the planning system gets a turn, and its vote is usually the garden. Friction's power is that it converts an unconscious reflex into a conscious decision — and conscious decisions are ones you have usually already thought through.</p></div>
+      </details>
+    </section>
+    <div class="feynman">It is not that the locked cupboard is unbreakable; it is that the extra second lets your thinking brain arrive before your grabbing hand does.</div>
+
+    <section class="scaffold" id="toolkit-2">
+      <h3 class="scaffold__concept">Tool 2 — commitment devices &amp; reframing</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body"><p>A <strong>commitment device</strong> is an external lock, set in a calm moment, that removes a future choice. Its internal cousin is <strong>reframing</strong> — changing how you think about the reward so the reflexive system stops feeding.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body"><p>Mischel himself reached for the oldest example: Ulysses, who knew the sirens would seduce him, had his crew tie him to the mast so he could not steer into the rocks. <a class="source" href="https://bingschool.stanford.edu/news/bing-marshmallow-studies-50-years-continuing-research" target="_blank" rel="noopener">Bing Nursery School, 2015</a> The marshmallow children used reframing instead: "puffy like a cotton ball" rather than "sweet and chewy." Modern versions: money locked until retirement, an app blocker you cannot dismiss for the night, telling a friend "I'll pay you if I open this before 5 p.m." The device is chosen when you are thinking clearly, precisely so it can protect you when you are not.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>What is the difference between a commitment device and a rule you promise yourself — like "no phone after 9 p.m."?</summary>
+        <div class="scaffold__resolve"><p>A rule you promise yourself lives inside the planning system — and the planning system loses every head-on fight with the reflexive system at 10 p.m. A commitment device moves the decision outside the moment: the phone is physically elsewhere, the money is locked, the promise is on record. Your future, impulsive self has nothing left to argue with. That is the whole trick: you cannot out-muscle the machine in the moment, but you can be smarter than it last Tuesday.</p></div>
+      </details>
+    </section>
+    <div class="feynman">If you know tonight-you is a sleepy fool, do not leave tonight-you in charge of the cookies — lock the jar now, while awake-you is still smart.</div>
+
+    <div class="checkpoint" data-checkpoint-id="cp2">
+      <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+      <p class="checkpoint__question">Name the one technique from this chapter you could apply tonight. Be precise: does it add friction to the vending machine, remove friction from the garden, or set a commitment device? Write it before checking.</p>
+      <textarea placeholder="Write your answer in your own words before checking…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Expert answer</span>
+        <p>Anything that taxes the reflexive path or shortens the planning path: phone in another room (friction on the machine), shoes by the door and lunch prepped (friction removed from the garden), a pre-committed timer or app block (commitment device). A correct answer names which side of the model the technique touches.</p>
+      </div>
+    </div>
+
+    <!-- =====================================================
+         CONNECTION MAP
+         ===================================================== -->
+    <h2 id="connections">How this connects</h2>
+    <p>Instant gratification sits at the junction of several bigger maps. If the garden model sparked anything, these are the natural next stops:</p>
+    <ul>
+      <li><strong>Behavioral economics</strong> — the same discounting curves power "present bias" and the design of nudges (Thaler &amp; Sunstein's <em>Nudge</em>): make the good choice the easy choice.</li>
+      <li><strong>Reward neuroscience</strong> — dopamine as "wanting" vs "liking" opens the door to habit loops and behavioral addiction research.</li>
+      <li><strong>Technology ethics &amp; digital wellbeing</strong> — dark patterns, extended-use designs, and the growing regulation of attention-capture interfaces.</li>
+      <li><strong>Developmental psychology</strong> — the marshmallow replication debate reframed self-control as environment plus skills, not destiny.</li>
+    </ul>
+
+    <!-- =====================================================
+         STATE 6 — Synthesis
+         ===================================================== -->
+    <h2 id="synthesis">The whole picture</h2>
+    <p>Strip the costumes away and three claims remain. First, <strong>instant gratification is the default</strong>: every human brain discounts the future, and the near future most steeply, so "now" always votes loudly. Second, <strong>the environment sets the volume</strong>: the reflexive system is fed by cues, and when those cues are engineered at industrial scale — infinite feeds, variable rewards, autoplay — the same brain that calmly waits in one setting caves in another. Third, <strong>you cannot out-muscle it, but you can out-design it</strong>: friction, commitment devices, and reframing do not win fights against the reflexive system; they prevent the fights from starting. And the marshmallow correction is the moral core: waiting is less a trait you have than a situation you are given — so build the situation.</p>
+
+    <blockquote>
+      <strong>If you remember only one thing:</strong> You can't beat "now" with willpower — you beat it with environment.
+    </blockquote>
+
+    <!-- Launch Pad -->
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+      <h3 class="launchpad__title">The Future-Self Paradox</h3>
+      <p class="launchpad__problem">Here is a deal. A genie offers present-you two options. Option one: $1,000, cash, today. Option two: $10,000, locked so that you — and only you — can receive it in ten years, and once chosen it is genuinely untouchable until then. Most people, faced with this, take the $1,000 — and would urge a close friend to take the $10,000. Here is the paradox: the friend is the same kind of being as you, with the same brain, the same bills, the same appetites. Why would you happily counsel someone else to be patient while refusing to be patient yourself? Using everything in this note, explain the paradox — then design the smallest commitment device that would let your own future self win the $10,000. That last half is the actual assignment.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Stuck? Reveal a hint at a time.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Reveal hint 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Hint 1 — reframe</span>
+          <p>Both sides of the paradox are "you" deciding — the difference is the frame each decision happens in. What is different about deciding for a friend versus deciding for yourself? Name which system does the talking in each frame.</p>
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Hint 2 — key concept</span>
+          <p>Temporal discounting shrinks rewards the further they sit in the future, and the discount is steepest for "now." For a friend, there is no reward sitting on the table in front of you — the choice is abstract, so the planning system runs it. For yourself, $1,000 is physically present, so the reflexive system gets first vote. Which system wins a one-on-one?</p>
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Hint 3 — setup</span>
+          <p>A commitment device moves a decision into the calm, abstract frame in advance: the locked account, a friend who audits you, a default you never have to re-decide. Now design yours — it must survive your future self's attempts to quietly undo it. And explain, in two sentences, why "I'll just be disciplined" is not a commitment device.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glossary -->
+    <h2 id="glossary">Glossary</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Instant gratification</dt>
+        <dd>Preferring a smaller reward that arrives now over a larger one that arrives later. <em>(In the Garden and the Vending Machine: grabbing from the machine.)</em></dd>
+        <dt>Delayed gratification</dt>
+        <dd>Forgoing a present reward for a larger, later one. <em>(Planting the garden and waiting for harvest.)</em></dd>
+        <dt>Temporal discounting</dt>
+        <dd>The felt value of a reward shrinking as its arrival moves further away — steepest near the present. <em>(The tomato sixty days out feels worth almost nothing today.)</em></dd>
+        <dt>Reflexive system</dt>
+        <dd>Fast, automatic, reacts to whatever is present. <em>(The hand that reaches for the machine on sight.)</em></dd>
+        <dt>Planning system</dt>
+        <dd>Slow, deliberate, simulates future consequences. <em>(The mind that remembers the garden plan.)</em></dd>
+        <dt>Friction</dt>
+        <dd>Any step that raises the effort between an impulse and its completion. <em>(The locked gate; the distance to the machine.)</em></dd>
+        <dt>Variable reward</dt>
+        <dd>An unpredictable payoff — the strongest habit-building schedule known. <em>(A machine that sometimes pays out a jackpot: the slot-machine feed.)</em></dd>
+        <dt>Dopamine</dt>
+        <dd>A signal of anticipation and wanting, not of pleasure. <em>(The hunger the machine triggers before you even pay.)</em></dd>
+        <dt>Attention economy</dt>
+        <dd>The competition among media for the scarce resource of human attention. <em>(Every machine in the arcade is lit; attention is the coin.)</em></dd>
+        <dt>Commitment device</dt>
+        <dd>An external lock, decided in a calm moment, that removes a future choice. <em>(Tying yourself to the mast so you cannot steer toward the machine later.)</em></dd>
+        <dt>Preference reversal</dt>
+        <dd>Choosing differently about the same reward gap depending on how far in the future it sits — the signature of hyperbolic discounting. <em>(The garden looks worth it from a distance, and unbearable up close.)</em></dd>
+      </dl>
+    </div><!-- =====================================================
+         KNOWLEDGE CHECK (auto-graded quiz)
+         ===================================================== -->
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Knowledge check</h2>
+      <p class="quiz__intro">3 questions. Pick the best answer for each and click <em>Check answers</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. In the "Garden and the Vending Machine" model, why does the vending machine usually win?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> The machine's snack is higher quality than the garden's harvest.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Its reward is present now, and temporal discounting makes "now" disproportionately loud.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> People who choose it simply lack willpower.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> The garden offers no reward at all.</label>
+        <div class="quiz__explanation"><strong>Why:</strong> Temporal discounting shrinks a reward's felt value as its arrival recedes — steepest near the present — so a small reward that is here now outvotes a larger one that is invisible at the moment of choice.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>2. The 2018 Watts, Duncan &amp; Quan replication showed that the marshmallow test's link to later outcomes…</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Was perfectly accurate and required no correction.</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Proved that willpower is purely genetic.</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Shrank dramatically once family background and early ability were controlled for — so waiting mainly reflected the child's environment.</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Showed the test only predicts SAT scores and nothing else.</label>
+        <div class="quiz__explanation"><strong>Why:</strong> The original correlations were halved, then shrank by about two-thirds after controls, and nearly vanished for behavioral outcomes — the child who waits is mostly displaying a safe, predictable environment, not an inner trait.</div>
+      </fieldset>
+
+      <fieldset data-answer="3">
+        <legend>3. Why did turning off Netflix autoplay cut daily viewing by about 21 minutes?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> It made episodes shorter.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> It removed the videos entirely.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> It reduced the reward each episode delivered.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> It inserted a beat of friction, so the reflexive system had to hand the choice back to the planning system — which usually chose to stop.</label>
+        <div class="quiz__explanation"><strong>Why:</strong> The 5-second countdown barely left time to re-decide; removing it forced a conscious choice, and conscious choices tend to favor the plan. That is friction at work.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Check answers</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Reset</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <!-- Sources section — research pass ran with real web tools. -->
+    <h2 id="sources">Sources &amp; further reading</h2>
+    <ul class="sources">
+      <li><a class="source" href="https://bingschool.stanford.edu/news/bing-marshmallow-studies-50-years-continuing-research" target="_blank" rel="noopener">Bing Nursery School</a> — Stanford, 2015, "The Bing Marshmallow Studies: 50 Years of Continuing Research" (history of the studies, the 1968–1974 cohort, ~550 children, children who waited ~18 minutes, Mischel's Ulysses example, Shoda, Mischel &amp; Peake 1990 follow-up).</li>
+      <li><a class="source" href="https://escholarship.org/uc/item/9k92888p" target="_blank" rel="noopener">Watts, Duncan &amp; Quan</a> — 2018, "Revisiting the Marshmallow Test" (Psychological Science): replication showing the association was halved, reduced ~2/3 with controls, and that behavioral interventions would "probably have very small effects."</li>
+      <li><a class="source" href="https://news.uchicago.edu/story/uchicago-scientists-study-hidden-cost-netflixs-autoplay" target="_blank" rel="noopener">University of Chicago</a> — 2025, "UChicago scientists study the hidden cost of Netflix's autoplay" (Schaffner et al., Proc. ACM HCI, DOI 10.1145/3710928; 76 users; −21 min/day, −18 min/session; Schaffner quote about the 5-second countdown).</li>
+      <li><a class="source" href="https://apptopia.com/en/insights/americans-now-spend-6-3-hours-per-day-on-their-phones-up-an-hour-from-january-2023/" target="_blank" rel="noopener">Apptopia</a> — 2026, "Americans now spend 6.3 hours per day on their phones" (US mobile average, up from 5.5 h in Jan 2023).</li>
+      <li><a class="source" href="https://www.statesman.com/business/technology/article/screentime-americans-phone-checks-5-min-21266440.php" target="_blank" rel="noopener">Reviews.org via the Austin American-Statesman</a> — Dec 30, 2025, survey: ~200 phone checks/day, 85% within 10 min of waking, 87% while watching TV, 72% at work, 53% never 24 h without a phone, 45.8% self-described addicted.</li>
+      <li><a class="source" href="https://veryinteractive.net/pdfs/simon_designing-organizations-for-an-information-rich-world.pdf" target="_blank" rel="noopener">Herbert Simon</a> — 1971, "Designing Organizations for an Information-Rich World": "a wealth of information creates a poverty of attention."</li>
+      <li><a class="source" href="https://link.springer.com/article/10.1007/s11245-024-10031-0" target="_blank" rel="noopener">Topoi</a> — 2024, article comparing social-media reward loops to digital slot machines via intermittent reinforcement.</li>
+    </ul>
+
+    <div class="footer">
+      <p>Keyboard: <span class="kbd">J</span>/<span class="kbd">K</span> scroll · <span class="kbd">F</span> focus mode · <span class="kbd">T</span> theme · <span class="kbd">P</span> print</p>
+    </div>
+
+  </main>
+
+  <!-- =========================================================
+       RIGHT — MARGINALIA (sidenotes)
+       ========================================================= -->
+  <aside class="marginalia" aria-label="Sidenotes">
+
+    <!-- Contextual Amplifier — sticky slot at the top of the right column.
+         Hovering any .term-amp[data-note] in the canvas fills this slot with the note whose id matches data-note.
+         Notes themselves are stored in the .amp-notes pool below (hidden). -->
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Term amplifier</span>
+      <p class="amplifier__empty">Hover a <span style="border-bottom:1px dashed var(--accent2)">dashed</span> term in the main text to expand it here.</p>
+    </div>
+
+    <!-- Amplifier notes — id must match the data-note attribute on the corresponding .term-amp in the canvas. -->
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="temporal-discounting">
+        <span class="amplifier__term">Temporal discounting</span>
+        <p class="amplifier__body">The felt value of a reward drops as its arrival moves further into the future — and drops fastest right around "now." That curvature is what makes today's 1 marshmallow beat tomorrow's 2, and why the same 10% return feels worth waiting for in a year but not in a month.</p>
+      </div>
+      <div data-note-id="dopamine">
+        <span class="amplifier__term">Dopamine</span>
+        <p class="amplifier__body">A "wanting" signal, released in anticipation of a reward — not during enjoyment. It lights up at the sight of the snack and during the chase, which is why the pull to open the app happens before the scroll, not after it.</p>
+      </div>
+      <div data-note-id="variable-reward">
+        <span class="amplifier__term">Variable reward</span>
+        <p class="amplifier__body">An unpredictable payoff schedule. Intermittent, uncertain wins are the most habit-forming schedule known — the same mechanism that keeps a slot-machine lever being pulled, and the core pattern behind infinite feeds and pull-to-refresh.</p>
+      </div>
+      <div data-note-id="attention-economy">
+        <span class="amplifier__term">Attention economy</span>
+        <p class="amplifier__body">When information is abundant and cheap, human attention becomes the scarce, valuable resource — so platforms are engineered to capture it. Herbert Simon named this in 1971: "a wealth of information creates a poverty of attention."</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Sidenote 1 — the ~18-minute wait</strong>
+      In later marshmallow-task versions, children who hid the treat or turned it into "a photograph" sometimes waited around 18 minutes — close to the whole experimental session. The trick was never brute-force resistance; it was shrinking the treat's sensory pull.
+    </div>
+    <div class="sidenote">
+      <strong>Sidenote 2 — the 9:14 p.m. hour</strong>
+      The 6.3-hour daily average is a mean, not a bill: most of us have days near zero and days closer to ten. The useful number is the ~200 checks a day — one roughly every five waking minutes — because each check is a tiny vote for the vending machine.
+    </div>
+    <div class="sidenote">
+      <strong>Historical trivia — the sirens</strong>
+      Mischel himself reached for Ulysses to explain commitment devices: forewarned, the hero had himself tied to the mast before the sirens sang. The device was chosen while the plan was clear, precisely so it could survive the moment when the plan stopped mattering.
+    </div>
+  </aside>
+
+</div>
+
+<!-- Floating controls -->
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Focus mode (F)" aria-label="Toggle focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Theme (T)" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</div><script>
+/* ============================================================
+   PERSISTENCE — theme + reading position + quiz state
+   Uses localStorage. This file is saved to disk and opened
+   directly in a browser, so localStorage is available.
+============================================================ */
+const STORAGE_KEY = 'edu-notes:' + (document.title || 'untitled');
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY + ':' + k)); }catch{ return null; } },
+  set(k,v){ try{ localStorage.setItem(STORAGE_KEY + ':' + k, JSON.stringify(v)); }catch{} },
+};
+
+/* ============================================================
+   THEME
+============================================================ */
+(function initTheme(){
+  const saved = store.get('theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  store.set('theme', next);
+});
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function initFocus(){
+  if(store.get('focus')) document.body.classList.add('focus-mode');
+})();
+document.getElementById('focusBtn').addEventListener('click', () => {
+  document.body.classList.toggle('focus-mode');
+  const on = document.body.classList.contains('focus-mode');
+  document.getElementById('focusBtn').setAttribute('data-active', on ? 'true' : 'false');
+  store.set('focus', on);
+});
+
+/* ============================================================
+   TABLE OF CONTENTS — auto-generate from h2/h3
+============================================================ */
+(function buildTOC(){
+  const canvas = document.getElementById('canvas');
+  const toc = document.getElementById('toc');
+  const headings = canvas.querySelectorAll('h2, h3');
+  headings.forEach(h => {
+    if(!h.id){
+      h.id = h.textContent.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g,'')
+        .trim().replace(/\s+/g,'-').slice(0,60);
+    }
+    const li = document.createElement('li');
+    if(h.tagName === 'H3') li.className = 'toc-l3';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+})();
+
+/* ============================================================
+   INTERSECTION OBSERVER — highlight current section
+============================================================ */
+(function initObserver(){
+  const links = document.querySelectorAll('.toc a');
+  const map = new Map();
+  links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = map.get(e.target.id);
+      if(!link) return;
+      if(e.isIntersecting){
+        document.querySelectorAll('.toc a.is-active').forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  document.querySelectorAll('#canvas h2, #canvas h3').forEach(h => observer.observe(h));
+})();
+
+/* ============================================================
+   PROGRESS BAR + reading position restore
+============================================================ */
+(function initProgress(){
+  const fill = document.getElementById('progressFill');
+  function update(){
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    fill.style.width = pct + '%';
+    store.set('scroll', scrolled);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  const saved = store.get('scroll');
+  if(typeof saved === 'number' && saved > 100){
+    setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 60);
+  }
+})();
+
+/* ============================================================
+   FLIP CARDS — click + keyboard support
+============================================================ */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+  card.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      card.classList.toggle('is-flipped');
+    }
+  });
+});
+
+/* ============================================================
+   QUIZ — auto grade + persist
+============================================================ */
+(function initQuiz(){
+  const quiz = document.getElementById('quiz');
+  if(!quiz) return;
+  const check = document.getElementById('quizCheck');
+  const reset = document.getElementById('quizReset');
+  const score = document.getElementById('quizScore');
+
+  const prior = store.get('quiz') || {};
+  Object.entries(prior).forEach(([name, val]) => {
+    const input = quiz.querySelector(`input[name="${name}"][value="${val}"]`);
+    if(input) input.checked = true;
+  });
+
+  quiz.addEventListener('change', () => {
+    const state = {};
+    quiz.querySelectorAll('input[type=radio]:checked').forEach(i => state[i.name] = i.value);
+    store.set('quiz', state);
+  });
+
+  check.addEventListener('click', () => {
+    let correct = 0, total = 0;
+    quiz.querySelectorAll('fieldset').forEach(fs => {
+      const answer = parseInt(fs.dataset.answer, 10);
+      const selected = fs.querySelector('input:checked');
+      total++;
+      fs.querySelectorAll('.quiz__option').forEach(o => {
+        o.classList.remove('correct-answer','incorrect-answer');
+      });
+      const correctOption = fs.querySelector(`input[value="${answer}"]`);
+      if(correctOption) correctOption.closest('.quiz__option').classList.add('correct-answer');
+      if(selected && parseInt(selected.value, 10) !== answer){
+        selected.closest('.quiz__option').classList.add('incorrect-answer');
+      }
+      if(selected && parseInt(selected.value, 10) === answer) correct++;
+    });
+    quiz.classList.add('is-graded');
+    const pct = Math.round((correct / total) * 100);
+    let msg = `${correct} / ${total} correct (${pct}%)`;
+    if(pct === 100) msg += ' — 🎯 nailed it';
+    else if(pct >= 66) msg += ' — solid';
+    else msg += ' — worth another pass through the boundaries section';
+    score.textContent = msg;
+  });
+
+  reset.addEventListener('click', () => {
+    quiz.querySelectorAll('input[type=radio]').forEach(i => i.checked = false);
+    quiz.querySelectorAll('.quiz__option').forEach(o => o.classList.remove('correct-answer','incorrect-answer'));
+    quiz.classList.remove('is-graded');
+    score.textContent = '';
+    store.set('quiz', {});
+  });
+})();
+
+/* ============================================================
+   KEYBOARD SHORTCUTS
+============================================================ */
+document.addEventListener('keydown', e => {
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  switch(e.key.toLowerCase()){
+    case 'j': window.scrollBy({ top: 200, behavior: 'smooth' }); break;
+    case 'k': window.scrollBy({ top: -200, behavior: 'smooth' }); break;
+    case 'f': document.getElementById('focusBtn').click(); break;
+    case 't': document.getElementById('themeBtn').click(); break;
+    case 'p': window.print(); break;
+  }
+});
+
+/* ============================================================
+   PHASE ORBIT — light up phase nodes as reader scrolls;
+   clicking a node smooth-scrolls to that phase.
+============================================================ */
+(function initOrbit(){
+  const nodes = Array.from(document.querySelectorAll('.orbit__node'));
+  if(!nodes.length) return;
+  const reached = new Set(store.get('reached') || []);
+  nodes.forEach(n => {
+    if(reached.has(n.dataset.target)) n.setAttribute('data-reached','true');
+  });
+  nodes.forEach(n => {
+    n.addEventListener('click', () => {
+      const target = document.getElementById(n.dataset.target);
+      if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+  const targets = nodes.map(n => document.getElementById(n.dataset.target)).filter(Boolean);
+  if(!targets.length) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const node = nodes.find(n => n.dataset.target === e.target.id);
+      if(!node) return;
+      if(e.isIntersecting){
+        node.setAttribute('data-reached','true');
+        reached.add(e.target.id);
+        store.set('reached', Array.from(reached));
+        nodes.forEach(n => n.removeAttribute('data-active'));
+        node.setAttribute('data-active','true');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  targets.forEach(t => observer.observe(t));
+})();
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER — hover .term-amp[data-note] → fill #amplifier
+============================================================ */
+(function initAmplifier(){
+  const amp = document.getElementById('amplifier');
+  const pool = document.getElementById('ampNotes');
+  if(!amp || !pool) return;
+  const emptyHtml = amp.innerHTML;
+  let currentId = null;
+
+  function show(id){
+    if(id === currentId) return;
+    const note = pool.querySelector(`[data-note-id="${id}"]`);
+    if(!note) return;
+    currentId = id;
+    amp.innerHTML = '<span class="amplifier__label">Term amplifier</span>' + note.innerHTML;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+    document.querySelectorAll(`.term-amp[data-note="${id}"]`).forEach(t => t.classList.add('is-active'));
+  }
+  function reset(){
+    currentId = null;
+    amp.innerHTML = emptyHtml;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+  }
+
+  document.querySelectorAll('.term-amp[data-note]').forEach(t => {
+    t.addEventListener('mouseenter', () => show(t.dataset.note));
+    t.addEventListener('focus', () => show(t.dataset.note));
+    t.setAttribute('tabindex','0');
+  });
+  const canvas = document.getElementById('canvas');
+  if(canvas){
+    canvas.addEventListener('mouseleave', reset);
+  }
+})();
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINTS — textarea persistence + Compare to Expert
+============================================================ */
+(function initCheckpoints(){
+  document.querySelectorAll('.checkpoint').forEach(cp => {
+    const id = cp.dataset.checkpointId;
+    const ta = cp.querySelector('textarea');
+    const savedLabel = cp.querySelector('[data-checkpoint-saved]');
+    const revealBtn = cp.querySelector('[data-checkpoint-reveal]');
+    if(!id || !ta) return;
+
+    const prior = store.get('cp:' + id);
+    if(prior){ ta.value = prior; if(savedLabel) savedLabel.textContent = 'Saved'; }
+
+    let t;
+    ta.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        store.set('cp:' + id, ta.value);
+        if(savedLabel) savedLabel.textContent = 'Saved';
+      }, 400);
+    });
+
+    if(revealBtn){
+      revealBtn.addEventListener('click', () => {
+        cp.classList.toggle('is-revealed');
+        revealBtn.textContent = cp.classList.contains('is-revealed')
+          ? 'Hide expert answer'
+          : 'Compare to expert answer';
+      });
+    }
+  });
+})();
+
+/* ============================================================
+   LAUNCH PAD — progressive hint reveal
+============================================================ */
+(function initLaunchpad(){
+  const btn = document.getElementById('hintBtn');
+  if(!btn) return;
+  const hints = Array.from(document.querySelectorAll('.launchpad__hint'));
+  const total = hints.length;
+  let shown = 0;
+
+  const prior = parseInt(store.get('hints') || 0, 10);
+  for(let i=0; i<prior && i<total; i++){
+    hints[i].classList.add('is-visible');
+    shown = i + 1;
+  }
+  updateBtn();
+
+  btn.addEventListener('click', () => {
+    if(shown >= total) return;
+    hints[shown].classList.add('is-visible');
+    shown++;
+    store.set('hints', shown);
+    updateBtn();
+  });
+
+  function updateBtn(){
+    if(shown >= total){
+      btn.textContent = 'All hints revealed';
+      btn.disabled = true;
+    } else {
+      btn.textContent = `Reveal hint ${shown + 1} of ${total}`;
+    }
+  }
+})();
+</script>
+</body>
+</html>
