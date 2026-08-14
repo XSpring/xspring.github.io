@@ -1,0 +1,2049 @@
+<!doctype html>
+<html lang="vi" data-theme="light" data-lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nâng chất trường thường kiểu Phần Lan — Có khả thi ở Việt Nam? Phản biện một đề xuất giáo dục</title>
+<meta name="description" content="Vòng xoắn thứ hai của phản biện biện chứng: 'nâng chất trường thường theo mô hình Phần Lan có khả thi về ngân sách và chính trị ở Việt Nam không?' Trajectory PARADOX, dựa trên dữ liệu chi ngân sách giáo dục VN, PISA 2022, cải cách Singapore (Full SBB 2024), Thông tư 05/2023, Luật Nhà giáo 2025, và chuẩn lương giáo viên OECD.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS  (v1.1.0 — semantic dialectic colors)
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+::selection{background:rgba(74,111,165,.2)}
+
+:root{
+  --font-serif: 'Merriweather', 'Lora', Georgia, serif;
+  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* === Light theme ("The Arena") === */
+  --bg:            #FDFBF7;   /* warm parchment */
+  --bg-panel:     #2B2B3D;   /* dark slate side panels */
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #1A1A2E;
+  --text-muted:    #6B7280;
+  --text-strong:   #0F172A;
+  --text-panel:    #E5E7EB;   /* text on dark side panels */
+  --text-panel-muted: #9CA3AF;
+
+  /* === Semantic dialectic colors (v1.1.0) === */
+  --thesis:        #4A6FA5;   /* Scholarly Blue */
+  --thesis-soft:   #E1E9F5;
+  --thesis-strong: #2A4B7F;
+  --antithesis:    #A34A4A;   /* Critical Red */
+  --antithesis-soft: #F5E0E0;
+  --antithesis-strong: #7A2A2A;
+  --synthesis:     #8A6FA5;   /* Elevated Purple = Blue ⊕ Red */
+  --synthesis-soft: #ECE5F2;
+  --synthesis-strong: #5D4478;
+
+  --accent:        #319795;   /* teal for UI */
+  --accent-strong: #285E61;
+  --accent-soft:   #E6FFFA;
+
+  --border:        #E4DFD5;
+  --border-strong: #D4CFC5;
+  --sidenote-bg:   #F0EEE6;
+
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow:    0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.12);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 220ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #14141F;
+  --bg-panel:      #0A0A15;
+  --bg-elevated:   #2B2B3D;
+  --bg-sunken:     #1F1F2E;
+  --text:          #E5E7EB;
+  --text-muted:    #9CA3AF;
+  --text-strong:   #F9FAFB;
+  --text-panel:    #E5E7EB;
+  --text-panel-muted: #9CA3AF;
+
+  --thesis:        #7AA3D4;
+  --thesis-soft:   #1E2E42;
+  --thesis-strong: #A8C3E0;
+  --antithesis:    #D48282;
+  --antithesis-soft:#3B1F1F;
+  --antithesis-strong: #E0A5A5;
+  --synthesis:     #B49AD4;
+  --synthesis-soft:#2F2138;
+  --synthesis-strong: #D0BCE5;
+
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent-soft:   #1A3B3A;
+
+  --border:        #2D3748;
+  --border-strong: #4A5568;
+  --sidenote-bg:   #24243A;
+
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+  --shadow:    0 4px 12px rgba(0,0,0,.5);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.6);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: var(--line);
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   LAYOUT — 3-column grid (10% / 55% / 35%)
+============================================================ */
+.layout{
+  display: grid;
+  grid-template-columns: 12% 55% 33%;
+  gap: 0;
+  max-width: 1500px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.navigator{ background: var(--bg-panel); color: var(--text-panel); }
+.canvas{    background: var(--bg);       color: var(--text); padding: 40px 48px 120px; }
+.marginalia{background: var(--bg-panel); color: var(--text-panel); }
+
+@media (max-width: 1024px){
+  .layout{ grid-template-columns: 1fr; }
+  .navigator, .marginalia{ position: static !important; max-height: none !important; padding: 20px !important; }
+  .canvas{ padding: 24px; }
+}
+
+/* Focus mode collapses side panels */
+html.focus-mode .layout{ grid-template-columns: 1fr; max-width: 820px; }
+html.focus-mode .navigator,
+html.focus-mode .marginalia{ display: none; }
+html.focus-mode .canvas{ background: var(--bg); }
+
+/* ============================================================
+   LEFT PANEL — Navigator (dark, with Emoji Compass)
+============================================================ */
+.navigator{
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 24px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.progress-bar{
+  height: 3px; background: rgba(255,255,255,.1);
+  border-radius: 2px; overflow: hidden; margin-bottom: 20px;
+}
+.progress-bar__fill{
+  height: 100%; background: var(--accent);
+  width: 0%; transition: width 100ms linear;
+}
+.nav-meta{
+  color: var(--text-panel-muted);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 20px; display: flex; justify-content: space-between;
+}
+
+/* Emoji Compass */
+.compass-title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); margin: 20px 0 10px;
+  font-weight: 700;
+}
+.compass{
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 24px;
+}
+.compass-node{
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  color: var(--text-panel-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  font-size: 12px;
+}
+.compass-node:hover{ background: rgba(255,255,255,.06); color: var(--text-panel); }
+.compass-node.active{
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border-left-color: currentColor;
+}
+.compass-node__icon{ font-size: 18px; }
+.compass-node__label{ font-weight: 500; letter-spacing: .02em; }
+.compass-node[data-phase="thesis"].active{ border-left-color: var(--thesis); }
+.compass-node[data-phase="probe"].active{  border-left-color: var(--accent); }
+.compass-node[data-phase="collision"].active{ border-left-color: var(--antithesis); }
+.compass-node[data-phase="synthesis"].active{ border-left-color: var(--synthesis); }
+.compass-node[data-phase="ripple"].active{ border-left-color: var(--info); }
+
+/* Sub-TOC */
+.toc-title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); margin: 8px 0 8px; font-weight: 700;
+}
+.toc{ list-style: none; padding: 0; margin: 0; }
+.toc li{ margin: 1px 0; }
+.toc a{
+  display: block; padding: 5px 10px;
+  color: var(--text-panel-muted); text-decoration: none;
+  border-left: 2px solid transparent; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition); font-size: 12px;
+}
+.toc a:hover{ color: var(--text-panel); background: rgba(255,255,255,.05); }
+.toc a.active{ color: #fff; background: rgba(255,255,255,.1); border-left-color: var(--accent); font-weight: 500; }
+
+/* ============================================================
+   PARADOX METER — the metacognitive UI
+============================================================ */
+.paradox-meter{
+  position: sticky; top: 12px; z-index: 20;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin: 0 0 32px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans);
+}
+.paradox-meter__label{
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); font-weight: 700;
+  margin-bottom: 8px;
+}
+.paradox-meter__value{
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-strong);
+}
+.paradox-meter__bar{
+  height: 8px; background: var(--bg-sunken);
+  border-radius: 4px; overflow: hidden; position: relative;
+}
+.paradox-meter__fill{
+  height: 100%; width: 0%;
+  background: linear-gradient(to right, var(--thesis), var(--antithesis));
+  transition: width 300ms cubic-bezier(.4,0,.2,1), background 300ms;
+  border-radius: 4px;
+}
+.paradox-meter[data-phase="synthesis"] .paradox-meter__fill,
+.paradox-meter[data-phase="ripple"] .paradox-meter__fill{
+  background: linear-gradient(to right, var(--synthesis), var(--success));
+}
+.paradox-meter__hint{
+  font-size: 11px; color: var(--text-muted); margin-top: 6px;
+  min-height: 1.2em;
+}
+
+/* ============================================================
+   MIDDLE COLUMN — Canvas typography
+============================================================ */
+.canvas-inner{ max-width: var(--measure); margin: 0 auto; width: 100%; }
+.canvas h1{
+  font-family: var(--font-sans); font-size: 36px; line-height: 1.15;
+  margin: 0 0 8px; color: var(--text-strong); letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans); font-size: 26px; line-height: 1.3;
+  margin: 64px 0 16px; color: var(--text-strong);
+  letter-spacing: -.01em; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.canvas h2 .h2-emoji{ font-size: 24px; }
+.canvas h3{
+  font-family: var(--font-sans); font-size: 20px;
+  margin: 36px 0 12px; color: var(--text-strong);
+}
+.canvas h4{
+  font-family: var(--font-sans); font-size: 14px;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-muted); margin: 24px 0 8px;
+}
+.canvas p{ margin: 0 0 18px; }
+.canvas a{
+  color: var(--accent); text-decoration: underline;
+  text-decoration-color: var(--border-strong); text-underline-offset: 3px;
+}
+.canvas a:hover{ text-decoration-color: var(--accent); }
+.canvas blockquote{
+  border-left: 3px solid var(--accent);
+  padding: 12px 18px; margin: 24px 0;
+  background: var(--bg-sunken); font-style: italic;
+  color: var(--text); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.canvas code{
+  font-family: var(--font-mono); font-size: .9em;
+  background: var(--bg-sunken); padding: 2px 6px; border-radius: 4px;
+}
+.canvas pre{
+  background: var(--bg-sunken); padding: 16px;
+  border-radius: var(--radius-sm); overflow-x: auto;
+  border: 1px solid var(--border);
+}
+.canvas pre code{ background: transparent; padding: 0; }
+.canvas strong{ color: var(--text-strong); font-weight: 600; }
+
+.byline{
+  font-family: var(--font-sans); color: var(--text-muted);
+  font-size: 14px; margin-bottom: 32px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--border);
+}
+.byline .pill{
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: .05em;
+  background: var(--accent-soft); color: var(--accent-strong);
+  margin-right: 6px; font-weight: 600;
+}
+
+/* ============================================================
+   ASSUMPTIONS REGISTER — the 4 Dimensions block
+============================================================ */
+.assumptions{
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 24px 0 40px;
+  font-family: var(--font-sans);
+}
+.assumptions__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); font-weight: 700; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.assumptions__grid{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px;
+  font-size: 13px;
+}
+@media (max-width: 640px){ .assumptions__grid{ grid-template-columns: 1fr; } }
+.assumption-row{ display: flex; flex-direction: column; gap: 2px; }
+.assumption-key{ color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+.assumption-val{ color: var(--text-strong); font-weight: 500; }
+.assumption-val .badge{
+  display: inline-block; padding: 1px 8px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 10px;
+  background: var(--accent-soft); color: var(--accent-strong);
+  margin-right: 4px;
+}
+
+/* ============================================================
+   THREE-PANEL DIALECTIC HEADER (Thesis / Antithesis / Synthesis)
+============================================================ */
+.dialectic-header{
+  display: grid; grid-template-columns: 1fr; gap: 12px;
+  margin: 32px 0 40px;
+}
+@media (min-width: 720px){
+  .dialectic-header{ grid-template-columns: 1fr 1fr 1fr; }
+}
+.panel{
+  padding: 18px; border-radius: var(--radius);
+  border: 1px solid var(--border); font-family: var(--font-sans);
+  font-size: 14px; line-height: 1.5; position: relative;
+}
+.panel__label{
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 700; margin-bottom: 8px;
+}
+.panel__body{ color: var(--text); }
+.panel--thesis{     background: var(--thesis-soft);     border-color: var(--thesis); }
+.panel--thesis .panel__label{ color: var(--thesis-strong); }
+.panel--antithesis{ background: var(--antithesis-soft); border-color: var(--antithesis); }
+.panel--antithesis .panel__label{ color: var(--antithesis-strong); }
+.panel--synthesis{  background: var(--synthesis-soft);  border-color: var(--synthesis); }
+.panel--synthesis .panel__label{ color: var(--synthesis-strong); }
+
+/* ============================================================
+   ARGUMENT MAP — Toulmin visual
+============================================================ */
+.argument-map{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; margin: 32px 0; background: var(--bg-elevated);
+  font-family: var(--font-sans); font-size: 13px; box-shadow: var(--shadow-sm);
+}
+.argument-map__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); margin-bottom: 14px; font-weight: 700;
+}
+.toulmin{ display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 640px){
+  .toulmin{
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "grounds warrant claim" "backing qualifier rebuttal";
+  }
+  .t-grounds{ grid-area: grounds; } .t-warrant{ grid-area: warrant; }
+  .t-claim{ grid-area: claim; }     .t-backing{ grid-area: backing; }
+  .t-qualifier{ grid-area: qualifier; } .t-rebuttal{ grid-area: rebuttal; }
+}
+.toulmin__cell{
+  padding: 12px 14px; background: var(--bg-sunken);
+  border-radius: var(--radius-sm); border-left: 3px solid var(--accent);
+  line-height: 1.45;
+}
+.toulmin__cell.t-claim{
+  border-left-color: var(--synthesis);
+  background: var(--synthesis-soft); font-weight: 500;
+}
+.toulmin__cell.t-rebuttal{ border-left-color: var(--antithesis); background: var(--antithesis-soft); }
+.toulmin__cell.t-grounds{ border-left-color: var(--thesis); background: var(--thesis-soft); }
+.toulmin__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text-muted);
+  margin-bottom: 4px; font-weight: 700;
+}
+
+/* ============================================================
+   THESIS PILLAR — the load-bearing walls
+============================================================ */
+.thesis-pillar{
+  border-left: 6px solid var(--thesis);
+  background: linear-gradient(to right, var(--thesis-soft) 0%, transparent 80%);
+  padding: 20px 24px; margin: 24px 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.thesis-pillar__label{
+  font-family: var(--font-sans); font-size: 10px;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--thesis-strong); font-weight: 700;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.thesis-pillar__statement{
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 700; line-height: 1.4; color: var(--text-strong);
+  margin-bottom: 8px;
+}
+.thesis-pillar__contract{
+  font-style: italic; color: var(--text-muted); font-size: 14px;
+  font-family: var(--font-sans);
+}
+.premise-walls{
+  display: grid; gap: 12px; margin: 20px 0;
+  font-family: var(--font-sans);
+}
+.premise-wall{
+  display: grid; grid-template-columns: 40px 1fr;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: var(--bg-elevated);
+}
+.premise-wall__index{
+  background: var(--thesis); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-weight: 700; font-size: 14px;
+}
+.premise-wall__body{ padding: 12px 14px; font-size: 14px; line-height: 1.5; }
+.premise-wall__label{
+  font-weight: 700; color: var(--thesis-strong);
+  font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   CROSS-EXAMINATION CARD (per premise, with "Hear the Defense")
+============================================================ */
+.xexam-card{
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--antithesis);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  padding: 20px 24px;
+  margin: 24px 0;
+  font-family: var(--font-sans);
+  box-shadow: var(--shadow-sm);
+}
+.xexam-card__meta{
+  display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+}
+.xexam-card__meta .tag{
+  padding: 2px 8px; border-radius: 10px;
+  background: var(--antithesis-soft); color: var(--antithesis-strong);
+  font-weight: 700;
+}
+.xexam-card__meta .tag--lens{ background: var(--warn-bg); color: var(--warn); }
+.xexam-card__meta .tag--rigor{ background: var(--info-bg); color: var(--info); }
+.xexam-card__probe{
+  font-family: var(--font-sans); font-size: 17px; font-weight: 600;
+  color: var(--text-strong); margin: 8px 0 12px; line-height: 1.4;
+  font-style: italic;
+}
+.xexam-card__probe::before{
+  content: "Q: ";
+  color: var(--antithesis); font-weight: 700; font-style: normal;
+  margin-right: 4px;
+}
+.xexam-card__setup{
+  color: var(--text); font-size: 14px; line-height: 1.6; margin-bottom: 16px;
+  font-family: var(--font-serif);
+}
+.xexam-card__defense-btn{
+  background: var(--bg-sunken); color: var(--text-strong);
+  border: 1px solid var(--border-strong);
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  cursor: pointer; font-family: var(--font-sans);
+  font-size: 13px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all var(--transition);
+}
+.xexam-card__defense-btn:hover{
+  background: var(--thesis-soft); color: var(--thesis-strong);
+  border-color: var(--thesis);
+}
+.xexam-card__defense-btn::before{ content: "🛡️"; }
+.xexam-card__defense-btn[aria-expanded="true"]{
+  background: var(--thesis-soft); color: var(--thesis-strong);
+  border-color: var(--thesis);
+}
+.xexam-card__defense{
+  display: none; margin-top: 16px;
+  padding: 16px 18px; background: var(--thesis-soft);
+  border-left: 3px solid var(--thesis); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 14px; line-height: 1.55;
+  animation: defense-slide 320ms ease-out;
+}
+.xexam-card__defense.is-open{ display: block; }
+.xexam-card__defense .label{
+  font-family: var(--font-sans); font-weight: 700;
+  color: var(--thesis-strong); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: 6px; display: block;
+}
+.xexam-card__defense .verdict{
+  margin-top: 12px; padding: 8px 12px;
+  background: var(--bg-elevated); border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 13px;
+}
+.xexam-card__defense .verdict .verdict-tag{
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  margin-right: 6px; background: var(--warn-bg); color: var(--warn);
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.xexam-card__steel-man{
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px dashed var(--border-strong);
+  font-size: 12px; color: var(--text-muted); line-height: 1.5;
+}
+.xexam-card__steel-man strong{ color: var(--text-strong); }
+@keyframes defense-slide{
+  from{ opacity: 0; transform: translateY(-6px); }
+  to{   opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   COLLISION SPLIT-SCREEN (State 4 dramatic visual)
+============================================================ */
+.collision{
+  margin: 40px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.collision__inner{
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: stretch; min-height: 220px;
+}
+@media (max-width: 640px){
+  .collision__inner{ grid-template-columns: 1fr; }
+  .collision__divider{ padding: 12px 0 !important; }
+}
+.collision__side{
+  padding: 24px 28px;
+  font-family: var(--font-serif); font-size: 15px; line-height: 1.55;
+}
+.collision__side--thesis{
+  background: linear-gradient(135deg, var(--thesis-soft), var(--thesis-soft) 80%, transparent);
+  color: var(--text);
+}
+.collision__side--antithesis{
+  background: linear-gradient(-135deg, var(--antithesis-soft), var(--antithesis-soft) 80%, transparent);
+  color: var(--text);
+  text-align: right;
+}
+@media (max-width: 640px){ .collision__side--antithesis{ text-align: left; } }
+.collision__side .label{
+  display: block; font-family: var(--font-sans);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 700; margin-bottom: 12px;
+}
+.collision__side--thesis .label{ color: var(--thesis-strong); }
+.collision__side--antithesis .label{ color: var(--antithesis-strong); }
+.collision__side .heading{
+  font-family: var(--font-sans); font-size: 15px; font-weight: 700;
+  color: var(--text-strong); margin-bottom: 8px;
+}
+.collision__divider{
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  padding: 0 16px; position: relative;
+}
+.collision__divider::before,
+.collision__divider::after{
+  content: ""; position: absolute; left: 50%; width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--text-muted), transparent);
+  transform: translateX(-50%);
+}
+.collision__divider::before{ top: 8%; height: 30%; }
+.collision__divider::after{  bottom: 8%; height: 30%; }
+.collision__zap{
+  font-size: 42px; line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(163,74,74,.4));
+  z-index: 1; background: var(--bg); padding: 4px 8px; border-radius: 50%;
+}
+.collision__tension{
+  padding: 16px 24px; background: var(--bg-sunken);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans); font-size: 13px;
+  color: var(--text-muted); text-align: center;
+}
+.collision__tension strong{
+  color: var(--text-strong); font-family: var(--font-serif);
+  font-style: italic; font-size: 15px;
+}
+
+/* ============================================================
+   SUBLATION GRADIENT (State 5 elevated visual)
+============================================================ */
+.sublation{
+  margin: 40px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: linear-gradient(
+    135deg,
+    var(--thesis) 0%,
+    var(--synthesis) 50%,
+    var(--antithesis) 100%
+  );
+  padding: 3px;   /* creates gradient border */
+}
+.sublation__inner{
+  background: var(--bg);
+  border-radius: calc(var(--radius) - 3px);
+  padding: 28px 32px;
+}
+.sublation__label{
+  font-family: var(--font-sans); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--synthesis-strong); font-weight: 700;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.sublation__statement{
+  font-family: var(--font-serif); font-size: 22px; line-height: 1.4;
+  font-weight: 700; color: var(--text-strong);
+  margin-bottom: 20px;
+}
+.sublation__elevation{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-top: 20px;
+}
+@media (max-width: 640px){ .sublation__elevation{ grid-template-columns: 1fr; } }
+.sublation__elev-cell{
+  padding: 14px 16px; border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 13px; line-height: 1.55;
+}
+.sublation__elev-cell--preserve{
+  background: var(--thesis-soft);
+  border-left: 3px solid var(--thesis);
+}
+.sublation__elev-cell--absorb{
+  background: var(--antithesis-soft);
+  border-left: 3px solid var(--antithesis);
+}
+.sublation__elev-cell .lead{
+  font-weight: 700; color: var(--text-strong);
+  display: block; margin-bottom: 4px; font-size: 11px;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+
+/* ============================================================
+   RIPPLE POOL (State 7 — Radiating Implication)
+============================================================ */
+.ripple{
+  margin: 40px 0; position: relative;
+  padding: 40px 32px;
+  background: radial-gradient(
+    ellipse at center,
+    var(--synthesis-soft) 0%,
+    var(--bg) 70%
+  );
+  border-radius: 200px / 100px;
+  border: 2px solid var(--synthesis);
+  text-align: center;
+}
+.ripple::before, .ripple::after{
+  content: ""; position: absolute;
+  border: 1px solid var(--synthesis);
+  border-radius: 200px / 100px;
+  opacity: .3;
+  pointer-events: none;
+}
+.ripple::before{ inset: -12px; }
+.ripple::after{  inset: -24px; opacity: .15; }
+.ripple__label{
+  font-family: var(--font-sans); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--synthesis-strong); font-weight: 700;
+  margin-bottom: 12px;
+}
+.ripple__claim{
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 700; color: var(--text-strong); line-height: 1.4;
+  max-width: 60ch; margin: 0 auto 12px;
+}
+.ripple__adjacent{
+  font-family: var(--font-sans); font-size: 13px; color: var(--text-muted);
+  max-width: 55ch; margin: 0 auto;
+}
+.ripple__adjacent strong{ color: var(--synthesis-strong); }
+
+/* ============================================================
+   EVIDENCE LOCKER (right-panel triggers)
+============================================================ */
+.evidence-trigger{
+  background: var(--warn-bg); color: var(--warn);
+  padding: 1px 6px; border-radius: 4px;
+  font-family: var(--font-sans); font-size: .85em;
+  cursor: pointer; border: 1px dashed transparent;
+  transition: all var(--transition);
+}
+.evidence-trigger::before{ content: "🔎 "; font-size: .9em; }
+.evidence-trigger:hover, .evidence-trigger:focus{
+  border-color: var(--warn); outline: none;
+}
+.evidence-trigger.active{
+  background: var(--warn); color: white;
+}
+.evidence-item{
+  padding: 12px 14px; background: var(--sidenote-bg);
+  color: var(--text); border-left: 3px solid var(--warn);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 12px; font-size: 12px; line-height: 1.5;
+  font-family: var(--font-sans);
+  transition: all var(--transition);
+}
+.evidence-item.highlight{
+  background: var(--warn-bg);
+  box-shadow: 0 0 0 2px var(--warn), var(--shadow);
+  transform: scale(1.02);
+}
+.evidence-item__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--warn); font-weight: 700;
+  margin-bottom: 4px;
+}
+.evidence-item__source{
+  margin-top: 6px; font-size: 11px; color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   PHILOSOPHERS' NOTE (user-generated marginalia)
+============================================================ */
+.phil-notes{ margin-top: 20px; }
+.phil-notes__title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); font-weight: 700; margin-bottom: 8px;
+}
+.phil-note{
+  background: #FFF9C4; color: #4A3F00;
+  padding: 10px 12px; margin-bottom: 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans); font-size: 12px;
+  line-height: 1.45; position: relative;
+  transform: rotate(-.5deg);
+  transition: transform var(--transition);
+}
+html[data-theme="dark"] .phil-note{
+  background: #6B5F1A; color: #FFF9C4;
+}
+.phil-note:hover{ transform: rotate(0); }
+.phil-note:nth-child(even){ transform: rotate(.6deg); }
+.phil-note__quote{
+  font-style: italic; font-size: 11px; color: #6B5F00;
+  border-left: 2px solid rgba(0,0,0,.15); padding-left: 6px;
+  margin-bottom: 6px;
+}
+html[data-theme="dark"] .phil-note__quote{ color: #E5D97F; }
+.phil-note__body{ font-weight: 500; }
+.phil-note__del{
+  position: absolute; top: 6px; right: 8px;
+  background: none; border: none; cursor: pointer;
+  font-size: 12px; color: rgba(0,0,0,.4); line-height: 1;
+}
+.phil-note__del:hover{ color: #C53030; }
+html[data-theme="dark"] .phil-note__del{ color: rgba(255,255,255,.4); }
+.phil-note__empty{
+  font-size: 11px; color: var(--text-panel-muted);
+  font-style: italic; padding: 12px;
+  border: 1px dashed rgba(255,255,255,.15); border-radius: var(--radius-sm);
+  text-align: center;
+}
+#phil-popup{
+  position: absolute; z-index: 100;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-sans); font-size: 13px;
+  max-width: 320px; display: none;
+}
+#phil-popup.show{ display: block; }
+#phil-popup__quote{
+  color: var(--text-muted); font-style: italic; font-size: 12px;
+  border-left: 2px solid var(--accent); padding-left: 8px;
+  margin-bottom: 8px; max-height: 60px; overflow: hidden;
+}
+#phil-popup__input{
+  width: 100%; min-height: 60px; resize: vertical;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px; font: inherit; color: var(--text);
+  background: var(--bg-sunken);
+  font-family: var(--font-sans); font-size: 13px;
+}
+#phil-popup__actions{
+  display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;
+}
+#phil-popup button{
+  padding: 6px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--bg);
+  color: var(--text); cursor: pointer; font: inherit;
+  font-size: 12px;
+}
+#phil-popup button.save{ background: var(--accent); color: white; border-color: var(--accent); }
+
+/* ============================================================
+   FLIP CARD, DETAILS, BAR CHART, CONCEPT FLOW, QUIZ, RESIDUALS
+============================================================ */
+.flip-card{
+  perspective: 1000px; height: 180px; margin: 24px 0;
+  font-family: var(--font-sans);
+}
+.flip-card__inner{
+  position: relative; width: 100%; height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d; cursor: pointer;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card:focus-within .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg); }
+.flip-card__face{
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; border-radius: var(--radius);
+  padding: 24px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__face--front{
+  background: var(--accent-soft); color: var(--accent-strong);
+  font-weight: 600; font-size: 16px;
+}
+.flip-card__face--back{
+  background: var(--bg-elevated); color: var(--text);
+  transform: rotateY(180deg); font-size: 14px; line-height: 1.5;
+}
+
+details.deep-dive{
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0; margin: 20px 0; background: var(--bg-sunken); overflow: hidden;
+}
+details.deep-dive > summary{
+  cursor: pointer; padding: 14px 18px;
+  font-family: var(--font-sans); font-weight: 600; font-size: 14px;
+  color: var(--accent-strong); list-style: none;
+  display: flex; align-items: center; gap: 8px; user-select: none;
+}
+details.deep-dive > summary::-webkit-details-marker{ display: none; }
+details.deep-dive > summary::before{
+  content: "▸"; transition: transform var(--transition); color: var(--accent);
+}
+details.deep-dive[open] > summary::before{ transform: rotate(90deg); }
+details.deep-dive[open] > summary{ border-bottom: 1px solid var(--border); }
+details.deep-dive > *:not(summary){
+  padding: 16px 18px;
+  animation: dd-open 240ms ease-out;
+}
+@keyframes dd-open{ from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+
+details.fallacy-log{ border-color: var(--warn); }
+details.fallacy-log > summary{ color: var(--warn); }
+details.fallacy-log > summary::before{ color: var(--warn); }
+.fallacy-entry{
+  border-left: 3px solid var(--warn); padding: 10px 14px;
+  background: var(--warn-bg); margin: 10px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 14px;
+}
+.fallacy-entry__name{
+  font-family: var(--font-sans); font-weight: 700; color: var(--warn);
+}
+
+.bar-chart{
+  font-family: var(--font-sans); margin: 24px 0;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; background: var(--bg-elevated);
+}
+.bar-chart__title{
+  font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); margin-bottom: 14px; font-weight: 700;
+}
+.bar-row{
+  display: grid; grid-template-columns: 140px 1fr 50px;
+  align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px;
+}
+.bar-label{ color: var(--text); }
+.bar-track{ background: var(--bg-sunken); height: 20px; border-radius: 4px; overflow: hidden; }
+.bar-fill{
+  height: 100%; background: var(--synthesis);
+  transition: width var(--transition), background var(--transition);
+  border-radius: 4px;
+}
+.bar-fill:hover{ background: var(--synthesis-strong); }
+.bar-value{ color: var(--text-muted); font-family: var(--font-mono); font-size: 12px; text-align: right; }
+
+.term{
+  border-bottom: 1px dotted var(--accent); cursor: help; position: relative;
+}
+.term:hover::after, .term:focus::after{
+  content: attr(data-def); position: absolute;
+  bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--text-strong); color: var(--bg);
+  font-family: var(--font-sans); font-size: 12px; font-weight: 400;
+  padding: 8px 12px; border-radius: var(--radius-sm);
+  white-space: normal; min-width: 200px; max-width: 280px;
+  z-index: 100; box-shadow: var(--shadow); line-height: 1.4;
+}
+
+/* Residuals */
+.residuals{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin: 32px 0; background: var(--bg-sunken);
+}
+.residuals h4{ margin-top: 20px; }
+.residuals h4:first-child{ margin-top: 0; }
+.residuals ul{ padding-left: 20px; margin: 8px 0; }
+.residuals li{ margin: 6px 0; font-size: 15px; }
+.residuals__badge{
+  display: inline-block; font-family: var(--font-mono);
+  font-size: 10px; padding: 2px 6px; border-radius: 3px;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text-muted); margin-right: 6px;
+}
+
+/* Quiz */
+.quiz{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin: 40px 0 24px;
+  background: var(--bg-elevated); font-family: var(--font-sans);
+}
+.quiz h2{ border: none; padding: 0; margin: 0 0 16px; font-size: 20px; }
+.quiz fieldset{ border: none; padding: 0; margin: 0 0 24px; }
+.quiz legend{
+  font-weight: 700; margin-bottom: 12px; color: var(--text-strong);
+  font-size: 15px; line-height: 1.4;
+}
+.quiz-option{
+  display: block; padding: 10px 14px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  margin: 6px 0; cursor: pointer; transition: all var(--transition);
+  font-size: 14px; background: var(--bg);
+}
+.quiz-option:hover{ border-color: var(--accent); }
+.quiz-option input{ margin-right: 10px; accent-color: var(--accent); }
+.quiz-option.selected{ background: var(--accent-soft); border-color: var(--accent); }
+.quiz-option.correct-answer{ background: var(--success-bg); border-color: var(--success); color: var(--success); }
+.quiz-option.incorrect-answer{ background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+.quiz-check-btn{
+  font-family: var(--font-sans); background: var(--synthesis);
+  color: white; border: none; padding: 10px 20px;
+  font-size: 14px; font-weight: 600; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--transition);
+}
+.quiz-check-btn:hover{ background: var(--synthesis-strong); }
+.quiz-score{
+  margin-top: 16px; padding: 14px 18px;
+  border-radius: var(--radius-sm); font-weight: 600; display: none;
+}
+.quiz-score.show{ display: block; }
+.quiz-score.pass{ background: var(--success-bg); color: var(--success); }
+.quiz-score.mid{ background: var(--warn-bg); color: var(--warn); }
+.quiz-score.fail{ background: var(--danger-bg); color: var(--danger); }
+
+/* Difficulty markers */
+.diff{
+  display: inline-block; font-family: var(--font-sans); font-size: 10px;
+  padding: 1px 6px; border-radius: 3px;
+  vertical-align: middle; margin-right: 4px; font-weight: 700;
+}
+.diff-core{ background: var(--success-bg); color: var(--success); }
+.diff-supp{ background: var(--warn-bg); color: var(--warn); }
+.diff-deep{ background: var(--info-bg); color: var(--info); }
+
+/* Sidenotes in right panel */
+.marginalia{
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 24px 20px;
+  font-family: var(--font-sans); font-size: 12px;
+}
+.sidenote{
+  background: rgba(255,255,255,.05);
+  padding: 12px 14px; border-radius: var(--radius-sm);
+  margin-bottom: 16px; border-left: 3px solid var(--accent);
+  line-height: 1.55;
+  color: var(--text-panel);
+}
+.sidenote__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--accent); margin-bottom: 4px; font-weight: 700;
+}
+.marginalia__title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); font-weight: 700;
+  margin: 24px 0 8px;
+}
+.marginalia__title:first-child{ margin-top: 0; }
+
+/* Floating controls */
+.controls{
+  position: fixed; bottom: 24px; right: 24px;
+  display: flex; flex-direction: column; gap: 8px; z-index: 50;
+}
+.ctrl-btn{
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text); width: 44px; height: 44px; border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); transition: all var(--transition);
+  font-family: var(--font-sans); font-size: 18px;
+}
+.ctrl-btn:hover{ background: var(--accent); color: white; border-color: var(--accent); }
+.ctrl-btn__lang{ font-size: 12px; font-weight: 700; }
+
+/* Footer */
+.footer-note{
+  margin-top: 60px; padding: 20px 0;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans); font-size: 12px;
+  color: var(--text-muted); line-height: 1.5;
+}
+
+/* Gate 5 offer block */
+.gate5{
+  margin: 40px 0; padding: 24px;
+  border: 1px solid var(--accent); border-radius: var(--radius);
+  background: var(--accent-soft);
+  font-family: var(--font-sans);
+}
+.gate5__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--accent-strong); font-weight: 700; margin-bottom: 8px;
+}
+.gate5__body{ color: var(--text); font-size: 14px; line-height: 1.55; }
+.gate5__options{ list-style: none; padding: 0; margin: 12px 0 0; }
+.gate5__options li{
+  padding: 6px 0; padding-left: 24px; position: relative;
+}
+.gate5__options li::before{
+  content: attr(data-key); position: absolute; left: 0; top: 6px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); color: white;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Bilingual scaffold */
+html[data-lang="en"] [lang="vi"]{ display: none; }
+html[data-lang="vi"] [lang="en"]{ display: none; }
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     FLOATING CONTROLS
+============================================================ -->
+<div class="controls">
+  <button class="ctrl-btn" id="theme-toggle" title="Chuyển chế độ sáng/tối" aria-label="Toggle theme">☾</button>
+  <button class="ctrl-btn" id="focus-toggle" title="Chế độ tập trung" aria-label="Toggle focus mode">⛶</button>
+  <button class="ctrl-btn ctrl-btn__lang" id="lang-toggle" title="Chuyển ngôn ngữ" aria-label="Toggle language" style="display:none">EN</button>
+</div>
+
+<!-- Philosophers' Note popup -->
+<div id="phil-popup" role="dialog" aria-label="Thêm một câu phản vấn">
+  <div id="phil-popup__quote"></div>
+  <textarea id="phil-popup__input" placeholder="Câu phản vấn của bạn... Socrates sẽ hỏi gì về đoạn này?" aria-label="Counter-probe"></textarea>
+  <div id="phil-popup__actions">
+    <button id="phil-popup__cancel">Hủy</button>
+    <button id="phil-popup__save" class="save">Lưu ghi chú</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     MAIN LAYOUT
+============================================================ -->
+<div class="layout">
+
+  <!-- =====================================================
+       LEFT PANEL — Navigator (Dialectical Compass)
+  ===================================================== -->
+  <aside class="navigator" aria-label="Điều hướng">
+    <div class="progress-bar" aria-hidden="true">
+      <div class="progress-bar__fill" id="progress-fill"></div>
+    </div>
+    <div class="nav-meta">
+      <span>📖 <span id="reading-time">~10</span> phút</span>
+      <span id="progress-percent">0%</span>
+    </div>
+
+    <div class="compass-title">La bàn biện chứng</div>
+    <div class="compass" id="compass">
+      <a class="compass-node" data-target="scope"        data-phase="scope"><span class="compass-node__icon">🎯</span><span class="compass-node__label">Phạm vi</span></a>
+      <a class="compass-node" data-target="thesis"       data-phase="thesis"><span class="compass-node__icon">📘</span><span class="compass-node__label">Luận đề</span></a>
+      <a class="compass-node" data-target="xexam"        data-phase="probe"><span class="compass-node__icon">🔍</span><span class="compass-node__label">Thẩm vấn</span></a>
+      <a class="compass-node" data-target="collision"    data-phase="collision"><span class="compass-node__icon">⚔️</span><span class="compass-node__label">Va chạm</span></a>
+      <a class="compass-node" data-target="synthesis"    data-phase="synthesis"><span class="compass-node__icon">💎</span><span class="compass-node__label">Tổng hợp</span></a>
+      <a class="compass-node" data-target="ripple"       data-phase="ripple"><span class="compass-node__icon">🌊</span><span class="compass-node__label">Lan tỏa</span></a>
+    </div>
+
+    <div class="toc-title">Mục lục</div>
+    <ul class="toc" id="toc">
+      <li><a href="#hook" data-target="hook">Câu chuyện mở đầu</a></li>
+      <li><a href="#scope" data-target="scope">Phạm vi &amp; Giả định</a></li>
+      <li><a href="#dialectic" data-target="dialectic">Thoáng nhìn</a></li>
+      <li><a href="#argument-map" data-target="argument-map">Bản đồ lập luận</a></li>
+      <li><a href="#thesis" data-target="thesis">Luận đề + Tiền đề</a></li>
+      <li><a href="#xexam" data-target="xexam">Thẩm vấn chéo</a></li>
+      <li><a href="#collision" data-target="collision">Va chạm</a></li>
+      <li><a href="#synthesis" data-target="synthesis">Tổng hợp</a></li>
+      <li><a href="#proof" data-target="proof">Bằng chứng</a></li>
+      <li><a href="#ripple" data-target="ripple">Hệ quả lan tỏa</a></li>
+      <li><a href="#fallacy-log" data-target="fallacy-log">Nhật ký ngụy biện</a></li>
+      <li><a href="#residuals" data-target="residuals">Giới hạn</a></li>
+      <li><a href="#quiz" data-target="quiz">Kiểm tra hiểu biết</a></li>
+      <li><a href="#gate5" data-target="gate5">Tiếp tục hay lặp lại?</a></li>
+    </ul>
+  </aside><!-- =====================================================
+       MIDDLE COLUMN — Canvas (The Arena)
+  ===================================================== -->
+  <main class="canvas">
+    <div class="canvas-inner">
+
+    <!-- Title -->
+    <h1>Nâng chất trường thường kiểu Phần Lan — Có khả thi ở Việt Nam?</h1>
+    <div class="byline">
+      <span class="pill">Biện chứng</span>
+      <span class="pill">Vòng xoắn 2</span>
+      <span class="pill">Chính sách giáo dục</span>
+      Một lập luận được rèn giũa về đề xuất: "Nâng chất trường thường theo tinh thần Phần Lan — để trường chuyên không còn là lối thoát duy nhất cho phụ huynh."
+    </div>
+
+    <!-- ============ PARADOX METER ============ -->
+    <div class="paradox-meter" id="paradox-meter" data-phase="thesis" aria-live="polite">
+      <div class="paradox-meter__label">
+        <span>Mức bất hòa nhận thức</span>
+        <span class="paradox-meter__value" id="paradox-value">0%</span>
+      </div>
+      <div class="paradox-meter__bar">
+        <div class="paradox-meter__fill" id="paradox-fill"></div>
+      </div>
+      <div class="paradox-meter__hint" id="paradox-hint">Bắt đầu vòng xoắn 2 — luận đề về sự khả thi đứng vững, chưa bị thách thức.</div>
+    </div>
+
+    <!-- ============ ASSUMPTIONS REGISTER (4 Dimensions) ============ -->
+    <div class="assumptions" aria-labelledby="assumptions-title">
+      <div class="assumptions__title" id="assumptions-title">🔧 Sổ đăng ký giả định — Bốn chiều kích (kế thừa từ Vòng 1)</div>
+      <div class="assumptions__grid">
+        <div class="assumption-row">
+          <span class="assumption-key">Kính tấn công</span>
+          <span class="assumption-val"><span class="badge">THỰC NGHIỆM + THỰC DỤNG</span>Mọi khẳng định được kiểm tra bằng số liệu ngân sách, lương giáo viên, kết quả PISA, và tiền lệ cải cách.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Mức độ gắt gao</span>
+          <span class="assumption-val"><span class="badge">CON RUỒI TRÂU</span>Thẩm vấn mạnh — đề xuất bị coi là mơ mộng cho tới khi được chứng minh khả thi.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Quỹ đạo</span>
+          <span class="assumption-val"><span class="badge">NGHỊCH LÝ</span>Cả "khả thi" lẫn "không khả thi" đều có phần đúng; tổng hợp tìm biến số quyết định.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Độ sâu</span>
+          <span class="assumption-val"><span class="badge">XOẮN ỐC VÒNG 2</span>Bài toán chuyển từ "chuyên hay thường" sang "hệ thống có khả năng không" — ngân sách → chính trị → văn hóa.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ HOOK ============ -->
+    <section id="hook">
+      <h2><span class="h2-emoji">✍️</span>Câu chuyện mở đầu</h2>
+      <p>Năm 2023, Bộ Giáo dục ban hành Thông tư 05/2023: <span class="evidence-trigger" data-evidence="ev-tt05">bỏ lớp không chuyên trong trường chuyên</span>, từ năm học 2024–2025. Năm 2026, Luật Nhà giáo có hiệu lực, quy định <span class="evidence-trigger" data-evidence="ev-luongvn">lương nhà giáo xếp cao nhất hệ thống thang bậc lương hành chính sự nghiệp</span>. Năm 2024, Singapore — nền giáo dục thành tích bậc nhất châu Á — <span class="evidence-trigger" data-evidence="ev-sbb">xóa bỏ phân luồng Express/Normal</span> trong trường phổ thông.</p>
+      <p>Nhưng ở Việt Nam, câu hỏi lớn vẫn bỏ ngỏ: <em>"Nâng chất trường thường — để con cái chúng tôi không phải chạy đua vào trường chuyên — có khả thi về ngân sách và chính trị không?"</em> Nghe thì tốt đẹp, nhân văn. Nhưng nó có đứng vững trước con số 2,89% GDP chi cho giáo dục, trước mức lương giáo viên mới tăng nhưng vẫn thua xa chuẩn OECD, trước văn hóa thi cử lâu đời? Bài này sẽ phản biện đề xuất đó — đúng chỗ nào, sai chỗ nào, và đâu là lộ trình thực sự khả thi.</p>
+    </section>
+
+    <!-- ============ SCOPE ============ -->
+    <section id="scope">
+      <h2><span class="h2-emoji">🎯</span>Phạm vi &amp; Giả định</h2>
+      <p><strong>Lãnh vực.</strong> Khả năng tài chính và chính trị của Việt Nam trong việc nâng chất trường phổ thông đại trà theo tinh thần Phần Lan, đối chiếu với tiền lệ cải cách Singapore (Full SBB 2024) và dữ liệu chi ngân sách/lương giáo viên quốc tế (OECD).</p>
+      <p><strong>Trong phạm vi:</strong> ngân sách giáo dục (tỷ trọng GDP và ngân sách nhà nước), lương giáo viên, đào tạo giáo viên, cải cách chương trình, và các quyết định chính trị đã ban hành (Thông tư 05/2023, Luật Nhà giáo 2025).</p>
+      <p><strong>Ngoài phạm vi:</strong> bậc tiểu học/THCS riêng biệt, chi tiết kỹ thuật cải cách tiền lương công chức, và câu hỏi triết học "trường chuyên có nên tồn tại" (đã xử lý ở Vòng 1 — kết luận: có, cho nhóm năng khiếu thật).</p>
+      <p><strong>Giả định đăng ký:</strong></p>
+      <ul>
+        <li>"Nâng chất trường thường kiểu Phần Lan" được hiểu là <span class="term" data-def="Ba trụ cột: (1) giáo viên được đào tạo sâu (thạc sĩ), được trả lương tương xứng, có tự chủ nghề nghiệp; (2) chương trình chuẩn quốc gia nhưng trường tự thiết kế; (3) giảm thi cử áp lực, không xếp hạng học sinh.">ba trụ cột</span>: đào tạo giáo viên, tự chủ trường học, giảm thi cử — không phải "học ít đi".</li>
+        <li>Số liệu ngân sách và lương được lấy từ nguồn đã kiểm chứng (World Bank, OECD, UNESCO, báo chí Việt Nam) — mọi con số đều có ghi chú nguồn.</li>
+        <li>Người đọc là phụ huynh Việt đã đọc Vòng 1 (hiểu BFLPE và khái niệm "fit"), giờ muốn biết hệ thống có đáng tin để lựa chọn trường thường hay không.</li>
+      </ul>
+      <p><strong>Tư thế người đọc:</strong> phụ huynh đã bớt phân vân "chuyên hay thường" nhưng vẫn hoài nghi: "Nói nâng chất thì dễ — nhưng nhà nước có tiền và có muốn làm không?" Họ muốn bằng chứng về ngân sách và ý chí chính trị.</p>
+    </section>
+
+    <!-- ============ AT A GLANCE (three-panel) ============ -->
+    <section id="dialectic">
+      <h2><span class="h2-emoji">👁️</span>Thoáng nhìn</h2>
+      <div class="dialectic-header">
+        <div class="panel panel--thesis">
+          <span class="panel__label">📘 Luận đề</span>
+          <div class="panel__body">Việt Nam có thể nâng chất trường thường theo tinh thần Phần Lan — <em>cả về ngân sách lẫn chính trị</em> — để trường chuyên không còn là lối thoát duy nhất cho phụ huynh.</div>
+        </div>
+        <div class="panel panel--antithesis">
+          <span class="panel__label">⚔️ Phản đề</span>
+          <div class="panel__body">Không khả thi. Chi giáo dục/GDP tụt xuống <span class="evidence-trigger" data-evidence="ev-ngansach">2,89% năm 2022</span> — thấp nhất 14 năm, không đạt mục tiêu 20% ngân sách; lương giáo viên 5,3–17,2 triệu không thể đuổi kịp chuẩn OECD; chính trị vẫn ưu tiên trường chuyên (học bổng, tuyển thẳng); văn hóa thi cử + học thêm đã ăn sâu.</div>
+        </div>
+        <div class="panel panel--synthesis">
+          <span class="panel__label">💎 Tổng hợp</span>
+          <div class="panel__body">Khả thi — nhưng không bằng cách <em>nhân bản Phần Lan</em>, mà bằng ba đòn bẩy Việt hóa: (1) tái phân bổ ngân sách theo hiệu quả, (2) thực thi các luật đã ban hành (Luật Nhà giáo, Thông tư 05/2023), (3) giảm thi cử sinh tử ở ngưỡng chuyển cấp như Singapore đã làm.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARGUMENT MAP (Toulmin) ============ -->
+    <section id="argument-map">
+      <h2><span class="h2-emoji">🗺️</span>Bản đồ lập luận</h2>
+      <div class="argument-map">
+        <div class="argument-map__title">Cấu trúc Toulmin của tổng hợp</div>
+        <div class="toulmin">
+          <div class="toulmin__cell t-grounds">
+            <span class="toulmin__label">Dữ kiện</span>
+            Chi GD VN ~<span class="evidence-trigger" data-evidence="ev-ngansach">2,89–4,9% GDP</span> (2008–2022) và ~15–20% chi ngân sách (World Bank: 15,1% 2000 → ~20% 2012). Lương GV từ 1/7/2026: <span class="evidence-trigger" data-evidence="ev-luongvn">5,3–17,2 triệu đồng/tháng</span>; Phần Lan GV trung học <span class="evidence-trigger" data-evidence="ev-oecd">~73.575 USD/năm</span> (OECD 2023). PISA 2022 VN giảm: <span class="evidence-trigger" data-evidence="ev-pisa">Toán 469, Đọc 462, Khoa 472</span> (toán −27 so với 2018). Singapore bỏ phân luồng từ 2024.
+          </div>
+          <div class="toulmin__cell t-warrant">
+            <span class="toulmin__label">Nhịp cầu</span>
+            Khả thi không phụ thuộc vào tổng mức chi mà vào <em>hiệu quả phân bổ</em> và <em>ý chí chính trị</em>. Cả hai đều có dấu hiệu đang xuất hiện: phân bổ ngân sách từng đạt 20% NSNN (2012) chứng minh năng lực tài chính; Thông tư 05/2023 và Luật Nhà giáo chứng minh chính phủ đã chọn hướng nâng chất toàn hệ thống.
+          </div>
+          <div class="toulmin__cell t-claim">
+            <span class="toulmin__label">Luận điểm</span>
+            Nâng chất trường thường kiểu Phần Lan ở Việt Nam là khả thi — nhưng phải là phiên bản Việt hóa: tái phân bổ ngân sách, thực thi luật đã ban hành, và giảm thi cử sinh tử, thay vì chờ "đủ tiền kiểu OECD".
+          </div>
+          <div class="toulmin__cell t-backing">
+            <span class="toulmin__label">Hậu thuẫn</span>
+            World Bank Public Expenditure Review (chi GD ~5,7% GDP 2009–2012); UNESCO/GPE &amp; số liệu VNIES về chi GD; OECD Education at a Glance 2023 (lương GV, giờ học, quy mô lớp); MOE Singapore (Full SBB); Bộ GD-ĐT (Thông tư 05/2023); báo chí VN về Luật Nhà giáo 2025.
+          </div>
+          <div class="toulmin__cell t-qualifier">
+            <span class="toulmin__label">Giới hạn</span>
+            Đúng khi: nhìn trung–dài hạn (5–10 năm), ở các đô thị lớn trước, và khi chính phủ coi đây là ưu tiên chiến lược. Không đúng khi: kỳ vọng nhân bản nguyên xi mô hình Phần Lan trong ngắn hạn toàn quốc, hoặc khi ngân sách tiếp tục bị tái cấu trúc ngược lại (ưu tiên trường chuyên).
+          </div>
+          <div class="toulmin__cell t-rebuttal">
+            <span class="toulmin__label">Phản bác</span>
+            Phản bác mạnh nhất: chi/GDP tụt xuống 2,89% (2022) — "nước càng ngày càng chi ít hơn, lấy đâu ra ngân sách để nâng chất?" Câu trả lời: tỷ trọng 15,45% ngân sách nhà nước 2022 vẫn <em>cao hơn trung bình toàn cầu 13,94%</em>; vấn đề là phân bổ nội bộ ngành, không phải thiếu tổng lượng.
+          </div>
+        </div>
+      </div>
+    </section><!-- ============ THESIS PILLAR + PREMISES ============ -->
+    <section id="thesis">
+      <h2><span class="h2-emoji">📘</span>Luận đề</h2>
+
+      <div class="thesis-pillar">
+        <div class="thesis-pillar__label">📘 Luận đề được mài sắc</div>
+        <div class="thesis-pillar__statement">"Việt Nam có thể nâng chất trường thường theo tinh thần Phần Lan — về ngân sách lẫn chính trị — để trường chuyên không còn là lối thoát duy nhất cho phụ huynh."</div>
+        <div class="thesis-pillar__contract">Ta chấp nhận mệnh đề này làm điểm khởi đầu. Nhưng nó có đứng vững dưới sự soi xét của con số ngân sách và bản đồ quyền lực?</div>
+      </div>
+
+      <h3><span class="diff diff-core">LÕI</span>Tiền đề chịu lực (khai quật được)</h3>
+      <p>Để Luận đề đứng vững, cả ba tiền đề sau phải đúng. Nếu một cái sụp, lập luận sụp theo.</p>
+
+      <div class="premise-walls">
+        <div class="premise-wall">
+          <div class="premise-wall__index">P1</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Ngân sách cho phép</div>
+            VN thiếu hiệu quả phân bổ, không thiếu tổng tiền: chi GD luôn ở 3–5% GDP và 15–20% NSNN — đủ để nâng chất nếu được phân bổ đúng.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P2</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Chính trị đang tự ủng hộ</div>
+            Nhà nước đã ban hành Thông tư 05/2023 (bỏ lớp không chuyên), Luật Nhà giáo 2025 (lương nhà giáo cao nhất) — và có tiền lệ Singapore bỏ phân luồng.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P3</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Văn hóa đảo ngược được</div>
+            Cơn sốt trường chuyên là hệ quả của trường thường kém hấp dẫn; khi trường thường đủ tốt và thi cử bớt sinh tử, hành vi phụ huynh sẽ dịch chuyển.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CROSS-EXAMINATION ============ -->
+    <section id="xexam">
+      <h2><span class="h2-emoji">🔍</span>Thẩm vấn chéo</h2>
+      <p>Mỗi tiền đề nhận một câu hỏi riêng. Câu hỏi và tình huống bìa được hiện ngay; lời bào chữa nằm sau nút bấm. Hãy ngồi với nghi ngờ trước khi nghe lời cứu viện.</p>
+
+      <!-- P1 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P1 — NGÂN SÁCH CHO PHÉP?</span>
+          <span class="tag tag--lens">Kính: Thực dụng</span>
+          <span class="tag tag--rigor">Độ gắt: Ruồi trâu</span>
+        </div>
+        <div class="xexam-card__probe">Chi/GDP đang tụt dốc — 2,89% năm 2022, mục tiêu 20% ngân sách không đạt. Lấy tiền đâu?</div>
+        <p class="xexam-card__setup">Nghịch lý ngân sách: World Bank ghi nhận VN từng chi giáo dục <span class="evidence-trigger" data-evidence="ev-wb">~5,7% GDP (2009–2012)</span> và tỷ trọng ngân sách tăng từ 15,1% (2000) lên ~20% (2012). Đến 2022, chi/GDP tụt về <span class="evidence-trigger" data-evidence="ev-ngansach">2,89%</span> — thấp nhất 14 năm. Nếu "khả thi" cần một dòng ngân sách bền vững, con số đang đi ngược hướng này phá hỏng tiền đề P1.</p>
+        <button class="xexam-card__defense-btn" data-target="def-p1" aria-expanded="false">Nghe lời bào chữa</button>
+        <div class="xexam-card__defense" id="def-p1">
+          <span class="label">Tình huống bìa — Kính thực dụng</span>
+          <p>Một tỉnh nghèo miền núi chi gần hết ngân sách giáo dục cho lương, không còn đồng nào cho bồi dưỡng giáo viên hay cơ sở vật chất — nhưng vẫn đạt "tỷ trọng ngân sách 20%". Ngược lại, Hà Nội chi ít hơn về tỷ trọng nhưng hiệu quả cao hơn. Điều này cho thấy: đo bằng tỷ trọng GDP/NSNN không nói được gì về chất lượng.</p>
+          <span class="label" style="margin-top:12px">Lời bào chữa</span>
+          <p>Người bảo vệ Luận đề nhượng bộ phần chi/GDP giảm là thật, nhưng lập luận: tỷ trọng 15,45% chi ngân sách 2022 vẫn <em>cao hơn trung bình toàn cầu 13,94%</em> — tức VN không thiếu tổng, mà thiếu hiệu quả. Vấn đề là <em>cơ cấu chi</em>: quá ít cho phát triển nghiệp vụ (bồi dưỡng GV, chương trình, cơ sở vật chất trường thường), quá nhiều cho duy trì bộ máy và trường chuyên. Tái phân bổ nội bộ ngành — không cần tăng tổng — đủ để khởi động nâng chất ở quy mô thí điểm.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đứng vững <em>có điều kiện</em>: P1 đúng nếu hiểu "cho phép" là khả năng tái phân bổ, sai nếu đòi tăng tổng chi ngay. → Biến số quyết định: <strong>cơ cấu chi, không phải tổng chi.</strong></div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra steel-man:</strong> SM-1 ✓ (công nhận chi/GDP 2,89% là số thật, không bào chữa); SM-2 ✓ (tấn công đúng mệnh đề "ngân sách cho phép"); SM-3 ✓ (dùng bằng chứng mạnh nhất của phe phản đối: World Bank PER, UNESCO).
+          </div>
+        </div>
+      </article>
+
+      <!-- P2 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P2 — CHÍNH TRỊ TỰ ỦNG HỘ?</span>
+          <span class="tag tag--lens">Kính: Thực nghiệm</span>
+          <span class="tag tag--rigor">Độ gắt: Ruồi trâu</span>
+        </div>
+        <div class="xexam-card__probe">Văn bản thì hay, nhưng thực thi thế nào? Trường chuyên vẫn là "con cưng" của chính trị.</div>
+        <p class="xexam-card__setup">Thông tư 05/2023 bỏ lớp không chuyên trong trường chuyên <span class="evidence-trigger" data-evidence="ev-tt05">(hiệu lực 15/4/2023)</span> — nhưng các trường chuyên vẫn tuyển sinh lớp chất lượng cao theo nguyện vọng. Luật Nhà giáo 2025 quy định lương nhà giáo cao nhất hệ thống thang bậc lương — nhưng mức lương thực tế từ 1/7/2026 chỉ <span class="evidence-trigger" data-evidence="ev-luongvn">5,3–17,2 triệu đồng/tháng</span>. Văn bản và thực tiễn cách nhau một khoảng — chính trị "ủng hộ trên giấy" có đếm là ủng hộ không?</p>
+        <button class="xexam-card__defense-btn" data-target="def-p2" aria-expanded="false">Nghe lời bào chữa</button>
+        <div class="xexam-card__defense" id="def-p2">
+          <span class="label">Tình huống bìa — Kính thực nghiệm</span>
+          <p>Singapore: từ 2024, xóa bỏ hoàn toàn phân luồng Express/Normal sau ~40 năm — <span class="evidence-trigger" data-evidence="ev-sbb">thay bằng Posting Groups và môn học theo mức độ</span>. Quyết định do Bộ Giáo dục (chính trị) đưa ra, không phải do áp lực kinh tế. Tiền lệ châu Á này chứng minh: một nền giáo dục thành tích cao vẫn có thể giảm thi cử sinh tử bằng quyết định chính trị.</p>
+          <span class="label" style="margin-top:12px">Lời bào chữa</span>
+          <p>Người bảo vệ Luận đề công nhận khoảng cách giữa văn bản và thực thi là có thật — nhưng lập luận ngược: chính việc <em>ban hành</em> những văn bản này là tín hiệu chính trị quan trọng. Luật Nhà giáo là đạo luật quy định lương nhà giáo <em>cao nhất hệ thống</em> — điều không chính trị nào làm nếu không coi giáo viên là nguồn lực trung tâm. Thông tư 05/2023 thu hẹp vai trò trường chuyên — bước ngược lại xu hướng "chuyên hóa" mà không phải bộ trưởng nào cũng dám làm. Chính trị không cần "ủng hộ trọn vẹn"; chỉ cần <em>mở được cánh cửa đúng hướng</em> — phần còn lại là thực thi và giám sát.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đứng vững <em>có điều kiện</em>: P2 đúng khi đọc "chính trị ủng hộ" là tín hiệu ban hành + tiền lệ quốc tế, không đòi thực thi hoàn hảo ngay. → Biến số quyết định: <strong>thực thi, không phải ban hành.</strong></div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra steel-man:</strong> SM-1 ✓ (không phủ nhận khoảng cách thực thi); SM-2 ✓ (tấn công đúng mệnh đề "chính trị tự ủng hộ"); SM-3 ✓ (dùng Thông tư 05 và Luật Nhà giáo — vũ khí mạnh nhất của Luận đề — để soi).
+          </div>
+        </div>
+      </article>
+
+      <!-- P3 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P3 — VĂN HÓA ĐẢO NGƯỢC ĐƯỢC?</span>
+          <span class="tag tag--lens">Kính: Triết học</span>
+          <span class="tag tag--rigor">Độ gắt: Ruồi trâu</span>
+        </div>
+        <div class="xexam-card__probe">Phụ huynh VN "chạy trước" bằng học thêm — nâng trường thường có chuyển được hành vi không?</div>
+        <p class="xexam-card__setup">Văn hóa thi cử ăn sâu: kỳ thi chuyển cấp là "cửa ải sinh tử", học thêm là bình thường hóa. Phản đề nói: dù trường thường có tốt, phụ huynh vẫn đổ xô vào trường chuyên vì so sánh xã hội — thay đổi cấu trúc trường không đổi được văn hóa. Nhưng Singapore đã chứng minh điều ngược lại: thay đổi cấu trúc (bỏ phân luồng, gỡ kỳ thi áp lực) <em>kéo theo</em> đổi hành vi.</p>
+        <button class="xexam-card__defense-btn" data-target="def-p3" aria-expanded="false">Nghe lời bào chữa</button>
+        <div class="xexam-card__defense" id="def-p3">
+          <span class="label">Tình huống bìa — Kính triết học</span>
+          <p>Phụ huynh Hà Nội con học lớp 9: trường thường gần nhà được nâng cấp, giáo viên tốt, không còn "phân luồng mặc định" vào lớp yếu — người phụ huynh này còn đổ xô thi chuyên vì so sánh xã hội không? Khi rủi ro của "trường thường" biến mất, động cơ chạy đua chuyển từ phòng thủ sang lựa chọn — hành vi dịch chuyển theo.</p>
+          <span class="label" style="margin-top:12px">Lời bào chữa</span>
+          <p>Người bảo vệ Luận đề thừa nhận văn hóa là rào cản mạnh nhất, nhưng lập luận bằng tiền lệ Singapore: một nền giáo dục từng nổi tiếng về thi cử (PSLE, xếp hạng, phân luồng từ 1979) vẫn thành công gỡ bỏ cấu trúc thi cử sinh tử trong 5–10 năm — vì khi <em>cấu trúc</em> thay đổi (không còn phân luồng, chỗ học tốt không còn khan hiếm theo kiểu lọc chọn), <em>hành vi</em> phụ huynh tự điều chỉnh. Văn hóa không phải hằng số; nó là phản ứng thích nghi với cấu trúc khuyến khích. Ở VN, PISA 2022 vẫn cho thấy <span class="evidence-trigger" data-evidence="ev-pisa">72% học sinh đạt năng lực Toán tối thiểu</span> — nền tảng không yếu, thiếu là cấu trúc phân bổ cơ hội.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đứng vững <em>có điều kiện</em>: P3 đúng nếu điều kiện "trường thường thật sự tốt hơn" được thỏa — biến phụ thuộc của nó là P1 và P2. → Vòng xoắn 3: văn hóa là biến <strong>phụ thuộc</strong>, không phải biến độc lập.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra steel-man:</strong> SM-1 ✓ (công nhận văn hóa thi cử là rào cản thật); SM-2 ✓ (tấn công đúng mệnh đề "đảo ngược được"); SM-3 ✓ (dùng chính tiền lệ Singapore của phe hoài nghi châu Á để phản bác).
+          </div>
+        </div>
+      </article>
+    </section><!-- ============ COLLISION SPLIT-SCREEN ============ -->
+    <section id="collision">
+      <h2><span class="h2-emoji">⚔️</span>Phản đề — Va chạm</h2>
+      <p><strong>Tổng hợp của nghi ngờ.</strong> Sau ba cuộc thẩm vấn: P1 giữ được nhưng chỉ "có điều kiện" (đủ tổng chi, thiếu hiệu quả phân bổ); P2 giữ được với điều kiện thực thi; P3 đúng nhưng là biến phụ thuộc của P1 và P2. Kiểu lỗi chung của Luận đề: <em>đọc con số ngân sách và văn bản pháp luật là đủ, mà bỏ quên khoảng cách thực thi</em> — giữa 20% ngân sách và một lớp học có giáo viên giỏi là cả một trời.</p>
+
+      <div class="collision">
+        <div class="collision__inner">
+          <div class="collision__side collision__side--thesis">
+            <span class="label">📘 Luận đề nứt ở đây</span>
+            <div class="heading">Nơi Luận đề thất bại</div>
+            <p>Nó nhìn thấy tiềm năng (tổng tiền đủ, văn bản đã ban hành) và nhầm đó là hiện trạng. Giữa "ngân sách cho phép" và "giáo viên được trả lương xứng đáng ở một trường thường tốt" là một chuỗi thực thi dài mà con số GDP không nói lên.</p>
+          </div>
+          <div class="collision__divider" aria-hidden="true">
+            <span class="collision__zap">⚡</span>
+          </div>
+          <div class="collision__side collision__side--antithesis">
+            <span class="label">⚔️ Phản đề đứng vững ở đây</span>
+            <div class="heading">Nơi Phản đề giữ chân</div>
+            <p>Nó nhìn thấy thực thi trục trặc (chi/GDP tụt, lương thấp, trường chuyên vẫn được ưu tiên) và nhầm đó là bất khả thi vĩnh viễn. Nhưng nó không giải thích được: vì sao nhà nước vẫn ban hành Luật Nhà giáo, vì sao Singapore — châu Á, thành tích cao — vẫn bỏ được phân luồng.</p>
+          </div>
+        </div>
+        <div class="collision__tension">
+          Biến số va chạm chính xác giữa Luận đề và Phản đề: <strong>cùng một con số 2,89% GDP — Luận đề đọc nó là "đủ mà phân bổ sai", Phản đề đọc nó là "thiếu và đang tụt".</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SUBLATION (Synthesis) ============ -->
+    <section id="synthesis">
+      <h2><span class="h2-emoji">💎</span>Tổng hợp — Aufheben</h2>
+
+      <div class="sublation">
+        <div class="sublation__inner">
+          <div class="sublation__label">💎 Quỹ đạo: NGHỊCH LÝ · Aufheben (ba đòn bẩy)</div>
+          <div class="sublation__statement">
+            Cả hai đều đúng — nhưng mỗi cái đúng cho một tầng vấn đề khác nhau. Phản đề đúng ở tầng <em>thực thi hiện tại</em> (thiếu hiệu quả, thiếu ưu tiên); Luận đề đúng ở tầng <em>năng lực hệ thống</em> (ngân sách đủ, ý chí đang hình thành). Tổng hợp: nâng chất trường thường kiểu Phần Lan ở VN là khả thi — nhưng không bằng <em>nhân bản Phần Lan</em>, mà bằng ba đòn bẩy Việt hóa: tái phân bổ ngân sách theo hiệu quả; thực thi luật đã ban hành; giảm thi cử sinh tử ở ngưỡng chuyển cấp. Trường chuyên giữ vai bồi dưỡng thiểu số năng khiếu — không còn là lối thoát duy nhất.
+          </div>
+          <div class="sublation__elevation">
+            <div class="sublation__elev-cell sublation__elev-cell--preserve">
+              <span class="lead">Bảo tồn từ Luận đề</span>
+              Tổng chi ngân sách cho giáo dục là đủ (15–20% NSNN, cao hơn trung bình toàn cầu). Nhà nước đã mở cửa bằng văn bản đúng hướng (Thông tư 05/2023, Luật Nhà giáo). Châu Á có tiền lệ Singapore — không phải "văn hóa châu Á thì không đổi được".
+            </div>
+            <div class="sublation__elev-cell sublation__elev-cell--absorb">
+              <span class="lead">Hấp thụ từ Phản đề</span>
+              Chi/GDP tụt xuống 2,89% là cảnh báo thật — nâng chất không thể chờ "tăng tổng chi", phải tái phân bổ. Lương giáo viên 5,3–17,2 triệu không đủ hấp dẫn — nhưng vấn đề là cơ cấu, không phải thiếu chính sách. Văn hóa thi cử là lực cản mạnh nhất — phải giảm sinh tử của kỳ thi, không chỉ nâng cấp trường.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3><span class="diff diff-core">LÕI</span>Ba đòn bẩy (levers)</h3>
+      <p><strong>Đòn bẩy 1 — Tái phân bổ ngân sách theo hiệu quả:</strong> từ duy trì bộ máy + trường chuyên, chuyển sang bồi dưỡng giáo viên nền và trường thường ở vùng khó. Không cần tăng tổng chi.</p>
+      <p><strong>Đòn bẩy 2 — Thực thi luật đã ban hành:</strong> Luật Nhà giáo đã ghi lương nhà giáo cao nhất hệ thống; Thông tư 05/2023 đã thu hẹp trường chuyên. Thực thi đầy đủ, công khai tiến độ, đo bằng kết quả lớp học — không phải số văn bản.</p>
+      <p><strong>Đòn bẩy 3 — Giảm thi cử sinh tử ở ngưỡng chuyển cấp:</strong> học theo bài học Singapore — gỡ dần áp lực kỳ thi, phân luồng mềm, không "một kỳ thi quyết định tương lai". Văn hóa phụ huynh dịch chuyển khi cấu trúc thay đổi.</p>
+    </section>
+
+    <!-- ============ PROOF ============ -->
+    <section id="proof">
+      <h2><span class="h2-emoji">🧪</span>Bằng chứng</h2>
+      <p><span class="diff diff-supp">BỔ TRỢ</span>Ba chuỗi bằng chứng độc lập hội tụ vào kết luận "khả thi nhưng phải Việt hóa". Thứ nhất, ngân sách: VN từng chi giáo dục <span class="evidence-trigger" data-evidence="ev-wb">~5,7% GDP (2009–2012)</span> — nghĩa là năng lực tài chính không phải vấn đề, vấn đề là ưu tiên. Thứ hai, lương giáo viên: từ 1/7/2026, lương khởi điểm giáo viên khoảng <span class="evidence-trigger" data-evidence="ev-luongvn">5,3 triệu đồng/tháng</span> — thấp hơn nhiều chuẩn OECD (Phần Lan trung bình ~73.575 USD/năm cho giáo viên trung học), chứng tỏ "nâng chất" trước hết là nâng đãi ngộ nghề giáo. Thứ ba, thực trạng chất lượng: PISA 2022 cho thấy <span class="evidence-trigger" data-evidence="ev-pisa">điểm VN giảm rõ rệt so với 2018</span> — nền tảng đang bị bào mòn, càng cho thấy cần hành động hệ thống.</p>
+
+      <div class="bar-chart">
+        <div class="bar-chart__title">Chi giáo dục VN: tổng đủ, cơ cấu mới là vấn đề (% GDP)</div>
+        <div class="bar-row"><span class="bar-label">2008 (đỉnh)</span><div class="bar-track"><div class="bar-fill" style="width:98%;background:var(--synthesis)"></div></div><span class="bar-value">4,89%</span></div>
+        <div class="bar-row"><span class="bar-label">2009–2012 (WB)</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--synthesis)"></div></div><span class="bar-value">~5,7%</span></div>
+        <div class="bar-row"><span class="bar-label">TB 2008–2022</span><div class="bar-track"><div class="bar-fill" style="width:74%;background:var(--thesis)"></div></div><span class="bar-value">~3,71%</span></div>
+        <div class="bar-row"><span class="bar-label">2022 (đáy)</span><div class="bar-track"><div class="bar-fill" style="width:58%;background:var(--antithesis)"></div></div><span class="bar-value">2,89%</span></div>
+      </div>
+
+      <p><strong>Ca đối chứng.</strong> Singapore — nền giáo dục từng nổi tiếng về kỳ thi PSLE và phân luồng từ 1979 — từ năm 2024 chính thức <span class="evidence-trigger" data-evidence="ev-sbb">xóa bỏ các luồng Express/Normal (Technical)/(Academic)</span>, thay bằng Posting Groups với môn học theo từng mức độ. Điều này chứng minh: không có "định mệnh châu Á" nào ngăn một xã hội thành tích cao giảm thi cử sinh tử — điều kiện tiên quyết là quyết định chính trị và lộ trình dài hạn.</p>
+
+      <div class="flip-card" tabindex="0">
+        <div class="flip-card__inner">
+          <div class="flip-card__face flip-card__face--front">"Việt Nam không thể như Phần Lan vì Phần Lan giàu" — có đúng không?</div>
+          <div class="flip-card__face flip-card__face--back">Sai ở mức độ. Nâng chất trường thường không đòi hỏi đạt GDP/đầu người của Phần Lan; nó đòi hỏi <em>tái phân bổ</em> 15–20% ngân sách nhà nước sẵn có + thực thi luật đã ban hành. Singapore là bằng chứng châu Á: bỏ phân luồng không phải là đặc quyền của nước giàu phương Tây.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RIPPLE POOL — Radiating Implication ============ -->
+    <section id="ripple">
+      <h2><span class="h2-emoji">🌊</span>Hệ quả lan tỏa</h2>
+
+      <h3><span class="diff diff-core">LÕI</span>Bài kiểm tra ứng dụng</h3>
+      <p>Phụ huynh Hà Nội năm 2026, con học lớp 9, phân vân cho con thi chuyên. Áp dụng Tổng hợp: (1) chẩn đoán fit bằng quá trình — con có năng khiếu vượt trội và đam mê thật không, hay chỉ vì sợ "trường thường kém"? (2) nếu con thuộc số đông, đừng biến trường chuyên thành lối thoát duy nhất — hãy đòi hỏi hệ thống nâng chất trường thường gần nhà, vì ngân sách cho phép; (3) đặt câu hỏi đúng cho con: "trường nào giúp con học tốt và hạnh phúc nhất", thay vì "trường nào có thương hiệu".</p>
+
+      <div class="ripple">
+        <div class="ripple__label">🌊 Nếu tổng hợp này đúng, thì…</div>
+        <div class="ripple__claim">Bài toán trường chuyên chỉ giải được khi hệ thống chấp nhận giảm quy mô thi cử sinh tử ở ngưỡng chuyển cấp — và ngân sách cho giáo dục phải được tái phân bổ theo hiệu quả, không phải tăng theo cảm tính.</div>
+        <div class="ripple__adjacent">Lãnh vực kề cận bị thách thức căn bản: <strong>chính sách thi cử và tuyển sinh đại học.</strong> Nếu tổng hợp đúng, cuộc cải cách kỳ thi tốt nghiệp THPT và phân luồng sau lớp 9 là điểm tựa chính trị khả thi nhất — vì nó không đòi thêm tiền, chỉ đòi quyết tâm. Vòng xoắn tiếp theo sẽ hỏi: làm thế nào để giảm thi cử sinh tử ở Việt Nam mà không gây phản ứng ngược từ phụ huynh?</div>
+      </div>
+    </section>
+
+    <!-- ============ FALLACY LOG ============ -->
+    <section id="fallacy-log">
+      <h2><span class="h2-emoji">⚠️</span>Nhật ký ngụy biện</h2>
+      <p style="color:var(--text-muted);font-size:14px">Mỗi mục ghi một ngụy biện phát hiện trong quá trình thẩm vấn và việc viết lại nó buộc phải làm. Nhật ký đóng là tốt; nhật ký trống là không ổn.</p>
+      <details class="deep-dive fallacy-log">
+        <summary>⚠️ Nhật ký ngụy biện (3 phát hiện từ cuộc kiểm toán 12 ngụy biện)</summary>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">1. Ngụy biện phân đôi giả (False Dilemma) — trong khung đề xuất gốc</div>
+          <p>Đóng khung "nâng chất trường thường" là phải chọn giữa "nhân bản Phần Lan" (đòi GDP/đầu người cao) hoặc "bỏ cuộc". Thực tế là một phổ: tái phân bổ ngân sách hiện có, thực thi luật, giảm thi cử — không cần Phần Lan hóa toàn bộ.</p>
+          <p><strong>Viết lại:</strong> đặt lại thành ba đòn bẩy Việt hóa, không phải "có hoặc không" theo chuẩn OECD.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">2. Khái quát vội vàng (Hasty Generalisation) — từ chi/GDP 2,89%</div>
+          <p>Lấy một con số (chi/GDP giảm) để kết luận "không khả thi". Chi/GDP là một chỉ báo thô; tỷ trọng 15,45% ngân sách nhà nước 2022 vẫn cao hơn trung bình toàn cầu (13,94%), và lịch sử VN từng chi 5,7% GDP — năng lực tài chính có, vấn đề ưu tiên.</p>
+          <p><strong>Viết lại:</strong> Luận đề giờ lập luận trên cả tỷ trọng GDP lẫn tỷ trọng ngân sách, và phân biệt "thiếu tổng" với "thiếu hiệu quả".</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">3. Kêu gọi định mệnh văn hóa (Appeal to Cultural Determinism)</div>
+          <p>"Người Việt vốn chuộng thi cử nên không đổi được" — dạng thiên kiến xác nhận. Singapore (châu Á, thi cử lâu đời) đã bỏ phân luồng năm 2024, cho thấy văn hóa không phải hằng số.</p>
+          <p><strong>Viết lại:</strong> coi văn hóa là biến phụ thuộc của cấu trúc (P3) — thay đổi cấu trúc thì hành vi dịch chuyển.</p>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:16px">Ngụy biện đã kiểm toán nhưng không phát hiện: Rơm rạ, Trượt dốc ("tăng lương GV sẽ phá ngân sách" — không có chuỗi nhân quả), Ad Hominem, Kêu gọi uy tín (mọi số liệu đều có nguồn kiểm chứng), Motte-and-Bailey, Bỏ quên tỷ lệ nền, Tu Quoque.</p>
+      </details>
+    </section>
+
+    <!-- ============ RESIDUALS ============ -->
+    <section id="residuals">
+      <h2><span class="h2-emoji">📉</span>Giới hạn &amp; Điều kiện biên</h2>
+      <div class="residuals">
+        <h4>Lập luận này không bao phủ</h4>
+        <ul>
+          <li><span class="residuals__badge">8a</span>Bậc tiểu học/THCS — nơi áp lực tuyển chọn sớm có quỹ đạo riêng (chưa phân tích chi tiết chi ngân sách theo bậc học).</li>
+          <li><span class="residuals__badge">8a</span>Kỹ thuật cải cách tiền lương công chức: bảng lương mới, phụ cấp, nguồn chi — chỉ dừng ở mức tín hiệu chính trị.</li>
+          <li><span class="residuals__badge">8a</span>So sánh chi phí–hiệu quả định lượng giữa "nâng trường thường" và "duy trì trường chuyên" — cần nghiên cứu chi tiêu nội bộ ngành chưa có.</li>
+        </ul>
+        <h4>Yếu tố có thể bác bỏ (falsifiers)</h4>
+        <ul>
+          <li><span class="residuals__badge">8b</span>Báo cáo chi tiêu nội bộ Bộ GD-ĐT cho thấy không còn dư địa tái phân bổ (mọi khoản đều bắt buộc).</li>
+          <li><span class="residuals__badge">8b</span>Luật Nhà giáo bị hoãn hiệu lực hoặc mức lương quy định không được ngân sách đảm bảo trong 3–5 năm.</li>
+          <li><span class="residuals__badge">8b</span>Kỳ thi chuyển cấp vẫn là "cửa ải sinh tử" duy nhất sau 2028, hoặc Singapore tái lập phân luồng.</li>
+        </ul>
+        <h4>Đòn bẩy độ tin cậy</h4>
+        <ul>
+          <li><span class="residuals__badge">8c</span>↑ Dữ liệu chi tiêu nội ngành giáo dục (Bộ Tài chính) — mới nhất, phân theo bậc học và vùng.</li>
+          <li><span class="residuals__badge">8c</span>↑ Khảo sát phụ huynh về mức độ sẵn sàng chọn trường thường khi chất lượng được nâng cấp.</li>
+          <li><span class="residuals__badge">8c</span>↓ Nếu chi/GDP tiếp tục giảm dưới 2,5% và tỷ trọng ngân sách dưới 15% trong 5 năm.</li>
+          <li><span class="residuals__badge">8c</span>↓ Nếu trường chuyên tiếp tục mở rộng tuyển sinh bất chấp Thông tư 05/2023.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section id="quiz" class="quiz">
+      <h2>🧠 Kiểm tra hiểu biết</h2>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:20px">Các câu hỏi kiểm tra khả năng bảo vệ <em>cấu trúc</em> của lập luận, không phải trí nhớ về ví dụ.</p>
+
+      <fieldset data-q="1" data-answer="c">
+        <legend>1. Theo lập luận này, vì sao "chi/GDP tụt xuống 2,89%" không bác bỏ được đề xuất nâng chất trường thường?</legend>
+        <label class="quiz-option"><input type="radio" name="q1" value="a">a. Vì con số 2,89% là sai.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="b">b. Vì Việt Nam đã đạt mục tiêu 20% ngân sách.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="c">c. Vì tỷ trọng 15,45% ngân sách vẫn cao hơn trung bình toàn cầu, và VN từng chi 5,7% GDP — vấn đề là cơ cấu chi, không phải thiếu tổng.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="d">d. Vì giáo dục Việt Nam không cần tiền.</label>
+      </fieldset>
+
+      <fieldset data-q="2" data-answer="b">
+        <legend>2. Tiền lệ nào được dùng làm bằng chứng cho thấy "văn hóa thi cử châu Á" có thể thay đổi được?</legend>
+        <label class="quiz-option"><input type="radio" name="q2" value="a">a. Hàn Quốc tiếp tục mở rộng học thêm.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="b">b. Singapore xóa bỏ phân luồng Express/Normal từ năm 2024.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="c">c. Trung Quốc giảm áp lực kỳ thi đại học.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="d">d. Nhật Bản bỏ thi cử hoàn toàn.</label>
+      </fieldset>
+
+      <fieldset data-q="3" data-answer="d">
+        <legend>3. Tổng hợp (Synthesis) đề xuất "nâng chất trường thường kiểu Phần Lan" thông qua điều gì?</legend>
+        <label class="quiz-option"><input type="radio" name="q3" value="a">a. Nhân bản toàn bộ mô hình Phần Lan.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="b">b. Tăng chi giáo dục lên 7% GDP ngay lập tức.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="c">c. Xóa bỏ tất cả trường chuyên.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="d">d. Ba đòn bẩy Việt hóa: tái phân bổ ngân sách theo hiệu quả, thực thi luật đã ban hành, và giảm thi cử sinh tử ở ngưỡng chuyển cấp.</label>
+      </fieldset>
+
+      <button class="quiz-check-btn" id="check-quiz">Chấm điểm</button>
+      <div class="quiz-score" id="quiz-score" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- ============ GATE 5 — CONTINUE OR ITERATE? ============ -->
+    <section id="gate5" class="gate5">
+      <div class="gate5__title">Gate 5 — Tiếp tục hay lặp lại?</div>
+      <div class="gate5__body">
+        Hệ quả lan tỏa tôi rút ra: <em>"Nâng chất trường thường kiểu Phần Lan ở Việt Nam là khả thi — nhưng bằng ba đòn bẩy Việt hóa, không phải nhân bản."</em> Bốn bước đi tiếp:
+      </div>
+      <ul class="gate5__options">
+        <li data-key="a"><strong>Xoắn tiếp</strong> — đưa tổng hợp này thành luận đề mới: "giảm thi cử sinh tử ở ngưỡng chuyển cấp có khả thi về chính trị ở Việt Nam không?"</li>
+        <li data-key="b"><strong>Mài giũa</strong> — cải thiện một mục cụ thể (nêu rõ mục nào).</li>
+        <li data-key="c"><strong>Phân nhánh</strong> — lập luận riêng cho hệ quả lan tỏa: cải cách tiền lương giáo viên như một chính sách kinh tế.</li>
+        <li data-key="d"><strong>Chốt lại</strong> — artifact này đứng như hiện tại.</li>
+      </ul>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <div class="footer-note">
+      <p><strong>Ghi chú phương pháp:</strong> Artifact này được rèn giũa bằng Socratic Dialectic Engine v2.2 — 10 trạng thái xuyên qua năm cổng phản hồi. Quỹ đạo NGHỊCH LÝ, độ sâu XOẮN ỐC VÒNG 2 (tổng hợp từ Vòng 1 làm luận đề cho Vòng 2).</p>
+      <p><em>Chế độ nghiên cứu: <span id="research-mode-value">web-enabled — các URL nguồn đã được tải và kiểm chứng trong phiên ngày 15/08/2026.</span></em></p>
+    </div>
+
+    </div><!-- /.canvas-inner -->
+  </main><!-- =====================================================
+       RIGHT PANEL — Marginalia (Evidence Locker + Philosophers' Notes)
+  ===================================================== -->
+  <aside class="marginalia" aria-label="Lề và Kho bằng chứng">
+
+    <div class="marginalia__title">🔎 Kho bằng chứng</div>
+    <div id="evidence-locker">
+      <div class="evidence-item" id="ev-ngansach">
+        <span class="evidence-item__label">Chi giáo dục VN 2022</span>
+        Chi giáo dục VN = 2,89% GDP năm 2022 — mức thấp nhất giai đoạn 2008–2022 (đỉnh 4,89% năm 2008, trung bình 3,71%). Chiếm 15,45% tổng chi ngân sách nhà nước (trung bình toàn cầu 13,94%). Mục tiêu ≥20% NSNN (Luật Giáo dục 2019) chưa đạt.
+        <div class="evidence-item__source">Tổng hợp UNESCO / TheGlobalEconomy / VNIES, trích lại tại thaytheanh.com, 28/08/2025 · thaytheanh.com/bai-hoc/... (đã tải 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-wb">
+        <span class="evidence-item__label">World Bank — năng lực chi tiêu</span>
+        Việt Nam từng chi giáo dục &amp; đào tạo ~5,7% GDP giai đoạn 2009–2012; tỷ trọng trong tổng chi ngân sách tăng từ 15,1% (2000) lên ~20% (2012). Giáo dục đại học chỉ ~0,33% GDP (2016). Điều này chứng minh năng lực tài chính không phải rào cản.
+        <div class="evidence-item__source">World Bank Public Expenditure Review (documents1.worldbank.org, đã tải 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-luongvn">
+        <span class="evidence-item__label">Lương giáo viên VN từ 1/7/2026</span>
+        Từ 1/7/2026: lương giáo viên ~5,3–17,2 triệu đồng/tháng (chưa kể phụ cấp); lương cơ sở mới 2,53 triệu đồng. Khoảng 1,05 triệu giáo viên hưởng lương từ ngân sách. Luật Nhà giáo (thông qua 6/2025) quy định lương nhà giáo xếp cao nhất hệ thống thang bậc lương hành chính sự nghiệp.
+        <div class="evidence-item__source">VnExpress, 27/06/2026 · vnexpress.net/luong-giao-vien-5090548.html (đã tải 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-sbb">
+        <span class="evidence-item__label">Singapore Full SBB 2024</span>
+        Từ cohort lớp 6 (S1) 2024, Singapore xóa bỏ phân luồng Normal (Technical), Normal (Academic) và Express; thay bằng Posting Groups (1/2/3) với môn học theo từng mức độ, cho phép học sinh học các môn ở mức độ khác nhau.
+        <div class="evidence-item__source">Bộ Giáo dục Singapore, moe.gov.sg/psle-fsbb (đã tải 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-tt05">
+        <span class="evidence-item__label">Thông tư 05/2023/TT-BGDĐT</span>
+        Bỏ lớp không chuyên trong trường chuyên (hiệu lực 15/4/2023); tuyển sinh lớp không chuyên kết thúc hết năm học 2023–2024. Mỗi lớp chuyên ≤35 học sinh; mỗi tỉnh/thành có ít nhất 1 trường chuyên.
+        <div class="evidence-item__source">SGGP, 04/03/2023 · sggp.org.vn/... (đã tải 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-pisa">
+        <span class="evidence-item__label">PISA 2022 — Việt Nam giảm</span>
+        VN: Toán 469, Đọc 462, Khoa học 472 — giảm so với 2018 (Toán −27, Đọc −43, Khoa −71). Hạng 31 Toán, 34 Đọc, 37 Khoa học. Chỉ 5% đạt top performer Toán (OECD 9%); 72% đạt mức năng lực tối thiểu Toán (OECD 69%).
+        <div class="evidence-item__source">Vietnam News, 07/12/2023 · vietnamnews.vn (đã tải 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-oecd">
+        <span class="evidence-item__label">Chuẩn lương GV OECD 2023</span>
+        Phần Lan: lương thực tế giáo viên trung học phổ thông ~73.575 USD/năm (hạng 10/32). OECD trung bình: tiểu học 48.023 USD, THCS 49.911 USD, THPT 53.119 USD/năm. So với mức 5,3–17,2 triệu đồng (VN) — khoảng cách đãi ngộ là rất lớn.
+        <div class="evidence-item__source">OECD Education at a Glance 2023 / Education GPS (trích qua tìm kiếm, 15/08/2026)</div>
+      </div>
+    </div>
+
+    <div class="marginalia__title">📎 Ghi chú lề</div>
+    <div class="sidenote">
+      <span class="sidenote__label">Mức độ khó</span>
+      🟢 Lõi · 🟡 Bổ trợ · 🔴 Đào sâu — bỏ qua 🔴 ở lượt đọc đầu.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Giao thức đọc</span>
+      Đọc ba-panel và bản đồ lập luận trước. Nếu bạn đã bất đồng, nhảy thẳng tới Nhật ký ngụy biện và Giới hạn — nơi trung thực nhất của lập luận.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">2,89% không phải là câu chuyện</span>
+      Con số chi/GDP giảm nghe đáng sợ, nhưng tỷ trọng ngân sách 15,45% vẫn cao hơn trung bình toàn cầu. Nâng chất không cần thêm tiền tuyệt đối — cần chuyển tiền đúng chỗ.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Singapore, một dòng</span>
+      Châu Á, thi cử lâu đời, thành tích cao — vẫn bỏ được phân luồng từ 2024. "Văn hóa thi cử" là biến phụ thuộc của cấu trúc, không phải định mệnh.
+    </div>
+
+    <div class="marginalia__title">📝 Ghi chú của triết gia <small style="font-weight:400;text-transform:none;letter-spacing:0">(bôi đen văn bản để thêm)</small></div>
+    <div class="phil-notes" id="phil-notes">
+      <div class="phil-note__empty" id="phil-notes-empty">Chọn bất kỳ văn bản nào trong lập luận, rồi viết câu phản vấn của riêng bạn. Ghi chú chỉ lưu trên thiết bị này.</div>
+    </div>
+  </aside>
+
+</div><!-- /.layout -->
+
+<script>
+/* ============================================================
+   THEME TOGGLE with localStorage
+============================================================ */
+(function(){
+  const KEY = 'dialectic-theme';
+  const btn = document.getElementById('theme-toggle');
+  const stored = localStorage.getItem(KEY);
+  if (stored) document.documentElement.setAttribute('data-theme', stored);
+  const updateIcon = () => {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    btn.textContent = dark ? '☀' : '☾';
+    btn.title = dark ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối';
+  };
+  updateIcon();
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem(KEY, next);
+    updateIcon();
+  });
+})();
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function(){
+  const KEY = 'dialectic-focus';
+  const btn = document.getElementById('focus-toggle');
+  if (localStorage.getItem(KEY) === '1') document.documentElement.classList.add('focus-mode');
+  btn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('focus-mode');
+    localStorage.setItem(KEY, document.documentElement.classList.contains('focus-mode') ? '1' : '0');
+  });
+})();
+
+/* ============================================================
+   LANGUAGE TOGGLE (visible only if [lang="vi"] elements exist)
+============================================================ */
+(function(){
+  const KEY = 'dialectic-lang';
+  const btn = document.getElementById('lang-toggle');
+  const hasVi = document.querySelector('[lang="vi"]');
+  if (!hasVi) return;
+  btn.style.display = 'flex';
+  const stored = localStorage.getItem(KEY);
+  if (stored) document.documentElement.setAttribute('data-lang', stored);
+  const updateLabel = () => {
+    btn.textContent = document.documentElement.getAttribute('data-lang') === 'vi' ? 'VI' : 'EN';
+  };
+  updateLabel();
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-lang');
+    const next = cur === 'vi' ? 'en' : 'vi';
+    document.documentElement.setAttribute('data-lang', next);
+    localStorage.setItem(KEY, next);
+    updateLabel();
+  });
+})();
+
+/* ============================================================
+   READING PROGRESS BAR + PERCENTAGE + READING TIME
+============================================================ */
+(function(){
+  const fill = document.getElementById('progress-fill');
+  const pct  = document.getElementById('progress-percent');
+  const article = document.querySelector('.canvas');
+  const update = () => {
+    const rect = article.getBoundingClientRect();
+    const scrolled = window.scrollY - (rect.top + window.scrollY - 100);
+    const total = article.scrollHeight - window.innerHeight;
+    const p = Math.max(0, Math.min(1, scrolled / Math.max(1, total)));
+    const percent = Math.round(p * 100);
+    fill.style.width = percent + '%';
+    pct.textContent = percent + '%';
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  const wc = document.querySelector('.canvas').innerText.trim().split(/\s+/).length;
+  document.getElementById('reading-time').textContent = Math.max(1, Math.round(wc / 220));
+})();
+
+/* ============================================================
+   PARADOX METER — the metacognitive UI
+============================================================ */
+(function(){
+  const meter = document.getElementById('paradox-meter');
+  const fill  = document.getElementById('paradox-fill');
+  const val   = document.getElementById('paradox-value');
+  const hint  = document.getElementById('paradox-hint');
+
+  const zones = [
+    { id: 'hook',         pct: 5,   phase: 'thesis',    hint: 'Bắt đầu — luận đề đứng vững, chưa bị thách thức.' },
+    { id: 'scope',        pct: 8,   phase: 'thesis',    hint: 'Phạm vi đã thiết lập. Sự căng thẳng chưa được nêu tên.' },
+    { id: 'dialectic',    pct: 15,  phase: 'thesis',    hint: 'Ba vị trí đã tuyên bố. Va chạm đang tới.' },
+    { id: 'argument-map', pct: 20,  phase: 'thesis',    hint: 'Kiến trúc lập luận hiện rõ.' },
+    { id: 'thesis',       pct: 25,  phase: 'thesis',    hint: 'Luận đề được mài sắc; tiền đề được khai quật.' },
+    { id: 'xexam',        pct: 65,  phase: 'probe',     hint: 'Đang thẩm vấn chéo — hãy ngồi với nghi ngờ.' },
+    { id: 'collision',    pct: 95,  phase: 'collision', hint: 'Đỉnh điểm bất hòa — Luận đề và Phản đề va chạm.' },
+    { id: 'synthesis',    pct: 55,  phase: 'synthesis', hint: 'Aufheben — căng thẳng tan ra ở tầng cao hơn.' },
+    { id: 'proof',        pct: 40,  phase: 'synthesis', hint: 'Tổng hợp được neo vào bằng chứng.' },
+    { id: 'ripple',       pct: 25,  phase: 'ripple',    hint: 'Lan tỏa ra các lãnh vực kề cận.' },
+    { id: 'fallacy-log',  pct: 15,  phase: 'ripple',    hint: 'Kiểm toán lại cuộc kiểm toán.' },
+    { id: 'residuals',    pct: 10,  phase: 'ripple',    hint: 'Tự đánh giá trung thực.' },
+    { id: 'quiz',         pct: 5,   phase: 'ripple',    hint: 'Kiểm tra nắm bắt cấu trúc của bạn.' }
+  ];
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const z = zones.find(x => x.id === e.target.id);
+      if (!z) return;
+      fill.style.width = z.pct + '%';
+      val.textContent  = z.pct + '%';
+      hint.textContent = z.hint;
+      meter.dataset.phase = z.phase;
+    });
+  }, { rootMargin: '-25% 0px -60% 0px', threshold: 0 });
+
+  zones.forEach(z => {
+    const el = document.getElementById(z.id);
+    if (el) io.observe(el);
+  });
+})();
+
+/* ============================================================
+   COMPASS + TOC via IntersectionObserver
+============================================================ */
+(function(){
+  const compassNodes = document.querySelectorAll('.compass-node[data-target]');
+  const tocLinks     = document.querySelectorAll('.toc a[data-target]');
+  const cmap = new Map();
+  compassNodes.forEach(a => cmap.set(a.dataset.target, a));
+  const tmap = new Map();
+  tocLinks.forEach(a => tmap.set(a.dataset.target, a));
+
+  const sectionIds = new Set([
+    ...Array.from(cmap.keys()),
+    ...Array.from(tmap.keys())
+  ]);
+  const compassAlias = {
+    'hook': 'scope', 'argument-map': 'thesis', 'dialectic': 'thesis',
+    'proof': 'synthesis', 'fallacy-log': 'ripple',
+    'residuals': 'ripple', 'quiz': 'ripple', 'gate5': 'ripple'
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const tocLink = tmap.get(e.target.id);
+      if (tocLink) tocLink.classList.add('active');
+      const cTarget = cmap.has(e.target.id) ? e.target.id : compassAlias[e.target.id];
+      compassNodes.forEach(n => n.classList.remove('active'));
+      const cNode = cmap.get(cTarget);
+      if (cNode) cNode.classList.add('active');
+    });
+  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+  document.querySelectorAll('.canvas section[id]').forEach(el => {
+    if (sectionIds.has(el.id) || compassAlias[el.id]) io.observe(el);
+  });
+
+  document.querySelectorAll('.compass-node[data-target], .toc a[data-target]').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const target = document.getElementById(a.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();
+
+/* ============================================================
+   CROSS-EXAMINATION — "Hear the Defense" toggle
+============================================================ */
+(function(){
+  document.querySelectorAll('.xexam-card__defense-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      const panel = document.getElementById(targetId);
+      if (!panel) return;
+      const isOpen = panel.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      btn.textContent = isOpen ? 'Ẩn lời bào chữa' : 'Nghe lời bào chữa';
+    });
+  });
+})();
+
+/* ============================================================
+   EVIDENCE LOCKER — click trigger, highlight sidebar entry
+============================================================ */
+(function(){
+  const triggers = document.querySelectorAll('.evidence-trigger');
+  triggers.forEach(t => {
+    t.setAttribute('tabindex', '0');
+    t.setAttribute('role', 'button');
+    const activate = () => {
+      const id = t.dataset.evidence;
+      const item = document.getElementById(id);
+      if (!item) return;
+      document.querySelectorAll('.evidence-item.highlight').forEach(x => x.classList.remove('highlight'));
+      document.querySelectorAll('.evidence-trigger.active').forEach(x => x.classList.remove('active'));
+      item.classList.add('highlight');
+      t.classList.add('active');
+      item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        item.classList.remove('highlight');
+        t.classList.remove('active');
+      }, 4000);
+    };
+    t.addEventListener('click', activate);
+    t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+  });
+})();
+
+/* ============================================================
+   PHILOSOPHERS' NOTE — text-selection triggers counter-probe
+============================================================ */
+(function(){
+  const KEY = 'dialectic-phil-notes';
+  const popup     = document.getElementById('phil-popup');
+  const popupQ    = document.getElementById('phil-popup__quote');
+  const popupIn   = document.getElementById('phil-popup__input');
+  const btnSave   = document.getElementById('phil-popup__save');
+  const btnCancel = document.getElementById('phil-popup__cancel');
+  const notesEl   = document.getElementById('phil-notes');
+  const emptyEl   = document.getElementById('phil-notes-empty');
+  const canvas    = document.querySelector('.canvas');
+
+  let pendingQuote = '';
+
+  const load = () => {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { return []; }
+  };
+  const save = (notes) => localStorage.setItem(KEY, JSON.stringify(notes));
+
+  const render = () => {
+    const notes = load();
+    notesEl.innerHTML = '';
+    if (notes.length === 0){
+      notesEl.appendChild(emptyEl);
+      return;
+    }
+    notes.forEach((n, i) => {
+      const el = document.createElement('div');
+      el.className = 'phil-note';
+      el.innerHTML =
+        '<button class="phil-note__del" aria-label="Xóa ghi chú" title="Xóa">✕</button>' +
+        (n.quote ? '<div class="phil-note__quote">"' + escapeHtml(n.quote) + '"</div>' : '') +
+        '<div class="phil-note__body">' + escapeHtml(n.body) + '</div>';
+      el.querySelector('.phil-note__del').addEventListener('click', () => {
+        const cur = load();
+        cur.splice(i, 1);
+        save(cur);
+        render();
+      });
+      notesEl.appendChild(el);
+    });
+  };
+
+  const escapeHtml = (s) => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  const closePopup = () => {
+    popup.classList.remove('show');
+    popupIn.value = '';
+    pendingQuote = '';
+  };
+
+  canvas.addEventListener('mouseup', () => {
+    const sel = window.getSelection();
+    const text = sel ? sel.toString().trim() : '';
+    if (text.length < 8) return;
+    if (!sel.anchorNode || !canvas.contains(sel.anchorNode)) return;
+    pendingQuote = text;
+    popupQ.textContent = text.length > 160 ? text.slice(0, 160) + '…' : text;
+    const range = sel.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    const pTop = window.scrollY + rect.bottom + 8;
+    const pLeft = Math.min(window.innerWidth - 340, rect.left + window.scrollX);
+    popup.style.top  = pTop  + 'px';
+    popup.style.left = Math.max(16, pLeft) + 'px';
+    popup.classList.add('show');
+    setTimeout(() => popupIn.focus(), 60);
+  });
+
+  btnCancel.addEventListener('click', closePopup);
+  btnSave.addEventListener('click', () => {
+    const body = popupIn.value.trim();
+    if (!body) { closePopup(); return; }
+    const notes = load();
+    notes.push({ quote: pendingQuote, body: body, ts: Date.now() });
+    save(notes);
+    render();
+    closePopup();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && popup.classList.contains('show')) closePopup();
+  });
+  document.addEventListener('click', (e) => {
+    if (popup.classList.contains('show') && !popup.contains(e.target) && !window.getSelection().toString().trim()) {
+      closePopup();
+    }
+  });
+
+  render();
+})();
+
+/* ============================================================
+   QUIZ — self-grading with localStorage
+============================================================ */
+(function(){
+  const KEY = 'dialectic-quiz';
+  const fieldsets = document.querySelectorAll('.quiz fieldset');
+  const btn = document.getElementById('check-quiz');
+  const scoreEl = document.getElementById('quiz-score');
+
+  fieldsets.forEach(fs => {
+    fs.querySelectorAll('.quiz-option').forEach(label => {
+      const input = label.querySelector('input');
+      input.addEventListener('change', () => {
+        fs.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('selected'));
+        if (input.checked) label.classList.add('selected');
+        persist();
+      });
+    });
+  });
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+    Object.entries(saved).forEach(([q, v]) => {
+      const input = document.querySelector('input[name="' + q + '"][value="' + v + '"]');
+      if (input){ input.checked = true; input.closest('.quiz-option').classList.add('selected'); }
+    });
+  } catch(e){}
+
+  function persist(){
+    const state = {};
+    fieldsets.forEach(fs => {
+      const q = 'q' + fs.dataset.q;
+      const sel = fs.querySelector('input:checked');
+      if (sel) state[q] = sel.value;
+    });
+    localStorage.setItem(KEY, JSON.stringify(state));
+  }
+
+  btn.addEventListener('click', () => {
+    let correct = 0;
+    fieldsets.forEach(fs => {
+      const correctVal = fs.dataset.answer;
+      const chosen = fs.querySelector('input:checked');
+      fs.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('correct-answer', 'incorrect-answer'));
+      const correctLabel = fs.querySelector('input[value="' + correctVal + '"]').closest('.quiz-option');
+      correctLabel.classList.add('correct-answer');
+      if (chosen){
+        if (chosen.value === correctVal) correct++;
+        else chosen.closest('.quiz-option').classList.add('incorrect-answer');
+      }
+    });
+    const total = fieldsets.length;
+    scoreEl.className = 'quiz-score show';
+    if (correct === total){ scoreEl.textContent = 'Hoàn hảo — ' + correct + '/' + total + '. Bạn có thể bảo vệ lập luận này.'; scoreEl.classList.add('pass'); }
+    else if (correct >= Math.ceil(total * 0.6)){ scoreEl.textContent = correct + '/' + total + '. Đọc lại bản đồ lập luận và nhật ký ngụy biện.'; scoreEl.classList.add('mid'); }
+    else { scoreEl.textContent = correct + '/' + total + '. Bắt đầu lại từ "Thoáng nhìn".'; scoreEl.classList.add('fail'); }
+  });
+})();
+
+/* ============================================================
+   SCROLL POSITION PERSIST
+============================================================ */
+(function(){
+  const KEY = 'dialectic-scroll';
+  const saved = parseInt(localStorage.getItem(KEY) || '0', 10);
+  if (saved > 0) window.scrollTo(0, saved);
+  let t;
+  window.addEventListener('scroll', () => {
+    clearTimeout(t);
+    t = setTimeout(() => localStorage.setItem(KEY, String(window.scrollY)), 200);
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
