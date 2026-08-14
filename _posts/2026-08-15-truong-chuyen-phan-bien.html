@@ -1,0 +1,2052 @@
+<!doctype html>
+<html lang="vi" data-theme="light" data-lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Không cần trường chuyên? — Phản biện một câu nói quen thuộc của phụ huynh</title>
+<meta name="description" content="Một bài phản biện biện chứng về câu nói 'không cần thiết cho con học trường chuyên, học trường bình thường cũng tốt rồi'. Trajectory PARADOX, 3 vòng xoắn, dựa trên dữ liệu từ BFLPE meta-analysis, Visible Learning, so sánh Hàn Quốc–Phần Lan, và thực tiễn trường chuyên Việt Nam.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS  (v1.1.0 — semantic dialectic colors)
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+::selection{background:rgba(74,111,165,.2)}
+
+:root{
+  --font-serif: 'Merriweather', 'Lora', Georgia, serif;
+  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* === Light theme ("The Arena") === */
+  --bg:            #FDFBF7;   /* warm parchment */
+  --bg-panel:     #2B2B3D;   /* dark slate side panels */
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #1A1A2E;
+  --text-muted:    #6B7280;
+  --text-strong:   #0F172A;
+  --text-panel:    #E5E7EB;   /* text on dark side panels */
+  --text-panel-muted: #9CA3AF;
+
+  /* === Semantic dialectic colors (v1.1.0) === */
+  --thesis:        #4A6FA5;   /* Scholarly Blue */
+  --thesis-soft:   #E1E9F5;
+  --thesis-strong: #2A4B7F;
+  --antithesis:    #A34A4A;   /* Critical Red */
+  --antithesis-soft: #F5E0E0;
+  --antithesis-strong: #7A2A2A;
+  --synthesis:     #8A6FA5;   /* Elevated Purple = Blue ⊕ Red */
+  --synthesis-soft: #ECE5F2;
+  --synthesis-strong: #5D4478;
+
+  --accent:        #319795;   /* teal for UI */
+  --accent-strong: #285E61;
+  --accent-soft:   #E6FFFA;
+
+  --border:        #E4DFD5;
+  --border-strong: #D4CFC5;
+  --sidenote-bg:   #F0EEE6;
+
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow:    0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.12);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 220ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #14141F;
+  --bg-panel:      #0A0A15;
+  --bg-elevated:   #2B2B3D;
+  --bg-sunken:     #1F1F2E;
+  --text:          #E5E7EB;
+  --text-muted:    #9CA3AF;
+  --text-strong:   #F9FAFB;
+  --text-panel:    #E5E7EB;
+  --text-panel-muted: #9CA3AF;
+
+  --thesis:        #7AA3D4;
+  --thesis-soft:   #1E2E42;
+  --thesis-strong: #A8C3E0;
+  --antithesis:    #D48282;
+  --antithesis-soft:#3B1F1F;
+  --antithesis-strong: #E0A5A5;
+  --synthesis:     #B49AD4;
+  --synthesis-soft:#2F2138;
+  --synthesis-strong: #D0BCE5;
+
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent-soft:   #1A3B3A;
+
+  --border:        #2D3748;
+  --border-strong: #4A5568;
+  --sidenote-bg:   #24243A;
+
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+  --shadow:    0 4px 12px rgba(0,0,0,.5);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.6);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: var(--line);
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   LAYOUT — 3-column grid (10% / 55% / 35%)
+============================================================ */
+.layout{
+  display: grid;
+  grid-template-columns: 12% 55% 33%;
+  gap: 0;
+  max-width: 1500px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.navigator{ background: var(--bg-panel); color: var(--text-panel); }
+.canvas{    background: var(--bg);       color: var(--text); padding: 40px 48px 120px; }
+.marginalia{background: var(--bg-panel); color: var(--text-panel); }
+
+@media (max-width: 1024px){
+  .layout{ grid-template-columns: 1fr; }
+  .navigator, .marginalia{ position: static !important; max-height: none !important; padding: 20px !important; }
+  .canvas{ padding: 24px; }
+}
+
+/* Focus mode collapses side panels */
+html.focus-mode .layout{ grid-template-columns: 1fr; max-width: 820px; }
+html.focus-mode .navigator,
+html.focus-mode .marginalia{ display: none; }
+html.focus-mode .canvas{ background: var(--bg); }
+
+/* ============================================================
+   LEFT PANEL — Navigator (dark, with Emoji Compass)
+============================================================ */
+.navigator{
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 24px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.progress-bar{
+  height: 3px; background: rgba(255,255,255,.1);
+  border-radius: 2px; overflow: hidden; margin-bottom: 20px;
+}
+.progress-bar__fill{
+  height: 100%; background: var(--accent);
+  width: 0%; transition: width 100ms linear;
+}
+.nav-meta{
+  color: var(--text-panel-muted);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 20px; display: flex; justify-content: space-between;
+}
+
+/* Emoji Compass */
+.compass-title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); margin: 20px 0 10px;
+  font-weight: 700;
+}
+.compass{
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 24px;
+}
+.compass-node{
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  color: var(--text-panel-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  font-size: 12px;
+}
+.compass-node:hover{ background: rgba(255,255,255,.06); color: var(--text-panel); }
+.compass-node.active{
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border-left-color: currentColor;
+}
+.compass-node__icon{ font-size: 18px; }
+.compass-node__label{ font-weight: 500; letter-spacing: .02em; }
+.compass-node[data-phase="thesis"].active{ border-left-color: var(--thesis); }
+.compass-node[data-phase="probe"].active{  border-left-color: var(--accent); }
+.compass-node[data-phase="collision"].active{ border-left-color: var(--antithesis); }
+.compass-node[data-phase="synthesis"].active{ border-left-color: var(--synthesis); }
+.compass-node[data-phase="ripple"].active{ border-left-color: var(--info); }
+
+/* Sub-TOC */
+.toc-title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); margin: 8px 0 8px; font-weight: 700;
+}
+.toc{ list-style: none; padding: 0; margin: 0; }
+.toc li{ margin: 1px 0; }
+.toc a{
+  display: block; padding: 5px 10px;
+  color: var(--text-panel-muted); text-decoration: none;
+  border-left: 2px solid transparent; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition); font-size: 12px;
+}
+.toc a:hover{ color: var(--text-panel); background: rgba(255,255,255,.05); }
+.toc a.active{ color: #fff; background: rgba(255,255,255,.1); border-left-color: var(--accent); font-weight: 500; }
+
+/* ============================================================
+   PARADOX METER — the metacognitive UI
+============================================================ */
+.paradox-meter{
+  position: sticky; top: 12px; z-index: 20;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin: 0 0 32px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans);
+}
+.paradox-meter__label{
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); font-weight: 700;
+  margin-bottom: 8px;
+}
+.paradox-meter__value{
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-strong);
+}
+.paradox-meter__bar{
+  height: 8px; background: var(--bg-sunken);
+  border-radius: 4px; overflow: hidden; position: relative;
+}
+.paradox-meter__fill{
+  height: 100%; width: 0%;
+  background: linear-gradient(to right, var(--thesis), var(--antithesis));
+  transition: width 300ms cubic-bezier(.4,0,.2,1), background 300ms;
+  border-radius: 4px;
+}
+.paradox-meter[data-phase="synthesis"] .paradox-meter__fill,
+.paradox-meter[data-phase="ripple"] .paradox-meter__fill{
+  background: linear-gradient(to right, var(--synthesis), var(--success));
+}
+.paradox-meter__hint{
+  font-size: 11px; color: var(--text-muted); margin-top: 6px;
+  min-height: 1.2em;
+}
+
+/* ============================================================
+   MIDDLE COLUMN — Canvas typography
+============================================================ */
+.canvas-inner{ max-width: var(--measure); margin: 0 auto; width: 100%; }
+.canvas h1{
+  font-family: var(--font-sans); font-size: 36px; line-height: 1.15;
+  margin: 0 0 8px; color: var(--text-strong); letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans); font-size: 26px; line-height: 1.3;
+  margin: 64px 0 16px; color: var(--text-strong);
+  letter-spacing: -.01em; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.canvas h2 .h2-emoji{ font-size: 24px; }
+.canvas h3{
+  font-family: var(--font-sans); font-size: 20px;
+  margin: 36px 0 12px; color: var(--text-strong);
+}
+.canvas h4{
+  font-family: var(--font-sans); font-size: 14px;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-muted); margin: 24px 0 8px;
+}
+.canvas p{ margin: 0 0 18px; }
+.canvas a{
+  color: var(--accent); text-decoration: underline;
+  text-decoration-color: var(--border-strong); text-underline-offset: 3px;
+}
+.canvas a:hover{ text-decoration-color: var(--accent); }
+.canvas blockquote{
+  border-left: 3px solid var(--accent);
+  padding: 12px 18px; margin: 24px 0;
+  background: var(--bg-sunken); font-style: italic;
+  color: var(--text); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.canvas code{
+  font-family: var(--font-mono); font-size: .9em;
+  background: var(--bg-sunken); padding: 2px 6px; border-radius: 4px;
+}
+.canvas pre{
+  background: var(--bg-sunken); padding: 16px;
+  border-radius: var(--radius-sm); overflow-x: auto;
+  border: 1px solid var(--border);
+}
+.canvas pre code{ background: transparent; padding: 0; }
+.canvas strong{ color: var(--text-strong); font-weight: 600; }
+
+.byline{
+  font-family: var(--font-sans); color: var(--text-muted);
+  font-size: 14px; margin-bottom: 32px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--border);
+}
+.byline .pill{
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: .05em;
+  background: var(--accent-soft); color: var(--accent-strong);
+  margin-right: 6px; font-weight: 600;
+}
+
+/* ============================================================
+   ASSUMPTIONS REGISTER — the 4 Dimensions block
+============================================================ */
+.assumptions{
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 24px 0 40px;
+  font-family: var(--font-sans);
+}
+.assumptions__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); font-weight: 700; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.assumptions__grid{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px;
+  font-size: 13px;
+}
+@media (max-width: 640px){ .assumptions__grid{ grid-template-columns: 1fr; } }
+.assumption-row{ display: flex; flex-direction: column; gap: 2px; }
+.assumption-key{ color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+.assumption-val{ color: var(--text-strong); font-weight: 500; }
+.assumption-val .badge{
+  display: inline-block; padding: 1px 8px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 10px;
+  background: var(--accent-soft); color: var(--accent-strong);
+  margin-right: 4px;
+}
+
+/* ============================================================
+   THREE-PANEL DIALECTIC HEADER (Thesis / Antithesis / Synthesis)
+============================================================ */
+.dialectic-header{
+  display: grid; grid-template-columns: 1fr; gap: 12px;
+  margin: 32px 0 40px;
+}
+@media (min-width: 720px){
+  .dialectic-header{ grid-template-columns: 1fr 1fr 1fr; }
+}
+.panel{
+  padding: 18px; border-radius: var(--radius);
+  border: 1px solid var(--border); font-family: var(--font-sans);
+  font-size: 14px; line-height: 1.5; position: relative;
+}
+.panel__label{
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 700; margin-bottom: 8px;
+}
+.panel__body{ color: var(--text); }
+.panel--thesis{     background: var(--thesis-soft);     border-color: var(--thesis); }
+.panel--thesis .panel__label{ color: var(--thesis-strong); }
+.panel--antithesis{ background: var(--antithesis-soft); border-color: var(--antithesis); }
+.panel--antithesis .panel__label{ color: var(--antithesis-strong); }
+.panel--synthesis{  background: var(--synthesis-soft);  border-color: var(--synthesis); }
+.panel--synthesis .panel__label{ color: var(--synthesis-strong); }
+
+/* ============================================================
+   ARGUMENT MAP — Toulmin visual
+============================================================ */
+.argument-map{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; margin: 32px 0; background: var(--bg-elevated);
+  font-family: var(--font-sans); font-size: 13px; box-shadow: var(--shadow-sm);
+}
+.argument-map__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); margin-bottom: 14px; font-weight: 700;
+}
+.toulmin{ display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 640px){
+  .toulmin{
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "grounds warrant claim" "backing qualifier rebuttal";
+  }
+  .t-grounds{ grid-area: grounds; } .t-warrant{ grid-area: warrant; }
+  .t-claim{ grid-area: claim; }     .t-backing{ grid-area: backing; }
+  .t-qualifier{ grid-area: qualifier; } .t-rebuttal{ grid-area: rebuttal; }
+}
+.toulmin__cell{
+  padding: 12px 14px; background: var(--bg-sunken);
+  border-radius: var(--radius-sm); border-left: 3px solid var(--accent);
+  line-height: 1.45;
+}
+.toulmin__cell.t-claim{
+  border-left-color: var(--synthesis);
+  background: var(--synthesis-soft); font-weight: 500;
+}
+.toulmin__cell.t-rebuttal{ border-left-color: var(--antithesis); background: var(--antithesis-soft); }
+.toulmin__cell.t-grounds{ border-left-color: var(--thesis); background: var(--thesis-soft); }
+.toulmin__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text-muted);
+  margin-bottom: 4px; font-weight: 700;
+}
+
+/* ============================================================
+   THESIS PILLAR — the load-bearing walls
+============================================================ */
+.thesis-pillar{
+  border-left: 6px solid var(--thesis);
+  background: linear-gradient(to right, var(--thesis-soft) 0%, transparent 80%);
+  padding: 20px 24px; margin: 24px 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.thesis-pillar__label{
+  font-family: var(--font-sans); font-size: 10px;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--thesis-strong); font-weight: 700;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.thesis-pillar__statement{
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 700; line-height: 1.4; color: var(--text-strong);
+  margin-bottom: 8px;
+}
+.thesis-pillar__contract{
+  font-style: italic; color: var(--text-muted); font-size: 14px;
+  font-family: var(--font-sans);
+}
+.premise-walls{
+  display: grid; gap: 12px; margin: 20px 0;
+  font-family: var(--font-sans);
+}
+.premise-wall{
+  display: grid; grid-template-columns: 40px 1fr;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: var(--bg-elevated);
+}
+.premise-wall__index{
+  background: var(--thesis); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-weight: 700; font-size: 14px;
+}
+.premise-wall__body{ padding: 12px 14px; font-size: 14px; line-height: 1.5; }
+.premise-wall__label{
+  font-weight: 700; color: var(--thesis-strong);
+  font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   CROSS-EXAMINATION CARD (per premise, with "Hear the Defense")
+============================================================ */
+.xexam-card{
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--antithesis);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  padding: 20px 24px;
+  margin: 24px 0;
+  font-family: var(--font-sans);
+  box-shadow: var(--shadow-sm);
+}
+.xexam-card__meta{
+  display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+}
+.xexam-card__meta .tag{
+  padding: 2px 8px; border-radius: 10px;
+  background: var(--antithesis-soft); color: var(--antithesis-strong);
+  font-weight: 700;
+}
+.xexam-card__meta .tag--lens{ background: var(--warn-bg); color: var(--warn); }
+.xexam-card__meta .tag--rigor{ background: var(--info-bg); color: var(--info); }
+.xexam-card__probe{
+  font-family: var(--font-sans); font-size: 17px; font-weight: 600;
+  color: var(--text-strong); margin: 8px 0 12px; line-height: 1.4;
+  font-style: italic;
+}
+.xexam-card__probe::before{
+  content: "Q: ";
+  color: var(--antithesis); font-weight: 700; font-style: normal;
+  margin-right: 4px;
+}
+.xexam-card__setup{
+  color: var(--text); font-size: 14px; line-height: 1.6; margin-bottom: 16px;
+  font-family: var(--font-serif);
+}
+.xexam-card__defense-btn{
+  background: var(--bg-sunken); color: var(--text-strong);
+  border: 1px solid var(--border-strong);
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  cursor: pointer; font-family: var(--font-sans);
+  font-size: 13px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all var(--transition);
+}
+.xexam-card__defense-btn:hover{
+  background: var(--thesis-soft); color: var(--thesis-strong);
+  border-color: var(--thesis);
+}
+.xexam-card__defense-btn::before{ content: "🛡️"; }
+.xexam-card__defense-btn[aria-expanded="true"]{
+  background: var(--thesis-soft); color: var(--thesis-strong);
+  border-color: var(--thesis);
+}
+.xexam-card__defense{
+  display: none; margin-top: 16px;
+  padding: 16px 18px; background: var(--thesis-soft);
+  border-left: 3px solid var(--thesis); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 14px; line-height: 1.55;
+  animation: defense-slide 320ms ease-out;
+}
+.xexam-card__defense.is-open{ display: block; }
+.xexam-card__defense .label{
+  font-family: var(--font-sans); font-weight: 700;
+  color: var(--thesis-strong); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: 6px; display: block;
+}
+.xexam-card__defense .verdict{
+  margin-top: 12px; padding: 8px 12px;
+  background: var(--bg-elevated); border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 13px;
+}
+.xexam-card__defense .verdict .verdict-tag{
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  margin-right: 6px; background: var(--warn-bg); color: var(--warn);
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.xexam-card__steel-man{
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px dashed var(--border-strong);
+  font-size: 12px; color: var(--text-muted); line-height: 1.5;
+}
+.xexam-card__steel-man strong{ color: var(--text-strong); }
+@keyframes defense-slide{
+  from{ opacity: 0; transform: translateY(-6px); }
+  to{   opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   COLLISION SPLIT-SCREEN (State 4 dramatic visual)
+============================================================ */
+.collision{
+  margin: 40px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.collision__inner{
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: stretch; min-height: 220px;
+}
+@media (max-width: 640px){
+  .collision__inner{ grid-template-columns: 1fr; }
+  .collision__divider{ padding: 12px 0 !important; }
+}
+.collision__side{
+  padding: 24px 28px;
+  font-family: var(--font-serif); font-size: 15px; line-height: 1.55;
+}
+.collision__side--thesis{
+  background: linear-gradient(135deg, var(--thesis-soft), var(--thesis-soft) 80%, transparent);
+  color: var(--text);
+}
+.collision__side--antithesis{
+  background: linear-gradient(-135deg, var(--antithesis-soft), var(--antithesis-soft) 80%, transparent);
+  color: var(--text);
+  text-align: right;
+}
+@media (max-width: 640px){ .collision__side--antithesis{ text-align: left; } }
+.collision__side .label{
+  display: block; font-family: var(--font-sans);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 700; margin-bottom: 12px;
+}
+.collision__side--thesis .label{ color: var(--thesis-strong); }
+.collision__side--antithesis .label{ color: var(--antithesis-strong); }
+.collision__side .heading{
+  font-family: var(--font-sans); font-size: 15px; font-weight: 700;
+  color: var(--text-strong); margin-bottom: 8px;
+}
+.collision__divider{
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  padding: 0 16px; position: relative;
+}
+.collision__divider::before,
+.collision__divider::after{
+  content: ""; position: absolute; left: 50%; width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--text-muted), transparent);
+  transform: translateX(-50%);
+}
+.collision__divider::before{ top: 8%; height: 30%; }
+.collision__divider::after{  bottom: 8%; height: 30%; }
+.collision__zap{
+  font-size: 42px; line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(163,74,74,.4));
+  z-index: 1; background: var(--bg); padding: 4px 8px; border-radius: 50%;
+}
+.collision__tension{
+  padding: 16px 24px; background: var(--bg-sunken);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans); font-size: 13px;
+  color: var(--text-muted); text-align: center;
+}
+.collision__tension strong{
+  color: var(--text-strong); font-family: var(--font-serif);
+  font-style: italic; font-size: 15px;
+}
+
+/* ============================================================
+   SUBLATION GRADIENT (State 5 elevated visual)
+============================================================ */
+.sublation{
+  margin: 40px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: linear-gradient(
+    135deg,
+    var(--thesis) 0%,
+    var(--synthesis) 50%,
+    var(--antithesis) 100%
+  );
+  padding: 3px;   /* creates gradient border */
+}
+.sublation__inner{
+  background: var(--bg);
+  border-radius: calc(var(--radius) - 3px);
+  padding: 28px 32px;
+}
+.sublation__label{
+  font-family: var(--font-sans); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--synthesis-strong); font-weight: 700;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.sublation__statement{
+  font-family: var(--font-serif); font-size: 22px; line-height: 1.4;
+  font-weight: 700; color: var(--text-strong);
+  margin-bottom: 20px;
+}
+.sublation__elevation{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-top: 20px;
+}
+@media (max-width: 640px){ .sublation__elevation{ grid-template-columns: 1fr; } }
+.sublation__elev-cell{
+  padding: 14px 16px; border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 13px; line-height: 1.55;
+}
+.sublation__elev-cell--preserve{
+  background: var(--thesis-soft);
+  border-left: 3px solid var(--thesis);
+}
+.sublation__elev-cell--absorb{
+  background: var(--antithesis-soft);
+  border-left: 3px solid var(--antithesis);
+}
+.sublation__elev-cell .lead{
+  font-weight: 700; color: var(--text-strong);
+  display: block; margin-bottom: 4px; font-size: 11px;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+
+/* ============================================================
+   RIPPLE POOL (State 7 — Radiating Implication)
+============================================================ */
+.ripple{
+  margin: 40px 0; position: relative;
+  padding: 40px 32px;
+  background: radial-gradient(
+    ellipse at center,
+    var(--synthesis-soft) 0%,
+    var(--bg) 70%
+  );
+  border-radius: 200px / 100px;
+  border: 2px solid var(--synthesis);
+  text-align: center;
+}
+.ripple::before, .ripple::after{
+  content: ""; position: absolute;
+  border: 1px solid var(--synthesis);
+  border-radius: 200px / 100px;
+  opacity: .3;
+  pointer-events: none;
+}
+.ripple::before{ inset: -12px; }
+.ripple::after{  inset: -24px; opacity: .15; }
+.ripple__label{
+  font-family: var(--font-sans); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--synthesis-strong); font-weight: 700;
+  margin-bottom: 12px;
+}
+.ripple__claim{
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 700; color: var(--text-strong); line-height: 1.4;
+  max-width: 60ch; margin: 0 auto 12px;
+}
+.ripple__adjacent{
+  font-family: var(--font-sans); font-size: 13px; color: var(--text-muted);
+  max-width: 55ch; margin: 0 auto;
+}
+.ripple__adjacent strong{ color: var(--synthesis-strong); }
+
+/* ============================================================
+   EVIDENCE LOCKER (right-panel triggers)
+============================================================ */
+.evidence-trigger{
+  background: var(--warn-bg); color: var(--warn);
+  padding: 1px 6px; border-radius: 4px;
+  font-family: var(--font-sans); font-size: .85em;
+  cursor: pointer; border: 1px dashed transparent;
+  transition: all var(--transition);
+}
+.evidence-trigger::before{ content: "🔎 "; font-size: .9em; }
+.evidence-trigger:hover, .evidence-trigger:focus{
+  border-color: var(--warn); outline: none;
+}
+.evidence-trigger.active{
+  background: var(--warn); color: white;
+}
+.evidence-item{
+  padding: 12px 14px; background: var(--sidenote-bg);
+  color: var(--text); border-left: 3px solid var(--warn);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 12px; font-size: 12px; line-height: 1.5;
+  font-family: var(--font-sans);
+  transition: all var(--transition);
+}
+.evidence-item.highlight{
+  background: var(--warn-bg);
+  box-shadow: 0 0 0 2px var(--warn), var(--shadow);
+  transform: scale(1.02);
+}
+.evidence-item__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--warn); font-weight: 700;
+  margin-bottom: 4px;
+}
+.evidence-item__source{
+  margin-top: 6px; font-size: 11px; color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   PHILOSOPHERS' NOTE (user-generated marginalia)
+============================================================ */
+.phil-notes{ margin-top: 20px; }
+.phil-notes__title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); font-weight: 700; margin-bottom: 8px;
+}
+.phil-note{
+  background: #FFF9C4; color: #4A3F00;
+  padding: 10px 12px; margin-bottom: 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans); font-size: 12px;
+  line-height: 1.45; position: relative;
+  transform: rotate(-.5deg);
+  transition: transform var(--transition);
+}
+html[data-theme="dark"] .phil-note{
+  background: #6B5F1A; color: #FFF9C4;
+}
+.phil-note:hover{ transform: rotate(0); }
+.phil-note:nth-child(even){ transform: rotate(.6deg); }
+.phil-note__quote{
+  font-style: italic; font-size: 11px; color: #6B5F00;
+  border-left: 2px solid rgba(0,0,0,.15); padding-left: 6px;
+  margin-bottom: 6px;
+}
+html[data-theme="dark"] .phil-note__quote{ color: #E5D97F; }
+.phil-note__body{ font-weight: 500; }
+.phil-note__del{
+  position: absolute; top: 6px; right: 8px;
+  background: none; border: none; cursor: pointer;
+  font-size: 12px; color: rgba(0,0,0,.4); line-height: 1;
+}
+.phil-note__del:hover{ color: #C53030; }
+html[data-theme="dark"] .phil-note__del{ color: rgba(255,255,255,.4); }
+.phil-note__empty{
+  font-size: 11px; color: var(--text-panel-muted);
+  font-style: italic; padding: 12px;
+  border: 1px dashed rgba(255,255,255,.15); border-radius: var(--radius-sm);
+  text-align: center;
+}
+#phil-popup{
+  position: absolute; z-index: 100;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-sans); font-size: 13px;
+  max-width: 320px; display: none;
+}
+#phil-popup.show{ display: block; }
+#phil-popup__quote{
+  color: var(--text-muted); font-style: italic; font-size: 12px;
+  border-left: 2px solid var(--accent); padding-left: 8px;
+  margin-bottom: 8px; max-height: 60px; overflow: hidden;
+}
+#phil-popup__input{
+  width: 100%; min-height: 60px; resize: vertical;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px; font: inherit; color: var(--text);
+  background: var(--bg-sunken);
+  font-family: var(--font-sans); font-size: 13px;
+}
+#phil-popup__actions{
+  display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;
+}
+#phil-popup button{
+  padding: 6px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--bg);
+  color: var(--text); cursor: pointer; font: inherit;
+  font-size: 12px;
+}
+#phil-popup button.save{ background: var(--accent); color: white; border-color: var(--accent); }
+
+/* ============================================================
+   FLIP CARD, DETAILS, BAR CHART, CONCEPT FLOW, QUIZ, RESIDUALS
+============================================================ */
+.flip-card{
+  perspective: 1000px; height: 180px; margin: 24px 0;
+  font-family: var(--font-sans);
+}
+.flip-card__inner{
+  position: relative; width: 100%; height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d; cursor: pointer;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card:focus-within .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg); }
+.flip-card__face{
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; border-radius: var(--radius);
+  padding: 24px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__face--front{
+  background: var(--accent-soft); color: var(--accent-strong);
+  font-weight: 600; font-size: 16px;
+}
+.flip-card__face--back{
+  background: var(--bg-elevated); color: var(--text);
+  transform: rotateY(180deg); font-size: 14px; line-height: 1.5;
+}
+
+details.deep-dive{
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0; margin: 20px 0; background: var(--bg-sunken); overflow: hidden;
+}
+details.deep-dive > summary{
+  cursor: pointer; padding: 14px 18px;
+  font-family: var(--font-sans); font-weight: 600; font-size: 14px;
+  color: var(--accent-strong); list-style: none;
+  display: flex; align-items: center; gap: 8px; user-select: none;
+}
+details.deep-dive > summary::-webkit-details-marker{ display: none; }
+details.deep-dive > summary::before{
+  content: "▸"; transition: transform var(--transition); color: var(--accent);
+}
+details.deep-dive[open] > summary::before{ transform: rotate(90deg); }
+details.deep-dive[open] > summary{ border-bottom: 1px solid var(--border); }
+details.deep-dive > *:not(summary){
+  padding: 16px 18px;
+  animation: dd-open 240ms ease-out;
+}
+@keyframes dd-open{ from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+
+details.fallacy-log{ border-color: var(--warn); }
+details.fallacy-log > summary{ color: var(--warn); }
+details.fallacy-log > summary::before{ color: var(--warn); }
+.fallacy-entry{
+  border-left: 3px solid var(--warn); padding: 10px 14px;
+  background: var(--warn-bg); margin: 10px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 14px;
+}
+.fallacy-entry__name{
+  font-family: var(--font-sans); font-weight: 700; color: var(--warn);
+}
+
+.bar-chart{
+  font-family: var(--font-sans); margin: 24px 0;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; background: var(--bg-elevated);
+}
+.bar-chart__title{
+  font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); margin-bottom: 14px; font-weight: 700;
+}
+.bar-row{
+  display: grid; grid-template-columns: 140px 1fr 50px;
+  align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px;
+}
+.bar-label{ color: var(--text); }
+.bar-track{ background: var(--bg-sunken); height: 20px; border-radius: 4px; overflow: hidden; }
+.bar-fill{
+  height: 100%; background: var(--synthesis);
+  transition: width var(--transition), background var(--transition);
+  border-radius: 4px;
+}
+.bar-fill:hover{ background: var(--synthesis-strong); }
+.bar-value{ color: var(--text-muted); font-family: var(--font-mono); font-size: 12px; text-align: right; }
+
+.term{
+  border-bottom: 1px dotted var(--accent); cursor: help; position: relative;
+}
+.term:hover::after, .term:focus::after{
+  content: attr(data-def); position: absolute;
+  bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--text-strong); color: var(--bg);
+  font-family: var(--font-sans); font-size: 12px; font-weight: 400;
+  padding: 8px 12px; border-radius: var(--radius-sm);
+  white-space: normal; min-width: 200px; max-width: 280px;
+  z-index: 100; box-shadow: var(--shadow); line-height: 1.4;
+}
+
+/* Residuals */
+.residuals{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin: 32px 0; background: var(--bg-sunken);
+}
+.residuals h4{ margin-top: 20px; }
+.residuals h4:first-child{ margin-top: 0; }
+.residuals ul{ padding-left: 20px; margin: 8px 0; }
+.residuals li{ margin: 6px 0; font-size: 15px; }
+.residuals__badge{
+  display: inline-block; font-family: var(--font-mono);
+  font-size: 10px; padding: 2px 6px; border-radius: 3px;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text-muted); margin-right: 6px;
+}
+
+/* Quiz */
+.quiz{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin: 40px 0 24px;
+  background: var(--bg-elevated); font-family: var(--font-sans);
+}
+.quiz h2{ border: none; padding: 0; margin: 0 0 16px; font-size: 20px; }
+.quiz fieldset{ border: none; padding: 0; margin: 0 0 24px; }
+.quiz legend{
+  font-weight: 700; margin-bottom: 12px; color: var(--text-strong);
+  font-size: 15px; line-height: 1.4;
+}
+.quiz-option{
+  display: block; padding: 10px 14px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  margin: 6px 0; cursor: pointer; transition: all var(--transition);
+  font-size: 14px; background: var(--bg);
+}
+.quiz-option:hover{ border-color: var(--accent); }
+.quiz-option input{ margin-right: 10px; accent-color: var(--accent); }
+.quiz-option.selected{ background: var(--accent-soft); border-color: var(--accent); }
+.quiz-option.correct-answer{ background: var(--success-bg); border-color: var(--success); color: var(--success); }
+.quiz-option.incorrect-answer{ background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+.quiz-check-btn{
+  font-family: var(--font-sans); background: var(--synthesis);
+  color: white; border: none; padding: 10px 20px;
+  font-size: 14px; font-weight: 600; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--transition);
+}
+.quiz-check-btn:hover{ background: var(--synthesis-strong); }
+.quiz-score{
+  margin-top: 16px; padding: 14px 18px;
+  border-radius: var(--radius-sm); font-weight: 600; display: none;
+}
+.quiz-score.show{ display: block; }
+.quiz-score.pass{ background: var(--success-bg); color: var(--success); }
+.quiz-score.mid{ background: var(--warn-bg); color: var(--warn); }
+.quiz-score.fail{ background: var(--danger-bg); color: var(--danger); }
+
+/* Difficulty markers */
+.diff{
+  display: inline-block; font-family: var(--font-sans); font-size: 10px;
+  padding: 1px 6px; border-radius: 3px;
+  vertical-align: middle; margin-right: 4px; font-weight: 700;
+}
+.diff-core{ background: var(--success-bg); color: var(--success); }
+.diff-supp{ background: var(--warn-bg); color: var(--warn); }
+.diff-deep{ background: var(--info-bg); color: var(--info); }
+
+/* Sidenotes in right panel */
+.marginalia{
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 24px 20px;
+  font-family: var(--font-sans); font-size: 12px;
+}
+.sidenote{
+  background: rgba(255,255,255,.05);
+  padding: 12px 14px; border-radius: var(--radius-sm);
+  margin-bottom: 16px; border-left: 3px solid var(--accent);
+  line-height: 1.55;
+  color: var(--text-panel);
+}
+.sidenote__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--accent); margin-bottom: 4px; font-weight: 700;
+}
+.marginalia__title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); font-weight: 700;
+  margin: 24px 0 8px;
+}
+.marginalia__title:first-child{ margin-top: 0; }
+
+/* Floating controls */
+.controls{
+  position: fixed; bottom: 24px; right: 24px;
+  display: flex; flex-direction: column; gap: 8px; z-index: 50;
+}
+.ctrl-btn{
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text); width: 44px; height: 44px; border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); transition: all var(--transition);
+  font-family: var(--font-sans); font-size: 18px;
+}
+.ctrl-btn:hover{ background: var(--accent); color: white; border-color: var(--accent); }
+.ctrl-btn__lang{ font-size: 12px; font-weight: 700; }
+
+/* Footer */
+.footer-note{
+  margin-top: 60px; padding: 20px 0;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans); font-size: 12px;
+  color: var(--text-muted); line-height: 1.5;
+}
+
+/* Gate 5 offer block */
+.gate5{
+  margin: 40px 0; padding: 24px;
+  border: 1px solid var(--accent); border-radius: var(--radius);
+  background: var(--accent-soft);
+  font-family: var(--font-sans);
+}
+.gate5__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--accent-strong); font-weight: 700; margin-bottom: 8px;
+}
+.gate5__body{ color: var(--text); font-size: 14px; line-height: 1.55; }
+.gate5__options{ list-style: none; padding: 0; margin: 12px 0 0; }
+.gate5__options li{
+  padding: 6px 0; padding-left: 24px; position: relative;
+}
+.gate5__options li::before{
+  content: attr(data-key); position: absolute; left: 0; top: 6px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); color: white;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Bilingual scaffold */
+html[data-lang="en"] [lang="vi"]{ display: none; }
+html[data-lang="vi"] [lang="en"]{ display: none; }
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     FLOATING CONTROLS
+============================================================ -->
+<div class="controls">
+  <button class="ctrl-btn" id="theme-toggle" title="Chuyển chế độ sáng/tối" aria-label="Toggle theme">☾</button>
+  <button class="ctrl-btn" id="focus-toggle" title="Chế độ tập trung" aria-label="Toggle focus mode">⛶</button>
+  <button class="ctrl-btn ctrl-btn__lang" id="lang-toggle" title="Chuyển ngôn ngữ" aria-label="Toggle language" style="display:none">EN</button>
+</div>
+
+<!-- Philosophers' Note popup -->
+<div id="phil-popup" role="dialog" aria-label="Thêm một câu phản vấn">
+  <div id="phil-popup__quote"></div>
+  <textarea id="phil-popup__input" placeholder="Câu phản vấn của bạn... Socrates sẽ hỏi gì về đoạn này?" aria-label="Counter-probe"></textarea>
+  <div id="phil-popup__actions">
+    <button id="phil-popup__cancel">Hủy</button>
+    <button id="phil-popup__save" class="save">Lưu ghi chú</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     MAIN LAYOUT
+============================================================ -->
+<div class="layout">
+
+  <!-- =====================================================
+       LEFT PANEL — Navigator (Dialectical Compass)
+  ===================================================== -->
+  <aside class="navigator" aria-label="Điều hướng">
+    <div class="progress-bar" aria-hidden="true">
+      <div class="progress-bar__fill" id="progress-fill"></div>
+    </div>
+    <div class="nav-meta">
+      <span>📖 <span id="reading-time">~10</span> phút</span>
+      <span id="progress-percent">0%</span>
+    </div>
+
+    <div class="compass-title">La bàn biện chứng</div>
+    <div class="compass" id="compass">
+      <a class="compass-node" data-target="scope"        data-phase="scope"><span class="compass-node__icon">🎯</span><span class="compass-node__label">Phạm vi</span></a>
+      <a class="compass-node" data-target="thesis"       data-phase="thesis"><span class="compass-node__icon">📘</span><span class="compass-node__label">Luận đề</span></a>
+      <a class="compass-node" data-target="xexam"        data-phase="probe"><span class="compass-node__icon">🔍</span><span class="compass-node__label">Thẩm vấn</span></a>
+      <a class="compass-node" data-target="collision"    data-phase="collision"><span class="compass-node__icon">⚔️</span><span class="compass-node__label">Va chạm</span></a>
+      <a class="compass-node" data-target="synthesis"    data-phase="synthesis"><span class="compass-node__icon">💎</span><span class="compass-node__label">Tổng hợp</span></a>
+      <a class="compass-node" data-target="ripple"       data-phase="ripple"><span class="compass-node__icon">🌊</span><span class="compass-node__label">Lan tỏa</span></a>
+    </div>
+
+    <div class="toc-title">Mục lục</div>
+    <ul class="toc" id="toc">
+      <li><a href="#hook" data-target="hook">Câu chuyện mở đầu</a></li>
+      <li><a href="#scope" data-target="scope">Phạm vi &amp; Giả định</a></li>
+      <li><a href="#dialectic" data-target="dialectic">Thoáng nhìn</a></li>
+      <li><a href="#argument-map" data-target="argument-map">Bản đồ lập luận</a></li>
+      <li><a href="#thesis" data-target="thesis">Luận đề + Tiền đề</a></li>
+      <li><a href="#xexam" data-target="xexam">Thẩm vấn chéo</a></li>
+      <li><a href="#collision" data-target="collision">Va chạm</a></li>
+      <li><a href="#synthesis" data-target="synthesis">Tổng hợp</a></li>
+      <li><a href="#proof" data-target="proof">Bằng chứng</a></li>
+      <li><a href="#ripple" data-target="ripple">Hệ quả lan tỏa</a></li>
+      <li><a href="#fallacy-log" data-target="fallacy-log">Nhật ký ngụy biện</a></li>
+      <li><a href="#residuals" data-target="residuals">Giới hạn</a></li>
+      <li><a href="#quiz" data-target="quiz">Kiểm tra hiểu biết</a></li>
+      <li><a href="#gate5" data-target="gate5">Tiếp tục hay lặp lại?</a></li>
+    </ul>
+  </aside><!-- =====================================================
+       MIDDLE COLUMN — Canvas (The Arena)
+  ===================================================== -->
+  <main class="canvas">
+    <div class="canvas-inner">
+
+    <!-- Title -->
+    <h1>Không cần trường chuyên? — Phản biện một câu nói quen thuộc của phụ huynh</h1>
+    <div class="byline">
+      <span class="pill">Biện chứng</span>
+      <span class="pill">v1.0</span>
+      Một lập luận được rèn giũa về câu nói: "Không cần thiết phải cho con học trường chuyên. Học trường bình thường cũng tốt rồi."
+    </div>
+
+    <!-- ============ PARADOX METER ============ -->
+    <div class="paradox-meter" id="paradox-meter" data-phase="thesis" aria-live="polite">
+      <div class="paradox-meter__label">
+        <span>Mức bất hòa nhận thức</span>
+        <span class="paradox-meter__value" id="paradox-value">0%</span>
+      </div>
+      <div class="paradox-meter__bar">
+        <div class="paradox-meter__fill" id="paradox-fill"></div>
+      </div>
+      <div class="paradox-meter__hint" id="paradox-hint">Bắt đầu — luận đề đứng vững, chưa bị thách thức.</div>
+    </div>
+
+    <!-- ============ ASSUMPTIONS REGISTER (4 Dimensions) ============ -->
+    <div class="assumptions" aria-labelledby="assumptions-title">
+      <div class="assumptions__title" id="assumptions-title">🔧 Sổ đăng ký giả định — Bốn chiều kích</div>
+      <div class="assumptions__grid">
+        <div class="assumption-row">
+          <span class="assumption-key">Kính tấn công</span>
+          <span class="assumption-val"><span class="badge">THỰC NGHIỆM + THỰC DỤNG</span>Mọi khẳng định được kiểm tra bằng dữ liệu và thực tiễn tuyển sinh, chi phí.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Mức độ gắt gao</span>
+          <span class="assumption-val"><span class="badge">CON RUỒI TRÂU</span>Thẩm vấn mạnh — luận đề bị coi là over-claim cho tới khi được chứng minh.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Quỹ đạo</span>
+          <span class="assumption-val"><span class="badge">NGHỊCH LÝ</span>Cả hai phía đều có phần đúng; tổng hợp tìm biến số quyết định.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Độ sâu</span>
+          <span class="assumption-val"><span class="badge">XOẮN ỐC 3 VÒNG</span>Hiện tượng → hệ thống → mục đích. Không một lượt duy nhất.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ HOOK ============ -->
+    <section id="hook">
+      <h2><span class="h2-emoji">✍️</span>Câu chuyện mở đầu</h2>
+      <p>Năm 2026, khoảng <strong>6.000 thí sinh</strong> đăng ký thi vào 2 trường THPT chuyên thuộc Đại học Quốc gia Hà Nội. Khối chuyên Toán có tỷ lệ chọi <span class="evidence-trigger" data-evidence="ev-vn2026">1/9,7</span> — tức 10 em thì lấy 1. Đề Toán được nhận xét: "khó thế".</p>
+      <p>Cùng lúc đó, một câu nói rất phổ biến trong giới phụ huynh: <em>"Không cần thiết phải cho con học trường chuyên. Học trường bình thường cũng tốt rồi."</em> Nghe thì hợp lý, nhân văn. Nhưng nó có đứng vững dưới kính hiển vi của dữ liệu không? Bài này sẽ phản biện câu nói đó — đúng chỗ nào, sai chỗ nào, và đâu là câu hỏi thực sự nên hỏi.</p>
+    </section>
+
+    <!-- ============ SCOPE ============ -->
+    <section id="scope">
+      <h2><span class="h2-emoji">🎯</span>Phạm vi &amp; Giả định</h2>
+      <p><strong>Lãnh vực.</strong> Quyết định chọn trường THPT cho con tại Việt Nam, mở rộng sang bối cảnh Đông Á (Hàn Quốc, Trung Quốc) và một mô hình đối chứng phương Tây (Phần Lan).</p>
+      <p><strong>Trong phạm vi:</strong> học sinh THPT, tác động của môi trường học thuật cao lên thành tích và tâm lý, chi phí thực tế của cuộc đua trường chuyên.</p>
+      <p><strong>Ngoài phạm vi:</strong> bậc tiểu học/THCS, giáo dục nghề nghiệp, chính sách tuyển sinh đại học, và các trường tư thục quốc tế đắt tiền.</p>
+      <p><strong>Giả định đăng ký:</strong></p>
+      <ul>
+        <li><span class="term" data-def="Hiệu ứng cá lớn ao nhỏ: học sinh học trong môi trường đồng trang lứa xuất sắc có xu hướng tự đánh giá năng lực của mình thấp hơn, dù bản thân vẫn giỏi như cũ.">BFLPE</span> được định nghĩa theo Marsh (1984): hiệu ứng tiêu cực của thành tích trung bình lớp/school lên tự khái niệm học thuật (academic self-concept).</li>
+        <li>Trường chuyên tại Việt Nam hiện tại thiên về "trường công lập chất lượng cao" nhiều hơn là bồi dưỡng năng khiếu đúng nghĩa (theo GS Lê Anh Vinh).</li>
+        <li>Người đọc là phụ huynh Việt đang phân vân giữa hai lựa chọn, muốn quyết định dựa trên dữ liệu thay vì định kiến.</li>
+      </ul>
+      <p><strong>Tư thế người đọc:</strong> một phụ huynh từng nghe cả hai phía — người thì bảo trường chuyên là "nuôi gà chọi", người thì bảo trường thường làm "thui chột tài năng". Họ muốn biết ai đúng.</p>
+    </section>
+
+    <!-- ============ AT A GLANCE (three-panel) ============ -->
+    <section id="dialectic">
+      <h2><span class="h2-emoji">👁️</span>Thoáng nhìn</h2>
+      <div class="dialectic-header">
+        <div class="panel panel--thesis">
+          <span class="panel__label">📘 Luận đề</span>
+          <div class="panel__body">Học trường thường là đủ tốt cho con tôi. Trường chuyên không cần thiết — chi phí và áp lực của nó vượt xa lợi ích cho phần lớn học sinh.</div>
+        </div>
+        <div class="panel panel--antithesis">
+          <span class="panel__label">⚔️ Phản đề</span>
+          <div class="panel__body">Trường chuyên tạo môi trường kích thích năng khiếu thật: bạn bè đồng trang lứa, giáo viên giỏi hơn, chương trình sâu hơn. Bằng chứng meta-analysis cho thấy xếp nhóm học sinh giỏi có tác động tích cực. Phủ nhận điều này là bỏ qua dữ liệu.</div>
+        </div>
+        <div class="panel panel--synthesis">
+          <span class="panel__label">💎 Tổng hợp</span>
+          <div class="panel__body">Câu trả lời không nằm ở "chuyên hay thường", mà nằm ở <em>sự khớp (fit) giữa con trẻ và môi trường</em>. Trường chuyên đúng cho một nhóm nhỏ có năng khiếu thật; trường thường đủ tốt cho số đông — nhưng chỉ khi hệ thống thật sự đầu tư nâng chất trường thường (bài học Phần Lan).</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARGUMENT MAP (Toulmin) ============ -->
+    <section id="argument-map">
+      <h2><span class="h2-emoji">🗺️</span>Bản đồ lập luận</h2>
+      <div class="argument-map">
+        <div class="argument-map__title">Cấu trúc Toulmin của tổng hợp</div>
+        <div class="toulmin">
+          <div class="toulmin__cell t-grounds">
+            <span class="toulmin__label">Dữ kiện</span>
+            BFLPE trung bình <span class="evidence-trigger" data-evidence="ev-bflpe">β = −0,28</span> (meta-analysis 33 nghiên cứu, N = 1.276.838) — mạnh hơn ở THPT, ở châu Á. Xếp nhóm học sinh giỏi: <span class="evidence-trigger" data-evidence="ev-grouping">ES = 0,20</span> (6 meta-analysis). Việt Nam: 1,74% HS THPT học trường chuyên; Hàn Quốc học 12–16 giờ/ngày.
+          </div>
+          <div class="toulmin__cell t-warrant">
+            <span class="toulmin__label">Nhịp cầu</span>
+            Khi môi trường học thuật quá cao so với năng lực thực của trẻ, thành tích có thể tăng nhẹ nhưng tự tin học tập giảm rõ rệt. Khi năng lực vượt trội, môi trường chuyên mới phát huy. Nói cách khác: hiệu quả phụ thuộc vào fit, không phải tên trường.
+          </div>
+          <div class="toulmin__cell t-claim">
+            <span class="toulmin__label">Luận điểm</span>
+            Quyết định "chuyên hay thường" phải bắt đầu từ chẩn đoán fit giữa trẻ và môi trường — không phải từ danh tiếng trường, cũng không phải từ sợ hãi "thui chột tài năng".
+          </div>
+          <div class="toulmin__cell t-backing">
+            <span class="toulmin__label">Hậu thuẫn</span>
+            Meta-analysis BFLPE (Fang et al., 2018); Visible Learning MetaX (Hattie); so sánh Hàn Quốc–Phần Lan trên PISA 2018; phát biểu của GS Lê Anh Vinh về trường chuyên Việt Nam.
+          </div>
+          <div class="toulmin__cell t-qualifier">
+            <span class="toulmin__label">Giới hạn</span>
+            Đúng khi: trẻ có năng lực nổi trội và đam mê thật (fit cao) → chuyên giúp ích; trẻ ở mức khá–giỏi bình thường → trường thường đủ tốt, miễn hệ thống không "khủng hoảng chất lượng" nơi đó.
+          </div>
+          <div class="toulmin__cell t-rebuttal">
+            <span class="toulmin__label">Phản bác</span>
+            Trường chuyên Việt Nam hiện nay đang là "trường chất lượng cao với tấm áo choàng đào tạo tài năng" (GS Lê Anh Vinh) — khi đó lợi ích "bồi dưỡng năng khiếu" bị loãng thành cuộc đua luyện thi, và chi phí tâm lý tăng không tương xứng.
+          </div>
+        </div>
+      </div>
+    </section><!-- ============ THESIS PILLAR + PREMISES ============ -->
+    <section id="thesis">
+      <h2><span class="h2-emoji">📘</span>Luận đề</h2>
+
+      <div class="thesis-pillar">
+        <div class="thesis-pillar__label">📘 Luận đề được mài sắc</div>
+        <div class="thesis-pillar__statement">"Học trường thường là đủ tốt cho con tôi. Trường chuyên không cần thiết."</div>
+        <div class="thesis-pillar__contract">Ta chấp nhận mệnh đề này làm điểm khởi đầu. Nhưng nó có đứng vững dưới sự soi xét?</div>
+      </div>
+
+      <h3><span class="diff diff-core">LÕI</span>Tiền đề chịu lực (khai quật được)</h3>
+      <p>Để Luận đề đứng vững, cả ba tiền đề sau phải đúng. Nếu một cái sụp, lập luận sụp theo.</p>
+
+      <div class="premise-walls">
+        <div class="premise-wall">
+          <div class="premise-wall__index">P1</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Trường thường không thua về chất lượng học thật</div>
+            Xét thành tích học thật (không kể thương hiệu), trường thường không kém trường chuyên đối với phần lớn học sinh.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P2</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Chi phí của trường chuyên lớn hơn lợi ích</div>
+            Chi phí thể chất, tinh thần, tài chính của cuộc đua trường chuyên vượt xa lợi ích mang lại cho đa số trẻ.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P3</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Hạnh phúc quan trọng hơn thành tích</div>
+            Phát triển toàn diện và hạnh phúc quan trọng hơn thứ hạng; trường thường — ít áp lực hơn — đem lại điều đó.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CROSS-EXAMINATION ============ -->
+    <section id="xexam">
+      <h2><span class="h2-emoji">🔍</span>Thẩm vấn chéo</h2>
+      <p>Mỗi tiền đề nhận một câu hỏi riêng. Câu hỏi và tình huống bìa được hiện ngay; lời bào chữa nằm sau nút bấm. Hãy ngồi với nghi ngờ trước khi nghe lời cứu viện.</p>
+
+      <!-- P1 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P1 — TRƯỜNG THƯỜNG KHÔNG THUA?</span>
+          <span class="tag tag--lens">Kính: Thực nghiệm</span>
+          <span class="tag tag--rigor">Độ gắt: Ruồi trâu</span>
+        </div>
+        <div class="xexam-card__probe">Nhưng dữ liệu nói ngược lại: nhóm học sinh giỏi học chung lại học tốt hơn?</div>
+        <p class="xexam-card__setup">Meta-analysis của Visible Learning cho thấy "ability grouping for gifted students" có <span class="evidence-trigger" data-evidence="ev-grouping">trọng số hiệu ứng trung bình ES = 0,20</span> (6 meta-analysis, 131 nghiên cứu, 516 hiệu ứng) — kết luận "likely to have positive impact". Tức là: gom học sinh giỏi vào một lớp thì chúng học tốt hơn. Nếu đúng, tiền đề "trường thường không thua" sụp ngay ở tầng dữ liệu.</p>
+        <button class="xexam-card__defense-btn" data-target="def-p1" aria-expanded="false">Nghe lời bào chữa</button>
+        <div class="xexam-card__defense" id="def-p1">
+          <span class="label">Tình huống bìa — Kính thực nghiệm</span>
+          <p>Một học sinh giỏi Toán nhưng học trong lớp đại trà vẫn đạt giải thành phố — không cần trường chuyên. Nhưng câu chuyện ngược lại cũng có thật: học sinh năng khiếu bị "thui chột" khi không có bạn đồng trang lứa để cùng đua. Cả hai giai thoại đều có, nên phải dựa vào meta-analysis.</p>
+          <span class="label" style="margin-top:12px">Lời bào chữa</span>
+          <p>Người bảo vệ Luận đề nhượng bộ: ES 0,20 là có thật, nhưng nó chỉ áp dụng cho <em>nhóm đã được xác định là năng khiếu</em>. Câu hỏi của phụ huynh lại là: <em>con tôi có phải là nhóm đó không?</em> Với một học sinh ở mức khá–giỏi bình thường (chiếm tuyệt đại đa số), việc xếp vào môi trường quá cao so với năng lực gây ra BFLPE — tự tin học tập giảm, β ≈ −0,28. Điểm mấu chốt: lợi ích của trường chuyên chỉ xuất hiện khi fit dương (năng lực vượt trội). Với người còn lại, "trường thường đủ tốt" là đúng.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đứng vững <em>có điều kiện</em>. P1 đúng cho số đông, sai cho nhóm năng khiếu thật. → Vòng xoắn 1 đã tìm ra biến số quyết định: <strong>fit</strong>.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra steel-man:</strong> SM-1 ✓ (nhà phản biện công nhận ES 0,20 là dữ liệu thật); SM-2 ✓ (tấn công đúng mệnh đề, không bắt bí); SM-3 ✓ (dùng bằng chứng meta-analysis mạnh nhất của phe đối lập).
+          </div>
+        </div>
+      </article>
+
+      <!-- P2 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P2 — CHI PHÍ &gt; LỢI ÍCH?</span>
+          <span class="tag tag--lens">Kính: Thực dụng</span>
+          <span class="tag tag--rigor">Độ gắt: Ruồi trâu</span>
+        </div>
+        <div class="xexam-card__probe">Chi phí đó có thật sự lớn hơn lợi ích — hay chỉ lớn hơn với người không khớp?</div>
+        <p class="xexam-card__setup">Hàn Quốc là tấm gương cảnh báo. Học sinh học <span class="evidence-trigger" data-evidence="ev-korea">12–16 giờ/ngày</span> (trường + hagwon); tỷ lệ tự tử học sinh THPT là 4/1.000 vào 2021. 80% trẻ em Hàn từng học thêm; thị trường học thêm đạt <span class="evidence-trigger" data-evidence="ev-nyt">20,3 tỷ USD năm 2024</span>. Trẻ 4 tuổi đã thi tuyển vào trường mầm non tiếng Anh. Đây chính là quỹ đạo nếu cuộc đua trường chuyên tràn lan — và chi phí đó thật sự vượt lợi ích.</p>
+        <button class="xexam-card__defense-btn" data-target="def-p2" aria-expanded="false">Nghe lời bào chữa</button>
+        <div class="xexam-card__defense" id="def-p2">
+          <span class="label">Tình huống bìa — Kính thực dụng</span>
+          <p>Một học sinh thật sự yêu Toán, học chuyên, chịu áp lực tốt, đạt huy chương Olympic — với em, chi phí (thời gian, căng thẳng) là đầu tư, không phải tổn thất. Đo "chi phí trung bình" trên cả dân số sẽ bỏ qua ca này.</p>
+          <span class="label" style="margin-top:12px">Lời bào chữa</span>
+          <p>Người bảo vệ Luận đề chấp nhận: lợi ích của trường chuyên là có thật với nhóm fit cao. Nhưng điểm mấu chốt thực dụng là <em>chi phí cơ hội của cuộc đua</em>. GS Lê Anh Vinh cảnh báo: hàng nghìn trẻ "luyện sớm hơn, lâu hơn, đúng dạng hơn" — thời gian đó đáng lẽ dành cho đọc sâu, làm dự án, khám phá. Khi trường chuyên biến thành "trường chất lượng cao", đa số thí sinh thi chuyên không vì đam mê mà vì muốn một trường "tốt hơn". Với nhóm ấy, chi phí thật sự lớn hơn lợi ích.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đứng vững <em>có điều kiện</em>. P2 đúng với thị trường luyện thi tràn lan, sai với nhóm năng khiếu thật. → Vòng xoắn 2: đừng nhầm "đỗ chuyên" với "khớp chuyên".</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra steel-man:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓ (dùng dữ liệu Hàn Quốc và phát biểu của GS Lê Anh Vinh — vũ khí mạnh nhất của phe phản đối cuộc đua).
+          </div>
+        </div>
+      </article>
+
+      <!-- P3 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P3 — HẠNH PHÚC &gt; THÀNH TÍCH?</span>
+          <span class="tag tag--lens">Kính: Triết học</span>
+          <span class="tag tag--rigor">Độ gắt: Ruồi trâu</span>
+        </div>
+        <div class="xexam-card__probe">Phần Lan chứng minh "không áp lực vẫn giỏi" — vậy trường thường phải thắng chứ?</div>
+        <p class="xexam-card__setup">PISA 2018: Hàn Quốc xếp top-5, Phần Lan hạng 7 — chỉ kém chút xíu. Nhưng học sinh Phần Lan học từ <span class="evidence-trigger" data-evidence="ev-finland">9:00 đến 14:45</span>, gần như không bài tập về nhà, không xếp hạng học sinh, có hệ thống tư vấn tâm lý. Nếu một nước xếp hạng 7 PISA làm được mà không cần trường chuyên, trường thường kiểu Phần Lan phải là câu trả lời?</p>
+        <button class="xexam-card__defense-btn" data-target="def-p3" aria-expanded="false">Nghe lời bào chữa</button>
+        <div class="xexam-card__defense" id="def-p3">
+          <span class="label">Tình huống bìa — Kính triết học</span>
+          <p>Phần Lan thắng nhờ cả hệ sinh thái: giáo viên được đào tạo bậc thạc sĩ, tự chủ nghề nghiệp, được trả lương tương xứng, chương trình chuẩn quốc gia nhưng trường tự thiết kế. Đó không phải "trường thường" theo nghĩa Việt Nam hiện hành — nơi chất lượng giáo viên và cơ sở vật chất không đồng đều.</p>
+          <span class="label" style="margin-top:12px">Lời bào chữa</span>
+          <p>Người bảo vệ Luận đề chấp nhận mục tiêu: hạnh phúc và phát triển toàn diện là đúng đắn. Nhưng phải nhìn thẳng: ở Việt Nam, "trường thường cũng tốt" <em>chưa phải là sự thật hiện hành</em>, mà là một cam kết. GS Lê Anh Vinh nói rõ: "hệ thống phổ thông bình thường chưa tạo đủ những ngôi trường tốt để phụ huynh yên tâm". Trong khi chờ hệ thống được nâng cấp, phụ huynh đặt con vào trường chuyên (dù không hoàn hảo) là một lựa chọn hợp lý về mặt thực dụng. Câu nói "trường thường cũng tốt" chỉ đúng khi đã có trường thường đủ tốt.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đứng vững <em>có điều kiện</em>. P3 đúng về mục tiêu, nhưng phụ thuộc điều kiện hệ thống. → Vòng xoắn 3: trách nhiệm nâng trường thường thuộc về hệ thống, không phải của riêng phụ huynh.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra steel-man:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓ (dùng mô hình Phần Lan — phản ví dụ mạnh nhất của phe ủng hộ trường thường).
+          </div>
+        </div>
+      </article>
+    </section><!-- ============ COLLISION SPLIT-SCREEN ============ -->
+    <section id="collision">
+      <h2><span class="h2-emoji">⚔️</span>Phản đề — Va chạm</h2>
+      <p><strong>Tổng hợp của nghi ngờ.</strong> Sau ba cuộc thẩm vấn: P1 giữ được nhưng chỉ "có điều kiện" (đúng với số đông, sai với nhóm năng khiếu); P2 giữ được với điều kiện thị trường luyện thi; P3 đúng về mục tiêu nhưng phụ thuộc hệ thống. Kiểu lỗi chung: Luận đề <em>đúng cho trung bình, nhưng bỏ quên hai đầu phân bố</em> — nhóm năng khiếu thật ở một đầu, và hệ thống trường thường kém chất lượng ở đầu kia.</p>
+
+      <div class="collision">
+        <div class="collision__inner">
+          <div class="collision__side collision__side--thesis">
+            <span class="label">📘 Luận đề nứt ở đây</span>
+            <div class="heading">Nơi Luận đề thất bại</div>
+            <p>Câu nói coi mọi đứa trẻ như nhau. Nó phủ nhận trường chuyên bằng một lần quét — nhưng phủ nhận cả lợi ích có thật của môi trường chuyên với nhóm năng khiếu, và lờ đi rằng "trường thường tốt" hiện tại mới chỉ là lời hứa.</p>
+          </div>
+          <div class="collision__divider" aria-hidden="true">
+            <span class="collision__zap">⚡</span>
+          </div>
+          <div class="collision__side collision__side--antithesis">
+            <span class="label">⚔️ Phản đề đứng vững ở đây</span>
+            <div class="heading">Nơi Phản đề giữ chân</div>
+            <p>Trường chuyên có giá trị thực chứng cho nhóm fit cao. Nhưng nó cũng nuôi một cuộc đua mà GS Lê Anh Vinh gọi là "gánh khát vọng chính đáng của phụ huynh" — và Hàn Quốc cho thấy cuộc đua đó kết thúc ở đâu.</p>
+          </div>
+        </div>
+        <div class="collision__tension">
+          Biến số va chạm chính xác giữa Luận đề và Phản đề: <strong>cùng một câu hỏi "con tôi có khớp với môi trường này không?" — mà hai phía trả lời bằng hai thước đo khác nhau: trường thường đo bằng nỗi sợ thui chột, trường chuyên đo bằng nỗi sợ nghiền nát.</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SUBLATION (Synthesis) ============ -->
+    <section id="synthesis">
+      <h2><span class="h2-emoji">💎</span>Tổng hợp — Aufheben</h2>
+
+      <div class="sublation">
+        <div class="sublation__inner">
+          <div class="sublation__label">💎 Quỹ đạo: NGHỊCH LÝ · Aufheben (3 vòng xoắn)</div>
+          <div class="sublation__statement">
+            Cả hai đều đúng — nhưng mỗi cái đúng cho một nhóm trẻ khác nhau. Trường chuyên cần thiết cho nhóm năng khiếu thật (fit cao); trường thường đủ tốt cho số đông — với điều kiện hệ thống thật sự nâng chất trường thường. Câu hỏi đúng không phải "chuyên hay thường", mà là <em>"môi trường nào khớp với con tôi, và hệ thống đang cho tôi môi trường nào?"</em>
+          </div>
+          <div class="sublation__elevation">
+            <div class="sublation__elev-cell sublation__elev-cell--preserve">
+              <span class="lead">Bảo tồn từ Luận đề</span>
+              Cho số đông: trường thường là đủ và đúng — nếu nó thật sự tốt. Hạnh phúc, phát triển toàn diện, không ép con vào cuộc đua là những giá trị đúng. Nỗi sợ "thui chột" không nên trở thành cái cớ để bắt mọi trẻ chạy đua.
+            </div>
+            <div class="sublation__elev-cell sublation__elev-cell--absorb">
+              <span class="lead">Hấp thụ từ Phản đề</span>
+              Nhóm năng khiếu thật tồn tại và cần môi trường chuyên đúng nghĩa (sâu, chọn lọc, nghiên cứu). Meta-analysis ủng hộ xếp nhóm năng khiếu. Vấn đề không phải là xóa trường chuyên, mà là <em>tách hai việc đang bị trộn lẫn</em>: bồi dưỡng năng khiếu (chuyên đúng nghĩa) và cung cấp trường tốt cho số đông (việc của trường thường).
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3><span class="diff diff-core">LÕI</span>Ba vòng xoắn (spiral)</h3>
+      <p><strong>Vòng 1 — Hiện tượng:</strong> "Trường thường cũng tốt" đúng với số đông, sai với nhóm năng khiếu thật. Biến số quyết định = <em>fit</em>.</p>
+      <p><strong>Vòng 2 — Hệ thống cá nhân:</strong> Làm sao biết con mình thuộc nhóm nào? Fit phải được đo bằng quá trình (thử – quan sát – điều chỉnh), không phải một quyết định dứt khoát. Và đừng nhầm "đỗ chuyên" với "khớp chuyên" — thi đỗ không chứng minh con sẽ hạnh phúc trong môi trường đó.</p>
+      <p><strong>Vòng 3 — Hệ thống xã hội:</strong> Ai chịu trách nhiệm làm trường thường đủ tốt? Mô hình Phần Lan cho thấy có thể — nhưng cần đầu tư hệ thống, không phải gánh lên vai từng phụ huynh. "Trường thường cũng tốt" phải thành sự thật có điều kiện được xây dựng, không phải sự cam chịu.</p>
+    </section>
+
+    <!-- ============ PROOF ============ -->
+    <section id="proof">
+      <h2><span class="h2-emoji">🧪</span>Bằng chứng</h2>
+      <p><span class="diff diff-supp">BỔ TRỢ</span>Hai hiệu ứng ngược chiều cùng tồn tại trong một thí nghiệm tự nhiên. Meta-analysis của Fang và cộng sự (2018) gộp 33 nghiên cứu (N = 1.276.838) cho ra <span class="evidence-trigger" data-evidence="ev-bflpe">BFLPE trung bình β = −0,28</span> — mạnh hơn ở học sinh THPT, ở châu Á, và với tự khái niệm ngôn ngữ. Kiểm chứng chéo của Marsh &amp; Hau (2003) tìm thấy hiệu ứng âm ở 26 quốc gia (β = −0,20). Trong khi đó, Visible Learning MetaX cho xếp nhóm học sinh năng khiếu ES = 0,20 — tích cực nhưng khiêm tốn.</p>
+
+      <div class="bar-chart">
+        <div class="bar-chart__title">Hai hiệu ứng ngược chiều của môi trường học thuật cao (độ lớn hiệu ứng)</div>
+        <div class="bar-row"><span class="bar-label">BFLPE (Fang 2018)</span><div class="bar-track"><div class="bar-fill" style="width:93%;background:var(--antithesis)"></div></div><span class="bar-value">−0,28</span></div>
+        <div class="bar-row"><span class="bar-label">BFLPE (Marsh&amp;Hau)</span><div class="bar-track"><div class="bar-fill" style="width:67%;background:var(--antithesis)"></div></div><span class="bar-value">−0,20</span></div>
+        <div class="bar-row"><span class="bar-label">Xếp nhóm năng khiếu</span><div class="bar-track"><div class="bar-fill" style="width:67%;background:var(--synthesis)"></div></div><span class="bar-value">+0,20</span></div>
+      </div>
+
+      <p><strong>Ca đối chứng.</strong> Hàn Quốc (top-5 PISA 2018) và Phần Lan (hạng 7) đạt thành tích gần ngang — nhưng khác biệt về chi phí tâm lý là trời vực: Hàn học 12–16 giờ/ngày, tỷ lệ tự tử HS THPT 4/1.000; Phần Lan học 6 giờ/ngày, ít bài tập, không xếp hạng. Điều này cho thấy thành tích cao không buộc phải trả giá bằng hạnh phúc — điều kiện là hệ thống phải đủ tốt, không phải nỗ lực cá nhân trả giá.</p>
+
+      <div class="flip-card" tabindex="0">
+        <div class="flip-card__inner">
+          <div class="flip-card__face flip-card__face--front">Ca đối chứng Phần Lan chứng minh điều gì?</div>
+          <div class="flip-card__face flip-card__face--back">Nó chứng minh "không áp lực vẫn giỏi" là khả thi — nhưng chỉ khi toàn bộ hệ thống được xây lại (giáo viên, chương trình, văn hóa). Ở Việt Nam hiện tại, trường thường chưa được đầu tư tương đương, nên "trường thường cũng tốt" là mục tiêu phải xây, không phải hiện trạng để mà tin.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RIPPLE POOL — Radiating Implication ============ -->
+    <section id="ripple">
+      <h2><span class="h2-emoji">🌊</span>Hệ quả lan tỏa</h2>
+
+      <h3><span class="diff diff-core">LÕI</span>Bài kiểm tra ứng dụng</h3>
+      <p>Một phụ huynh Hà Nội năm 2026, con đang học lớp 9, học lực khá giỏi, phân vân cho con thi chuyên Toán. Áp dụng Tổng hợp: (1) đo fit bằng quá trình — cho con thử, quan sát phản ứng của con với áp lực, không phán xét qua một kỳ thi; (2) nếu con không có năng khiếu vượt trội và đam mê thật, trường thường tốt + thời gian cho phát triển toàn diện là lựa chọn đúng; (3) nếu con khát khao và chịu được áp lực, trường chuyên có giá trị thật — nhưng hãy chọn vì sự khớp, không phải vì thương hiệu.</p>
+
+      <div class="ripple">
+        <div class="ripple__label">🌊 Nếu tổng hợp này đúng, thì…</div>
+        <div class="ripple__claim">Cuộc tranh luận "chuyên hay thường" đang hỏi sai câu hỏi. Câu hỏi đúng là: đứa trẻ này khớp với môi trường nào, và hệ thống có đang tạo đủ trường tốt cho mọi đứa trẻ hay không.</div>
+        <div class="ripple__adjacent">Lãnh vực kề cận bị thách thức căn bản: <strong>chính sách giáo dục.</strong> Nếu tổng hợp đúng, nhà nước nên đầu tư nâng chất trường phổ thông đại trà (mô hình Phần Lan) thay vì chỉ nuôi hệ thống trường chuyên elite. Vòng xoắn tiếp theo sẽ hỏi: điều đó có khả thi về ngân sách và chính trị ở Việt Nam không?</div>
+      </div>
+    </section>
+
+    <!-- ============ FALLACY LOG ============ -->
+    <section id="fallacy-log">
+      <h2><span class="h2-emoji">⚠️</span>Nhật ký ngụy biện</h2>
+      <p style="color:var(--text-muted);font-size:14px">Mỗi mục ghi một ngụy biện phát hiện trong quá trình thẩm vấn và việc viết lại nó buộc phải làm. Nhật ký đóng là tốt; nhật ký trống là không ổn.</p>
+      <details class="deep-dive fallacy-log">
+        <summary>⚠️ Nhật ký ngụy biện (3 phát hiện từ cuộc kiểm toán 12 ngụy biện)</summary>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">1. Ngụy biện phân đôi giả (False Dilemma) — trong luận đề gốc</div>
+          <p>Đóng khung "chuyên hay thường" thành lựa chọn nhị phân. Thực tế là một phổ: nhiều học sinh năng khiếu học tốt ở trường thường có câu lạc bộ, nhiều học sinh không năng khiếu chật vật ở trường chuyên.</p>
+          <p><strong>Viết lại:</strong> đặt lại thành câu hỏi về fit — một phổ, không phải ngã ba.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">2. Khái quát vội vàng (Hasty Generalisation) — từ giai thoại cá nhân</div>
+          <p>Nhiều phụ huynh dựa trên "con nhà hàng xóm học trường thường vẫn đỗ ĐH tốt" để kết luận chung cho mọi trẻ. Một vài ca thành công không phải bằng chứng cho phân bố.</p>
+          <p><strong>Viết lại:</strong> Luận đề giờ dựa vào meta-analysis (BFLPE, xếp nhóm) thay vì giai thoại; và thừa nhận phạm vi theo nhóm fit.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">3. Ngụy biện kêu gọi uy tín ngược (Appeal to Authority) — cả hai phía</div>
+          <p>Cả "trường chuyên nuôi gà chọi" lẫn "trường thường thui chột tài năng" thường được đóng gói bằng uy tín (chuyên gia, giáo viên nổi tiếng) thay vì dữ liệu đo được.</p>
+          <p><strong>Viết lại:</strong> mọi khẳng định đều được neo vào nguồn đã kiểm chứng (meta-analysis, số liệu PISA, phát biểu có nguồn).</p>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:16px">Ngụy biện đã kiểm toán nhưng không phát hiện: Rơm rạ, Trượt dốc, Ad Hominem, Ngụy biện thiên vị sống sót trong dữ liệu meta (đã được kiểm soát), Nhân quả nhầm lẫn, Không có người Scotland thật, Motte-and-Bailey, Bỏ quên tỷ lệ nền, Tu Quoque.</p>
+      </details>
+    </section>
+
+    <!-- ============ RESIDUALS ============ -->
+    <section id="residuals">
+      <h2><span class="h2-emoji">📉</span>Giới hạn &amp; Điều kiện biên</h2>
+      <div class="residuals">
+        <h4>Lập luận này không bao phủ</h4>
+        <ul>
+          <li><span class="residuals__badge">8a</span>Bậc tiểu học/THCS — nơi áp lực tuyển chọn sớm có quỹ đạo khác.</li>
+          <li><span class="residuals__badge">8a</span>Các trường tư thục quốc tế đắt tiền — nơi "trường thường" không phải lựa chọn của số đông.</li>
+          <li><span class="residuals__badge">8a</span>Câu hỏi ngân sách: liệu nâng chất trường thường có khả thi về tài chính ở Việt Nam.</li>
+        </ul>
+        <h4>Yếu tố có thể bác bỏ (falsifiers)</h4>
+        <ul>
+          <li><span class="residuals__badge">8b</span>Nghiên cứu dọc Việt Nam cho thấy HS trường thường (đã kiểm soát đầu vào) có thành tích kém hơn hẳn — không phải do chọn lọc.</li>
+          <li><span class="residuals__badge">8b</span>Bằng chứng BFLPE không tái lập trên mẫu Việt Nam, hoặc hiệu ứng ngược dấu.</li>
+          <li><span class="residuals__badge">8b</span>Bằng chứng Hàn Quốc/Phần Lan không chuyển dịch được sang Việt Nam do khác biệt văn hóa, kinh tế.</li>
+        </ul>
+        <h4>Đòn bẩy độ tin cậy</h4>
+        <ul>
+          <li><span class="residuals__badge">8c</span>↑ Nghiên cứu BFLPE trên mẫu trường chuyên Việt Nam.</li>
+          <li><span class="residuals__badge">8c</span>↑ Khảo sát chi phí tâm lý (lo âu, trầm cảm) của HS chuyên vs không chuyên tại VN.</li>
+          <li><span class="residuals__badge">8c</span>↓ Nếu hệ thống tiếp tục đổ toàn bộ kỳ vọng vào trường chuyên mà không đầu tư trường thường.</li>
+          <li><span class="residuals__badge">8c</span>↓ Nếu trường chuyên tiếp tục "chất lượng cao hóa" thay vì bồi dưỡng năng khiếu đúng nghĩa.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section id="quiz" class="quiz">
+      <h2>🧠 Kiểm tra hiểu biết</h2>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:20px">Các câu hỏi kiểm tra khả năng bảo vệ <em>cấu trúc</em> của lập luận, không phải trí nhớ về ví dụ.</p>
+
+      <fieldset data-q="1" data-answer="c">
+        <legend>1. BFLPE (hiệu ứng cá lớn ao nhỏ) mô tả điều gì?</legend>
+        <label class="quiz-option"><input type="radio" name="q1" value="a">a. Học sinh giỏi luôn học tốt hơn trong lớp giỏi.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="b">b. Học sinh trong trường lớn được lợi về cơ sở vật chất.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="c">c. Học sinh trong môi trường học thuật quá cao có xu hướng tự đánh giá năng lực thấp hơn, dù bản thân vẫn giỏi.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="d">d. Học sinh yếu bị bỏ lại trong lớp giỏi.</label>
+      </fieldset>
+
+      <fieldset data-q="2" data-answer="b">
+        <legend>2. Theo Tổng hợp, quyết định "chuyên hay thường" phụ thuộc điều gì?</legend>
+        <label class="quiz-option"><input type="radio" name="q2" value="a">a. Danh tiếng của trường.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="b">b. Sự khớp (fit) giữa năng lực, đam mê của trẻ và môi trường — đo bằng quá trình, không phải một kỳ thi.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="c">c. Tỷ lệ đỗ đại học của trường.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="d">d. Khả năng chi trả của gia đình.</label>
+      </fieldset>
+
+      <fieldset data-q="3" data-answer="d">
+        <legend>3. Vì sao "trường thường cũng tốt" chưa phải là sự thật hiện hành ở Việt Nam, theo lập luận này?</legend>
+        <label class="quiz-option"><input type="radio" name="q3" value="a">a. Vì trường thường toàn giáo viên kém.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="b">b. Vì học sinh trường thường không bao giờ đỗ đại học tốt.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="c">c. Vì chưa có dữ liệu về trường thường.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="d">d. Vì hệ thống phổ thông đại trà chưa được đầu tư đủ tốt (bài học Phần Lan), nên đó là cam kết phải xây dựng, không phải hiện trạng.</label>
+      </fieldset>
+
+      <button class="quiz-check-btn" id="check-quiz">Chấm điểm</button>
+      <div class="quiz-score" id="quiz-score" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- ============ GATE 5 — CONTINUE OR ITERATE? ============ -->
+    <section id="gate5" class="gate5">
+      <div class="gate5__title">Gate 5 — Tiếp tục hay lặp lại?</div>
+      <div class="gate5__body">
+        Hệ quả lan tỏa tôi rút ra: <em>"Cuộc tranh luận 'chuyên hay thường' đang hỏi sai câu hỏi; câu hỏi đúng là về sự khớp của từng đứa trẻ và trách nhiệm của hệ thống."</em> Bốn bước đi tiếp:
+      </div>
+      <ul class="gate5__options">
+        <li data-key="a"><strong>Xoắn tiếp</strong> — đưa tổng hợp này thành luận đề mới: "nâng chất trường thường kiểu Phần Lan có khả thi về ngân sách và chính trị ở Việt Nam không?"</li>
+        <li data-key="b"><strong>Mài giũa</strong> — cải thiện một mục cụ thể (nêu rõ mục nào).</li>
+        <li data-key="c"><strong>Phân nhánh</strong> — lập luận riêng cho hệ quả lan tỏa: chi phí tâm lý của cuộc đua luyện thi ở trẻ em Việt.</li>
+        <li data-key="d"><strong>Chốt lại</strong> — artifact này đứng như hiện tại.</li>
+      </ul>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <div class="footer-note">
+      <p><strong>Ghi chú phương pháp:</strong> Artifact này được rèn giũa bằng Socratic Dialectic Engine v2.2 — 10 trạng thái xuyên qua năm cổng phản hồi. Quỹ đạo NGHỊCH LÝ, độ sâu XOẮN ỐC 3 VÒNG.</p>
+      <p><em>Chế độ nghiên cứu: <span id="research-mode-value">web-enabled — các URL nguồn đã được tải và kiểm chứng trong phiên ngày 15/08/2026.</span></em></p>
+    </div>
+
+    </div><!-- /.canvas-inner -->
+  </main><!-- =====================================================
+       RIGHT PANEL — Marginalia (Evidence Locker + Philosophers' Notes)
+  ===================================================== -->
+  <aside class="marginalia" aria-label="Lề và Kho bằng chứng">
+
+    <div class="marginalia__title">🔎 Kho bằng chứng</div>
+    <div id="evidence-locker">
+      <div class="evidence-item" id="ev-bflpe">
+        <span class="evidence-item__label">BFLPE meta-analysis</span>
+        Hiệu ứng cá lớn ao nhỏ lên tự khái niệm học thuật: β = −0,28 (p&lt;0,001). 33 nghiên cứu, 56 hiệu ứng, N = 1.276.838. Mạnh hơn ở học sinh THPT, ở châu Á, và với tự khái niệm ngôn ngữ.
+        <div class="evidence-item__source">Fang, Huang, Zhang et al., Frontiers in Psychology 9:1569 (2018) · pmc.ncbi.nlm.nih.gov/articles/PMC6124391</div>
+      </div>
+      <div class="evidence-item" id="ev-marshhau">
+        <span class="evidence-item__label">Kiểm chứng 26 quốc gia</span>
+        Marsh &amp; Hau (2003) tìm hiệu ứng trung bình của thành tích trường lên tự khái niệm là âm (β = −0,20, SD = 0,08) ở 26 quốc gia — ổn định xuyên văn hóa và mọi mức năng lực học sinh.
+        <div class="evidence-item__source">Dẫn lại trong Fang et al. (2018), PMC6124391</div>
+      </div>
+      <div class="evidence-item" id="ev-grouping">
+        <span class="evidence-item__label">Xếp nhóm học sinh năng khiếu</span>
+        Trọng số hiệu ứng trung bình ES = 0,20 (6 meta-analysis, 131 nghiên cứu, 516 hiệu ứng). Kết luận: "likely to have positive impact". Tổng trung bình các meta-analysis: 0,27.
+        <div class="evidence-item__source">Visible Learning MetaX v1.4 (2026) · visiblelearningmetax.com/influences/view/ability_grouping_for_gifted_students</div>
+      </div>
+      <div class="evidence-item" id="ev-korea">
+        <span class="evidence-item__label">Hàn Quốc — cuộc đua học tập</span>
+        Học sinh Hàn dành 12–16 giờ/ngày ở trường và hagwon; PISA 2018 top-5. Tỷ lệ tự tử học sinh THPT 4/1.000 năm 2021 (Statista). Áp lực gắn với hệ thống xếp hạng và kỳ thi suneung.
+        <div class="evidence-item__source">The International, "South Korea and Finland – role models…" (2023) · isshinternational.org/9420/viewpoint/south-korea-and-finland-role-models-for-the-ideal-education-system/</div>
+      </div>
+      <div class="evidence-item" id="ev-finland">
+        <span class="evidence-item__label">Phần Lan — đối chứng</span>
+        Hạng 7 PISA 2018. Học 9:00–14:45, gần như không bài tập về nhà, không xếp hạng học sinh, có tư vấn tâm lý chuẩn. Năng suất cao với ít giờ học.
+        <div class="evidence-item__source">The International (2023) · isshinternational.org/9420/viewpoint/south-korea-and-finland-role-models-for-the-ideal-education-system/</div>
+      </div>
+      <div class="evidence-item" id="ev-nyt">
+        <span class="evidence-item__label">Trẻ em Hàn và học thêm</span>
+        80% trẻ em Hàn từng học thêm; thị trường học thêm đạt 20,3 tỷ USD năm 2024 dù dân số giảm. Trẻ 4 tuổi đã thi tuyển vào trường mầm non tiếng Anh; trầm cảm ở trẻ dưới 10 tuổi tăng.
+        <div class="evidence-item__source">The New York Times (tiếng Trung), 06/02/2026 · cn.nytimes.com/asia-pacific/20260206/south-korea-cram-schools-childhood-stress/</div>
+      </div>
+      <div class="evidence-item" id="ev-vn2026">
+        <span class="evidence-item__label">Cuộc đua trường chuyên 2026</span>
+        ~6.000 thí sinh đăng ký vào 2 trường chuyên ĐH Quốc gia Hà Nội; chuyên Toán 3.972 hồ sơ/545 chỉ tiêu, chọi 1/9,7; chuyên Văn 1/14. GS Lê Anh Vinh: trường chuyên đang thành "trường công lập chất lượng cao", đừng bắt trường chuyên "gánh thay khát vọng".
+        <div class="evidence-item__source">VietNamNet, 28/05/2026 · vietnamnet.vn/dieu-dang-suy-ngam-ve-cuoc-dua-thi-vao-lop-10-truong-chuyen-2519836.html</div>
+      </div>
+      <div class="evidence-item" id="ev-vn2010">
+        <span class="evidence-item__label">Quy mô trường chuyên VN</span>
+        Tính đến 12/2009: 67 trường THPT chuyên, 49.904 học sinh, chiếm 1,74% số HS THPT. Tỷ lệ HS trường chuyên đỗ ĐH-CĐ trung bình trên 90% hằng năm. Chương trình chuyên thêm ~1–2 tiết/tuần so với đại trà.
+        <div class="evidence-item__source">Dân trí, 16/08/2010 (Trần Quang Đại) · dantri.com.vn/ban-doc/can-hieu-dung-ve-ap-luc-truong-chuyen-1282194970.htm</div>
+      </div>
+    </div>
+
+    <div class="marginalia__title">📎 Ghi chú lề</div>
+    <div class="sidenote">
+      <span class="sidenote__label">Mức độ khó</span>
+      🟢 Lõi · 🟡 Bổ trợ · 🔴 Đào sâu — bỏ qua 🔴 ở lượt đọc đầu.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Giao thức đọc</span>
+      Đọc ba-panel và bản đồ lập luận trước. Nếu bạn đã bất đồng, nhảy thẳng tới Nhật ký ngụy biện và Giới hạn — nơi trung thực nhất của lập luận.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">BFLPE trong một dòng</span>
+      Cá lớn trong ao nhỏ tự tin hơn cá vừa trong ao lớn — dù cùng kích cỡ. Vào trường chuyên khi chưa đủ tầm có thể làm giảm tự tin mà không tăng năng lực.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Toulmin, ngắn gọn</span>
+      Stephen Toulmin (1958) tách luận điểm khỏi dữ kiện, nhịp cầu logic, phạm vi và phản ví dụ. Dùng nó làm giàn giáo để lập luận không sụp dưới áp lực phản biện.
+    </div>
+
+    <div class="marginalia__title">📝 Ghi chú của triết gia <small style="font-weight:400;text-transform:none;letter-spacing:0">(bôi đen văn bản để thêm)</small></div>
+    <div class="phil-notes" id="phil-notes">
+      <div class="phil-note__empty" id="phil-notes-empty">Chọn bất kỳ văn bản nào trong lập luận, rồi viết câu phản vấn của riêng bạn. Ghi chú chỉ lưu trên thiết bị này.</div>
+    </div>
+  </aside>
+
+</div><!-- /.layout -->
+
+<script>
+/* ============================================================
+   THEME TOGGLE with localStorage
+============================================================ */
+(function(){
+  const KEY = 'dialectic-theme';
+  const btn = document.getElementById('theme-toggle');
+  const stored = localStorage.getItem(KEY);
+  if (stored) document.documentElement.setAttribute('data-theme', stored);
+  const updateIcon = () => {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    btn.textContent = dark ? '☀' : '☾';
+    btn.title = dark ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối';
+  };
+  updateIcon();
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem(KEY, next);
+    updateIcon();
+  });
+})();
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function(){
+  const KEY = 'dialectic-focus';
+  const btn = document.getElementById('focus-toggle');
+  if (localStorage.getItem(KEY) === '1') document.documentElement.classList.add('focus-mode');
+  btn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('focus-mode');
+    localStorage.setItem(KEY, document.documentElement.classList.contains('focus-mode') ? '1' : '0');
+  });
+})();
+
+/* ============================================================
+   LANGUAGE TOGGLE (visible only if [lang="vi"] elements exist)
+============================================================ */
+(function(){
+  const KEY = 'dialectic-lang';
+  const btn = document.getElementById('lang-toggle');
+  const hasVi = document.querySelector('[lang="vi"]');
+  if (!hasVi) return;
+  btn.style.display = 'flex';
+  const stored = localStorage.getItem(KEY);
+  if (stored) document.documentElement.setAttribute('data-lang', stored);
+  const updateLabel = () => {
+    btn.textContent = document.documentElement.getAttribute('data-lang') === 'vi' ? 'VI' : 'EN';
+  };
+  updateLabel();
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-lang');
+    const next = cur === 'vi' ? 'en' : 'vi';
+    document.documentElement.setAttribute('data-lang', next);
+    localStorage.setItem(KEY, next);
+    updateLabel();
+  });
+})();
+
+/* ============================================================
+   READING PROGRESS BAR + PERCENTAGE + READING TIME
+============================================================ */
+(function(){
+  const fill = document.getElementById('progress-fill');
+  const pct  = document.getElementById('progress-percent');
+  const article = document.querySelector('.canvas');
+  const update = () => {
+    const rect = article.getBoundingClientRect();
+    const scrolled = window.scrollY - (rect.top + window.scrollY - 100);
+    const total = article.scrollHeight - window.innerHeight;
+    const p = Math.max(0, Math.min(1, scrolled / Math.max(1, total)));
+    const percent = Math.round(p * 100);
+    fill.style.width = percent + '%';
+    pct.textContent = percent + '%';
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  const wc = document.querySelector('.canvas').innerText.trim().split(/\s+/).length;
+  document.getElementById('reading-time').textContent = Math.max(1, Math.round(wc / 220));
+})();
+
+/* ============================================================
+   PARADOX METER — the metacognitive UI
+============================================================ */
+(function(){
+  const meter = document.getElementById('paradox-meter');
+  const fill  = document.getElementById('paradox-fill');
+  const val   = document.getElementById('paradox-value');
+  const hint  = document.getElementById('paradox-hint');
+
+  const zones = [
+    { id: 'hook',         pct: 5,   phase: 'thesis',    hint: 'Bắt đầu — luận đề đứng vững, chưa bị thách thức.' },
+    { id: 'scope',        pct: 8,   phase: 'thesis',    hint: 'Phạm vi đã thiết lập. Sự căng thẳng chưa được nêu tên.' },
+    { id: 'dialectic',    pct: 15,  phase: 'thesis',    hint: 'Ba vị trí đã tuyên bố. Va chạm đang tới.' },
+    { id: 'argument-map', pct: 20,  phase: 'thesis',    hint: 'Kiến trúc lập luận hiện rõ.' },
+    { id: 'thesis',       pct: 25,  phase: 'thesis',    hint: 'Luận đề được mài sắc; tiền đề được khai quật.' },
+    { id: 'xexam',        pct: 65,  phase: 'probe',     hint: 'Đang thẩm vấn chéo — hãy ngồi với nghi ngờ.' },
+    { id: 'collision',    pct: 95,  phase: 'collision', hint: 'Đỉnh điểm bất hòa — Luận đề và Phản đề va chạm.' },
+    { id: 'synthesis',    pct: 55,  phase: 'synthesis', hint: 'Aufheben — căng thẳng tan ra ở tầng cao hơn.' },
+    { id: 'proof',        pct: 40,  phase: 'synthesis', hint: 'Tổng hợp được neo vào bằng chứng.' },
+    { id: 'ripple',       pct: 25,  phase: 'ripple',    hint: 'Lan tỏa ra các lãnh vực kề cận.' },
+    { id: 'fallacy-log',  pct: 15,  phase: 'ripple',    hint: 'Kiểm toán lại cuộc kiểm toán.' },
+    { id: 'residuals',    pct: 10,  phase: 'ripple',    hint: 'Tự đánh giá trung thực.' },
+    { id: 'quiz',         pct: 5,   phase: 'ripple',    hint: 'Kiểm tra nắm bắt cấu trúc của bạn.' }
+  ];
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const z = zones.find(x => x.id === e.target.id);
+      if (!z) return;
+      fill.style.width = z.pct + '%';
+      val.textContent  = z.pct + '%';
+      hint.textContent = z.hint;
+      meter.dataset.phase = z.phase;
+    });
+  }, { rootMargin: '-25% 0px -60% 0px', threshold: 0 });
+
+  zones.forEach(z => {
+    const el = document.getElementById(z.id);
+    if (el) io.observe(el);
+  });
+})();
+
+/* ============================================================
+   COMPASS + TOC via IntersectionObserver
+============================================================ */
+(function(){
+  const compassNodes = document.querySelectorAll('.compass-node[data-target]');
+  const tocLinks     = document.querySelectorAll('.toc a[data-target]');
+  const cmap = new Map();
+  compassNodes.forEach(a => cmap.set(a.dataset.target, a));
+  const tmap = new Map();
+  tocLinks.forEach(a => tmap.set(a.dataset.target, a));
+
+  const sectionIds = new Set([
+    ...Array.from(cmap.keys()),
+    ...Array.from(tmap.keys())
+  ]);
+  const compassAlias = {
+    'hook': 'scope', 'argument-map': 'thesis', 'dialectic': 'thesis',
+    'proof': 'synthesis', 'fallacy-log': 'ripple',
+    'residuals': 'ripple', 'quiz': 'ripple', 'gate5': 'ripple'
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const tocLink = tmap.get(e.target.id);
+      if (tocLink) tocLink.classList.add('active');
+      const cTarget = cmap.has(e.target.id) ? e.target.id : compassAlias[e.target.id];
+      compassNodes.forEach(n => n.classList.remove('active'));
+      const cNode = cmap.get(cTarget);
+      if (cNode) cNode.classList.add('active');
+    });
+  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+  document.querySelectorAll('.canvas section[id]').forEach(el => {
+    if (sectionIds.has(el.id) || compassAlias[el.id]) io.observe(el);
+  });
+
+  document.querySelectorAll('.compass-node[data-target], .toc a[data-target]').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const target = document.getElementById(a.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();
+
+/* ============================================================
+   CROSS-EXAMINATION — "Hear the Defense" toggle
+============================================================ */
+(function(){
+  document.querySelectorAll('.xexam-card__defense-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      const panel = document.getElementById(targetId);
+      if (!panel) return;
+      const isOpen = panel.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      btn.textContent = isOpen ? 'Ẩn lời bào chữa' : 'Nghe lời bào chữa';
+    });
+  });
+})();
+
+/* ============================================================
+   EVIDENCE LOCKER — click trigger, highlight sidebar entry
+============================================================ */
+(function(){
+  const triggers = document.querySelectorAll('.evidence-trigger');
+  triggers.forEach(t => {
+    t.setAttribute('tabindex', '0');
+    t.setAttribute('role', 'button');
+    const activate = () => {
+      const id = t.dataset.evidence;
+      const item = document.getElementById(id);
+      if (!item) return;
+      document.querySelectorAll('.evidence-item.highlight').forEach(x => x.classList.remove('highlight'));
+      document.querySelectorAll('.evidence-trigger.active').forEach(x => x.classList.remove('active'));
+      item.classList.add('highlight');
+      t.classList.add('active');
+      item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        item.classList.remove('highlight');
+        t.classList.remove('active');
+      }, 4000);
+    };
+    t.addEventListener('click', activate);
+    t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+  });
+})();
+
+/* ============================================================
+   PHILOSOPHERS' NOTE — text-selection triggers counter-probe
+============================================================ */
+(function(){
+  const KEY = 'dialectic-phil-notes';
+  const popup     = document.getElementById('phil-popup');
+  const popupQ    = document.getElementById('phil-popup__quote');
+  const popupIn   = document.getElementById('phil-popup__input');
+  const btnSave   = document.getElementById('phil-popup__save');
+  const btnCancel = document.getElementById('phil-popup__cancel');
+  const notesEl   = document.getElementById('phil-notes');
+  const emptyEl   = document.getElementById('phil-notes-empty');
+  const canvas    = document.querySelector('.canvas');
+
+  let pendingQuote = '';
+
+  const load = () => {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { return []; }
+  };
+  const save = (notes) => localStorage.setItem(KEY, JSON.stringify(notes));
+
+  const render = () => {
+    const notes = load();
+    notesEl.innerHTML = '';
+    if (notes.length === 0){
+      notesEl.appendChild(emptyEl);
+      return;
+    }
+    notes.forEach((n, i) => {
+      const el = document.createElement('div');
+      el.className = 'phil-note';
+      el.innerHTML =
+        '<button class="phil-note__del" aria-label="Xóa ghi chú" title="Xóa">✕</button>' +
+        (n.quote ? '<div class="phil-note__quote">"' + escapeHtml(n.quote) + '"</div>' : '') +
+        '<div class="phil-note__body">' + escapeHtml(n.body) + '</div>';
+      el.querySelector('.phil-note__del').addEventListener('click', () => {
+        const cur = load();
+        cur.splice(i, 1);
+        save(cur);
+        render();
+      });
+      notesEl.appendChild(el);
+    });
+  };
+
+  const escapeHtml = (s) => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  const closePopup = () => {
+    popup.classList.remove('show');
+    popupIn.value = '';
+    pendingQuote = '';
+  };
+
+  canvas.addEventListener('mouseup', () => {
+    const sel = window.getSelection();
+    const text = sel ? sel.toString().trim() : '';
+    if (text.length < 8) return;
+    if (!sel.anchorNode || !canvas.contains(sel.anchorNode)) return;
+    pendingQuote = text;
+    popupQ.textContent = text.length > 160 ? text.slice(0, 160) + '…' : text;
+    const range = sel.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    const pTop = window.scrollY + rect.bottom + 8;
+    const pLeft = Math.min(window.innerWidth - 340, rect.left + window.scrollX);
+    popup.style.top  = pTop  + 'px';
+    popup.style.left = Math.max(16, pLeft) + 'px';
+    popup.classList.add('show');
+    setTimeout(() => popupIn.focus(), 60);
+  });
+
+  btnCancel.addEventListener('click', closePopup);
+  btnSave.addEventListener('click', () => {
+    const body = popupIn.value.trim();
+    if (!body) { closePopup(); return; }
+    const notes = load();
+    notes.push({ quote: pendingQuote, body: body, ts: Date.now() });
+    save(notes);
+    render();
+    closePopup();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && popup.classList.contains('show')) closePopup();
+  });
+  document.addEventListener('click', (e) => {
+    if (popup.classList.contains('show') && !popup.contains(e.target) && !window.getSelection().toString().trim()) {
+      closePopup();
+    }
+  });
+
+  render();
+})();
+
+/* ============================================================
+   QUIZ — self-grading with localStorage
+============================================================ */
+(function(){
+  const KEY = 'dialectic-quiz';
+  const fieldsets = document.querySelectorAll('.quiz fieldset');
+  const btn = document.getElementById('check-quiz');
+  const scoreEl = document.getElementById('quiz-score');
+
+  fieldsets.forEach(fs => {
+    fs.querySelectorAll('.quiz-option').forEach(label => {
+      const input = label.querySelector('input');
+      input.addEventListener('change', () => {
+        fs.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('selected'));
+        if (input.checked) label.classList.add('selected');
+        persist();
+      });
+    });
+  });
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+    Object.entries(saved).forEach(([q, v]) => {
+      const input = document.querySelector('input[name="' + q + '"][value="' + v + '"]');
+      if (input){ input.checked = true; input.closest('.quiz-option').classList.add('selected'); }
+    });
+  } catch(e){}
+
+  function persist(){
+    const state = {};
+    fieldsets.forEach(fs => {
+      const q = 'q' + fs.dataset.q;
+      const sel = fs.querySelector('input:checked');
+      if (sel) state[q] = sel.value;
+    });
+    localStorage.setItem(KEY, JSON.stringify(state));
+  }
+
+  btn.addEventListener('click', () => {
+    let correct = 0;
+    fieldsets.forEach(fs => {
+      const correctVal = fs.dataset.answer;
+      const chosen = fs.querySelector('input:checked');
+      fs.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('correct-answer', 'incorrect-answer'));
+      const correctLabel = fs.querySelector('input[value="' + correctVal + '"]').closest('.quiz-option');
+      correctLabel.classList.add('correct-answer');
+      if (chosen){
+        if (chosen.value === correctVal) correct++;
+        else chosen.closest('.quiz-option').classList.add('incorrect-answer');
+      }
+    });
+    const total = fieldsets.length;
+    scoreEl.className = 'quiz-score show';
+    if (correct === total){ scoreEl.textContent = 'Hoàn hảo — ' + correct + '/' + total + '. Bạn có thể bảo vệ lập luận này.'; scoreEl.classList.add('pass'); }
+    else if (correct >= Math.ceil(total * 0.6)){ scoreEl.textContent = correct + '/' + total + '. Đọc lại bản đồ lập luận và nhật ký ngụy biện.'; scoreEl.classList.add('mid'); }
+    else { scoreEl.textContent = correct + '/' + total + '. Bắt đầu lại từ "Thoáng nhìn".'; scoreEl.classList.add('fail'); }
+  });
+})();
+
+/* ============================================================
+   SCROLL POSITION PERSIST
+============================================================ */
+(function(){
+  const KEY = 'dialectic-scroll';
+  const saved = parseInt(localStorage.getItem(KEY) || '0', 10);
+  if (saved > 0) window.scrollTo(0, saved);
+  let t;
+  window.addEventListener('scroll', () => {
+    clearTimeout(t);
+    t = setTimeout(() => localStorage.setItem(KEY, String(window.scrollY)), 200);
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
