@@ -1,0 +1,2090 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grab Bike Drivers Are Workers: A Dialectic on the Partner Fiction and the Third Category</title>
+<meta name="description" content="A forged, empirically-anchored argument that Grab bike drivers are workers in substance — forged through a Socratic dialectic with evidence from English- and Chinese-language sources.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS  (v1.1.0 — semantic dialectic colors)
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+::selection{background:rgba(74,111,165,.2)}
+
+:root{
+  --font-serif: 'Merriweather', 'Lora', Georgia, serif;
+  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* === Light theme ("The Arena") === */
+  --bg:            #FDFBF7;   /* warm parchment */
+  --bg-panel:     #2B2B3D;   /* dark slate side panels */
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #1A1A2E;
+  --text-muted:    #6B7280;
+  --text-strong:   #0F172A;
+  --text-panel:    #E5E7EB;   /* text on dark side panels */
+  --text-panel-muted: #9CA3AF;
+
+  /* === Semantic dialectic colors (v1.1.0) === */
+  --thesis:        #4A6FA5;   /* Scholarly Blue */
+  --thesis-soft:   #E1E9F5;
+  --thesis-strong: #2A4B7F;
+  --antithesis:    #A34A4A;   /* Critical Red */
+  --antithesis-soft: #F5E0E0;
+  --antithesis-strong: #7A2A2A;
+  --synthesis:     #8A6FA5;   /* Elevated Purple = Blue ⊕ Red */
+  --synthesis-soft: #ECE5F2;
+  --synthesis-strong: #5D4478;
+
+  --accent:        #319795;   /* teal for UI */
+  --accent-strong: #285E61;
+  --accent-soft:   #E6FFFA;
+
+  --border:        #E4DFD5;
+  --border-strong: #D4CFC5;
+  --sidenote-bg:   #F0EEE6;
+
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow:    0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.12);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 220ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #14141F;
+  --bg-panel:      #0A0A15;
+  --bg-elevated:   #2B2B3D;
+  --bg-sunken:     #1F1F2E;
+  --text:          #E5E7EB;
+  --text-muted:    #9CA3AF;
+  --text-strong:   #F9FAFB;
+  --text-panel:    #E5E7EB;
+  --text-panel-muted: #9CA3AF;
+
+  --thesis:        #7AA3D4;
+  --thesis-soft:   #1E2E42;
+  --thesis-strong: #A8C3E0;
+  --antithesis:    #D48282;
+  --antithesis-soft:#3B1F1F;
+  --antithesis-strong: #E0A5A5;
+  --synthesis:     #B49AD4;
+  --synthesis-soft:#2F2138;
+  --synthesis-strong: #D0BCE5;
+
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent-soft:   #1A3B3A;
+
+  --border:        #2D3748;
+  --border-strong: #4A5568;
+  --sidenote-bg:   #24243A;
+
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+  --shadow:    0 4px 12px rgba(0,0,0,.5);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.6);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: var(--line);
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   LAYOUT — 3-column grid (10% / 55% / 35%)
+============================================================ */
+.layout{
+  display: grid;
+  grid-template-columns: 12% 55% 33%;
+  gap: 0;
+  max-width: 1500px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.navigator{ background: var(--bg-panel); color: var(--text-panel); }
+.canvas{    background: var(--bg);       color: var(--text); padding: 40px 48px 120px; }
+.marginalia{background: var(--bg-panel); color: var(--text-panel); }
+
+@media (max-width: 1024px){
+  .layout{ grid-template-columns: 1fr; }
+  .navigator, .marginalia{ position: static !important; max-height: none !important; padding: 20px !important; }
+  .canvas{ padding: 24px; }
+}
+
+/* Focus mode collapses side panels */
+html.focus-mode .layout{ grid-template-columns: 1fr; max-width: 820px; }
+html.focus-mode .navigator,
+html.focus-mode .marginalia{ display: none; }
+html.focus-mode .canvas{ background: var(--bg); }
+
+/* ============================================================
+   LEFT PANEL — Navigator (dark, with Emoji Compass)
+============================================================ */
+.navigator{
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 24px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.progress-bar{
+  height: 3px; background: rgba(255,255,255,.1);
+  border-radius: 2px; overflow: hidden; margin-bottom: 20px;
+}
+.progress-bar__fill{
+  height: 100%; background: var(--accent);
+  width: 0%; transition: width 100ms linear;
+}
+.nav-meta{
+  color: var(--text-panel-muted);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 20px; display: flex; justify-content: space-between;
+}
+
+/* Emoji Compass */
+.compass-title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); margin: 20px 0 10px;
+  font-weight: 700;
+}
+.compass{
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 24px;
+}
+.compass-node{
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  color: var(--text-panel-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  font-size: 12px;
+}
+.compass-node:hover{ background: rgba(255,255,255,.06); color: var(--text-panel); }
+.compass-node.active{
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border-left-color: currentColor;
+}
+.compass-node__icon{ font-size: 18px; }
+.compass-node__label{ font-weight: 500; letter-spacing: .02em; }
+.compass-node[data-phase="thesis"].active{ border-left-color: var(--thesis); }
+.compass-node[data-phase="probe"].active{  border-left-color: var(--accent); }
+.compass-node[data-phase="collision"].active{ border-left-color: var(--antithesis); }
+.compass-node[data-phase="synthesis"].active{ border-left-color: var(--synthesis); }
+.compass-node[data-phase="ripple"].active{ border-left-color: var(--info); }
+
+/* Sub-TOC */
+.toc-title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); margin: 8px 0 8px; font-weight: 700;
+}
+.toc{ list-style: none; padding: 0; margin: 0; }
+.toc li{ margin: 1px 0; }
+.toc a{
+  display: block; padding: 5px 10px;
+  color: var(--text-panel-muted); text-decoration: none;
+  border-left: 2px solid transparent; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition); font-size: 12px;
+}
+.toc a:hover{ color: var(--text-panel); background: rgba(255,255,255,.05); }
+.toc a.active{ color: #fff; background: rgba(255,255,255,.1); border-left-color: var(--accent); font-weight: 500; }
+
+/* ============================================================
+   PARADOX METER — the metacognitive UI
+============================================================ */
+.paradox-meter{
+  position: sticky; top: 12px; z-index: 20;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin: 0 0 32px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans);
+}
+.paradox-meter__label{
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); font-weight: 700;
+  margin-bottom: 8px;
+}
+.paradox-meter__value{
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-strong);
+}
+.paradox-meter__bar{
+  height: 8px; background: var(--bg-sunken);
+  border-radius: 4px; overflow: hidden; position: relative;
+}
+.paradox-meter__fill{
+  height: 100%; width: 0%;
+  background: linear-gradient(to right, var(--thesis), var(--antithesis));
+  transition: width 300ms cubic-bezier(.4,0,.2,1), background 300ms;
+  border-radius: 4px;
+}
+.paradox-meter[data-phase="synthesis"] .paradox-meter__fill,
+.paradox-meter[data-phase="ripple"] .paradox-meter__fill{
+  background: linear-gradient(to right, var(--synthesis), var(--success));
+}
+.paradox-meter__hint{
+  font-size: 11px; color: var(--text-muted); margin-top: 6px;
+  min-height: 1.2em;
+}
+
+/* ============================================================
+   MIDDLE COLUMN — Canvas typography
+============================================================ */
+.canvas-inner{ max-width: var(--measure); margin: 0 auto; width: 100%; }
+.canvas h1{
+  font-family: var(--font-sans); font-size: 36px; line-height: 1.15;
+  margin: 0 0 8px; color: var(--text-strong); letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans); font-size: 26px; line-height: 1.3;
+  margin: 64px 0 16px; color: var(--text-strong);
+  letter-spacing: -.01em; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.canvas h2 .h2-emoji{ font-size: 24px; }
+.canvas h3{
+  font-family: var(--font-sans); font-size: 20px;
+  margin: 36px 0 12px; color: var(--text-strong);
+}
+.canvas h4{
+  font-family: var(--font-sans); font-size: 14px;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-muted); margin: 24px 0 8px;
+}
+.canvas p{ margin: 0 0 18px; }
+.canvas a{
+  color: var(--accent); text-decoration: underline;
+  text-decoration-color: var(--border-strong); text-underline-offset: 3px;
+}
+.canvas a:hover{ text-decoration-color: var(--accent); }
+.canvas blockquote{
+  border-left: 3px solid var(--accent);
+  padding: 12px 18px; margin: 24px 0;
+  background: var(--bg-sunken); font-style: italic;
+  color: var(--text); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.canvas code{
+  font-family: var(--font-mono); font-size: .9em;
+  background: var(--bg-sunken); padding: 2px 6px; border-radius: 4px;
+}
+.canvas pre{
+  background: var(--bg-sunken); padding: 16px;
+  border-radius: var(--radius-sm); overflow-x: auto;
+  border: 1px solid var(--border);
+}
+.canvas pre code{ background: transparent; padding: 0; }
+.canvas strong{ color: var(--text-strong); font-weight: 600; }
+
+.byline{
+  font-family: var(--font-sans); color: var(--text-muted);
+  font-size: 14px; margin-bottom: 32px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--border);
+}
+.byline .pill{
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: .05em;
+  background: var(--accent-soft); color: var(--accent-strong);
+  margin-right: 6px; font-weight: 600;
+}
+
+/* ============================================================
+   ASSUMPTIONS REGISTER — the 4 Dimensions block
+============================================================ */
+.assumptions{
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 24px 0 40px;
+  font-family: var(--font-sans);
+}
+.assumptions__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); font-weight: 700; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.assumptions__grid{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px;
+  font-size: 13px;
+}
+@media (max-width: 640px){ .assumptions__grid{ grid-template-columns: 1fr; } }
+.assumption-row{ display: flex; flex-direction: column; gap: 2px; }
+.assumption-key{ color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+.assumption-val{ color: var(--text-strong); font-weight: 500; }
+.assumption-val .badge{
+  display: inline-block; padding: 1px 8px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 10px;
+  background: var(--accent-soft); color: var(--accent-strong);
+  margin-right: 4px;
+}
+
+/* ============================================================
+   THREE-PANEL DIALECTIC HEADER (Thesis / Antithesis / Synthesis)
+============================================================ */
+.dialectic-header{
+  display: grid; grid-template-columns: 1fr; gap: 12px;
+  margin: 32px 0 40px;
+}
+@media (min-width: 720px){
+  .dialectic-header{ grid-template-columns: 1fr 1fr 1fr; }
+}
+.panel{
+  padding: 18px; border-radius: var(--radius);
+  border: 1px solid var(--border); font-family: var(--font-sans);
+  font-size: 14px; line-height: 1.5; position: relative;
+}
+.panel__label{
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 700; margin-bottom: 8px;
+}
+.panel__body{ color: var(--text); }
+.panel--thesis{     background: var(--thesis-soft);     border-color: var(--thesis); }
+.panel--thesis .panel__label{ color: var(--thesis-strong); }
+.panel--antithesis{ background: var(--antithesis-soft); border-color: var(--antithesis); }
+.panel--antithesis .panel__label{ color: var(--antithesis-strong); }
+.panel--synthesis{  background: var(--synthesis-soft);  border-color: var(--synthesis); }
+.panel--synthesis .panel__label{ color: var(--synthesis-strong); }
+
+/* ============================================================
+   ARGUMENT MAP — Toulmin visual
+============================================================ */
+.argument-map{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; margin: 32px 0; background: var(--bg-elevated);
+  font-family: var(--font-sans); font-size: 13px; box-shadow: var(--shadow-sm);
+}
+.argument-map__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); margin-bottom: 14px; font-weight: 700;
+}
+.toulmin{ display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 640px){
+  .toulmin{
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "grounds warrant claim" "backing qualifier rebuttal";
+  }
+  .t-grounds{ grid-area: grounds; } .t-warrant{ grid-area: warrant; }
+  .t-claim{ grid-area: claim; }     .t-backing{ grid-area: backing; }
+  .t-qualifier{ grid-area: qualifier; } .t-rebuttal{ grid-area: rebuttal; }
+}
+.toulmin__cell{
+  padding: 12px 14px; background: var(--bg-sunken);
+  border-radius: var(--radius-sm); border-left: 3px solid var(--accent);
+  line-height: 1.45;
+}
+.toulmin__cell.t-claim{
+  border-left-color: var(--synthesis);
+  background: var(--synthesis-soft); font-weight: 500;
+}
+.toulmin__cell.t-rebuttal{ border-left-color: var(--antithesis); background: var(--antithesis-soft); }
+.toulmin__cell.t-grounds{ border-left-color: var(--thesis); background: var(--thesis-soft); }
+.toulmin__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text-muted);
+  margin-bottom: 4px; font-weight: 700;
+}
+
+/* ============================================================
+   THESIS PILLAR — the load-bearing walls
+============================================================ */
+.thesis-pillar{
+  border-left: 6px solid var(--thesis);
+  background: linear-gradient(to right, var(--thesis-soft) 0%, transparent 80%);
+  padding: 20px 24px; margin: 24px 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.thesis-pillar__label{
+  font-family: var(--font-sans); font-size: 10px;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--thesis-strong); font-weight: 700;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.thesis-pillar__statement{
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 700; line-height: 1.4; color: var(--text-strong);
+  margin-bottom: 8px;
+}
+.thesis-pillar__contract{
+  font-style: italic; color: var(--text-muted); font-size: 14px;
+  font-family: var(--font-sans);
+}
+.premise-walls{
+  display: grid; gap: 12px; margin: 20px 0;
+  font-family: var(--font-sans);
+}
+.premise-wall{
+  display: grid; grid-template-columns: 40px 1fr;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: var(--bg-elevated);
+}
+.premise-wall__index{
+  background: var(--thesis); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-weight: 700; font-size: 14px;
+}
+.premise-wall__body{ padding: 12px 14px; font-size: 14px; line-height: 1.5; }
+.premise-wall__label{
+  font-weight: 700; color: var(--thesis-strong);
+  font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   CROSS-EXAMINATION CARD (per premise, with "Hear the Defense")
+============================================================ */
+.xexam-card{
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--antithesis);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  padding: 20px 24px;
+  margin: 24px 0;
+  font-family: var(--font-sans);
+  box-shadow: var(--shadow-sm);
+}
+.xexam-card__meta{
+  display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+}
+.xexam-card__meta .tag{
+  padding: 2px 8px; border-radius: 10px;
+  background: var(--antithesis-soft); color: var(--antithesis-strong);
+  font-weight: 700;
+}
+.xexam-card__meta .tag--lens{ background: var(--warn-bg); color: var(--warn); }
+.xexam-card__meta .tag--rigor{ background: var(--info-bg); color: var(--info); }
+.xexam-card__probe{
+  font-family: var(--font-sans); font-size: 17px; font-weight: 600;
+  color: var(--text-strong); margin: 8px 0 12px; line-height: 1.4;
+  font-style: italic;
+}
+.xexam-card__probe::before{
+  content: "Q: ";
+  color: var(--antithesis); font-weight: 700; font-style: normal;
+  margin-right: 4px;
+}
+.xexam-card__setup{
+  color: var(--text); font-size: 14px; line-height: 1.6; margin-bottom: 16px;
+  font-family: var(--font-serif);
+}
+.xexam-card__defense-btn{
+  background: var(--bg-sunken); color: var(--text-strong);
+  border: 1px solid var(--border-strong);
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  cursor: pointer; font-family: var(--font-sans);
+  font-size: 13px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all var(--transition);
+}
+.xexam-card__defense-btn:hover{
+  background: var(--thesis-soft); color: var(--thesis-strong);
+  border-color: var(--thesis);
+}
+.xexam-card__defense-btn::before{ content: "🛡️"; }
+.xexam-card__defense-btn[aria-expanded="true"]{
+  background: var(--thesis-soft); color: var(--thesis-strong);
+  border-color: var(--thesis);
+}
+.xexam-card__defense{
+  display: none; margin-top: 16px;
+  padding: 16px 18px; background: var(--thesis-soft);
+  border-left: 3px solid var(--thesis); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 14px; line-height: 1.55;
+  animation: defense-slide 320ms ease-out;
+}
+.xexam-card__defense.is-open{ display: block; }
+.xexam-card__defense .label{
+  font-family: var(--font-sans); font-weight: 700;
+  color: var(--thesis-strong); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: 6px; display: block;
+}
+.xexam-card__defense .verdict{
+  margin-top: 12px; padding: 8px 12px;
+  background: var(--bg-elevated); border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 13px;
+}
+.xexam-card__defense .verdict .verdict-tag{
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  margin-right: 6px; background: var(--warn-bg); color: var(--warn);
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.xexam-card__steel-man{
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px dashed var(--border-strong);
+  font-size: 12px; color: var(--text-muted); line-height: 1.5;
+}
+.xexam-card__steel-man strong{ color: var(--text-strong); }
+@keyframes defense-slide{
+  from{ opacity: 0; transform: translateY(-6px); }
+  to{   opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   COLLISION SPLIT-SCREEN (State 4 dramatic visual)
+============================================================ */
+.collision{
+  margin: 40px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.collision__inner{
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: stretch; min-height: 220px;
+}
+@media (max-width: 640px){
+  .collision__inner{ grid-template-columns: 1fr; }
+  .collision__divider{ padding: 12px 0 !important; }
+}
+.collision__side{
+  padding: 24px 28px;
+  font-family: var(--font-serif); font-size: 15px; line-height: 1.55;
+}
+.collision__side--thesis{
+  background: linear-gradient(135deg, var(--thesis-soft), var(--thesis-soft) 80%, transparent);
+  color: var(--text);
+}
+.collision__side--antithesis{
+  background: linear-gradient(-135deg, var(--antithesis-soft), var(--antithesis-soft) 80%, transparent);
+  color: var(--text);
+  text-align: right;
+}
+@media (max-width: 640px){ .collision__side--antithesis{ text-align: left; } }
+.collision__side .label{
+  display: block; font-family: var(--font-sans);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 700; margin-bottom: 12px;
+}
+.collision__side--thesis .label{ color: var(--thesis-strong); }
+.collision__side--antithesis .label{ color: var(--antithesis-strong); }
+.collision__side .heading{
+  font-family: var(--font-sans); font-size: 15px; font-weight: 700;
+  color: var(--text-strong); margin-bottom: 8px;
+}
+.collision__divider{
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  padding: 0 16px; position: relative;
+}
+.collision__divider::before,
+.collision__divider::after{
+  content: ""; position: absolute; left: 50%; width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--text-muted), transparent);
+  transform: translateX(-50%);
+}
+.collision__divider::before{ top: 8%; height: 30%; }
+.collision__divider::after{  bottom: 8%; height: 30%; }
+.collision__zap{
+  font-size: 42px; line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(163,74,74,.4));
+  z-index: 1; background: var(--bg); padding: 4px 8px; border-radius: 50%;
+}
+.collision__tension{
+  padding: 16px 24px; background: var(--bg-sunken);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans); font-size: 13px;
+  color: var(--text-muted); text-align: center;
+}
+.collision__tension strong{
+  color: var(--text-strong); font-family: var(--font-serif);
+  font-style: italic; font-size: 15px;
+}
+
+/* ============================================================
+   SUBLATION GRADIENT (State 5 elevated visual)
+============================================================ */
+.sublation{
+  margin: 40px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: linear-gradient(
+    135deg,
+    var(--thesis) 0%,
+    var(--synthesis) 50%,
+    var(--antithesis) 100%
+  );
+  padding: 3px;   /* creates gradient border */
+}
+.sublation__inner{
+  background: var(--bg);
+  border-radius: calc(var(--radius) - 3px);
+  padding: 28px 32px;
+}
+.sublation__label{
+  font-family: var(--font-sans); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--synthesis-strong); font-weight: 700;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.sublation__statement{
+  font-family: var(--font-serif); font-size: 22px; line-height: 1.4;
+  font-weight: 700; color: var(--text-strong);
+  margin-bottom: 20px;
+}
+.sublation__elevation{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-top: 20px;
+}
+@media (max-width: 640px){ .sublation__elevation{ grid-template-columns: 1fr; } }
+.sublation__elev-cell{
+  padding: 14px 16px; border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 13px; line-height: 1.55;
+}
+.sublation__elev-cell--preserve{
+  background: var(--thesis-soft);
+  border-left: 3px solid var(--thesis);
+}
+.sublation__elev-cell--absorb{
+  background: var(--antithesis-soft);
+  border-left: 3px solid var(--antithesis);
+}
+.sublation__elev-cell .lead{
+  font-weight: 700; color: var(--text-strong);
+  display: block; margin-bottom: 4px; font-size: 11px;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+
+/* ============================================================
+   RIPPLE POOL (State 7 — Radiating Implication)
+============================================================ */
+.ripple{
+  margin: 40px 0; position: relative;
+  padding: 40px 32px;
+  background: radial-gradient(
+    ellipse at center,
+    var(--synthesis-soft) 0%,
+    var(--bg) 70%
+  );
+  border-radius: 200px / 100px;
+  border: 2px solid var(--synthesis);
+  text-align: center;
+}
+.ripple::before, .ripple::after{
+  content: ""; position: absolute;
+  border: 1px solid var(--synthesis);
+  border-radius: 200px / 100px;
+  opacity: .3;
+  pointer-events: none;
+}
+.ripple::before{ inset: -12px; }
+.ripple::after{  inset: -24px; opacity: .15; }
+.ripple__label{
+  font-family: var(--font-sans); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--synthesis-strong); font-weight: 700;
+  margin-bottom: 12px;
+}
+.ripple__claim{
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 700; color: var(--text-strong); line-height: 1.4;
+  max-width: 60ch; margin: 0 auto 12px;
+}
+.ripple__adjacent{
+  font-family: var(--font-sans); font-size: 13px; color: var(--text-muted);
+  max-width: 55ch; margin: 0 auto;
+}
+.ripple__adjacent strong{ color: var(--synthesis-strong); }
+
+/* ============================================================
+   EVIDENCE LOCKER (right-panel triggers)
+============================================================ */
+.evidence-trigger{
+  background: var(--warn-bg); color: var(--warn);
+  padding: 1px 6px; border-radius: 4px;
+  font-family: var(--font-sans); font-size: .85em;
+  cursor: pointer; border: 1px dashed transparent;
+  transition: all var(--transition);
+}
+.evidence-trigger::before{ content: "🔎 "; font-size: .9em; }
+.evidence-trigger:hover, .evidence-trigger:focus{
+  border-color: var(--warn); outline: none;
+}
+.evidence-trigger.active{
+  background: var(--warn); color: white;
+}
+.evidence-item{
+  padding: 12px 14px; background: var(--sidenote-bg);
+  color: var(--text); border-left: 3px solid var(--warn);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 12px; font-size: 12px; line-height: 1.5;
+  font-family: var(--font-sans);
+  transition: all var(--transition);
+}
+.evidence-item.highlight{
+  background: var(--warn-bg);
+  box-shadow: 0 0 0 2px var(--warn), var(--shadow);
+  transform: scale(1.02);
+}
+.evidence-item__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--warn); font-weight: 700;
+  margin-bottom: 4px;
+}
+.evidence-item__source{
+  margin-top: 6px; font-size: 11px; color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   PHILOSOPHERS' NOTE (user-generated marginalia)
+============================================================ */
+.phil-notes{ margin-top: 20px; }
+.phil-notes__title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); font-weight: 700; margin-bottom: 8px;
+}
+.phil-note{
+  background: #FFF9C4; color: #4A3F00;
+  padding: 10px 12px; margin-bottom: 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans); font-size: 12px;
+  line-height: 1.45; position: relative;
+  transform: rotate(-.5deg);
+  transition: transform var(--transition);
+}
+html[data-theme="dark"] .phil-note{
+  background: #6B5F1A; color: #FFF9C4;
+}
+.phil-note:hover{ transform: rotate(0); }
+.phil-note:nth-child(even){ transform: rotate(.6deg); }
+.phil-note__quote{
+  font-style: italic; font-size: 11px; color: #6B5F00;
+  border-left: 2px solid rgba(0,0,0,.15); padding-left: 6px;
+  margin-bottom: 6px;
+}
+html[data-theme="dark"] .phil-note__quote{ color: #E5D97F; }
+.phil-note__body{ font-weight: 500; }
+.phil-note__del{
+  position: absolute; top: 6px; right: 8px;
+  background: none; border: none; cursor: pointer;
+  font-size: 12px; color: rgba(0,0,0,.4); line-height: 1;
+}
+.phil-note__del:hover{ color: #C53030; }
+html[data-theme="dark"] .phil-note__del{ color: rgba(255,255,255,.4); }
+.phil-note__empty{
+  font-size: 11px; color: var(--text-panel-muted);
+  font-style: italic; padding: 12px;
+  border: 1px dashed rgba(255,255,255,.15); border-radius: var(--radius-sm);
+  text-align: center;
+}
+#phil-popup{
+  position: absolute; z-index: 100;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-sans); font-size: 13px;
+  max-width: 320px; display: none;
+}
+#phil-popup.show{ display: block; }
+#phil-popup__quote{
+  color: var(--text-muted); font-style: italic; font-size: 12px;
+  border-left: 2px solid var(--accent); padding-left: 8px;
+  margin-bottom: 8px; max-height: 60px; overflow: hidden;
+}
+#phil-popup__input{
+  width: 100%; min-height: 60px; resize: vertical;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px; font: inherit; color: var(--text);
+  background: var(--bg-sunken);
+  font-family: var(--font-sans); font-size: 13px;
+}
+#phil-popup__actions{
+  display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;
+}
+#phil-popup button{
+  padding: 6px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--bg);
+  color: var(--text); cursor: pointer; font: inherit;
+  font-size: 12px;
+}
+#phil-popup button.save{ background: var(--accent); color: white; border-color: var(--accent); }
+
+/* ============================================================
+   FLIP CARD, DETAILS, BAR CHART, CONCEPT FLOW, QUIZ, RESIDUALS
+============================================================ */
+.flip-card{
+  perspective: 1000px; height: 180px; margin: 24px 0;
+  font-family: var(--font-sans);
+}
+.flip-card__inner{
+  position: relative; width: 100%; height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d; cursor: pointer;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card:focus-within .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg); }
+.flip-card__face{
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; border-radius: var(--radius);
+  padding: 24px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__face--front{
+  background: var(--accent-soft); color: var(--accent-strong);
+  font-weight: 600; font-size: 16px;
+}
+.flip-card__face--back{
+  background: var(--bg-elevated); color: var(--text);
+  transform: rotateY(180deg); font-size: 14px; line-height: 1.5;
+}
+
+details.deep-dive{
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0; margin: 20px 0; background: var(--bg-sunken); overflow: hidden;
+}
+details.deep-dive > summary{
+  cursor: pointer; padding: 14px 18px;
+  font-family: var(--font-sans); font-weight: 600; font-size: 14px;
+  color: var(--accent-strong); list-style: none;
+  display: flex; align-items: center; gap: 8px; user-select: none;
+}
+details.deep-dive > summary::-webkit-details-marker{ display: none; }
+details.deep-dive > summary::before{
+  content: "▸"; transition: transform var(--transition); color: var(--accent);
+}
+details.deep-dive[open] > summary::before{ transform: rotate(90deg); }
+details.deep-dive[open] > summary{ border-bottom: 1px solid var(--border); }
+details.deep-dive > *:not(summary){
+  padding: 16px 18px;
+  animation: dd-open 240ms ease-out;
+}
+@keyframes dd-open{ from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+
+details.fallacy-log{ border-color: var(--warn); }
+details.fallacy-log > summary{ color: var(--warn); }
+details.fallacy-log > summary::before{ color: var(--warn); }
+.fallacy-entry{
+  border-left: 3px solid var(--warn); padding: 10px 14px;
+  background: var(--warn-bg); margin: 10px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 14px;
+}
+.fallacy-entry__name{
+  font-family: var(--font-sans); font-weight: 700; color: var(--warn);
+}
+
+.bar-chart{
+  font-family: var(--font-sans); margin: 24px 0;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; background: var(--bg-elevated);
+}
+.bar-chart__title{
+  font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); margin-bottom: 14px; font-weight: 700;
+}
+.bar-row{
+  display: grid; grid-template-columns: 200px 1fr 46px;
+  align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px;
+}
+.bar-label{ color: var(--text); }
+.bar-track{ background: var(--bg-sunken); height: 20px; border-radius: 4px; overflow: hidden; }
+.bar-fill{
+  height: 100%; background: var(--synthesis);
+  transition: width var(--transition), background var(--transition);
+  border-radius: 4px;
+}
+.bar-fill:hover{ background: var(--synthesis-strong); }
+.bar-value{ color: var(--text-muted); font-family: var(--font-mono); font-size: 12px; text-align: right; }
+
+.term{
+  border-bottom: 1px dotted var(--accent); cursor: help; position: relative;
+}
+.term:hover::after, .term:focus::after{
+  content: attr(data-def); position: absolute;
+  bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--text-strong); color: var(--bg);
+  font-family: var(--font-sans); font-size: 12px; font-weight: 400;
+  padding: 8px 12px; border-radius: var(--radius-sm);
+  white-space: normal; min-width: 200px; max-width: 280px;
+  z-index: 100; box-shadow: var(--shadow); line-height: 1.4;
+}
+
+/* Residuals */
+.residuals{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin: 32px 0; background: var(--bg-sunken);
+}
+.residuals h4{ margin-top: 20px; }
+.residuals h4:first-child{ margin-top: 0; }
+.residuals ul{ padding-left: 20px; margin: 8px 0; }
+.residuals li{ margin: 6px 0; font-size: 15px; }
+.residuals__badge{
+  display: inline-block; font-family: var(--font-mono);
+  font-size: 10px; padding: 2px 6px; border-radius: 3px;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text-muted); margin-right: 6px;
+}
+
+/* Quiz */
+.quiz{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin: 40px 0 24px;
+  background: var(--bg-elevated); font-family: var(--font-sans);
+}
+.quiz h2{ border: none; padding: 0; margin: 0 0 16px; font-size: 20px; }
+.quiz fieldset{ border: none; padding: 0; margin: 0 0 24px; }
+.quiz legend{
+  font-weight: 700; margin-bottom: 12px; color: var(--text-strong);
+  font-size: 15px; line-height: 1.4;
+}
+.quiz-option{
+  display: block; padding: 10px 14px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  margin: 6px 0; cursor: pointer; transition: all var(--transition);
+  font-size: 14px; background: var(--bg);
+}
+.quiz-option:hover{ border-color: var(--accent); }
+.quiz-option input{ margin-right: 10px; accent-color: var(--accent); }
+.quiz-option.selected{ background: var(--accent-soft); border-color: var(--accent); }
+.quiz-option.correct-answer{ background: var(--success-bg); border-color: var(--success); color: var(--success); }
+.quiz-option.incorrect-answer{ background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+.quiz-check-btn{
+  font-family: var(--font-sans); background: var(--synthesis);
+  color: white; border: none; padding: 10px 20px;
+  font-size: 14px; font-weight: 600; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--transition);
+}
+.quiz-check-btn:hover{ background: var(--synthesis-strong); }
+.quiz-score{
+  margin-top: 16px; padding: 14px 18px;
+  border-radius: var(--radius-sm); font-weight: 600; display: none;
+}
+.quiz-score.show{ display: block; }
+.quiz-score.pass{ background: var(--success-bg); color: var(--success); }
+.quiz-score.mid{ background: var(--warn-bg); color: var(--warn); }
+.quiz-score.fail{ background: var(--danger-bg); color: var(--danger); }
+
+/* Difficulty markers */
+.diff{
+  display: inline-block; font-family: var(--font-sans); font-size: 10px;
+  padding: 1px 6px; border-radius: 3px;
+  vertical-align: middle; margin-right: 4px; font-weight: 700;
+}
+.diff-core{ background: var(--success-bg); color: var(--success); }
+.diff-supp{ background: var(--warn-bg); color: var(--warn); }
+.diff-deep{ background: var(--info-bg); color: var(--info); }
+
+/* Sidenotes in right panel */
+.marginalia{
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 24px 20px;
+  font-family: var(--font-sans); font-size: 12px;
+}
+.sidenote{
+  background: rgba(255,255,255,.05);
+  padding: 12px 14px; border-radius: var(--radius-sm);
+  margin-bottom: 16px; border-left: 3px solid var(--accent);
+  line-height: 1.55;
+  color: var(--text-panel);
+}
+.sidenote__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--accent); margin-bottom: 4px; font-weight: 700;
+}
+.marginalia__title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); font-weight: 700;
+  margin: 24px 0 8px;
+}
+.marginalia__title:first-child{ margin-top: 0; }
+
+/* Floating controls */
+.controls{
+  position: fixed; bottom: 24px; right: 24px;
+  display: flex; flex-direction: column; gap: 8px; z-index: 50;
+}
+.ctrl-btn{
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text); width: 44px; height: 44px; border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); transition: all var(--transition);
+  font-family: var(--font-sans); font-size: 18px;
+}
+.ctrl-btn:hover{ background: var(--accent); color: white; border-color: var(--accent); }
+.ctrl-btn__lang{ font-size: 12px; font-weight: 700; }
+
+/* Footer */
+.footer-note{
+  margin-top: 60px; padding: 20px 0;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans); font-size: 12px;
+  color: var(--text-muted); line-height: 1.5;
+}
+
+/* Gate 5 offer block */
+.gate5{
+  margin: 40px 0; padding: 24px;
+  border: 1px solid var(--accent); border-radius: var(--radius);
+  background: var(--accent-soft);
+  font-family: var(--font-sans);
+}
+.gate5__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--accent-strong); font-weight: 700; margin-bottom: 8px;
+}
+.gate5__body{ color: var(--text); font-size: 14px; line-height: 1.55; }
+.gate5__options{ list-style: none; padding: 0; margin: 12px 0 0; }
+.gate5__options li{
+  padding: 6px 0; padding-left: 24px; position: relative;
+}
+.gate5__options li::before{
+  content: attr(data-key); position: absolute; left: 0; top: 6px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); color: white;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Bilingual scaffold */
+html[data-lang="en"] [lang="vi"]{ display: none; }
+html[data-lang="vi"] [lang="en"]{ display: none; }
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     FLOATING CONTROLS
+============================================================ -->
+<div class="controls">
+  <button class="ctrl-btn" id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">☾</button>
+  <button class="ctrl-btn" id="focus-toggle" title="Toggle focus mode" aria-label="Toggle focus mode">⛶</button>
+  <button class="ctrl-btn ctrl-btn__lang" id="lang-toggle" title="Toggle language" aria-label="Toggle language" style="display:none">EN</button>
+</div>
+
+<!-- Philosophers' Note popup -->
+<div id="phil-popup" role="dialog" aria-label="Add a counter-probe">
+  <div id="phil-popup__quote"></div>
+  <textarea id="phil-popup__input" placeholder="Your counter-probe... What question would Socrates ask about this passage?" aria-label="Counter-probe"></textarea>
+  <div id="phil-popup__actions">
+    <button id="phil-popup__cancel">Cancel</button>
+    <button id="phil-popup__save" class="save">Save note</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     MAIN LAYOUT
+============================================================ -->
+<div class="layout">
+
+  <!-- =====================================================
+       LEFT PANEL — Navigator (Dialectical Compass)
+  ===================================================== -->
+  <aside class="navigator" aria-label="Navigator">
+    <div class="progress-bar" aria-hidden="true">
+      <div class="progress-bar__fill" id="progress-fill"></div>
+    </div>
+    <div class="nav-meta">
+      <span>📖 <span id="reading-time">~12</span> min</span>
+      <span id="progress-percent">0%</span>
+    </div>
+
+    <div class="compass-title">Dialectical Compass</div>
+    <div class="compass" id="compass">
+      <a class="compass-node" data-target="scope"        data-phase="scope"><span class="compass-node__icon">🎯</span><span class="compass-node__label">Scope</span></a>
+      <a class="compass-node" data-target="thesis"       data-phase="thesis"><span class="compass-node__icon">📘</span><span class="compass-node__label">Thesis</span></a>
+      <a class="compass-node" data-target="xexam"        data-phase="probe"><span class="compass-node__icon">🔍</span><span class="compass-node__label">Probe</span></a>
+      <a class="compass-node" data-target="collision"    data-phase="collision"><span class="compass-node__icon">⚔️</span><span class="compass-node__label">Collide</span></a>
+      <a class="compass-node" data-target="synthesis"    data-phase="synthesis"><span class="compass-node__icon">💎</span><span class="compass-node__label">Sublate</span></a>
+      <a class="compass-node" data-target="ripple"       data-phase="ripple"><span class="compass-node__icon">🌊</span><span class="compass-node__label">Radiate</span></a>
+    </div>
+
+    <div class="toc-title">Contents</div>
+    <ul class="toc" id="toc">
+      <li><a href="#hook" data-target="hook">The Hook</a></li>
+      <li><a href="#scope" data-target="scope">Scope &amp; Assumptions</a></li>
+      <li><a href="#dialectic" data-target="dialectic">At a Glance</a></li>
+      <li><a href="#argument-map" data-target="argument-map">Argument Map</a></li>
+      <li><a href="#thesis" data-target="thesis">The Thesis + Premises</a></li>
+      <li><a href="#xexam" data-target="xexam">Cross-Examination</a></li>
+      <li><a href="#collision" data-target="collision">The Collision</a></li>
+      <li><a href="#synthesis" data-target="synthesis">The Synthesis</a></li>
+      <li><a href="#proof" data-target="proof">The Proof</a></li>
+      <li><a href="#ripple" data-target="ripple">Radiating Implication</a></li>
+      <li><a href="#fallacy-log" data-target="fallacy-log">Fallacy Log</a></li>
+      <li><a href="#residuals" data-target="residuals">Residuals</a></li>
+      <li><a href="#quiz" data-target="quiz">Knowledge Check</a></li>
+      <li><a href="#gate5" data-target="gate5">Continue or Iterate?</a></li>
+    </ul>
+  </aside>
+
+  <!-- =====================================================
+       MIDDLE COLUMN — Canvas (The Arena)
+  ===================================================== -->
+  <main class="canvas">
+    <div class="canvas-inner">
+
+    <!-- Title -->
+    <h1>Grab Bike Drivers Are Workers</h1>
+    <div class="byline">
+      <span class="pill">Dialectic</span>
+      <span class="pill">Advocate</span>
+      <span class="pill">Bilingual Evidence (EN + CN)</span>
+      A forged argument on labour-law classification in the Southeast Asian gig economy, main language English.
+    </div>
+
+    <!-- ============ PARADOX METER ============ -->
+    <div class="paradox-meter" id="paradox-meter" data-phase="thesis" aria-live="polite">
+      <div class="paradox-meter__label">
+        <span>Cognitive Dissonance</span>
+        <span class="paradox-meter__value" id="paradox-value">0%</span>
+      </div>
+      <div class="paradox-meter__bar">
+        <div class="paradox-meter__fill" id="paradox-fill"></div>
+      </div>
+      <div class="paradox-meter__hint" id="paradox-hint">Beginning — the thesis stands unchallenged.</div>
+    </div>
+
+    <!-- ============ ASSUMPTIONS REGISTER (4 Dimensions) ============ -->
+    <div class="assumptions" aria-labelledby="assumptions-title">
+      <div class="assumptions__title" id="assumptions-title">🔧 Assumptions Register — the four Dimensions</div>
+      <div class="assumptions__grid">
+        <div class="assumption-row">
+          <span class="assumption-key">Adversarial Lens</span>
+          <span class="assumption-val"><span class="badge">EMPIRICAL + ETHICAL</span>Employment status is decided by evidence (control, pay) and judged by welfare.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Rigor</span>
+          <span class="assumption-val"><span class="badge">GADFLY</span>Advocate stance: the thesis is over-claimed until it survives maximal pressure.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Trajectory</span>
+          <span class="assumption-val"><span class="badge">FORTIFY</span>Thesis survives, its scope narrowed, the Antithesis's valid points absorbed.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Depth</span>
+          <span class="assumption-val"><span class="badge">SINGLE_COLLISION</span>One 10-state pass through the FSM.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ HOOK ============ -->
+    <section id="hook">
+      <h2><span class="h2-emoji">✍️</span>The Hook</h2>
+      <p>On 22 July 2024, the Federal Court of Malaysia, chaired by the Chief Justice, refused a former Grab driver leave to appeal. Her case had been simple: after a dispute with a passenger at Senai Airport, she was removed from the platform she had driven for since 2016. She wanted a hearing. The courts told her she was not a <em>workman</em> under the Industrial Relations Act 1967 — Grab, they said, is "solely an intermediary." Eleven months later, the same Parliament that writes the law these courts apply passed the <span class="evidence-trigger" data-evidence="ev-gigact">Gig Workers Act 2025</span>, creating a legal category for roughly 1.2 million Malaysian gig workers. This is not a coincidence.</p>
+      <p>This note forges one claim: <strong>Grab bike drivers are workers in substance — subordinated to Grab's algorithmic control and economically dependent on it — and must be recognised as protected platform workers.</strong> The claim is tested against the strongest evidence its opponents can field, drawn from both English- and Chinese-language sources.</p>
+    </section>
+
+    <!-- ============ SCOPE ============ -->
+    <section id="scope">
+      <h2><span class="h2-emoji">🎯</span>Scope &amp; Assumptions</h2>
+      <p><strong>Domain.</strong> Labour-law classification of Grab two-wheeler (bike) drivers — GrabBike passenger rides and GrabFood/Express deliveries — under the "partner" model, across Southeast Asia. Primary jurisdiction: <strong>Malaysia</strong>, where both the judiciary and the legislature have moved on this exact question. Comparative evidence: Vietnam, Indonesia, the Philippines, Singapore, the People's Republic of China (as the regional policy laboratory), and the UK/EU as Western reference points. Timeframe: 2014 (GrabBike entry) to 2026.</p>
+      <p><strong>In scope:</strong> the control/subordination test; economic dependence and integration; statutory remedies (minimum earnings, social security, unfair-deactivation protection); the interaction of judicial rulings and legislation.</p>
+      <p><strong>Out of scope:</strong> taxation of platform earnings; the four-wheel GrabCar segment (used only as a comparative aside); other platforms' internal labour arrangements; social-security funding design.</p>
+      <p><strong>Assumptions:</strong> evidence pool is bilingual (English + Chinese sources, quoted with translation); the legal lens is Malaysian positive law with comparative material; "bike driver" covers both passenger rides and delivery; all URLs were loaded during this session's research pass (2026-08-15).</p>
+      <p><strong>Audience posture:</strong> A skeptical domain-adjacent expert — employment lawyer, platform economist, or policy analyst — whose sharpest objection is: <em>"The Malaysian courts have settled this. Loh Guet Ching lost at the Federal Court in 2024; drivers are not 'workmen.' And Parliament passed the Gig Workers Act precisely because they are a separate category. Your thesis is moot."</em></p>
+    </section>
+
+    <!-- ============ AT A GLANCE (three-panel) ============ -->
+    <section id="dialectic">
+      <h2><span class="h2-emoji">👁️</span>At a Glance</h2>
+      <div class="dialectic-header">
+        <div class="panel panel--thesis">
+          <span class="panel__label">📘 Thesis</span>
+          <div class="panel__body">Grab bike drivers are workers in substance — subordinated to Grab's algorithmic control and economically dependent on it — so the "partner" label is a legal fiction that strips them of employment-derived protections.</div>
+        </div>
+        <div class="panel panel--antithesis">
+          <span class="panel__label">⚔️ Antithesis</span>
+          <div class="panel__body">Grab drivers are genuinely independent operators: they own their bikes, choose their hours, run multiple apps, and are paid per trip, not salary. Malaysia's courts have thrice confirmed they are not "workmen," and forced employee status would destroy the flexibility drivers value.</div>
+        </div>
+        <div class="panel panel--synthesis">
+          <span class="panel__label">💎 Synthesis</span>
+          <div class="panel__body">The binary is the failure. Drivers should be recognised under a <em>statutorily defined third category</em> of protected platform worker — carrying employment-derived protections (just-cause deactivation, social security, a dispute tribunal, earnings standards) while preserving scheduling autonomy. Recognition, not the label, reflects the substance.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARGUMENT MAP (Toulmin) ============ -->
+    <section id="argument-map">
+      <h2><span class="h2-emoji">🗺️</span>The Argument Map</h2>
+      <div class="argument-map">
+        <div class="argument-map__title">Toulmin structure of the synthesis</div>
+        <div class="toulmin">
+          <div class="toulmin__cell t-grounds">
+            <span class="toulmin__label">Grounds</span>
+            Substance evidence (Vietnam's <span class="evidence-trigger" data-evidence="ev-vinasun">Vinasun finding</span>; PRC <span class="evidence-trigger" data-evidence="ev-prc-2021">劳动三分法</span>) plus a global convergence — UK 2021, France 2020, EU 2024, Singapore 2025, <span class="evidence-trigger" data-evidence="ev-gigact">Malaysia 2025</span> — plus protection-gap data: 600,000 uninsured drivers in Vietnam, no EPF/SOCSO in Malaysia, arbitrary deactivation.
+          </div>
+          <div class="toulmin__cell t-warrant">
+            <span class="toulmin__label">Warrant</span>
+            Substance over form: when a platform exercises algorithmic control over the terms of work and workers are economically dependent on it, the "partner" label is legally irrelevant — recognition is owed, and the legal vehicle must fit the flexible employment form rather than force a unitary "employee" box.
+          </div>
+          <div class="toulmin__cell t-claim">
+            <span class="toulmin__label">Claim</span>
+            Grab bike drivers should be recognised under a statutorily defined third category of protected platform worker, between employee and independent contractor.
+          </div>
+          <div class="toulmin__cell t-backing">
+            <span class="toulmin__label">Backing</span>
+            The doctrine of subordination (<span class="term" data-def="从属性 (cóng shǔ xìng) — the subordination doctrine shared by civil- and common-law labour systems: an employment relationship exists where one party works under the direction, control and economic dependency of another.">从属性</span>) in civil- and common-law systems; the ILO's call to read the "true nature of the relationship" by degree of control, not contract wording.
+          </div>
+          <div class="toulmin__cell t-qualifier">
+            <span class="toulmin__label">Qualifier</span>
+            Holds for materially engaged, economically dependent drivers; genuinely casual or multi-platform autonomous operators fall outside (or at a reduced tier); each statute sets the engagement threshold.
+          </div>
+          <div class="toulmin__cell t-rebuttal">
+            <span class="toulmin__label">Rebuttal</span>
+            The Malaysian rulings (2021–2024) and the autonomy account: both rest on a pre-algorithmic control test; Parliament's 2025 Act responded precisely to the gap they exposed, and its safeguards deliver the thesis's protections without the rigidities the Antithesis fears.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ THESIS PILLAR + PREMISES ============ -->
+    <section id="thesis">
+      <h2><span class="h2-emoji">📘</span>The Thesis</h2>
+
+      <div class="thesis-pillar">
+        <div class="thesis-pillar__label">📘 The Sharpened Thesis</div>
+        <div class="thesis-pillar__statement">Grab bike drivers are workers in substance — subordinated to Grab's algorithmic control and economically dependent on it — and must be recognised as protected platform workers, so that the "partner" label stops functioning as a legal fiction that strips them of employment-derived protections.</div>
+        <div class="thesis-pillar__contract">We accept this proposition as our starting point. But does it hold under scrutiny?</div>
+      </div>
+
+      <h3><span class="diff diff-core">CORE</span>Load-Bearing Premises (Excavated)</h3>
+      <p>For the Thesis to hold, all three of the following must be true. If any one fails, the argument collapses.</p>
+
+      <div class="premise-walls">
+        <div class="premise-wall">
+          <div class="premise-wall__index">P1</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Control / Subordination (EMPIRICAL)</div>
+            Grab sets fares, dispatch, rules and ratings surveillance, and holds the power to deactivate. Vietnam's courts pierced the "neutral connector" fiction in the Vinasun litigation; under a substance-over-form test this is the hallmark of subordination.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P2</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Economic Dependence / Integration (EMPIRICAL)</div>
+            A commission is deducted from every fare, drivers cannot negotiate the price or the cut, and their work is Grab's product. For materially engaged drivers, the platform is the only source of income — dependence, not partnership.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P3</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Protection Gap → Harm (ETHICAL)</div>
+            Exclusion leaves drivers without minimum-earnings standards, EPF/SOCSO, injury cover, or a remedy against arbitrary deactivation — and Malaysia's rulings (2021–2024) actively closed the remedies that existed.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CROSS-EXAMINATION ============ -->
+    <section id="xexam">
+      <h2><span class="h2-emoji">🔍</span>The Cross-Examination</h2>
+      <p>Each premise below gets its own probe. The Probe and Edge Case are shown openly; the Defense is behind a click. Sit with the doubt before you hear the rescue.</p>
+
+      <!-- P1 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P1 — CONTROL / SUBORDINATION</span>
+          <span class="tag tag--lens">Lens: Empirical</span>
+          <span class="tag tag--rigor">Rigor: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">But isn't the freedom to log on and off at will, to own your own bike, and to run three apps at once precisely the <em>absence</em> of the control that employment law requires?</div>
+        <p class="xexam-card__setup">The Court of Appeal in the <span class="evidence-trigger" data-evidence="ev-loh">Loh Guet Ching</span> case found Grab is "solely an intermediary connecting users with Loh": she provided her own vehicle, Grab paid no salary, made no EPF or SOCSO contributions, and charged a 20% commission. A rider who can deactivate her account, switch to MyCar, and decide her own hours looks, on paper, like a free agent.</p>
+        <button class="xexam-card__defense-btn" data-target="def-p1" aria-expanded="false">Hear the Defense</button>
+        <div class="xexam-card__defense" id="def-p1">
+          <span class="label">Edge Case — Empirical lens</span>
+          <p>The full judicial record: Kuala Lumpur High Court, 9 July 2021; Court of Appeal, 27 November 2023; Federal Court, 22 July 2024 — a driver removed from the platform after a passenger dispute was denied any hearing because she was not a "workman" under s.2 of the Industrial Relations Act 1967.</p>
+          <span class="label" style="margin-top:12px">The Defense</span>
+          <p>Control in the gig economy is algorithmic and asymmetric. Grab sets the fare the rider cannot change, disciplines through ratings and deactivation, and surveys every trip. "Freedom to log off" is freedom to not earn. Vietnam's courts already pierced this framing: in the Vinasun litigation (settled 2018–2020) judges found Grab operated "as a transport company that set fares, dispatched rides and managed its drivers, even cutting their pay over customer complaints." The Malaysian test — designed for a factory foreman — has simply not caught up with algorithmic control.</p>
+          <div class="verdict"><span class="verdict-tag">Verdict</span>Defense holds <em>partially</em>. The control is real and directed, but the courts' reading is binding law until statute changes it — and statute, as we will see, did.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Steel-Man Check:</strong> SM-1 ✓ (a contractor-side lawyer would recognise the autonomy account); SM-2 ✓ (attacks the actual premise — the control test — not a caricature); SM-3 ✓ (uses the strongest court findings available to that side).
+          </div>
+        </div>
+      </article>
+
+      <!-- P2 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P2 — ECONOMIC DEPENDENCE</span>
+          <span class="tag tag--lens">Lens: Empirical</span>
+          <span class="tag tag--rigor">Rigor: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">But don't drivers genuinely run their own businesses — and many of them prefer it that way?</div>
+        <p class="xexam-card__setup">Drivers buy the bike, absorb fuel and maintenance, choose hours, and multi-app. Grab Indonesia's public-affairs chief warned in 2025 that reclassifying drivers as employees could <span class="evidence-trigger" data-evidence="ev-indo">reduce active partners "by as much as 80 to 90 percent."</span> And in China, a 2025 survey of Meituan riders found 42.25% explicitly said they do <em>not</em> want to pay into social insurance. If economic dependence were the norm, why would so many drivers resist the protection?</p>
+        <button class="xexam-card__defense-btn" data-target="def-p2" aria-expanded="false">Hear the Defense</button>
+        <div class="xexam-card__defense" id="def-p2">
+          <span class="label">Edge Case — Empirical lens</span>
+          <p>Grab Indonesia statement, 29 April 2025 (Jakarta Globe): employee status implies "a minimum of 40 working hours per week, fixed schedules, and exclusive service to a single platform" — which, the company argues, is structurally wrong for gig work. China's survey data (via 证券时报/Securities Times, 2025): 42.25% of surveyed riders do not want social security; 42.46% are enrolled in none.</p>
+          <span class="label" style="margin-top:12px">The Defense</span>
+          <p>Dependence is real but not uniform — which is precisely why the binary fails. For the engaged, full-time rider, the platform is the only source of income and price-setting is unilateral: that is the essence of subordination. The "80–90%" figure is an advocacy estimate (the Fallacy Log flags it as a Slippery Slope). And the Chinese survey cuts both ways: it explains why the <em>design</em> of recognition must be voluntary and flexible — not why recognition should be withheld. Dependence being heterogeneous argues for a graduated category, not for the status quo.</p>
+          <div class="verdict"><span class="verdict-tag">Verdict</span>Defense holds <em>partially</em>. Dependence is heterogeneous; the Qualifier in State 5 must differentiate by engagement intensity.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Steel-Man Check:</strong> SM-1 ✓; SM-2 ✓ (targets the dependence premise directly); SM-3 ✓ (uses the platforms' and drivers' own strongest data).
+          </div>
+        </div>
+      </article>
+
+      <!-- P3 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P3 — PROTECTION GAP → HARM</span>
+          <span class="tag tag--lens">Lens: Ethical</span>
+          <span class="tag tag--rigor">Rigor: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">But isn't the harm already being fixed — without employee status, and by the very legislation the thesis will cite?</div>
+        <p class="xexam-card__setup">Malaysia passed the <span class="evidence-trigger" data-evidence="ev-gigact">Gig Workers Act 2025</span>; China's 2021 指导意见 created a third category and its platforms began paying social security in 2025; Singapore's Platform Workers Act took effect 1 January 2025. If the protection gap is closing by statute, the thesis's ethical engine is running out of fuel.</p>
+        <button class="xexam-card__defense-btn" data-target="def-p3" aria-expanded="false">Hear the Defense</button>
+        <div class="xexam-card__defense" id="def-p3">
+          <span class="label">Edge Case — the facts of the Synthesis itself</span>
+          <p>Gig Workers Act 2025: passed by the Dewan Rakyat on 28 August 2025 and the Dewan Negara on 9 September 2025; awaiting royal assent as of October 2025. China: 人社部发〔2021〕56号 (July 2021) plus the February 2025 social-security pivot by JD and Meituan. Singapore: law in force 1 January 2025.</p>
+          <span class="label" style="margin-top:12px">The Defense</span>
+          <p>This does not refute the thesis — it vindicates it. Every one of these jurisdictions converged on the same conclusion: the "partner" fiction is unacceptable, and substance-based recognition is owed. The thesis's core claim (recognition, protection, just-cause deactivation) is exactly what these laws deliver. What the collision reveals is that the thesis's <em>vehicle</em> was the over-claim: "employee" in the traditional unitary sense does not fit a flexible, multi-app workforce. The vehicle is what the Qualifier must now narrow — from "employee status" to "statutory third-category recognition."</p>
+          <div class="verdict"><span class="verdict-tag">Verdict</span>Defense holds <em>fully</em> for the harm — and forces the Synthesis to shift its remedy vehicle. This is the FORTIFY pivot.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Steel-Man Check:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓ (this is the strongest available counter, and it is steel-manned with the synthesis's own evidence).
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============ COLLISION SPLIT-SCREEN ============ -->
+    <section id="collision">
+      <h2><span class="h2-emoji">⚔️</span>The Antithesis — The Collision</h2>
+      <p><strong>Synthesis of the doubt.</strong> Across the three cross-examinations: P1's Defense held only partially (the courts' control test is real and binding, but lags algorithmic control); P2 held partially (dependence is heterogeneous — some drivers are genuinely autonomous); P3 held fully for the harm but forced a remedy shift. The aggregate flaw pattern: <em>the Thesis over-claims by insisting on the employee label; the Antithesis over-claims by treating the "partner" label as dispositive.</em> Both collapse on the same fact — the relationship is neither a traditional contract of service nor a genuine partnership.</p>
+
+      <div class="collision">
+        <div class="collision__inner">
+          <div class="collision__side collision__side--thesis">
+            <span class="label">📘 Thesis breaks here</span>
+            <div class="heading">Where the Thesis fails</div>
+            <p>"Employee" in the traditional unitary sense over-reaches. It implies fixed schedules, exclusive service, a 40-hour week — none of which fit a multi-app rider who may or may not want a pension. The label the thesis insisted on is the wrong vehicle.</p>
+          </div>
+          <div class="collision__divider" aria-hidden="true">
+            <span class="collision__zap">⚡</span>
+          </div>
+          <div class="collision__side collision__side--antithesis">
+            <span class="label">⚔️ Antithesis stands here</span>
+            <div class="heading">Where the Antithesis holds</div>
+            <p>Autonomy is real: own bike, own hours, multi-apping, per-trip payment. The Malaysian judiciary read the relationship as a commercial arrangement. Forced employee status threatens the flexibility drivers value and platforms' viability.</p>
+          </div>
+        </div>
+        <div class="collision__tension">
+          The exact conceptual variable where Thesis and Antithesis collide: <strong>subordination vs autonomy — does algorithmic control and economic dependence (substance) outweigh scheduling freedom (form)?</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SUBLATION (Synthesis) ============ -->
+    <section id="synthesis">
+      <h2><span class="h2-emoji">💎</span>The Synthesis — The Aufheben</h2>
+
+      <div class="sublation">
+        <div class="sublation__inner">
+          <div class="sublation__label">💎 Trajectory: FORTIFY · The Aufheben</div>
+          <div class="sublation__statement">
+            Grab bike drivers should be recognised under a statutorily defined third category of protected platform worker — carrying employment-derived protections (just-cause deactivation, written service agreements, social security, a dispute tribunal, minimum-earnings standards) while preserving scheduling autonomy — because recognition, not the "partner" fiction, reflects the substance of their relationship with Grab.
+          </div>
+          <div class="sublation__elevation">
+            <div class="sublation__elev-cell sublation__elev-cell--preserve">
+              <span class="lead">Preserves from the Thesis</span>
+              The core survives intact: drivers are subordinated workers in substance, not free agents; the "partner" label is a legal fiction; the protection gap is real and judicial form-based rulings compounded it. Every jurisdiction that examined the substance — Vinasun, 从属性 doctrine, the UK Supreme Court, France, the EU, Malaysia's own Parliament — reached the recognition conclusion.
+            </div>
+            <div class="sublation__elev-cell sublation__elev-cell--absorb">
+              <span class="lead">Absorbs from the Antithesis</span>
+              The autonomy account is absorbed as design constraints, not refutations: the category preserves scheduling freedom, permits multi-apping, and differentiates by engagement. Driver-preference data explains why the category must be voluntary and flexible. The "80–90%" warning is absorbed as a warning against forced uniform employee status — which the third category structurally avoids.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PROOF ============ -->
+    <section id="proof">
+      <h2><span class="h2-emoji">🧪</span>The Proof</h2>
+      <p><span class="diff diff-core">CORE</span><strong>Primary anchor — Malaysia, 2021→2025.</strong> The Loh Guet Ching saga is a controlled experiment in what the binary does to people. A driver who had driven since 2016 was removed after a passenger dispute; the Minister declined to refer her claim; the High Court (2021), Court of Appeal (2023) and Federal Court (2024) all held she was not a "workman" and had no industrial-court remedy. Then Parliament built the very thing the courts said did not exist: the <span class="evidence-trigger" data-evidence="ev-gigact">Gig Workers Act 2025</span>, passed 28 August 2025 (Dewan Rakyat) and 9 September 2025 (Dewan Negara), covering ~1.2 million gig workers with mandatory written service agreements, a prohibition on termination without just cause, a 14-day cap on suspension pending inquiry, compensation of 50% of average daily income for unjust deactivation, enrolment in SOCSO's self-employment scheme, a dedicated Gig Workers Tribunal, and mandatory disclosure of algorithmic monitoring with access to human review. Map it to Toulmin: the Act is the <em>Claim</em> made real — the courts' rulings are the <em>Rebuttal</em> it answers, and its protections are the <em>Grounds</em> for the thesis's core.</p>
+
+      <p><span class="diff diff-supp">SUPPORTING</span><strong>Contrasting case — Indonesia, 2025→2026.</strong> Indonesia offers the divergence test. The government's 2026 plan classifies ride-hailing drivers as MSME micro-business owners (Presidential Regulation 27/2026, KUR micro-credit, subsidised fuel) — also a "third category," and backed by Grab Indonesia. The SPAI transport union rejects it, demanding worker status under the 2003 Manpower Law. This is where the Qualifier does real work: MSME relabelling routes drivers toward entrepreneurship and micro-credit — it preserves the flexibility half of the synthesis but drops the protection half. The third category only fulfils its Aufheben contract if it carries employment-derived protections; a relabel of the status quo is not recognition, it is the same fiction with a better name.</p>
+
+      <div class="bar-chart">
+        <div class="bar-chart__title">Substance check — where does control actually sit in the Grab–rider relationship?</div>
+        <div class="bar-row"><span class="bar-label">Grab sets the fare (rider can't)</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--thesis)"></div></div><span class="bar-value">100</span></div>
+        <div class="bar-row"><span class="bar-label">Dispatch decided by algorithm</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--thesis)"></div></div><span class="bar-value">100</span></div>
+        <div class="bar-row"><span class="bar-label">Ratings discipline + surveillance</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--thesis)"></div></div><span class="bar-value">100</span></div>
+        <div class="bar-row"><span class="bar-label">Deactivation power, no hearing</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--thesis)"></div></div><span class="bar-value">100</span></div>
+        <div class="bar-row"><span class="bar-label">Rider chooses when to log on</span><div class="bar-track"><div class="bar-fill" style="width:40%;background:var(--warn)"></div></div><span class="bar-value">40</span></div>
+        <div class="bar-row"><span class="bar-label">Rider negotiates price / commission</span><div class="bar-track"><div class="bar-fill" style="width:5%;background:var(--antithesis)"></div></div><span class="bar-value">5</span></div>
+      </div>
+      <p class="footer-note" style="margin-top:8px;border-top:none;padding-top:0"><em>Illustrative presentation of the evidence, not a precise measurement. Sources: Court of Appeal reasoning in Loh Guet Ching (2023); Vinasun finding (VnExpress, 2026-06-16); FULCRUM analysis (2022-06-06).</em></p>
+
+      <div class="flip-card" tabindex="0">
+        <div class="flip-card__inner">
+          <div class="flip-card__face flip-card__face--front">Indonesia's MSME plan is also a "third category." Why does the synthesis reject it?</div>
+          <div class="flip-card__face flip-card__face--back">Because a category is only an Aufheben if it carries employment-derived protections. MSME relabelling gives riders micro-loans and subsidised fuel — entrepreneurship, not labour rights. It preserves the flexibility half and drops the protection half. The Qualifier requires both, which is why SPAI (a union) rejects it and Grab (a platform) supports it.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RIPPLE POOL — Radiating Implication ============ -->
+    <section id="ripple">
+      <h2><span class="h2-emoji">🌊</span>The Radiating Implication</h2>
+
+      <h3><span class="diff diff-core">CORE</span>The Applied Test</h3>
+      <p>A novel scenario. It is 2027, and a new entrant — call it AngkorGo — launches bike delivery in Phnom Penh, onboarding riders as "independent partners" on the exact contract terms Grab used in 2016. A rider is deactivated after a ratings drop, with no hearing. Applying the Synthesis: the question is not what the contract calls them. Test control — AngkorGo sets fares, dispatch and ratings. Test dependence — the rider has no other income source. Both tests pass, so the rider is owed the category's protections: written terms, just-cause deactivation, human review of the algorithmic decision, and a tribunal. The synthesis is operational because it supplies a decision procedure — test substance, then apply protections — that works even in a jurisdiction with no statute yet.</p>
+
+      <div class="ripple">
+        <div class="ripple__label">🌊 If this synthesis is true, then…</div>
+        <div class="ripple__claim">Platform algorithms are legally regulated instruments of labour management — and algorithmic accountability (fare transparency, dispatch fairness, human review of deactivation) becomes a core statutory employment right across Southeast Asia.</div>
+        <div class="ripple__adjacent">The adjacent domain fundamentally challenged: <strong>platform-algorithm governance and digital-labour regulation.</strong> This implication is the seed for the next dialectical loop.</div>
+      </div>
+    </section>
+
+    <!-- ============ FALLACY LOG ============ -->
+    <section id="fallacy-log">
+      <h2><span class="h2-emoji">⚠️</span>Fallacy Log</h2>
+      <p style="color:var(--text-muted);font-size:14px">Every entry names a fallacy detected during State 3 and the rewrite it forced. A closed log is fine; an empty one is not.</p>
+      <details class="deep-dive fallacy-log">
+        <summary>⚠️ Fallacy Log (8 detections from the 12-fallacy audit)</summary>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">1. False Dilemma — in the seed premise itself</div>
+          <p>"Employee vs independent contractor" was treated as a binary. Both sides of this debate inherit it.</p>
+          <p><strong>Rewrite:</strong> the question is reframed as what recognition vehicle fits the substance — leading to the third category.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">2. Slippery Slope — in Grab Indonesia's "80–90%" claim</div>
+          <p>The claim that employee status "could reduce active partners by 80–90%" (2025-04-29) chains unproven consequences from a contested premise.</p>
+          <p><strong>Rewrite:</strong> treated as an advocacy estimate, not evidence; counterweighted by driver-preference data showing heterogeneous desire for protection.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">3. Motte-and-Bailey — in the Thesis as originally framed</div>
+          <p>Defending modest "recognition" while pushing ambitious "employee status" — a movable castle wall.</p>
+          <p><strong>Rewrite:</strong> core (recognition/protection) separated from vehicle (employee vs third category); the vehicle is explicitly qualified.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">4. Hasty Generalisation — about "drivers"</div>
+          <p>Both sides treated drivers as one homogeneous class. Full-time riders and casual multi-appers are different economic actors.</p>
+          <p><strong>Rewrite:</strong> the Qualifier differentiates by engagement intensity; the third category is graduated, not uniform.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">5. Survivorship Bias — on both sides</div>
+          <p>Jurisdictional examples select on the markets that moved; drivers who thrived vs those who left the platform are both selected populations.</p>
+          <p><strong>Rewrite:</strong> the convergence evidence is framed as trend data, with Malaysia's failure-until-2025 history disclosed.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">6. Base Rate Neglect — the vivid Loh case vs the base rate</div>
+          <p>A single dramatic court saga stands in for the base rate of unprotected drivers; the vivid "80–90%" figure stands in for the base rate of driver preference.</p>
+          <p><strong>Rewrite:</strong> both are anchored to population data (1.2M in Malaysia; 600,000 uninsured in Vietnam; 42.25% survey figure in China).</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">7. Appeal to Authority — risk flagged at State 3</div>
+          <p>The ILO could be invoked as a name; the audit required content.</p>
+          <p><strong>Rewrite:</strong> the ILO is cited for a specific position — read the "true nature of the relationship" by degree of control — not as a logo.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">8. Straw Man — checked, passed</div>
+          <p>The Probes were tested against the Steel-Man Rubric: a contractor-side lawyer would recognise the autonomy account (own bike, own hours, NZ precedent, flexibility).</p>
+          <p><strong>Rewrite:</strong> none needed — SM-1/SM-2/SM-3 passed on all three probes; the Antithesis is steel-manned throughout.</p>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:16px">Audited but not detected: Ad Hominem, Correlation↔Causation, No True Scotsman, Tu Quoque.</p>
+      </details>
+    </section>
+
+    <!-- ============ RESIDUALS ============ -->
+    <section id="residuals">
+      <h2><span class="h2-emoji">📉</span>Residuals &amp; Boundary Conditions</h2>
+      <div class="residuals">
+        <h4>What this argument does <em>not</em> cover</h4>
+        <ul>
+          <li><span class="residuals__badge">8a</span>Tax treatment of platform earnings, and how a third category interacts with presumptive tax regimes (the 2019 Hanoi strike context).</li>
+          <li><span class="residuals__badge">8a</span>The GrabCar four-wheel segment, whose economics differ (vehicle investment, chauffeur sub-contracting).</li>
+          <li><span class="residuals__badge">8a</span>Non-Grab platforms (Gojek, Maxim, ShopeeFood) and their internal labour arrangements — the argument is about the model, illustrated by Grab.</li>
+          <li><span class="residuals__badge">8a</span>The precise funding split of social security in a third-category design, and whether "minimum earnings standards" should bind platforms.</li>
+        </ul>
+        <h4>Falsifiers</h4>
+        <ul>
+          <li><span class="residuals__badge">8b</span>If, within three years of the Malaysian Act's commencement, independent evaluation shows no improvement in gig-worker earnings or benefit take-up versus the 2024 baseline, the third-category vehicle fails its own test.</li>
+          <li><span class="residuals__badge">8b</span>If any jurisdiction adopts full employee classification for bike riders and shows measurable welfare gains without a collapse in rider numbers or service availability, the third category is the inferior remedy.</li>
+          <li><span class="residuals__badge">8b</span>If Malaysian courts under the new law reclassify engaged riders as full employees, the category boundary is unstable and the synthesis's Qualifier is wrong.</li>
+          <li><span class="residuals__badge">8b</span>If Grab or industry litigation successfully strikes down the Act on constitutional grounds, the legislative route is not reliable.</li>
+        </ul>
+        <h4>Confidence levers</h4>
+        <ul>
+          <li><span class="residuals__badge">8c</span>↑ Royal assent and commencement of the Malaysian Gig Workers Act 2025, plus a functioning Tribunal within its first year.</li>
+          <li><span class="residuals__badge">8c</span>↑ Enforcement of China's 劳动三分法 written-agreement layer and expansion of the 2025 rider social-security pilots.</li>
+          <li><span class="residuals__badge">8c</span>↓ Gazetting stalls; the Act remains "awaiting royal assent" into 2026.</li>
+          <li><span class="residuals__badge">8c</span>↓ A competing jurisdiction (e.g. Indonesia's MSME route) succeeds and shows riders better off — undercutting the employment-derived-protection requirement.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section id="quiz" class="quiz">
+      <h2>🧠 Knowledge Check</h2>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:20px">These test whether you can defend the argument's <em>structure</em>, not whether you memorised its examples.</p>
+
+      <fieldset data-q="1" data-answer="b">
+        <legend>1. What did the Federal Court of Malaysia actually decide on 22 July 2024?</legend>
+        <label class="quiz-option"><input type="radio" name="q1" value="a">a. That Grab drivers ARE employees with full employment rights.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="b">b. It refused leave to appeal, leaving intact the finding that drivers are not "workmen" under the Industrial Relations Act 1967.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="c">c. That the Gig Workers Act 2025 was unconstitutional.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="d">d. That Parliament's Gig Workers Act 2025 was already in force.</label>
+      </fieldset>
+
+      <fieldset data-q="2" data-answer="c">
+        <legend>2. Which cross-examination verdict forced the Synthesis to shift its remedy vehicle?</legend>
+        <label class="quiz-option"><input type="radio" name="q2" value="a">a. P1 — the Malaysian courts' "solely an intermediary" finding.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="b">b. P2 — drivers' preference for flexibility.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="c">c. P3 — the harm was already being fixed by statute, so recognition could ride a third category rather than the "employee" label.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="d">d. None — the thesis's vehicle never changed.</label>
+      </fieldset>
+
+      <fieldset data-q="3" data-answer="a">
+        <legend>3. Why is the third category an Aufheben, not Argument-to-Moderation?</legend>
+        <label class="quiz-option"><input type="radio" name="q3" value="a">a. It introduces a structural innovation (a statutory category) that preserves the thesis's recognition claim while absorbing the antithesis's autonomy constraints — it does not average the two positions.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="b">b. It is literally the midpoint between employee and contractor.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="c">c. It appeals to both Grab and the drivers.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="d">d. It costs less than either pure status.</label>
+      </fieldset>
+
+      <fieldset data-q="4" data-answer="d">
+        <legend>4. The Radiating Implication claims that, if the synthesis holds, platform algorithms become…</legend>
+        <label class="quiz-option"><input type="radio" name="q4" value="a">a. trade secrets protected from disclosure.</label>
+        <label class="quiz-option"><input type="radio" name="q4" value="b">b. irrelevant to employment classification.</label>
+        <label class="quiz-option"><input type="radio" name="q4" value="c">c. neutral market coordination tools with no labour dimension.</label>
+        <label class="quiz-option"><input type="radio" name="q4" value="d">d. legally regulated instruments of labour management, subject to transparency and human review.</label>
+      </fieldset>
+
+      <button class="quiz-check-btn" id="check-quiz">Check Answers</button>
+      <div class="quiz-score" id="quiz-score" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- ============ GATE 5 — CONTINUE OR ITERATE? ============ -->
+    <section id="gate5" class="gate5">
+      <div class="gate5__title">Gate 5 — Continue or Iterate?</div>
+      <div class="gate5__body">
+        The Radiating Implication I derived: <em>"If third-category recognition is the correct vehicle for platform labour, then platform algorithms are legally regulated instruments of labour management."</em> Four possible next moves:
+      </div>
+      <ul class="gate5__options">
+        <li data-key="a"><strong>Spiral</strong> — feed this synthesis back as the next Thesis: argue that algorithmic accountability (fare transparency, dispatch fairness, human review of deactivation) becomes a core statutory employment right.</li>
+        <li data-key="b"><strong>Refine</strong> — improve any specific section (say which).</li>
+        <li data-key="c"><strong>Branch</strong> — argue the Radiating Implication in its own right, in the adjacent domain of platform-algorithm governance and digital-labour regulation.</li>
+        <li data-key="d"><strong>Close out</strong> — this artifact stands as-is.</li>
+      </ul>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <div class="footer-note">
+      <p><strong>Method note:</strong> This artifact was forged using the Socratic Dialectic Engine v2.2 — 10 states across five feedback gates (Gates 0, 1 and 5 fired; MEDIUM length).</p>
+      <p><em>Research mode: <span id="research-mode-value">web-enabled — all URLs were loaded via the session's web-search provider on 2026-08-15; evidence is dated and attributed. Primary language English; evidence pool bilingual (English + Chinese sources, quoted with translation).</span></em></p>
+    </div>
+
+    </div><!-- /.canvas-inner -->
+  </main>
+
+  <!-- =====================================================
+       RIGHT PANEL — Marginalia (Evidence Locker + Philosophers' Notes)
+  ===================================================== -->
+  <aside class="marginalia" aria-label="Marginalia and Evidence Locker">
+
+    <div class="marginalia__title">🔎 Evidence Locker</div>
+    <div id="evidence-locker">
+      <div class="evidence-item" id="ev-loh">
+        <span class="evidence-item__label">Malaysia — the Loh Guet Ching rulings</span>
+        High Court (9 Jul 2021), Court of Appeal (27 Nov 2023), Federal Court (22 Jul 2024): a Grab driver removed after a passenger dispute is not a "workman" under s.2 of the Industrial Relations Act 1967 — Grab is "solely an intermediary"; no salary, no EPF/SOCSO, 20% commission.
+        <div class="evidence-item__source">Free Malaysia Today (2023-11-27) · Bernama (2024-07-22) · Donovan &amp; Ho (2021-07-13)</div>
+      </div>
+      <div class="evidence-item" id="ev-gigact">
+        <span class="evidence-item__label">Malaysia — Gig Workers Act 2025</span>
+        Dewan Rakyat 28 Aug 2025, Dewan Negara 9 Sep 2025; ~1.2M workers; mandatory written service agreements; no termination without just cause; 14-day suspension cap; 50% daily-income compensation for unjust deactivation; SOCSO SESSS enrolment; Gig Workers Tribunal; algorithmic-disclosure + human-review duty; awaiting royal assent.
+        <div class="evidence-item__source">東方網 / Oriental Daily (2025-08-28; 2025-09-09) · Shearn Delamore (2025) · HRTechChina (2025-09-03) · MondAq (2025-10-02)</div>
+      </div>
+      <div class="evidence-item" id="ev-vinasun">
+        <span class="evidence-item__label">Vietnam — Vinasun litigation + 600k uninsured</span>
+        Courts found Grab operates "as a transport company that set fares, dispatched rides and managed its drivers, even cutting their pay over customer complaints"; ~600,000 ride-hailing/delivery drivers still classified as "business partners" without social/health/unemployment insurance; 2019 Labour Code adopts substance-over-form.
+        <div class="evidence-item__source">VnExpress International (2026-06-16) · FULCRUM (2022-06-06) · Lexology / Lac Duy (2021-03-09)</div>
+      </div>
+      <div class="evidence-item" id="ev-prc-2021">
+        <span class="evidence-item__label">China — 劳动三分法 (Labour Three-Way Classification)</span>
+        人社部发〔2021〕56号 (16 Jul 2021): (1) full employment relationship → labour contract; (2) "不完全符合确立劳动关系情形" — incomplete relationship where the enterprise conducts labour management → written agreement, minimum wage, occupational-injury protection; (3) autonomous operation → civil law. The PRC's own "third category."
+        <div class="evidence-item__source">gov.cn / 人社部 (2021-07-23) · 国家发改委 NDRC commentary (2021-07-28)</div>
+      </div>
+      <div class="evidence-item" id="ev-prc-2025">
+        <span class="evidence-item__label">China — 2025 social-security pivot</span>
+        JD: 五险一金 for full-time riders from 1 Mar 2025, enterprise covering the employee's share; 10,000+ labour contracts by 20 Mar 2025. Meituan: full-time + stable part-time from Q2 2025, 50% pension-subsidy pilot in Quanzhou/Nantong (~22,000 riders); 14亿元 occupational-injury premiums, 7 provinces, 1,037.99万 covered. Survey: 42.25% of riders say they do not want to pay social security.
+        <div class="evidence-item__source">Meituan newsroom (2025-02-19) · 21经济网 (2025-02-19) · 人民日报 (2025-02-28) · 光明网 (2025-05-19) · 证券时报 · 央广网 (2025-03-03)</div>
+      </div>
+      <div class="evidence-item" id="ev-indo">
+        <span class="evidence-item__label">Indonesia — platforms vs union</span>
+        Grab Indonesia &amp; Maxim reject employee classification (29 Apr 2025); Grab warns forced employment could cut active partners "by as much as 80 to 90 percent." Government's 2026 MSME-microbusiness reclassification plan (Presidential Regulation 27/2026) is rejected by SPAI union, which demands worker status; Indonesia to adopt ILO Convention No. 193.
+        <div class="evidence-item__source">Jakarta Globe (2025-04-29) · The Jakarta Post (2026-07-18)</div>
+      </div>
+      <div class="evidence-item" id="ev-intl">
+        <span class="evidence-item__label">Global convergence</span>
+        UK Supreme Court 2021 (Uber drivers = "workers"); France 2020 (Uber driver reclassified employee; "independent" status fictitious); EU Platform Work Directive 2024 (rebuttable presumption); Singapore Platform Workers Act in force 1 Jan 2025 (retirement savings + injury insurance); ILO: read the "true nature of the relationship" by degree of control.
+        <div class="evidence-item__source">VnExpress International (2026-06-16) · FULCRUM (2022-06-06)</div>
+      </div>
+      <div class="evidence-item" id="ev-phil">
+        <span class="evidence-item__label">Philippines — riders without protection</span>
+        Academic argument that Grab/FoodPanda delivery riders, nominally "independent contractors" with no insurance, meet the employer-employee test under Philippine jurisprudence; Spain and France rulings cited as precedent.
+        <div class="evidence-item__source">ejournals.ph / KITE E-Learning Solutions (undated academic paper)</div>
+      </div>
+    </div>
+
+    <div class="marginalia__title">📎 Sidenotes</div>
+    <div class="sidenote">
+      <span class="sidenote__label">Difficulty markers</span>
+      🟢 Core · 🟡 Supporting · 🔴 Deep dive — skip 🔴 on first pass.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Terminology</span>
+      从属性 (cóng shǔ xìng) — the subordination doctrine. 劳动三分法 — the PRC's "three-way classification" of labour relations. "Partner" — the label Grab uses for drivers; the law's test looks at substance.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Reading protocol</span>
+      Read the three-panel + argument map first. If you already disagree, jump to Fallacy Log + Residuals — that's where the argument's honesty lives.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Toulmin, briefly</span>
+      Stephen Toulmin's schema (1958) separates a claim from its supporting evidence, its logical bridge, its scope, and its counter-cases. Using it as scaffolding stops arguments from collapsing under adversarial pressure.
+    </div>
+
+    <div class="marginalia__title">📝 Philosophers' Notes <small style="font-weight:400;text-transform:none;letter-spacing:0">(highlight text to add)</small></div>
+    <div class="phil-notes" id="phil-notes">
+      <div class="phil-note__empty" id="phil-notes-empty">Select any text in the argument, then type your own counter-probe. Your notes are saved on this device only.</div>
+    </div>
+  </aside>
+
+</div><!-- /.layout -->
+
+<script>
+/* ============================================================
+   THEME TOGGLE with localStorage
+============================================================ */
+(function(){
+  const KEY = 'dialectic-theme';
+  const btn = document.getElementById('theme-toggle');
+  const stored = localStorage.getItem(KEY);
+  if (stored) document.documentElement.setAttribute('data-theme', stored);
+  const updateIcon = () => {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    btn.textContent = dark ? '☀' : '☾';
+    btn.title = dark ? 'Switch to light mode' : 'Switch to dark mode';
+  };
+  updateIcon();
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem(KEY, next);
+    updateIcon();
+  });
+})();
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function(){
+  const KEY = 'dialectic-focus';
+  const btn = document.getElementById('focus-toggle');
+  if (localStorage.getItem(KEY) === '1') document.documentElement.classList.add('focus-mode');
+  btn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('focus-mode');
+    localStorage.setItem(KEY, document.documentElement.classList.contains('focus-mode') ? '1' : '0');
+  });
+})();
+
+/* ============================================================
+   LANGUAGE TOGGLE (visible only if [lang="vi"] elements exist)
+============================================================ */
+(function(){
+  const KEY = 'dialectic-lang';
+  const btn = document.getElementById('lang-toggle');
+  const hasVi = document.querySelector('[lang="vi"]');
+  if (!hasVi) return;
+  btn.style.display = 'flex';
+  const stored = localStorage.getItem(KEY);
+  if (stored) document.documentElement.setAttribute('data-lang', stored);
+  const updateLabel = () => {
+    btn.textContent = document.documentElement.getAttribute('data-lang') === 'vi' ? 'VI' : 'EN';
+  };
+  updateLabel();
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-lang');
+    const next = cur === 'vi' ? 'en' : 'vi';
+    document.documentElement.setAttribute('data-lang', next);
+    localStorage.setItem(KEY, next);
+    updateLabel();
+  });
+})();
+
+/* ============================================================
+   READING PROGRESS BAR + PERCENTAGE + READING TIME
+============================================================ */
+(function(){
+  const fill = document.getElementById('progress-fill');
+  const pct  = document.getElementById('progress-percent');
+  const article = document.querySelector('.canvas');
+  const update = () => {
+    const rect = article.getBoundingClientRect();
+    const scrolled = window.scrollY - (rect.top + window.scrollY - 100);
+    const total = article.scrollHeight - window.innerHeight;
+    const p = Math.max(0, Math.min(1, scrolled / Math.max(1, total)));
+    const percent = Math.round(p * 100);
+    fill.style.width = percent + '%';
+    pct.textContent = percent + '%';
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  const wc = document.querySelector('.canvas').innerText.trim().split(/\s+/).length;
+  document.getElementById('reading-time').textContent = Math.max(1, Math.round(wc / 220));
+})();
+
+/* ============================================================
+   PARADOX METER — the metacognitive UI
+============================================================ */
+(function(){
+  const meter = document.getElementById('paradox-meter');
+  const fill  = document.getElementById('paradox-fill');
+  const val   = document.getElementById('paradox-value');
+  const hint  = document.getElementById('paradox-hint');
+
+  const zones = [
+    { id: 'hook',         pct: 5,   phase: 'thesis',    hint: 'Beginning — the thesis stands unchallenged.' },
+    { id: 'scope',        pct: 8,   phase: 'thesis',    hint: 'Scope established. Tension not yet named.' },
+    { id: 'dialectic',    pct: 15,  phase: 'thesis',    hint: 'Three positions declared. The collision is coming.' },
+    { id: 'argument-map', pct: 20,  phase: 'thesis',    hint: 'Argument architecture visible.' },
+    { id: 'thesis',       pct: 25,  phase: 'thesis',    hint: 'Thesis sharpened; premises excavated.' },
+    { id: 'xexam',        pct: 65,  phase: 'probe',     hint: 'Cross-examination in progress — sit with the doubt.' },
+    { id: 'collision',    pct: 95,  phase: 'collision', hint: 'Peak dissonance — Thesis and Antithesis colliding.' },
+    { id: 'synthesis',    pct: 55,  phase: 'synthesis', hint: 'Aufheben — the tension resolves upward.' },
+    { id: 'proof',        pct: 40,  phase: 'synthesis', hint: 'Synthesis anchored in evidence.' },
+    { id: 'ripple',       pct: 25,  phase: 'ripple',    hint: 'Radiating outward into adjacent domains.' },
+    { id: 'fallacy-log',  pct: 15,  phase: 'ripple',    hint: 'Auditing the audit.' },
+    { id: 'residuals',    pct: 10,  phase: 'ripple',    hint: 'Honest self-assessment.' },
+    { id: 'quiz',         pct: 5,   phase: 'ripple',    hint: 'Testing your grasp of the structure.' }
+  ];
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const z = zones.find(x => x.id === e.target.id);
+      if (!z) return;
+      fill.style.width = z.pct + '%';
+      val.textContent  = z.pct + '%';
+      hint.textContent = z.hint;
+      meter.dataset.phase = z.phase;
+    });
+  }, { rootMargin: '-25% 0px -60% 0px', threshold: 0 });
+
+  zones.forEach(z => {
+    const el = document.getElementById(z.id);
+    if (el) io.observe(el);
+  });
+})();
+
+/* ============================================================
+   COMPASS + TOC via IntersectionObserver
+============================================================ */
+(function(){
+  const compassNodes = document.querySelectorAll('.compass-node[data-target]');
+  const tocLinks     = document.querySelectorAll('.toc a[data-target]');
+  const cmap = new Map();
+  compassNodes.forEach(a => cmap.set(a.dataset.target, a));
+  const tmap = new Map();
+  tocLinks.forEach(a => tmap.set(a.dataset.target, a));
+
+  const sectionIds = new Set([
+    ...Array.from(cmap.keys()),
+    ...Array.from(tmap.keys())
+  ]);
+  const compassAlias = {
+    'hook': 'scope', 'argument-map': 'thesis', 'dialectic': 'thesis',
+    'proof': 'synthesis', 'fallacy-log': 'ripple',
+    'residuals': 'ripple', 'quiz': 'ripple', 'gate5': 'ripple'
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const tocLink = tmap.get(e.target.id);
+      if (tocLink) tocLink.classList.add('active');
+      const cTarget = cmap.has(e.target.id) ? e.target.id : compassAlias[e.target.id];
+      compassNodes.forEach(n => n.classList.remove('active'));
+      const cNode = cmap.get(cTarget);
+      if (cNode) cNode.classList.add('active');
+    });
+  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+  document.querySelectorAll('.canvas section[id]').forEach(el => {
+    if (sectionIds.has(el.id) || compassAlias[el.id]) io.observe(el);
+  });
+
+  document.querySelectorAll('.compass-node[data-target], .toc a[data-target]').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const target = document.getElementById(a.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();
+
+/* ============================================================
+   CROSS-EXAMINATION — "Hear the Defense" toggle
+============================================================ */
+(function(){
+  document.querySelectorAll('.xexam-card__defense-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      const panel = document.getElementById(targetId);
+      if (!panel) return;
+      const isOpen = panel.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      btn.textContent = isOpen ? 'Hide the Defense' : 'Hear the Defense';
+    });
+  });
+})();
+
+/* ============================================================
+   EVIDENCE LOCKER — click trigger, highlight sidebar entry
+============================================================ */
+(function(){
+  const triggers = document.querySelectorAll('.evidence-trigger');
+  triggers.forEach(t => {
+    t.setAttribute('tabindex', '0');
+    t.setAttribute('role', 'button');
+    const activate = () => {
+      const id = t.dataset.evidence;
+      const item = document.getElementById(id);
+      if (!item) return;
+      document.querySelectorAll('.evidence-item.highlight').forEach(x => x.classList.remove('highlight'));
+      document.querySelectorAll('.evidence-trigger.active').forEach(x => x.classList.remove('active'));
+      item.classList.add('highlight');
+      t.classList.add('active');
+      item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        item.classList.remove('highlight');
+        t.classList.remove('active');
+      }, 4000);
+    };
+    t.addEventListener('click', activate);
+    t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+  });
+})();
+
+/* ============================================================
+   PHILOSOPHERS' NOTE — text-selection triggers counter-probe
+============================================================ */
+(function(){
+  const KEY = 'dialectic-phil-notes';
+  const popup     = document.getElementById('phil-popup');
+  const popupQ    = document.getElementById('phil-popup__quote');
+  const popupIn   = document.getElementById('phil-popup__input');
+  const btnSave   = document.getElementById('phil-popup__save');
+  const btnCancel = document.getElementById('phil-popup__cancel');
+  const notesEl   = document.getElementById('phil-notes');
+  const emptyEl   = document.getElementById('phil-notes-empty');
+  const canvas    = document.querySelector('.canvas');
+
+  let pendingQuote = '';
+
+  const load = () => {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { return []; }
+  };
+  const save = (notes) => localStorage.setItem(KEY, JSON.stringify(notes));
+
+  const render = () => {
+    const notes = load();
+    notesEl.innerHTML = '';
+    if (notes.length === 0){
+      notesEl.appendChild(emptyEl);
+      return;
+    }
+    notes.forEach((n, i) => {
+      const el = document.createElement('div');
+      el.className = 'phil-note';
+      el.innerHTML =
+        '<button class="phil-note__del" aria-label="Delete note" title="Delete">✕</button>' +
+        (n.quote ? '<div class="phil-note__quote">"' + escapeHtml(n.quote) + '"</div>' : '') +
+        '<div class="phil-note__body">' + escapeHtml(n.body) + '</div>';
+      el.querySelector('.phil-note__del').addEventListener('click', () => {
+        const cur = load();
+        cur.splice(i, 1);
+        save(cur);
+        render();
+      });
+      notesEl.appendChild(el);
+    });
+  };
+
+  const escapeHtml = (s) => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  const closePopup = () => {
+    popup.classList.remove('show');
+    popupIn.value = '';
+    pendingQuote = '';
+  };
+
+  canvas.addEventListener('mouseup', () => {
+    const sel = window.getSelection();
+    const text = sel ? sel.toString().trim() : '';
+    if (text.length < 8) return;
+    if (!sel.anchorNode || !canvas.contains(sel.anchorNode)) return;
+    pendingQuote = text;
+    popupQ.textContent = text.length > 160 ? text.slice(0, 160) + '…' : text;
+    const range = sel.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    const pTop = window.scrollY + rect.bottom + 8;
+    const pLeft = Math.min(window.innerWidth - 340, rect.left + window.scrollX);
+    popup.style.top  = pTop  + 'px';
+    popup.style.left = Math.max(16, pLeft) + 'px';
+    popup.classList.add('show');
+    setTimeout(() => popupIn.focus(), 60);
+  });
+
+  btnCancel.addEventListener('click', closePopup);
+  btnSave.addEventListener('click', () => {
+    const body = popupIn.value.trim();
+    if (!body) { closePopup(); return; }
+    const notes = load();
+    notes.push({ quote: pendingQuote, body: body, ts: Date.now() });
+    save(notes);
+    render();
+    closePopup();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && popup.classList.contains('show')) closePopup();
+  });
+  document.addEventListener('click', (e) => {
+    if (popup.classList.contains('show') && !popup.contains(e.target) && !window.getSelection().toString().trim()) {
+      closePopup();
+    }
+  });
+
+  render();
+})();
+
+/* ============================================================
+   QUIZ — self-grading with localStorage
+============================================================ */
+(function(){
+  const KEY = 'dialectic-quiz';
+  const fieldsets = document.querySelectorAll('.quiz fieldset');
+  const btn = document.getElementById('check-quiz');
+  const scoreEl = document.getElementById('quiz-score');
+
+  fieldsets.forEach(fs => {
+    fs.querySelectorAll('.quiz-option').forEach(label => {
+      const input = label.querySelector('input');
+      input.addEventListener('change', () => {
+        fs.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('selected'));
+        if (input.checked) label.classList.add('selected');
+        persist();
+      });
+    });
+  });
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+    Object.entries(saved).forEach(([q, v]) => {
+      const input = document.querySelector('input[name="' + q + '"][value="' + v + '"]');
+      if (input){ input.checked = true; input.closest('.quiz-option').classList.add('selected'); }
+    });
+  } catch(e){}
+
+  function persist(){
+    const state = {};
+    fieldsets.forEach(fs => {
+      const q = 'q' + fs.dataset.q;
+      const sel = fs.querySelector('input:checked');
+      if (sel) state[q] = sel.value;
+    });
+    localStorage.setItem(KEY, JSON.stringify(state));
+  }
+
+  btn.addEventListener('click', () => {
+    let correct = 0;
+    fieldsets.forEach(fs => {
+      const correctVal = fs.dataset.answer;
+      const chosen = fs.querySelector('input:checked');
+      fs.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('correct-answer', 'incorrect-answer'));
+      const correctLabel = fs.querySelector('input[value="' + correctVal + '"]').closest('.quiz-option');
+      correctLabel.classList.add('correct-answer');
+      if (chosen){
+        if (chosen.value === correctVal) correct++;
+        else chosen.closest('.quiz-option').classList.add('incorrect-answer');
+      }
+    });
+    const total = fieldsets.length;
+    scoreEl.className = 'quiz-score show';
+    if (correct === total){ scoreEl.textContent = 'Perfect — ' + correct + '/' + total + '. You can defend this argument.'; scoreEl.classList.add('pass'); }
+    else if (correct >= Math.ceil(total * 0.6)){ scoreEl.textContent = correct + '/' + total + '. Re-read the Toulmin map and Fallacy Log.'; scoreEl.classList.add('mid'); }
+    else { scoreEl.textContent = correct + '/' + total + '. Start again from "At a Glance".'; scoreEl.classList.add('fail'); }
+  });
+})();
+
+/* ============================================================
+   SCROLL POSITION PERSIST
+============================================================ */
+(function(){
+  const KEY = 'dialectic-scroll';
+  const saved = parseInt(localStorage.getItem(KEY) || '0', 10);
+  if (saved > 0) window.scrollTo(0, saved);
+  let t;
+  window.addEventListener('scroll', () => {
+    clearTimeout(t);
+    t = setTimeout(() => localStorage.setItem(KEY, String(window.scrollY)), 200);
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
