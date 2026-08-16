@@ -1,0 +1,2446 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Vì sao người đã có gia đình lại ngoại tình?</title>
+<meta name="description" content="Một tài liệu dài kỳ về vì sao người đã kết hôn vẫn ngoại tình — nhìn từ tâm lý, sinh học, xã hội, văn hóa Đông-Tây và pháp lý.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg:            #FDFBF7;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #2D3748;
+  --text-muted:    #718096;
+  --text-strong:   #1A202C;
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  --accent2:        #B7791F;
+  --accent2-strong: #975A16;
+  --accent2-soft:   #FEEBC8;
+  --border:        #E4DFD5;
+  --sidenote-bg:   #EDF2F7;
+  --code-bg:       #EDF2F7;
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #1A202C;
+  --bg-elevated:   #2D3748;
+  --bg-sunken:     #171923;
+  --text:          #E2E8F0;
+  --text-muted:    #A0AEC0;
+  --text-strong:   #F7FAFC;
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent2:        #F6AD55;
+  --accent2-strong: #FBD38D;
+  --accent2-soft:   #4A2E14;
+  --border:        #2D3748;
+  --sidenote-bg:   #2A2F3A;
+  --code-bg:       #2A2F3A;
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: var(--line);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   PROGRESS BAR (fixed top)
+============================================================ */
+.progress-bar{
+  position: fixed; top:0; left:0; right:0;
+  height: 3px;
+  background: transparent;
+  z-index: 100;
+}
+.progress-bar__fill{
+  height:100%;
+  width:0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+
+/* ============================================================
+   LAYOUT — 3 column grid
+============================================================ */
+.app{
+  display:grid;
+  grid-template-columns: minmax(220px, 20%) minmax(0, 1fr) minmax(240px, 20%);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 32px 128px;
+}
+
+.navigator{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding-right: 8px;
+}
+.navigator::-webkit-scrollbar{width:6px}
+.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+.canvas{
+  max-width: var(--measure);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.marginalia{
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Focus mode: collapse side panels */
+body.focus-mode .navigator,
+body.focus-mode .marginalia{
+  display:none;
+}
+body.focus-mode .app{
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+/* Mobile */
+@media (max-width: 960px){
+  .app{
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px 96px;
+  }
+  .navigator{
+    position: relative;
+    top: 0;
+    max-height: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .marginalia{
+    order: 3;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+}
+
+/* ============================================================
+   NAVIGATOR
+============================================================ */
+.navigator__meta{
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.navigator__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+.navigator__reading-time{
+  color: var(--text);
+  font-size: 13px;
+}
+
+.toc{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc li{margin: 2px 0}
+.toc a{
+  display: block;
+  padding: 6px 10px;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition);
+  line-height: 1.4;
+}
+.toc a:hover{
+  color: var(--text);
+  background: var(--sidenote-bg);
+}
+.toc a.is-active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--sidenote-bg);
+  font-weight: 500;
+}
+.toc .toc-l3{ padding-left: 20px; font-size: 13px }
+
+/* ============================================================
+   CANVAS (main reading area)
+============================================================ */
+.canvas h1{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin: 8px 0 16px;
+  letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--text-strong);
+  margin: 56px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+.canvas h2:first-of-type{ border-top: none; padding-top: 0 }
+.canvas h3{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-strong);
+  margin: 32px 0 12px;
+  scroll-margin-top: 24px;
+}
+.canvas p{ margin: 0 0 16px }
+.canvas strong{ color: var(--text-strong); font-weight: 700 }
+.canvas em{ font-style: italic }
+.canvas a{
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.canvas a:hover{ color: var(--accent-strong) }
+
+.source{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--sidenote-bg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all var(--transition);
+}
+.source::before{ content: "↗ "; opacity: .6 }
+.source:hover{
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+.bar-chart__caption{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+.bar-chart__caption a{ color: var(--text-muted); text-decoration: underline dotted }
+.bar-chart__caption a:hover{ color: var(--accent) }
+.provenance-note{
+  margin: 32px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--sidenote-bg);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-left: 3px solid var(--text-muted);
+}
+
+.canvas ul, .canvas ol{
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.canvas li{ margin: 4px 0 }
+
+.canvas blockquote{
+  margin: 24px 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--sidenote-bg);
+  color: var(--text);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+}
+
+.canvas code{
+  font-family: var(--font-mono);
+  font-size: .9em;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.canvas pre{
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 24px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  position: relative;
+}
+.canvas pre code{ background: transparent; padding: 0 }
+
+.hook{
+  margin: 24px 0 48px;
+  padding: 24px 28px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.hook__label{
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.meta-block{
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.meta-block h4{
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.meta-block ul{ margin: 0; padding-left: 20px }
+.meta-block li{ margin: 4px 0; color: var(--text) }
+
+.callout{
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--info);
+  background: var(--info-bg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+}
+.callout__label{
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.callout--tip{ border-left-color: var(--success); background: var(--success-bg) }
+.callout--tip .callout__label{ color: var(--success) }
+.callout--warn{ border-left-color: var(--warn); background: var(--warn-bg) }
+.callout--warn .callout__label{ color: var(--warn) }
+.callout--danger{ border-left-color: var(--danger); background: var(--danger-bg) }
+.callout--danger .callout__label{ color: var(--danger) }
+
+.feynman{
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+}
+.feynman::before{
+  content: "🧒 Giải thích trong một câu:";
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.term{
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+  position: relative;
+}
+.term:hover::after{
+  content: attr(data-def);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-strong);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-style: normal;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  z-index: 10;
+  box-shadow: var(--shadow);
+  line-height: 1.4;
+}
+
+.sidenote{
+  margin: 24px 0;
+  padding: 12px 14px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.sidenote strong{ color: var(--text); display: block; margin-bottom: 4px; font-weight: 600 }
+
+/* ============================================================
+   FLIP CARD (active recall)
+============================================================ */
+.flip-card{
+  perspective: 1000px;
+  height: 180px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+.flip-card__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg) }
+
+.flip-card__face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__front{
+  background: var(--bg-elevated);
+}
+.flip-card__back{
+  background: var(--accent);
+  color: white;
+  transform: rotateY(180deg);
+}
+.flip-card__label{
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.flip-card__back .flip-card__label{ color: rgba(255,255,255,.85) }
+.flip-card__content{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PROGRESSIVE DISCLOSURE (details/summary)
+============================================================ */
+.deep-dive{
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+.deep-dive > summary{
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  transition: background var(--transition);
+}
+.deep-dive > summary::-webkit-details-marker{ display: none }
+.deep-dive > summary::before{
+  content: "▶";
+  color: var(--accent);
+  font-size: 10px;
+  transition: transform var(--transition);
+}
+.deep-dive[open] > summary::before{ transform: rotate(90deg) }
+.deep-dive > summary:hover{ background: var(--sidenote-bg) }
+.deep-dive__label{
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  margin-right: auto;
+}
+.deep-dive > *:not(summary){
+  padding: 0 18px 16px;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideDown{
+  from{ opacity: 0; transform: translateY(-8px) }
+  to  { opacity: 1; transform: translateY(0) }
+}
+
+/* ============================================================
+   CSS-ONLY BAR CHART
+============================================================ */
+.bar-chart{
+  margin: 32px 0;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.bar-chart__title{
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 16px;
+}
+.bar-row{
+  display: grid;
+  grid-template-columns: 140px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.bar-label{ color: var(--text) }
+.bar-track{
+  background: var(--sidenote-bg);
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill{
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  border-radius: 4px;
+  transition: width 400ms cubic-bezier(.4,0,.2,1);
+}
+.bar-row:hover .bar-fill{ filter: brightness(1.15) }
+.bar-value{ color: var(--text-muted); font-weight: 600; text-align: right }
+
+@media (max-width: 640px){
+  .bar-row{ grid-template-columns: 100px 1fr 40px; font-size: 13px }
+}
+
+/* ============================================================
+   CONCEPT FLOW (3-step)
+============================================================ */
+.concept-flow{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 32px 0;
+}
+.concept-flow__step{
+  padding: 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.concept-flow__step:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.concept-flow__num{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.concept-flow__arrow{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 20px;
+  user-select: none;
+}
+@media (max-width: 640px){
+  .concept-flow{ grid-template-columns: 1fr; }
+  .concept-flow__arrow{ transform: rotate(90deg); justify-self: center }
+}
+
+/* ============================================================
+   GLOSSARY
+============================================================ */
+.glossary{ margin: 32px 0 }
+.glossary dl{ margin: 0 }
+.glossary dt{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: 16px;
+  font-size: 15px;
+}
+.glossary dd{
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 15px;
+  padding-left: 0;
+}
+
+/* ============================================================
+   QUIZ
+============================================================ */
+.quiz{
+  margin: 56px 0 24px;
+  padding: 32px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.quiz h2{
+  font-family: var(--font-sans);
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.quiz__intro{
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.quiz fieldset{
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.quiz legend{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.quiz__option{
+  display: block;
+  padding: 12px 16px;
+  margin: 6px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  transition: all var(--transition);
+  position: relative;
+  padding-left: 44px;
+}
+.quiz__option::before{
+  content: "";
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  transition: all var(--transition);
+}
+.quiz__option:hover{ border-color: var(--accent); background: var(--sidenote-bg) }
+.quiz__option input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.quiz__option:has(input:checked){
+  border-color: var(--accent);
+  background: var(--sidenote-bg);
+}
+.quiz__option:has(input:checked)::before{
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg-elevated);
+}
+.quiz__option.correct-answer{
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--text-strong);
+}
+.quiz__option.correct-answer::before{
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 3px var(--success-bg);
+}
+.quiz__option.incorrect-answer{
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+.quiz__option.incorrect-answer::before{
+  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: inset 0 0 0 3px var(--danger-bg);
+}
+
+.quiz__explanation{
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__explanation{ display: block }
+
+.quiz__actions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.btn{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--transition);
+}
+.btn:hover{ background: var(--accent-strong); border-color: var(--accent-strong) }
+.btn--ghost{ background: transparent; color: var(--accent) }
+.btn--ghost:hover{ background: var(--sidenote-bg); color: var(--accent-strong) }
+
+.quiz__score{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__score{ display: block }
+
+/* ============================================================
+   FLOATING CONTROLS
+============================================================ */
+.controls{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+}
+.control-btn{
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  padding: 0;
+}
+.control-btn:hover{
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.control-btn svg{ width: 18px; height: 18px }
+.control-btn[data-active="true"]{ background: var(--accent); color: white }
+
+/* ============================================================
+   PRINT
+============================================================ */
+@media print{
+  .navigator, .marginalia, .controls, .progress-bar, .quiz__actions{ display: none !important }
+  .app{ grid-template-columns: 1fr; max-width: none; padding: 0 }
+  body{ background: white; color: black; font-size: 12pt }
+  .canvas h1, .canvas h2, .canvas h3{ page-break-after: avoid }
+  .flip-card{ height: auto }
+  .flip-card__inner{ transform: none !important; height: auto }
+  .flip-card__face{ position: static; padding: 8px 0; box-shadow: none; border: none }
+  .flip-card__back{ display: block; background: white; color: black }
+  .deep-dive[open] > *:not(summary){ animation: none }
+}
+
+/* ============================================================
+   PHASE ORBIT (6-node progress in left navigator)
+============================================================ */
+.orbit{
+  margin: 0 0 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.orbit__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+.orbit__track{
+  position: relative;
+  padding-left: 22px;
+}
+.orbit__track::before{
+  content: "";
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.orbit__node{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--transition);
+  user-select: none;
+}
+.orbit__node::before{
+  content: "";
+  position: absolute;
+  left: -22px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  transition: all var(--transition);
+  box-sizing: border-box;
+}
+.orbit__node[data-reached="true"]::before{
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.orbit__node[data-active="true"]{
+  color: var(--text-strong);
+  font-weight: 600;
+}
+.orbit__node[data-active="true"]::before{
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.orbit__node:hover{ color: var(--text) }
+
+/* ============================================================
+   MISCONCEPTION PRE-MORTEM (State 2 tail)
+============================================================ */
+.premortem{
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--accent2-soft);
+  border-left: 4px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text);
+}
+.premortem__label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 8px;
+}
+.premortem__wrong{ text-decoration: line-through; color: var(--text-muted) }
+.premortem__truth{ font-weight: 600; color: var(--text-strong) }
+
+/* ============================================================
+   SCAFFOLD CARD (S/I/P/R micro-loop, State 3)
+============================================================ */
+.scaffold{
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.scaffold__concept{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scaffold__concept::before{
+  content: "◆";
+  color: var(--accent);
+  font-size: 12px;
+}
+.scaffold__row{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px 16px;
+  margin: 12px 0;
+  align-items: start;
+}
+.scaffold__row-label{
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 4px;
+}
+.scaffold__row-body{ font-size: 15px; line-height: 1.65 }
+.scaffold__row-body p:last-child{ margin-bottom: 0 }
+
+.scaffold__probe{
+  margin: 8px 0 0;
+  border: 1px dashed var(--accent2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  overflow: hidden;
+}
+.scaffold__probe > summary{
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent2-strong);
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  user-select: none;
+  transition: background var(--transition);
+}
+.scaffold__probe > summary::-webkit-details-marker{ display: none }
+.scaffold__probe > summary::before{
+  content: "🤔 Probe";
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent2-strong);
+}
+.scaffold__probe[open] > summary::after{
+  content: "";
+  position: absolute;
+}
+.scaffold__probe > summary:hover{ background: var(--accent2-soft) }
+.scaffold__resolve{
+  padding: 12px 14px 14px 14px;
+  background: var(--accent2-soft);
+  border-top: 1px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.scaffold__resolve::before{
+  content: "💡 Resolve";
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINT (textarea + reveal)
+============================================================ */
+.checkpoint{
+  margin: 32px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+}
+.checkpoint__label{
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.checkpoint__question{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.checkpoint textarea{
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--transition);
+  box-sizing: border-box;
+}
+.checkpoint textarea:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.checkpoint__actions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.checkpoint__expert{
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  display: none;
+}
+.checkpoint.is-revealed .checkpoint__expert{ display: block; animation: slideDown 300ms cubic-bezier(.4,0,.2,1) }
+.checkpoint__expert-label{
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.checkpoint__saved{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   LAUNCH PAD (Extension Problem, State 6)
+============================================================ */
+.launchpad{
+  margin: 48px 0 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.launchpad::before{
+  content: "🚀";
+  position: absolute;
+  top: -16px; right: -8px;
+  font-size: 96px;
+  opacity: .06;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+.launchpad__label{
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--accent2);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.launchpad__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+.launchpad__problem{
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.launchpad__hints{
+  border-top: 1px dashed var(--border);
+  padding-top: 20px;
+  font-family: var(--font-sans);
+}
+.launchpad__hints-label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: block;
+}
+.launchpad__hint{
+  margin: 10px 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-left: 3px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  display: none;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.launchpad__hint.is-visible{ display: block }
+.launchpad__hint-label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 4px;
+  letter-spacing: .08em;
+}
+.launchpad__reveal{
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all var(--transition);
+}
+.launchpad__reveal:hover{
+  background: var(--accent2);
+  color: white;
+}
+.launchpad__reveal:disabled{
+  opacity: .4;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER (right-panel hover-to-elaborate)
+============================================================ */
+.canvas .term-amp{
+  border-bottom: 1px dashed var(--accent2);
+  cursor: help;
+  transition: background var(--transition);
+}
+.canvas .term-amp:hover,
+.canvas .term-amp.is-active{
+  background: var(--accent2-soft);
+  border-bottom-color: var(--accent2-strong);
+}
+.amplifier{
+  position: sticky;
+  top: 24px;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: var(--accent2-soft);
+  border: 1px solid var(--accent2);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  min-height: 96px;
+  transition: opacity var(--transition);
+}
+.amplifier__label{
+  display: block;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 6px;
+}
+.amplifier__term{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+  display: block;
+  font-size: 14px;
+}
+.amplifier__body{ margin: 0 }
+.amplifier__empty{ color: var(--text-muted); font-style: italic }
+.amp-notes{ display: none }
+
+/* ============================================================
+   MISC
+============================================================ */
+.footer{
+  max-width: var(--measure);
+  margin: 64px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-align: center;
+}
+.kbd{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<div class="app">
+
+  <!-- =========================================================
+       LEFT — NAVIGATOR (sticky ToC)
+       ========================================================= -->
+  <aside class="navigator" aria-label="Table of contents">
+    <div class="navigator__meta">
+      <p class="navigator__title">Reading time</p>
+      <p class="navigator__reading-time" id="readingTime">~ 28 min</p>
+    </div>
+
+    <div class="orbit" aria-label="Learning phases">
+      <p class="orbit__title">Learning path</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Anchor</div>
+        <div class="orbit__node" data-target="bridge">2 · Bridge</div>
+        <div class="orbit__node" data-target="exposition">3 · Construct</div>
+        <div class="orbit__node" data-target="application">4 · Apply</div>
+        <div class="orbit__node" data-target="boundary">5 · Boundary</div>
+        <div class="orbit__node" data-target="synthesis">6 · Fade</div>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="toc" id="toc">
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- =========================================================
+       MIDDLE — CANVAS (main content)
+       ========================================================= -->
+  <main class="canvas" id="canvas">
+
+    <h1>Vì sao người đã có gia đình lại ngoại tình?</h1>
+
+    <!-- HOOK -->
+    <div class="hook">
+      <span class="hook__label">🎣 Câu mở đầu</span>
+      Vào 0h ngày 18/8/2015, một nhóm tự xưng là <em>Impact Team</em> tung công khai dữ liệu của hơn <strong>30 triệu</strong> người dùng Ashley Madison — trang hẹn hò dành riêng cho người đã kết hôn. Trong một đêm, hàng trăm nghìn cuộc hôn nhân bị đặt trước ánh sáng dư luận. Ashley Madison chỉ tính riêng dịch vụ "xóa toàn bộ dữ liệu" giá 19 USD đã thu về hơn 1,7 triệu USD mỗi năm — tiền người ta trả để <em>che giấu</em> chuyện của mình.<a class="source" href="https://krebsonsecurity.com/2022/07/a-retrospective-on-the-2015-ashley-madison-breach" target="_blank" rel="noopener">KrebsOnSecurity, 2022</a>
+      <br><br>
+      Nhưng đây không phải câu chuyện về một trang web. Đây là câu chuyện về một hiện tượng phổ quát: <strong>người đã cam kết một đời, vẫn đi tìm người khác.</strong> Trước khi đọc tiếp, hãy trả lời một câu: <em>nếu hôn nhân của họ hạnh phúc, họ có thể vẫn ngoại tình không?</em> — Khoanh: <strong>Có</strong> / <strong>Không</strong> / <strong>Không chắc</strong>.
+    </div>
+
+    <!-- PREREQUISITES + OBJECTIVES -->
+    <div class="meta-block">
+      <h4>Kiến thức nền</h4>
+      <ul>
+        <li>Không cần kiến thức tâm lý học hay thống kê trước đó.</li>
+        <li>Chỉ cần từng quan sát một cuộc hôn nhân, một gia đình — của người khác hay của chính mình.</li>
+        <li>Một chút tò mò về câu hỏi "vì sao".</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Sau khi đọc xong bạn có thể…</h4>
+      <ul>
+        <li><strong>Nhận diện</strong> ba loại ngoại tình và các con số tỷ lệ cơ bản ở Mỹ, Việt Nam, Trung Quốc.</li>
+        <li><strong>Giải thích</strong> nghịch lý "hôn nhân hạnh phúc vẫn ngoại tình" bằng Mô hình Bếp ăn.</li>
+        <li><strong>So sánh</strong> cách phương Đông và phương Tây nhìn nhận cùng một hành vi ngoại tình.</li>
+        <li><strong>Phân tích</strong> một tình huống ngoại tình bất kỳ bằng các yếu tố: nhu cầu, cơ hội, rào cản.</li>
+      </ul>
+    </div>
+
+    <!-- =====================================================
+         CHƯƠNG 1 — MỞ ĐẦU
+         ===================================================== -->
+    <h2 id="ch1">Chương 1 — Nền tảng: sự thật về ngoại tình</h2>
+    <h3 id="baseline">Sự thật nền tảng</h3>
+
+    <p><strong>Sự thật nền tảng:</strong> ngoại tình là một hiện tượng phổ biến, có động cơ đa dạng, và thường <em>không bắt đầu</em> từ việc hôn nhân tan vỡ.</p>
+
+    <p>Bạn đã biết điều này trong đời sống hàng ngày: bạn đọc tin đồn người này người kia, bạn nhớ về cuộc hôn nhân "đẹp như mơ" rồi bỗng đổ vỡ. Trực giác của bạn không sai khi nghi ngờ có gì đó phức tạp hơn "anh ấy/chị ấy hư". Tài liệu này sẽ chứng minh trực giác đó bằng số liệu, bằng nghiên cứu, và bằng lịch sử.</p>
+
+    <h3>Đo lường ngoại tình: con số nào cũng là con số tối thiểu</h3>
+    <p>Không ai muốn thú nhận chuyện này. Nghiên cứu kinh điển của Whisman &amp; Snyder (2007) cho thấy: khi hỏi trực tiếp, chỉ khoảng 1% người thừa nhận ngoại tình trong năm qua; nhưng khi trả lời trên máy tính ẩn danh, con số tăng lên gần 6 lần. Mọi thống kê dưới đây vì thế đều là <strong>tỷ lệ tối thiểu</strong>.</p>
+
+    <table style="width:100%;border-collapse:collapse;font-family:var(--font-sans);font-size:14px;margin:0 0 16px">
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px"><strong>Bối cảnh</strong></td><td style="padding:6px 8px"><strong>Nam</strong></td><td style="padding:6px 8px"><strong>Nữ</strong></td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px">Mỹ (GSS / IFS, 2023)</td><td style="padding:6px 8px">20%</td><td style="padding:6px 8px">13%</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px">Trung Quốc (2012, ĐH Nhân dân–Chicago)</td><td style="padding:6px 8px">~14%</td><td style="padding:6px 8px">~4%</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px">Việt Nam (ước tính hôn nhân từng ngoại tình)</td><td style="padding:6px 8px" colspan="2">16–25%</td></tr>
+    </table>
+    <p><em>Tỷ lệ "đã từng ngoại tình khi đã kết hôn". Các khảo sát dùng phương pháp khác nhau nên chỉ nên so sánh tương đối. Nguồn Mỹ: <a href="https://www.affairhealing.com/blog/marriage-infidelity-stats" target="_blank" rel="noopener">Affair Healing, 2025</a>; Việt Nam: <a href="https://thamtulienviet.com/ty-le-ngoai-tinh-o-viet-nam" target="_blank" rel="noopener">Tham Tu Lien Viet, 2024</a>.</em></p>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Trước khi đọc phần tiếp theo: bạn nghĩ tỷ lệ ngoại tình ở nhóm <strong>trẻ (18–29 tuổi)</strong> sẽ nghiêng về nam hay nữ hơn? Viết ra dự đoán của bạn — kết quả có thể làm bạn bất ngờ.
+    </div>
+
+    <p>Điểm bất ngờ thứ hai: khoảng cách nam–nữ đang <strong>thu hẹp</strong>, và ở nhóm 18–29 tuổi tại Mỹ, phụ nữ (~11%) đã vượt nam giới (~10%). "Ngoại tình là chuyện của đàn ông" — ngày càng không còn đúng ở thế hệ trẻ.</p>
+
+    <!-- =====================================================
+         STATE 2 — Cognitive Bridge
+         ===================================================== -->
+    <h3 id="bridge">Cầu nối: Mô hình Bếp ăn</h3>
+
+    <p>Để ghi nhớ mọi biến số trong cả 8 chương này, hãy dùng một thứ cực kỳ quen thuộc: <strong>bữa cơm gia đình</strong>. Gọi đây là <strong>Mô hình Bếp ăn</strong>. Nó sẽ được nhắc đi nhắc lại suốt tài liệu.</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span><strong>Bếp nhà</strong><br>Hôn nhân, mối quan hệ chính</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span><strong>Đói / thèm</strong><br>Nhu cầu tình cảm &amp; thể xác</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span><strong>Ăn vụng</strong><br>Ngoại tình</div>
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;font-family:var(--font-sans);font-size:14px;margin:0 0 16px">
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px"><strong>Trong bếp ăn</strong></td><td style="padding:6px 8px"><strong>Trong hôn nhân</strong></td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px">Nấu ăn tại nhà</td><td style="padding:6px 8px">Vun vén mối quan hệ</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px">Đói bụng</td><td style="padding:6px 8px">Nhu cầu (tình cảm / thể xác) chưa được đáp ứng</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px">Món lặp đi lặp lại, nhạt</td><td style="padding:6px 8px">Nhàm chán</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px"><strong>Ăn vụng ngoài hàng</strong></td><td style="padding:6px 8px"><strong>Ngoại tình</strong></td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px">"No mà vẫn ăn"</td><td style="padding:6px 8px">Nghịch lý hôn nhân hạnh phúc</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px">Bếp tắt lửa</td><td style="padding:6px 8px">Hôn nhân nguội lạnh, hết tình dục</td></tr>
+      <tr style="border-bottom:1px solid var(--border)"><td style="padding:6px 8px">Quán ăn mọc sát nhà</td><td style="padding:6px 8px">Cơ hội tiếp cận người thứ ba</td></tr>
+      <tr><td style="padding:6px 8px">Dọn ra khỏi bếp</td><td style="padding:6px 8px">Ly hôn</td></tr>
+    </table>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi xây tiếp — hầu hết mọi người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">Ngoại tình = hôn nhân không hạnh phúc.</span></p>
+      <p>Điều này sai vì nghiên cứu trên chính người dùng Ashley Madison (Selterman và cộng sự, 2023) cho thấy nhiều người tìm ngoại tình <strong>vẫn yêu vợ/chồng, vẫn đánh giá hôn nhân tốt</strong> — họ chỉ bất mãn về đời sống tình dục, và gần một nửa không còn quan hệ tình dục với bạn đời.<a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10069361/" target="_blank" rel="noopener">Arch. Sexual Behavior, 2023</a></p>
+      <p><span class="premortem__truth">Sự thật là:</span> ngoại tình giống "thèm món lạ" hơn là "đói" — và ở Chương 2 ta sẽ thấy nhiều động cơ không hề liên quan đến chất lượng hôn nhân.</p>
+    </div>
+
+    <!-- =====================================================
+         STATE 3 — Exposition
+         ===================================================== -->
+    <h3 id="exposition">Xây mô hình, từng mảnh một</h3>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Ba loại ngoại tình</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">Ngoại tình không phải một hiện tượng, mà là ba: <strong>ngoại tình thể xác</strong> (chỉ quan hệ tình dục, không gắn tình cảm), <strong>ngoại tình tình cảm</strong> (gắn bó tình cảm, chưa có hoặc không có quan hệ tình dục), và <strong>ngoại tình kết hợp</strong> (cả hai).<a class="source" href="https://ifstudies.org/blog/the-state-of-affairs" target="_blank" rel="noopener">IFS, 2019</a></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">Một người chồng nhắn tin "chúc ngủ ngon" suốt 3 tháng với đồng nghiệp cũ — chưa hề gặp mặt — là <span class="term-amp" data-note="ngoai-tinh-tinh-cam">ngoại tình tình cảm</span>: bếp nhà vẫn ăn bình thường, nhưng anh ta đang "thưởng thức" một món tinh thần ở hàng khác.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Loại nào phổ biến nhất trong khảo sát IFS?</summary>
+        <div class="scaffold__resolve">Ngoại tình <strong>kết hợp</strong> (~45%) phổ biến nhất, tiếp theo là tình cảm (~32%), rồi thể xác (~23%). Nếu đã từng có cảm xúc và thể xác song song, người ta hiếm khi tách rời chúng. Câu này gợi ý: "chỉ vì thể xác" hiếm khi là toàn bộ câu chuyện.</div>
+      </details>
+    </section>
+    <div class="feynman">Ngoại tình giống như trộm ăn vặt: có người chỉ "đi vay vị" (tình cảm), có người chỉ "ăn trộm món" (thể xác), và đa số là cả hai.</div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Tám động cơ (Selterman et al., 2019)</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">Khảo sát gần 500 người Mỹ từng ngoại tình cho thấy 8 động cơ. Điều gây sốc: <strong>khoái cảm tình dục không phải động cơ số một</strong>.</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">Thứ tự phổ biến: <strong>1) Thiếu tình yêu</strong> (77%) · 2) Lòng tự trọng — muốn được "nhìn thấy" (57%) · 3) Giận dữ — trả thù (43%) · 4) Nhàm chán (41%) · 5) Hoàn cảnh — cơ hội xuất hiện (37%) · 6) Bất an gắn bó (31%) · 7) Cảm giác bị lơ là (30%) · 8) Cam kết thấp (28%).<a class="source" href="https://www.bettendorfcounselingcenter.com/journal/why-people-have-affairs-psychological-and-emotional-drivers" target="_blank" rel="noopener">Bettendorf Counseling, 2025</a></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu "thiếu tình yêu" đứng đầu, vì sao họ không ly hôn mà đi ngoại tình?</summary>
+        <div class="scaffold__resolve">Vì họ không muốn mất cả món cũ. Trong Mô hình Bếp ăn: họ vẫn đói <em>một phần</em> nhu cầu, nhưng bữa nhà vẫn đáng giữ — họ muốn "thêm món", không muốn "đổi bếp". Ngoại tình thường là cách sửa đói <em>mà không phá bữa</em>.</div>
+      </details>
+    </section>
+    <div class="feynman">Nhiều người đi ăn vụng không phải vì bếp nhà không có gì, mà vì bếp nhà không còn khiến họ thấy mình là ai.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đọc sâu</span> Người ngoại tình có hối hận không?</summary>
+      <p>Nghiên cứu "No Remorse" (2023) trên 2.000 người dùng Ashley Madison phát hiện một mô hình ngược trực giác: họ <strong>ít hối hận về đạo đức</strong> hơn người ta tưởng, nhưng <strong>vẫn yêu bạn đời</strong>. Khác với hình ảnh "kẻ phản bội lạnh lùng", họ thường là người đang thiếu một phần nhu cầu — thường là tình dục — trong một cuộc hôn nhân mà họ vẫn muốn giữ.<a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10069361/" target="_blank" rel="noopener">Arch. Sexual Behavior, 2023</a></p>
+    </details>
+
+    <!-- =====================================================
+         STATE 4 — Application
+         ===================================================== -->
+    <h3 id="application">Trong đời thực</h3>
+
+    <p><strong>Case 1.</strong> Anh H., 41 tuổi, kết hôn 14 năm, bị vợ phát hiện nhắn tin tình cảm với đồng nghiệp nữ. Khi được hỏi, anh nói: <em>"Tôi vẫn thương vợ. Nhưng ở cơ quan tôi được khen, được lắng nghe. Ở nhà tôi chỉ là 'bố của con' — không ai thấy tôi còn là một người đàn ông."</em></p>
+
+    <p><strong>Phân tích bằng Mô hình Bếp ăn:</strong> bếp nhà anh H. <strong>không hẳn tắt lửa</strong> — anh vẫn thương vợ (món nhà vẫn còn vị). Nhưng món nhà đã "nhạt" phần thừa nhận giá trị: anh đói <strong>lòng tự trọng</strong>, không đói thể xác. Cửa hàng (đồng nghiệp) lại nằm ngay cạnh cơ quan — <strong>cơ hội</strong> cao. Động cơ nổi bật nhất nằm ở nhóm "lòng tự trọng" (57%), không phải nhóm "thiếu tình yêu".</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Tỷ lệ đã từng ngoại tình khi đã kết hôn</div>
+      <div class="bar-row">
+        <div class="bar-label">Mỹ · nam</div>
+        <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+        <div class="bar-value">20%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Mỹ · nữ</div>
+        <div class="bar-track"><div class="bar-fill" style="width:13%"></div></div>
+        <div class="bar-value">13%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">TQ · nam (~2012)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
+        <div class="bar-value">~14%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">TQ · nữ (~2012)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:4%"></div></div>
+        <div class="bar-value">~4%</div>
+      </div>
+      <p class="bar-chart__caption">Nguồn: <a href="https://www.affairhealing.com/blog/marriage-infidelity-stats" target="_blank" rel="noopener">Affair Healing</a>, 2025 (Mỹ); nghiên cứu 2012 ĐH Nhân dân–Chicago, dẫn qua <a href="http://news.sina.com.cn/c/2003-08-07/12561497928.shtml" target="_blank" rel="noopener">中国新闻周刊</a> (Trung Quốc). Các khảo sát dùng phương pháp khác nhau — chỉ nên đọc tương đối. Số liệu tự báo cáo thường thấp hơn thực tế.</p>
+    </div>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Tự nhớ lại — câu hỏi</span>
+          <div class="flip-card__content">Trong Mô hình Bếp ăn, "quán ăn mọc sát nhà" tương ứng với yếu tố nào trong 8 động cơ của Selterman?</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Đáp án</span>
+          <div class="flip-card__content">Động cơ số 5 — <strong>Hoàn cảnh</strong> (37%): cơ hội xuất hiện sẵn sàng, người ta dễ "ghé hàng" hơn. Cơ hội là mảnh ghép bị bỏ quên nhất khi người ta phán xét người ngoại tình.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================
+         STATE 5 — Boundary
+         ===================================================== -->
+    <h3 id="boundary">Chỗ mô hình vỡ</h3>
+    <p>Mô hình Bếp ăn (nhu cầu + cơ hội) chưa trả lời được:</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      <strong>"Ngoại tình chỉ xảy ra khi hôn nhân tồi tệ."</strong> Sai: nghiên cứu Ashley Madison cho thấy nhiều người ngoại tình vẫn yêu bạn đời và đánh giá hôn nhân tốt. Nếu chỉ nhìn vào "bếp nhà xấu" để giải thích, ta bỏ lỡ các động cơ như lòng tự trọng, giận dữ, nhàm chán.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Trường hợp lệ</span>
+      <strong>Nếu mọi thứ đều "no" thì không ai ăn vụng?</strong> Vẫn có người ngoại tình trong hôn nhân hạnh phúc, đầy đủ tình dục. Mô hình nhu cầu không giải thích được nhóm này — cần Chương 3 (sinh học, tiến hóa) và Chương 2 (tâm lý cá nhân) để bù.
+    </div>
+
+    <!-- =====================================================
+         STATE 6 — Chương 1 synthesis
+         ===================================================== -->
+    <h3 id="synthesis">Tổng kết</h3>
+    <p>Ngoại tình là hành vi phổ biến, bị báo cáo thiếu, có ba hình thái và ít nhất 8 động cơ — trong đó nhu cầu cảm xúc (thiếu tình yêu, lòng tự trọng) vượt trội hơn khoái cảm thể xác. Mô hình Bếp ăn cho ta ngôn ngữ chung để nói về "đói", "thèm", "món nhạt" và "cơ hội" trong suốt các chương sau.</p>
+
+    <blockquote>
+      <strong>Nếu chỉ nhớ một điều:</strong> người ta không ngoại tình vì hôn nhân xấu hay vì bản chất xấu — họ ngoại tình vì một nhu cầu nào đó (tình cảm, tự trọng, mới lạ, tình dục) chưa được đáp ứng trong một bối cảnh có cơ hội.
+    </blockquote>
+
+    <!-- =====================================================
+         CHƯƠNG 2
+         ===================================================== -->
+    <h2 id="ch2">Chương 2 — Tâm lý cá nhân: cùng một bếp, khác người ăn</h2>
+
+    <p><em>Chuyển tiếp từ Chương 1:</em> cùng một "bếp ăn" (nhu cầu + cơ hội), vì sao người này ăn vụng, người kia thì không? Câu trả lời nằm ở tâm lý cá nhân — thứ người ăn mang sẵn trong người.</p>
+
+    <h3>Nền tảng</h3>
+    <p><strong>Sự thật nền tảng:</strong> hoàn cảnh giải thích <em>khi nào</em> ngoại tình; nhân cách và kiểu gắn bó giải thích <em>ai</em> dễ ngoại tình hơn. Bạn đã biết điều này qua kinh nghiệm: trong lớp học cũ của bạn, không phải ai có hoàn cảnh "đói" cũng đi ăn vụng.</p>
+
+    <h3>Cầu nối</h3>
+    <p>Tận dụng lại Mô hình Bếp ăn toàn cục: <strong>hai người cùng ngồi vào một bàn, cùng thấy món nhạt, cùng có hàng quán ngay cạnh — nhưng chỉ một người đứng dậy.</strong> Sự khác biệt là <strong>"khẩu vị" và "tính cách"</strong> của người ăn.</p>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi xây tiếp — ngộ nhận phổ biến…</span>
+      <p><span class="premortem__wrong">Chỉ những người "vô đạo đức" mới ngoại tình — đó là lựa chọn của kẻ xấu.</span></p>
+      <p>Điều này sai vì nghiên cứu tâm lý tìm thấy các đặc điểm <em>đo được</em> khiến người ta dễ ngoại tình hơn — kiểu gắn bó, nhân cách, lòng tự trọng — và những yếu tố này nằm ngoài phạm trù thiện/ác. Đánh giá đạo đức không phải là công cụ dự báo.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> ngoại tình dễ xảy ra ở người có kiểu gắn bó né tránh hoặc bất an, người bốc đồng, và người có lòng tự trọng mỏng manh cần sự xác nhận liên tục.</p>
+    </div>
+
+    <section class="scaffold" id="ch2-scaffold">
+      <h3 class="scaffold__concept">Kiểu gắn bó: thấu kính của mọi mối quan hệ</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body"><strong>Kiểu gắn bó</strong> (attachment style) là khuôn mẫu quan hệ hình thành từ nhỏ — an toàn, né tránh, hoặc bất an. Người <span class="term-amp" data-note="gan-bo-ne-tranh">né tránh</span> kìm nén thân mật và dễ tìm lối thoát bên ngoài; người <strong>bất an</strong> sợ bị bỏ rơi và có thể ngoại tình như một cách "kiểm tra" hay tự bảo vệ.</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">Người né tránh giống thực khách hay tìm "bàn riêng": khi bữa nhà bắt đầu thân mật, họ thấy ngột, và một "quán ăn mới" không đòi hỏi thân mật là lối thoát êm ái nhất.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu kiểu gắn bó hình thành từ nhỏ, phải chăng người né tránh không thể chung thủy?</summary>
+        <div class="scaffold__resolve">Không — kiểu gắn bó <em>có thể thay đổi</em> theo trải nghiệm và trị liệu. Nó nâng xác suất, không định mệnh hoá. Nghiên cứu chỉ ra người né tránh có nguy cơ cao hơn, nhưng nhiều người vẫn chung thủy nhờ nhận thức và chọn lựa có ý thức.</div>
+      </details>
+    </section>
+    <div class="feynman">Như việc một số người ăn chay dễ cầm lòng hơn ở hàng thịt nướng — bởi họ có "quy tắc bữa ăn" rõ ràng hơn những người không nghĩ gì về điều đó.</div>
+
+    <div class="checkpoint" data-checkpoint-id="cp2">
+      <span class="checkpoint__label">🛑 Tạm dừng &amp; suy ngẫm</span>
+      <p class="checkpoint__question">Dùng Mô hình Bếp ăn: một người bất an gắn bó, khi bị bạn đời bỏ mặc một buổi tối, sẽ "đọc" bữa nhà như thế nào — đói hay thèm? Viết câu trả lời của bạn rồi so sánh.</p>
+      <textarea name="cp2-answer" placeholder="Viết câu trả lời bằng lời của bạn trước khi mở…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với đáp án chuyên gia</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án chuyên gia</span>
+        Người bất an không "đói" thực sự — họ <strong>thèm sự trấn an</strong>. Một lời nhắn trấn an từ người khác ("em ổn không?") đủ để họ ghé hàng, không phải vì bếp nhà thiếu món mà vì họ cần được xác nhận mình vẫn được chăm sóc.
+      </div>
+    </div>
+
+    <h3>Ứng dụng</h3>
+    <p>Nghiên cứu theo dõi dài hạn của Knopp và cộng sự (2017) trên 484 người: <strong>45%</strong> những người từng ngoại tình trong một mối quan hệ sẽ ngoại tình ở mối quan hệ tiếp theo, so với chỉ <strong>18%</strong> ở người chưa từng. Nghĩa là: hành vi này có tính "lặp lại" — một phần do mang sẵn kiểu gắn bó và nhân cách từ lần quan hệ trước.</p>
+
+    <h3>Ranh giới</h3>
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận</span>
+      <strong>"Đàn ông ngoại tình vì thể xác, phụ nữ vì tình cảm."</strong> Quá đơn giản: khảo sát IFS cho thấy loại ngoại tình <em>kết hợp</em> là phổ biến nhất ở cả hai giới. Phụ nữ trẻ còn có tỷ lệ cao hơn nam giới ở nhóm 18–29.
+    </div>
+
+    <h3>Tổng kết chương</h3>
+    <p>Hoàn cảnh chỉ là cánh cửa; con người mới là người bước ra. Kiểu gắn bó, nhân cách và lòng tự trọng quyết định ai dễ "ghé hàng" — và hành vi này có xu hướng lặp lại.</p>
+
+    <!-- =====================================================
+         CHƯƠNG 3
+         ===================================================== -->
+    <h2 id="ch3">Chương 3 — Sinh học &amp; tiến hóa: cơ thể "lập trình" tìm gì</h2>
+
+    <p><em>Chuyển tiếp:</em> Chương 2 nói về "ai" dễ ngoại tình. Chương 3 trả lời câu hỏi khó nhất: vì sao người hôn nhân <em>tốt đẹp</em> vẫn ngoại tình? Vì cơ thể chúng ta được lập trình cho một mục tiêu khác với lời thề hôn nhân.</p>
+
+    <h3>Nền tảng</h3>
+    <p><strong>Sự thật nền tảng:</strong> ở góc độ sinh học, sự đa dạng bạn tình là một <em>chiến lược sinh sản</em> cổ xưa; lời thề chung thủy là một <em>phát minh văn hóa</em> rất trẻ. Bạn đã biết điều này qua các câu đùa về "bản năng đàn ông" — nhưng cơ chế thực sự tinh tế hơn.</p>
+
+    <h3>Cầu nối</h3>
+    <p><strong>Mô hình Khoản đầu tư:</strong> nếu sinh sản là một khoản đầu tư, người phụ nữ "góp vốn" 9 tháng mang thai; người đàn ông "góp" vài phút. Lý thuyết <span class="term-amp" data-note="dau-tu-sinh-san">đầu tư của cha mẹ</span> (parental investment, Trivers 1972) dự đoán: bên góp ít vốn hơn (nam) có lợi hơn khi "đa dạng hoá danh mục đầu tư" — tức tìm nhiều bạn tình. Bên góp vốn lớn (nữ) có lợi hơn khi "chọn lọc kỹ" một nhà đầu tư tốt.</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span><strong>Góp vốn nhỏ</strong><br>Nam: chi phí sinh sản thấp</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span><strong>Đa dạng hoá</strong><br>Lợi ích: nhiều bạn tình</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span><strong>Mâu thuẫn</strong><br>Với lời thề một vợ một chồng</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi xây tiếp — ngộ nhận phổ biến…</span>
+      <p><span class="premortem__wrong">"Đàn ông là đàn ông" — bản năng nam giới khiến họ không thể chung thủy.</span></p>
+      <p>Điều này sai vì cơ chế sinh học chỉ tạo <em>khuynh hướng</em>, không tạo <em>định mệnh</em> — và nó bỏ quên hoàn toàn nhóm phụ nữ trẻ đang có tỷ lệ ngoại tình cao hơn nam giới ở Mỹ.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> tiến hóa giải thích xác suất thống kê giữa các giới, không giải thích hành vi của từng cá nhân — và văn hóa có thể chồng lấn mạnh lên khuynh hướng đó.</p>
+    </div>
+
+    <section class="scaffold" id="ch3-scaffold">
+      <h3 class="scaffold__concept">Hiệu ứng mới lạ (Coolidge effect)</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body"><strong>Hiệu ứng mới lạ</strong> là sự hồi phục hưng phấn khi gặp bạn tình <em>mới</em> — con đực nhiều loài động vật có vú (kể cả người) phản ứng mạnh hơn với đối tác mới so với đối tác quen thuộc, bất kể chất lượng của đối tác cũ.</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">Trong nghiên cứu "No Remorse" (2023), người dùng Ashley Madison thường <strong>yêu vợ/chồng nhưng ít hài lòng tình dục</strong> — và gần một nửa không còn quan hệ tình dục với bạn đời. Món nhà vẫn ngon, nhưng vị cũ; món mới kích thích vị giác vốn đã quen thuộc.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu "mới lạ" quan trọng vậy, tại sao người ta không ngoại tình liên tục với mọi người?</summary>
+        <div class="scaffold__resolve">Vì có các <strong>rào cản</strong>: chi phí xã hội, nguy cơ mất bạn đời, lương tâm. Hiệu ứng mới lạ giải thích <em>sức hút</em>, còn quyết định cuối cùng nằm ở cân nhắc giữa sức hút và tổn thất — chính là mối quan hệ giữa "thèm" và "giá phải trả".</div>
+      </details>
+    </section>
+    <div class="feynman">Giống như lúc nào cũng thèm thử món mới dù món nhà nấu vẫn ngon — cái thèm không phải vì món nhà dở.</div>
+
+    <h3>Ứng dụng</h3>
+    <p>Testosterone là một dấu hiệu thú vị: ở Mỹ, tỷ lệ nam giới <strong>đã ly hôn</strong> báo cáo ngoại tình cao hơn nam giới đang kết hôn. Nhưng quan trọng hơn: tỷ lệ nữ giới ngoại tình tăng mạnh ở thế hệ trẻ — tín hiệu cho thấy <strong>văn hóa và cơ hội</strong> đang chi phối mạnh hơn so với khuynh hướng tiến hóa thuần túy. Sinh học đặt nền, xã hội đặt mái nhà.</p>
+
+    <h3>Ranh giới</h3>
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận</span>
+      <strong>"Tiến hóa nói ngoại tình là tự nhiên, nên không thể tránh."</strong> Sai: rất nhiều hành vi "tự nhiên" (ăn nhiều, cáu giận) bị con người kiểm soát bằng văn hóa mỗi ngày. Chung thủy là thành quả văn hóa, cũng cần được vun trồng như kỷ luật ăn uống.
+    </div>
+
+    <h3>Tổng kết chương</h3>
+    <p>Cơ thể nghiêng về đa dạng hóa, văn hóa nghiêng về một vợ một chồng. Nghịch lý "hôn nhân hạnh phúc vẫn ngoại tình" trở nên dễ hiểu: nhu cầu mới lạ không đối nghịch với tình yêu — nó nằm trên một trục khác.</p>
+
+    <!-- =====================================================
+         CHƯƠNG 4
+         ===================================================== -->
+    <h2 id="ch4">Chương 4 — Quan hệ &amp; xã hội: cơ hội, công nghệ và cái bẫy "ngoại tình công sở"</h2>
+
+    <p><em>Chuyển tiếp:</em> con người (Chương 2) và cơ thể (Chương 3) xác định <em>ai dễ</em>. Chương 4 nói về <em>khi nào</em>: cơ hội và cấu trúc xã hội là van mở của ngọn lửa ấy.</p>
+
+    <h3>Nền tảng</h3>
+    <p><strong>Sự thật nền tảng:</strong> ngoại tình không chỉ là chuyện của hai người — nó được định hình bởi <strong>cơ hội</strong>: nơi làm việc, mạng xã hội, các ứng dụng hẹn hò. Bạn đã biết điều này: người đi công tác liên tục, người làm việc chung nhóm 1-1 thâu đêm, người có tài khoản mạng xã hội riêng — tất cả đều là "quán ăn mọc sát nhà".</p>
+
+    <h3>Cầu nối</h3>
+    <p>Quay lại Mô hình Bếp ăn: <strong>bạn không thể ăn vụng nếu không có hàng quán.</strong> Một người không bao giờ gặp ai lạ, không bao giờ nhận tin nhắn từ người khác giới, khó ngoại tình hơn người luôn đứng cạnh "quán ăn". Công nghệ thế kỷ 21 là thay đổi lớn nhất: nó đưa hàng quán vào <strong>tận túi quần</strong>.</p>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi xây tiếp — ngộ nhận phổ biến…</span>
+      <p><span class="premortem__wrong">Ngoại tình công sở chỉ là chuyện của những người thiếu kiểm soát.</span></p>
+      <p>Điều này sai vì cơ hội có sức mạnh riêng: người tiếp xúc thường xuyên 1-1 với người khác giới và chia sẻ căng thẳng công việc có nguy cơ cao hơn — bất kể ý chí. Nghiên cứu cho thấy đa số ngoại tình bắt đầu từ tình bạn/mối quan hệ quen biết, không phải từ người lạ.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> cấu trúc cơ hội (công việc, công nghệ, thói quen) là một trong những yếu tố dự báo mạnh nhất — mạnh hơn cả "đức tính" của cá nhân.</p>
+    </div>
+
+    <section class="scaffold" id="ch4-scaffold">
+      <h3 class="scaffold__concept">Cái bẫy công sở (opportunity structure)</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body"><strong>Cấu trúc cơ hội</strong> là tập hợp hoàn cảnh khiến hành vi có thể xảy ra: thời gian tiếp xúc 1-1, sự riêng tư, mức căng thẳng chung, và "ngưỡng vô tội" (chỉ là đồng nghiệp).</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">Hai đồng nghiệp thường xuyên ở lại muộn, cùng xử lý khủng hoảng, cùng "ăn vội bữa tối ở quán cạnh văn phòng" — họ không có ý định gì, nhưng mỗi buổi tối chung là một lần <em>quán ăn mọc thêm</em>.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao "thói quen nhắn tin" lại là cơ hội nguy hiểm hơn cả gặp mặt?</summary>
+        <div class="scaffold__resolve">Vì nhắn tin cho phép <strong>tình cảm tiến dần</strong> mà không có rào cản xã hội của một cuộc gặp: không có ai nhìn thấy, không cần "lên tiếng", cảm xúc trôi theo tốc độ gõ phím. Đó là con đường vô hình nhất dẫn tới ngoại tình tình cảm.</div>
+      </details>
+    </section>
+    <div class="feynman">Giống như một quán ăn vắng vẻ không ai để ý — bạn cứ "ghé mua" mỗi tối, đến khi quen thì đã thành bữa chính.</div>
+
+    <h3>Ứng dụng — Vụ rò rỉ Ashley Madison 2015</h3>
+    <p>Đây là minh chứng thực tế nhất về sức mạnh của cơ hội: Ashley Madison không tạo ra ham muốn, nó chỉ <strong>xóa đi rào cản gặp gỡ</strong>. Tính đến 2015, trang này có hơn 30 triệu tài khoản — và phân tích dữ liệu bị rò rỉ cho thấy <strong>84% tài khoản là nam giới</strong>, trong khi tỷ lệ hồ sơ nữ thực sự hoạt động là cực thấp (đa phần là tài khoản "bóng ma"). Câu chuyện này gây chấn động tới mức ít nhất hai người dùng đã tự tử sau khi bị phơi bày.<a class="source" href="https://krebsonsecurity.com/2022/07/a-retrospective-on-the-2015-ashley-madison-breach" target="_blank" rel="noopener">KrebsOnSecurity, 2022</a></p>
+
+    <p><strong>Bài học cho Mô hình Bếp ăn:</strong> có hàng chục triệu người <em>thèm</em>, nhưng chỉ cần một nền tảng dỡ bỏ rào cản (ẩn danh, không phán xét, "bếp nhà vẫn giữ"), cơn thèm đó thành hành vi. Cơ hội không chỉ là cửa mở — nó là người mời.</p>
+
+    <div class="sidenote" style="margin:0 0 24px">
+      <strong>Số liệu ít người biết</strong>
+      Dịch vụ "Full Delete" giá 19 USD của Ashley Madison thu về khoảng 1,7 triệu USD doanh thu mỗi năm — số tiền người ta trả chỉ để xoá dấu vết, một bằng chứng nữa cho thấy "bếp nhà vẫn muốn giữ" đi cùng "vẫn thèm món lạ".
+    </div>
+
+    <h3>Ranh giới</h3>
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Trường hợp lệ</span>
+      <strong>Cơ hội giải thích mọi ngoại tình?</strong> Không — nhiều người ngoại tình dù không có cơ hội thuận lợi (chủ động tạo cơ hội), và nhiều người có cơ hội tuyệt đối vẫn không ngoại tình. Cơ hội là van, không phải động cơ.
+    </div>
+
+    <h3>Tổng kết chương</h3>
+    <p>Muốn hiểu một vụ ngoại tình, đừng chỉ hỏi "tại sao họ muốn" mà hãy hỏi "cửa mở ở đâu". Công sở, mạng xã hội và ứng dụng hẹn hò là những quán ăn mới nhất trong lịch sử loài người.</p>
+
+    <!-- =====================================================
+         CHƯƠNG 5
+         ===================================================== -->
+    <h2 id="ch5">Chương 5 — Văn hóa phương Tây: từ tội hình sự đến tội lỗi cá nhân</h2>
+
+    <p><em>Chuyển tiếp:</em> bốn chương trước xét ngoại tình như hành vi cá nhân. Từ đây ta đổi kính: cùng một hành vi, các nền văn hóa nhìn nhận và xử phạt khác nhau đến kinh ngạc.</p>
+
+    <h3>Nền tảng</h3>
+    <p><strong>Sự thật nền tảng:</strong> ở phương Tây, ngoại tình từng là <strong>tội hình sự</strong> có thể bị tử hình — và trong vòng một thế kỷ đã biến thành chuyện riêng tư gần như không bị luật pháp can thiệp. Bạn đã biết điều này qua phim ảnh: "scarlet letter", tòa án Tôn giáo, người vợ ngoại tình bị ném đá.</p>
+
+    <h3>Cầu nối</h3>
+    <p><strong>Mô hình Luật chơi:</strong> hãy nghĩ ngoại tình như một động tác trong một môn thể thao. Cùng một động tác, thời La Mã là "thẻ đỏ truất quyền vĩnh viễn" (tử hình), thời Thanh giáo là "thẻ đỏ + phạt công khai", thế kỷ 20 là "thẻ vàng" (đối xử xã hội), và nay gần như "hợp lệ trong luật, chỉ phạt trong lòng người". <strong>Hành vi không đổi; luật chơi đổi.</strong></p>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi xây tiếp — ngộ nhận phổ biến…</span>
+      <p><span class="premortem__wrong">Ngoại tình luôn bị luật pháp trừng phạt trong lịch sử phương Tây — đó là điều hiển nhiên.</span></p>
+      <p>Điều này sai vì trên thực tế, ngoại tình của <strong>nam giới có quyền lực</strong> trong nhiều thời kỳ bị bỏ qua hoặc dung thứ (vua chúa, quý tộc), và các mức phạt lịch sử nhắm không cân xứng vào phụ nữ — luật pháp phản ánh quyền lực, không chỉ đạo đức.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> hình phạt lịch sử áp dụng bất cân xứng theo giới và địa vị — và việc bãi bỏ hình sự hóa diễn ra rất nhanh trong thế kỷ 20.</p>
+    </div>
+
+    <section class="scaffold" id="ch5-scaffold">
+      <h3 class="scaffold__concept">Hành trình hình sự hóa → phi hình sự hóa</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">Ở La Mã cổ đại (Lex Julia, 18 TCN), ngoại tình là tội công khai có thể bị trừng phạt nặng. Thời Trung cổ và Thanh giáo, nó là tội chống lại Thượng đế. Nhưng đến thế kỷ 20, hầu hết nước phương Tây <strong>bãi bỏ hình sự hóa</strong>: Pháp 1975, Ý và Tây Đức 1969, Tây Ban Nha 1978, Anh với Đạo luật Ly hôn 1970 chuyển sang ly hôn "không lỗi" (no-fault).<a class="source" href="https://en.wikipedia.org/wiki/Adultery" target="_blank" rel="noopener">Wikipedia: Adultery</a></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">Nước Mỹ hiện vẫn còn khoảng 16–17 tiểu bang có luật chống ngoại tình "trên sách" — nhưng gần như không ai bị truy tố. Luật không bị xóa, chỉ trở thành "trang trí pháp lý" — minh chứng rằng sự thay đổi văn hóa đi nhanh hơn luật viết.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao các nước phương Tây lại bãi bỏ hình sự hóa ngoại tình?</summary>
+        <div class="scaffold__resolve">Vì triết lý <strong>cá nhân chủ nghĩa</strong> dâng cao: quan hệ tình cảm của người lớn là chuyện riêng tư, nhà nước không nên can thiệp vào phòng ngủ. Sự chuyển dịch từ "tội chống lại xã hội" sang "vi phạm khế ước riêng" là dấu hiệu của chủ nghĩa tự do hiện đại.</div>
+      </details>
+    </section>
+    <div class="feynman">Giống như luật đổi từ "cấm ăn vụng" sang "chuyện bếp nhà tự lo" — nhà nước rút khỏi phòng bếp, chỉ còn lương tâm làm trọng tài.</div>
+
+    <h3>Ứng dụng — Nước Mỹ: hai luật song song</h3>
+    <p>Mỹ là ví dụ kép hoàn hảo: 16–17 bang vẫn ghi luật cấm (di sản Thanh giáo), nhưng ly hôn không-lỗi đã được áp dụng toàn quốc từ cuối thập niên 1970 — bạn không cần chứng minh vợ/chồng ngoại tình để ly hôn nữa. Hệ quả văn hóa: ngoại tình bị <strong>phán xét trong lòng người</strong> (tội lỗi, xấu hổ) thay vì bị tòa án xử — một hình phạt mềm nhưng dai dẳng hơn.</p>
+
+    <h3>Ranh giới</h3>
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận</span>
+      <strong>"Phương Tây hiện đại không còn lên án ngoại tình."</strong> Sai: hình sự hóa giảm, nhưng <em>phán xét xã hội</em> và tổn thương cá nhân vẫn rất nặng. Chỉ là "trọng tài" đã đổi từ tòa án sang mạng xã hội.
+    </div>
+
+    <h3>Tổng kết chương</h3>
+    <p>Phương Tây chuyển ngoại tình từ <em>tội với Chúa</em> → <em>tội với xã hội</em> → <em>chuyện riêng của hai người</em>. Hành vi không đổi, nhưng "luật chơi" đã viết lại hoàn toàn bản án.</p>
+
+    <!-- =====================================================
+         CHƯƠNG 6
+         ===================================================== -->
+    <h2 id="ch6">Chương 6 — Văn hóa phương Đông: lễ nghĩa, song chuẩn và hiện đại hóa</h2>
+
+    <p><em>Chuyển tiếp:</em> phương Tây chuyển từ tội hình sự sang tội lỗi cá nhân. Phương Đông đi một con đường khác: ngoại tình vốn không phải tội của <em>tất cả</em> — mà là đặc quyền của một nửa dân số.</p>
+
+    <h3>Nền tảng</h3>
+    <p><strong>Sự thật nền tảng:</strong> ở Trung Quốc và Việt Nam thời phong kiến, ngoại tình của <strong>nam giới được thể chế hóa</strong> (nạp thiếp, đa thê hợp pháp), còn của <strong>nữ giới là tội lớn nhất</strong> có thể dẫn đến bỏ vợ, trừng phạt nặng. Song chuẩn này là nền móng định hình quan niệm hiện đại. Bạn đã biết điều này qua cụm từ "ghen là ít, thương nhiều" và câu "nam nhi đa thê vốn là chuyện thường".</p>
+
+    <h3>Cầu nối</h3>
+    <p><strong>Mô hình Sân nhà &amp; Bếp:</strong> ở phương Đông phong kiến, hôn nhân như một <em>ngôi nhà chung</em> trong đó người chủ (nam) có "sân" rộng để đi lại — nạp thêm người vào là quyền của chủ nhà. Người vợ (nữ) bị giam trong "bếp" — bước ra khỏi khuôn phép là phá vỡ trật tự. <strong>Cùng một hành vi "đi ra ngoài", chủ nhà được xem là thường, người giữ bếp bị xem là tội.</strong></p>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi xây tiếp — ngộ nhận phổ biến…</span>
+      <p><span class="premortem__wrong">Phương Đông cổ xưa cấm ngoại tình của mọi người như nhau, vì Nho giáo đề cao trinh tiết.</span></p>
+      <p>Điều này sai vì trinh tiết là yêu cầu đặt lên <em>phụ nữ</em>; đàn ông được pháp luật và phong tục cho phép <strong>nạp thiếp</strong> hợp pháp — một hình thức "ngoại tình được chứng nhận".</p>
+      <p><span class="premortem__truth">Sự thật là:</span> chế độ phong kiến Đông Á chính thức hóa song chuẩn giới: một vợ một chồng là lý tưởng, nhưng thực tế cho phép "một chồng, nhiều thiếp".</p>
+    </div>
+
+    <section class="scaffold" id="ch6-scaffold">
+      <h3 class="scaffold__concept">"Bảy điều bỏ vợ" (七出) và quyền nạp thiếp</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">Theo luật phong kiến Trung Quốc (kế thừa Nho giáo), chồng có quyền <strong>bỏ vợ</strong> theo "bảy điều" (七出) — trong đó có <strong>"dâm"</strong> (ngoại tình). Đàn ông lại được quyền <strong>nạp thiếp</strong> (娶妾) hợp pháp, và hình phạt dành cho vợ ngoại tình nặng hơn nhiều so với chồng.<a class="source" href="https://zzfy.hncourt.gov.cn/public/detail.php?id=15699" target="_blank" rel="noopener">河南法院, về luật Nho giáo</a></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">Ở thế kỷ 19 Trung Quốc, một người chồng nạp thiếp là "nối dõi tông đường"; còn vợ bị bắt quả tang ngoại tình có thể bị "thất xuất" (bỏ) và chịu sỉ nhục công khai. Cùng là "ăn vụng", chủ nhà gọi là "thêm món", người giữ bếp gọi là "phá bếp".</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao "dâm" lại nằm trong bảy điều bỏ vợ, mà không có "điều bỏ chồng" tương ứng?</summary>
+        <div class="scaffold__resolve">Vì quyền bỏ vợ là công cụ bảo vệ <strong>dòng máu và gia sản</strong> của dòng họ chồng: con vợ ngoại tình có thể không phải con chồng. Không có "điều bỏ chồng" vì chồng không phải chịu trách nhiệm sinh sản — cấu trúc quyền lực định hình luật lệ.</div>
+      </details>
+    </section>
+    <div class="feynman">Luật cũ giống như quy định "chủ nhà được mời thêm khách, người giúp việc bếp không được rời bếp" — luật phục vụ người nắm quyền.</div>
+
+    <h3>Ứng dụng — Cuộc cách mạng Luật hôn nhân 1950 (Trung Quốc)</h3>
+    <p>Ngày 1/5/1950, Luật Hôn nhân nước Cộng hòa Nhân dân Trung Hoa chính thức <strong>bãi bỏ nạp thiếp, đa thê và hôn nhân sắp đặt</strong> — do Đặng Dĩnh Siêu (Deng Yingchao, vợ Chu Ân Lai) thúc đẩy. Lần đầu tiên trong lịch sử, "một vợ một chồng" là luật cho <em>cả nam lẫn nữ</em>.<a class="source" href="http://www.chinaknowledge.de/History/PRC/prc-event-marriagelaw.html" target="_blank" rel="noopener">ChinaKnowledge, 1950 Marriage Law</a></p>
+
+    <p>Tuy nhiên, thái độ xã hội đổi chậm hơn luật. Khảo sát của giáo sư Phan Ứng Minh (潘绥铭, ĐH Nhân dân) cho thấy tỷ lệ ngoại tình nam giới Trung Quốc tăng mạnh từ ~13% (năm 2000) lên ~34% (năm 2015), trong khi nữ giới tăng từ ~4% lên ~14% — và <strong>tỷ lệ ly hôn do ngoại tình</strong> được báo cáo chiếm hơn nửa số vụ ở các thành phố.<a class="source" href="http://news.sina.com.cn/c/2003-08-07/12561497928.shtml" target="_blank" rel="noopener">中国新闻周刊, 2003</a></p>
+
+    <h3>Việt Nam: từ song chuẩn đến luật hiện đại</h3>
+    <p>Việt Nam mang di sản Nho giáo tương tự: "trai năm thê bảy thiếp" từng là chuẩn mực, phụ nữ thì chịu chuẩn mực "tam tòng, tứ đức". Luật Hôn nhân và Gia đình 2014 (Luật số 52/2014/QH13) đặt nghĩa vụ <strong>chung thủy</strong> làm nền tảng (Điều 19), cấm "chung sống như vợ chồng" với người khác (Điều 5).<a class="source" href="https://luatvietnam.vn/hon-nhan/luat-hon-nhan-gia-dinh-moi-nhat-ve-ngoai-tinh-605-105535-article.html" target="_blank" rel="noopener">LuatVietnam, 2014</a></p>
+
+    <p>Thực tế hiện đại Việt Nam phức tạp hơn luật: ước tính <strong>16–25%</strong> hôn nhân từng trải qua ngoại tình, và nhóm trẻ (18–29) có tỷ lệ cao nhất — với phụ nữ trẻ <em>thừa nhận</em> nhiều hơn nam giới cùng tuổi.<a class="source" href="https://thamtulienviet.com/ty-le-ngoai-tinh-o-viet-nam" target="_blank" rel="noopener">Tham Tu Lien Viet, 2024</a> Một hiện tượng mang tính thời đại: các dịch vụ "kết đôi có điều kiện" cho người đã có gia đình xuất hiện công khai — năm 2025, một dịch vụ như vậy thu hút gần 1.700 đàn ông, nhiều người đã có vợ.<a class="source" href="https://kenh14.vn/gan-1700-nguoi-dan-ong-da-tim-den-hong-ty-nhieu-nguoi-da-co-ban-gai-hoac-gia-dinh-tu-goc-nhin-tam-ly-hoc-dieu-gi-khien-dan-ong-ngoai-tinh-215250712202626955.chn" target="_blank" rel="noopener">Kenh14, 2025</a></p>
+
+    <h3>Ranh giới</h3>
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận</span>
+      <strong>"Phương Đông nghiêm khắc hơn phương Tây với ngoại tình nói chung."</strong> Sai: Đông và Tây đều nghiêm khắc — nhưng với <em>những người khác nhau</em>. Di sản Đông Á là song chuẩn giới (nghiêm với nữ, dung với nam); di sản Tây là hình sự hóa rồi cá nhân hóa (nghiêm với cả hai, rồi rút lui khỏi pháp luật).
+    </div>
+
+    <h3>Tổng kết chương</h3>
+    <p>Phương Đông không "nghiêm hơn" — mà <em>lệch</em>: lịch sử từng hợp pháp hóa ngoại tình của nam và trừng phạt nặng ngoại tình của nữ. Luật 1950 và Luật 2014 đã san bằng song chuẩn về mặt pháp lý, nhưng thái độ xã hội — và dữ liệu — vẫn còn dấu vết của ngôi nhà cũ.</p>
+
+    <!-- =====================================================
+         CHƯƠNG 7
+         ===================================================== -->
+    <h2 id="ch7">Chương 7 — Hậu quả &amp; pháp lý: sau khi cái bếp bốc cháy</h2>
+
+    <p><em>Chuyển tiếp:</em> đã hiểu vì sao hành vi xảy ra. Giờ là hệ quả: khi bị phát hiện, chuyện gì xảy ra với con người, con cái, và trước pháp luật?</p>
+
+    <h3>Nền tảng</h3>
+    <p><strong>Sự thật nền tảng:</strong> ngoại tình gây ra <strong>tổn thương tâm lý thực sự, đo được</strong> — không phải chỉ "tổn thương lòng tự trọng" mơ hồ. Bạn đã biết điều này qua chính cơ thể mình: khi bị phản bội, tim đập nhanh, giấc ngủ tan vỡ, có cảm giác như mất một phần thân thể.</p>
+
+    <h3>Cầu nối</h3>
+    <p><strong>Mô hình Vụ cháy bếp:</strong> một vụ cháy bếp không chỉ thiêu món ăn — nó để lại khói ám vào tường (kỷ niệm), hư hỏng cấu trúc (niềm tin), và nỗi sợ lửa mỗi khi nhìn thấy bếp (tái diễn). Cháy bếp nào cũng đau; nhưng mức thiệt hại phụ thuộc vào <em>chất liệu ngôi nhà</em> — vốn xây bằng gì, trước đó đã có vết nứt chưa.</p>
+
+    <section class="scaffold" id="ch7-scaffold">
+      <h3 class="scaffold__concept">Tổn thương của người bị phản bội</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">Các nhà tâm lý ví trải nghiệm bị phản bội với <strong>mất mát + mất niềm tin</strong>: sốc, phủ nhận, giận dữ, trầm cảm — một chu trình đau buồn có thể kéo dài nhiều năm, và lòng tin với người khác giới nói chung bị tổn hại.</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">Nghiên cứu của Ami Rokach (ĐH York, 2023) tổng hợp nhiều khảo sát cho thấy ngoại tình là một trong những căng thẳng hôn nhân nặng nhất; ở Việt Nam, ước tính khoảng 1/4 hôn nhân từng trải qua chuyện này.<a class="source" href="https://thamtulienviet.com/ty-le-ngoai-tinh-o-viet-nam" target="_blank" rel="noopener">Tham Tu Lien Viet, 2024</a></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao "người thứ ba biết tên" lại đau hơn "người lạ không biết tên"?</summary>
+        <div class="scaffold__resolve">Vì nỗi đau không nằm ở hành vi tình dục — nó nằm ở <strong>sự so sánh</strong> ("anh ta/cô ta hơn tôi chỗ nào?") và sự <strong>mất riêng tư</strong> (chuyện phòng the trở thành đề tài). Người bị phản bội không chỉ mất bạn đời trong giây lát, mà mất cả câu chuyện về chính mình.</div>
+      </details>
+    </section>
+    <div class="feynman">Bị phản bội giống như ngôi bếp mình nấu cả đời bị người khác thắp lửa lên một món khác — còn mùi khét thì người sống trong nhà phải ngửi.</div>
+
+    <h3>Ứng dụng — Pháp lý Việt Nam</h3>
+    <p>Việt Nam vẫn <strong>hình sự hóa</strong> một phần ngoại tình — khác biệt lớn với phương Tây. Theo Điều 182 Bộ luật Hình sự 2015 (sửa đổi 2017): hành vi <strong>"vi phạm chế độ một vợ, một chồng"</strong> — kết hôn hoặc chung sống như vợ chồng với người khác — bị phạt cảnh cáo, cải tạo không giam giữ đến 1 năm, hoặc phạt tù từ 3 tháng đến 1 năm nếu gây ra ly hôn hoặc tái phạm.<a class="source" href="https://luatvietnam.vn/hon-nhan/luat-hon-nhan-gia-dinh-moi-nhat-ve-ngoai-tinh-605-105535-article.html" target="_blank" rel="noopener">LuatVietnam</a></p>
+
+    <p>Trong Mô hình Bếp ăn: phương Tây nói "chuyện nhà bếp là của nhà", còn Việt Nam vẫn giữ một người giám sát (nhà nước) có quyền phạt — dù thực tế truy tố hiếm, thường chỉ xảy ra khi có đơn thư và hệ quả (ly hôn, tai tiếng). Khoảng cách giữa <em>luật viết</em> và <em>thực thi</em> chính là nơi văn hóa và pháp luật gặp nhau.</p>
+
+    <h3>Ranh giới</h3>
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Trường hợp lệ</span>
+      <strong>Luật phạt được nỗi đau?</strong> Không — mức phạt tù/phạt hành chính không "bù" được tổn thương tâm lý. Và ở chiều ngược lại, nhiều cặp đôi chọn <strong>hàn gắn</strong> thay vì ly hôn: ngoại tình không nhất thiết kết thúc hôn nhân — đôi khi nó trở thành chất xúc tác buộc hai người nói chuyện thật.
+    </div>
+
+    <h3>Tổng kết chương</h3>
+    <p>Hậu quả của ngoại tình là chuỗi: tổn thương tâm lý → khủng hoảng niềm tin → quyết định pháp lý. Và pháp luật không thống nhất: phương Tây rút lui, Việt Nam vẫn giữ hình sự hóa có điều kiện — nhưng không hệ thống nào "chữa" được ngọn lửa đã tắt niềm tin.</p>
+
+    <!-- =====================================================
+         CHƯƠNG 8 — Global synthesis
+         ===================================================== -->
+    <h2 id="ch8">Chương 8 — Ranh giới, ngộ nhận &amp; bức tranh toàn cảnh</h2>
+
+    <p><em>Chuyển tiếp:</em> bảy chương là bảy góc kính. Giờ tháo kính ra và nhìn vào thứ chúng vừa soi: một hiện tượng có <em>động cơ</em> (Chương 1–2), có <em>nền tảng cơ thể</em> (3), được <em>mở van bởi cơ hội</em> (4), bị <em>định hình bởi văn hóa</em> (5–6), và gây <em>hậu quả thực</em> (7).</p>
+
+    <h3>Hộp ngộ nhận tổng hợp</h3>
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận 1</span>
+      <strong>"Ngoại tình = hôn nhân đổ vỡ."</strong> Sai — nhiều người ngoại tình vẫn yêu và muốn giữ hôn nhân (Selterman 2023). Đổ vỡ là <em>một</em> kết cục, không phải <em>nguyên nhân</em> duy nhất.
+    </div>
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận 2</span>
+      <strong>"Người ngoại tình đều là kẻ xấu."</strong> Sai — các yếu tố tâm lý (gắn bó, tự trọng) và cơ hội giải thích hành vi tốt hơn phạm trù thiện/ác. Đánh giá đạo đức không phải mô hình dự báo.
+    </div>
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Trường hợp lệ</span>
+      <strong>Các mối quan hệ phi truyền thống:</strong> một số cặp đôi <em>thoả thuận</em> mở quan hệ (consensual non-monogamy, đa ái) — ở đó hành vi "ngoại tình" không còn là vi phạm khế ước vì khế ước đã viết lại. Nghĩa là: chính <em>khế ước</em>, chứ không phải hành vi, mới định nghĩa ngoại tình. Điều này làm sáng tỏ Mô hình Bếp ăn: không có bữa nào là "vụng" nếu gia đình đã đồng thuận thêm món.
+    </div>
+
+    <h3>Bức tranh toàn cảnh</h3>
+    <p>Trả lời câu hỏi mở đầu: <strong>có</strong>, người trong hôn nhân hạnh phúc vẫn có thể ngoại tình. Vì ngoại tình là giao điểm của nhiều dòng lực: một nhu cầu chưa được đáp ứng (thường là tình cảm, tự trọng, hay tình dục), một cơ hội thuận tiện, một rào cản đủ thấp, và một di sản văn hóa dạy ta cách <em>đọc</em> hành vi ấy. Mỗi vụ ngoại tình là một tổ hợp khác nhau — và hiểu nó đòi hỏi nhìn cả bếp, cả hàng quán, cả người ăn, lẫn luật chơi của thời đại.</p>
+
+    <blockquote>
+      <strong>Nếu chỉ nhớ một điều:</strong> ngoại tình không phải dấu chấm hết cho một con người, mà là tín hiệu — về một nhu cầu, một cơ hội, một kẽ hở trong lời thề — và mỗi nền văn hóa đọc tín hiệu ấy theo cách của riêng mình.
+    </blockquote>
+
+    <h2 id="connections">Điều này liên hệ với gì</h2>
+    <ul>
+      <li><strong>Lý thuyết gắn bó (attachment theory)</strong> — nền tảng của Chương 2; là lăng kính giải thích cả sự chung thủy lẫn sự phản bội trong mọi loại quan hệ, không chỉ hôn nhân.</li>
+      <li><strong>Tâm lý học tình dục</strong> — khoái cảm, mới lạ, testosterone (Chương 3) kết nối với cách các nền văn hóa điều chỉnh (hoặc không) biểu hiện tình dục.</li>
+      <li><strong>Xã hội học gia đình</strong> — biến đổi vai trò giới ở Đông Á (Chương 6) giải thích vì sao tỷ lệ nữ giới ngoại tình đang tăng.</li>
+      <li><strong>Luật so sánh</strong> — hành trình hình sự hóa → phi hình sự hóa (Chương 5, 7) là ví dụ điển hình về mối quan hệ giữa đạo đức xã hội và luật pháp.</li>
+    </ul>
+
+    <!-- LAUNCH PAD -->
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Nghịch lý "no mà vẫn ăn": thiết kế một thử nghiệm</h3>
+      <p class="launchpad__problem">Bạn là nhà nghiên cứu. Dữ liệu cho thấy một nhóm người ngoại tình trong hôn nhân được họ tự đánh giá là <em>hạnh phúc và đầy đủ tình dục</em> — vi phạm trực tiếp giả thuyết "ngoại tình vì thiếu hụt". Thiết kế một khảo sát (tối đa 10 câu hỏi) để phân biệt <strong>hai giả thuyết đối nghịch</strong>: (a) họ ngoại tình vì thèm mới lạ, hay (b) họ nói dối khi tự đánh giá hôn nhân hạnh phúc. Đồng thời dự đoán: câu hỏi nào sẽ tách được hai nhóm?</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — tái khung</span>
+          Nhớ Chương 1: tỷ lệ báo cáo thiếu ~6 lần. Bất kỳ khảo sát nào cũng phải làm cho câu trả lời "tôi không hạnh phúc" trở nên <em>an toàn</em> để nói ra — ẩn danh máy tính, không phỏng vấn trực tiếp.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm chính</span>
+          Dùng chính "hiệu ứng mới lạ" (Chương 3) và "động cơ" (Chương 1). Nếu giả thuyết (a) đúng, mối quan hệ giữa <em>số bạn tình trong quá khứ</em> và <em>hành vi ngoại tình</em> sẽ dương mạnh; nếu (b) đúng, biến "hài lòng tình dục" sẽ thay đổi khi hỏi bằng các cách khác nhau.
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dàn dựng</span>
+          Tách 10 câu thành 4 khối: (1) đánh giá hôn nhân chung, (2) đánh giá hài lòng tình dục riêng, (3) số bạn tình &amp; lịch sử ngoại tình, (4) thang đo "nhu cầu mới lạ" (vị giác, du lịch, thử món lạ). Nhóm (4) là chìa khóa: nếu nhu cầu mới lạ dự báo ngoại tình <em>khi đã kiểm soát</em> hài lòng hôn nhân, giả thuyết (a) thắng.
+        </div>
+      </div>
+    </div>
+
+    <!-- GLOSSARY -->
+    <h2 id="glossary">Bảng thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Ngoại tình thể xác</dt>
+        <dd>Quan hệ tình dục ngoài hôn nhân, không gắn tình cảm. <em>(Trong Mô hình Bếp ăn: chỉ "ăn trộm món", không gắn với hàng quán.)</em></dd>
+        <dt>Ngoại tình tình cảm</dt>
+        <dd>Gắn bó tình cảm với người ngoài cuộc, có thể không có quan hệ tình dục. <em>(Trong Mô hình Bếp ăn: "ăn vụng vị" — thưởng thức món tinh thần ngoài nhà.)</em></dd>
+        <dt>Ngoại tình kết hợp</dt>
+        <dd>Cả tình cảm lẫn thể xác; loại phổ biến nhất (~45%). <em>(Trong Mô hình Bếp ăn: vừa gắn vị vừa gắn người bán hàng.)</em></dd>
+        <dt>Mô hình Bếp ăn</dt>
+        <dd>Cầu nối của toàn tài liệu: hôn nhân như bữa cơm nhà, nhu cầu như đói/thèm, ngoại tình như ăn vụng, cơ hội như hàng quán.</dd>
+        <dt>Kiểu gắn bó (attachment style)</dt>
+        <dd>Khuôn mẫu quan hệ hình thành từ nhỏ: an toàn, né tránh, bất an. <em>(Trong Mô hình Bếp ăn: "khẩu vị" và "tính cách" của người ăn.)</em></dd>
+        <dt>Đầu tư của cha mẹ (parental investment)</dt>
+        <dd>Lý thuyết của Trivers (1972): bên đầu tư ít hơn trong sinh sản có xu hướng đa dạng hóa bạn tình. <em>(Trong Mô hình Bếp ăn: chênh lệch "góp vốn" giữa người nấu và người ăn.)</em></dd>
+        <dt>Hiệu ứng mới lạ (Coolidge effect)</dt>
+        <dd>Hưng phấn hồi phục với bạn tình mới, bất kể chất lượng đối tác cũ. <em>(Trong Mô hình Bếp ăn: "thèm món lạ" dù món nhà vẫn ngon.)</em></dd>
+        <dt>Cấu trúc cơ hội (opportunity structure)</dt>
+        <dd>Tập hợp hoàn cảnh khiến hành vi có thể xảy ra: công sở, công nghệ, thói quen. <em>(Trong Mô hình Bếp ăn: "hàng quán" — gần hay xa bếp.)</em></dd>
+        <dt>Bảy điều bỏ vợ (七出)</dt>
+        <dd>Luật phong kiến Trung Quốc cho phép chồng bỏ vợ vì bảy lý do, trong đó có ngoại tình ("dâm"). <em>(Trong Mô hình Bếp ăn: luật của "người chủ nhà" — chỉ áp cho người giữ bếp.)</em></dd>
+        <dt>Chế độ một vợ một chồng</dt>
+        <dd>Nguyên tắc hôn nhân chỉ một người bạn đời; được pháp luật Việt Nam bảo vệ, vi phạm có thể bị xử hình sự (Điều 182 BLHS 2015). <em>(Trong Mô hình Bếp ăn: quy định "mỗi bếp chỉ một người nấu chính".)</em></dd>
+      </dl>
+    </div>
+
+    <!-- =====================================================
+         KNOWLEDGE CHECK
+         ===================================================== -->
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu hỏi. Chọn đáp án đúng nhất cho mỗi câu rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="0">
+        <legend>1. Trong Mô hình Bếp ăn, một người ngoại tình dù hôn nhân vẫn hạnh phúc — đang ở trạng thái nào nhất?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Bếp nhà vẫn ngon, nhưng "thèm món lạ" — hiệu ứng mới lạ</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Bếp nhà đã tắt lửa hoàn toàn — hết tình cảm</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Hàng quán ép buộc họ phải ghé</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Họ đang đói vì không có gì để ăn</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Nghiên cứu Ashley Madison cho thấy nhiều người vẫn yêu bạn đời nhưng bất mãn tình dục — "thèm món lạ", không phải "đói". Đáp án "bếp tắt lửa" là ngộ nhận phổ biến đã bị bác bỏ ở Chương 1.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>2. Theo nghiên cứu của Whisman &amp; Snyder (2007), vì sao các con số tỷ lệ ngoại tình đều là "con số tối thiểu"?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Vì các quốc gia không công bố số liệu</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Vì người ngoại tình thường không nhớ chính xác</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Vì khi trả lời ẩn danh trên máy tính, tỷ lệ thừa nhận cao hơn gần 6 lần so với phỏng vấn trực tiếp</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Vì phụ nữ không bao giờ thừa nhận</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Mọi người che giấu hành vi bị xã hội lên án; trả lời ẩn danh làm lộ ra phần "tảng băng chìm". Các đáp án khác là phỏng đoán không có cơ sở nghiên cứu.</div>
+      </fieldset>
+
+      <fieldset data-answer="3">
+        <legend>3. Đâu là điểm khác biệt lớn nhất giữa cách phương Đông và phương Tây xử lý ngoại tình trong lịch sử?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Phương Đông hình sự hóa tất cả ngoại tình, phương Tây không bao giờ</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Phương Tây nghiêm khắc hơn với nữ giới, phương Đông nghiêm hơn với nam giới</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Cả hai đều coi ngoại tình là chuyện riêng tư</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Phương Đông thể chế hóa ngoại tình của nam giới (nạp thiếp) và trừng phạt nặng nữ giới (bảy điều bỏ vợ); phương Tây hình sự hóa rồi cá nhân hóa, bãi bỏ dần hình sự hóa từ thế kỷ 20</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Song chuẩn giới là đặc trưng Đông Á (quyền nạp thiếp của nam, "七出" đè lên nữ); phương Tây chuyển từ tội hình sự sang tội lỗi cá nhân và phi hình sự hóa. Đáp án "hình sự hóa tất cả" là ngộ nhận điển hình.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra đáp án</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Đặt lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <!-- Sources -->
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <p><a class="source" href="https://krebsonsecurity.com/2022/07/a-retrospective-on-the-2015-ashley-madison-breach" target="_blank" rel="noopener">KrebsOnSecurity</a> — Retrospective vụ rò rỉ Ashley Madison 2015 (doanh thu, hậu quả, 30 triệu tài khoản).</p>
+    <p><a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10069361/" target="_blank" rel="noopener">Archives of Sexual Behavior</a> — Selterman et al., 2023, "No Remorse" (người dùng Ashley Madison: vẫn yêu nhưng bất mãn tình dục).</p>
+    <p><a class="source" href="https://www.bettendorfcounselingcenter.com/journal/why-people-have-affairs-psychological-and-emotional-drivers" target="_blank" rel="noopener">Bettendorf Counseling Center</a> — Tổng hợp 8 động cơ ngoại tình (Selterman 2019; tỷ lệ 20–25%).</p>
+    <p><a class="source" href="https://www.affairhealing.com/blog/marriage-infidelity-stats" target="_blank" rel="noopener">Affair Healing</a> — Thống kê ngoại tình Mỹ (20% nam, 13% nữ).</p>
+    <p><a class="source" href="https://thamtulienviet.com/ty-le-ngoai-tinh-o-viet-nam" target="_blank" rel="noopener">Tham Tu Lien Viet</a> — Tỷ lệ ngoại tình Việt Nam (16–25%, nhóm trẻ 18–29).</p>
+    <p><a class="source" href="https://luatvietnam.vn/hon-nhan/luat-hon-nhan-gia-dinh-moi-nhat-ve-ngoai-tinh-605-105535-article.html" target="_blank" rel="noopener">LuatVietnam</a> — Luật Hôn nhân &amp; Gia đình 2014 (Điều 5, 19) và Điều 182 BLHS 2015.</p>
+    <p><a class="source" href="http://www.chinaknowledge.de/History/PRC/prc-event-marriagelaw.html" target="_blank" rel="noopener">ChinaKnowledge</a> — Luật Hôn nhân 1950 (bãi bỏ nạp thiếp, vai trò Đặng Dĩnh Siêu).</p>
+    <p><a class="source" href="http://news.sina.com.cn/c/2003-08-07/12561497928.shtml" target="_blank" rel="noopener">中国新闻周刊</a> — Dữ liệu Phan Ứng Minh (tỷ lệ nam/nữ Trung Quốc, 2000–2015).</p>
+    <p><a class="source" href="https://zzfy.hncourt.gov.cn/public/detail.php?id=15699" target="_blank" rel="noopener">河南法院网</a> — Ảnh hưởng Nho giáo lên luật phong kiến (七出, nạp thiếp, song chuẩn).</p>
+    <p><a class="source" href="https://en.wikipedia.org/wiki/Adultery" target="_blank" rel="noopener">Wikipedia: Adultery</a> — Lịch sử hình sự hóa và phi hình sự hóa ở phương Tây.</p>
+    <p><a class="source" href="https://kenh14.vn/gan-1700-nguoi-dan-ong-da-tim-den-hong-ty-nhieu-nguoi-da-co-ban-gai-hoac-gia-dinh-tu-goc-nhin-tam-ly-hoc-dieu-gi-khien-dan-ong-ngoai-tinh-215250712202626955.chn" target="_blank" rel="noopener">Kenh14</a> — Hiện tượng dịch vụ kết đôi cho người đã có gia đình tại Việt Nam (2025).</p>
+
+    <div class="footer">
+      <p>Phím tắt: <span class="kbd">J</span>/<span class="kbd">K</span> cuộn · <span class="kbd">F</span> chế độ tập trung · <span class="kbd">T</span> đổi nền · <span class="kbd">P</span> in</p>
+    </div>
+
+  </main>
+
+  <!-- =========================================================
+       RIGHT — MARGINALIA (sidenotes)
+       ========================================================= -->
+  <aside class="marginalia" aria-label="Ghi chú bên lề">
+
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Từ điển theo ngữ cảnh</span>
+      <p class="amplifier__empty">Di chuột vào thuật ngữ có gạch chân <span style="border-bottom:1px dashed var(--accent2)">đứt nét</span> trong bài để xem giải thích ở đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="ngoai-tinh-tinh-cam">
+        <span class="amplifier__term">Ngoại tình tình cảm</span>
+        <p class="amplifier__body">Loại ngoại tình không cần thể xác: gắn bó cảm xúc, nhắn tin thâu đêm, "người bạn đặc biệt". Chiếm ~32% trong khảo sát IFS — và là loại dễ bị người ngoài bỏ sót nhất vì không để lại "bằng chứng".</p>
+      </div>
+      <div data-note-id="gan-bo-ne-tranh">
+        <span class="amplifier__term">Kiểu gắn bó né tránh</span>
+        <p class="amplifier__body">Người né tránh sự thân mật sâu, giữ khoảng cách khi quan hệ trở nên gần gũi. Trong nghiên cứu, họ có tỷ lệ ngoại tình cao hơn — một cách "thoát hiểm" khi bữa nhà trở nên quá ấm. Quan trọng: có thể thay đổi bằng nhận thức và trị liệu.</p>
+      </div>
+      <div data-note-id="dau-tu-sinh-san">
+        <span class="amplifier__term">Đầu tư của cha mẹ</span>
+        <p class="amplifier__body">Lý thuyết của Robert Trivers (1972): chi phí sinh sản không đối xứng giữa hai giới. Bên đầu tư ít vốn (nam) có lợi hơn khi đa dạng hóa; bên đầu tư lớn (nữ) có lợi hơn khi chọn lọc kỹ. Đây là nền tảng giải thích sự khác biệt giới trong hành vi ngoại tình — ở mức thống kê, không phải định mệnh.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Ghi chú 1 — Đo đếm thiếu ~6 lần</strong>
+      Whisman &amp; Snyder (2007) phát hiện: phỏng vấn trực tiếp chỉ bắt được ~1% thừa nhận ngoại tình trong năm; trả lời máy tính ẩn danh bắt được ~6%. Mọi thống kê trong bài là "con số tối thiểu".
+    </div>
+    <div class="sidenote">
+      <strong>Ghi chú 2 — Vụ rò rỉ và "bóng ma"</strong>
+      Dữ liệu Ashley Madison bị rò rỉ 2015 cho thấy 84% tài khoản là nam giới; tỷ lệ hồ sơ nữ hoạt động thực sự rất thấp. "Người thứ ba" trong mơ của hàng triệu đàn ông, phần lớn, không hề tồn tại.
+    </div>
+    <div class="sidenote">
+      <strong>Trò chuyện lịch sử</strong>
+      Đạo luật Hôn nhân 1950 của Trung Quốc — công bố 1/5/1950, bãi bỏ đa thê và nạp thiếp — được ví là "sự giải phóng phụ nữ" lớn nhất của nước này, do Đặng Dĩnh Siêu (邓颖超) đứng sau. Luật đổi, nhưng 70 năm sau, song chuẩn vẫn còn in dấu trong thái độ xã hội.
+    </div>
+  </aside>
+
+</div>
+
+<!-- Floating controls -->
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Focus mode (F)" aria-label="Toggle focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Theme (T)" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</div>
+
+<script>
+/* ============================================================
+   PERSISTENCE — theme + reading position + quiz state
+============================================================ */
+const STORAGE_KEY = 'edu-notes:' + (document.title || 'untitled');
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY + ':' + k)); }catch{ return null; } },
+  set(k,v){ try{ localStorage.setItem(STORAGE_KEY + ':' + k, JSON.stringify(v)); }catch{} },
+};
+
+/* ============================================================
+   THEME
+============================================================ */
+(function initTheme(){
+  const saved = store.get('theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  store.set('theme', next);
+});
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function initFocus(){
+  if(store.get('focus')) document.body.classList.add('focus-mode');
+})();
+document.getElementById('focusBtn').addEventListener('click', () => {
+  document.body.classList.toggle('focus-mode');
+  const on = document.body.classList.contains('focus-mode');
+  document.getElementById('focusBtn').setAttribute('data-active', on ? 'true' : 'false');
+  store.set('focus', on);
+});
+
+/* ============================================================
+   TABLE OF CONTENTS — auto-generate from h2/h3
+============================================================ */
+(function buildTOC(){
+  const canvas = document.getElementById('canvas');
+  const toc = document.getElementById('toc');
+  const headings = canvas.querySelectorAll('h2, h3');
+  headings.forEach(h => {
+    if(!h.id){
+      h.id = h.textContent.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g,'')
+        .trim().replace(/\s+/g,'-').slice(0,60);
+    }
+    const li = document.createElement('li');
+    if(h.tagName === 'H3') li.className = 'toc-l3';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+})();
+
+/* ============================================================
+   INTERSECTION OBSERVER — highlight current section
+============================================================ */
+(function initObserver(){
+  const links = document.querySelectorAll('.toc a');
+  const map = new Map();
+  links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = map.get(e.target.id);
+      if(!link) return;
+      if(e.isIntersecting){
+        document.querySelectorAll('.toc a.is-active').forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  document.querySelectorAll('#canvas h2, #canvas h3').forEach(h => observer.observe(h));
+})();
+
+/* ============================================================
+   PROGRESS BAR + reading position restore
+============================================================ */
+(function initProgress(){
+  const fill = document.getElementById('progressFill');
+  function update(){
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    fill.style.width = pct + '%';
+    store.set('scroll', scrolled);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  const saved = store.get('scroll');
+  if(typeof saved === 'number' && saved > 100){
+    setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 60);
+  }
+})();
+
+/* ============================================================
+   FLIP CARDS — click + keyboard support
+============================================================ */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+  card.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      card.classList.toggle('is-flipped');
+    }
+  });
+});
+
+/* ============================================================
+   QUIZ — auto grade + persist
+============================================================ */
+(function initQuiz(){
+  const quiz = document.getElementById('quiz');
+  if(!quiz) return;
+  const check = document.getElementById('quizCheck');
+  const reset = document.getElementById('quizReset');
+  const score = document.getElementById('quizScore');
+
+  const prior = store.get('quiz') || {};
+  Object.entries(prior).forEach(([name, val]) => {
+    const input = quiz.querySelector(`input[name="${name}"][value="${val}"]`);
+    if(input) input.checked = true;
+  });
+
+  quiz.addEventListener('change', () => {
+    const state = {};
+    quiz.querySelectorAll('input[type=radio]:checked').forEach(i => state[i.name] = i.value);
+    store.set('quiz', state);
+  });
+
+  check.addEventListener('click', () => {
+    let correct = 0, total = 0;
+    quiz.querySelectorAll('fieldset').forEach(fs => {
+      const answer = parseInt(fs.dataset.answer, 10);
+      const selected = fs.querySelector('input:checked');
+      total++;
+      fs.querySelectorAll('.quiz__option').forEach(o => {
+        o.classList.remove('correct-answer','incorrect-answer');
+      });
+      const correctOption = fs.querySelector(`input[value="${answer}"]`);
+      if(correctOption) correctOption.closest('.quiz__option').classList.add('correct-answer');
+      if(selected && parseInt(selected.value, 10) !== answer){
+        selected.closest('.quiz__option').classList.add('incorrect-answer');
+      }
+      if(selected && parseInt(selected.value, 10) === answer) correct++;
+    });
+    quiz.classList.add('is-graded');
+    const pct = Math.round((correct / total) * 100);
+    let msg = `${correct} / ${total} đúng (${pct}%)`;
+    if(pct === 100) msg += ' — 🎯 xuất sắc';
+    else if(pct >= 66) msg += ' — vững vàng';
+    else msg += ' — nên đọc lại phần Ranh giới';
+    score.textContent = msg;
+  });
+
+  reset.addEventListener('click', () => {
+    quiz.querySelectorAll('input[type=radio]').forEach(i => i.checked = false);
+    quiz.querySelectorAll('.quiz__option').forEach(o => o.classList.remove('correct-answer','incorrect-answer'));
+    quiz.classList.remove('is-graded');
+    score.textContent = '';
+    store.set('quiz', {});
+  });
+})();
+
+/* ============================================================
+   KEYBOARD SHORTCUTS
+============================================================ */
+document.addEventListener('keydown', e => {
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  switch(e.key.toLowerCase()){
+    case 'j': window.scrollBy({ top: 200, behavior: 'smooth' }); break;
+    case 'k': window.scrollBy({ top: -200, behavior: 'smooth' }); break;
+    case 'f': document.getElementById('focusBtn').click(); break;
+    case 't': document.getElementById('themeBtn').click(); break;
+    case 'p': window.print(); break;
+  }
+});
+
+/* ============================================================
+   PHASE ORBIT — light up phase nodes as reader scrolls
+============================================================ */
+(function initOrbit(){
+  const nodes = Array.from(document.querySelectorAll('.orbit__node'));
+  if(!nodes.length) return;
+  const reached = new Set(store.get('reached') || []);
+  nodes.forEach(n => {
+    if(reached.has(n.dataset.target)) n.setAttribute('data-reached','true');
+  });
+  nodes.forEach(n => {
+    n.addEventListener('click', () => {
+      const target = document.getElementById(n.dataset.target);
+      if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+  const targets = nodes.map(n => document.getElementById(n.dataset.target)).filter(Boolean);
+  if(!targets.length) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const node = nodes.find(n => n.dataset.target === e.target.id);
+      if(!node) return;
+      if(e.isIntersecting){
+        node.setAttribute('data-reached','true');
+        reached.add(e.target.id);
+        store.set('reached', Array.from(reached));
+        nodes.forEach(n => n.removeAttribute('data-active'));
+        node.setAttribute('data-active','true');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  targets.forEach(t => observer.observe(t));
+})();
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER — hover .term-amp[data-note] → fill #amplifier
+============================================================ */
+(function initAmplifier(){
+  const amp = document.getElementById('amplifier');
+  const pool = document.getElementById('ampNotes');
+  if(!amp || !pool) return;
+  const emptyHtml = amp.innerHTML;
+  let currentId = null;
+
+  function show(id){
+    if(id === currentId) return;
+    const note = pool.querySelector(`[data-note-id="${id}"]`);
+    if(!note) return;
+    currentId = id;
+    amp.innerHTML = '<span class="amplifier__label">Từ điển theo ngữ cảnh</span>' + note.innerHTML;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+    document.querySelectorAll(`.term-amp[data-note="${id}"]`).forEach(t => t.classList.add('is-active'));
+  }
+  function reset(){
+    currentId = null;
+    amp.innerHTML = emptyHtml;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+  }
+
+  document.querySelectorAll('.term-amp[data-note]').forEach(t => {
+    t.addEventListener('mouseenter', () => show(t.dataset.note));
+    t.addEventListener('focus', () => show(t.dataset.note));
+    t.setAttribute('tabindex','0');
+  });
+  const canvas = document.getElementById('canvas');
+  if(canvas){
+    canvas.addEventListener('mouseleave', reset);
+  }
+})();
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINTS — textarea persistence + Compare to Expert
+============================================================ */
+(function initCheckpoints(){
+  document.querySelectorAll('.checkpoint').forEach(cp => {
+    const id = cp.dataset.checkpointId;
+    const ta = cp.querySelector('textarea');
+    const savedLabel = cp.querySelector('[data-checkpoint-saved]');
+    const revealBtn = cp.querySelector('[data-checkpoint-reveal]');
+    if(!id || !ta) return;
+
+    const prior = store.get('cp:' + id);
+    if(prior){ ta.value = prior; if(savedLabel) savedLabel.textContent = 'Đã lưu'; }
+
+    let t;
+    ta.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        store.set('cp:' + id, ta.value);
+        if(savedLabel) savedLabel.textContent = 'Đã lưu';
+      }, 400);
+    });
+
+    if(revealBtn){
+      revealBtn.addEventListener('click', () => {
+        cp.classList.toggle('is-revealed');
+        revealBtn.textContent = cp.classList.contains('is-revealed')
+          ? 'Ẩn đáp án chuyên gia'
+          : 'So sánh với đáp án chuyên gia';
+      });
+    }
+  });
+})();
+
+/* ============================================================
+   LAUNCH PAD — progressive hint reveal
+============================================================ */
+(function initLaunchpad(){
+  const btn = document.getElementById('hintBtn');
+  if(!btn) return;
+  const hints = Array.from(document.querySelectorAll('.launchpad__hint'));
+  const total = hints.length;
+  let shown = 0;
+
+  const prior = parseInt(store.get('hints') || 0, 10);
+  for(let i=0; i<prior && i<total; i++){
+    hints[i].classList.add('is-visible');
+    shown = i + 1;
+  }
+  updateBtn();
+
+  btn.addEventListener('click', () => {
+    if(shown >= total) return;
+    hints[shown].classList.add('is-visible');
+    shown++;
+    store.set('hints', shown);
+    updateBtn();
+  });
+
+  function updateBtn(){
+    if(shown >= total){
+      btn.textContent = 'Đã hiện hết gợi ý';
+      btn.disabled = true;
+    } else {
+      btn.textContent = `Mở gợi ý ${shown + 1} / ${total}`;
+    }
+  }
+})();
+</script>
+</body>
+</html>

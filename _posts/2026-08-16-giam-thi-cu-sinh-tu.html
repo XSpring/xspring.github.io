@@ -1,0 +1,2048 @@
+<!doctype html>
+<html lang="vi" data-theme="light" data-lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Giảm thi cử sinh tử ở ngưỡng chuyển cấp — Khả thi chính trị ở Việt Nam? Phản biện một đề xuất cải cách thi cử</title>
+<meta name="description" content="Vòng xoắn thứ ba của phản biện biện chứng: 'giảm thi cử sinh tử ở ngưỡng chuyển cấp (lớp 9→10 và thi tốt nghiệp THPT) có khả thi về chính trị ở Việt Nam không?' Trajectory PARADOX, dựa trên Thông tư 24/2024 (thi tốt nghiệp giảm 2 môn), Quy chế tuyển sinh THCS/THPT 2025, Thông tư 06/2025 (bỏ xét tuyển sớm ĐH), dữ liệu tuyển sinh chuyên TP.HCM 2025–2026, và khảo sát dư luận VnExpress.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS  (v1.1.0 — semantic dialectic colors)
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+::selection{background:rgba(74,111,165,.2)}
+
+:root{
+  --font-serif: 'Merriweather', 'Lora', Georgia, serif;
+  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* === Light theme ("The Arena") === */
+  --bg:            #FDFBF7;   /* warm parchment */
+  --bg-panel:     #2B2B3D;   /* dark slate side panels */
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #1A1A2E;
+  --text-muted:    #6B7280;
+  --text-strong:   #0F172A;
+  --text-panel:    #E5E7EB;   /* text on dark side panels */
+  --text-panel-muted: #9CA3AF;
+
+  /* === Semantic dialectic colors (v1.1.0) === */
+  --thesis:        #4A6FA5;   /* Scholarly Blue */
+  --thesis-soft:   #E1E9F5;
+  --thesis-strong: #2A4B7F;
+  --antithesis:    #A34A4A;   /* Critical Red */
+  --antithesis-soft: #F5E0E0;
+  --antithesis-strong: #7A2A2A;
+  --synthesis:     #8A6FA5;   /* Elevated Purple = Blue ⊕ Red */
+  --synthesis-soft: #ECE5F2;
+  --synthesis-strong: #5D4478;
+
+  --accent:        #319795;   /* teal for UI */
+  --accent-strong: #285E61;
+  --accent-soft:   #E6FFFA;
+
+  --border:        #E4DFD5;
+  --border-strong: #D4CFC5;
+  --sidenote-bg:   #F0EEE6;
+
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow:    0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.12);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 220ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #14141F;
+  --bg-panel:      #0A0A15;
+  --bg-elevated:   #2B2B3D;
+  --bg-sunken:     #1F1F2E;
+  --text:          #E5E7EB;
+  --text-muted:    #9CA3AF;
+  --text-strong:   #F9FAFB;
+  --text-panel:    #E5E7EB;
+  --text-panel-muted: #9CA3AF;
+
+  --thesis:        #7AA3D4;
+  --thesis-soft:   #1E2E42;
+  --thesis-strong: #A8C3E0;
+  --antithesis:    #D48282;
+  --antithesis-soft:#3B1F1F;
+  --antithesis-strong: #E0A5A5;
+  --synthesis:     #B49AD4;
+  --synthesis-soft:#2F2138;
+  --synthesis-strong: #D0BCE5;
+
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent-soft:   #1A3B3A;
+
+  --border:        #2D3748;
+  --border-strong: #4A5568;
+  --sidenote-bg:   #24243A;
+
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+  --shadow:    0 4px 12px rgba(0,0,0,.5);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.6);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: var(--line);
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   LAYOUT — 3-column grid (10% / 55% / 35%)
+============================================================ */
+.layout{
+  display: grid;
+  grid-template-columns: 12% 55% 33%;
+  gap: 0;
+  max-width: 1500px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.navigator{ background: var(--bg-panel); color: var(--text-panel); }
+.canvas{    background: var(--bg);       color: var(--text); padding: 40px 48px 120px; }
+.marginalia{background: var(--bg-panel); color: var(--text-panel); }
+
+@media (max-width: 1024px){
+  .layout{ grid-template-columns: 1fr; }
+  .navigator, .marginalia{ position: static !important; max-height: none !important; padding: 20px !important; }
+  .canvas{ padding: 24px; }
+}
+
+/* Focus mode collapses side panels */
+html.focus-mode .layout{ grid-template-columns: 1fr; max-width: 820px; }
+html.focus-mode .navigator,
+html.focus-mode .marginalia{ display: none; }
+html.focus-mode .canvas{ background: var(--bg); }
+
+/* ============================================================
+   LEFT PANEL — Navigator (dark, with Emoji Compass)
+============================================================ */
+.navigator{
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 24px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.progress-bar{
+  height: 3px; background: rgba(255,255,255,.1);
+  border-radius: 2px; overflow: hidden; margin-bottom: 20px;
+}
+.progress-bar__fill{
+  height: 100%; background: var(--accent);
+  width: 0%; transition: width 100ms linear;
+}
+.nav-meta{
+  color: var(--text-panel-muted);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 20px; display: flex; justify-content: space-between;
+}
+
+/* Emoji Compass */
+.compass-title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); margin: 20px 0 10px;
+  font-weight: 700;
+}
+.compass{
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 24px;
+}
+.compass-node{
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  color: var(--text-panel-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  font-size: 12px;
+}
+.compass-node:hover{ background: rgba(255,255,255,.06); color: var(--text-panel); }
+.compass-node.active{
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border-left-color: currentColor;
+}
+.compass-node__icon{ font-size: 18px; }
+.compass-node__label{ font-weight: 500; letter-spacing: .02em; }
+.compass-node[data-phase="thesis"].active{ border-left-color: var(--thesis); }
+.compass-node[data-phase="probe"].active{  border-left-color: var(--accent); }
+.compass-node[data-phase="collision"].active{ border-left-color: var(--antithesis); }
+.compass-node[data-phase="synthesis"].active{ border-left-color: var(--synthesis); }
+.compass-node[data-phase="ripple"].active{ border-left-color: var(--info); }
+
+/* Sub-TOC */
+.toc-title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); margin: 8px 0 8px; font-weight: 700;
+}
+.toc{ list-style: none; padding: 0; margin: 0; }
+.toc li{ margin: 1px 0; }
+.toc a{
+  display: block; padding: 5px 10px;
+  color: var(--text-panel-muted); text-decoration: none;
+  border-left: 2px solid transparent; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition); font-size: 12px;
+}
+.toc a:hover{ color: var(--text-panel); background: rgba(255,255,255,.05); }
+.toc a.active{ color: #fff; background: rgba(255,255,255,.1); border-left-color: var(--accent); font-weight: 500; }
+
+/* ============================================================
+   PARADOX METER — the metacognitive UI
+============================================================ */
+.paradox-meter{
+  position: sticky; top: 12px; z-index: 20;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin: 0 0 32px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans);
+}
+.paradox-meter__label{
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); font-weight: 700;
+  margin-bottom: 8px;
+}
+.paradox-meter__value{
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-strong);
+}
+.paradox-meter__bar{
+  height: 8px; background: var(--bg-sunken);
+  border-radius: 4px; overflow: hidden; position: relative;
+}
+.paradox-meter__fill{
+  height: 100%; width: 0%;
+  background: linear-gradient(to right, var(--thesis), var(--antithesis));
+  transition: width 300ms cubic-bezier(.4,0,.2,1), background 300ms;
+  border-radius: 4px;
+}
+.paradox-meter[data-phase="synthesis"] .paradox-meter__fill,
+.paradox-meter[data-phase="ripple"] .paradox-meter__fill{
+  background: linear-gradient(to right, var(--synthesis), var(--success));
+}
+.paradox-meter__hint{
+  font-size: 11px; color: var(--text-muted); margin-top: 6px;
+  min-height: 1.2em;
+}
+
+/* ============================================================
+   MIDDLE COLUMN — Canvas typography
+============================================================ */
+.canvas-inner{ max-width: var(--measure); margin: 0 auto; width: 100%; }
+.canvas h1{
+  font-family: var(--font-sans); font-size: 36px; line-height: 1.15;
+  margin: 0 0 8px; color: var(--text-strong); letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans); font-size: 26px; line-height: 1.3;
+  margin: 64px 0 16px; color: var(--text-strong);
+  letter-spacing: -.01em; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.canvas h2 .h2-emoji{ font-size: 24px; }
+.canvas h3{
+  font-family: var(--font-sans); font-size: 20px;
+  margin: 36px 0 12px; color: var(--text-strong);
+}
+.canvas h4{
+  font-family: var(--font-sans); font-size: 14px;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-muted); margin: 24px 0 8px;
+}
+.canvas p{ margin: 0 0 18px; }
+.canvas a{
+  color: var(--accent); text-decoration: underline;
+  text-decoration-color: var(--border-strong); text-underline-offset: 3px;
+}
+.canvas a:hover{ text-decoration-color: var(--accent); }
+.canvas blockquote{
+  border-left: 3px solid var(--accent);
+  padding: 12px 18px; margin: 24px 0;
+  background: var(--bg-sunken); font-style: italic;
+  color: var(--text); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.canvas code{
+  font-family: var(--font-mono); font-size: .9em;
+  background: var(--bg-sunken); padding: 2px 6px; border-radius: 4px;
+}
+.canvas pre{
+  background: var(--bg-sunken); padding: 16px;
+  border-radius: var(--radius-sm); overflow-x: auto;
+  border: 1px solid var(--border);
+}
+.canvas pre code{ background: transparent; padding: 0; }
+.canvas strong{ color: var(--text-strong); font-weight: 600; }
+
+.byline{
+  font-family: var(--font-sans); color: var(--text-muted);
+  font-size: 14px; margin-bottom: 32px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--border);
+}
+.byline .pill{
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: .05em;
+  background: var(--accent-soft); color: var(--accent-strong);
+  margin-right: 6px; font-weight: 600;
+}
+
+/* ============================================================
+   ASSUMPTIONS REGISTER — the 4 Dimensions block
+============================================================ */
+.assumptions{
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 24px 0 40px;
+  font-family: var(--font-sans);
+}
+.assumptions__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); font-weight: 700; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.assumptions__grid{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px;
+  font-size: 13px;
+}
+@media (max-width: 640px){ .assumptions__grid{ grid-template-columns: 1fr; } }
+.assumption-row{ display: flex; flex-direction: column; gap: 2px; }
+.assumption-key{ color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+.assumption-val{ color: var(--text-strong); font-weight: 500; }
+.assumption-val .badge{
+  display: inline-block; padding: 1px 8px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 10px;
+  background: var(--accent-soft); color: var(--accent-strong);
+  margin-right: 4px;
+}
+
+/* ============================================================
+   THREE-PANEL DIALECTIC HEADER (Thesis / Antithesis / Synthesis)
+============================================================ */
+.dialectic-header{
+  display: grid; grid-template-columns: 1fr; gap: 12px;
+  margin: 32px 0 40px;
+}
+@media (min-width: 720px){
+  .dialectic-header{ grid-template-columns: 1fr 1fr 1fr; }
+}
+.panel{
+  padding: 18px; border-radius: var(--radius);
+  border: 1px solid var(--border); font-family: var(--font-sans);
+  font-size: 14px; line-height: 1.5; position: relative;
+}
+.panel__label{
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 700; margin-bottom: 8px;
+}
+.panel__body{ color: var(--text); }
+.panel--thesis{     background: var(--thesis-soft);     border-color: var(--thesis); }
+.panel--thesis .panel__label{ color: var(--thesis-strong); }
+.panel--antithesis{ background: var(--antithesis-soft); border-color: var(--antithesis); }
+.panel--antithesis .panel__label{ color: var(--antithesis-strong); }
+.panel--synthesis{  background: var(--synthesis-soft);  border-color: var(--synthesis); }
+.panel--synthesis .panel__label{ color: var(--synthesis-strong); }
+
+/* ============================================================
+   ARGUMENT MAP — Toulmin visual
+============================================================ */
+.argument-map{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; margin: 32px 0; background: var(--bg-elevated);
+  font-family: var(--font-sans); font-size: 13px; box-shadow: var(--shadow-sm);
+}
+.argument-map__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); margin-bottom: 14px; font-weight: 700;
+}
+.toulmin{ display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 640px){
+  .toulmin{
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "grounds warrant claim" "backing qualifier rebuttal";
+  }
+  .t-grounds{ grid-area: grounds; } .t-warrant{ grid-area: warrant; }
+  .t-claim{ grid-area: claim; }     .t-backing{ grid-area: backing; }
+  .t-qualifier{ grid-area: qualifier; } .t-rebuttal{ grid-area: rebuttal; }
+}
+.toulmin__cell{
+  padding: 12px 14px; background: var(--bg-sunken);
+  border-radius: var(--radius-sm); border-left: 3px solid var(--accent);
+  line-height: 1.45;
+}
+.toulmin__cell.t-claim{
+  border-left-color: var(--synthesis);
+  background: var(--synthesis-soft); font-weight: 500;
+}
+.toulmin__cell.t-rebuttal{ border-left-color: var(--antithesis); background: var(--antithesis-soft); }
+.toulmin__cell.t-grounds{ border-left-color: var(--thesis); background: var(--thesis-soft); }
+.toulmin__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text-muted);
+  margin-bottom: 4px; font-weight: 700;
+}
+
+/* ============================================================
+   THESIS PILLAR — the load-bearing walls
+============================================================ */
+.thesis-pillar{
+  border-left: 6px solid var(--thesis);
+  background: linear-gradient(to right, var(--thesis-soft) 0%, transparent 80%);
+  padding: 20px 24px; margin: 24px 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.thesis-pillar__label{
+  font-family: var(--font-sans); font-size: 10px;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--thesis-strong); font-weight: 700;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.thesis-pillar__statement{
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 700; line-height: 1.4; color: var(--text-strong);
+  margin-bottom: 8px;
+}
+.thesis-pillar__contract{
+  font-style: italic; color: var(--text-muted); font-size: 14px;
+  font-family: var(--font-sans);
+}
+.premise-walls{
+  display: grid; gap: 12px; margin: 20px 0;
+  font-family: var(--font-sans);
+}
+.premise-wall{
+  display: grid; grid-template-columns: 40px 1fr;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: var(--bg-elevated);
+}
+.premise-wall__index{
+  background: var(--thesis); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-weight: 700; font-size: 14px;
+}
+.premise-wall__body{ padding: 12px 14px; font-size: 14px; line-height: 1.5; }
+.premise-wall__label{
+  font-weight: 700; color: var(--thesis-strong);
+  font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   CROSS-EXAMINATION CARD (per premise, with "Hear the Defense")
+============================================================ */
+.xexam-card{
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--antithesis);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  padding: 20px 24px;
+  margin: 24px 0;
+  font-family: var(--font-sans);
+  box-shadow: var(--shadow-sm);
+}
+.xexam-card__meta{
+  display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+}
+.xexam-card__meta .tag{
+  padding: 2px 8px; border-radius: 10px;
+  background: var(--antithesis-soft); color: var(--antithesis-strong);
+  font-weight: 700;
+}
+.xexam-card__meta .tag--lens{ background: var(--warn-bg); color: var(--warn); }
+.xexam-card__meta .tag--rigor{ background: var(--info-bg); color: var(--info); }
+.xexam-card__probe{
+  font-family: var(--font-sans); font-size: 17px; font-weight: 600;
+  color: var(--text-strong); margin: 8px 0 12px; line-height: 1.4;
+  font-style: italic;
+}
+.xexam-card__probe::before{
+  content: "Q: ";
+  color: var(--antithesis); font-weight: 700; font-style: normal;
+  margin-right: 4px;
+}
+.xexam-card__setup{
+  color: var(--text); font-size: 14px; line-height: 1.6; margin-bottom: 16px;
+  font-family: var(--font-serif);
+}
+.xexam-card__defense-btn{
+  background: var(--bg-sunken); color: var(--text-strong);
+  border: 1px solid var(--border-strong);
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  cursor: pointer; font-family: var(--font-sans);
+  font-size: 13px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all var(--transition);
+}
+.xexam-card__defense-btn:hover{
+  background: var(--thesis-soft); color: var(--thesis-strong);
+  border-color: var(--thesis);
+}
+.xexam-card__defense-btn::before{ content: "🛡️"; }
+.xexam-card__defense-btn[aria-expanded="true"]{
+  background: var(--thesis-soft); color: var(--thesis-strong);
+  border-color: var(--thesis);
+}
+.xexam-card__defense{
+  display: none; margin-top: 16px;
+  padding: 16px 18px; background: var(--thesis-soft);
+  border-left: 3px solid var(--thesis); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 14px; line-height: 1.55;
+  animation: defense-slide 320ms ease-out;
+}
+.xexam-card__defense.is-open{ display: block; }
+.xexam-card__defense .label{
+  font-family: var(--font-sans); font-weight: 700;
+  color: var(--thesis-strong); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: 6px; display: block;
+}
+.xexam-card__defense .verdict{
+  margin-top: 12px; padding: 8px 12px;
+  background: var(--bg-elevated); border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 13px;
+}
+.xexam-card__defense .verdict .verdict-tag{
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  margin-right: 6px; background: var(--warn-bg); color: var(--warn);
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.xexam-card__steel-man{
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px dashed var(--border-strong);
+  font-size: 12px; color: var(--text-muted); line-height: 1.5;
+}
+.xexam-card__steel-man strong{ color: var(--text-strong); }
+@keyframes defense-slide{
+  from{ opacity: 0; transform: translateY(-6px); }
+  to{   opacity: 1; transform: translateY(0); }
+}
+
+/* ============================================================
+   COLLISION SPLIT-SCREEN (State 4 dramatic visual)
+============================================================ */
+.collision{
+  margin: 40px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.collision__inner{
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: stretch; min-height: 220px;
+}
+@media (max-width: 640px){
+  .collision__inner{ grid-template-columns: 1fr; }
+  .collision__divider{ padding: 12px 0 !important; }
+}
+.collision__side{
+  padding: 24px 28px;
+  font-family: var(--font-serif); font-size: 15px; line-height: 1.55;
+}
+.collision__side--thesis{
+  background: linear-gradient(135deg, var(--thesis-soft), var(--thesis-soft) 80%, transparent);
+  color: var(--text);
+}
+.collision__side--antithesis{
+  background: linear-gradient(-135deg, var(--antithesis-soft), var(--antithesis-soft) 80%, transparent);
+  color: var(--text);
+  text-align: right;
+}
+@media (max-width: 640px){ .collision__side--antithesis{ text-align: left; } }
+.collision__side .label{
+  display: block; font-family: var(--font-sans);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 700; margin-bottom: 12px;
+}
+.collision__side--thesis .label{ color: var(--thesis-strong); }
+.collision__side--antithesis .label{ color: var(--antithesis-strong); }
+.collision__side .heading{
+  font-family: var(--font-sans); font-size: 15px; font-weight: 700;
+  color: var(--text-strong); margin-bottom: 8px;
+}
+.collision__divider{
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  padding: 0 16px; position: relative;
+}
+.collision__divider::before,
+.collision__divider::after{
+  content: ""; position: absolute; left: 50%; width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--text-muted), transparent);
+  transform: translateX(-50%);
+}
+.collision__divider::before{ top: 8%; height: 30%; }
+.collision__divider::after{  bottom: 8%; height: 30%; }
+.collision__zap{
+  font-size: 42px; line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(163,74,74,.4));
+  z-index: 1; background: var(--bg); padding: 4px 8px; border-radius: 50%;
+}
+.collision__tension{
+  padding: 16px 24px; background: var(--bg-sunken);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans); font-size: 13px;
+  color: var(--text-muted); text-align: center;
+}
+.collision__tension strong{
+  color: var(--text-strong); font-family: var(--font-serif);
+  font-style: italic; font-size: 15px;
+}
+
+/* ============================================================
+   SUBLATION GRADIENT (State 5 elevated visual)
+============================================================ */
+.sublation{
+  margin: 40px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: linear-gradient(
+    135deg,
+    var(--thesis) 0%,
+    var(--synthesis) 50%,
+    var(--antithesis) 100%
+  );
+  padding: 3px;   /* creates gradient border */
+}
+.sublation__inner{
+  background: var(--bg);
+  border-radius: calc(var(--radius) - 3px);
+  padding: 28px 32px;
+}
+.sublation__label{
+  font-family: var(--font-sans); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--synthesis-strong); font-weight: 700;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.sublation__statement{
+  font-family: var(--font-serif); font-size: 22px; line-height: 1.4;
+  font-weight: 700; color: var(--text-strong);
+  margin-bottom: 20px;
+}
+.sublation__elevation{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-top: 20px;
+}
+@media (max-width: 640px){ .sublation__elevation{ grid-template-columns: 1fr; } }
+.sublation__elev-cell{
+  padding: 14px 16px; border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 13px; line-height: 1.55;
+}
+.sublation__elev-cell--preserve{
+  background: var(--thesis-soft);
+  border-left: 3px solid var(--thesis);
+}
+.sublation__elev-cell--absorb{
+  background: var(--antithesis-soft);
+  border-left: 3px solid var(--antithesis);
+}
+.sublation__elev-cell .lead{
+  font-weight: 700; color: var(--text-strong);
+  display: block; margin-bottom: 4px; font-size: 11px;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+
+/* ============================================================
+   RIPPLE POOL (State 7 — Radiating Implication)
+============================================================ */
+.ripple{
+  margin: 40px 0; position: relative;
+  padding: 40px 32px;
+  background: radial-gradient(
+    ellipse at center,
+    var(--synthesis-soft) 0%,
+    var(--bg) 70%
+  );
+  border-radius: 200px / 100px;
+  border: 2px solid var(--synthesis);
+  text-align: center;
+}
+.ripple::before, .ripple::after{
+  content: ""; position: absolute;
+  border: 1px solid var(--synthesis);
+  border-radius: 200px / 100px;
+  opacity: .3;
+  pointer-events: none;
+}
+.ripple::before{ inset: -12px; }
+.ripple::after{  inset: -24px; opacity: .15; }
+.ripple__label{
+  font-family: var(--font-sans); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--synthesis-strong); font-weight: 700;
+  margin-bottom: 12px;
+}
+.ripple__claim{
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 700; color: var(--text-strong); line-height: 1.4;
+  max-width: 60ch; margin: 0 auto 12px;
+}
+.ripple__adjacent{
+  font-family: var(--font-sans); font-size: 13px; color: var(--text-muted);
+  max-width: 55ch; margin: 0 auto;
+}
+.ripple__adjacent strong{ color: var(--synthesis-strong); }
+
+/* ============================================================
+   EVIDENCE LOCKER (right-panel triggers)
+============================================================ */
+.evidence-trigger{
+  background: var(--warn-bg); color: var(--warn);
+  padding: 1px 6px; border-radius: 4px;
+  font-family: var(--font-sans); font-size: .85em;
+  cursor: pointer; border: 1px dashed transparent;
+  transition: all var(--transition);
+}
+.evidence-trigger::before{ content: "🔎 "; font-size: .9em; }
+.evidence-trigger:hover, .evidence-trigger:focus{
+  border-color: var(--warn); outline: none;
+}
+.evidence-trigger.active{
+  background: var(--warn); color: white;
+}
+.evidence-item{
+  padding: 12px 14px; background: var(--sidenote-bg);
+  color: var(--text); border-left: 3px solid var(--warn);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 12px; font-size: 12px; line-height: 1.5;
+  font-family: var(--font-sans);
+  transition: all var(--transition);
+}
+.evidence-item.highlight{
+  background: var(--warn-bg);
+  box-shadow: 0 0 0 2px var(--warn), var(--shadow);
+  transform: scale(1.02);
+}
+.evidence-item__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--warn); font-weight: 700;
+  margin-bottom: 4px;
+}
+.evidence-item__source{
+  margin-top: 6px; font-size: 11px; color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   PHILOSOPHERS' NOTE (user-generated marginalia)
+============================================================ */
+.phil-notes{ margin-top: 20px; }
+.phil-notes__title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); font-weight: 700; margin-bottom: 8px;
+}
+.phil-note{
+  background: #FFF9C4; color: #4A3F00;
+  padding: 10px 12px; margin-bottom: 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans); font-size: 12px;
+  line-height: 1.45; position: relative;
+  transform: rotate(-.5deg);
+  transition: transform var(--transition);
+}
+html[data-theme="dark"] .phil-note{
+  background: #6B5F1A; color: #FFF9C4;
+}
+.phil-note:hover{ transform: rotate(0); }
+.phil-note:nth-child(even){ transform: rotate(.6deg); }
+.phil-note__quote{
+  font-style: italic; font-size: 11px; color: #6B5F00;
+  border-left: 2px solid rgba(0,0,0,.15); padding-left: 6px;
+  margin-bottom: 6px;
+}
+html[data-theme="dark"] .phil-note__quote{ color: #E5D97F; }
+.phil-note__body{ font-weight: 500; }
+.phil-note__del{
+  position: absolute; top: 6px; right: 8px;
+  background: none; border: none; cursor: pointer;
+  font-size: 12px; color: rgba(0,0,0,.4); line-height: 1;
+}
+.phil-note__del:hover{ color: #C53030; }
+html[data-theme="dark"] .phil-note__del{ color: rgba(255,255,255,.4); }
+.phil-note__empty{
+  font-size: 11px; color: var(--text-panel-muted);
+  font-style: italic; padding: 12px;
+  border: 1px dashed rgba(255,255,255,.15); border-radius: var(--radius-sm);
+  text-align: center;
+}
+#phil-popup{
+  position: absolute; z-index: 100;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-sans); font-size: 13px;
+  max-width: 320px; display: none;
+}
+#phil-popup.show{ display: block; }
+#phil-popup__quote{
+  color: var(--text-muted); font-style: italic; font-size: 12px;
+  border-left: 2px solid var(--accent); padding-left: 8px;
+  margin-bottom: 8px; max-height: 60px; overflow: hidden;
+}
+#phil-popup__input{
+  width: 100%; min-height: 60px; resize: vertical;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px; font: inherit; color: var(--text);
+  background: var(--bg-sunken);
+  font-family: var(--font-sans); font-size: 13px;
+}
+#phil-popup__actions{
+  display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;
+}
+#phil-popup button{
+  padding: 6px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--bg);
+  color: var(--text); cursor: pointer; font: inherit;
+  font-size: 12px;
+}
+#phil-popup button.save{ background: var(--accent); color: white; border-color: var(--accent); }
+
+/* ============================================================
+   FLIP CARD, DETAILS, BAR CHART, CONCEPT FLOW, QUIZ, RESIDUALS
+============================================================ */
+.flip-card{
+  perspective: 1000px; height: 180px; margin: 24px 0;
+  font-family: var(--font-sans);
+}
+.flip-card__inner{
+  position: relative; width: 100%; height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d; cursor: pointer;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card:focus-within .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg); }
+.flip-card__face{
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; border-radius: var(--radius);
+  padding: 24px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__face--front{
+  background: var(--accent-soft); color: var(--accent-strong);
+  font-weight: 600; font-size: 16px;
+}
+.flip-card__face--back{
+  background: var(--bg-elevated); color: var(--text);
+  transform: rotateY(180deg); font-size: 14px; line-height: 1.5;
+}
+
+details.deep-dive{
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0; margin: 20px 0; background: var(--bg-sunken); overflow: hidden;
+}
+details.deep-dive > summary{
+  cursor: pointer; padding: 14px 18px;
+  font-family: var(--font-sans); font-weight: 600; font-size: 14px;
+  color: var(--accent-strong); list-style: none;
+  display: flex; align-items: center; gap: 8px; user-select: none;
+}
+details.deep-dive > summary::-webkit-details-marker{ display: none; }
+details.deep-dive > summary::before{
+  content: "▸"; transition: transform var(--transition); color: var(--accent);
+}
+details.deep-dive[open] > summary::before{ transform: rotate(90deg); }
+details.deep-dive[open] > summary{ border-bottom: 1px solid var(--border); }
+details.deep-dive > *:not(summary){
+  padding: 16px 18px;
+  animation: dd-open 240ms ease-out;
+}
+@keyframes dd-open{ from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+
+details.fallacy-log{ border-color: var(--warn); }
+details.fallacy-log > summary{ color: var(--warn); }
+details.fallacy-log > summary::before{ color: var(--warn); }
+.fallacy-entry{
+  border-left: 3px solid var(--warn); padding: 10px 14px;
+  background: var(--warn-bg); margin: 10px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 14px;
+}
+.fallacy-entry__name{
+  font-family: var(--font-sans); font-weight: 700; color: var(--warn);
+}
+
+.bar-chart{
+  font-family: var(--font-sans); margin: 24px 0;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; background: var(--bg-elevated);
+}
+.bar-chart__title{
+  font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); margin-bottom: 14px; font-weight: 700;
+}
+.bar-row{
+  display: grid; grid-template-columns: 140px 1fr 50px;
+  align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px;
+}
+.bar-label{ color: var(--text); }
+.bar-track{ background: var(--bg-sunken); height: 20px; border-radius: 4px; overflow: hidden; }
+.bar-fill{
+  height: 100%; background: var(--synthesis);
+  transition: width var(--transition), background var(--transition);
+  border-radius: 4px;
+}
+.bar-fill:hover{ background: var(--synthesis-strong); }
+.bar-value{ color: var(--text-muted); font-family: var(--font-mono); font-size: 12px; text-align: right; }
+
+.term{
+  border-bottom: 1px dotted var(--accent); cursor: help; position: relative;
+}
+.term:hover::after, .term:focus::after{
+  content: attr(data-def); position: absolute;
+  bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--text-strong); color: var(--bg);
+  font-family: var(--font-sans); font-size: 12px; font-weight: 400;
+  padding: 8px 12px; border-radius: var(--radius-sm);
+  white-space: normal; min-width: 200px; max-width: 280px;
+  z-index: 100; box-shadow: var(--shadow); line-height: 1.4;
+}
+
+/* Residuals */
+.residuals{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin: 32px 0; background: var(--bg-sunken);
+}
+.residuals h4{ margin-top: 20px; }
+.residuals h4:first-child{ margin-top: 0; }
+.residuals ul{ padding-left: 20px; margin: 8px 0; }
+.residuals li{ margin: 6px 0; font-size: 15px; }
+.residuals__badge{
+  display: inline-block; font-family: var(--font-mono);
+  font-size: 10px; padding: 2px 6px; border-radius: 3px;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text-muted); margin-right: 6px;
+}
+
+/* Quiz */
+.quiz{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin: 40px 0 24px;
+  background: var(--bg-elevated); font-family: var(--font-sans);
+}
+.quiz h2{ border: none; padding: 0; margin: 0 0 16px; font-size: 20px; }
+.quiz fieldset{ border: none; padding: 0; margin: 0 0 24px; }
+.quiz legend{
+  font-weight: 700; margin-bottom: 12px; color: var(--text-strong);
+  font-size: 15px; line-height: 1.4;
+}
+.quiz-option{
+  display: block; padding: 10px 14px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  margin: 6px 0; cursor: pointer; transition: all var(--transition);
+  font-size: 14px; background: var(--bg);
+}
+.quiz-option:hover{ border-color: var(--accent); }
+.quiz-option input{ margin-right: 10px; accent-color: var(--accent); }
+.quiz-option.selected{ background: var(--accent-soft); border-color: var(--accent); }
+.quiz-option.correct-answer{ background: var(--success-bg); border-color: var(--success); color: var(--success); }
+.quiz-option.incorrect-answer{ background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+.quiz-check-btn{
+  font-family: var(--font-sans); background: var(--synthesis);
+  color: white; border: none; padding: 10px 20px;
+  font-size: 14px; font-weight: 600; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--transition);
+}
+.quiz-check-btn:hover{ background: var(--synthesis-strong); }
+.quiz-score{
+  margin-top: 16px; padding: 14px 18px;
+  border-radius: var(--radius-sm); font-weight: 600; display: none;
+}
+.quiz-score.show{ display: block; }
+.quiz-score.pass{ background: var(--success-bg); color: var(--success); }
+.quiz-score.mid{ background: var(--warn-bg); color: var(--warn); }
+.quiz-score.fail{ background: var(--danger-bg); color: var(--danger); }
+
+/* Difficulty markers */
+.diff{
+  display: inline-block; font-family: var(--font-sans); font-size: 10px;
+  padding: 1px 6px; border-radius: 3px;
+  vertical-align: middle; margin-right: 4px; font-weight: 700;
+}
+.diff-core{ background: var(--success-bg); color: var(--success); }
+.diff-supp{ background: var(--warn-bg); color: var(--warn); }
+.diff-deep{ background: var(--info-bg); color: var(--info); }
+
+/* Sidenotes in right panel */
+.marginalia{
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 24px 20px;
+  font-family: var(--font-sans); font-size: 12px;
+}
+.sidenote{
+  background: rgba(255,255,255,.05);
+  padding: 12px 14px; border-radius: var(--radius-sm);
+  margin-bottom: 16px; border-left: 3px solid var(--accent);
+  line-height: 1.55;
+  color: var(--text-panel);
+}
+.sidenote__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--accent); margin-bottom: 4px; font-weight: 700;
+}
+.marginalia__title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); font-weight: 700;
+  margin: 24px 0 8px;
+}
+.marginalia__title:first-child{ margin-top: 0; }
+
+/* Floating controls */
+.controls{
+  position: fixed; bottom: 24px; right: 24px;
+  display: flex; flex-direction: column; gap: 8px; z-index: 50;
+}
+.ctrl-btn{
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text); width: 44px; height: 44px; border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); transition: all var(--transition);
+  font-family: var(--font-sans); font-size: 18px;
+}
+.ctrl-btn:hover{ background: var(--accent); color: white; border-color: var(--accent); }
+.ctrl-btn__lang{ font-size: 12px; font-weight: 700; }
+
+/* Footer */
+.footer-note{
+  margin-top: 60px; padding: 20px 0;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans); font-size: 12px;
+  color: var(--text-muted); line-height: 1.5;
+}
+
+/* Gate 5 offer block */
+.gate5{
+  margin: 40px 0; padding: 24px;
+  border: 1px solid var(--accent); border-radius: var(--radius);
+  background: var(--accent-soft);
+  font-family: var(--font-sans);
+}
+.gate5__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--accent-strong); font-weight: 700; margin-bottom: 8px;
+}
+.gate5__body{ color: var(--text); font-size: 14px; line-height: 1.55; }
+.gate5__options{ list-style: none; padding: 0; margin: 12px 0 0; }
+.gate5__options li{
+  padding: 6px 0; padding-left: 24px; position: relative;
+}
+.gate5__options li::before{
+  content: attr(data-key); position: absolute; left: 0; top: 6px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); color: white;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* Bilingual scaffold */
+html[data-lang="en"] [lang="vi"]{ display: none; }
+html[data-lang="vi"] [lang="en"]{ display: none; }
+</style>
+</head>
+
+<body>
+
+<!-- ============================================================
+     FLOATING CONTROLS
+============================================================ -->
+<div class="controls">
+  <button class="ctrl-btn" id="theme-toggle" title="Chuyển chế độ sáng/tối" aria-label="Toggle theme">☾</button>
+  <button class="ctrl-btn" id="focus-toggle" title="Chế độ tập trung" aria-label="Toggle focus mode">⛶</button>
+  <button class="ctrl-btn ctrl-btn__lang" id="lang-toggle" title="Chuyển ngôn ngữ" aria-label="Toggle language" style="display:none">EN</button>
+</div>
+
+<!-- Philosophers' Note popup -->
+<div id="phil-popup" role="dialog" aria-label="Thêm một câu phản vấn">
+  <div id="phil-popup__quote"></div>
+  <textarea id="phil-popup__input" placeholder="Câu phản vấn của bạn... Socrates sẽ hỏi gì về đoạn này?" aria-label="Counter-probe"></textarea>
+  <div id="phil-popup__actions">
+    <button id="phil-popup__cancel">Hủy</button>
+    <button id="phil-popup__save" class="save">Lưu ghi chú</button>
+  </div>
+</div>
+
+<!-- ============================================================
+     MAIN LAYOUT
+============================================================ -->
+<div class="layout">
+
+  <!-- =====================================================
+       LEFT PANEL — Navigator (Dialectical Compass)
+  ===================================================== -->
+  <aside class="navigator" aria-label="Điều hướng">
+    <div class="progress-bar" aria-hidden="true">
+      <div class="progress-bar__fill" id="progress-fill"></div>
+    </div>
+    <div class="nav-meta">
+      <span>📖 <span id="reading-time">~10</span> phút</span>
+      <span id="progress-percent">0%</span>
+    </div>
+
+    <div class="compass-title">La bàn biện chứng</div>
+    <div class="compass" id="compass">
+      <a class="compass-node" data-target="scope"        data-phase="scope"><span class="compass-node__icon">🎯</span><span class="compass-node__label">Phạm vi</span></a>
+      <a class="compass-node" data-target="thesis"       data-phase="thesis"><span class="compass-node__icon">📘</span><span class="compass-node__label">Luận đề</span></a>
+      <a class="compass-node" data-target="xexam"        data-phase="probe"><span class="compass-node__icon">🔍</span><span class="compass-node__label">Thẩm vấn</span></a>
+      <a class="compass-node" data-target="collision"    data-phase="collision"><span class="compass-node__icon">⚔️</span><span class="compass-node__label">Va chạm</span></a>
+      <a class="compass-node" data-target="synthesis"    data-phase="synthesis"><span class="compass-node__icon">💎</span><span class="compass-node__label">Tổng hợp</span></a>
+      <a class="compass-node" data-target="ripple"       data-phase="ripple"><span class="compass-node__icon">🌊</span><span class="compass-node__label">Lan tỏa</span></a>
+    </div>
+
+    <div class="toc-title">Mục lục</div>
+    <ul class="toc" id="toc">
+      <li><a href="#hook" data-target="hook">Câu chuyện mở đầu</a></li>
+      <li><a href="#scope" data-target="scope">Phạm vi &amp; Giả định</a></li>
+      <li><a href="#dialectic" data-target="dialectic">Thoáng nhìn</a></li>
+      <li><a href="#argument-map" data-target="argument-map">Bản đồ lập luận</a></li>
+      <li><a href="#thesis" data-target="thesis">Luận đề + Tiền đề</a></li>
+      <li><a href="#xexam" data-target="xexam">Thẩm vấn chéo</a></li>
+      <li><a href="#collision" data-target="collision">Va chạm</a></li>
+      <li><a href="#synthesis" data-target="synthesis">Tổng hợp</a></li>
+      <li><a href="#proof" data-target="proof">Bằng chứng</a></li>
+      <li><a href="#ripple" data-target="ripple">Hệ quả lan tỏa</a></li>
+      <li><a href="#fallacy-log" data-target="fallacy-log">Nhật ký ngụy biện</a></li>
+      <li><a href="#residuals" data-target="residuals">Giới hạn</a></li>
+      <li><a href="#quiz" data-target="quiz">Kiểm tra hiểu biết</a></li>
+      <li><a href="#gate5" data-target="gate5">Tiếp tục hay lặp lại?</a></li>
+    </ul>
+  </aside><!-- =====================================================
+       MIDDLE COLUMN — Canvas (The Arena)
+  ===================================================== -->
+  <main class="canvas">
+    <div class="canvas-inner">
+
+    <!-- Title -->
+    <h1>Giảm thi cử sinh tử ở ngưỡng chuyển cấp — Có khả thi về chính trị ở Việt Nam?</h1>
+    <div class="byline">
+      <span class="pill">Biện chứng</span>
+      <span class="pill">Vòng xoắn 3</span>
+      <span class="pill">Chính sách thi cử</span>
+      Một lập luận được rèn giũa về đề xuất: "Giảm thi cử sinh tử ở ngưỡng chuyển cấp — lớp 9 lên 10 và kỳ thi tốt nghiệp THPT — là đòn bẩy rẻ nhất để phá cuộc đua trường chuyên."
+    </div>
+
+    <!-- ============ PARADOX METER ============ -->
+    <div class="paradox-meter" id="paradox-meter" data-phase="thesis" aria-live="polite">
+      <div class="paradox-meter__label">
+        <span>Mức bất hòa nhận thức</span>
+        <span class="paradox-meter__value" id="paradox-value">0%</span>
+      </div>
+      <div class="paradox-meter__bar">
+        <div class="paradox-meter__fill" id="paradox-fill"></div>
+      </div>
+      <div class="paradox-meter__hint" id="paradox-hint">Bắt đầu vòng xoắn 3 — luận đề về khả thi chính trị đứng vững, chưa bị thách thức.</div>
+    </div>
+
+    <!-- ============ ASSUMPTIONS REGISTER (4 Dimensions) ============ -->
+    <div class="assumptions" aria-labelledby="assumptions-title">
+      <div class="assumptions__title" id="assumptions-title">🔧 Sổ đăng ký giả định — Bốn chiều kích (kế thừa từ Vòng 2)</div>
+      <div class="assumptions__grid">
+        <div class="assumption-row">
+          <span class="assumption-key">Kính tấn công</span>
+          <span class="assumption-val"><span class="badge">THỰC NGHIỆM + THỰC DỤNG</span>Mọi khẳng định được kiểm tra bằng văn bản quy chế (Thông tư 24/2024, Quy chế 2025, Thông tư 06/2025), số thí sinh, tỷ lệ chọi, và phản ứng dư luận.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Mức độ gắt gao</span>
+          <span class="assumption-val"><span class="badge">CON RUỒI TRÂU</span>Thẩm vấn mạnh — đề xuất "giảm thi cử sinh tử" bị coi là mơ mộng cho tới khi được chứng minh khả thi về chính trị.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Quỹ đạo</span>
+          <span class="assumption-val"><span class="badge">NGHỊCH LÝ</span>Cả "hệ thống đang giảm thi thật" lẫn "áp lực chỉ đổi chỗ" đều có phần đúng; tổng hợp tìm biến số quyết định.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Độ sâu</span>
+          <span class="assumption-val"><span class="badge">XOẮN ỐC VÒNG 3</span>Bài toán chuyển từ "ngân sách có đủ không" (Vòng 2) sang "chính trị có muốn và có thể giảm thi không" — thi cử → tuyển sinh ĐH → văn hóa phân loại.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ HOOK ============ -->
+    <section id="hook">
+      <h2><span class="h2-emoji">✍️</span>Câu chuyện mở đầu</h2>
+      <p>Ngày 24/12/2024, Bộ Giáo dục ban hành Thông tư 24/2024/TT-BGDĐT: kỳ thi tốt nghiệp THPT từ 2025 <span class="evidence-trigger" data-evidence="ev-tt24">giảm từ 6 môn xuống còn 4 môn, giảm 1 buổi thi</span>, học bạ chiếm 50% điểm xét tốt nghiệp. Đầu năm 2025, Quy chế tuyển sinh THCS/THPT chốt thi lớp 10 gồm 3 môn với <span class="evidence-trigger" data-evidence="ev-tt30">môn thứ ba do địa phương chọn, xoay vòng không quá 3 năm liên tiếp</span>. Tháng 3/2025, Thông tư 06/2025 chính thức <span class="evidence-trigger" data-evidence="ev-tt06">bỏ xét tuyển sớm đại học</span> từ kỳ tuyển sinh 2025.</p>
+      <p>Nghe thì như hệ thống đang tự giảm thi cử sinh tử. Nhưng nhìn kỹ, một nghịch lý xuất hiện: trong khi số thí sinh thi lớp 10 chuyên ở TP.HCM năm 2025 <span class="evidence-trigger" data-evidence="ev-diemchuan10">rơi xuống mức thấp nhất 4 năm</span> (5.550 em, giảm ~2.700), thì điểm chuẩn lớp 6 Trường Trần Đại Nghĩa cùng năm lại <span class="evidence-trigger" data-evidence="ev-diemchuan6">tăng vọt lên 73,25 — tỷ lệ chọi 1/14, cao nhất từ trước tới nay</span>. Bài này sẽ phản biện đề xuất "giảm thi cử sinh tử": khả thi chính trị thật hay chỉ là áp lực đổi chỗ?</p>
+    </section>
+
+    <!-- ============ SCOPE ============ -->
+    <section id="scope">
+      <h2><span class="h2-emoji">🎯</span>Phạm vi &amp; Giả định</h2>
+      <p><strong>Lãnh vực.</strong> Khả thi chính trị của việc giảm thi cử sinh tử ở hai ngưỡng chuyển cấp — tuyển sinh lớp 10 và thi tốt nghiệp THPT — tại Việt Nam giai đoạn 2024–2026, đối chiếu với các văn bản quy chế đã ban hành và dữ liệu tuyển sinh thực tế.</p>
+      <p><strong>Trong phạm vi:</strong> số lượng môn thi/buổi thi (Thông tư 24/2024), quy chế thi lớp 10 (Quy chế tuyển sinh THCS/THPT 2025), bỏ xét tuyển sớm đại học (Thông tư 06/2025), số thí sinh và tỷ lệ chọi trường chuyên TP.HCM 2024–2026, điểm chuẩn lớp 6, và phản ứng dư luận (khảo sát VnExpress).</p>
+      <p><strong>Ngoài phạm vi:</strong> chi tiết kỹ thuật đề thi và chấm điểm, tác động chất lượng giáo dục dài hạn của giảm thi, và câu hỏi ngân sách (đã xử lý ở Vòng 2 — kết luận: đủ tiền, thiếu hiệu quả phân bổ).</p>
+      <p><strong>Giả định đăng ký:</strong></p>
+      <ul>
+        <li>"Thi cử sinh tử" được hiểu là <span class="term" data-def="Kỳ thi có vai trò quyết định toàn bộ cơ hội: đỗ/trượt, trường tốt/xấu, vào thẳng một kết quả duy nhất — khác với kỳ thi nhẹ mang vai trò kiểm định hoặc một phần của hồ sơ.">kỳ thi quyết định toàn bộ cơ hội</span>, không phải "mọi kỳ thi đều đáng bỏ".</li>
+        <li>"Giảm thi cử sinh tử" trong đề xuất này = giảm sức nặng quyết định của kỳ thi (số môn, số buổi, vai trò trong xét tuyển), không nhất thiết xóa bỏ kỳ thi.</li>
+        <li>Người đọc là phụ huynh Việt đã đọc Vòng 1 và Vòng 2 (hiểu "trường thường tốt thì phụ huynh dịch chuyển"), giờ muốn biết: hệ thống có thật sự đang giảm bớt cửa ải cho con mình không.</li>
+      </ul>
+      <p><strong>Tư thế người đọc:</strong> phụ huynh vừa thấy 2025 "giảm thi" vừa thấy điểm chuẩn lớp 6 tăng vọt — họ hoài nghi: "Bộ giảm thi có phải là thật, hay chỉ là đổi chỗ áp lực cho con tôi?"</p>
+    </section>
+
+    <!-- ============ AT A GLANCE (three-panel) ============ -->
+    <section id="dialectic">
+      <h2><span class="h2-emoji">👁️</span>Thoáng nhìn</h2>
+      <div class="dialectic-header">
+        <div class="panel panel--thesis">
+          <span class="panel__label">📘 Luận đề</span>
+          <div class="panel__body">Việt Nam có thể giảm thi cử sinh tử ở ngưỡng chuyển cấp một cách khả thi về chính trị — bằng chứng là hệ thống <em>đã bắt đầu làm</em> từ 2024–2025: giảm 2 môn thi tốt nghiệp, chốt 3 môn thi lớp 10, bỏ xét tuyển sớm đại học.</div>
+        </div>
+        <div class="panel panel--antithesis">
+          <span class="panel__label">⚔️ Phản đề</span>
+          <div class="panel__body">Không khả thi. Mỗi lần giảm thi, áp lực lại đổi chỗ: bỏ 22 lớp chuyên đại trà thì <span class="evidence-trigger" data-evidence="ev-diemchuan6">điểm chuẩn lớp 6 Trần Đại Nghĩa tăng vọt</span> (73,25, chọi 1/14); bỏ xét tuyển sớm thì điểm chuẩn đại học dự báo tăng. Đề xuất "bốc thăm môn thi thứ ba" bị dư luận phản đối ngay lập tức.</div>
+        </div>
+        <div class="panel panel--synthesis">
+          <span class="panel__label">💎 Tổng hợp</span>
+          <div class="panel__body">Khả thi — nhưng không phải bằng "bỏ thi", mà bằng <em>giảm sức nặng của thi</em>: giữ kỳ thi làm neo công bằng, thu nhỏ vai trò phân hạng bằng đa dạng kênh tuyển sinh, và xử lý đồng bộ toàn chuỗi ngưỡng để áp lực không chỉ đổi chỗ.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ ARGUMENT MAP (Toulmin) ============ -->
+    <section id="argument-map">
+      <h2><span class="h2-emoji">🗺️</span>Bản đồ lập luận</h2>
+      <div class="argument-map">
+        <div class="argument-map__title">Cấu trúc Toulmin của tổng hợp</div>
+        <div class="toulmin">
+          <div class="toulmin__cell t-grounds">
+            <span class="toulmin__label">Dữ kiện</span>
+            Thi tốt nghiệp 2025: <span class="evidence-trigger" data-evidence="ev-tt24">4 môn, 3 buổi, học bạ 50%</span> (Thông tư 24/2024). Thi lớp 10: 3 môn, môn thứ ba xoay vòng 3 năm (Quy chế 2025). Đại học: <span class="evidence-trigger" data-evidence="ev-tt06">bỏ xét tuyển sớm từ 05/5/2025</span>. Chuyên TP.HCM: <span class="evidence-trigger" data-evidence="ev-diemchuan10">5.550 thí sinh 2025</span> (thấp nhất 4 năm) → 2026 <span class="evidence-trigger" data-evidence="ev-chuyen2026">tăng gấp rưỡi</span>. Lớp 6 Trần Đại Nghĩa: <span class="evidence-trigger" data-evidence="ev-diemchuan6">73,25 điểm, chọi 1/14</span>.
+          </div>
+          <div class="toulmin__cell t-warrant">
+            <span class="toulmin__label">Nhịp cầu</span>
+            Khả thi chính trị = khả năng ban hành + duy trì cải cách trước phản ứng dư luận. Giai đoạn 2024–2025 cho thấy Bộ GD-ĐT <em>ban hành được</em> ba văn bản giảm thi — dù phải lùi bước ở điểm gây phản đối mạnh nhất (bốc thăm môn thi thứ ba).
+          </div>
+          <div class="toulmin__cell t-claim">
+            <span class="toulmin__label">Luận điểm</span>
+            Giảm thi cử sinh tử ở ngưỡng chuyển cấp là khả thi về chính trị ở Việt Nam — với điều kiện giữ kỳ thi làm neo công bằng, đa dạng kênh tuyển sinh, và xử lý áp lực dịch chuyển xuống bậc dưới.
+          </div>
+          <div class="toulmin__cell t-backing">
+            <span class="toulmin__label">Hậu thuẫn</span>
+            Thông tư 24/2024/TT-BGDĐT (24/12/2024); Quy chế tuyển sinh THCS/THPT (08/01/2025); Thông tư 06/2025/TT-BGDĐT (19/03/2025); khảo sát VnExpress ~56.000 độc giả (88% muốn cố định 3 môn); số liệu tuyển sinh Sở GD-ĐT TP.HCM 2025–2026.
+          </div>
+          <div class="toulmin__cell t-qualifier">
+            <span class="toulmin__label">Giới hạn</span>
+            Đúng khi: hiểu "giảm thi" là giảm sức nặng quyết định của kỳ thi (không phải xóa kỳ thi), và khi có kênh tuyển sinh thay thế đủ tin cậy. Không đúng khi: kỳ vọng xóa bỏ kỳ thi hoặc khi áp lực đơn thuần dồn xuống bậc tiểu học.
+          </div>
+          <div class="toulmin__cell t-rebuttal">
+            <span class="toulmin__label">Phản bác</span>
+            Phản bác mạnh nhất: "Bỏ xét tuyển sớm khiến áp lực dồn vào một kỳ thi duy nhất — tệ hơn." Trả lời: bỏ xét tuyển sớm giảm số cửa ải phải nộp hồ sơ (năm 2023, hơn 375.500 thí sinh trúng tuyển sớm) và lý do chính thức là công bằng — không phải "mất cơ hội".
+          </div>
+        </div>
+      </div>
+    </section><!-- ============ THESIS PILLAR + PREMISES ============ -->
+    <section id="thesis">
+      <h2><span class="h2-emoji">📘</span>Luận đề</h2>
+
+      <div class="thesis-pillar">
+        <div class="thesis-pillar__label">📘 Luận đề được mài sắc</div>
+        <div class="thesis-pillar__statement">"Việt Nam có thể giảm thi cử sinh tử ở ngưỡng chuyển cấp — lớp 9 lên 10 và thi tốt nghiệp THPT — một cách khả thi về chính trị; đó là đòn bẩy rẻ nhất để phá cuộc đua trường chuyên."</div>
+        <div class="thesis-pillar__contract">Ta chấp nhận mệnh đề này làm điểm khởi đầu. Nhưng nó có đứng vững dưới sự soi xét của lịch sử cải cách thi 2024–2025 và sự dịch chuyển của áp lực?</div>
+      </div>
+
+      <h3><span class="diff diff-core">LÕI</span>Tiền đề chịu lực (khai quật được)</h3>
+      <p>Để Luận đề đứng vững, cả ba tiền đề sau phải đúng. Nếu một cái sụp, lập luận sụp theo.</p>
+
+      <div class="premise-walls">
+        <div class="premise-wall">
+          <div class="premise-wall__index">P1</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Đã có tiền lệ giảm thi</div>
+            2024–2025, hệ thống tự giảm số môn thi, số buổi thi, và bỏ xét tuyển sớm đại học mà không xảy ra khủng hoảng — năng lực giảm thi không phải điều chưa từng xảy ra.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P2</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Chính trị có lý do để giảm thi</div>
+            Giảm thi tiết kiệm chi phí tổ chức, giảm áp lực xã hội, và khớp với chương trình 2018 (đánh giá năng lực thay vì kiến thức). Khảo sát ~56.000 độc giả cho thấy <span class="evidence-trigger" data-evidence="ev-khaosat">88% muốn cố định 3 môn thi lớp 10</span> — không phải xóa kỳ thi, mà là giảm bất ngờ và biến động.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P3</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Văn hóa thi cử thích nghi với cấu trúc</div>
+            Khi cấu trúc lọc chọn giảm bớt, hành vi phụ huynh dịch chuyển: thí sinh thi lớp 10 chuyên TP.HCM giảm ~2.700 khi bỏ 22 lớp chuyên đại trà — nhưng áp lực đồng thời dồn xuống lớp 6, nên phải xử lý đồng bộ chuỗi ngưỡng.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CROSS-EXAMINATION ============ -->
+    <section id="xexam">
+      <h2><span class="h2-emoji">🔍</span>Thẩm vấn chéo</h2>
+      <p>Mỗi tiền đề nhận một câu hỏi riêng. Câu hỏi và tình huống bìa được hiện ngay; lời bào chữa nằm sau nút bấm. Hãy ngồi với nghi ngờ trước khi nghe lời cứu viện.</p>
+
+      <!-- P1 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P1 — ĐÃ CÓ TIỀN LỆ GIẢM THI?</span>
+          <span class="tag tag--lens">Kính: Thực nghiệm</span>
+          <span class="tag tag--rigor">Độ gắt: Ruồi trâu</span>
+        </div>
+        <div class="xexam-card__probe">Các quy chế 2024–2025 chỉ giảm số môn, không giảm sức nặng — thí sinh vẫn phải thi để vào lớp 10, và điểm chuẩn chuyên 2026 đã tăng vọt. Giảm thi là ảo giác chăng?</div>
+        <p class="xexam-card__setup">Đúng là thi tốt nghiệp 2025 còn <span class="evidence-trigger" data-evidence="ev-tt24">4 môn, 3 buổi</span> so với 6 môn trước đó. Nhưng nghịch lý nằm ở phía tuyển sinh: năm 2025, thí sinh lớp 10 chuyên TP.HCM xuống <span class="evidence-trigger" data-evidence="ev-diemchuan10">5.550 — thấp nhất 4 năm</span>; sang 2026 lại <span class="evidence-trigger" data-evidence="ev-chuyen2026">tăng gấp rưỡi</span>, tỷ lệ chọi Lê Hồng Phong lên 1/7,13. Nếu "giảm thi" thật, vì sao cơn sốt trường chuyên bùng lại?</p>
+        <button class="xexam-card__defense-btn" data-target="def-p1" aria-expanded="false">Nghe lời bào chữa</button>
+        <div class="xexam-card__defense" id="def-p1">
+          <span class="label">Tình huống bìa — Kính thực nghiệm</span>
+          <p>Một phụ huynh TP.HCM năm 2025: con đang học lớp 9, thành phố vừa dừng 22 lớp chuyên ở trường đại trà (theo quy định của Bộ). Không còn "chuyên ở trường thường", lựa chọn chuyên chỉ còn 2 trường trọng điểm — nên số người đăng ký giảm. Đến 2026, khi cơn sốt này tái lập, rõ ràng cấu trúc lọc chọn chưa thực sự thay đổi — người ta vẫn thi để giành chỗ hiếm.</p>
+          <span class="label" style="margin-top:12px">Lời bào chữa</span>
+          <p>Người bảo vệ Luận đề thừa nhận: năm 2025 giảm số thí sinh chủ yếu vì bỏ cơ hội tuyển chọn (22 lớp chuyên đại trà), chứ chưa phải vì văn hóa thi cử đổi. Nhưng chính điều đó chứng minh luận điểm mạnh hơn: <em>khi cơ hội lọc chọn giảm, số người chạy đua giảm theo</em> — hành vi phụ huynh thích nghi với cấu trúc. Sự bùng lại 2026 không bác bỏ giảm thi; nó chỉ cảnh báo rằng giảm thi phải đi kèm giảm cơ hội tuyển chọn và đa dạng kênh, nếu không chỉ là "giảm một năm rồi quay lại".</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đứng vững <em>có điều kiện</em>: P1 đúng nếu hiểu "giảm thi" là giảm vai trò quyết định của kỳ thi, không phải giảm một lần rồi thôi. → Biến số quyết định: <strong>sức nặng quyết định, không phải số môn thi.</strong></div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra steel-man:</strong> SM-1 ✓ (dùng số 5.550 và 2026 tăng gấp rưỡi — dữ liệu mạnh nhất phe phản đối); SM-2 ✓ (tấn công đúng mệnh đề "đã có tiền lệ giảm thi"); SM-3 ✓ (không phủ nhận cơn sốt 2026 tái lập).
+          </div>
+        </div>
+      </article>
+
+      <!-- P2 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P2 — CHÍNH TRỊ CÓ LÝ DO?</span>
+          <span class="tag tag--lens">Kính: Thực dụng</span>
+          <span class="tag tag--rigor">Độ gắt: Ruồi trâu</span>
+        </div>
+        <div class="xexam-card__probe">Bộ đã lùi bước ngay khi dư luận phản đối đề xuất "bốc thăm môn thi thứ ba" cuối 2024 — chứng tỏ chính trị yếu, không dám giảm thi thật?</div>
+        <p class="xexam-card__setup">Cuối tháng 9/2024, Bộ đề xuất môn thi thứ ba lớp 10 được <span class="evidence-trigger" data-evidence="ev-khaosat">bốc thăm ngẫu nhiên</span> — bị phản đối mạnh, Bộ rút lại. Khảo sát VnExpress: 83% thấy công bố môn thi cuối tháng 3 là muộn; 88% trong ~56.000 người muốn cố định 3 môn Toán/Văn/Ngoại ngữ. Một bộ trưởng lùi bước trước dư luận liệu có đủ can đảm cho cải cách lớn?</p>
+        <button class="xexam-card__defense-btn" data-target="def-p2" aria-expanded="false">Nghe lời bào chữa</button>
+        <div class="xexam-card__defense" id="def-p2">
+          <span class="label">Tình huống bìa — Kính thực dụng</span>
+          <p>Cuối 2024, một vụ việc lên sóng truyền thông: phụ huynh phản ứng dữ dội khi nghe "môn thi thứ ba sẽ được bốc thăm". Bộ phải họp khẩn, rút đề xuất, và 8/1/2025 ban hành Quy chế chốt môn thứ ba do Sở chọn, xoay vòng 3 năm. Bài học chính trị: không ai giữ nổi một cải cách mà dư luận đứng dậy.</p>
+          <span class="label" style="margin-top:12px">Lời bào chữa</span>
+          <p>Người bảo vệ Luận đề đọc sự kiện này ngược lại: việc lùi bước ở <em>cách chọn môn</em> không phải thất bại của giảm thi — Bộ vẫn giữ được nguyên tắc cốt lõi (môn thứ ba xoay vòng, không môn nào bất biến, công bố sớm), chỉ nhượng bộ về thủ tục. Chính trị khả thi không có nghĩa là cứng nhắc; nó nghĩa là có khả năng điều chỉnh giữa mục tiêu và sức ép. Điều đáng chú ý: sau phản đối, Bộ <em>vẫn</em> ban hành được Quy chế giảm thi — đó là năng lực chính trị thật, khác với "yếu".</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đứng vững: P2 đúng khi đọc "khả thi chính trị" là khả năng ban hành + điều chỉnh, không phải khả năng áp đặt. → Biến số quyết định: <strong>động lực ban hành, không phải độ cứng.</strong></div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra steel-man:</strong> SM-1 ✓ (công nhận phản đối dư luận là sức ép thật); SM-2 ✓ (tấn công đúng mệnh đề "chính trị có lý do"); SM-3 ✓ (dùng chính sự kiện rút bốc thăm — vũ khí mạnh nhất của phe phản đối — để phân tích).
+          </div>
+        </div>
+      </article>
+
+      <!-- P3 -->
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P3 — VĂN HÓA THÍCH NGHI CẤU TRÚC?</span>
+          <span class="tag tag--lens">Kính: Triết học</span>
+          <span class="tag tag--rigor">Độ gắt: Ruồi trâu</span>
+        </div>
+        <div class="xexam-card__probe">Giảm thi ở bậc trên, áp lực dồn xuống bậc dưới: bỏ lớp chuyên lớp 10 thì điểm chuẩn lớp 6 Trần Đại Nghĩa tăng vọt. Vậy "giảm thi" chỉ là đổi chỗ áp lực — có đúng không?</div>
+        <p class="xexam-card__setup">Năm 2025, trong khi thí sinh lớp 10 chuyên giảm, điểm chuẩn lớp 6 Trường Trần Đại Nghĩa lên <span class="evidence-trigger" data-evidence="ev-diemchuan6">73,25 — tăng 5,75 điểm so với năm trước, chọi 1/14</span>, cao nhất lịch sử khảo sát. Phụ huynh không bỏ cuộc đua; họ chỉ dời cuộc đua xuống sớm hơn — cho trẻ 11 tuổi. Đây có phải là phản chứng chí mạng cho luận đề?</p>
+        <button class="xexam-card__defense-btn" data-target="def-p3" aria-expanded="false">Nghe lời bào chữa</button>
+        <div class="xexam-card__defense" id="def-p3">
+          <span class="label">Tình huống bìa — Kính triết học</span>
+          <p>Một gia đình TP.HCM 2025: con đang học lớp 5, chưa kịp thở vì áp lực lớp 10, bố mẹ đã lo luyện khảo sát lớp 6 Trần Đại Nghĩa. Càng giảm tuyển chọn ở cấp trên, càng nhiều người đổ về tuyến sớm — nỗi lo chỉ thay hình đổi dạng.</p>
+          <span class="label" style="margin-top:12px">Lời bào chữa</span>
+          <p>Người bảo vệ Luận đề không chối bỏ dữ liệu này — trái lại, coi nó là bằng chứng cho phần chẩn đoán. Sự kiện điểm chuẩn lớp 6 tăng vọt xác nhận chính xác cơ chế luận đề nêu ở P3: <em>hành vi phụ huynh thích nghi với cấu trúc</em>. Áp lực không biến mất khi giảm một ngưỡng; nó tràn sang ngưỡng kế cận. Hệ quả thực dụng: giảm thi sinh tử chỉ thành công khi được thiết kế như một hệ thống — giảm đồng bộ vai trò lọc chọn ở lớp 6, lớp 10, tốt nghiệp và đại học — chứ không thể "vá" từng ngưỡng riêng lẻ. Dữ liệu Trần Đại Nghĩa không bác bỏ luận đề; nó chỉ rõ điều kiện triển khai.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đứng vững <em>bằng cách hấp thụ</em>: phản chứng mạnh nhất trở thành dữ liệu chẩn đoán của luận đề. → Biến số quyết định: <strong>tính đồng bộ của chuỗi ngưỡng, không phải một kỳ thi đơn lẻ.</strong></div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra steel-man:</strong> SM-1 ✓ (thừa nhận đầy đủ con số 73,25 và chọi 1/14); SM-2 ✓ (tấn công đúng mệnh đề "văn hóa thích nghi cấu trúc"); SM-3 ✓ (dùng dữ liệu gây bất lợi nhất cho luận đề để làm thước đo).
+          </div>
+        </div>
+      </article>
+    </section><!-- ============ COLLISION SPLIT-SCREEN ============ -->
+    <section id="collision">
+      <h2><span class="h2-emoji">⚔️</span>Phản đề — Va chạm</h2>
+      <p><strong>Tổng hợp của nghi ngờ.</strong> Sau ba cuộc thẩm vấn: P1 giữ được nhưng đòi "giảm sức nặng quyết định", không chỉ giảm số môn; P2 giữ được vì đọc "khả thi chính trị" là ban hành + điều chỉnh; P3 đúng nhưng phải xử lý đồng bộ chuỗi ngưỡng. Kiểu lỗi chung của Luận đề: <em>đọc "giảm thi" như giảm con số, mà quên rằng áp lực lọc chọn chỉ đổi chỗ khi không xử lý đồng bộ</em> — giữa "giảm 2 môn thi tốt nghiệp" và "con tôi hết áp lực" là cả một chuỗi ngưỡng dịch chuyển.</p>
+
+      <div class="collision">
+        <div class="collision__inner">
+          <div class="collision__side collision__side--thesis">
+            <span class="label">📘 Luận đề nứt ở đây</span>
+            <div class="heading">Nơi Luận đề thất bại</div>
+            <p>Nó nhìn thấy các văn bản 2024–2025 (giảm môn, bỏ xét tuyển sớm) và nhầm đó là giảm thi thật. Giữa "quy chế giảm 2 môn" và "phụ huynh bớt lo" là hiện tượng áp lực tràn xuống lớp 6 và bùng lại ở lớp 10 năm 2026.</p>
+          </div>
+          <div class="collision__divider" aria-hidden="true">
+            <span class="collision__zap">⚡</span>
+          </div>
+          <div class="collision__side collision__side--antithesis">
+            <span class="label">⚔️ Phản đề đứng vững ở đây</span>
+            <div class="heading">Nơi Phản đề giữ chân</div>
+            <p>Nó nhìn thấy áp lực chỉ đổi chỗ (điểm chuẩn lớp 6 tăng vọt, chuyên 2026 bùng lại) và nhầm đó là giảm thi bất khả thi. Nhưng nó không giải thích được: vì sao Bộ vẫn ban hành được ba văn bản giảm thi, vì sao thí sinh lớp 10 chuyên 2025 lại giảm tới ~2.700 em.</p>
+          </div>
+        </div>
+        <div class="collision__tension">
+          Biến số va chạm chính xác giữa Luận đề và Phản đề: <strong>cùng một hiện tượng "thí sinh lớp 10 chuyên 2025 giảm" — Luận đề đọc nó là "giảm thi có tác dụng", Phản đề đọc nó là "chỉ vì bỏ cơ hội tuyển chọn, rồi sẽ đổi chỗ".</strong>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SUBLATION (Synthesis) ============ -->
+    <section id="synthesis">
+      <h2><span class="h2-emoji">💎</span>Tổng hợp — Aufheben</h2>
+
+      <div class="sublation">
+        <div class="sublation__inner">
+          <div class="sublation__label">💎 Quỹ đạo: NGHỊCH LÝ · Aufheben (giảm sức nặng, không bỏ thi)</div>
+          <div class="sublation__statement">
+            Cả hai đều đúng — nhưng mỗi cái đúng cho một tầng vấn đề khác nhau. Phản đề đúng ở tầng <em>hiệu ứng hiện thời</em> (áp lực chỉ đổi chỗ: lớp 6 tăng vọt, chuyên 2026 bùng lại); Luận đề đúng ở tầng <em>năng lực hệ thống</em> (Bộ đã ban hành được ba văn bản giảm thi, thí sinh 2025 giảm ~2.700). Tổng hợp: giảm thi cử sinh tử ở ngưỡng chuyển cấp là khả thi chính trị — nhưng không phải bằng "bỏ thi", mà bằng <em>giảm sức nặng của thi</em>: giữ kỳ thi làm neo công bằng, thu nhỏ vai trò phân hạng bằng đa dạng kênh tuyển sinh, và xử lý đồng bộ toàn chuỗi ngưỡng để áp lực không chỉ đổi chỗ.
+          </div>
+          <div class="sublation__elevation">
+            <div class="sublation__elev-cell sublation__elev-cell--preserve">
+              <span class="lead">Bảo tồn từ Luận đề</span>
+              Hệ thống đã chứng minh năng lực giảm thi qua văn bản thật (Thông tư 24/2024, Quy chế 2025, Thông tư 06/2025). Thí sinh lớp 10 chuyên giảm ~2.700 khi cơ hội lọc chọn giảm — hành vi phụ huynh thích nghi cấu trúc. Chính trị có động lực: giảm chi phí, giảm áp lực xã hội.
+            </div>
+            <div class="sublation__elev-cell sublation__elev-cell--absorb">
+              <span class="lead">Hấp thụ từ Phản đề</span>
+              Áp lực chỉ đổi chỗ khi không xử lý đồng bộ — điểm chuẩn lớp 6 Trần Đại Nghĩa 73,25 (chọi 1/14) là minh chứng. Bốc thăm môn thi thứ ba bị dư luận đánh sập — giảm thi phải nhạy cảm với tâm lý. Cơn sốt chuyên 2026 bùng lại — giảm một ngưỡng đơn lẻ không bền.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3><span class="diff diff-core">LÕI</span>Ba đòn bẩy (levers)</h3>
+      <p><strong>Đòn bẩy 1 — Giữ kỳ thi, giảm vai trò phân hạng:</strong> thi tốt nghiệp đã chuyển sang học bạ 50% (Thông tư 24/2024) — mở rộng tinh thần đó xuống tuyển sinh lớp 10: kỳ thi không còn là thước đo duy nhất, điểm chuẩn không phải số phận.</p>
+      <p><strong>Đòn bẩy 2 — Đa dạng hóa kênh tuyển sinh thay cho "một kỳ thi quyết định":</strong> kế thừa tinh thần bỏ xét tuyển sớm (chống mua chỗ, chống chứng chỉ — vì bình đẳng), thiết kế kênh hồ sơ năng lực minh bạch để không còn cảnh nộp hồ sơ khắp nơi.</p>
+      <p><strong>Đòn bẩy 3 — Xử lý điểm chuyển dịch áp lực:</strong> giảm thi ở lớp 9→10 phải đi cùng kiểm soát tuyển chọn sớm ở lớp 6 (Trần Đại Nghĩa chọi 1/14) và phân luồng mềm trong trường — kẻo giảm thi chỉ đổi chỗ, không giảm.</p>
+    </section>
+
+    <!-- ============ PROOF ============ -->
+    <section id="proof">
+      <h2><span class="h2-emoji">🧪</span>Bằng chứng</h2>
+      <p><span class="diff diff-supp">BỔ TRỢ</span>Ba chuỗi bằng chứng độc lập hội tụ vào kết luận "khả thi nhưng phải giảm sức nặng, không bỏ thi". Thứ nhất, năng lực giảm thi: <span class="evidence-trigger" data-evidence="ev-tt24">thi tốt nghiệp THPT 2025 giảm từ 6 xuống 4 môn, giảm 1 buổi, học bạ chiếm 50%</span> (Thông tư 24/2024) — hệ thống đã làm, không phải đề xuất. Thứ hai, áp lực đổi chỗ: <span class="evidence-trigger" data-evidence="ev-diemchuan6">điểm chuẩn lớp 6 Trần Đại Nghĩa 2025 tăng vọt lên 73,25 (chọi 1/14)</span> ngay khi giảm tuyển chọn ở cấp trên — minh chứng áp lực chỉ đổi chỗ nếu thiếu đồng bộ. Thứ ba, sự bùng lại: <span class="evidence-trigger" data-evidence="ev-chuyen2026">tỷ lệ chọi lớp 10 chuyên Lê Hồng Phong 2026 lên 1/7,13</span> — cao hơn cả trước khi giảm.</p>
+
+      <div class="bar-chart">
+        <div class="bar-chart__title">Tỷ lệ chọi vào lớp 10 chuyên THPT Lê Hồng Phong (TP.HCM) — giảm 2025, bùng lại 2026 (n:1)</div>
+        <div class="bar-row"><span class="bar-label">2024 (trước đổi quy chế)</span><div class="bar-track"><div class="bar-fill" style="width:77%;background:var(--thesis)"></div></div><span class="bar-value">1/5,5</span></div>
+        <div class="bar-row"><span class="bar-label">2025 (sau bỏ 22 lớp chuyên)</span><div class="bar-track"><div class="bar-fill" style="width:69%;background:var(--synthesis)"></div></div><span class="bar-value">1/4,9</span></div>
+        <div class="bar-row"><span class="bar-label">2026 (cơn sốt quay lại)</span><div class="bar-track"><div class="bar-fill" style="width:100%;background:var(--antithesis)"></div></div><span class="bar-value">1/7,13</span></div>
+      </div>
+
+      <p><strong>Ca đối chứng.</strong> Thông tư 06/2025 bỏ xét tuyển sớm đại học từ 05/5/2025 — <span class="evidence-trigger" data-evidence="ev-tt06">tất cả phương thức xét tuyển chung một đợt, trừ tuyển thẳng tài năng vượt trội</span>. Bộ lý giải vì công bằng: trước đây học sinh có học lực trung bình vẫn trúng tuyển sớm bằng học bạ, còn người không có điều kiện thi chứng chỉ thì thiệt. Bài học: giảm "cửa ải" (số đợt xét tuyển) đổi lấy công bằng — nhưng dư luận dự báo áp lực dồn vào một kỳ thi duy nhất. Đây chính là biến số của tổng hợp: <em>đa dạng kênh, không cô đặc về một kỳ thi.</em></p>
+
+      <div class="flip-card" tabindex="0">
+        <div class="flip-card__inner">
+          <div class="flip-card__face flip-card__face--front">"Kỳ thi là công cụ công bằng duy nhất người nghèo tin — bỏ thi là bất công" — có đúng không?</div>
+          <div class="flip-card__face flip-card__face--back">Đúng ở mức đó, nên tổng hợp <em>không đề xuất bỏ thi</em>. Nó đề xuất giữ kỳ thi nhưng thu nhỏ vai trò phân hạng: đa dạng kênh (hồ sơ + thi + xét), giảm số môn/buổi, tăng trọng số học bạ. Chính Bộ GD-ĐT lấy "bình đẳng" làm lý do bỏ xét tuyển sớm — nghĩa là giảm thi có thể đi cùng công bằng, không mâu thuẫn.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RIPPLE POOL — Radiating Implication ============ -->
+    <section id="ripple">
+      <h2><span class="h2-emoji">🌊</span>Hệ quả lan tỏa</h2>
+
+      <h3><span class="diff diff-core">LÕI</span>Bài kiểm tra ứng dụng</h3>
+      <p>Phụ huynh TP.HCM năm 2026, con đang học lớp 5, nghe tin "Bộ giảm thi" rồi thấy điểm chuẩn lớp 6 Trần Đại Nghĩa 73,25. Áp dụng Tổng hợp: (1) đừng đọc "giảm thi" như một lời hứa giảm áp lực ở mọi cấp — hãy theo dõi cả chuỗi ngưỡng (lớp 6, lớp 10, tốt nghiệp, đại học), vì áp lực chỉ đổi chỗ nếu thiếu đồng bộ; (2) ủng hộ đa dạng kênh tuyển sinh (hồ sơ + thi + xét) thay vì "một kỳ thi quyết định số phận" — vì kỳ thi càng đơn nhất, trung tâm luyện thi càng hưởng lợi; (3) đặt câu hỏi đúng cho hệ thống: "giảm thi có đi kèm giảm cơ hội lọc chọn và kênh thay thế không?", thay vì "Bộ có giảm thêm môn nào không".</p>
+
+      <div class="ripple">
+        <div class="ripple__label">🌊 Nếu tổng hợp này đúng, thì…</div>
+        <div class="ripple__claim">Giảm thi cử sinh tử ở ngưỡng chuyển cấp là khả thi về chính trị — nhưng chỉ khi được thiết kế như một hệ thống đồng bộ: giữ kỳ thi làm neo công bằng, đa dạng kênh tuyển sinh, và xử lý áp lực dịch chuyển xuống bậc dưới.</div>
+        <div class="ripple__adjacent">Lãnh vực kề cận bị thách thức căn bản: <strong>tuyển chọn sớm ở bậc tiểu học.</strong> Nếu tổng hợp đúng, chính sách tuyển sinh lớp 6 (khảo sát năng lực, điểm chuẩn, chọi 1/14) là điểm tựa tiếp theo phải xử lý — kẻo giảm thi ở cấp trên chỉ đẩy cuộc đua xuống trẻ 11 tuổi. Vòng xoắn tiếp theo sẽ hỏi: tuyển chọn trẻ 11 tuổi có nên tồn tại không, và làm thế nào để giảm thi không đổi chỗ?</div>
+      </div>
+    </section>
+
+    <!-- ============ FALLACY LOG ============ -->
+    <section id="fallacy-log">
+      <h2><span class="h2-emoji">⚠️</span>Nhật ký ngụy biện</h2>
+      <p style="color:var(--text-muted);font-size:14px">Mỗi mục ghi một ngụy biện phát hiện trong quá trình thẩm vấn và việc viết lại nó buộc phải làm. Nhật ký đóng là tốt; nhật ký trống là không ổn.</p>
+      <details class="deep-dive fallacy-log">
+        <summary>⚠️ Nhật ký ngụy biện (3 phát hiện từ cuộc kiểm toán 12 ngụy biện)</summary>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">1. Ngụy biện quy kết quả một phần thành toàn phần (Cherry-picking) — từ cơn sốt chuyên 2026</div>
+          <p>Lấy riêng dữ liệu "tỷ lệ chọi 2026 tăng lên 1/7,13" để kết luận "giảm thi thất bại", mà bỏ qua việc thí sinh lớp 10 chuyên 2025 giảm ~2.700 em ngay khi bỏ 22 lớp chuyên đại trà. Hai mảnh dữ liệu phải đọc cùng nhau: giảm cơ hội lọc chọn thì giảm số người chạy đua — cơn sốt 2026 chỉ chứng tỏ sức nặng quyết định chưa giảm, không phải giảm thi vô dụng.</p>
+          <p><strong>Viết lại:</strong> Luận đề giờ lập luận trên cả hai mốc 2025 và 2026, và nhấn "giảm sức nặng quyết định" chứ không phải "giảm số môn rồi thôi".</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">2. Trượt dốc (Slippery Slope) — "bỏ môn thi thứ ba là bước đầu tiên đến hỗn loạn tuyển sinh"</div>
+          <p>Một số ý kiến cho rằng giảm môn thi hoặc xoay vòng môn thứ ba sẽ kéo theo sụp đổ hệ thống tuyển sinh. Không có chuỗi nhân quả nào chứng minh điều đó; trái lại, quy chế môn thứ ba xoay vòng 3 năm được Bộ công bố nhằm chống học lệch, học tủ — một mục tiêu giáo dục, không phải "hỗn loạn".</p>
+          <p><strong>Viết lại:</strong> phân tích giảm thi theo từng bước cụ thể (số môn, số buổi, trọng số học bạ, kênh tuyển sinh) thay vì sợ "trượt dốc".</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">3. Giải pháp hoàn hảo (Perfectionist Fallacy)</div>
+          <p>"Chỉ cần áp lực còn tồn tại ở một ngưỡng nào đó (lớp 6 chọi 1/14, chuyên 2026 bùng lại) thì giảm thi là vô nghĩa." Ngụy biện này đòi kết quả tuyệt đối, bỏ qua việc thi tốt nghiệp 2025 đã giảm 2 môn + 1 buổi, học bạ lên 50%, và hơn 375.500 thí sinh (2023) không còn phải nộp hồ sơ xét tuyển sớm khắp nơi.</p>
+          <p><strong>Viết lại:</strong> đánh giá giảm thi theo chiều hướng (giảm dần sức nặng qua từng ngưỡng), không theo tiêu chuẩn "áp lực bằng không".</p>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:16px">Ngụy biện đã kiểm toán nhưng không phát hiện: Rơm rạ, Ad Hominem, Kêu gọi uy tín (mọi số liệu đều có nguồn kiểm chứng), Motte-and-Bailey, Bỏ quên tỷ lệ nền (số thí sinh 5.550 là tuyệt đối, phải so với quy mô năm trước), Tu Quoque.</p>
+      </details>
+    </section>
+
+    <!-- ============ RESIDUALS ============ -->
+    <section id="residuals">
+      <h2><span class="h2-emoji">📉</span>Giới hạn &amp; Điều kiện biên</h2>
+      <div class="residuals">
+        <h4>Lập luận này không bao phủ</h4>
+        <ul>
+          <li><span class="residuals__badge">8a</span>Chi tiết kỹ thuật đề thi và chấm điểm (độ khó, phổ điểm, chống gian lận) — chỉ dừng ở mức số môn, số buổi, trọng số.</li>
+          <li><span class="residuals__badge">8a</span>Đo lường tác động chất lượng giáo dục thực tế của giảm thi — dữ liệu sau 2025 chưa đủ để đánh giá PISA hay năng lực học sinh.</li>
+          <li><span class="residuals__badge">8a</span>Toàn bộ bậc tiểu học ngoài Trần Đại Nghĩa — quỹ đạo tuyển chọn sớm ở các thành phố khác chưa khảo sát.</li>
+        </ul>
+        <h4>Yếu tố có thể bác bỏ (falsifiers)</h4>
+        <ul>
+          <li><span class="residuals__badge">8b</span>2026–2027 quay lại tăng số môn thi tốt nghiệp hoặc tái lập xét tuyển sớm đại học.</li>
+          <li><span class="residuals__badge">8b</span>Điểm chuẩn lớp 6 Trần Đại Nghĩa tăng liên tục 3 năm liền — áp lực cố định hẳn ở bậc tiểu học, chứng minh "đổi chỗ" thành "chuyển vĩnh viễn".</li>
+          <li><span class="residuals__badge">8b</span>Khảo sát phụ huynh cho thấy đa số đòi cố định môn thi cố định (không xoay vòng) — tức "giảm bất ngờ" thất bại, phải chuyển sang chiến lược ổn định thay vì xoay vòng.</li>
+        </ul>
+        <h4>Đòn bẩy độ tin cậy</h4>
+        <ul>
+          <li><span class="residuals__badge">8c</span>↑ Dữ liệu học bạ 50% có thật sự làm giảm áp lực học thêm và điểm số không — khảo sát phụ huynh sau 2 năm áp dụng.</li>
+          <li><span class="residuals__badge">8c</span>↑ Số liệu tuyển sinh lớp 10 và lớp 6 các thành phố lớn khác (Hà Nội, Đà Nẵng) để kiểm tra tính đồng bộ của chuỗi ngưỡng.</li>
+          <li><span class="residuals__badge">8c</span>↓ Nếu tỷ lệ chọi chuyên 2026 tăng tiếp và điểm chuẩn lớp 6 lên trên 75 — áp lực lọc chọn đang chạy nhanh hơn cải cách.</li>
+          <li><span class="residuals__badge">8c</span>↓ Nếu môn thi thứ ba được công bố muộn và thay đổi liên tục — nỗi lo học tủ, học lệch vẫn nguyên vẹn.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ QUIZ ============ -->
+    <section id="quiz" class="quiz">
+      <h2>🧠 Kiểm tra hiểu biết</h2>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:20px">Các câu hỏi kiểm tra khả năng bảo vệ <em>cấu trúc</em> của lập luận, không phải trí nhớ về ví dụ.</p>
+
+      <fieldset data-q="1" data-answer="c">
+        <legend>1. Theo lập luận này, vì sao "điểm chuẩn lớp 6 Trần Đại Nghĩa tăng vọt lên 73,25" không bác bỏ được đề xuất giảm thi cử sinh tử?</legend>
+        <label class="quiz-option"><input type="radio" name="q1" value="a">a. Vì con số 73,25 là sai.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="b">b. Vì lớp 6 không phải ngưỡng chuyển cấp.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="c">c. Vì nó chứng minh áp lực chỉ đổi chỗ khi giảm thi không đồng bộ — chính là biến số luận đề phải giải quyết, không phải phản chứng chí mạng.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="d">d. Vì tuyển sinh lớp 6 không quan trọng.</label>
+      </fieldset>
+
+      <fieldset data-q="2" data-answer="b">
+        <legend>2. Đề xuất "bốc thăm ngẫu nhiên môn thi thứ ba vào lớp 10" của Bộ GD-ĐT cuối 2024 kết thúc thế nào?</legend>
+        <label class="quiz-option"><input type="radio" name="q2" value="a">a. Được áp dụng chính thức từ năm 2025.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="b">b. Bị dư luận phản đối, Bộ rút lại và chốt môn thứ ba do địa phương chọn, xoay vòng không quá 3 năm.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="c">c. Được khảo sát ~56.000 độc giả ủng hộ tới 88%.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="d">d. Không bao giờ được đề xuất.</label>
+      </fieldset>
+
+      <fieldset data-q="3" data-answer="d">
+        <legend>3. Tổng hợp (Synthesis) đề xuất cách giảm thi cử sinh tử nào?</legend>
+        <label class="quiz-option"><input type="radio" name="q3" value="a">a. Xóa bỏ hoàn toàn kỳ thi chuyển cấp.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="b">b. Chỉ giảm số môn thi ở một ngưỡng, không cần đụng đến ngưỡng khác.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="c">c. Bỏ hết kỳ thi và dùng học bạ 100%.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="d">d. Giữ kỳ thi làm neo công bằng, thu nhỏ vai trò phân hạng, đa dạng kênh tuyển sinh, và xử lý đồng bộ chuỗi ngưỡng để áp lực không chỉ đổi chỗ.</label>
+      </fieldset>
+
+      <button class="quiz-check-btn" id="check-quiz">Chấm điểm</button>
+      <div class="quiz-score" id="quiz-score" role="status" aria-live="polite"></div>
+    </section>
+
+    <!-- ============ GATE 5 — CONTINUE OR ITERATE? ============ -->
+    <section id="gate5" class="gate5">
+      <div class="gate5__title">Gate 5 — Tiếp tục hay lặp lại?</div>
+      <div class="gate5__body">
+        Hệ quả lan tỏa tôi rút ra: <em>"Giảm thi cử sinh tử ở ngưỡng chuyển cấp là khả thi chính trị — nhưng bằng cách giảm sức nặng, không bỏ thi."</em> Bốn bước đi tiếp:
+      </div>
+      <ul class="gate5__options">
+        <li data-key="a"><strong>Xoắn tiếp</strong> — đưa hệ quả này thành luận đề mới: "tuyển chọn sớm trẻ 11 tuổi (khảo sát lớp 6) có nên tồn tại ở Việt Nam không?"</li>
+        <li data-key="b"><strong>Mài giũa</strong> — cải thiện một mục cụ thể (nêu rõ mục nào).</li>
+        <li data-key="c"><strong>Phân nhánh</strong> — lập luận riêng cho hệ quả lan tỏa: tác động của bỏ xét tuyển sớm đại học đối với các trường tuyển sinh bằng học bạ.</li>
+        <li data-key="d"><strong>Chốt lại</strong> — artifact này đứng như hiện tại.</li>
+      </ul>
+    </section>
+
+    <!-- ============ FOOTER ============ -->
+    <div class="footer-note">
+      <p><strong>Ghi chú phương pháp:</strong> Artifact này được rèn giũa bằng Socratic Dialectic Engine v2.2 — 10 trạng thái xuyên qua năm cổng phản hồi. Quỹ đạo NGHỊCH LÝ, độ sâu XOẮN ỐC VÒNG 3 (tổng hợp từ Vòng 2 làm luận đề cho Vòng 3).</p>
+      <p><em>Chế độ nghiên cứu: <span id="research-mode-value">web-enabled — các URL nguồn đã được tải và kiểm chứng trong phiên ngày 15/08/2026.</span></em></p>
+    </div>
+
+    </div><!-- /.canvas-inner -->
+  </main><!-- =====================================================
+       RIGHT PANEL — Marginalia (Evidence Locker + Philosophers' Notes)
+  ===================================================== -->
+  <aside class="marginalia" aria-label="Lề và Kho bằng chứng">
+
+    <div class="marginalia__title">🔎 Kho bằng chứng</div>
+    <div id="evidence-locker">
+      <div class="evidence-item" id="ev-tt24">
+        <span class="evidence-item__label">Thông tư 24/2024 — thi tốt nghiệp THPT 2025</span>
+        Từ năm 2025: kỳ thi tốt nghiệp THPT còn 4 môn (Toán, Ngữ văn bắt buộc + 2 môn tự chọn), 3 buổi thi (giảm 2 môn, giảm 1 buổi so với trước); điểm xét tốt nghiệp kết hợp học bạ 50-50 (trước 30%); bỏ cộng điểm chứng chỉ nghề, tin học, ngoại ngữ.
+        <div class="evidence-item__source">Bộ GD-ĐT, Thông tư 24/2024/TT-BGDĐT, 24/12/2024 · giaoduc.net.vn/gdvn-post248052.gd (đã tải 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-tt30">
+        <span class="evidence-item__label">Quy chế tuyển sinh THCS/THPT 2025 — thi lớp 10</span>
+        Thi tuyển lớp 10 gồm Toán, Ngữ văn và môn thứ ba do Sở GD-ĐT chọn từ các môn tính điểm; không chọn một môn quá 3 năm liên tiếp (chống học tủ, học lệch); công bố sau học kỳ I nhưng không muộn hơn 31/3. Đề xuất "bốc thăm môn thi thứ ba" (9/2024) bị dư luận phản đối và được rút lại.
+        <div class="evidence-item__source">Bộ GD-ĐT, Quy chế tuyển sinh THCS và THPT, 08/01/2025 · vnexpress.net/bo-giao-duc-chot-quy-che-thi-lop-10-4830885.html (đã tải 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-tt06">
+        <span class="evidence-item__label">Thông tư 06/2025 — bỏ xét tuyển sớm đại học</span>
+        Từ 05/05/2025, bỏ phương thức xét tuyển sớm trong tuyển sinh đại học; tất cả các phương thức xét tuyển chung một đợt theo lịch Bộ GD-ĐT (trừ xét tuyển thẳng cho thí sinh tài năng vượt trội). Lý do chính thức: đảm bảo công bằng, giảm tốn kém nguồn lực (năm 2023 có hơn 375.500 thí sinh trúng tuyển sớm; ~8 nguyện vọng trúng tuyển sớm mới có 1 nguyện vọng nhập học).
+        <div class="evidence-item__source">SGGP, 28/02/2025 · sggp.org.vn/tuyen-sinh-dai-hoc-nam-2025-ap-luc-khi-bo-xet-tuyen-som-post783842.html; Chinhphu.vn 06/01/2025 (trích qua tìm kiếm, 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-khaosat">
+        <span class="evidence-item__label">Khảo sát VnExpress — dư luận về môn thi thứ ba</span>
+        Khảo sát VnExpress với ~56.000 độc giả: 88% cho rằng nên cố định 3 môn Toán, Văn, Ngoại ngữ; khảo sát khác (3.200 người): gần 83% nhìn nhận công bố môn thứ ba cuối tháng 3 là muộn. Đề xuất bốc thăm môn thứ ba cuối 9/2024 bị phản đối mạnh.
+        <div class="evidence-item__source">VnExpress, 08/01/2025 · vnexpress.net/bo-giao-duc-chot-quy-che-thi-lop-10-4830885.html (đã tải 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-diemchuan10">
+        <span class="evidence-item__label">Thí sinh thi lớp 10 chuyên TP.HCM 2025</span>
+        5.550 thí sinh đăng ký thi lớp 10 chuyên (Lê Hồng Phong + Trần Đại Nghĩa) năm 2025 — thấp nhất 4 năm, giảm ~2.650–2.700 so với năm ngoái; một phần do TP.HCM dừng 22 lớp chuyên ở trường THPT đại trà theo quy định của Bộ GD-ĐT. Tỷ lệ chọi LHP 1/4,9 (năm ngoái 1/5,5), Trần Đại Nghĩa 1/3,5 (1/4,1).
+        <div class="evidence-item__source">VnExpress, 16/05/2025 · vnexpress.net/ty-le-choi-lop-10-chuyen-le-hong-phong-va-tran-dai-nghia-nam-2025-4885853.html (trích qua tìm kiếm, 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-diemchuan6">
+        <span class="evidence-item__label">Điểm chuẩn lớp 6 Trần Đại Nghĩa 2025</span>
+        Điểm chuẩn khảo sát năng lực lớp 6 Trường THCS-THPT Trần Đại Nghĩa (TP.HCM) năm học 2025-2026: 73,25 — tăng 5,75 điểm so với 67,5 năm trước; hơn 4.800 học sinh dự thi cho 350 chỉ tiêu (chọi ~1/14, cao nhất từ trước tới nay).
+        <div class="evidence-item__source">VietNamNet, 23/06/2025 · vietnamnet.vn/diem-chuan-lop-6-truong-thcs-thpt-tran-dai-nghia-tang-vot-2414249.html; Dân trí 23/06/2025 (trích qua tìm kiếm, 15/08/2026)</div>
+      </div>
+      <div class="evidence-item" id="ev-chuyen2026">
+        <span class="evidence-item__label">Cơn sốt chuyên TP.HCM 2026 bùng lại</span>
+        Điểm chuẩn lớp 10 chuyên TP.HCM 2026: phần lớn lớp chuyên Lê Hồng Phong và Trần Đại Nghĩa tăng 0,5–6,25 điểm so với 2025. LHP nhận hơn 5.700 hồ sơ (gấp rưỡi năm ngoái), tỷ lệ chọi tăng từ 1/4,9 lên 1/7,13; Trần Đại Nghĩa hơn 2.500 hồ sơ (tăng ~900), chọi 1/4,8.
+        <div class="evidence-item__source">VnExpress, 19/06/2026 · vnexpress.net/diem-chuan-lop-10-chuyen-tp-hcm-nam-2026-5087443.html (trích qua tìm kiếm, 15/08/2026)</div>
+      </div>
+    </div>
+
+    <div class="marginalia__title">📎 Ghi chú lề</div>
+    <div class="sidenote">
+      <span class="sidenote__label">Mức độ khó</span>
+      🟢 Lõi · 🟡 Bổ trợ · 🔴 Đào sâu — bỏ qua 🔴 ở lượt đọc đầu.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Giao thức đọc</span>
+      Đọc ba-panel và bản đồ lập luận trước. Nếu bạn đã bất đồng, nhảy thẳng tới Nhật ký ngụy biện và Giới hạn — nơi trung thực nhất của lập luận.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">"Giảm thi" ≠ "bỏ thi"</span>
+      Tổng hợp này không đề xuất xóa kỳ thi. Nó đề xuất giảm sức nặng quyết định — vì kỳ thi là công cụ công bằng mà người nghèo tin cậy. Giữ neo, đổi vai trò.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Áp lực không biến mất</span>
+      Điểm chuẩn lớp 6 Trần Đại Nghĩa 73,25 (chọi 1/14) năm 2025 là lời cảnh báo: giảm thi ở một ngưỡng mà không xử lý đồng bộ chỉ khiến cuộc đua đổi chỗ — xuống trẻ 11 tuổi.
+    </div>
+
+    <div class="marginalia__title">📝 Ghi chú của triết gia <small style="font-weight:400;text-transform:none;letter-spacing:0">(bôi đen văn bản để thêm)</small></div>
+    <div class="phil-notes" id="phil-notes">
+      <div class="phil-note__empty" id="phil-notes-empty">Chọn bất kỳ văn bản nào trong lập luận, rồi viết câu phản vấn của riêng bạn. Ghi chú chỉ lưu trên thiết bị này.</div>
+    </div>
+  </aside>
+
+</div><!-- /.layout -->
+
+<script>
+/* ============================================================
+   THEME TOGGLE with localStorage
+============================================================ */
+(function(){
+  const KEY = 'dialectic-theme';
+  const btn = document.getElementById('theme-toggle');
+  const stored = localStorage.getItem(KEY);
+  if (stored) document.documentElement.setAttribute('data-theme', stored);
+  const updateIcon = () => {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    btn.textContent = dark ? '☀' : '☾';
+    btn.title = dark ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối';
+  };
+  updateIcon();
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem(KEY, next);
+    updateIcon();
+  });
+})();
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function(){
+  const KEY = 'dialectic-focus';
+  const btn = document.getElementById('focus-toggle');
+  if (localStorage.getItem(KEY) === '1') document.documentElement.classList.add('focus-mode');
+  btn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('focus-mode');
+    localStorage.setItem(KEY, document.documentElement.classList.contains('focus-mode') ? '1' : '0');
+  });
+})();
+
+/* ============================================================
+   LANGUAGE TOGGLE (visible only if [lang="vi"] elements exist)
+============================================================ */
+(function(){
+  const KEY = 'dialectic-lang';
+  const btn = document.getElementById('lang-toggle');
+  const hasVi = document.querySelector('[lang="vi"]');
+  if (!hasVi) return;
+  btn.style.display = 'flex';
+  const stored = localStorage.getItem(KEY);
+  if (stored) document.documentElement.setAttribute('data-lang', stored);
+  const updateLabel = () => {
+    btn.textContent = document.documentElement.getAttribute('data-lang') === 'vi' ? 'VI' : 'EN';
+  };
+  updateLabel();
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-lang');
+    const next = cur === 'vi' ? 'en' : 'vi';
+    document.documentElement.setAttribute('data-lang', next);
+    localStorage.setItem(KEY, next);
+    updateLabel();
+  });
+})();
+
+/* ============================================================
+   READING PROGRESS BAR + PERCENTAGE + READING TIME
+============================================================ */
+(function(){
+  const fill = document.getElementById('progress-fill');
+  const pct  = document.getElementById('progress-percent');
+  const article = document.querySelector('.canvas');
+  const update = () => {
+    const rect = article.getBoundingClientRect();
+    const scrolled = window.scrollY - (rect.top + window.scrollY - 100);
+    const total = article.scrollHeight - window.innerHeight;
+    const p = Math.max(0, Math.min(1, scrolled / Math.max(1, total)));
+    const percent = Math.round(p * 100);
+    fill.style.width = percent + '%';
+    pct.textContent = percent + '%';
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  const wc = document.querySelector('.canvas').innerText.trim().split(/\s+/).length;
+  document.getElementById('reading-time').textContent = Math.max(1, Math.round(wc / 220));
+})();
+
+/* ============================================================
+   PARADOX METER — the metacognitive UI
+============================================================ */
+(function(){
+  const meter = document.getElementById('paradox-meter');
+  const fill  = document.getElementById('paradox-fill');
+  const val   = document.getElementById('paradox-value');
+  const hint  = document.getElementById('paradox-hint');
+
+  const zones = [
+    { id: 'hook',         pct: 5,   phase: 'thesis',    hint: 'Bắt đầu — luận đề đứng vững, chưa bị thách thức.' },
+    { id: 'scope',        pct: 8,   phase: 'thesis',    hint: 'Phạm vi đã thiết lập. Sự căng thẳng chưa được nêu tên.' },
+    { id: 'dialectic',    pct: 15,  phase: 'thesis',    hint: 'Ba vị trí đã tuyên bố. Va chạm đang tới.' },
+    { id: 'argument-map', pct: 20,  phase: 'thesis',    hint: 'Kiến trúc lập luận hiện rõ.' },
+    { id: 'thesis',       pct: 25,  phase: 'thesis',    hint: 'Luận đề được mài sắc; tiền đề được khai quật.' },
+    { id: 'xexam',        pct: 65,  phase: 'probe',     hint: 'Đang thẩm vấn chéo — hãy ngồi với nghi ngờ.' },
+    { id: 'collision',    pct: 95,  phase: 'collision', hint: 'Đỉnh điểm bất hòa — Luận đề và Phản đề va chạm.' },
+    { id: 'synthesis',    pct: 55,  phase: 'synthesis', hint: 'Aufheben — căng thẳng tan ra ở tầng cao hơn.' },
+    { id: 'proof',        pct: 40,  phase: 'synthesis', hint: 'Tổng hợp được neo vào bằng chứng.' },
+    { id: 'ripple',       pct: 25,  phase: 'ripple',    hint: 'Lan tỏa ra các lãnh vực kề cận.' },
+    { id: 'fallacy-log',  pct: 15,  phase: 'ripple',    hint: 'Kiểm toán lại cuộc kiểm toán.' },
+    { id: 'residuals',    pct: 10,  phase: 'ripple',    hint: 'Tự đánh giá trung thực.' },
+    { id: 'quiz',         pct: 5,   phase: 'ripple',    hint: 'Kiểm tra nắm bắt cấu trúc của bạn.' }
+  ];
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const z = zones.find(x => x.id === e.target.id);
+      if (!z) return;
+      fill.style.width = z.pct + '%';
+      val.textContent  = z.pct + '%';
+      hint.textContent = z.hint;
+      meter.dataset.phase = z.phase;
+    });
+  }, { rootMargin: '-25% 0px -60% 0px', threshold: 0 });
+
+  zones.forEach(z => {
+    const el = document.getElementById(z.id);
+    if (el) io.observe(el);
+  });
+})();
+
+/* ============================================================
+   COMPASS + TOC via IntersectionObserver
+============================================================ */
+(function(){
+  const compassNodes = document.querySelectorAll('.compass-node[data-target]');
+  const tocLinks     = document.querySelectorAll('.toc a[data-target]');
+  const cmap = new Map();
+  compassNodes.forEach(a => cmap.set(a.dataset.target, a));
+  const tmap = new Map();
+  tocLinks.forEach(a => tmap.set(a.dataset.target, a));
+
+  const sectionIds = new Set([
+    ...Array.from(cmap.keys()),
+    ...Array.from(tmap.keys())
+  ]);
+  const compassAlias = {
+    'hook': 'scope', 'argument-map': 'thesis', 'dialectic': 'thesis',
+    'proof': 'synthesis', 'fallacy-log': 'ripple',
+    'residuals': 'ripple', 'quiz': 'ripple', 'gate5': 'ripple'
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const tocLink = tmap.get(e.target.id);
+      if (tocLink) tocLink.classList.add('active');
+      const cTarget = cmap.has(e.target.id) ? e.target.id : compassAlias[e.target.id];
+      compassNodes.forEach(n => n.classList.remove('active'));
+      const cNode = cmap.get(cTarget);
+      if (cNode) cNode.classList.add('active');
+    });
+  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+  document.querySelectorAll('.canvas section[id]').forEach(el => {
+    if (sectionIds.has(el.id) || compassAlias[el.id]) io.observe(el);
+  });
+
+  document.querySelectorAll('.compass-node[data-target], .toc a[data-target]').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const target = document.getElementById(a.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();
+
+/* ============================================================
+   CROSS-EXAMINATION — "Hear the Defense" toggle
+============================================================ */
+(function(){
+  document.querySelectorAll('.xexam-card__defense-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      const panel = document.getElementById(targetId);
+      if (!panel) return;
+      const isOpen = panel.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      btn.textContent = isOpen ? 'Ẩn lời bào chữa' : 'Nghe lời bào chữa';
+    });
+  });
+})();
+
+/* ============================================================
+   EVIDENCE LOCKER — click trigger, highlight sidebar entry
+============================================================ */
+(function(){
+  const triggers = document.querySelectorAll('.evidence-trigger');
+  triggers.forEach(t => {
+    t.setAttribute('tabindex', '0');
+    t.setAttribute('role', 'button');
+    const activate = () => {
+      const id = t.dataset.evidence;
+      const item = document.getElementById(id);
+      if (!item) return;
+      document.querySelectorAll('.evidence-item.highlight').forEach(x => x.classList.remove('highlight'));
+      document.querySelectorAll('.evidence-trigger.active').forEach(x => x.classList.remove('active'));
+      item.classList.add('highlight');
+      t.classList.add('active');
+      item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        item.classList.remove('highlight');
+        t.classList.remove('active');
+      }, 4000);
+    };
+    t.addEventListener('click', activate);
+    t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+  });
+})();
+
+/* ============================================================
+   PHILOSOPHERS' NOTE — text-selection triggers counter-probe
+============================================================ */
+(function(){
+  const KEY = 'dialectic-phil-notes';
+  const popup     = document.getElementById('phil-popup');
+  const popupQ    = document.getElementById('phil-popup__quote');
+  const popupIn   = document.getElementById('phil-popup__input');
+  const btnSave   = document.getElementById('phil-popup__save');
+  const btnCancel = document.getElementById('phil-popup__cancel');
+  const notesEl   = document.getElementById('phil-notes');
+  const emptyEl   = document.getElementById('phil-notes-empty');
+  const canvas    = document.querySelector('.canvas');
+
+  let pendingQuote = '';
+
+  const load = () => {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { return []; }
+  };
+  const save = (notes) => localStorage.setItem(KEY, JSON.stringify(notes));
+
+  const render = () => {
+    const notes = load();
+    notesEl.innerHTML = '';
+    if (notes.length === 0){
+      notesEl.appendChild(emptyEl);
+      return;
+    }
+    notes.forEach((n, i) => {
+      const el = document.createElement('div');
+      el.className = 'phil-note';
+      el.innerHTML =
+        '<button class="phil-note__del" aria-label="Xóa ghi chú" title="Xóa">✕</button>' +
+        (n.quote ? '<div class="phil-note__quote">"' + escapeHtml(n.quote) + '"</div>' : '') +
+        '<div class="phil-note__body">' + escapeHtml(n.body) + '</div>';
+      el.querySelector('.phil-note__del').addEventListener('click', () => {
+        const cur = load();
+        cur.splice(i, 1);
+        save(cur);
+        render();
+      });
+      notesEl.appendChild(el);
+    });
+  };
+
+  const escapeHtml = (s) => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  const closePopup = () => {
+    popup.classList.remove('show');
+    popupIn.value = '';
+    pendingQuote = '';
+  };
+
+  canvas.addEventListener('mouseup', () => {
+    const sel = window.getSelection();
+    const text = sel ? sel.toString().trim() : '';
+    if (text.length < 8) return;
+    if (!sel.anchorNode || !canvas.contains(sel.anchorNode)) return;
+    pendingQuote = text;
+    popupQ.textContent = text.length > 160 ? text.slice(0, 160) + '…' : text;
+    const range = sel.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    const pTop = window.scrollY + rect.bottom + 8;
+    const pLeft = Math.min(window.innerWidth - 340, rect.left + window.scrollX);
+    popup.style.top  = pTop  + 'px';
+    popup.style.left = Math.max(16, pLeft) + 'px';
+    popup.classList.add('show');
+    setTimeout(() => popupIn.focus(), 60);
+  });
+
+  btnCancel.addEventListener('click', closePopup);
+  btnSave.addEventListener('click', () => {
+    const body = popupIn.value.trim();
+    if (!body) { closePopup(); return; }
+    const notes = load();
+    notes.push({ quote: pendingQuote, body: body, ts: Date.now() });
+    save(notes);
+    render();
+    closePopup();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && popup.classList.contains('show')) closePopup();
+  });
+  document.addEventListener('click', (e) => {
+    if (popup.classList.contains('show') && !popup.contains(e.target) && !window.getSelection().toString().trim()) {
+      closePopup();
+    }
+  });
+
+  render();
+})();
+
+/* ============================================================
+   QUIZ — self-grading with localStorage
+============================================================ */
+(function(){
+  const KEY = 'dialectic-quiz';
+  const fieldsets = document.querySelectorAll('.quiz fieldset');
+  const btn = document.getElementById('check-quiz');
+  const scoreEl = document.getElementById('quiz-score');
+
+  fieldsets.forEach(fs => {
+    fs.querySelectorAll('.quiz-option').forEach(label => {
+      const input = label.querySelector('input');
+      input.addEventListener('change', () => {
+        fs.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('selected'));
+        if (input.checked) label.classList.add('selected');
+        persist();
+      });
+    });
+  });
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+    Object.entries(saved).forEach(([q, v]) => {
+      const input = document.querySelector('input[name="' + q + '"][value="' + v + '"]');
+      if (input){ input.checked = true; input.closest('.quiz-option').classList.add('selected'); }
+    });
+  } catch(e){}
+
+  function persist(){
+    const state = {};
+    fieldsets.forEach(fs => {
+      const q = 'q' + fs.dataset.q;
+      const sel = fs.querySelector('input:checked');
+      if (sel) state[q] = sel.value;
+    });
+    localStorage.setItem(KEY, JSON.stringify(state));
+  }
+
+  btn.addEventListener('click', () => {
+    let correct = 0;
+    fieldsets.forEach(fs => {
+      const correctVal = fs.dataset.answer;
+      const chosen = fs.querySelector('input:checked');
+      fs.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('correct-answer', 'incorrect-answer'));
+      const correctLabel = fs.querySelector('input[value="' + correctVal + '"]').closest('.quiz-option');
+      correctLabel.classList.add('correct-answer');
+      if (chosen){
+        if (chosen.value === correctVal) correct++;
+        else chosen.closest('.quiz-option').classList.add('incorrect-answer');
+      }
+    });
+    const total = fieldsets.length;
+    scoreEl.className = 'quiz-score show';
+    if (correct === total){ scoreEl.textContent = 'Hoàn hảo — ' + correct + '/' + total + '. Bạn có thể bảo vệ lập luận này.'; scoreEl.classList.add('pass'); }
+    else if (correct >= Math.ceil(total * 0.6)){ scoreEl.textContent = correct + '/' + total + '. Đọc lại bản đồ lập luận và nhật ký ngụy biện.'; scoreEl.classList.add('mid'); }
+    else { scoreEl.textContent = correct + '/' + total + '. Bắt đầu lại từ "Thoáng nhìn".'; scoreEl.classList.add('fail'); }
+  });
+})();
+
+/* ============================================================
+   SCROLL POSITION PERSIST
+============================================================ */
+(function(){
+  const KEY = 'dialectic-scroll';
+  const saved = parseInt(localStorage.getItem(KEY) || '0', 10);
+  if (saved > 0) window.scrollTo(0, saved);
+  let t;
+  window.addEventListener('scroll', () => {
+    clearTimeout(t);
+    t = setTimeout(() => localStorage.setItem(KEY, String(window.scrollY)), 200);
+  }, { passive: true });
+})();
+</script>
+
+</body>
+</html>
