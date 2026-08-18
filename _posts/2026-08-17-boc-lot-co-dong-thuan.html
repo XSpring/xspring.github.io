@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bóc lột có đồng thuận — Cơ chế vận hành trong thế giới hiện đại</title>
+<meta name="description" content="Khảo cứu cơ chế trích xuất hàng chục năm lao động tương lai qua tín dụng nhà ở Việt Nam: chia ô, định giá kỳ vọng, thế chấp tương lai, khóa đạo đức, cổ đông hóa, chuyền giao liên thế hệ.">
+
+<!-- Nạp font Serif hiển thị tiếng Việt rất tốt, không lo trôi dấu -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Long-form note — self-contained stylesheet, no dependencies.
+   Colours are CSS custom properties so inline SVG figures theme
+   correctly in both schemes. Never hard-code a colour in an SVG.
+   ============================================================ */
+
+:root {
+  --bg:        #fbfaf7;
+  --surface:   #ffffff;
+  --surface-2: #f3f1ec;
+  --ink:       #1c1b19;
+  --ink-soft:  #4a4741;
+  --ink-faint: #85807a;
+  --rule:      #ddd8d0;
+  --rule-soft: #ebe7e0;
+  --accent:    #8c2f1d;
+  --accent-bg: #f7ece8;
+  --cool:      #2c5468;
+  --cool-bg:   #e9f0f3;
+  --warn:      #8a6d18;
+  --warn-bg:   #faf3df;
+  --good:      #2f5d3a;
+
+  --serif: "Iowan Old Style", "Charter", "Georgia", "Times New Roman", serif;
+  --sans:  ui-sans-serif, -apple-system, "Segoe UI", "Inter", "Helvetica Neue", sans-serif;
+  --mono:  ui-monospace, "SF Mono", "Cascadia Code", Menlo, monospace;
+
+  --measure: 34rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:        #14150f;
+    --surface:   #1b1c16;
+    --surface-2: #23241d;
+    --ink:       #e8e5dc;
+    --ink-soft:  #b6b2a6;
+    --ink-faint: #837f74;
+    --rule:      #35362d;
+    --rule-soft: #292a22;
+    --accent:    #d98368;
+    --accent-bg: #2a1d18;
+    --cool:      #7fb0c6;
+    --cool-bg:   #16242b;
+    --warn:      #d4b45c;
+    --warn-bg:   #292213;
+    --good:      #7cae88;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; scroll-padding-top: 2rem; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 1.075rem;
+  line-height: 1.68;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: 'Merriweather', Georgia, 'Times New Roman', serif;
+}
+
+/* ---------- layout ---------- */
+
+.wrap {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media (min-width: 68rem) {
+  .wrap { grid-template-columns: minmax(0,1fr) 15rem; align-items: start; }
+  .note { grid-column: 1; }
+  .toc  { grid-column: 2; position: sticky; top: 2rem; }
+}
+
+.note > * { max-width: var(--measure); }
+.note > .full, .note > figure, .note > .statstrip,
+.note > .tablewrap, .note > .rules { max-width: 46rem; }
+
+/* ---------- table of contents ---------- */
+
+.toc {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  border-left: 2px solid var(--rule);
+  padding-left: 1rem;
+  max-height: calc(100vh - 4rem);
+  overflow-y: auto;
+}
+.toc h2 {
+  font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-faint); margin: 0 0 0.85rem; font-weight: 600;
+}
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc li { margin: 0 0 0.5rem; }
+.toc li.sub { padding-left: 0.9rem; font-size: 0.74rem; }
+.toc a { color: var(--ink-soft); text-decoration: none; }
+.toc a:hover { color: var(--accent); }
+
+@media (max-width: 67.99rem) {
+  .toc {
+    border-left: none; border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule); padding: 1.25rem 0; max-height: none;
+  }
+}
+
+/* ---------- frame ---------- */
+
+.kicker {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); margin: 0 0 1rem;
+}
+.kicker .sep { color: var(--ink-faint); margin: 0 0.5rem; }
+.kicker .subject { color: var(--ink-faint); font-weight: 500; }
+
+h1 {
+  font-size: clamp(2rem, 5vw, 2.9rem);
+  line-height: 1.12; letter-spacing: -0.02em;
+  font-weight: 600; margin: 0 0 1rem;
+}
+
+.dateline {
+  font-family: var(--sans); font-size: 0.78rem;
+  color: var(--ink-faint); margin: 0 0 2rem;
+}
+
+.lede {
+  font-size: 1.2rem; line-height: 1.58; color: var(--ink-soft);
+  margin: 0 0 2.5rem;
+}
+.lede strong { color: var(--ink); font-weight: 600; }
+
+/* ---------- stat strip ---------- */
+
+.statstrip {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 1px; background: var(--rule);
+  border: 1px solid var(--rule); margin: 0 0 3rem;
+}
+@media (max-width: 40rem) { .statstrip { grid-template-columns: repeat(2, 1fr); } }
+.stat { background: var(--surface); padding: 1.1rem 1rem; }
+.stat .v {
+  display: block; font-family: var(--sans); font-size: 1.5rem;
+  font-weight: 650; line-height: 1.1; letter-spacing: -0.02em;
+  color: var(--accent); margin-bottom: 0.35rem;
+}
+.stat .l {
+  display: block; font-family: var(--sans); font-size: 0.74rem;
+  line-height: 1.35; color: var(--ink-faint);
+}
+
+/* ---------- headings ---------- */
+
+h2 {
+  font-size: 1.5rem; line-height: 1.25; font-weight: 600;
+  letter-spacing: -0.015em; margin: 3.5rem 0 1rem;
+  padding-top: 1.25rem; border-top: 1px solid var(--rule);
+}
+h3 {
+  font-size: 1.13rem; font-weight: 650; margin: 2.25rem 0 0.75rem;
+}
+h2 .num, h3 .num { color: var(--ink-faint); font-weight: 500; margin-right: 0.4em; }
+
+p { margin: 0 0 1.15rem; }
+
+a { color: var(--accent); text-decoration: none; border-bottom: 1px solid var(--rule); }
+a:hover { border-bottom-color: var(--accent); }
+
+strong { font-weight: 650; }
+
+/* ---------- callouts ---------- */
+
+.callout {
+  margin: 2rem 0; padding: 1.15rem 1.35rem;
+  background: var(--surface); border: 1px solid var(--rule);
+  border-left: 3px solid var(--ink-faint);
+  font-size: 0.98rem;
+}
+.callout .ct {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 650;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-faint); margin: 0 0 0.5rem;
+}
+.callout p:last-child { margin-bottom: 0; }
+
+.callout.caveat  { border-left-color: var(--warn); background: var(--warn-bg); }
+.callout.caveat .ct  { color: var(--warn); }
+.callout.key     { border-left-color: var(--accent); background: var(--accent-bg); }
+.callout.key .ct     { color: var(--accent); }
+.callout.reading { border-left-color: var(--cool); background: var(--cool-bg); }
+.callout.reading .ct { color: var(--cool); }
+.callout.scope   { border-left-color: var(--ink-faint); background: var(--surface-2); }
+.callout.precision { border-left-color: var(--good); background: var(--surface-2); }
+.callout.precision .ct { color: var(--good); }
+
+/* ---------- pull quote ---------- */
+
+blockquote.pull {
+  margin: 2.25rem 0; padding: 0 0 0 1.35rem;
+  border-left: 3px solid var(--accent);
+  font-size: 1.12rem; line-height: 1.5; font-style: italic;
+  color: var(--ink);
+}
+blockquote.pull p { margin: 0 0 0.6rem; }
+blockquote.pull cite {
+  display: block; font-family: var(--sans); font-size: 0.76rem;
+  font-style: normal; color: var(--ink-faint); letter-spacing: 0.01em;
+}
+
+/* ---------- tables ---------- */
+
+.tablewrap { margin: 2rem 0; overflow-x: auto; }
+table {
+  width: 100%; border-collapse: collapse;
+  font-family: var(--sans); font-size: 0.86rem; line-height: 1.45;
+}
+th {
+  text-align: left; font-weight: 650; font-size: 0.72rem;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-faint);
+  padding: 0.6rem 0.9rem 0.6rem 0; border-bottom: 1.5px solid var(--rule);
+  vertical-align: bottom;
+}
+td {
+  padding: 0.75rem 0.9rem 0.75rem 0; border-bottom: 1px solid var(--rule-soft);
+  vertical-align: top; color: var(--ink-soft);
+}
+td:first-child { color: var(--ink); font-weight: 550; }
+.tcap {
+  font-family: var(--sans); font-size: 0.74rem; color: var(--ink-faint);
+  margin-top: 0.6rem;
+}
+
+/* ---------- figures ---------- */
+
+figure {
+  margin: 2.75rem 0; padding: 1.35rem;
+  background: var(--surface); border: 1px solid var(--rule);
+}
+figure .fig-title {
+  font-family: var(--sans); font-size: 0.95rem; font-weight: 650;
+  margin: 0 0 0.2rem; color: var(--ink);
+}
+figure .fig-sub {
+  font-family: var(--sans); font-size: 0.78rem; color: var(--ink-faint);
+  margin: 0 0 1.1rem;
+}
+figure svg { display: block; width: 100%; height: auto; }
+figure figcaption {
+  font-family: var(--sans); font-size: 0.74rem; line-height: 1.5;
+  color: var(--ink-faint); margin-top: 1rem;
+  padding-top: 0.75rem; border-top: 1px solid var(--rule-soft);
+}
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* SVG helper classes — figures must use these, never literal colours */
+.s-ink   { fill: var(--ink); }
+.s-soft  { fill: var(--ink-soft); }
+.s-faint { fill: var(--ink-faint); }
+.s-acc   { fill: var(--accent); }
+.s-cool  { fill: var(--cool); }
+.s-warn  { fill: var(--warn); }
+.s-panel { fill: var(--surface-2); }
+.s-accbg { fill: var(--accent-bg); }
+.s-coolbg{ fill: var(--cool-bg); }
+.k-rule  { stroke: var(--rule); fill: none; }
+.k-ink   { stroke: var(--ink); fill: none; }
+.k-acc   { stroke: var(--accent); fill: none; }
+.k-cool  { stroke: var(--cool); fill: none; }
+.k-faint { stroke: var(--ink-faint); fill: none; }
+.k-warn  { stroke: var(--warn); fill: none; }
+.s-good  { fill: var(--good); }
+.t-label { font-family: var(--sans); font-size: 11px; }
+.t-small { font-family: var(--sans); font-size: 9.5px; }
+.t-big   { font-family: var(--sans); font-size: 18px; font-weight: 650; }
+.t-head  { font-family: var(--sans); font-size: 10px; font-weight: 650;
+           letter-spacing: 0.09em; }
+
+/* ---------- numbered rule cards ---------- */
+
+.rules { margin: 2.25rem 0; display: grid; gap: 1px; background: var(--rule);
+         border: 1px solid var(--rule); }
+.rule { background: var(--surface); padding: 1.05rem 1.25rem;
+        display: grid; grid-template-columns: 2.25rem 1fr; gap: 0.5rem; }
+.rule .n {
+  font-family: var(--sans); font-size: 0.92rem; font-weight: 650;
+  color: var(--accent); line-height: 1.4;
+}
+.rule .h { font-family: var(--sans); font-size: 0.95rem; font-weight: 650;
+           margin: 0 0 0.3rem; line-height: 1.35; }
+.rule .d { font-family: var(--sans); font-size: 0.84rem; color: var(--ink-soft);
+           margin: 0; line-height: 1.5; }
+.rules-group {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 650;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-faint);
+  background: var(--surface-2); padding: 0.55rem 1.25rem;
+}
+
+/* ---------- closing + summary ---------- */
+
+.summary { margin: 2.25rem 0; padding: 1.35rem; background: var(--surface-2);
+           border: 1px solid var(--rule); }
+.summary .ct {
+  font-family: var(--sans); font-size: 0.72rem; font-weight: 650;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-faint);
+  margin: 0 0 0.75rem;
+}
+.summary ol { margin: 0; padding-left: 1.2rem; font-size: 0.95rem; }
+.summary li { margin-bottom: 0.5rem; }
+
+/* ---------- sources ---------- */
+
+.sources { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); }
+.sources h2 { border: none; padding-top: 0; margin-top: 0; font-size: 1.1rem; }
+.sources ol { font-family: var(--sans); font-size: 0.82rem; line-height: 1.55;
+              padding-left: 1.4rem; color: var(--ink-soft); }
+.sources li { margin-bottom: 0.6rem; }
+.sources .tier {
+  display: inline-block; font-size: 0.62rem; font-weight: 650;
+  letter-spacing: 0.06em; padding: 0.05rem 0.35rem; border-radius: 2px;
+  border: 1px solid var(--rule); color: var(--ink-faint); margin-right: 0.4rem;
+  vertical-align: 1px;
+}
+
+.limits { margin-top: 2.5rem; font-family: var(--sans); font-size: 0.82rem;
+          line-height: 1.55; color: var(--ink-faint); }
+.limits h2 { border: none; padding-top: 0; font-size: 1.1rem; color: var(--ink); }
+
+/* ---------- visible refs ---------- */
+
+a.ref {
+  font-family: var(--sans); font-size: 0.68em; font-weight: 600;
+  vertical-align: super; line-height: 0; margin-left: 0.1em;
+  border: none; color: var(--accent); text-decoration: none;
+}
+a.ref:hover { text-decoration: underline; }
+.backref { border: none; color: var(--ink-faint); margin-left: 0.3rem; }
+.sources .supports {
+  display: block; font-size: 0.94em; color: var(--ink-faint); font-style: italic;
+  margin-top: 0.15rem;
+}
+
+/* ---------- epistemic status ---------- */
+
+.status {
+  margin: 0 0 2.5rem; padding: 1.1rem 1.3rem;
+  background: var(--surface-2); border: 1px solid var(--rule);
+  font-family: var(--sans); font-size: 0.82rem; line-height: 1.5;
+}
+.status-label {
+  font-size: 0.66rem; font-weight: 700; letter-spacing: 0.13em;
+  color: var(--warn); margin: 0 0 0.75rem; font-family: var(--mono);
+}
+.status dl { margin: 0; display: grid; grid-template-columns: 9rem 1fr; gap: 0.4rem 1rem; }
+.status dt { font-weight: 650; color: var(--ink-faint); }
+.status dd { margin: 0; color: var(--ink-soft); }
+@media (max-width: 34rem) { .status dl { grid-template-columns: 1fr; gap: 0.1rem; }
+  .status dd { margin-bottom: 0.5rem; } }
+
+/* ---------- reading paths ---------- */
+
+.paths { margin: 0 0 3rem; }
+.paths-title {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 650;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--ink-faint); margin: 0 0 0.75rem;
+}
+.paths ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px;
+            background: var(--rule); border: 1px solid var(--rule); }
+.paths li { margin: 0; }
+.paths a {
+  display: block; background: var(--surface); padding: 0.85rem 1.1rem;
+  border: none; text-decoration: none; color: inherit;
+}
+.paths a:hover { background: var(--accent-bg); }
+.p-n { display: block; font-family: var(--sans); font-size: 0.65rem; font-weight: 700;
+       letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.p-h { display: block; font-family: var(--sans); font-size: 0.95rem; font-weight: 650;
+       margin: 0.15rem 0 0.15rem; }
+.p-d { display: block; font-family: var(--sans); font-size: 0.82rem; color: var(--ink-soft); }
+
+/* ---------- depth layers ---------- */
+
+details.deep {
+  margin: 1.75rem 0; border: 1px solid var(--rule);
+  background: var(--surface); font-size: 0.97rem;
+}
+details.deep > summary {
+  cursor: pointer; padding: 0.75rem 1.15rem; list-style: none;
+  font-family: var(--sans); font-size: 0.88rem; font-weight: 650;
+  color: var(--cool); background: var(--cool-bg);
+}
+details.deep > summary::-webkit-details-marker { display: none; }
+details.deep > summary::before { content: "📚 "; }
+details.deep[open] > summary { border-bottom: 1px solid var(--rule); }
+.deep-tag {
+  float: right; font-weight: 500; font-size: 0.72rem;
+  color: var(--ink-faint); letter-spacing: 0.04em;
+}
+details.deep > *:not(summary) { padding: 0 1.15rem; }
+details.deep > p:first-of-type { padding-top: 1rem; }
+details.deep > *:last-child { padding-bottom: 1rem; }
+@media (max-width: 34rem) { .deep-tag { display: none; } }
+
+/* ---------- self-test ---------- */
+
+.selftest {
+  margin: 2rem 0; padding: 1.05rem 1.3rem;
+  border: 1px dashed var(--rule); background: transparent;
+}
+.selftest .ct {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 650;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--cool); margin: 0 0 0.55rem;
+}
+.selftest ol { margin: 0; padding-left: 1.2rem; font-family: var(--sans);
+               font-size: 0.88rem; color: var(--ink-soft); }
+.selftest li { margin-bottom: 0.35rem; }
+
+/* ---------- transferable checklist ---------- */
+
+.checklist-purpose {
+  font-family: var(--sans); font-size: 0.9rem; color: var(--ink-soft);
+  padding: 0.8rem 1.1rem; background: var(--accent-bg);
+  border-left: 3px solid var(--accent); margin: 0 0 1.5rem;
+}
+ol.check { list-style: none; counter-reset: chk; margin: 0 0 2rem; padding: 0;
+           display: grid; gap: 1px; background: var(--rule);
+           border: 1px solid var(--rule); }
+ol.check li {
+  counter-increment: chk; background: var(--surface);
+  padding: 0.8rem 1.1rem 0.8rem 3rem; position: relative;
+}
+ol.check li::before {
+  content: counter(chk, decimal-leading-zero);
+  position: absolute; left: 1.1rem; top: 0.8rem;
+  font-family: var(--sans); font-size: 0.8rem; font-weight: 700; color: var(--accent);
+}
+ol.check .q { display: block; font-family: var(--sans); font-size: 0.94rem;
+              font-weight: 600; margin-bottom: 0.2rem; }
+ol.check .why { display: block; font-family: var(--sans); font-size: 0.82rem;
+                color: var(--ink-faint); }
+.applications { padding: 1.1rem 1.3rem; background: var(--surface-2);
+                border: 1px solid var(--rule); font-size: 0.95rem; }
+.applications .ct {
+  font-family: var(--sans); font-size: 0.7rem; font-weight: 650;
+  letter-spacing: 0.11em; text-transform: uppercase;
+  color: var(--ink-faint); margin: 0 0 0.6rem;
+}
+.applications p:last-child { margin-bottom: 0; }
+
+@media print {
+  .toc, .paths { display: none; }
+  details.deep { border: none; }
+  details.deep > summary { display: none; }
+  details.deep > *:not(summary) { padding: 0; }
+  .wrap { display: block; max-width: none; }
+  a { color: inherit; border: none; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<article class="note">
+
+  <p class="kicker">Khảo cứu<span class="sep">·</span><span class="subject">Kinh tế chính trị · Nhà ở Việt Nam</span></p>
+
+  <h1>Bóc lột có đồng thuận — Cơ chế vận hành trong thế giới hiện đại</h1>
+
+  <p class="dateline">18 tháng 8, 2026 · ~6.500 từ</p>
+
+  <p class="lede">Bài khảo cứu này kiểm tra một cơ chế: <strong>một hệ thống có thể trích xuất hàng chục năm lao động tương lai của một con người không bằng roi vọt, mà bằng một chuỗi sáu bước — chia ô, định giá theo kỳ vọng, thế chấp tương lai, khóa đạo đức, cổ đông hóa, chuyền giao liên thế hệ — khiến người bị trích xuất đồng thuận và thậm chí bảo vệ chính hệ thống đó.</strong> Xuất phát từ bài trào phúng "Hành Tinh Ngu" của Nguyễn Anh Bình (2021), ghi chú nâng các ý của bài thành một khảo cứu có nguồn về nhà ở Việt Nam: cơ chế hoạt động, lớp hạ tầng ít ai nhắc, phản biện và phân phối lợi ích–chi phí.</p>
+
+  <div class="statstrip">
+    <div class="stat"><span class="v" data-claim="E-012">25–30×</span><span class="l" data-claim="E-012">Giá nhà Hà Nội / TP.HCM so với thu nhập hộ gia đình mỗi năm — ngưỡng lành mạnh quốc tế là 4–6×</span></div>
+    <div class="stat"><span class="v" data-claim="E-011">12–14%/năm</span><span class="l" data-claim="E-011">Lãi suất vay mua nhà sau khi hết thời gian ưu đãi (có lúc 16%)</span></div>
+    <div class="stat"><span class="v" data-claim="E-010">4,1 → 4,74 tr tỷ</span><span class="l" data-claim="E-010 E-011">Dư nợ tín dụng bất động sản tháng 7/2025 → cuối 2025 (tăng 17% → 36%)</span></div>
+    <div class="stat"><span class="v" data-claim="E-010">2,43%</span><span class="l" data-claim="E-010">Tỷ lệ nợ xấu toàn hệ thống ngân hàng, tháng 7/2025</span></div>
+    <div class="stat"><span class="v" data-claim="E-015">3% · 4%</span><span class="l" data-claim="E-015">Lợi suất cho thuê căn hộ Hà Nội · TP.HCM — thấp hơn lãi tiết kiệm (~5,5%)</span></div>
+    <div class="stat"><span class="v" data-claim="E-016">75,5 tr đ/m²</span><span class="l" data-claim="E-016">Giá căn hộ trung bình Hà Nội quý 2/2025, tăng 87,7% so với 2019</span></div>
+    <div class="stat"><span class="v" data-claim="E-007">1,91</span><span class="l" data-claim="E-007">Tổng tỷ suất sinh Việt Nam 2024 — thấp nhất lịch sử (thành thị 1,67)</span></div>
+    <div class="stat"><span class="v" data-claim="E-009">27,3 tuổi</span><span class="l" data-claim="E-009">Tuổi kết hôn lần đầu 2024 — TP.HCM 30,4</span></div>
+  </div>
+
+  <nav class="paths" aria-label="Reading paths">
+    <p class="paths-title">Đọc từ đâu</p>
+    <ol>
+      <li><a href="#s3"><span class="p-n">Con đường 1 · Cơ chế</span><span class="p-h">Tôi muốn hiểu nó hoạt động thế nào</span><span class="p-d">Stat strip → Giai đoạn 1–2 → Giai đoạn 3 + Substrate → Giai đoạn 4–6</span></a></li>
+      <li><a href="#s8"><span class="p-n">Con đường 2 · Tranh luận</span><span class="p-h">Tôi muốn biết "bóc lột" có nghĩa gì và ai đúng</span><span class="p-d">Phản biện (Nozick–Wertheimer–Marx) → Giai đoạn 4 → Giới hạn</span></a></li>
+      <li><a href="#sources"><span class="p-n">Con đường 3 · Kiểm chứng</span><span class="p-h">Tôi muốn tự đánh giá, không tin số liệu</span><span class="p-d">Stat strip → danh sách nguồn → Bảng kiểm tra → Giới hạn</span></a></li>
+    </ol>
+  </nav>
+
+  <section class="status" id="status">
+    <p class="status-label">AI_RESEARCH · NOT_PEER_REVIEWED</p>
+    <dl>
+      <dt>Cơ sở bằng chứng</dt><dd>38 nguồn — 7 nguồn gốc (primary, gồm văn bản kinh điển và bài công bố có phản biện đồng cấp), 24 nguồn trung cấp, 7 nguồn yếu (chỉ dùng có nhãn độ tin cậy thấp; một nguồn được xem xét nhưng loại). Không tiến hành nghiên cứu định lượng riêng.</dd>
+      <dt>Phiên bản</dt><dd>v1 · 18 tháng 8, 2026</dd>
+      <dt>Giới hạn đã biết</dt><dd>Con số giá/thu nhập 25–30× là ước tính truyền thông, không phải đo lường chuẩn hóa kiểu Demographia. Chưa có nghiên cứu nhân quả nào cho mối quan hệ giá nhà ↔ sinh đẻ riêng tại Việt Nam. Khung "6 giai đoạn" và phép lượng hóa ở Hình 4 là phân tích của người viết, được dán nhãn. Một số vị thế lý thuyết (Nozick, Wertheimer, Gramsci, George, Asset Economy) đối chiếu qua tóm tắt học thuật, chưa đọc nguyên bản từng trang.</dd>
+    </dl>
+  </section>
+
+  <h2 id="s1"><span class="num">I.</span> Xuất phát điểm: từ bài trào phúng đến câu hỏi nghiêm túc</h2>
+
+  <p>Năm 2021, Nguyễn Anh Bình viết bài "Hành Tinh Ngu" — một tiểu phẩm trào phúng về người mua nhà ở đô thị Việt Nam <a class="ref" id="ref-1" href="#src-1">[1]</a>. Luận điểm trung tâm của bài rất ít gặp trong văn chương châm biếm: các hình thức bóc lột cũ — nô lệ, phong kiến, tư bản công nghiệp sơ kỳ — sụp đổ không phải vì chúng tàn nhẫn, mà vì <span data-claim="E-001">nạn nhân cuối cùng nhận ra mình là nạn nhân</span>. Mô hình nhà đất hiện đại thì khác: nó không cần roi vọt, không cần luật cưỡng chế, không cần một kẻ bóc lột hiện diện để nhận diện — nên nó không bao giờ bị "lật tẩy" theo cách đó <a class="ref" id="ref-1b" href="#src-1">[1]</a>.</p>
+
+  <p>Để cơ chế bền vững, bài viết mô tả ba công thức <a class="ref" id="ref-2" href="#src-1">[1]</a>:</p>
+
+  <div class="rules">
+    <div class="rules-group">Ba công thức của bài gốc (khung của Nguyễn Anh Bình)</div>
+    <div class="rule"><span class="n">01</span><div><p class="h" data-claim="E-002">Lấy tương lai thay vì hiện tại</p><p class="d">Trích không phải cái người ta đang có, mà chuỗi thu nhập 25–30 năm sắp tới — thứ người ta chưa có nên chưa biết đau.</p></div></div>
+    <div class="rule"><span class="n">02</span><div><p class="h" data-claim="E-002">Biến nạn nhân thành cổ đông</p><p class="d">Người trả nợ được cho một "cổ phần" trong hệ thống: giá lên thì họ cũng lên theo, nên họ bảo vệ chính cỗ máy.</p></div></div>
+    <div class="rule"><span class="n">03</span><div><p class="h" data-claim="E-002">Biến bóc lột thành chuẩn mực đạo đức</p><p class="d">Mua nhà được khoác áo nghĩa vụ người trưởng thành; trả nợ 25–30 năm thành lẽ tự nhiên và đáng khen.</p></div></div>
+  </div>
+
+  <p>Ba công thức này được lắp vào một "Mô hình Hình vuông" gồm năm bước <span data-claim="E-003">chia ô → định giá theo kỳ vọng → thanh toán qua ngân hàng 25–30 năm → khóa đạo đức ("an cư lạc nghiệp") → chuyền giao nghĩa vụ cho người mua sau ("lướt sóng")</span> <a class="ref" id="ref-3" href="#src-1">[1]</a>.</p>
+
+  <div class="callout scope">
+    <p class="ct">Vật thử, không phải bằng chứng</p>
+    <p>Toàn bộ nhận định của bài gốc là ý kiến trào phúng, không phải sự thật khảo chứng. Ghi chú này dùng bài viết làm <strong>vật thử</strong>: mỗi luận điểm của nó được đối chiếu với nguồn độc lập, và khái niệm của bài chỉ được giữ lại khi gán đúng nhãn tác giả. Giọng văn ở đây là khảo cứu nghiêm túc, không lặp lại giọng châm biếm.</p>
+  </div>
+
+  <p>Từ đó, câu hỏi trung tâm của ghi chú này được đặt ra: <em>Theo cơ chế nào một hệ thống có thể trích xuất hàng chục năm lao động của một con người mà con người ấy đồng thuận — thậm chí bảo vệ hệ thống — và "đồng thuận" đó là thật hay chỉ là sản phẩm của cơ cấu?</em> Sáu giai đoạn tiếp theo trình bày cơ chế; các mục sau kiểm tra tính "đồng thuận" ấy đến cùng.</p>
+
+  <h2 id="s2"><span class="num">II.</span> Vì sao bóc lột cũ chết: vũ khí của nạn nhân là sự nhận diện</h2>
+
+  <p>Tuyên bố "nạn nhân nhận ra mình là nạn nhân" của bài gốc có một tiền thân học thuật vững chắc: khái niệm cưỡng ép phi bạo lực của Marx. Trong <em>Tư bản</em> tập 1, chương 28, Marx viết:</p>
+
+  <blockquote class="pull">
+    <p data-claim="E-005">"Cưỡng ép câm lặng của quan hệ kinh tế hoàn tất sự phục tùng của người lao động đối với nhà tư bản. Bạo lực trực tiếp ... chỉ còn được dùng một cách ngoại lệ."</p>
+    <cite>Karl Marx, Tư bản, tập 1, ch. 28 (bản dịch Moore–Aveling) <a class="ref" id="ref-4" href="#src-2">[2]</a></cite>
+  </blockquote>
+
+  <p>Và ngay trước đó, điểm mấu chốt về "tự nguyện":</p>
+
+  <blockquote class="pull">
+    <p data-claim="E-006">"Chưa đủ để họ bị buộc phải bán sức lao động một cách tự nguyện ... [giai cấp công nhân trưởng thành] coi những điều kiện của phương thức sản xuất đó như những quy luật tự nhiên hiển nhiên."</p>
+    <cite>Karl Marx, Tư bản, tập 1, ch. 28 <a class="ref" id="ref-5" href="#src-2">[2]</a></cite>
+  </blockquote>
+
+  <p>Chương 28 bàn về lịch sử tích lũy nguyên thủy, không phải về nhà đất hiện đại — chúng tôi dùng nó chỉ để đối chiếu khái niệm: <span data-claim="E-006">một người có thể "tự nguyện" bán sức lao động theo nghĩa thủ tục, trong khi điều kiện buộc người ấy bán là một ràng buộc cấu trúc mà người ấy xem là lẽ tự nhiên</span> <a class="ref" id="ref-6" href="#src-2">[2]</a>. Nhận diện được yếu tố cưỡng ép này chính là thứ làm sụp đổ các chế độ nô lệ và lao động cưỡng bức: nạn nhân nhìn thấy mối quan hệ chủ–tớ và có thể chỉ tên kẻ đối nghịch.</p>
+
+  <p>Cỗ máy của "Hành Tinh Ngu" tinh vi hơn ở chỗ: <span data-claim="E-001">không có kẻ bóc lột hiện diện để chỉ tên</span>. Người bán đất, ngân hàng cho vay, nhà quy hoạch, người mua lần trước — mỗi bên chỉ làm một thao tác nhỏ, đúng luật, thiện chí. Sáu giai đoạn sau đây là cách chúng tôi tách chuỗi thao tác đó ra thành một cỗ máy có thể nhìn thấy.</p>
+
+  <h2 id="s3"><span class="num">III.</span> Giai đoạn 1–2 · Chia ô và định giá theo kỳ vọng</h2>
+
+  <figure data-fig-type="schematic" data-claim="E-052">
+    <p class="fig-title">Cỗ máy đồng thuận — sáu giai đoạn và điểm gãy</p>
+    <p class="fig-sub">Khung phân tích của người viết, sắp lại từ "Mô hình Hình vuông" 5 bước của Nguyễn Anh Bình (E-003). Mỗi giai đoạn có điểm gãy riêng (E-052).</p>
+    <svg viewBox="0 0 1000 240" role="img" aria-label="Sơ đồ sáu giai đoạn của cỗ máy đồng thuận">
+      <text x="20" y="24" class="t-head s-faint">01 · CHIA Ô</text>
+      <rect x="30" y="40" width="150" height="60" class="s-panel k-ink"/>
+      <text x="105" y="66" class="t-label s-ink" text-anchor="middle">Quy hoạch · phân lô</text>
+      <text x="105" y="82" class="t-label s-ink" text-anchor="middle">· đấu giá</text>
+      <text x="105" y="124" class="t-small s-warn" text-anchor="middle">Gãy: cạn "ô" mới</text>
+      <text x="105" y="138" class="t-small s-faint" text-anchor="middle">(E-024)</text>
+
+      <polygon points="188,70 198,70 193,64" class="s-acc"/>
+
+      <text x="203" y="24" class="t-head s-faint">02 · ĐỊNH GIÁ KỲ VỌNG</text>
+      <rect x="213" y="40" width="150" height="60" class="s-panel k-ink"/>
+      <text x="288" y="66" class="t-label s-ink" text-anchor="middle">Kỳ vọng tăng giá</text>
+      <text x="288" y="82" class="t-label s-ink" text-anchor="middle">· vòng phản hồi</text>
+      <text x="288" y="124" class="t-small s-warn" text-anchor="middle">Gãy: kỳ vọng đảo chiều</text>
+      <text x="288" y="138" class="t-small s-faint" text-anchor="middle">(E-037)</text>
+
+      <polygon points="371,70 381,70 376,64" class="s-acc"/>
+
+      <text x="386" y="24" class="t-head s-faint">03 · THẾ CHẤP TƯƠNG LAI</text>
+      <rect x="396" y="40" width="150" height="60" class="s-panel k-ink"/>
+      <text x="471" y="66" class="t-label s-ink" text-anchor="middle">Vay 25–30 năm</text>
+      <text x="471" y="82" class="t-label s-ink" text-anchor="middle">· lãi thả nổi</text>
+      <text x="471" y="124" class="t-small s-warn" text-anchor="middle">Gãy: hết ưu đãi · DTI vỡ</text>
+      <text x="471" y="138" class="t-small s-faint" text-anchor="middle">(E-034, E-039)</text>
+
+      <polygon points="554,70 564,70 559,64" class="s-acc"/>
+
+      <text x="569" y="24" class="t-head s-faint">04 · KHÓA ĐẠO ĐỨC</text>
+      <rect x="579" y="40" width="150" height="60" class="s-panel k-ink"/>
+      <text x="654" y="66" class="t-label s-ink" text-anchor="middle">"An cư lạc nghiệp"</text>
+      <text x="654" y="82" class="t-label s-ink" text-anchor="middle">= nghĩa vụ trưởng thành</text>
+      <text x="654" y="124" class="t-small s-warn" text-anchor="middle">Gãy: chuẩn mực đảo</text>
+      <text x="654" y="138" class="t-small s-faint" text-anchor="middle">(E-009)</text>
+
+      <polygon points="737,70 747,70 742,64" class="s-acc"/>
+
+      <text x="752" y="24" class="t-head s-faint">05 · CỔ ĐÔNG HÓA</text>
+      <rect x="762" y="40" width="150" height="60" class="s-panel k-ink"/>
+      <text x="837" y="66" class="t-label s-ink" text-anchor="middle">Mua để tăng giá</text>
+      <text x="837" y="82" class="t-label s-ink" text-anchor="middle">· greater fool</text>
+      <text x="837" y="124" class="t-small s-warn" text-anchor="middle">Gãy: cạn người mua mới</text>
+      <text x="837" y="138" class="t-small s-faint" text-anchor="middle">(E-038)</text>
+
+      <text x="20" y="190" class="t-head s-faint">06 · CHUYỀN GIAO LIÊN THẾ HỆ</text>
+      <rect x="20" y="206" width="892" height="26" class="s-accbg"/>
+      <text x="466" y="223" class="t-label s-ink" text-anchor="middle">Kết hôn muộn · sinh ít · máy tự ăn nhiên liệu — Gãy: cạn người kế thừa nghĩa vụ (E-007, E-009)</text>
+    </svg>
+    <figcaption>Hình 1 — Sơ đồ khung 6 giai đoạn, loại <em>schematic</em>: hình minh họa cấu trúc phân tích của người viết, không phải dữ liệu đo được. Điểm gãy mỗi giai đoạn neo vào mục nguồn tương ứng.</figcaption>
+  </figure>
+
+  <h3 id="s3-1">Giai đoạn 1 · Chia ô: tạo ra những mảnh tài sản có giá niêm yết</h3>
+
+  <p>Bước đầu của cỗ máy là biến một mảnh đất thành một "ô" được định giá. Công cụ là quy hoạch, phân lô và đấu giá. Lịch sử Việt Nam từ Đổi mới cho thấy chuỗi "ô" này đi theo chu kỳ: <span data-claim="E-022">GS. Đặng Hùng Võ, nguyên Thứ trưởng Bộ Tài nguyên và Môi trường, kể bốn đợt sốt đất toàn quốc — 1990–1992, 2000–2002, 2007–2008 và 2020–2022</span> <a class="ref" id="ref-7" href="#src-14">[14]</a>. Mỗi đợt đều bắt đầu bằng một cú "mở ô": đổi mới thể chế, kỳ quy hoạch mới, dòng đầu tư công hạ tầng <a class="ref" id="ref-8" href="#src-15">[15]</a>.</p>
+
+  <p>Cơn sốt 2007–2008 là một minh chứng điển hình cho cơ chế: bong bóng chứng khoán vỡ năm 2007 đẩy dòng vốn ồ ạt sang bất động sản, và <span data-claim="E-023">giá đất tăng khoảng ba lần</span> trong khi nền kinh tế thực không sản xuất thêm gì <a class="ref" id="ref-9" href="#src-15">[15]</a>. Đợt 2020–2022 lại mở đầu bằng kỳ quy hoạch 2021–2030 và đấu giá đất — tiêu biểu là <span data-claim="E-025">phiên đấu giá Thủ Thiêm</span> <a class="ref" id="ref-10" href="#src-15">[15]</a>.</p>
+
+  <h3 id="s3-2">Giai đoạn 2 · Định giá theo kỳ vọng: giá không còn là hình ảnh của dòng tiền</h3>
+
+  <p>Ở một thị trường bình thường, giá tài sản phản ánh dòng tiền nó tạo ra (tiền thuê, lợi tức). Ở "ô" do cỗ máy tạo ra, giá phản ánh kỳ vọng tăng giá tương lai. Đây chính là tiêu chí Case–Shiller gọi là <span data-claim="E-032">"đặc tính định nghĩa của bong bóng nhà ở": xu hướng xem nhà như một khoản đầu tư</span> <a class="ref" id="ref-11" href="#src-3">[3]</a>. Kỳ vọng này tự nuôi chính nó qua <span data-claim="E-037">vòng phản hồi: giá tăng → truyền thông chú ý → người mua mới → giá tăng tiếp</span> <a class="ref" id="ref-12" href="#src-22">[22]</a>.</p>
+
+  <p>Henry George đã mô tả cơ chế này từ 1879: <span data-claim="E-050">đầu cơ "hút trước" mức tăng giá đất tương lai — phần "thặng dư không công lao" (unearned increment) — và giá đất do kỳ vọng tự nuôi chính nó, độc lập với lao động của người sở hữu</span> <a class="ref" id="ref-13" href="#src-36">[36]</a>. Nhà kinh tế học người Mỹ này lưu ý rằng phần lớn "tiến bộ" của một xã hội có thể bị hút vào địa tô đất đai trước khi chạm tới người lao động.</p>
+
+  <figure data-fig-type="measured" data-claim="E-012 E-015 E-016">
+    <p class="fig-title">Giá so với dòng tiền: hai phép đo cho thấy kỳ vọng chiếm chỗ</p>
+    <p class="fig-sub">Trái: giá nhà / thu nhập hộ mỗi năm (lần) — ước tính truyền thông cho Hà Nội, TP.HCM (E-012); phải: lợi suất cho thuê so với lãi tiết kiệm 12 tháng (E-015).</p>
+    <svg viewBox="0 0 1000 320" role="img" aria-label="Biểu đồ giá so với thu nhập và lợi suất cho thuê">
+      <text x="20" y="26" class="t-head s-ink">GIÁ NHÀ / THU NHẬP HỘ (LẦN/NĂM)</text>
+      <line x1="40" y1="280" x2="460" y2="280" class="k-ink"/>
+      <line x1="40" y1="200" x2="460" y2="200" class="k-faint"/>
+      <line x1="40" y1="120" x2="460" y2="120" class="k-faint"/>
+      <text x="30" y="204" class="t-small s-faint" text-anchor="end">10</text>
+      <text x="30" y="124" class="t-small s-faint" text-anchor="end">20</text>
+      <text x="30" y="284" class="t-small s-faint" text-anchor="end">0</text>
+      <rect x="120" y="232" width="90" height="16" class="s-ink"/>
+      <text x="165" y="222" class="t-small s-ink" text-anchor="middle">4–6× (ngưỡng lành mạnh, Demographia)</text>
+      <rect x="300" y="40" width="90" height="240" class="s-acc"/>
+      <line x1="300" y1="80" x2="390" y2="80" class="k-ink" stroke-dasharray="3 3"/>
+      <text x="398" y="84" class="t-small s-faint">25×</text>
+      <text x="345" y="32" class="t-label s-acc" text-anchor="middle">25–30×</text>
+      <text x="345" y="60" class="t-small s-faint" text-anchor="middle">VN 2025–26 (ước tính)</text>
+      <text x="345" y="300" class="t-small s-faint" text-anchor="middle">E-012 · E-019</text>
+
+      <line x1="540" y1="280" x2="980" y2="280" class="k-ink"/>
+      <text x="540" y="26" class="t-head s-ink">LỢI SUẤT HÀNG NĂM (%)</text>
+      <line x1="540" y1="196" x2="980" y2="196" class="k-faint"/>
+      <line x1="540" y1="112" x2="980" y2="112" class="k-faint"/>
+      <text x="530" y="200" class="t-small s-faint" text-anchor="end">3</text>
+      <text x="530" y="116" class="t-small s-faint" text-anchor="end">6</text>
+      <rect x="590" y="196" width="80" height="84" class="s-cool"/>
+      <text x="630" y="188" class="t-small s-cool" text-anchor="middle">3% HN</text>
+      <rect x="710" y="168" width="80" height="112" class="s-cool"/>
+      <text x="750" y="160" class="t-small s-cool" text-anchor="middle">4% HCM</text>
+      <rect x="830" y="126" width="80" height="154" class="s-warn"/>
+      <text x="870" y="118" class="t-small s-warn" text-anchor="middle">~5,5%</text>
+      <text x="750" y="300" class="t-small s-faint" text-anchor="middle">Cho thuê căn hộ vs tiết kiệm 12 tháng (E-015)</text>
+    </svg>
+    <figcaption>Hình 2 — Loại <em>measured</em>: dữ liệu có nguồn nhưng con số 25–30× là ước tính truyền thông (VTV), chưa nằm trong khảo sát chuẩn hóa của Demographia. Cú đảo ngược — giá mua cao gấp hàng chục lần thu nhập trong khi lợi suất thuê thấp hơn lãi tiết kiệm — là dấu hiệu giá bị định theo kỳ vọng, không theo dòng tiền.</figcaption>
+  </figure>
+
+  <p>Điểm gãy của hai giai đoạn đầu đã được lịch sử ghi lại: khi dòng "ô" mới ngừng chảy hoặc kỳ vọng đảo chiều. Theo tổng hợp thị trường của Blue Ocean Realty, sau 2008 <span data-claim="E-024">lãi suất vay lên tới 23–24%/năm, giá bất động sản giảm trung bình 40–50%, thị trường đóng băng diện rộng cuối 2011, tồn kho ước tính khoảng 100.000 tỷ đồng năm 2012</span> <a class="ref" id="ref-14" href="#src-30">[30]</a>. Đáng chú ý: bài gốc cho rằng lúc này "nạn nhân" đã nhận ra mình là nạn nhân — nhưng như chúng ta sẽ thấy ở giai đoạn 5, nhiều người trong số đó đã trở thành cổ đông của cỗ máy, nên phản ứng của họ không giống nô lệ nổi dậy.</p>
+
+  <h2 id="s4"><span class="num">IV.</span> Giai đoạn 3 · Thế chấp tương lai: trích lương 25–30 năm qua ngân hàng</h2>
+
+  <p>Giai đoạn quyết định của cỗ máy là bước biến một khoản trả một lần thành chuỗi nghĩa vụ dài hạn. Khoản vay ngân hàng là công cụ: thay vì phải trả đủ giá nhà hôm nay, người mua cam kết trích một phần thu nhập mỗi tháng trong 25–30 năm.</p>
+
+  <p>Phép toán nền tảng như sau. <span data-claim="E-012">Giá nhà Hà Nội và TP.HCM gấp khoảng 25–30 lần thu nhập hộ gia đình mỗi năm</span> <a class="ref" id="ref-15" href="#src-12">[12]</a>, trong khi <span data-claim="E-019">ngưỡng "mất khả năng chi trả trầm trọng" mà thước đo Median Multiple của Demographia dùng là từ 9,0 trở lên</span> <a class="ref" id="ref-16" href="#src-6">[6]</a>. Với lãi suất cho vay mua nhà <span data-claim="E-011">sau thời gian ưu đãi phổ biến 12–14%/năm, có lúc 16%</span> <a class="ref" id="ref-17" href="#src-11">[11]</a>, chuỗi trả nợ không còn là một khoản "tiết kiệm" nữa mà là phần chủ yếu của thu nhập lao động tương lai.</p>
+
+  <figure data-fig-type="schematic" data-claim="E-054 E-011 E-012">
+    <p class="fig-title">Thế chấp tương lai: một khoản trả một lần trở thành chuỗi trích thu nhập 30 năm</p>
+    <p class="fig-sub">Minh họa khái niệm (schematic) — không phải đo lường thống kê, không gán cho cá nhân cụ thể (E-054).</p>
+    <svg viewBox="0 0 900 340" role="img" aria-label="Sơ đồ khoản vay 30 năm trích thu nhập">
+      <polygon points="60,150 140,150 140,120 190,165 140,210 140,180 60,180" class="s-acc"/>
+      <text x="125" y="245" class="t-label s-ink" text-anchor="middle">"Ô": giá 25–30×</text>
+      <text x="125" y="260" class="t-small s-faint" text-anchor="middle">thu nhập/năm (E-012)</text>
+
+      <polygon points="260,158 300,158 300,152 322,165 300,178 300,172 260,172" class="s-soft"/>
+      <text x="291" y="192" class="t-label s-soft" text-anchor="middle">+ lãi 12–14%/năm</text>
+      <text x="291" y="206" class="t-small s-faint" text-anchor="middle">sau hết ưu đãi (E-011)</text>
+
+      <text x="360" y="150" class="t-head s-faint">30 NĂM TRẢ NỢ</text>
+      <line x1="360" y1="158" x2="880" y2="158" class="k-faint"/>
+      <g>
+        <rect x="360" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="377" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="394" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="411" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="428" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="445" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="462" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="479" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="496" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="513" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="530" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="547" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="564" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="581" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="598" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="615" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="632" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="649" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="666" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="683" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="700" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="717" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="734" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="751" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="768" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="785" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="802" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="819" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="836" y="100" width="14" height="58" class="s-acc"/>
+        <rect x="853" y="100" width="14" height="58" class="s-acc"/>
+      </g>
+      <text x="620" y="92" class="t-small s-faint" text-anchor="middle">mỗi cột = 1 năm thu nhập bị cam kết (schematic)</text>
+
+      <text x="360" y="272" class="t-head s-faint">CƠ CẤU MỘT THÁNG THU NHẬP (ƯỚC TÍNH KHUNG)</text>
+      <rect x="360" y="280" width="420" height="30" class="s-acc"/>
+      <rect x="780" y="280" width="100" height="30" class="s-panel"/>
+      <text x="570" y="300" class="t-small s-accbg" text-anchor="middle">gốc + lãi (chiếm phần lớn)</text>
+      <text x="830" y="300" class="t-small s-faint" text-anchor="middle">chi tiêu</text>
+    </svg>
+    <figcaption>Hình 3 — Loại <em>schematic</em>. Đây là lượng hóa minh họa của người viết (E-054), dựng từ hai con số có nguồn (E-011, E-012); không phải đo lường thống kê và không được đưa vào dải số liệu đầu trang. Mọi con số ở đây nên đọc là "cỡ bậc" (order of magnitude), kèm biến động rộng theo khu vực.</figcaption>
+  </figure>
+
+  <p>Ngân hàng thẩm định khả năng trả nợ bằng hai thước đo chuẩn theo quy trình mô tả của Vinhomes Market: <span data-claim="E-035">DTI (tỷ lệ tổng nợ trả hằng tháng trên thu nhập gộp) và LTV (tỷ lệ khoản vay trên giá trị tài sản thế chấp)</span> <a class="ref" id="ref-18" href="#src-32">[32]</a>. DTI càng cao, "khoảng thở" tài chính của hộ gia đình càng mỏng trước biến động lãi suất — mà biến động thì chắc chắn xảy ra, bởi lãi suất cho vay mua nhà ở Việt Nam chủ yếu là lãi suất thả nổi sau thời gian ưu đãi ngắn.</p>
+
+  <p>Điểm mấu chốt của giai đoạn này là gánh nặng thật không xuất hiện lúc ký. <span data-claim="E-011">Ưu đãi lãi suất 5–6% trong một hai năm đầu che phủ cú sốc; đến khi hết ưu đãi, nghĩa vụ nhảy lên 12–14%, thậm chí 16%</span> <a class="ref" id="ref-19" href="#src-11">[11]</a>. Viện nghiên cứu VARS IRE cảnh báo <span data-claim="E-034">nhiều khoản vay mua nhà ký 2024–2025 sẽ đối mặt áp lực trả nợ lớn từ năm 2027 khi hết ưu đãi và thời gian ân hạn gốc</span> <a class="ref" id="ref-20" href="#src-11">[11]</a>. Với lãi suất dài hạn như vậy, tỷ trọng lao động bị cam kết rất lớn — đây là điểm gãy 03.</p>
+
+  <p>Minsky giải thích vì sao điểm gãy này gần như chắc chắn xảy ra trong chu kỳ dài. Trong Giả thuyết bất ổn tài chính, ông phân biệt ba tư thế tài chính <a class="ref" id="ref-21" href="#src-5">[5]</a>:</p>
+
+  <figure data-fig-type="schematic" data-claim="E-039">
+    <p class="fig-title">Ba tư thế tài chính của Minsky</p>
+    <p class="fig-sub">Định nghĩa gốc từ The Financial Instability Hypothesis (1992); áp vào hộ vay mua nhà Việt Nam là phép loại suy của người viết, đã ghi nhãn (E-039).</p>
+    <svg viewBox="0 0 900 300" role="img" aria-label="Ba tư thế tài chính hedge, speculative, ponzi">
+      <text x="40" y="30" class="t-head s-ink">HEDGE</text>
+      <text x="40" y="46" class="t-small s-faint">Thu nhập đủ trả gốc + lãi</text>
+      <rect x="40" y="110" width="220" height="60" class="s-good"/>
+      <rect x="40" y="200" width="160" height="40" class="s-cool"/>
+      <text x="40" y="178" class="t-small s-soft">thu nhập</text>
+      <text x="40" y="228" class="t-small s-faint">nghĩa vụ nợ</text>
+
+      <text x="330" y="30" class="t-head s-ink">SPECULATIVE</text>
+      <text x="330" y="46" class="t-small s-faint">Thu nhập chỉ đủ trả lãi, phải vay tiếp</text>
+      <rect x="330" y="110" width="220" height="60" class="s-good"/>
+      <rect x="330" y="150" width="200" height="90" class="s-warn"/>
+      <text x="330" y="178" class="t-small s-soft">thu nhập</text>
+      <text x="330" y="228" class="t-small s-faint">nghĩa vụ nợ</text>
+
+      <text x="620" y="30" class="t-head s-ink">PONZI</text>
+      <text x="620" y="46" class="t-small s-faint">Trả nợ cũ bằng vay mới</text>
+      <rect x="620" y="110" width="220" height="50" class="s-warn"/>
+      <rect x="620" y="140" width="230" height="100" class="s-acc"/>
+      <text x="620" y="178" class="t-small s-soft">thu nhập</text>
+      <text x="620" y="228" class="t-small s-faint">nghĩa vụ nợ</text>
+
+      <text x="40" y="270" class="t-small s-faint">Trong thời kỳ thịnh vượng kéo dài, nền kinh tế trượt từ hedge → speculative → ponzi; sự ổn định tự sinh ra bất ổn (Minsky 1992).</text>
+    </svg>
+    <figcaption>Hình 4 — Loại <em>schematic</em>: mô phỏng khái niệm gốc của Minsky (hedge/speculative/ponzi là mô hình vi mô dành cho doanh nghiệp). Áp vào hộ gia đình vay mua nhà ở Việt Nam (gánh lãi thả nổi) là loại suy của người viết, cần đọc như một lăng kính, không phải mô tả định lượng.</figcaption>
+  </figure>
+
+  <p>Lăng kính Minsky cho thấy chuỗi tín dụng không tự ổn định: <span data-claim="E-039">thời kỳ thịnh vượng kéo dài khiến các đơn vị tài chính trượt dần từ tư thế hedge (đủ trả) sang speculative (chỉ đủ trả lãi) rồi ponzi (vay mới trả nợ cũ); khi lạm phát buộc chính quyền thắt chặt tiền tệ, các đơn vị speculative hóa ponzi và giá tài sản sụp đổ</span> <a class="ref" id="ref-22" href="#src-5">[5]</a>. Hộ gia đình Việt Nam vay mua nhà ở lãi suất thả nổi <span data-claim="E-011">12–14%</span> với DTI mỏng rơi vào đúng vị trí nhạy cảm này.</p>
+
+  <p>Quy mô của chuỗi nghĩa vụ này là điều khiến nó không còn là chuyện riêng của người vay: <span data-claim="E-010">dư nợ tín dụng bất động sản vượt 4,1 triệu tỷ đồng tại tháng 7/2025, tăng 17% so với cuối 2024, chiếm 23,68% tổng dư nợ nền kinh tế; riêng dư nợ tiêu dùng gắn với bất động sản của hộ gia đình 2,28 triệu tỷ</span> <a class="ref" id="ref-23" href="#src-10">[10]</a>. Đến cuối 2025, <span data-claim="E-011">con số này khoảng 4,74 triệu tỷ đồng, tăng hơn 36%, chiếm trên 25% tổng dư nợ hệ thống</span> <a class="ref" id="ref-24" href="#src-11">[11]</a>. Cơ quan quản lý đã siết dòng vốn vào địa ốc từ đầu 2026 <a class="ref" id="ref-25" href="#src-11">[11]</a> — một phản ứng cho thấy chính nhà nước nhìn thấy độ rủi ro của chuỗi mà giai đoạn 3 tạo ra.</p>
+
+  <h2 id="s5"><span class="num">V.</span> Giai đoạn 4 · Khóa đạo đức: "an cư lạc nghiệp" như máy sản xuất đồng thuận</h2>
+
+  <p>Giai đoạn này trả lời câu hỏi vì sao người trả nợ không thấy mình bị trích xuất, mà thấy mình <em>đang làm điều đúng</em>. "An cư lạc nghiệp" — thành ngữ Hán–Việt mang tư tưởng Nho giáo: <span data-claim="E-020">có nơi ở ổn định (an cư) là tiền đề để yên tâm lập thân, làm ăn (lạc nghiệp)</span> <a class="ref" id="ref-26" href="#src-16">[16]</a>. Bài gốc nhận diện chính xác: <span data-claim="E-004">thành ngữ này được dùng như cơ chế khóa đạo đức — biến việc mua nhà thành nghĩa vụ của người trưởng thành, khiến việc trả nợ 25–30 năm trở thành lẽ tự nhiên và đáng khen</span> <a class="ref" id="ref-27" href="#src-1">[1]</a>. Ngày nay nó xuất hiện đồng thời trong giáo huấn gia đình và trong tiếp thị bất động sản <a class="ref" id="ref-28" href="#src-16">[16]</a>.</p>
+
+  <p>Antonio Gramsci đặt cho hiện tượng này một cái tên: quyền lực bền vững khi dựa trên đồng thuận nhiều hơn cưỡng chế. <span data-claim="E-051">"Máy sản xuất đồng thuận" của xã hội dân sự khiến tầng lớp bị trị tham gia vào chính điều kiện áp bức mình; quyền bá chủ (hegemony) là sự kết hợp lãnh đạo bằng ý thức và cưỡng chế</span> <a class="ref" id="ref-29" href="#src-35">[35]</a>. Khóa đạo đức chính là "máy sản xuất đồng thuận" đó: nó hoạt động trong trường học, gia đình, phim ảnh, quảng cáo — không cần một chính khách nào ký vào bản án.</p>
+
+  <p>David Graeber mở rộng chiều lịch sử: <span data-claim="E-046">ngôn ngữ của nợ là ngôn ngữ đạo đức — "tội lỗi", "chuộc" đều mượn từ tranh luận về nợ; "phải trả nợ" không phải chân lý vĩnh cửu mà là một cấu trúc được áp đặt, thường được thực thi bằng bạo lực; nhiều nền văn minh cổ dùng nghi lễ "xóa sổ sạch" (jubilee) để ngăn xã hội bị nô dịch hóa bởi nợ</span> <a class="ref" id="ref-30" href="#src-23">[23]</a>. Nhìn qua lăng kính này, "an cư lạc nghiệp" làm một việc rất đặc biệt: nó khiến một cam kết tài chính 30 năm được trải nghiệm như một cột mốc đạo đức của đời người, giống như một lễ trưởng thành — chứ không phải như một bản án khấu trừ lương.</p>
+
+  <blockquote class="pull">
+    <p data-claim="E-046">"Sự trung thành về tinh thần với cấu trúc nợ được duy trì ... chính xác bởi vì nó được khoác lên ngôn ngữ của bổn phận, của cái đúng, và của cái đáng khen."</p>
+    <cite>Diễn giải của người viết từ luận điểm Graeber, <em data-claim="E-000">Debt: The First 5,000 Years</em> (2011) <a class="ref" id="ref-31" href="#src-23">[23]</a></cite>
+  </blockquote>
+
+  <p>Điểm gãy của giai đoạn này là khi chuẩn mực đảo chiều: một thế hệ không còn coi mua nhà là nghĩa vụ. Số liệu dân số học giai đoạn gần đây (xem giai đoạn 6) gợi ý điểm gãy này có thể đang xảy ra.</p>
+
+  <h2 id="s6"><span class="num">VI.</span> Giai đoạn 5 · Cổ đông hóa: mua nhà để tham gia thang máy giá</h2>
+
+  <p>Công thức thứ hai của bài gốc — "biến nạn nhân thành cổ đông" — là thứ khiến cỗ máy không giống bất kỳ chế độ bóc lột nào trước đó. Khi giá nhà tăng nhanh hơn thu nhập, người đã mua trở thành người <em>hưởng lợi</em> từ việc giá tăng tiếp. Họ không muốn bong bóng vỡ — kể cả khi bản thân họ đang trả lãi <span data-claim="E-011">14%</span>.</p>
+
+  <p>Lý thuyết "kẻ khờ lớn hơn" (greater fool) mô tả vòng xoáy: <span data-claim="E-038">trong bong bóng, người mua mua tài sản định giá quá cao chỉ với kỳ vọng bán lại cho người trả giá cao hơn; bong bóng chỉ tiếp tục khi có dòng người mua mới — khi cạn, người giữ cuối cùng "ôm bom" (bag holder)</span> <a class="ref" id="ref-32" href="#src-34">[34]</a>. Cỗ máy nhà đất khác ở một điểm: <span data-claim="E-038">người "ôm bom" cuối cùng (nhận định của người viết, không phải đo lường) không phải nhà đầu cơ chuyên nghiệp mà thường là hộ gia đình mua để ở, vì họ không có lựa chọn bán khi giá xuống — họ vẫn phải trả nợ</span>.</p>
+
+  <p>Bộ ba Adkins, Cooper và Konings (2020) gọi hiện tượng lớn hơn là "nền kinh tế tài sản": <span data-claim="E-029">sở hữu tài sản — đặc biệt nhà ở — đã "phủ bóng" lên quan hệ lao động như yếu tố quyết định vị thế giai cấp; lạm phát giá tài sản là động lực chính của bất bình đẳng mới; hộ gia đình "Minskyan" dùng nhà làm thế chấp để vay và trông đợi tăng giá vốn</span> <a class="ref" id="ref-33" href="#src-24">[24]</a>. Đây là một khung gây tranh cãi — ta sẽ tự phê bình nó ở mục VIII.4. Trong khung này, <span data-claim="E-047">người thuê nhà — cùng với người vô gia cư — là nhóm "churners" đứng ngoài ranh giới tài sản: trả chi phí nhà ở nhưng không hưởng lũy kế giá trị, và khi lạm phát tài sản đẩy chi phí lên, họ gánh phần tăng mà không tham gia quyết định</span> <a class="ref" id="ref-34" href="#src-24">[24]</a>.</p>
+
+  <p>Một phép suy luận của người viết gắn hai mảnh dữ liệu lại với nhau <span data-claim="E-040">(nhận định của người viết, không phải đo lường)</span>: khi <span data-claim="E-015">lợi suất cho thuê (~3–4%) thấp hơn lãi suất tiết kiệm (~5,5%)</span> <a class="ref" id="ref-35" href="#src-13">[13]</a>, mua nhà không được hậu thuẫn bởi dòng tiền cho thuê mà chỉ bởi kỳ vọng tăng giá vốn — đúng tiêu chí Case–Shiller của bong bóng <a class="ref" id="ref-36" href="#src-3">[3]</a>. Điều đó có nghĩa phần lớn hộ mua để ở phải gánh một khoản lỗ cơ hội (cho thuê thì rẻ hơn nhiều) mà mô hình chỉ "đền bù" nếu giá tiếp tục tăng. Nói cách khác: họ mua không phải một nơi ở, mà một vé vào thang máy giá — và trả giá của tấm vé đó bằng thu nhập 30 năm.</p>
+
+  <p>Điểm gãy 05 là khi thang máy hết người mua mới: <span data-claim="E-038">dòng "kẻ khờ lớn hơn" cạn kiệt thì người giữ cuối cùng — hộ mua để ở — tự nhận toàn bộ phần lỗ của chuỗi</span> <a class="ref" id="ref-37" href="#src-34">[34]</a>. Lịch sử Nhật Bản cho thấy hậu quả có thể kéo dài: <span data-claim="E-018">sau khi bong bóng địa ốc vỡ, đất đô thị giảm khoảng 70% so với đỉnh và niềm tin "đất không bao giờ giảm" sụp đổ</span> <a class="ref" id="ref-38" href="#src-34">[34]</a>. (Số liệu này lấy từ nguồn phổ thông thứ cấp Investopedia, chỉ dùng làm ví dụ lịch sử.)</p>
+
+  <h2 id="s7"><span class="num">VII.</span> Giai đoạn 6 · Chuyền giao liên thế hệ: máy tự ăn nhiên liệu</h2>
+
+  <p>Giai đoạn cuối là hậu quả dân số học của chuỗi nghĩa vụ dài hạn — thứ mà bài gốc gọi là "cỗ máy tự ăn nhiên liệu": chính chi phí nhà ở đang làm cạn người trẻ sẵn sàng gánh nghĩa vụ mới.</p>
+
+  <p>Số liệu Việt Nam cho thấy xu hướng rõ ràng. <span data-claim="E-007">Tổng tỷ suất sinh năm 2024 là 1,91 — mức thấp nhất lịch sử, năm thứ ba liên tiếp dưới mức sinh thay thế; khu vực thành thị 1,67, nông thôn 2,08</span> <a class="ref" id="ref-39" href="#src-28">[28]</a>. <span data-claim="E-009">Tuổi kết hôn lần đầu tăng lên 27,3 vào năm 2024 — mức tăng gấp đôi tốc độ của 20 năm trước</span> <a class="ref" id="ref-40" href="#src-9">[9]</a>, <span data-claim="E-008">và Bộ Y tế xếp chi phí nhà ở vào danh sách nguyên nhân khiến kết hôn muộn, sinh ít</span> <a class="ref" id="ref-40b" href="#src-8">[8]</a>. Chuỗi dài hơn: <span data-claim="E-008">từ 24,1 (1999) lên 25,2 (2019) rồi 27,2 (2023); TP.HCM cao nhất ở 30,4</span> <a class="ref" id="ref-41" href="#src-8">[8]</a>.</p>
+
+  <figure data-fig-type="measured" data-claim="E-007 E-008 E-009">
+    <p class="fig-title">Hai dấu hiệu của "cỗ máy ăn nhiên liệu"</p>
+    <p class="fig-sub">Trái: tuổi kết hôn lần đầu trung bình (năm); phải: tổng tỷ suất sinh so với mức thay thế 2,1. Nguồn: Cục Dân số, Bộ Y tế (E-007, E-008, E-009).</p>
+    <svg viewBox="0 0 900 320" role="img" aria-label="Biểu đồ tuổi kết hôn và tỷ suất sinh">
+      <text x="40" y="28" class="t-head s-ink">TUỔI KẾT HÔN LẦN ĐẦU</text>
+      <line x1="40" y1="280" x2="460" y2="280" class="k-ink"/>
+      <line x1="40" y1="246" x2="460" y2="246" class="k-faint"/>
+      <line x1="40" y1="178" x2="460" y2="178" class="k-faint"/>
+      <line x1="40" y1="76" x2="460" y2="76" class="k-faint"/>
+      <text x="30" y="284" class="t-small s-faint" text-anchor="end">24</text>
+      <text x="30" y="250" class="t-small s-faint" text-anchor="end">25</text>
+      <text x="30" y="182" class="t-small s-faint" text-anchor="end">27</text>
+      <text x="30" y="80" class="t-small s-faint" text-anchor="end">30</text>
+      <circle cx="90" cy="277" r="5" class="s-cool"/>
+      <circle cx="210" cy="239" r="5" class="s-cool"/>
+      <circle cx="330" cy="171" r="5" class="s-cool"/>
+      <circle cx="410" cy="168" r="5" class="s-acc"/>
+      <circle cx="480" cy="62" r="5" class="s-acc"/>
+      <polyline points="90,277 210,239 330,171 410,168" class="k-cool"/>
+      <text x="90" y="296" class="t-small s-faint" text-anchor="middle">1999: 24,1</text>
+      <text x="210" y="296" class="t-small s-faint" text-anchor="middle">2019: 25,2</text>
+      <text x="330" y="296" class="t-small s-faint" text-anchor="middle">2023: 27,2</text>
+      <text x="410" y="296" class="t-small s-faint" text-anchor="middle">2024: 27,3</text>
+      <text x="480" y="52" class="t-small s-acc" text-anchor="middle">TP.HCM: 30,4</text>
+
+      <text x="540" y="28" class="t-head s-ink">TỔNG TỶ SUẤT SINH (TFR)</text>
+      <line x1="540" y1="280" x2="980" y2="280" class="k-ink"/>
+      <line x1="540" y1="52" x2="980" y2="52" class="k-warn"/>
+      <text x="980" y="48" class="t-small s-warn" text-anchor="end">mức thay thế 2,1</text>
+      <rect x="700" y="73" width="120" height="207" class="s-acc"/>
+      <text x="760" y="65" class="t-label s-acc" text-anchor="middle">1,91</text>
+      <text x="760" y="296" class="t-small s-faint" text-anchor="middle">2024 · thành thị 1,67</text>
+    </svg>
+    <figcaption>Hình 5 — Loại <em>measured</em>. Trục ngang (trái) chia đều theo năm dữ liệu, không tỉ lệ với khoảng cách thời gian thực; TP.HCM (30,4) được đặt riêng vì nằm ngoài xu hướng chung. Mối liên hệ "nhà ở → kết hôn muộn → sinh ít" tại Việt Nam hiện là nhận định tương quan của cơ quan quản lý, chưa có đo lường nhân quả riêng (E-041).</figcaption>
+  </figure>
+
+  <p>Bằng chứng về cơ chế nhân quả có từ nghiên cứu nước ngoài. <span data-claim="E-017">Trên dữ liệu bảng hộ gia đình CFPS 2010–2018 của Trung Quốc, tăng giá nhà ức chế sinh đẻ, với hiệu ứng "chèn ép tài chính" (crowding-out) chiếm ưu thế và khác biệt theo trạng thái sở hữu nhà</span> <a class="ref" id="ref-42" href="#src-7">[7]</a>. Đây là bằng chứng cơ chế tương tự, không gán trực tiếp cho Việt Nam — và cần đọc cùng lưu ý rằng <span data-claim="E-041">chưa có nghiên cứu nhân quả đối chiếu riêng cho Việt Nam; mối quan hệ nêu trên là lập luận tương quan</span>.</p>
+
+  <p>Điểm gãy 06 — "máy cạn nhiên liệu" — là nơi bài gốc chạm tới ranh giới của chính nó: chúng tôi không đủ dữ liệu để khẳng định cỗ máy sẽ dừng. Nhưng cấu trúc số liệu (TFR giảm, tuổi kết hôn tăng, thành thị 1,67) đặt ra câu hỏi thật: một hệ thống trích xuất 30 năm thu nhập của người trẻ đang ngày càng ít người trẻ hơn, và những người còn lại trì hoãn việc tham gia.</p>
+
+  <h2 id="s8"><span class="num">VIII.</span> Phản biện: "đồng thuận là thật, và không thể gọi là bóc lột"</h2>
+
+  <div class="callout key">
+    <p class="ct">Luận điểm phản bác mạnh nhất</p>
+    <p>"Người ta tự nguyện ký hợp đồng mua nhà, tự nguyện trả nợ. Vậy theo nghĩa nào mà gọi là bóc lột?" Đây là phản đối đáng giá nhất, và ghi chú này dành phần lớn nỗ lực để đối phó nó một cách công bằng.</p>
+  </div>
+
+  <h3 id="s8-1">Vị thế tự do thủ tục: Nozick</h3>
+
+  <p>Robert Nozick, trong <em>Anarchy, State, and Utopia</em> (1974), đưa ra ví dụ Wilt Chamberlain để lập luận: <span data-claim="E-026">trao đổi tự nguyện không thể tạo ra bất công — nếu mọi người tự nguyện trả tiền xem Chamberlain đá bóng, thì phân phối thu nhập sau đó (dù bất bình đẳng) là công bằng theo nghĩa thủ tục; mọi khuôn mẫu phân phối "theo kiểu hình" đều chèn ép tự do</span> <a class="ref" id="ref-43" href="#src-25">[25]</a>. Vị thế này bị phản bác mạnh trong chính văn học triết học (xem mục VIII.2) — nhưng trước khi phản bác, phải đọc nó cho đúng. Áp vào câu chuyện của ta: người mua nhà tự nguyện ký, ngân hàng tự nguyện cho vay — không ai dùng súng, vậy nó không bóc lột.</p>
+
+  <p>Đây là lập luận mạnh vì nó đúng trong phạm vi của nó. Nhưng phạm vi đó có một điều kiện ngầm: các bên phải có lựa chọn thay thế thật sự khả thi. Như ta sẽ thấy ở phần hạ tầng (mục IX), người mua lần đầu không đối mặt với "trao đổi tự nguyện giữa các bên bình đẳng" — họ đối mặt với một hệ thống định giá, tín dụng và đăng ký tài sản đã được xếp sẵn.</p>
+
+  <h3 id="s8-2">Vị thế của Wertheimer: bóc lột là chiếm lợi bất công</h3>
+
+  <p>Alan Wertheimer (<em>Exploitation</em>, 1996) đưa ra phân biệt hữu ích nhất cho ghi chú này: <span data-claim="E-027">bóc lột là "chiếm lợi bất công" (taking unfair advantage), khác về khái niệm với cưỡng bức hay đàn áp; điều quan trọng là bóc lột tương hỗ cùng có lợi vẫn có thể xảy ra giữa các bên đồng thuận</span> <a class="ref" id="ref-44" href="#src-26">[26]</a>. Nói cách khác: "người bị bóc lột cũng được lợi" không tự động xóa nhãn "bóc lột" — nó chỉ có nghĩa bóc lột không nhất thiết là trò chơi tổng bằng không. (Phân biệt này cũng gây tranh cãi giữa các trường phái — xem mục VIII.1.)</p>
+
+  <p>Định nghĩa này cũng tách rời hai câu hỏi mà người ta hay trộn lẫn: <em>(a)</em> giao dịch có tự nguyện không? và <em>(b)</em> phân phối kết quả có công bằng không? Wertheimer cho phép trả lời "có tự nguyện" và vẫn đặt câu hỏi "nhưng tỷ lệ chia phần có bất công không" — đúng cái lõi của vấn đề ta đang xét.</p>
+
+  <p>Người viết tổng hợp phe trung gian như sau <span data-claim="E-028">(phân tích của người viết, dán nhãn rõ)</span>: khái niệm "bóc lột" trong chính trị học có độ trượt — nếu định nghĩa theo ý chí (không ai bị ép bằng vũ lực trực tiếp) thì khó gán nhãn bóc lột; còn nếu định nghĩa theo phân phối (chênh lệch quyền lực cấu trúc) thì cần bằng chứng rằng "tự nguyện" bị ràng buộc. Đây là vùng khái niệm đang gây tranh cãi, không có đồng thuận chuẩn. Ghi chú này chọn định nghĩa theo hướng Wertheimer + bằng chứng về ràng buộc cấu trúc ở mục IX: <strong>cách gọi "bóc lột" ở đây không phải cáo buộc đạo đức nhắm vào cá nhân người mua hay ngân hàng, mà là mô tả một cấu trúc phân phối</strong>.</p>
+
+  <h3 id="s8-3">Phản đối thứ hai: "Bong bóng vỡ sẽ giải quyết mọi thứ"</h3>
+
+  <p>Một phản đối phổ biến khác: giá nhà cao bất thường, nên để bong bóng vỡ thì ai cũng được giải thoát. Lịch sử nói khác. Ở Việt Nam, sau đỉnh 2007–2008, <span data-claim="E-024">thị trường đóng băng diện rộng, giá giảm 40–50%, hàng nghìn hộ và doanh nghiệp ôm nợ — nhưng gánh nợ không biến mất, chỉ chuyển người giữ (số liệu tổng hợp thị trường của Blue Ocean Realty)</span> <a class="ref" id="ref-45" href="#src-30">[30]</a>. Ở Nhật, theo Investopedia (nguồn phổ thông thứ cấp), <span data-claim="E-018">giá đất giảm 70% không xóa được kỷ nguyên trì trệ</span> <a class="ref" id="ref-46" href="#src-34">[34]</a>. Lăng kính Minsky <span data-claim="E-039">cho thấy vỡ bong bóng là lúc "sự ổn định tự sinh bất ổn" hiện thực hóa: các đơn vị speculative hóa ponzi, giá tài sản sụp đổ — thiệt hại đổ lên người vay cuối chuỗi và lan vào nợ xấu toàn hệ thống</span> <a class="ref" id="ref-47" href="#src-5">[5]</a>. Vỡ bong bóng không "giải quyết" cỗ máy — nó chỉ tắt máy giữa chừng, và người gánh nhiều nhất thường là người đang trả nợ.</p>
+
+  <h3 id="s8-4">Tự phê bình khung: phê bình chính "nền kinh tế tài sản"</h3>
+
+  <p>Để trung thực, khung Asset Economy mà ta dùng ở giai đoạn 5 cũng bị phê bình mạnh. Josh Weeks (New Socialist, 2021) chỉ ra: <span data-claim="E-030">cuốn sách làm mờ phân biệt hedge/speculative/ponzi của Minsky, gộp đầu cơ với rủi ro, và trình bày nền kinh tế tài sản gần như thuần nội địa — bỏ qua bối cảnh toàn cầu và thuộc địa</span> <a class="ref" id="ref-48" href="#src-20">[20]</a>. Renee Tapp (LSE Review of Books) bổ sung: <span data-claim="E-031">khung tập trung thanh khoản và cơ chế Minsky mà hy sinh việc đọc chính trị về quyền lực; cần phân tích lịch sử để giải thích chênh lệch quyền lực giữa chủ tài sản, chủ nợ và người thuê</span> <a class="ref" id="ref-49" href="#src-21">[21]</a>. Ghi chú này dùng Asset Economy như một lăng kính, không phải một chân lý.</p>
+
+  <p>Tương tự, khi nhắc tới Piketty: <span data-claim="E-042">ông lập luận bất bình đẳng tài sản khuếch đại khi lợi suất tư bản (r) vượt tăng trưởng (g)</span> <a class="ref" id="ref-50" href="#src-27">[27]</a>. Nhưng Rognlie (2015) cho thấy — một kết quả gây tranh cãi <span data-claim="E-043">phần lớn mức tăng tỷ trọng thu nhập từ tư bản đến từ ngành nhà ở — ngoài nhà ở, đóng góp của mọi khu vực khác bằng 0 hoặc âm</span> <a class="ref" id="ref-51" href="#src-4">[4]</a>. Kết quả này không phủ nhận luận điểm chính của ghi chú ta; ngược lại, nó nhấn mạnh đúng điều ta đang bàn: bất bình đẳng do tài sản hiện đại là bất bình đẳng <em>do nhà ở</em>.</p>
+
+  <h2 id="s9"><span class="num">IX.</span> Substrate — lớp hạ tầng khiến cam kết khả thi mà ít ai nhắc</h2>
+
+  <p>Sáu giai đoạn trên chỉ là câu chuyện trên mặt nước. Bên dưới là một lớp hạ tầng mà nếu thiếu nó, toàn bộ "cỗ máy đồng thuận" chỉ là văn chương. Đây cũng là phần trả lời trực tiếp nhất cho câu hỏi "đồng thuận có bị cưỡng chế không": <strong>một phần đồng thuận của người mua nhà nằm trong khuôn khổ cưỡng chế pháp lý và tài chính do ai đó đã xây sẵn</strong>.</p>
+
+  <figure data-fig-type="schematic" data-claim="E-021 E-044 E-045 E-035 E-036 E-033 E-048">
+    <p class="fig-title">Tảng băng chìm: lớp hạ tầng của sự "đồng thuận"</p>
+    <p class="fig-sub">Phần nổi: hành động đồng thuận. Phần chìm: các lớp cưỡng chế và đăng ký khiến cam kết khả thi (substrate).</p>
+    <svg viewBox="0 0 900 440" role="img" aria-label="Sơ đồ tảng băng chìm các lớp hạ tầng">
+      <line x1="20" y1="120" x2="880" y2="120" class="k-cool"/>
+      <text x="880" y="112" class="t-small s-cool" text-anchor="end">mặt nước</text>
+      <polygon points="400,40 480,40 500,120 300,120" class="s-accbg k-acc"/>
+      <text x="400" y="78" class="t-label s-ink" text-anchor="middle">"Đồng thuận":</text>
+      <text x="400" y="94" class="t-label s-ink" text-anchor="middle">ký hợp đồng mua nhà</text>
+
+      <polygon points="300,120 500,120 580,190 220,190" class="s-coolbg k-cool"/>
+      <text x="400" y="150" class="t-label s-cool" text-anchor="middle">Sổ đỏ & đăng ký đất đai — sang tên bắt buộc trong 30 ngày,</text>
+      <text x="400" y="166" class="t-small s-cool" text-anchor="middle">VPĐKĐĐ giải quyết ≤ 10 ngày làm việc (E-044, E-045)</text>
+
+      <polygon points="220,190 580,190 640,260 160,260" class="s-coolbg k-cool"/>
+      <text x="400" y="222" class="t-label s-cool" text-anchor="middle">Thẩm định: DTI, LTV, điểm tín dụng CIC (E-035, E-036)</text>
+      <text x="400" y="238" class="t-small s-cool" text-anchor="middle">"khoảng thở" tài chính mỏng trước lãi thả nổi</text>
+
+      <polygon points="160,260 640,260 680,330 120,330" class="s-coolbg k-cool"/>
+      <text x="400" y="292" class="t-label s-cool" text-anchor="middle">Hồ sơ tín dụng toàn quốc (CIC) — vết mực theo suốt đời (E-036)</text>
+      <text x="400" y="308" class="t-small s-cool" text-anchor="middle">quy định Thông tư 15/2023/TT-NHNN</text>
+
+      <polygon points="120,330 680,330 740,410 60,410" class="s-warn k-warn"/>
+      <text x="400" y="370" class="t-label s-warn" text-anchor="middle">Cưỡng chế thanh toán: phát mãi tài sản, truy thu phần còn thiếu,</text>
+      <text x="400" y="386" class="t-small s-warn" text-anchor="middle">kỳ thị xã hội "chủ cũ bết bát" (E-033, E-048)</text>
+    </svg>
+    <figcaption>Hình 6 — Loại <em>schematic</em>: tổ chức lại các mục nguồn về hạ tầng pháp lý và tín dụng. "Đồng thuận" của người mua nhà không đứng riêng — nó nằm trên một lớp cưỡng chế.</figcaption>
+  </figure>
+
+  <p>Bốn lớp của tảng băng chìm, đọc từ trên xuống:</p>
+
+  <p><strong>Một, bằng chứng sở hữu.</strong> Việt Nam duy trì nguyên tắc đất đai thuộc sở hữu toàn dân do Nhà nước quản lý <span data-claim="E-021">(Luật Đất đai 1993 trở đi); người dân có "quyền sử dụng đất" chứ không phải sở hữu — một quyền có thể chuyển nhượng, thế chấp</span> <a class="ref" id="ref-52" href="#src-37">[37]</a>. Sổ đỏ là vật thể hóa quyền đó. <span data-claim="E-044">Sang tên quyền sử dụng đất chỉ có hiệu lực khi đăng ký vào sổ địa chính (Luật Đất đai 2013, Điều 188; Luật Đất đai 2024, Điều 133); phải đăng ký trong 30 ngày, không sang tên bị phạt tới 20 triệu đồng; lệ phí trước bạ 0,5%, thuế thu nhập 2%</span> <a class="ref" id="ref-53" href="#src-17">[17]</a>.</p>
+
+  <p><strong>Hai, bộ máy đăng ký.</strong> <span data-claim="E-045">Quy trình sang tên được tổ chức qua Văn phòng đăng ký đất đai cấp tỉnh và chi nhánh cấp huyện, phối hợp cơ quan thuế, thời hạn giải quyết không quá 10 ngày làm việc</span> <a class="ref" id="ref-54" href="#src-18">[18]</a>. Chi tiết này nghe khô khan nhưng quyết định: nó khiến tài sản có thể giao dịch nhanh, tức là có thể thế chấp, tức là có thể biến thành nợ.</p>
+
+  <p><strong>Ba, bộ nhớ nợ.</strong> <span data-claim="E-036">CIC (Trung tâm Thông tin tín dụng Quốc gia, thuộc Ngân hàng Nhà nước) vận hành cơ sở dữ liệu tín dụng toàn quốc theo Thông tư 15/2023/TT-NHNN, dùng để thẩm định mọi khoản vay trong hệ thống (theo mô tả của SeABank)</span> <a class="ref" id="ref-55" href="#src-33">[33]</a>. Ý nghĩa cấu trúc: một lần vỡ nợ mua nhà để lại vết mực theo suốt đời tín dụng — rào cản không phải roi vọt, mà là việc bị tách khỏi hệ thống tài chính tương lai.</p>
+
+  <p><strong>Bốn, cưỡng chế thanh toán.</strong> Khi người vay vỡ nợ, <span data-claim="E-033">tài sản thế chấp bị phát mãi/thanh lý; nhiều lô rao bán nhiều lần với giá khởi điểm bị hạ dần (thí dụ BIDV hạ ~14% trong một tháng); người mua né tránh nhà "chủ cũ bết bát"; và tài sản thế chấp thường được định giá cao hơn giá trị thực lúc phê duyệt</span> <a class="ref" id="ref-56" href="#src-19">[19]</a>. Nếu số tiền phát mãi không đủ trả nợ, <span data-claim="E-048">phần còn thiếu vẫn bị truy thu; người vỡ nợ còn mang kỳ thị xã hội (theo giải đáp của Thư viện Pháp luật)</span> <a class="ref" id="ref-57" href="#src-29">[29]</a>.</p>
+
+  <p>Lớp hạ tầng này trả lời câu hỏi "đồng thuận là thật hay cấu trúc" theo cách nghiêng hẳn về phía cấu trúc: người mua ký một hợp đồng, nhưng hợp đồng đó nằm trong một hệ thống đã được trang bị sẵn để buộc họ trả — qua đăng ký tài sản, qua bộ nhớ tín dụng, qua phát mãi và truy thu. Đồng thuận ở mặt nước không phủ nhận cưỡng chế ở đáy tảng băng.</p>
+
+  <h2 id="s10"><span class="num">X.</span> Phân phối: ai hưởng, ai gánh, ai "ký hộ"</h2>
+
+  <p>Mục này trả lời câu hỏi phân phối của ghi chú. Đây là <strong>phân tích phân phối của người viết</strong> dựa trên các mục nguồn — không phải bảng kê tội cá nhân nào.</p>
+
+  <div class="tablewrap">
+    <table>
+      <thead>
+        <tr><th>Nhóm</th><th>Hưởng gì / gánh gì</th><th>Nguồn</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Chủ đầu tư, ngân hàng, nhà đầu cơ</td><td>Hưởng chênh lệch giá và lãi suất trên chuỗi nợ 25–30 năm; lợi nhuận phụ thuộc vào dòng "kẻ khờ lớn hơn"</td><td>E-038, E-010</td></tr>
+        <tr><td>Hộ sở hữu trước</td><td>Hưởng lũy kế giá trị qua tăng giá vốn — trở thành người bảo vệ hệ thống (cổ đông hóa)</td><td>E-038, E-016</td></tr>
+        <tr><td>Người mua lần đầu</td><td>Gánh chuỗi nghĩa vụ dài hạn ở mức giá kỳ vọng; phần lớn thu nhập tương lai bị cam kết</td><td>E-012, E-011, E-054</td></tr>
+        <tr><td>Người thuê ("churners")</td><td>Gánh chi phí nhà ở tăng theo lạm phát tài sản nhưng không hưởng lũy kế giá trị — nhóm ngoài ranh giới tài sản</td><td>E-047, E-015</td></tr>
+        <tr><td>Người vỡ nợ</td><td>Gánh phần nặng nhất: phát mãi giá chiết khấu, truy thu, kỳ thị xã hội</td><td>E-033, E-048</td></tr>
+        <tr><td>Thế hệ sau</td><td>"Ký hộ" gián tiếp: trả qua TFR thấp, trì hoãn kết hôn, và rủi ro nợ xấu lan vào hệ thống tài chính chung</td><td>E-007, E-009, E-010</td></tr>
+      </tbody>
+    </table>
+    <p class="tcap">Bảng 1 — Phân phối lợi ích và chi phí theo nhóm. "Ký hộ" ở dòng cuối là hình ảnh của người viết: họ không ký hợp đồng mua nhà, nhưng gánh hệ quả của chuỗi nợ qua hệ thống tài chính và dân số học chung.</p>
+  </div>
+
+  <p>Hai quan sát rút ra từ bảng này. Thứ nhất, <span data-claim="E-049">chính hộ gia đình vừa là người vay vừa là kênh phân bổ tín dụng: năm 2025, cho vay kinh doanh bất động sản tăng gần 50% còn dư nợ tiêu dùng gắn bất động sản của hộ gia đình tăng 12,4%</span> <a class="ref" id="ref-58" href="#src-11">[11]</a> — cỗ máy bơm nợ xuyên qua cả hai vai của hộ gia đình. Thứ hai, phần lớn chi phí của hệ thống do nhóm "không ký gì" gánh — người thuê chịu tiền thuê tăng theo kỳ vọng, thế hệ sau chịu hệ quả dân số, người nộp thuế chịu rủi ro nợ xấu của hệ thống. Bản chất "bóc lột có đồng thuận" ở đây không nằm ở ý chí của người ký, mà ở việc <strong>các chi phí thật được ngoại hóa sang những người không có tiếng nói trong thương vụ</strong>.</p>
+
+  <h2 id="s11"><span class="num">XI.</span> Giới hạn và câu hỏi mở</h2>
+
+  <p>Trung thực về độ bất định của toàn bộ ghi chú này:</p>
+
+  <ul>
+    <li><strong>Số liệu price-to-income.</strong> Con số 25–30× là ước tính truyền thông (VTV) <a class="ref" id="ref-59" href="#src-12">[12]</a>; một nguồn khác (Dân Việt) ước tính <span data-claim="E-013">23,7×</span> <a class="ref" id="ref-60" href="#src-31">[31]</a>. Các thành phố Việt Nam không nằm trong khảo sát chuẩn hóa của Demographia <a class="ref" id="ref-61" href="#src-6">[6]</a>, và <span data-claim="E-014">số liệu UBS/ESRB lưu hành qua blog thứ cấp (Cú Thông Thái) — nguồn yếu, chúng tôi chọn không dùng</span> <a class="ref" id="ref-62" href="#src-38">[38]</a>. Đọc các con số này như cỡ bậc, không phải giá trị chính xác.</li>
+    <li><strong>Ngoại suy liên quốc gia.</strong> Bằng chứng nhân quả giá nhà ↔ sinh đẻ lấy từ Trung Quốc (CFPS) <a class="ref" id="ref-63" href="#src-7">[7]</a>; Việt Nam chưa có đo lường riêng <a class="ref" id="ref-64" href="#src-9">[9]</a>. Ví dụ Nhật Bản lấy từ nguồn phổ thông thứ cấp <a class="ref" id="ref-65" href="#src-34">[34]</a>.</li>
+    <li><strong>Phép loại suy Minsky.</strong> Ba tư thế tài chính được thiết kế cho doanh nghiệp; áp cho hộ gia đình là lăng kính, không phải định lượng <a class="ref" id="ref-66" href="#src-5">[5]</a>.</li>
+    <li><strong>Các vị thế lý thuyết.</strong> Nozick, Wertheimer, Gramsci, George và Asset Economy được đối chiếu qua tóm tắt học thuật, chưa đọc nguyên bản từng trang.</li>
+    <li><strong>Phép thử dành cho độc giả.</strong> Một chương trình "thỏa thuận chia thu nhập" được thiết kế để đối chiếu ba công thức của bài gốc, nhưng <span data-claim="E-053">được giữ ngoài thân bài theo đúng thiết kế</span> — phần bảng kiểm tra cuối ghi chú là cách chuyển hóa tinh gọn thay thế.</li>
+    <li><strong>Bản dịch Marx.</strong> Câu trích "dull compulsion" là bản dịch tiếng Anh Moore–Aveling; cách dịch tiếng Việt có thể lệch chút ít.</li>
+  </ul>
+
+  <p>Câu hỏi mở thật sự — những câu mà dữ liệu hiện có không trả lời được:</p>
+  <ul>
+    <li>Bong bóng giá nhà Việt Nam có đang vỡ không, và nếu có, điểm gãy nào trong sáu giai đoạn xảy ra trước?</li>
+    <li>Hệ thống có thật sự "tự ăn nhiên liệu" (TFR 1,91, tuổi kết hôn 27,3) đến mức tự điều chỉnh, hay nó thích ứng bằng cách chuyển sang phân khúc khác?</li>
+    <li>"Đồng thuận" của hộ mua lần đầu — sau khi đọc lớp hạ tầng ở mục IX — còn được gọi là đồng thuận theo nghĩa nào?</li>
+  </ul>
+
+  <h2 id="s12"><span class="num">Bảng kiểm tra.</span> Sáu câu hỏi để nhận diện cỗ máy ở bất kỳ thị trường nào</h2>
+
+  <div class="checklist-purpose">
+    <p>Bảng kiểm tra này dùng để chuyển hóa kiến thức: áp nó cho bất kỳ chương trình nào đề nghị trả tiền hôm nay để lấy phần trăm thu nhập tương lai — chương trình học phí, vay mua nhà, hay bất kỳ cam kết dài hạn nào.</p>
+  </div>
+
+  <ol class="check">
+    <li><span class="q">Công thức nào trong ba công thức đang được dùng, và khâu nào bị che?</span><span class="why">Lấy tương lai? Biến người tham gia thành cổ đông? Khoác áo đạo đức? (E-002)</span></li>
+    <li><span class="q">"Đồng thuận" ở đây khác gì với đồng thuận trong giao dịch thị trường thông thường?</span><span class="why">Kênh nào biến nó thành cưỡng chế cấu trúc — chứ không chỉ là sự ưa thích cá nhân? (E-028, E-027)</span></li>
+    <li><span class="q">Substrate nào khiến cam kết này khả thi?</span><span class="why">Hồ sơ tín dụng, khấu trừ thu nhập, đăng ký tài sản, phát mãi? (E-035, E-036, E-044)</span></li>
+    <li><span class="q">Ai gánh chi phí ngoại hóa mà chưa hề ký gì?</span><span class="why">Nếu không ai — đó là giao dịch thị trường bình thường. Nếu có — bạn đang nhìn thấy cấu trúc. (E-047, E-048)</span></li>
+    <li><span class="q">Điểm gãy nào trong sáu giai đoạn gần nhất, và ai gánh phần vỡ?</span><span class="why">Cạn ô mới? Kỳ vọng đảo? Hết ưu đãi? Cạn người mua mới? (E-034, E-038)</span></li>
+    <li><span class="q">Trong những gì tôi vừa đọc, đâu là khung phân tích của người viết, đâu là số liệu có nguồn?</span><span class="why">Mọi khung tự đặt đều được dán nhãn; số liệu đều có mục nguồn gắn id (E-nnn).</span></li>
+  </ol>
+
+  <div class="summary">
+    <p class="ct">Tóm tắt</p>
+    <ol>
+      <li>Bài "Hành Tinh Ngu" đúng ở chỗ các hình thức bóc lột cũ sụp đổ vì nạn nhân nhận ra mình là nạn nhân — và cỗ máy nhà đất không có kẻ bóc lột hiện diện để nhận diện.</li>
+      <li>Chúng tôi tách cỗ máy thành sáu giai đoạn có điểm gãy: chia ô → định giá kỳ vọng → thế chấp tương lai → khóa đạo đức → cổ đông hóa → chuyền giao liên thế hệ.</li>
+      <li>"Đồng thuận" của người mua nhà nằm trên một lớp hạ tầng cưỡng chế: đăng ký tài sản, bộ nhớ tín dụng, phát mãi và truy thu — nên nó là đồng thuận trong ràng buộc, không phải đồng thuận thị trường thuần túy.</li>
+      <li>Chi phí thật được ngoại hóa sang người thuê, người vỡ nợ và thế hệ sau — những người không ký gì.</li>
+      <li>Bong bóng vỡ không giải quyết cỗ máy; nó chỉ chuyển người giữ phần lỗ.</li>
+    </ol>
+  </div>
+
+  <section class="sources" id="sources">
+    <h2>Nguồn</h2>
+    <ol>
+      <li id="src-1"><span class="tier">A</span> Nguyễn Anh Bình, <a href="https://www.omelet.tech/hanh-tinh-ngu/">Hành Tinh Ngu</a> (2021), omelet.tech — tác phẩm gốc, xuất phát điểm; dùng làm vật thử, không làm bằng chứng. <a class="backref" href="#ref-1">&#8617;</a><span class="supports">Hỗ trợ: ba công thức (E-002), Mô hình Hình vuông 5 bước (E-003), khóa đạo đức (E-004).</span></li>
+      <li id="src-2"><span class="tier">A</span> Karl Marx, <a href="https://www.marxists.org/archive/marx/works/1867-c1/ch28.htm">Capital, Vol. 1, Ch. 28 "Bloody Legislation Against the Expropriated"</a> (1867; bản dịch Moore–Aveling), marxists.org. <a class="backref" href="#ref-4">&#8617;</a><span class="supports">Hỗ trợ: cưỡng ép câm lặng của quan hệ kinh tế (E-005), tự nguyện trong khung ràng buộc (E-006).</span></li>
+      <li id="src-3"><span class="tier">A</span> Karl E. Case &amp; Robert J. Shiller, <a href="https://www.brookings.edu/articles/is-there-a-bubble-in-the-housing-market/">Is There a Bubble in the Housing Market?</a> (2003), Brookings Papers on Economic Activity, no. 2, tr. 299–362. <a class="backref" href="#ref-11">&#8617;</a><span class="supports">Hỗ trợ: "xem nhà là khoản đầu tư — đặc tính định nghĩa của bong bóng" (E-032).</span></li>
+      <li id="src-4"><span class="tier">A</span> Matthew Rognlie, <a href="https://mrognlie.github.io/papers/brookings_capitalshare.pdf">Deciphering the Fall and Rise in the Net Capital Share: Accumulation or Scarcity?</a> (2015), Brookings Papers on Economic Activity, Spring, tr. 1–69. <a class="backref" href="#ref-51">&#8617;</a><span class="supports">Hỗ trợ: mức tăng tỷ trọng thu nhập tư bản đến hoàn toàn từ nhà ở (E-043).</span></li>
+      <li id="src-5"><span class="tier">A</span> Hyman P. Minsky, <a href="https://www.levyinstitute.org/pubs/wp74.pdf">The Financial Instability Hypothesis</a> (1992), Levy Economics Institute WP74. <a class="backref" href="#ref-21">&#8617;</a><span class="supports">Hỗ trợ: ba tư thế hedge/speculative/ponzi và hai định lý bất ổn (E-039).</span></li>
+      <li id="src-6"><span class="tier">A</span> Wendell Cox &amp; Hugh Pavletich, <a href="https://www.demographia.com/dhi.pdf">International Housing Affordability</a> (2025), Demographia. <a class="backref" href="#ref-16">&#8617;</a><span class="supports">Hỗ trợ: định nghĩa Median Multiple, ngưỡng ≥9,0 = mất khả năng chi trả trầm trọng (E-019).</span></li>
+      <li id="src-7"><span class="tier">A</span> Zhang, F., Fang, Y., Han, C., &amp; Wu, Z., <a href="https://doi.org/10.1177/02685809241257863">Housing prices and family fertility decision-making in China: Effect and mechanism</a> (2024), International Sociology, 40(1), 137–162, SAGE. <a class="backref" href="#ref-42">&#8617;</a><span class="supports">Hỗ trợ: giá nhà ức chế sinh đẻ qua hiệu ứng chèn ép (E-017).</span></li>
+      <li id="src-8"><span class="tier">B</span> Cục Dân số (Bộ Y tế) qua Phạm Vũ Hoàng, <a href="https://vnexpress.net/tuoi-ket-hon-lan-dau-nguoi-viet-nam-la-27-2-4786789.html">Tuổi kết hôn lần đầu người Việt Nam là 27,2</a> (28/8/2024), VnExpress. <a class="backref" href="#ref-41">&#8617;</a><span class="supports">Hỗ trợ: chuỗi 24,1 → 25,2 → 27,2; TP.HCM 30,4 (E-008).</span></li>
+      <li id="src-9"><span class="tier">B</span> Đỗ Xuân Tuyên (Thứ trưởng Bộ Y tế), <a href="https://vnexpress.net/thanh-nien-viet-nam-ket-hon-ngay-cang-muon-5095878.html">Thanh niên Việt Nam kết hôn ngày càng muộn</a> (10/7/2026), VnExpress. <a class="backref" href="#ref-40">&#8617;</a><span class="supports">Hỗ trợ: tuổi kết hôn 27,3 năm 2024; nhận định nguyên nhân gồm nhà ở (E-009, E-041).</span></li>
+      <li id="src-10"><span class="tier">B</span> Ngân hàng Nhà nước qua Nguyễn Ngọc Cảnh (Phó Thống đốc), <a href="https://vietnambiz.vn/du-no-tin-dung-bat-dong-san-dat-hon-41-trieu-ty-dong-tang-17-so-voi-cuoi-nam-ngoai-202592372256132.htm">Dư nợ tín dụng bất động sản đạt hơn 4,1 triệu tỷ đồng</a> (23/9/2025), VietnamBiz. <a class="backref" href="#ref-23">&#8617;</a><span class="supports">Hỗ trợ: dư nợ 4,1 tr tỷ, +17%, 23,68%; nợ xấu 2,43% (E-010).</span></li>
+      <li id="src-11"><span class="tier">B</span> VARS IRE, <a href="https://vnexpress.net/ap-luc-tra-no-vay-mua-nha-se-manh-len-tu-nam-2027-5050816.html">"Áp lực trả nợ vay mua nhà sẽ mạnh lên từ năm 2027"</a> (16/3/2026), VnExpress. <a class="backref" href="#ref-17">&#8617;</a><span class="supports">Hỗ trợ: 4,74 tr tỷ cuối 2025 (+36%, &gt;25%); lãi suất 12–14% có lúc 16%; cảnh báo 2027; cho vay kinh doanh BĐS +50% (E-011, E-034, E-049).</span></li>
+      <li id="src-12"><span class="tier">B</span> VTV / Dân trí, <a href="https://vtv.vn/">Chênh lệch giá nhà so với thu nhập tại Hà Nội, TP.HCM</a> (21/4/2026), VTV. <a class="backref" href="#ref-15">&#8617;</a><span class="supports">Hỗ trợ: giá nhà 25–30 lần thu nhập hộ; ngưỡng lành mạnh 4–6 lần (E-012).</span></li>
+      <li id="src-13"><span class="tier">B</span> Báo Pháp luật Việt Nam / VARS, <a href="https://doanhnhan.baophapluat.vn/phan-hoa-loi-suat-cho-thue-can-ho-ha-noi-giam-con-3-tphcm-duy-tri-muc-4-85991.html">Phân hóa lợi suất cho thuê căn hộ: Hà Nội giảm còn 3%, TP.HCM duy trì mức 4%</a> (27/8/2025). <a class="backref" href="#ref-35">&#8617;</a><span class="supports">Hỗ trợ: lợi suất thuê 3–4% dưới lãi tiết kiệm ~5,5% (E-015); giá căn hộ HN 75,5 tr đ/m², +87,7% so 2019 (E-016).</span></li>
+      <li id="src-14"><span class="tier">B</span> GS. Đặng Hùng Võ, <a href="https://nhandan.vn/con-sot-dat-gay-ra-nhieu-he-luy-post695158.html">"Cơn sốt đất gây ra nhiều hệ lụy"</a> (29/4/2022), Báo Nhân Dân. <a class="backref" href="#ref-7">&#8617;</a><span class="supports">Hỗ trợ: bốn đợt sốt đất 1990–92, 2000–02, 2007–08, 2020–22 (E-022).</span></li>
+      <li id="src-15"><span class="tier">B</span> VietNamNet, <a href="https://vietnamnet.vn/nhung-lan-sot-dat-o-viet-nam-he-luy-xau-va-giai-phap-2007804.html">Những lần sốt đất ở Việt Nam, hệ lụy xấu và giải pháp</a> (18/4/2022). <a class="backref" href="#ref-8">&#8617;</a><span class="supports">Hỗ trợ: cơ chế sốt đất 2007–08, giá tăng ~3 lần; đợt 2020–22 với quy hoạch, đấu giá Thủ Thiêm (E-023, E-025).</span></li>
+      <li id="src-16"><span class="tier">B</span> VOV2 / TS. Phạm Văn Lam, <a href="https://vov2.vov.vn/giao-duc-dao-tao/an-cu-lac-nghiep-la-gi-57963.vov2">An cư lạc nghiệp là gì</a> (8/4/2026), VOV2. <a class="backref" href="#ref-26">&#8617;</a><span class="supports">Hỗ trợ: nguồn gốc và sức nặng văn hóa của "an cư lạc nghiệp" (E-020).</span></li>
+      <li id="src-17"><span class="tier">B</span> Luật sư Nguyễn Đức Hùng, <a href="https://luatvietnam.vn/dat-dai-nha-o/sang-ten-so-do-567-23920-article.html">Thủ tục sang tên Sổ đỏ từ ngày 01/7/2025</a> (21/8/2025), LuatVietnam. <a class="backref" href="#ref-53">&#8617;</a><span class="supports">Hỗ trợ: sang tên bắt buộc 30 ngày, phạt 20 tr đồng; Điều 133 Luật 2024 / Điều 188 Luật 2013; thuế phí (E-044).</span></li>
+      <li id="src-18"><span class="tier">B</span> LuatVietnam, <a href="https://luatvietnam.vn/dat-dai-nha-o/thu-tuc-sang-ten-so-do-567-23816-article.html">Hướng dẫn thủ tục sang tên Sổ đỏ năm 2026</a> (24/6/2026). <a class="backref" href="#ref-54">&#8617;</a><span class="supports">Hỗ trợ: VPĐKĐĐ cấp tỉnh/huyện, phối hợp cơ quan thuế, thời hạn ≤10 ngày làm việc (E-045).</span></li>
+      <li id="src-19"><span class="tier">B</span> Cafef / Tiền Phong (VARS), <a href="https://cafef.vn/ngan-hang-giam-gia-loat-bat-dong-san-phat-mai-20221114143531377.chn">Ngân hàng giảm giá loạt bất động sản phát mãi</a> (14/11/2022). <a class="backref" href="#ref-56">&#8617;</a><span class="supports">Hỗ trợ: phát mãi nhiều lần, hạ giá ~14%/tháng, định giá thế chấp cao (E-033).</span></li>
+      <li id="src-20"><span class="tier">B</span> Josh Weeks, <a href="https://www.newsocialist.org.uk/its-assets-stupid-review-_the-asset-economy_-adkins-cooper-and-konings">"It's the Assets, Stupid" — review The Asset Economy</a> (16/10/2021), New Socialist. <a class="backref" href="#ref-48">&#8617;</a><span class="supports">Hỗ trợ: phê bình làm mờ Minsky, gộp đầu cơ với rủi ro, thuần nội địa (E-030).</span></li>
+      <li id="src-21"><span class="tier">B</span> Renee Tapp, <a href="https://blogs.lse.ac.uk/lsereviewofbooks/2021/03/23/book-review-the-asset-economy-by-lisa-adkins-melinda-cooper-and-martijn-konings/">Review of The Asset Economy</a> (23/3/2021), LSE Review of Books. <a class="backref" href="#ref-49">&#8617;</a><span class="supports">Hỗ trợ: phê bình thiếu đọc chính trị về quyền lực (E-031).</span></li>
+      <li id="src-22"><span class="tier">B</span> Robert J. Shiller, <a href="https://www.institutionalinvestor.com/article/2bsuas4gvs74tsfj9ttkw/portfolio/robert-shiller-says-markets-have-become-more-prone-to-bubbles">Robert Shiller Says Markets Have Become More Prone to Bubbles</a> (phỏng vấn), Institutional Investor. <a class="backref" href="#ref-12">&#8617;</a><span class="supports">Hỗ trợ: bong bóng là "dịch bệnh xã hội" với vòng phản hồi giá→giá (E-037).</span></li>
+      <li id="src-23"><span class="tier">B</span> David Graeber, <a href="https://davidgraeber.org/books/debt-the-first-5000-years">Debt: The First 5,000 Years</a> (2011), Melville House. <a class="backref" href="#ref-30">&#8617;</a><span class="supports">Hỗ trợ: nợ được đạo đức hóa, không phải chân lý vĩnh cửu; jubilee (E-046).</span></li>
+      <li id="src-24"><span class="tier">B</span> Lisa Adkins, Melinda Cooper &amp; Martijn Konings, <a href="https://blogs.lse.ac.uk/lsereviewofbooks/2021/03/23/book-review-the-asset-economy-by-lisa-adkins-melinda-cooper-and-martijn-konings/">The Asset Economy</a> (2020), Polity Press — đánh giá qua LSE Review of Books. <a class="backref" href="#ref-33">&#8617;</a><span class="supports">Hỗ trợ: tài sản phủ bóng quan hệ lao động; hộ Minskyan; churners (E-029, E-047).</span></li>
+      <li id="src-25"><span class="tier">B</span> Robert Nozick, <a href="https://en.wikipedia.org/wiki/Anarchy,_State,_and_Utopia">Anarchy, State, and Utopia</a> (1974), Basic Books — vị thế xác nhận qua tóm tắt học thuật. <a class="backref" href="#ref-43">&#8617;</a><span class="supports">Hỗ trợ: ví dụ Wilt Chamberlain, tự do thủ tục (E-026).</span></li>
+      <li id="src-26"><span class="tier">B</span> Alan Wertheimer, <a href="https://www.jstor.org/stable/j.ctt7t06s">Exploitation</a> (1996), Princeton University Press. <a class="backref" href="#ref-44">&#8617;</a><span class="supports">Hỗ trợ: bóc lột = chiếm lợi bất công, khác cưỡng bức (E-027).</span></li>
+      <li id="src-27"><span class="tier">B</span> Thomas Piketty, <a href="https://libertystreeteconomics.newyorkfed.org/2015/01/capital-in-the-21st-century-a-review/">Capital in the Twenty-First Century</a> (2014), Harvard University Press — xác nhận qua review của NY Fed. <a class="backref" href="#ref-50">&#8617;</a><span class="supports">Hỗ trợ: bất đẳng thức r &gt; g (E-042).</span></li>
+      <li id="src-28"><span class="tier">B</span> Vietnam News / VNA, <a href="https://vietnamnews.vn/">Vietnam's fertility rate falls to record low 1.91 in 2024</a> (28/12/2024). <a class="backref" href="#ref-39">&#8617;</a><span class="supports">Hỗ trợ: TFR 1,91; thành thị 1,67, nông thôn 2,08 (E-007).</span></li>
+      <li id="src-29"><span class="tier">C</span> Thư viện Pháp luật, <a href="https://thuvienphapluat.vn/hoi-dap-phap-luat/giai-dap-ve-thanh-ly-tai-san-the-chap-ngan-hang-116656.html">Giải đáp về thanh lý tài sản thế chấp ngân hàng</a> (25/7/2017). <a class="backref" href="#ref-57">&#8617;</a><span class="supports">Hỗ trợ: truy thu phần còn thiếu sau phát mãi (E-048).</span></li>
+      <li id="src-30"><span class="tier">C</span> Blue Ocean Realty, <a href="https://blueocean-realty.com/bat-dong-san-bds-viet-nam-chang-duong-phat-trien-va-hien-nay">Thị trường bất động sản Việt Nam — chặng đường phát triển</a> (15/12/2023). <a class="backref" href="#ref-14">&#8617;</a><span class="supports">Hỗ trợ: sau 2008–2013, lãi 23–24%, giá giảm 40–50%, đóng băng 2011, tồn kho ~100.000 tỷ (E-024).</span></li>
+      <li id="src-31"><span class="tier">C</span> Dân Việt, <a href="https://danviet.vn/du-no-tin-dung-bat-dong-san-vuot-4-trieu-ty-dong-d1365059.html">Tín dụng bất động sản vượt 4 triệu tỷ đồng, nợ xấu 2,43%</a> (24/9/2025). <a class="backref" href="#ref-60">&#8617;</a><span class="supports">Hỗ trợ: giá nhà ~23,7 lần thu nhập — chỉ dùng làm tham chiếu độ bất định (E-013).</span></li>
+      <li id="src-32"><span class="tier">C</span> Vinhomes Market, <a href="https://market.vinhomes.vn/blog/dti-ty-le-no-tren-thu-nhap-la-gi-tam-quan-trong-cua-dti-khi-vay-mua-nha">DTI (Tỷ lệ nợ trên thu nhập) là gì</a> (5/5/2025) — mô tả quy trình chuẩn ngành. <a class="backref" href="#ref-18">&#8617;</a><span class="supports">Hỗ trợ: DTI/LTV/thang tín dụng (E-035).</span></li>
+      <li id="src-33"><span class="tier">C</span> SeABank, <a href="https://www.seabank.com.vn/">CIC và lịch sử tín dụng trong thẩm định vay</a> (2024) — sự tồn tại CIC là sự thật pháp lý công khai (Thông tư 15/2023/TT-NHNN). <a class="backref" href="#ref-55">&#8617;</a><span class="supports">Hỗ trợ: bộ nhớ nợ toàn quốc (E-036).</span></li>
+      <li id="src-34"><span class="tier">C</span> Investopedia, <a href="https://www.investopedia.com/terms/g/greaterfooltheory.asp">The greater fool theory</a> và các bình luận về bong bóng địa ốc Nhật Bản (2024). <a class="backref" href="#ref-32">&#8617;</a><span class="supports">Hỗ trợ: greater fool (E-038); ví dụ Nhật Bản — nguồn thứ cấp, dùng có nhãn (E-018).</span></li>
+      <li id="src-35"><span class="tier">B</span> Antonio Gramsci, <a href="https://en.wikipedia.org/wiki/Hegemony">Selections from the Prison Notebooks</a> (1929–1935; bản 1971) — khái niệm hegemony xác nhận qua tổng hợp học thuật. <a class="backref" href="#ref-29">&#8617;</a><span class="supports">Hỗ trợ: máy sản xuất đồng thuận (E-051).</span></li>
+      <li id="src-36"><span class="tier">B</span> Henry George, <a href="https://www.progress.org/wiki/progress-and-poverty-full-text/">Progress and Poverty</a> (1879), D. Appleton &amp; Company. <a class="backref" href="#ref-13">&#8617;</a><span class="supports">Hỗ trợ: địa tô và "thặng dư không công lao" (E-050).</span></li>
+      <li id="src-37"><span class="tier">B</span> Quốc hội, <a href="https://hethongphapluat.com/luat-dat-dai-1993.html">Luật Đất đai 1993</a>, Hệ thống Pháp luật. <a class="backref" href="#ref-52">&#8617;</a><span class="supports">Hỗ trợ: sở hữu toàn dân, "quyền sử dụng đất" (E-021).</span></li>
+      <li id="src-38"><span class="tier">C</span> Cú Thông Thái, <a href="https://vimo.cuthongthai.vn/">Chỉ số giá nhà UBS/ESRB lưu hành qua blog thứ cấp</a> — được xem xét nhưng chọn không dùng. <a class="backref" href="#ref-62">&#8617;</a><span class="supports">Tham chiếu: nguồn yếu bị loại (E-014).</span></li>
+    </ol>
+  </section>
+
+  <section class="limits" id="limits">
+    <h2>Những gì ghi chú này không bàn</h2>
+    <p>Không phải đề xuất hay phê bình chính sách cụ thể cho thị trường nhà ở Việt Nam. Không phải lời khuyên đầu tư. Không phải bài chỉ trích đạo đức nhắm vào người mua, ngân hàng hay giới trẻ — mục tiêu là hiểu cơ chế. Không phải tổng quan lịch sử học thuyết bóc lột của Marx — chỉ dùng các học thuyết khi chúng soi sáng cơ chế. Không lặp lại giọng châm biếm của bài gốc. Phép thử dành cho độc giả (một chương trình chia sẻ thu nhập) được giữ ngoài thân bài theo đúng thiết kế: nó là bài kiểm tra chuyển hóa, không phải nội dung.</p>
+  </section>
+
+</article>
+
+<nav class="toc" aria-label="Contents">
+  <h2>Mục lục</h2>
+  <ol>
+    <li><a href="#s1">I. Xuất phát điểm</a></li>
+    <li><a href="#s2">II. Vì sao bóc lột cũ chết</a></li>
+    <li><a href="#s3">III. GĐ 1–2 · Chia ô và định giá kỳ vọng</a></li>
+    <li class="sub"><a href="#s3-1">1. Chia ô</a></li>
+    <li class="sub"><a href="#s3-2">2. Định giá theo kỳ vọng</a></li>
+    <li><a href="#s4">IV. GĐ 3 · Thế chấp tương lai</a></li>
+    <li><a href="#s5">V. GĐ 4 · Khóa đạo đức</a></li>
+    <li><a href="#s6">VI. GĐ 5 · Cổ đông hóa</a></li>
+    <li><a href="#s7">VII. GĐ 6 · Chuyền giao liên thế hệ</a></li>
+    <li><a href="#s8">VIII. Phản biện</a></li>
+    <li class="sub"><a href="#s8-1">1. Nozick</a></li>
+    <li class="sub"><a href="#s8-2">2. Wertheimer</a></li>
+    <li class="sub"><a href="#s8-3">3. "Bong bóng vỡ sẽ giải quyết"</a></li>
+    <li class="sub"><a href="#s8-4">4. Tự phê bình khung</a></li>
+    <li><a href="#s9">IX. Substrate</a></li>
+    <li><a href="#s10">X. Phân phối</a></li>
+    <li><a href="#s11">XI. Giới hạn</a></li>
+    <li><a href="#s12">Bảng kiểm tra</a></li>
+    <li><a href="#sources">Nguồn</a></li>
+    <li><a href="#limits">Giới hạn phạm vi</a></li>
+  </ol>
+</nav>
+
+</div>
+</body>
+</html>
