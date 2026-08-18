@@ -1,0 +1,2083 @@
+<!doctype html>
+<html lang="en" data-theme="light" data-style="warm">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deconstructing Trust</title>
+<meta name="description" content="A first-principles deconstruction of trust: three axioms (the agency gap, the temporal fence, the evidential prior) derive every claim about trust's kinds, building, sensing, importance, and cultural variation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Light theme */
+  --bg:            #FDFBF7;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #2D3748;
+  --text-muted:    #718096;
+  --text-strong:   #1A202C;
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  --border:        #E4DFD5;
+  --sidenote-bg:   #EDF2F7;
+  --code-bg:       #EDF2F7;
+
+  /* Provenance colors */
+  --axiom:         #6B46C1;   /* deep purple */
+  --axiom-bg:      #EDE9FE;
+  --deduction:     #2B6CB0;   /* deep blue */
+  --deduction-bg:  #DBEAFE;
+  --constraint:    #B7791F;   /* amber */
+  --constraint-bg: #FEEBC8;
+  --synthesis:     #285E61;   /* teal */
+  --synthesis-bg:  #C6F6D5;
+  --commentary:    #718096;   /* slate */
+  --commentary-bg: #EDF2F7;
+
+  /* States */
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --halt:          #742A2A;
+  --halt-bg:       #FED7D7;
+
+  --radius-sm: 4px;
+  --radius:    8px;
+  --radius-lg: 12px;
+  --shadow:    0 1px 2px rgba(0,0,0,.04), 0 2px 8px rgba(0,0,0,.04);
+}
+
+html[data-theme="dark"]{
+  --bg:            #1A202C;
+  --bg-elevated:   #2D3748;
+  --bg-sunken:     #171923;
+  --text:          #E2E8F0;
+  --text-muted:    #A0AEC0;
+  --text-strong:   #F7FAFC;
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --border:        #2D3748;
+  --sidenote-bg:   #2D3748;
+  --code-bg:       #171923;
+
+  --axiom:         #C4B5FD;
+  --axiom-bg:      #322659;
+  --deduction:     #90CDF4;
+  --deduction-bg:  #2A4365;
+  --constraint:    #FBD38D;
+  --constraint-bg: #7B341E;
+  --synthesis:     #81E6D9;
+  --synthesis-bg:  #234E52;
+  --commentary:    #A0AEC0;
+  --commentary-bg: #2D3748;
+
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #742A2A;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --halt:          #FEB2B2;
+  --halt-bg:       #742A2A;
+}
+
+/* ============================================================
+   BRUTALIST BLUEPRINT — overrides all tokens when <html data-style="brutalist">
+============================================================ */
+html[data-style="brutalist"]{
+  --font-serif: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans:  'Space Mono', 'Fira Code', ui-monospace, monospace;
+  --font-mono:  'Space Mono', 'Fira Code', ui-monospace, monospace;
+
+  --bg:            #000000;
+  --bg-elevated:   #0A0A0A;
+  --bg-sunken:     #0A0A0A;
+  --text:          #F3F4F6;
+  --text-muted:    #9CA3AF;
+  --text-strong:   #FFFFFF;
+  --accent:        #00FFCC;
+  --accent-strong: #00FFCC;
+  --border:        #333333;
+  --sidenote-bg:   #0A0A0A;
+  --code-bg:       #0A0A0A;
+
+  --axiom:         #00FFCC;
+  --axiom-bg:      #001A16;
+  --deduction:     #7FDBFF;
+  --deduction-bg:  #001820;
+  --constraint:    #FF3366;
+  --constraint-bg: #1A0008;
+  --synthesis:     #00FFCC;
+  --synthesis-bg:  #001A16;
+  --commentary:    #9CA3AF;
+  --commentary-bg: #0A0A0A;
+
+  --success:       #00FFCC;
+  --success-bg:    #001A16;
+  --danger:        #FF3366;
+  --danger-bg:     #1A0008;
+  --warn:          #FF3366;
+  --warn-bg:       #1A0008;
+  --halt:          #FF3366;
+  --halt-bg:       #1A0008;
+
+  --radius-sm: 0;
+  --radius:    0;
+  --radius-lg: 0;
+  --shadow:    none;
+}
+
+html{scroll-behavior:smooth;scroll-padding-top:1rem}
+body{
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background .2s, color .2s;
+}
+
+/* ============================================================
+   LAYOUT — CSS GRID 3-column
+============================================================ */
+.layout{
+  display: grid;
+  grid-template-columns: 260px minmax(0, 720px) 260px;
+  gap: 2.5rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 6rem;
+  align-items: start;
+}
+.navigator{position:sticky;top:1.5rem;align-self:start;max-height:calc(100vh - 3rem);overflow-y:auto;padding-right:.5rem}
+.canvas{min-width:0}
+.marginalia{position:sticky;top:1.5rem;align-self:start}
+
+body.focus-mode .layout{grid-template-columns: 1fr; max-width: 780px}
+body.focus-mode .navigator,
+body.focus-mode .marginalia{display:none}
+body.focus-mode .canvas{max-width:70ch;margin:0 auto}
+
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}
+.progress-bar__fill{height:100%;width:0;background:var(--accent);transition:width .1s linear}
+
+/* ============================================================
+   NAVIGATOR (left panel)
+============================================================ */
+.navigator h4{
+  font-family:var(--font-sans);font-size:.72rem;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);
+  margin:1.5rem 0 .5rem;padding-bottom:.35rem;border-bottom:1px solid var(--border);
+}
+.navigator h4:first-child{margin-top:0}
+.reading-meta{font-family:var(--font-sans);font-size:.82rem;color:var(--text-muted);margin-bottom:.5rem}
+.reading-meta strong{color:var(--text);font-weight:600}
+
+.toc{list-style:none;padding:0;margin:0;font-family:var(--font-sans);font-size:.85rem}
+.toc li{margin:.2rem 0}
+.toc a{
+  display:block;padding:.3rem .6rem;border-radius:var(--radius-sm);
+  color:var(--text-muted);text-decoration:none;
+  border-left:2px solid transparent;transition:all .15s;
+}
+.toc a:hover{color:var(--text);background:var(--bg-sunken)}
+.toc a.active{color:var(--accent-strong);border-left-color:var(--accent);background:var(--bg-sunken);font-weight:600}
+
+.ledger{
+  background:var(--bg-elevated);border:1px solid var(--border);
+  border-radius:var(--radius);padding:.8rem;font-family:var(--font-sans);font-size:.78rem;
+}
+.ledger dt{font-weight:600;color:var(--text);margin-top:.5rem}
+.ledger dt:first-child{margin-top:0}
+.ledger dd{margin:.15rem 0 0;color:var(--text-muted);padding-left:.6rem;border-left:2px solid var(--border)}
+.ledger .tag{
+  display:inline-block;padding:.1rem .4rem;margin:.1rem .2rem .1rem 0;
+  border-radius:var(--radius-sm);font-size:.7rem;font-weight:600;
+  background:var(--axiom-bg);color:var(--axiom);
+}
+.ledger .tag.constraint{background:var(--constraint-bg);color:var(--constraint)}
+.ledger .tag.halt{background:var(--halt-bg);color:var(--halt)}
+
+/* ============================================================
+   CANVAS (middle column)
+============================================================ */
+.canvas{max-width:65ch;line-height:1.7}
+.canvas h1{
+  font-family:var(--font-sans);font-weight:700;font-size:2rem;line-height:1.2;
+  color:var(--text-strong);margin:0 0 .3rem;letter-spacing:-.02em;
+}
+.canvas .subtitle{font-family:var(--font-sans);color:var(--text-muted);font-size:1.05rem;margin:0 0 2rem}
+.canvas h2{
+  font-family:var(--font-sans);font-weight:700;font-size:1.5rem;line-height:1.25;
+  color:var(--text-strong);margin:3rem 0 1rem;padding-top:1rem;
+  border-top:1px solid var(--border);letter-spacing:-.01em;
+}
+.canvas h3{
+  font-family:var(--font-sans);font-weight:600;font-size:1.15rem;
+  color:var(--text-strong);margin:2rem 0 .75rem;
+}
+.canvas p{margin:0 0 1.1rem}
+.canvas p + p{margin-top:0}
+.canvas ol, .canvas ul{padding-left:1.5rem;margin:0 0 1.25rem}
+.canvas ol li, .canvas ul li{margin:.35rem 0}
+.canvas strong{color:var(--text-strong);font-weight:700}
+.canvas em{font-style:italic;color:var(--text-strong)}
+.canvas a{color:var(--accent);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+.canvas a:hover{color:var(--accent-strong)}
+
+code{font-family:var(--font-mono);font-size:.9em;background:var(--code-bg);padding:.1em .35em;border-radius:var(--radius-sm)}
+pre{background:var(--code-bg);border-radius:var(--radius);padding:1rem;overflow-x:auto;font-family:var(--font-mono);font-size:.85rem;line-height:1.5}
+pre code{background:none;padding:0}
+
+blockquote{
+  margin:1.5rem 0;padding:.5rem 1.1rem;border-left:3px solid var(--accent);
+  background:var(--bg-sunken);color:var(--text);border-radius:0 var(--radius) var(--radius) 0;
+  font-family:var(--font-serif);font-style:italic;
+}
+blockquote p:last-child{margin-bottom:0}
+
+.tooltip{position:relative;border-bottom:1px dashed var(--accent);cursor:help}
+.tooltip::after{
+  content:attr(data-tip);position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);
+  background:var(--text-strong);color:var(--bg);padding:.5rem .7rem;border-radius:var(--radius-sm);
+  font-family:var(--font-sans);font-size:.78rem;line-height:1.4;font-style:normal;font-weight:normal;
+  white-space:normal;width:max-content;max-width:260px;z-index:10;
+  opacity:0;pointer-events:none;transition:opacity .15s;
+}
+.tooltip:hover::after,.tooltip:focus::after{opacity:1}
+
+.halt-banner{
+  display:none;background:var(--halt-bg);color:var(--halt);
+  border:2px solid var(--halt);border-radius:var(--radius);
+  padding:1rem 1.2rem;margin-bottom:2rem;font-family:var(--font-sans);
+}
+body.halted .halt-banner{display:block}
+.halt-banner strong{font-size:1.05rem;display:block;margin-bottom:.3rem}
+
+.tag-badge{
+  display:inline-block;font-family:var(--font-sans);font-size:.68rem;font-weight:700;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:.15rem .45rem;border-radius:var(--radius-sm);
+  vertical-align:.15em;margin-right:.3rem;
+}
+.tag-badge.axiom{background:var(--axiom-bg);color:var(--axiom)}
+.tag-badge.deduction{background:var(--deduction-bg);color:var(--deduction)}
+.tag-badge.constraint{background:var(--constraint-bg);color:var(--constraint)}
+.tag-badge.synthesis{background:var(--synthesis-bg);color:var(--synthesis)}
+.tag-badge.commentary{background:var(--commentary-bg);color:var(--commentary)}
+
+.compare-table{
+  display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0;
+  border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;
+}
+.compare-table > div{padding:1rem 1.1rem;background:var(--bg-elevated)}
+.compare-table > div + div{border-left:1px solid var(--border)}
+.compare-table h4{
+  margin:0 0 .5rem;font-family:var(--font-sans);font-size:.72rem;font-weight:700;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);
+}
+.compare-table .consensus h4{color:var(--danger)}
+.compare-table .axiomatic h4{color:var(--axiom)}
+.compare-table p{margin:0;font-family:var(--font-serif);font-size:.95rem;line-height:1.6}
+
+.axiom-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin:1.5rem 0}
+.axiom-card{
+  perspective:1000px;min-height:280px;font-family:var(--font-sans);cursor:pointer;
+  position:relative;
+}
+.axiom-card__inner{
+  position:relative;width:100%;min-height:280px;text-align:left;
+  transition:transform .6s;transform-style:preserve-3d;
+}
+.axiom-card.flipped .axiom-card__inner{transform:rotateY(180deg)}
+.axiom-card__face{
+  position:absolute;inset:0;padding:1rem;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;
+  border:1px solid var(--border);border-radius:var(--radius);
+  background:var(--bg-elevated);box-shadow:var(--shadow);
+  display:flex;flex-direction:column;justify-content:space-between;
+  overflow:auto;
+}
+.axiom-card__face--back{transform:rotateY(180deg);background:var(--axiom-bg)}
+.axiom-card__label{
+  font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--axiom);margin-bottom:.4rem;
+}
+.axiom-card__name{font-size:1rem;font-weight:700;color:var(--text-strong);margin:0 0 .4rem}
+.axiom-card__statement{font-family:var(--font-serif);font-size:.9rem;line-height:1.5;color:var(--text);margin:0}
+.axiom-card__meta{font-size:.72rem;color:var(--text-muted);margin-top:.5rem}
+.axiom-card__cta{font-size:.72rem;color:var(--accent);margin-top:.3rem;font-weight:600}
+.axiom-card__face--back .axiom-card__label{color:var(--axiom-strong,var(--axiom))}
+.axiom-card__face--back ul{margin:.3rem 0 0;padding-left:1.1rem;font-family:var(--font-serif);font-size:.88rem;line-height:1.55}
+.axiom-card__face--back li{margin:.2rem 0}
+
+.flow{
+  display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:.5rem;align-items:stretch;
+  margin:1.5rem 0;font-family:var(--font-sans);
+}
+.flow__step{
+  background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);
+  padding:.9rem;display:flex;flex-direction:column;gap:.35rem;
+}
+.flow__step .label{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+.flow__step .title{font-size:.95rem;font-weight:600;color:var(--text-strong)}
+.flow__step .body{font-family:var(--font-serif);font-size:.85rem;line-height:1.5;color:var(--text)}
+.flow__arrow{align-self:center;color:var(--accent);font-size:1.5rem;font-weight:700;user-select:none}
+
+.injector{
+  background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.1rem;margin:1.5rem 0;font-family:var(--font-sans);
+}
+.injector h4{
+  margin:0 0 .5rem;font-size:.72rem;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--constraint);
+}
+.injector__desc{font-family:var(--font-serif);font-size:.95rem;line-height:1.55;color:var(--text);margin:0 0 .8rem}
+.injector__controls{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.9rem}
+.injector__toggle{
+  font-family:var(--font-sans);font-size:.82rem;font-weight:500;
+  padding:.4rem .7rem;background:var(--bg-sunken);border:1px solid var(--border);
+  border-radius:var(--radius-sm);cursor:pointer;color:var(--text);transition:all .15s;
+}
+.injector__toggle:hover{border-color:var(--accent)}
+.injector__toggle.active{background:var(--constraint-bg);border-color:var(--constraint);color:var(--constraint);font-weight:700}
+.fracture-map{margin-top:.5rem;font-family:var(--font-sans);font-size:.88rem}
+.fracture-row{
+  display:grid;grid-template-columns:auto 1fr;gap:.6rem;padding:.4rem 0;
+  border-top:1px solid var(--border);align-items:baseline;
+}
+.fracture-row:first-of-type{border-top:none}
+.fracture-row[hidden]{display:none}
+.fracture-status{
+  font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  padding:.1rem .45rem;border-radius:var(--radius-sm);
+}
+.fracture-status.survives{background:var(--success-bg);color:var(--success)}
+.fracture-status.fractures{background:var(--danger-bg);color:var(--danger)}
+.fracture-status.silent{background:var(--warn-bg);color:var(--warn)}
+.fracture-desc{font-family:var(--font-serif);color:var(--text);line-height:1.5}
+
+.bar-chart{margin:1.5rem 0;font-family:var(--font-sans);font-size:.85rem}
+.bar-chart h4{margin:0 0 .8rem;font-size:.9rem;color:var(--text-strong);font-weight:600}
+.bar-chart__row{display:grid;grid-template-columns:130px 1fr auto;gap:.7rem;align-items:center;margin:.35rem 0}
+.bar-chart__label{color:var(--text-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-chart__track{background:var(--bg-sunken);border-radius:var(--radius-sm);height:22px;position:relative;overflow:hidden}
+.bar-chart__fill{
+  height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong));
+  border-radius:var(--radius-sm);transition:opacity .15s;
+}
+.bar-chart__fill:hover{opacity:.85}
+.bar-chart__value{color:var(--text-strong);font-weight:600;font-variant-numeric:tabular-nums}
+
+details.deep-dive{
+  background:var(--bg-elevated);border:1px solid var(--border);border-left:3px solid var(--accent);
+  border-radius:var(--radius);padding:.9rem 1.1rem;margin:1.5rem 0;
+}
+details.deep-dive[open]{padding-bottom:1.1rem}
+details.deep-dive summary{
+  cursor:pointer;font-family:var(--font-sans);font-weight:600;color:var(--accent-strong);
+  list-style:none;position:relative;padding-left:1.3rem;
+}
+details.deep-dive summary::-webkit-details-marker{display:none}
+details.deep-dive summary::before{
+  content:'▸';position:absolute;left:0;color:var(--accent);
+  transition:transform .2s;display:inline-block;
+}
+details.deep-dive[open] summary::before{transform:rotate(90deg)}
+details.deep-dive[open] summary{margin-bottom:.6rem}
+
+.quiz{margin:2rem 0;font-family:var(--font-sans)}
+.quiz fieldset{
+  border:1px solid var(--border);border-radius:var(--radius);
+  padding:1.2rem;margin:1rem 0;background:var(--bg-elevated);
+}
+.quiz legend{
+  font-weight:700;color:var(--text-strong);padding:0 .5rem;
+  font-family:var(--font-sans);font-size:.95rem;
+}
+.quiz label{
+  display:block;padding:.7rem .9rem;margin:.4rem 0;background:var(--bg-sunken);
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  cursor:pointer;transition:all .15s;font-family:var(--font-serif);font-size:.94rem;
+}
+.quiz label:hover{border-color:var(--accent);background:var(--bg-elevated)}
+.quiz input[type="radio"]{margin-right:.6rem}
+.quiz input[type="radio"]:checked + span{font-weight:600;color:var(--text-strong)}
+.quiz:not(.checked) label:has(input:checked){border-color:var(--accent);background:var(--bg-elevated)}
+.quiz label.correct-answer{border-color:var(--success);background:var(--success-bg);color:var(--success)}
+.quiz label.incorrect-answer{border-color:var(--danger);background:var(--danger-bg);color:var(--danger)}
+.quiz .explanation{
+  display:none;margin-top:.5rem;padding:.6rem .8rem;background:var(--bg-sunken);
+  border-radius:var(--radius-sm);font-family:var(--font-serif);font-size:.88rem;color:var(--text);
+  line-height:1.55;
+}
+.quiz.checked .explanation{display:block}
+.quiz-controls{display:flex;gap:.6rem;align-items:center;margin-top:1rem;flex-wrap:wrap}
+.btn{
+  font-family:var(--font-sans);font-weight:600;font-size:.9rem;
+  padding:.55rem 1.1rem;border-radius:var(--radius-sm);cursor:pointer;
+  border:1px solid var(--accent);background:var(--accent);color:#fff;transition:all .15s;
+}
+.btn:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+.btn.btn--ghost{background:transparent;color:var(--accent);}
+.btn.btn--ghost:hover{background:var(--bg-sunken)}
+.quiz-score{font-family:var(--font-sans);font-weight:700;font-size:1rem;color:var(--text-strong)}
+
+.marginalia{font-family:var(--font-sans);font-size:.85rem}
+.marginalia h4{
+  font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-muted);margin:0 0 .5rem;padding-bottom:.35rem;border-bottom:1px solid var(--border);
+}
+.sidenote{
+  background:var(--sidenote-bg);border-radius:var(--radius);
+  padding:.7rem .9rem;margin:1rem 0;font-size:.82rem;line-height:1.55;color:var(--text-muted);
+}
+.sidenote strong{color:var(--text);font-weight:600;display:block;margin-bottom:.2rem}
+.sidenote .ref{
+  display:inline-block;background:var(--axiom-bg);color:var(--axiom);
+  padding:.05rem .35rem;border-radius:3px;font-size:.7rem;font-weight:700;margin-right:.25rem;
+}
+
+.controls{
+  position:fixed;bottom:1.5rem;right:1.5rem;display:flex;flex-direction:column;gap:.5rem;z-index:50;
+}
+.controls button{
+  width:44px;height:44px;border-radius:50%;border:1px solid var(--border);
+  background:var(--bg-elevated);color:var(--text);cursor:pointer;
+  box-shadow:var(--shadow);font-size:1.1rem;display:flex;align-items:center;justify-content:center;
+  transition:all .15s;
+}
+.controls button:hover{border-color:var(--accent);color:var(--accent);transform:scale(1.05)}
+.controls button svg{width:20px;height:20px}
+
+.footer{
+  margin-top:4rem;padding-top:1.5rem;border-top:1px solid var(--border);
+  font-family:var(--font-sans);font-size:.82rem;color:var(--text-muted);line-height:1.6;
+}
+.footer .footnotes{margin-top:1rem}
+.footer .footnotes p{margin:.35rem 0}
+
+@media (max-width: 960px){
+  .layout{grid-template-columns:1fr;gap:1.5rem;padding:1.5rem 1rem 5rem}
+  .navigator,.marginalia{position:static;max-height:none}
+  .canvas{max-width:none}
+  .compare-table{grid-template-columns:1fr}
+  .compare-table > div + div{border-left:none;border-top:1px solid var(--border)}
+  .flow{grid-template-columns:1fr;grid-template-rows:auto}
+  .flow__arrow{transform:rotate(90deg);justify-self:center;padding:.2rem 0}
+}
+/* ============================================================
+   SESSION 2 : NEW COMPONENT STYLES
+============================================================ */
+
+.ledger .dim-row{
+  display:flex;justify-content:space-between;gap:.4rem;padding:.2rem 0;
+  font-family:var(--font-mono);font-size:.72rem;color:var(--text);
+  border-bottom:1px dashed var(--border);
+}
+.ledger .dim-row:last-of-type{border-bottom:none}
+.ledger .dim-row .dim-key{color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+.ledger .dim-row .dim-val{color:var(--text-strong);font-weight:500}
+.ledger .lemma-list{list-style:none;padding:0;margin:0}
+.ledger .lemma-list li{
+  padding:.3rem .5rem;margin:.2rem 0;
+  background:var(--deduction-bg);color:var(--deduction);
+  border-radius:var(--radius-sm);font-family:var(--font-mono);font-size:.72rem;
+}
+.ledger .lemma-list li strong{font-weight:600}
+
+.deconstruct-table{
+  width:100%;border-collapse:collapse;margin:1.5rem 0 1rem;
+  font-family:var(--font-sans);font-size:.9rem;
+  border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;
+}
+.deconstruct-table thead{background:var(--bg-sunken)}
+.deconstruct-table th{
+  padding:.7rem 1rem;text-align:left;font-weight:600;
+  color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;
+  font-size:.72rem;border-bottom:1px solid var(--border);
+}
+.deconstruct-table td{
+  padding:.7rem 1rem;border-bottom:1px solid var(--border);vertical-align:top;
+}
+.deconstruct-table tr:last-child td{border-bottom:none}
+.deconstruct-table td:first-child{width:38%}
+.deconstruct-table td:nth-child(2){width:14%}
+.deconstruct-table .type-tag{
+  display:inline-block;padding:.15rem .5rem;font-size:.7rem;font-weight:600;
+  border-radius:var(--radius-sm);text-transform:uppercase;letter-spacing:.04em;
+  font-family:var(--font-mono);
+}
+.deconstruct-table .type-fundamental{background:var(--axiom-bg);color:var(--axiom)}
+.deconstruct-table .type-derivative{background:var(--commentary-bg);color:var(--commentary)}
+.deconstruct-table tr.derivative .assumption{text-decoration:line-through;color:var(--text-muted)}
+.deconstruct-table tr.fundamental .assumption{color:var(--text-strong);font-weight:500}
+.deconstruct-table tr.fundamental{background:color-mix(in srgb, var(--axiom-bg) 35%, transparent)}
+
+.boundaries-panel{
+  margin:1.5rem 0;padding:1rem 1.25rem;
+  border:1px solid var(--axiom);border-left:4px solid var(--axiom);
+  border-radius:var(--radius);background:color-mix(in srgb, var(--axiom-bg) 40%, var(--bg-elevated));
+  font-family:var(--font-sans);
+}
+.boundaries-panel .bp-label{
+  font-family:var(--font-mono);font-size:.7rem;font-weight:600;
+  color:var(--axiom);text-transform:uppercase;letter-spacing:.06em;
+  margin-bottom:.4rem;
+}
+.boundaries-panel .bp-body{color:var(--text);font-size:.92rem;line-height:1.55}
+.boundaries-panel .bp-body p{margin:.3rem 0}
+
+.structural-test{
+  margin:1.5rem 0;padding:1rem 1.25rem;
+  border:1px dashed var(--border);border-radius:var(--radius);
+  background:var(--bg-sunken);
+}
+.structural-test h4{
+  margin:0 0 .3rem;font-family:var(--font-sans);font-size:.85rem;
+  color:var(--text-strong);text-transform:uppercase;letter-spacing:.05em;
+}
+.structural-test .st-desc{font-size:.85rem;color:var(--text-muted);margin:.2rem 0 .7rem}
+.structural-test .st-buttons{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+.structural-test button{
+  padding:.4rem .8rem;border:1px solid var(--danger);
+  background:var(--bg-elevated);color:var(--danger);
+  font-family:var(--font-mono);font-size:.78rem;font-weight:600;
+  border-radius:var(--radius-sm);cursor:pointer;transition:.15s ease;
+}
+.structural-test button:hover{background:var(--danger-bg)}
+.structural-test button.active{background:var(--danger);color:#fff}
+.structural-test .st-reset{border-color:var(--border);color:var(--text-muted)}
+.structural-test .st-reset:hover{background:var(--bg-sunken)}
+.structural-test .st-note{
+  margin-top:.6rem;font-size:.8rem;color:var(--text-muted);font-style:italic;
+  min-height:1.2em;
+}
+.axiom-card.collapsed{opacity:.45;filter:grayscale(.6)}
+.axiom-card.collapsed .axiom-card__name,
+.axiom-card.collapsed .axiom-card__statement{text-decoration:line-through}
+.axiom-card.collapsed::after{
+  content:"REMOVED";position:absolute;top:.5rem;right:.5rem;
+  font-family:var(--font-mono);font-size:.65rem;font-weight:700;
+  padding:.15rem .4rem;background:var(--danger);color:#fff;
+  border-radius:var(--radius-sm);letter-spacing:.05em;pointer-events:none;
+}
+.theorem.collapsed{
+  background:var(--danger-bg);border-color:var(--danger);
+}
+.theorem.collapsed .theorem-header,
+.theorem.collapsed .theorem-claim{text-decoration:line-through;color:var(--danger)}
+.theorem.collapsed .proof-toggle::before{
+  content:"⚠ ";
+}
+
+.proof-chain{margin:1.2rem 0;position:relative}
+.proof-chain::before{
+  content:"";position:absolute;left:1rem;top:2rem;bottom:2rem;
+  width:2px;background:var(--border);z-index:0;
+}
+.theorem{
+  position:relative;margin:0 0 1.2rem 0;padding:.8rem 1rem .8rem 3rem;
+  background:var(--bg-elevated);border:1px solid var(--border);
+  border-left:4px solid var(--deduction);border-radius:var(--radius);
+  font-family:var(--font-sans);z-index:1;
+}
+.theorem-num{
+  position:absolute;left:-.15rem;top:.7rem;
+  width:2.3rem;height:2.3rem;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--deduction);color:#fff;
+  font-family:var(--font-mono);font-size:.75rem;font-weight:700;
+  border-radius:50%;letter-spacing:0;
+  border:3px solid var(--bg);
+}
+.theorem-header{
+  display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;
+  font-family:var(--font-mono);font-size:.7rem;
+  color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em;
+  margin-bottom:.3rem;
+}
+.theorem-header .cite{
+  display:inline-block;padding:.1rem .4rem;
+  background:var(--axiom-bg);color:var(--axiom);
+  border-radius:var(--radius-sm);font-weight:600;
+}
+.theorem-header .cite.lemma{background:var(--deduction-bg);color:var(--deduction)}
+.theorem-claim{
+  font-size:.98rem;color:var(--text-strong);font-weight:500;
+  line-height:1.5;margin:.2rem 0;
+}
+.theorem details{margin-top:.6rem}
+.theorem summary{
+  cursor:pointer;list-style:none;
+  font-family:var(--font-mono);font-size:.75rem;font-weight:600;
+  color:var(--deduction);padding:.35rem .6rem;
+  background:var(--deduction-bg);border-radius:var(--radius-sm);
+  display:inline-block;user-select:none;
+}
+.theorem summary::-webkit-details-marker{display:none}
+.theorem summary::before{content:"▶ ";display:inline-block;transition:transform .15s}
+.theorem details[open] summary::before{transform:rotate(90deg)}
+.theorem .proof-body{
+  margin-top:.6rem;padding:.8rem 1rem;
+  background:var(--code-bg);border:1px solid var(--border);
+  border-radius:var(--radius-sm);
+  font-family:var(--font-mono);font-size:.82rem;line-height:1.65;
+  color:var(--text);
+}
+.theorem .proof-body p{margin:.3rem 0}
+.theorem .proof-body .step{
+  display:grid;grid-template-columns:1.5rem 1fr;gap:.4rem;margin:.35rem 0;
+}
+.theorem .proof-body .op{
+  color:var(--axiom);font-weight:600;text-align:center;
+}
+.theorem .proof-body .qed{
+  margin-top:.6rem;padding-top:.4rem;border-top:1px dashed var(--border);
+  font-weight:700;color:var(--synthesis);
+}
+.theorem .proof-body .qed::before{content:"∎ ";color:var(--synthesis)}
+
+.axiom-ref{
+  display:inline-block;padding:0 .25rem;
+  color:var(--axiom);background:var(--axiom-bg);
+  border-radius:3px;font-family:var(--font-mono);font-size:.85em;
+  font-weight:600;cursor:help;transition:.15s ease;
+}
+.axiom-ref:hover,.axiom-ref:focus{background:var(--axiom);color:#fff;outline:none}
+.axiom-card.pulsing{
+  animation:axiomPulse 1.2s ease-in-out;
+  box-shadow:0 0 0 3px var(--axiom),var(--shadow);
+}
+@keyframes axiomPulse{
+  0%{box-shadow:0 0 0 0 var(--axiom),var(--shadow)}
+  40%{box-shadow:0 0 0 6px color-mix(in srgb, var(--axiom) 45%, transparent),var(--shadow)}
+  100%{box-shadow:0 0 0 3px var(--axiom),var(--shadow)}
+}
+.ledger-trace{
+  margin:.5rem 0;padding:.6rem .7rem;
+  background:var(--axiom-bg);border-left:3px solid var(--axiom);
+  border-radius:var(--radius-sm);
+  font-family:var(--font-sans);font-size:.78rem;line-height:1.5;
+  color:var(--text);
+  opacity:0;transform:translateY(-4px);transition:.2s ease;
+  pointer-events:none;
+  min-height:2.5rem;
+}
+.ledger-trace[hidden]{display:none}
+.ledger-trace.visible{opacity:1;transform:none}
+.ledger-trace .lt-label{
+  display:block;font-family:var(--font-mono);font-size:.7rem;font-weight:600;
+  color:var(--axiom);text-transform:uppercase;letter-spacing:.06em;margin-bottom:.2rem;
+}
+
+.emergence{
+  margin:1.5rem 0;padding:1.2rem 1.25rem;
+  background:var(--bg-elevated);border:1px solid var(--border);
+  border-radius:var(--radius);
+}
+.emergence h3{margin:0 0 .3rem;font-family:var(--font-sans)}
+.emergence .em-desc{color:var(--text);font-size:.92rem;line-height:1.55;margin:.3rem 0 1rem}
+.emergence-map{
+  display:grid;grid-template-columns:1fr;gap:.6rem;
+  max-width:600px;margin:.5rem auto;
+}
+.emergence-map .em-node{
+  padding:.6rem 1rem;border-radius:var(--radius);
+  text-align:center;font-family:var(--font-sans);font-size:.9rem;
+  border:2px solid var(--border);background:var(--bg-elevated);
+  position:relative;
+}
+.emergence-map .em-node.axiom{
+  border-color:var(--axiom);background:var(--axiom-bg);color:var(--axiom);
+  font-weight:600;
+}
+.emergence-map .em-node.theorem{
+  border-color:var(--deduction);background:var(--deduction-bg);color:var(--deduction);
+}
+.emergence-map .em-node.target{
+  border-color:var(--synthesis);background:var(--synthesis-bg);color:var(--synthesis);
+  font-weight:700;font-size:1rem;
+}
+.emergence-map .em-row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+.emergence-map .em-row .em-node{flex:1;min-width:140px}
+.emergence-map .em-arrow{
+  text-align:center;color:var(--text-muted);font-size:1.2rem;
+  font-family:var(--font-mono);
+}
+
+.predictive{
+  margin:1.5rem 0;padding:1.2rem 1.25rem;
+  border:2px dashed var(--synthesis);border-radius:var(--radius);
+  background:color-mix(in srgb, var(--synthesis-bg) 40%, var(--bg-elevated));
+}
+.predictive h3{margin:0 0 .4rem;font-family:var(--font-sans);color:var(--synthesis)}
+.predictive .pred-desc{font-size:.9rem;color:var(--text);margin:.2rem 0 1rem}
+.predictive .pred-block{
+  display:grid;grid-template-columns:1fr;gap:.6rem;
+  padding:.8rem 1rem;background:var(--bg-elevated);
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  margin:.5rem 0;
+}
+.predictive .pred-block .pb-label{
+  font-family:var(--font-mono);font-size:.68rem;font-weight:600;
+  color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;
+}
+.predictive .pred-block .pb-body{font-size:.92rem;line-height:1.55;color:var(--text)}
+.predictive .pred-block.scenario{border-left:3px solid var(--commentary)}
+.predictive .pred-block.consensus{border-left:3px solid var(--danger)}
+.predictive .pred-block.axiomatic{border-left:3px solid var(--axiom)}
+.predictive .pred-block.verdict{
+  border-left:3px solid var(--synthesis);
+  background:color-mix(in srgb, var(--synthesis-bg) 30%, var(--bg-elevated));
+}
+
+.confirm-iterate{
+  margin:2rem 0 1rem;padding:1rem 1.25rem;
+  background:var(--bg-sunken);border:1px solid var(--border);
+  border-radius:var(--radius);
+  font-family:var(--font-mono);font-size:.82rem;line-height:1.65;
+  color:var(--text);white-space:pre-wrap;
+}
+.confirm-iterate .ci-header{
+  display:block;
+  font-family:var(--font-sans);font-weight:600;font-size:.9rem;
+  color:var(--text-strong);margin-bottom:.5rem;letter-spacing:0;
+}
+.confirm-iterate strong{color:var(--accent-strong)}
+
+@media print{
+  .navigator,.marginalia,.controls,.progress-bar,.structural-test{display:none}
+  .canvas{max-width:none}
+  body{background:#fff;color:#000}
+  .theorem details{display:none}
+  .confirm-iterate{display:none}
+}
+
+/* ============================================================
+   SESSION 3 : VISUAL STYLE + EPISTEMIC CLEANSER + FSM TRACKER
+============================================================ */
+
+html[data-style="brutalist"] body{
+  font-family: var(--font-serif);
+}
+html[data-style="brutalist"] .canvas h1,
+html[data-style="brutalist"] .canvas h2,
+html[data-style="brutalist"] .canvas h3,
+html[data-style="brutalist"] .canvas h4{
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: .02em;
+  border-color: #333333;
+}
+html[data-style="brutalist"] .canvas h2{
+  border-top: 2px solid #333333;
+  border-bottom: 2px solid #333333;
+  padding: .6rem 0;
+}
+html[data-style="brutalist"] .navigator,
+html[data-style="brutalist"] .marginalia{
+  font-family: var(--font-sans);
+  border-left: 2px solid #333333;
+  padding-left: 1rem;
+}
+html[data-style="brutalist"] .marginalia{ border-left: none; border-right: 2px solid #333333; padding: 0 1rem 0 0; }
+html[data-style="brutalist"] .navigator h4,
+html[data-style="brutalist"] .marginalia h4{
+  color: var(--accent);
+  border-bottom: 2px solid var(--accent);
+  letter-spacing: .1em;
+}
+html[data-style="brutalist"] .toc a{ border-radius: 0; border-left-width: 3px; }
+html[data-style="brutalist"] .toc a.active{
+  border-left-color: #FF3366;
+  background: #001A16;
+  color: #00FFCC;
+}
+html[data-style="brutalist"] .ledger,
+html[data-style="brutalist"] .boundaries-panel,
+html[data-style="brutalist"] .structural-test,
+html[data-style="brutalist"] .axiom-card,
+html[data-style="brutalist"] .sidenote,
+html[data-style="brutalist"] .halt-banner,
+html[data-style="brutalist"] blockquote{
+  border-width: 2px;
+  border-radius: 0;
+  box-shadow: none;
+}
+html[data-style="brutalist"] .ledger dt,
+html[data-style="brutalist"] .ledger .tag{
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+html[data-style="brutalist"] .controls button{
+  border-radius: 0;
+  border-width: 2px;
+  width: auto; height: 40px;
+  padding: 0 .9rem;
+  font-family: var(--font-sans);
+  font-size: .7rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+html[data-style="brutalist"] .controls button:hover{ transform: none; background: var(--accent); color: #000; }
+html[data-style="brutalist"] blockquote{
+  font-family: var(--font-serif);
+  font-style: normal;
+  border-left: 3px solid var(--accent);
+}
+
+.jargon{
+  border-bottom: 1px dashed var(--accent);
+  cursor: help;
+  transition: color .15s, background .15s;
+}
+.jargon:hover{ background: var(--axiom-bg); color: var(--axiom); }
+html[data-style="brutalist"] .jargon{
+  font-family: var(--font-sans);
+  color: var(--accent);
+  border-bottom: 1px dotted var(--accent);
+  padding: 0 .1em;
+}
+
+body.cleansed .jargon{
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--constraint);
+  text-decoration-thickness: 2px;
+  border-bottom: none;
+}
+body.cleansed .jargon::after{
+  content: " → " attr(data-truth);
+  display: inline;
+  margin-left: .3em;
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: .92em;
+  font-weight: 600;
+  text-decoration: none;
+  font-style: normal;
+}
+html[data-style="brutalist"] body.cleansed .jargon::after{
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.epistemic-cleanser{
+  position: sticky;
+  top: 1rem;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  margin: 0 0 1.5rem;
+  padding: .6rem .9rem;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: .82rem;
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+.epistemic-cleanser__label{ color: var(--text-muted); font-size: .74rem; letter-spacing: .05em; text-transform: uppercase; }
+.epistemic-cleanser__btn{
+  cursor: pointer;
+  padding: .4rem .8rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-sans);
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .04em;
+  transition: all .15s;
+}
+.epistemic-cleanser__btn:hover{ background: var(--accent); color: var(--bg); }
+body.cleansed .epistemic-cleanser__btn{ background: var(--accent); color: var(--bg); }
+body.cleansed .epistemic-cleanser__btn::before{ content: "✓ "; }
+
+html[data-style="brutalist"] .epistemic-cleanser{
+  border: 2px solid var(--accent);
+  border-radius: 0;
+  background: #000;
+}
+html[data-style="brutalist"] .epistemic-cleanser__label{
+  font-family: var(--font-sans);
+  color: var(--accent);
+  font-weight: 700;
+}
+html[data-style="brutalist"] .epistemic-cleanser__btn{
+  border-radius: 0;
+  border-width: 2px;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  font-size: .72rem;
+}
+.epistemic-cleanser__label--warm{ display: inline; }
+.epistemic-cleanser__label--brutalist{ display: none; }
+html[data-style="brutalist"] .epistemic-cleanser__label--warm{ display: none; }
+html[data-style="brutalist"] .epistemic-cleanser__label--brutalist{ display: inline; }
+.epistemic-cleanser__btn-text--warm{ display: inline; }
+.epistemic-cleanser__btn-text--brutalist{ display: none; }
+html[data-style="brutalist"] .epistemic-cleanser__btn-text--warm{ display: none; }
+html[data-style="brutalist"] .epistemic-cleanser__btn-text--brutalist{ display: inline; }
+
+.fsm-tracker{
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1rem;
+  font-family: var(--font-sans);
+  font-size: .78rem;
+  border-left: 2px solid var(--border);
+  padding-left: .75rem;
+}
+.fsm-tracker li{
+  position: relative;
+  padding: .35rem 0 .35rem .9rem;
+  color: var(--text-muted);
+  transition: color .2s;
+  border-left: 3px solid transparent;
+  margin-left: -.75rem;
+  padding-left: 1.5rem;
+}
+.fsm-tracker li::before{
+  content: attr(data-num);
+  position: absolute;
+  left: 0;
+  top: .35rem;
+  width: 1.15rem; height: 1.15rem;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: var(--bg);
+  color: var(--text-muted);
+  font-size: .65rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .2s;
+}
+.fsm-tracker li.completed{ color: var(--text); }
+.fsm-tracker li.completed::before{
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--bg);
+  content: "✓";
+}
+.fsm-tracker li.active{
+  color: var(--accent-strong);
+  border-left-color: var(--accent);
+  font-weight: 600;
+}
+.fsm-tracker li.active::before{
+  border-color: var(--accent);
+  background: var(--bg);
+  color: var(--accent);
+  box-shadow: 0 0 0 3px var(--axiom-bg);
+}
+.fsm-tracker .fsm-state-name{ display: block; }
+.fsm-tracker .fsm-state-verb{ display: block; font-size: .68rem; color: var(--text-muted); font-weight: 400; margin-top: .1em; }
+html[data-style="brutalist"] .fsm-tracker{ border-left-color: var(--accent); }
+html[data-style="brutalist"] .fsm-tracker li{ text-transform: uppercase; letter-spacing: .04em; border-radius: 0; }
+html[data-style="brutalist"] .fsm-tracker li::before{ border-radius: 0; border-width: 2px; }
+html[data-style="brutalist"] .fsm-tracker li.active{ color: var(--accent); }
+html[data-style="brutalist"] .fsm-tracker li.active::before{ box-shadow: 0 0 0 2px #001A16; }
+
+.sidenote--jargon{
+  border-left: 3px solid var(--constraint);
+  background: var(--constraint-bg);
+  padding: .55rem .8rem;
+  font-size: .78rem;
+  color: var(--text);
+}
+.sidenote--jargon .sn-term{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--constraint);
+  text-decoration: line-through;
+  text-decoration-color: var(--constraint);
+  text-decoration-thickness: 2px;
+  display: block;
+  margin-bottom: .2rem;
+  letter-spacing: .02em;
+}
+.sidenote--jargon .sn-truth{
+  font-family: var(--font-mono);
+  color: var(--accent-strong);
+  font-size: .78rem;
+  line-height: 1.45;
+}
+html[data-style="brutalist"] .sidenote--jargon{
+  border: 2px solid var(--constraint);
+  border-left-width: 4px;
+  border-radius: 0;
+  background: #000;
+}
+html[data-style="brutalist"] .sidenote--jargon .sn-term{
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--constraint);
+  letter-spacing: .05em;
+}
+html[data-style="brutalist"] .sidenote--jargon .sn-truth{
+  color: var(--accent);
+  font-weight: 500;
+}
+
+.marginalia .mg-jargon-heading{
+  font-family: var(--font-sans);
+  font-size: .7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--constraint);
+  margin: 2rem 0 .35rem;
+  padding-bottom: .3rem;
+  border-bottom: 1px solid var(--constraint);
+}
+html[data-style="brutalist"] .marginalia .mg-jargon-heading{ border-bottom: 2px solid var(--constraint); }
+
+.sidenote--jargon.sidenote--focused{
+  outline: 1px solid var(--accent);
+  outline-offset: 2px;
+}
+html[data-style="brutalist"] .sidenote--jargon.sidenote--focused{
+  outline: 2px solid var(--accent);
+}
+
+@media (max-width: 960px){
+  .fsm-tracker{ display: none; }
+  .epistemic-cleanser{ position: static; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<div class="controls">
+  <button id="focusBtn" title="Focus mode (F)" aria-label="Toggle focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3"/><path d="M21 8V5a2 2 0 0 0-2-2h-3"/><path d="M3 16v3a2 2 0 0 0 2 2h3"/><path d="M16 21h3a2 2 0 0 0 2-2v-3"/></svg>
+  </button>
+  <button id="themeBtn" title="Toggle theme (T)" aria-label="Toggle theme">
+    <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+  </button>
+</div>
+
+<div class="layout">
+
+  <!-- ================== NAVIGATOR ================== -->
+  <aside class="navigator" aria-label="Navigation">
+
+    <h4>FSM Execution</h4>
+    <p class="reading-meta" style="margin-top:.1rem"><strong>Epistemic Tracker</strong></p>
+    <ol class="fsm-tracker" id="fsmTracker" aria-label="Finite state machine execution tracker">
+      <li data-fsm-state="1" data-num="1" data-target="#consensus"><span class="fsm-state-name">Epistemic Cleansing</span><span class="fsm-state-verb">deconstructing</span></li>
+      <li data-fsm-state="2" data-num="2" data-target="#axioms"><span class="fsm-state-name">Axiomatic Reduction</span><span class="fsm-state-verb">isolating</span></li>
+      <li data-fsm-state="3" data-num="3" data-target="#architecture"><span class="fsm-state-name">Logical Re-assembly</span><span class="fsm-state-verb">rebuilding</span></li>
+      <li data-fsm-state="4" data-num="4" data-target="#friction"><span class="fsm-state-name">Constraint Mapping</span><span class="fsm-state-verb">stress-testing</span></li>
+      <li data-fsm-state="5" data-num="5" data-target="#synthesis"><span class="fsm-state-name">Synthesis + Prediction</span><span class="fsm-state-verb">output</span></li>
+    </ol>
+
+    <h4>Table of Contents</h4>
+    <p class="reading-meta"><strong>25 min read</strong></p>
+    <nav>
+      <ol class="toc" id="toc">
+        <li><a href="#consensus">1. The Consensus Illusion</a></li>
+        <li><a href="#axioms">2. The Axiomatic Bedrock</a></li>
+        <li><a href="#architecture">3. The Logical Architecture</a></li>
+        <li><a href="#friction">4. The Friction Point</a></li>
+        <li><a href="#synthesis">5. The Compressed Synthesis</a></li>
+        <li><a href="#check">6. Reader-Check</a></li>
+        <li><a href="#glossary">7. Glossary</a></li>
+        <li><a href="#sources">8. Sources</a></li>
+        <li><a href="#iterate">9. Confirm &amp; Iterate</a></li>
+      </ol>
+    </nav>
+
+    <h4>Deconstruction Ledger</h4>
+    <div class="ledger-trace" id="ledgerTrace" aria-live="polite" hidden>
+      <span class="lt-label">Axiom trace</span>
+      <div id="ledgerTraceBody">Hover an axiom reference (A1, A2, A3, L1, L2) in the derivation to see its statement here.</div>
+    </div>
+    <dl class="ledger" id="ledger">
+      <dt>Target concept</dt>
+      <dd>Trust — its nature, kinds, building, detection, importance, and cross-cultural variance</dd>
+
+      <dt>Interview dimensions</dt>
+      <dd>
+        <div class="dim-row"><span class="dim-key">Depth</span><span class="dim-val">DOMAIN_BEDROCK</span></div>
+        <div class="dim-row"><span class="dim-key">Substrate</span><span class="dim-val">ECONOMIC</span></div>
+        <div class="dim-row"><span class="dim-key">Rigor</span><span class="dim-val">INTUITIVE</span></div>
+        <div class="dim-row"><span class="dim-key">Target</span><span class="dim-val">WHOLE_SYSTEM</span></div>
+        <div class="dim-row"><span class="dim-key">Style</span><span class="dim-val">ACADEMIC_WARM</span></div>
+      </dd>
+
+      <dt>Jargon-to-Truth pairs</dt>
+      <dd>
+        <span class="tag">8 pairs</span>
+        — see the Epistemic Cleanser toggle above and 💀 Jargon Graveyard in the right sidebar.
+      </dd>
+
+      <dt>Axioms in play</dt>
+      <dd>
+        <span class="tag">A1 · Agency Gap</span>
+        <span class="tag">A2 · Temporal Fence</span>
+        <span class="tag">A3 · Evidential Prior</span>
+      </dd>
+
+      <dt>Lemmas derived</dt>
+      <dd>
+        <ul class="lemma-list" id="lemmaList">
+          <li data-lemma="l1"><strong>L1</strong> · Reputation Statistic<span class="lemma-statement" hidden>A record of past behavior is a summary statistic of an observed sample; its predictive content for a future act is exactly the posterior it induces, inheriting sampling error and prior dependence.</span></li>
+          <li data-lemma="l2"><strong>L2</strong> · Detection Trace<span class="lemma-statement" hidden>An act of trust is a physical trace — resources committed before the trusted act, unforced and uninsured — readable before the trusted act is performed.</span></li>
+        </ul>
+      </dd>
+
+      <dt>Constraints tested</dt>
+      <dd>
+        <span class="tag constraint">C1 · Channel-endowment variance</span>
+        <span class="tag constraint">C2 · Intention unverifiability</span>
+      </dd>
+
+      <dt>FSM state</dt>
+      <dd id="fsmState">COMPLETED · SYNTHESIS</dd>
+
+      <dt>Halt state</dt>
+      <dd id="haltState">None — deconstruction fully closed.</dd>
+    </dl>
+  </aside>
+
+  <!-- ================== CANVAS ================== -->
+  <main class="canvas">
+
+    <div class="halt-banner" role="alert">
+      <strong>⚠ Halted Deconstruction</strong>
+      This deconstruction halted at step <span id="haltStep">N</span> of the Logical Architecture. See §3 for the frontier and what would be needed to continue.
+    </div>
+
+    <h1>Deconstructing Trust</h1>
+    <p class="subtitle">A first-principles deconstruction of <em>trust — its nature, its kinds, how it is built, how it is sensed, why it matters, and why religions, cultures, and races measure it so differently</em>.</p>
+
+    <!-- ================== EPISTEMIC CLEANSER ================== -->
+    <div class="epistemic-cleanser" role="region" aria-label="Epistemic Cleanser">
+      <span class="epistemic-cleanser__label">
+        <span class="epistemic-cleanser__label--warm">Reveal the raw truth behind each industry term.</span>
+        <span class="epistemic-cleanser__label--brutalist">STRIP CONSENSUS · REVEAL RAW SUBSTRATE</span>
+      </span>
+      <button type="button" id="cleanserBtn" class="epistemic-cleanser__btn" aria-pressed="false">
+        <span class="epistemic-cleanser__btn-text--warm">Cleanse jargon</span>
+        <span class="epistemic-cleanser__btn-text--brutalist">[ EXECUTE EPISTEMIC CLEANSING ]</span>
+      </button>
+    </div>
+
+    <!-- =============== STATE 1 : CONSENSUS ILLUSION =============== -->
+    <section id="consensus" data-fsm="1">
+      <h2>1. The Consensus Illusion</h2>
+
+      <p>Across psychology, economics, and management, <span class="jargon" data-truth="committing resources now against another agent's future decision you cannot control or fully verify in advance" id="jargon-1">trust</span> is canonically defined as "the <span class="jargon" data-truth="choosing to hold exposure that can be destroyed by another agent's future choice" id="jargon-2">willingness to be vulnerable</span> to the actions of another party based on the expectation that the other will perform a particular action important to the trustor, irrespective of the ability to monitor or control that other party" (Mayer, Davis &amp; Schoorman, 1995, p. 712). From this single definition a large research industry has grown: it enumerates <span class="jargon" data-truth="two posterior-formation channels: population base rates vs first-hand relational samples" id="jargon-4">generalized versus particularized trust</span>, it ranks whole countries as <span class="jargon" data-truth="a population whose members habitually form high posteriors of cooperation from available evidence channels" id="jargon-3">high-trust and low-trust societies</span>, and it counts <span class="jargon" data-truth="the population-level stock of low-cost evidence and enforcement that lowers the cost of forming cooperation posteriors" id="jargon-6">social capital</span> as a quantity a community accumulates and can lose.</p>
+
+      <p>Kenneth Arrow (1972) observes that virtually every commercial transaction has within itself an element of <span class="jargon" data-truth="committing resources now against another agent's future decision you cannot control or fully verify in advance">trust</span>, and Francis Fukuyama (1995) argues that the <span class="jargon" data-truth="a track-record property that raises another agent's posterior of your future cooperation" id="jargon-5">trustworthiness</span> of a people — a moral endowment expressed in shared norms — determines whether they can organize large, prosperous institutions. The practical literature then tells individuals and organizations that <span class="jargon" data-truth="raising another agent's posterior about your future actions by expanding the verifiable sample or aligning incentives" id="jargon-7">building trust</span> is a matter of character: be honest, be consistent, and trust will follow; <span class="jargon" data-truth="the realized outcome where the trusted agent's decision returned a payoff to itself at the truster's exposed stake" id="jargon-8">betrayal</span> is the moral failure of the one who violates the bond.</p>
+
+      <div class="compare-table" role="table" aria-label="Consensus vs. axiomatic framings">
+        <div class="consensus">
+          <h4>Consensus framing</h4>
+          <p>Trust is a psychological willingness and a moral-social substance that individuals and cultures possess in varying amounts, classified into distinct kinds, gained by good character, and measured as social capital.</p>
+        </div>
+        <div class="axiomatic">
+          <h4>Cleansed statement</h4>
+          <p>Trust is a commitment decision: an agent commits resources now whose payoff depends on another agent's future action, where that action is decided solely by the other agent, is not observable at commitment time, cannot be fully verified or insured in advance, and is estimated as a probability from a finite sample of channel-specific evidence. Every claim about trust — its presence, its kinds, its amounts in a culture — reduces to facts about such commitments and the posteriors that produce them.</p>
+        </div>
+      </div>
+
+      <h3>Deconstruction table</h3>
+      <p>Following the Why Chain: each component of the consensus framing is labeled as reducible (Derivative) or terminal at this depth (Fundamental). Only Fundamental rows are candidates for State 2 axiom material.</p>
+      <table class="deconstruct-table" aria-label="Deconstruction table">
+        <thead>
+          <tr>
+            <th scope="col">Common assumption</th>
+            <th scope="col">Type</th>
+            <th scope="col">Reduction result</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="derivative">
+            <td class="assumption">Trust is a feeling, attitude, or psychological state inside a person</td>
+            <td><span class="type-tag type-derivative">Derivative</span></td>
+            <td>Reduces to: a subjective posterior over another's future action plus a commitment decision. A posterior is a statistic, not a feeling — it is computed, not felt.</td>
+          </tr>
+          <tr class="derivative">
+            <td class="assumption">Trust is a moral virtue or moral value</td>
+            <td><span class="type-tag type-derivative">Derivative</span></td>
+            <td>Reduces to: a norm that functions as a cheap, population-wide signal channel — a shared prior that lowers the cost of forming posteriors. Uslaner's "moralistic trust" is this, once demystified.</td>
+          </tr>
+          <tr class="derivative">
+            <td class="assumption">There are distinct kinds of trust (calculus-based, knowledge-based, generalized, institutional)</td>
+            <td><span class="type-tag type-derivative">Derivative</span></td>
+            <td>Reduces to: one decision structure fed by different evidence channels — first-hand sample, population base rate, third-party verification. A derived taxonomy, not separate essences (reconstructed as Theorem 5).</td>
+          </tr>
+          <tr class="derivative">
+            <td class="assumption">Some cultures are high-trust, others low-trust</td>
+            <td><span class="type-tag type-derivative">Derivative</span></td>
+            <td>Reduces to: different equilibrium posteriors produced by different channel endowments and priors. An output of the axioms, not a cultural substance (reconstructed as Theorem 9).</td>
+          </tr>
+          <tr class="derivative">
+            <td class="assumption">Trust is gained by being honest and trustworthy</td>
+            <td><span class="type-tag type-derivative">Derivative</span></td>
+            <td>Reduces to: honesty expands the verifiable sample, which raises the posterior — but only when the recipient's prior reads that channel (reconstructed as Theorem 6).</td>
+          </tr>
+          <tr class="fundamental">
+            <td class="assumption">The trusted act is the other party's own free action</td>
+            <td><span class="type-tag type-fundamental">Fundamental</span></td>
+            <td>Terminal at this depth: the trusted act sits under the other party's exclusive decision authority. Candidate axiom A1 — the Agency Gap.</td>
+          </tr>
+          <tr class="fundamental">
+            <td class="assumption">Trust involves committing now, before the outcome is known</td>
+            <td><span class="type-tag type-fundamental">Fundamental</span></td>
+            <td>Terminal: exposure precedes revelation; the future act is not observable at commitment time. Candidate axiom A2 — the Temporal Fence.</td>
+          </tr>
+          <tr class="fundamental">
+            <td class="assumption">Trust decisions are made on limited evidence</td>
+            <td><span class="type-tag type-fundamental">Fundamental</span></td>
+            <td>Terminal: every judgment of another's future action is a posterior over finite, channel-specific observations. Candidate axiom A3 — the Evidential Prior.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>State 1's Why Chain has now stripped the concept down to three irreducible facts. Everything the consensus treats as a separate phenomenon — kinds, cultural amounts, moral value — is a Derivative that State 3 must reconstruct from those facts, or abandon.</p>
+    </section>
+
+    <!-- =============== STATE 2 : AXIOMATIC BEDROCK =============== -->
+    <section id="axioms" data-fsm="2">
+      <h2>2. The Axiomatic Bedrock</h2>
+
+      <p>The Cleansed Statement leaves three irreducible facts exposed. Each is a hard limit of decision theory, time, and statistics — none can be relaxed by better engineering, which is exactly what distinguishes an axiom from a design choice. If a claim can be made true by working harder, it is not bedrock.</p>
+
+      <div class="axiom-grid">
+        <!-- Axiom Card 1 -->
+        <div class="axiom-card" tabindex="0" role="button" aria-label="Flip axiom card">
+          <div class="axiom-card__inner">
+            <div class="axiom-card__face">
+              <div>
+                <div class="axiom-card__label">Axiom 1 · Economics</div>
+                <div class="axiom-card__name">The Agency Gap</div>
+                <p class="axiom-card__statement">Another agent's future action is that agent's own decision. No expectation, wish, or plea on your side enters their choice set; the trusted party's act is a function of their own incentives and information — never of your posterior over it.</p>
+              </div>
+              <div>
+                <div class="axiom-card__meta">Source: Baier (1986), <em>Trust and Antitrust</em></div>
+                <div class="axiom-card__cta">Click to see consequences →</div>
+              </div>
+            </div>
+            <div class="axiom-card__face axiom-card__face--back">
+              <div>
+                <div class="axiom-card__label">Deductive consequences</div>
+                <ul>
+                  <li>Trust is always a bet on the other's incentives, never on their character — character enters only as evidence, never as cause.</li>
+                  <li>The same act is "trust" or "gamble" depending on whose decision controls the payoff.</li>
+                  <li>Expectation cannot substitute for incentive design: you cannot want the other party into cooperating.</li>
+                </ul>
+              </div>
+              <div class="axiom-card__cta">← Click to flip back</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Axiom Card 2 -->
+        <div class="axiom-card" tabindex="0" role="button" aria-label="Flip axiom card">
+          <div class="axiom-card__inner">
+            <div class="axiom-card__face">
+              <div>
+                <div class="axiom-card__label">Axiom 2 · Information theory</div>
+                <div class="axiom-card__name">The Temporal Fence</div>
+                <p class="axiom-card__statement">Exposure precedes revelation. The act that determines the truster's payoff occurs after the truster's commitment and is not observable at commitment time; the future act can be estimated, never read.</p>
+              </div>
+              <div>
+                <div class="axiom-card__meta">Source: Arrow (1972); Berg, Dickhaut &amp; McCabe (1995)</div>
+                <div class="axiom-card__cta">Click to see consequences →</div>
+              </div>
+            </div>
+            <div class="axiom-card__face axiom-card__face--back">
+              <div>
+                <div class="axiom-card__label">Deductive consequences</div>
+                <ul>
+                  <li>Trust and control are substitutes on a spectrum defined by the fence; where control is possible, trust is unnecessary.</li>
+                  <li>Contracts relocate trust to the enforcer rather than eliminating it.</li>
+                  <li>The fence is why trust exists at all: without time between commitment and revelation, the phenomenon is not present.</li>
+                </ul>
+              </div>
+              <div class="axiom-card__cta">← Click to flip back</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Axiom Card 3 -->
+        <div class="axiom-card" tabindex="0" role="button" aria-label="Flip axiom card">
+          <div class="axiom-card__inner">
+            <div class="axiom-card__face">
+              <div>
+                <div class="axiom-card__label">Axiom 3 · Statistics</div>
+                <div class="axiom-card__name">The Evidential Prior</div>
+                <p class="axiom-card__statement">Every probability assigned to another agent's future action is a posterior computed from a finite sample of observations drawn from some channel — first-hand, aggregate, or institutional. It carries estimation error and depends on the prior and on which channel the sample came from.</p>
+              </div>
+              <div>
+                <div class="axiom-card__meta">Source: Bayes / Laplace; Alesina &amp; La Ferrara (2002)</div>
+                <div class="axiom-card__cta">Click to see consequences →</div>
+              </div>
+            </div>
+            <div class="axiom-card__face axiom-card__face--back">
+              <div>
+                <div class="axiom-card__label">Deductive consequences</div>
+                <ul>
+                  <li>Reputation is a statistic with sampling error, not a moral report card.</li>
+                  <li>The channel the evidence comes from determines what a posterior updates to: same fact, different channel, different trust.</li>
+                  <li>Priors are sticky and channel-bound — the same evidence moves different posteriors differently.</li>
+                </ul>
+              </div>
+              <div class="axiom-card__cta">← Click to flip back</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="boundaries-panel" role="region" aria-label="System boundaries">
+        <div class="bp-label">System boundaries</div>
+        <div class="bp-body">
+          <p>The axioms hold where (1) agents are distinct decision-makers with separable choice sets and not-identical interests [A1]; (2) commitment and act are not simultaneous — the interaction spans time [A2]; (3) the observer's evidence is finite and channel-structured, with no oracle revealing the future act [A3].</p>
+          <p>Outside these boundaries the target concept degenerates: a simultaneous, fully verifiable interaction is control, not trust; fully fused interests make trust vacuous. The axioms assert an information geometry, not a theory of rational agent behavior — posteriors need not be formed "as if" Bayesian, only formed from finite, channel-structured evidence.</p>
+        </div>
+      </div>
+
+      <div class="structural-test" role="region" aria-label="Structural integrity test">
+        <h4>Structural integrity test</h4>
+        <p class="st-desc">Remove an axiom to see which downstream Theorems collapse. This is the deconstruction's own proof that the axioms are load-bearing, not decorative.</p>
+        <div class="st-buttons">
+          <button type="button" data-remove="a1">Remove A1 · Agency Gap</button>
+          <button type="button" data-remove="a2">Remove A2 · Temporal Fence</button>
+          <button type="button" data-remove="a3">Remove A3 · Evidential Prior</button>
+          <button type="button" class="st-reset" data-remove="reset">Restore all</button>
+        </div>
+        <div class="st-note" id="stNote" aria-live="polite"></div>
+      </div>
+
+      <p>With the Agency Gap, the Temporal Fence, and the Evidential Prior locked, the deconstruction rebuilds the entire phenomenon of trust from these three facts alone. No further law is introduced — everything that follows is deduction.</p>
+    </section>
+
+    <!-- =============== STATE 3 : LOGICAL ARCHITECTURE =============== -->
+    <section id="architecture" data-fsm="3">
+      <h2>3. The Logical Architecture</h2>
+
+      <p>Three facts, two helper Lemmas, and ten Theorems reconstruct the whole of trust. Each Theorem cites the axioms and prior steps it depends on; under INTUITIVE rigor the Proofs are prose, but each is traceable step by step.</p>
+
+      <div class="flow" role="figure" aria-label="Concept flow: axioms to deduction to reconstructed concept">
+        <div class="flow__step">
+          <div class="label">Input</div>
+          <div class="title">Three hard facts</div>
+          <div class="body">The other's act is their own [A1]; exposure precedes revelation [A2]; judgment of a future act is a finite posterior [A3].</div>
+        </div>
+        <div class="flow__arrow" aria-hidden="true">→</div>
+        <div class="flow__step">
+          <div class="label">Deduction</div>
+          <div class="title">T1–T10</div>
+          <div class="body">Fence → computation → channels → posterior engineering → detection trace → cheap-input theorem → channel-variance theorem.</div>
+        </div>
+        <div class="flow__arrow" aria-hidden="true">→</div>
+        <div class="flow__step">
+          <div class="label">Output</div>
+          <div class="title">Trust as a decision</div>
+          <div class="body">Kinds, culture-dependence, and importance all derived — a decision under an information geometry, not a substance.</div>
+        </div>
+      </div>
+
+      <h3>The proof chain</h3>
+      <p>Each Theorem below is a claim the reader can inspect. The expandable Proof shows how the axioms and prior Theorems compose to force the claim. Hover any <span class="axiom-ref" data-axiom="a1">A1</span>-style reference to preview the axiom in the Ledger.</p>
+
+      <div class="proof-chain" data-theorem-count="10">
+
+        <article class="theorem" id="T1" data-depends-on="a2">
+          <div class="theorem-num">T1</div>
+          <div class="theorem-header"><span class="cite">A2</span></div>
+          <p class="theorem-claim">Trust is defined by the temporal fence. Wherever the trusted act is simultaneous with the truster's commitment — or observable and controllable in advance — verification or compulsion replaces trust. Trust exists precisely on the interval between commitment and revelation.</p>
+          <details>
+            <summary>Proof</summary>
+            <div class="proof-body">
+              <div class="step"><span class="op">∵</span><span>By A2, the truster's payoff depends on a future act that is not observable at commitment time.</span></div>
+              <div class="step"><span class="op">∴</span><span>If that act were observable or controllable now, the exposure would not be a bet on the other's future decision — it would be a settled transaction.</span></div>
+              <div class="step"><span class="op">∴</span><span>Every consensus definition (Mayer et al.: "irrespective of the ability to monitor or control") singles out exactly the cases where the fence is open.</span></div>
+              <div class="qed">Therefore the fence is the defining condition of trust.</div>
+            </div>
+          </details>
+        </article>
+
+        <article class="theorem" id="T2" data-depends-on="a1">
+          <div class="theorem-num">T2</div>
+          <div class="theorem-header"><span class="cite">A1</span></div>
+          <p class="theorem-claim">Expectation does not move the trusted act. The truster's welfare depends on the trusted party's incentives and information, not on the truster's confidence; trusting harder never changes the other's decision function.</p>
+          <details>
+            <summary>Proof</summary>
+            <div class="proof-body">
+              <div class="step"><span class="op">∵</span><span>By A1, the trusted party's act is their own decision, a function of their incentives and information.</span></div>
+              <div class="step"><span class="op">∴</span><span>The truster's posterior — their confidence — is not an input to that decision.</span></div>
+              <div class="qed">Therefore the only levers on the trusted act are the trusted party's incentives and information, which the truster may influence only by changing those inputs, not by hoping.</div>
+            </div>
+          </details>
+        </article>
+
+        <article class="theorem" id="T3" data-depends-on="a3,l1">
+          <div class="theorem-num">T3</div>
+          <div class="theorem-header"><span class="cite">A3</span><span class="cite lemma">L1</span></div>
+          <p class="theorem-claim">Trust is a computation, not a state. An agent commits to a trust gamble iff the posterior-weighted expected gain from cooperation exceeds the posterior-weighted expected loss from betrayal, minus any residual no contract can recover. Trust is therefore a continuum of commitment magnitudes, not an on/off attitude.</p>
+          <details>
+            <summary>Proof</summary>
+            <div class="proof-body">
+              <div class="step"><span class="op">∵</span><span>By A1 the trusted act is the other's decision; by A3 the truster holds a posterior P(cooperate | evidence), and by L1 that posterior is a statistic over the observed sample.</span></div>
+              <div class="step"><span class="op">∴</span><span>The truster's problem is a standard expected-utility choice over commitment size c: commit while posterior-weighted benefit exceeds posterior-weighted loss.</span></div>
+              <div class="step"><span class="op">∴</span><span>The optimum is a scalar — a magnitude, not a binary — so "trust" is a continuum.</span></div>
+              <div class="qed">Therefore trust is a computation: the amount committed encodes the posterior and the stakes.</div>
+            </div>
+          </details>
+        </article>
+
+        <article class="theorem" id="T4" data-depends-on="a2,t1">
+          <div class="theorem-num">T4</div>
+          <div class="theorem-header"><span class="cite">A2</span><span class="cite">T1</span></div>
+          <p class="theorem-claim">The fence cannot be fully closed. Verification observes acts, never intentions, and a future act is not yet observed; contracting substitutes verification for trust only by relocating it, because the enforceability of any contract is itself a future act that must be trusted. Trust is ineradicable wherever agents and time are separated.</p>
+          <details>
+            <summary>Proof</summary>
+            <div class="proof-body">
+              <div class="step"><span class="op">∵</span><span>By A2, any future act is unobservable at commitment time.</span></div>
+              <div class="step"><span class="op">∴</span><span>A contract is a set of commitments about future acts (delivery, payment, enforcement); each requires a posterior over the party who will perform that future act — which, by T1, is exactly trust.</span></div>
+              <div class="step"><span class="op">∴</span><span>Inductively, the chain of contracts bottoms out in at least one unverified future act — the enforcer, the court, the counterparty's solvency.</span></div>
+              <div class="qed">Therefore verification reduces but never eliminates trust.</div>
+            </div>
+          </details>
+        </article>
+
+        <article class="theorem" id="T5" data-depends-on="a3,t3">
+          <div class="theorem-num">T5</div>
+          <div class="theorem-header"><span class="cite">A3</span><span class="cite">T3</span></div>
+          <p class="theorem-claim">"Kinds" of trust are evidence channels, not essences. The literature's taxonomy — relational, generalized, institutional, calculus-based — collapses to one mechanism distinguished by which evidence channel feeds the posterior: a first-hand sample of the specific other, a population base rate or transmitted norm, or third-party verification. There is one trust decision and three canonical evidence regimes.</p>
+          <details>
+            <summary>Proof</summary>
+            <div class="proof-body">
+              <div class="step"><span class="op">∵</span><span>By T3 every trust act is a posterior-weighted commitment.</span></div>
+              <div class="step"><span class="op">∵</span><span>By A3 the posterior is formed over a finite sample, drawn from one of three sources of observations: one's own history with the agent, aggregated testimony about a class, or a verifier's records.</span></div>
+              <div class="step"><span class="op">∴</span><span>Every named "kind" in the literature maps to a mixture of these channels.</span></div>
+              <div class="qed">Therefore no separate essence is needed — the taxonomy is derived, not found.</div>
+            </div>
+          </details>
+        </article>
+
+        <article class="theorem" id="T6" data-depends-on="a1,a3,t3">
+          <div class="theorem-num">T6</div>
+          <div class="theorem-header"><span class="cite">A1</span><span class="cite">A3</span><span class="cite">T3</span></div>
+          <p class="theorem-claim">Gaining trust is posterior engineering. The operations that raise a counterpart's posterior over your future act are exactly three: expand the verifiable sample; align your incentives so your future act is predicted without needing the sample; or shift the counterpart's prior via membership and norm signals. Any act that does none of these does not raise trust, and any act that raises trust does one of these.</p>
+          <details>
+            <summary>Proof</summary>
+            <div class="proof-body">
+              <div class="step"><span class="op">∵</span><span>By T3 the counterpart commits iff posterior-weighted benefit exceeds loss; the posterior is the only truster-side term the seeker can influence.</span></div>
+              <div class="step"><span class="op">∵</span><span>By A3 a posterior changes only via new evidence, a change in which channel is consulted, or a change in prior.</span></div>
+              <div class="step"><span class="op">∵</span><span>By A1 the actual act is governed by the seeker's incentives, so incentive alignment makes the act predictable regardless of sample.</span></div>
+              <div class="qed">Therefore these three are the only levers on trust — "being honest" is one small instance of the first.</div>
+            </div>
+          </details>
+        </article>
+
+        <article class="theorem" id="T7" data-depends-on="a2,l2,t3">
+          <div class="theorem-num">T7</div>
+          <div class="theorem-header"><span class="cite">A2</span><span class="cite lemma">L2</span><span class="cite">T3</span></div>
+          <p class="theorem-claim">Being trusted is observable exposure. You know you are trusted when another agent commits unforced, uninsured exposure ahead of your action, before you have performed anything — because that commitment is their posterior made visible as a resource movement under the fence. Confidence without exposure is not trust.</p>
+          <details>
+            <summary>Proof</summary>
+            <div class="proof-body">
+              <div class="step"><span class="op">∵</span><span>By T3, a truster's commitment is their posterior translated into resources.</span></div>
+              <div class="step"><span class="op">∵</span><span>By L2, that commitment is a physical trace readable before your act — resources committed in advance, unforced, uninsured.</span></div>
+              <div class="step"><span class="op">∴</span><span>Unforced, uninsured forward exposure cannot be explained as control or prudence; the remaining explanation is a positive posterior over your act.</span></div>
+              <div class="qed">Therefore exposure read in advance is the detection signal — the observable signature of being trusted.</div>
+            </div>
+          </details>
+        </article>
+
+        <article class="theorem" id="T8" data-depends-on="a1,a2,t1,t4">
+          <div class="theorem-num">T8</div>
+          <div class="theorem-header"><span class="cite">A1</span><span class="cite">A2</span><span class="cite">T1</span><span class="cite">T4</span></div>
+          <p class="theorem-claim">Why trust matters: where the fence and agency separation hold — every intertemporal interaction between distinct agents — the alternatives to trust are verification and compulsion, both costly and both bounded by the fence. Trust substitutes a cheap posterior for expensive verification, making it the load-bearing input to commerce. This is Arrow's lubricant claim, derived rather than asserted.</p>
+          <details>
+            <summary>Proof</summary>
+            <div class="proof-body">
+              <div class="step"><span class="op">∵</span><span>By T1 and T4, exchange under the fence requires a posterior for every unverified future act.</span></div>
+              <div class="step"><span class="op">∴</span><span>Forming a posterior has cost c (sampling, channel access); verifying the act instead costs V &gt; c whenever the fence is wide, because intentions are unobservable (T4).</span></div>
+              <div class="step"><span class="op">∴</span><span>Agents pay for trust infrastructure — evidence channels — whenever c &lt; V, which is nearly always.</span></div>
+              <div class="qed">Therefore trust lowers the cost of any intertemporal exchange: "virtually every commercial transaction has within itself an element of trust" (Arrow 1972).</div>
+            </div>
+          </details>
+        </article>
+
+        <article class="theorem" id="T9" data-depends-on="a3,t5,t6">
+          <div class="theorem-num">T9</div>
+          <div class="theorem-header"><span class="cite">A3</span><span class="cite">T5</span><span class="cite">T6</span></div>
+          <p class="theorem-claim">Cross-cultural, religious, and ethnic variance is channel-endowment variance. Different religions, cultures, and racialized groups do not possess different quantities of a substance called "trust"; they operate on different endowments of evidence channels and different priors. The same three axioms, parameterized by which channels are reliable, what priors are transmitted, and whose behavior the sample covers, produce the observed variation — religion entering as a verifier technology, ethnic and racial cleavage entering as sample composition.</p>
+          <details>
+            <summary>Proof</summary>
+            <div class="proof-body">
+              <div class="step"><span class="op">∵</span><span>By T5 the posterior is channel-fed, and by T3 it drives commitments.</span></div>
+              <div class="step"><span class="op">∴</span><span>A society with weak institutional verification will form high posteriors only on relational and shared-supernatural channels — the observed pattern of high in-group, low generalized trust (Fukuyama's familial-Confucian societies; Ward et al. 2014).</span></div>
+              <div class="step"><span class="op">∴</span><span>Religion is a third-party verifier whose witness cannot be evaded: for believers it raises the expected cost of betrayal, raising posteriors on that channel (Norenzayan 2013; Johnson 2005).</span></div>
+              <div class="step"><span class="op">∴</span><span>Ethnic and racial cleavage is a sample-composition effect: where the observable sample of an out-group is thin, skewed, or collected by an out-group verifier, posteriors about that group inherit the sample's composition — lower generalized trust toward members of a different racialized or ethnic class follows without any claim about their conduct (Alesina &amp; La Ferrara 2002; GSS 2018).</span></div>
+              <div class="qed">Therefore the same three axioms, parameterized only by channel endowments and sample composition, reproduce every observed cross-religious, cross-cultural, and cross-ethnic trust differential. No additional substance is required.</div>
+            </div>
+          </details>
+        </article>
+
+        <article class="theorem" id="T10" data-depends-on="t5,t8,t9">
+          <div class="theorem-num">T10</div>
+          <div class="theorem-header"><span class="cite">T5</span><span class="cite">T8</span><span class="cite">T9</span></div>
+          <p class="theorem-claim">The emergence cap: a society's measured trust is an equilibrium of channel endowments and priors, not an injectable input. Because every commitment derives from posteriors (T5), posteriors are the only engine (T3), and channel endowments set the posterior landscape (T9), the aggregate "trust level" of any system is a downstream statistic — it can be shifted only by changing channels, samples, priors, or incentives, never by demanding trust directly.</p>
+          <details>
+            <summary>Proof</summary>
+            <div class="proof-body">
+              <div class="step"><span class="op">∵</span><span>By T5 and T3, every trust act is a posterior-weighted commitment fed by evidence channels.</span></div>
+              <div class="step"><span class="op">∵</span><span>By T8, the alternatives to trust — verification and compulsion — are costly and bounded by the fence.</span></div>
+              <div class="step"><span class="op">∵</span><span>By T9, which channels are reliable and whose behavior the sample covers determine the posterior landscape.</span></div>
+              <div class="step"><span class="op">∴</span><span>A "trust-building" initiative that changes none of these inputs cannot move the equilibrium; it is noise on a fixed point.</span></div>
+              <div class="qed">Therefore trust emerges from the system and cannot be injected into it — the emergence cap.</div>
+            </div>
+          </details>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- =============== STATE 4 : CONSTRAINT MAPPING =============== -->
+    <section id="friction" data-fsm="4">
+      <h2>4. The Friction Point</h2>
+
+      <p>Every theorem has a boundary. Constraints are the hard tests: inject a perturbation and ask whether the architecture survives, fractures, or goes silent. The deconstruction separates two families — <strong>C1</strong>, an artificial limit that engineering can move, and <strong>C2</strong>, a fundamental limit that no engineering can close.</p>
+
+      <div class="injector" data-injector="c1">
+        <h4>C1 · Channel-endowment variance <span class="tag-badge constraint">ARTIFICIAL</span></h4>
+        <p class="injector__desc">Societies, religions, and racialized groups differ in which evidence channels are reliable, which priors are transmitted, and whose behavior the sample covers. Under the axioms these are the <em>only</em> parameters that change trust. Toggle the parameter and watch the architecture react.</p>
+        <div class="injector__controls">
+          <button type="button" class="injector__toggle" data-target="c1-relational">Relational-only channels</button>
+          <button type="button" class="injector__toggle" data-target="c1-institutional">Institutional verifiers present</button>
+          <button type="button" class="injector__toggle" data-target="c1-campaign">Inject a "trust-building" campaign</button>
+          <button type="button" class="injector__toggle" data-target="c1-surveillance">Replace trust with surveillance</button>
+        </div>
+        <div class="fracture-map">
+          <div class="fracture-row" data-row="c1-relational"><span class="fracture-status survives">SURVIVES</span><span class="fracture-desc">Posteriors form on first-hand samples and transmitted norms only. The architecture holds and predicts precisely the observed high in-group / low generalized pattern: relational societies are not low in a substance called trust, they are channel-restricted (Fukuyama 1995; Ward et al. 2014).</span></div>
+          <div class="fracture-row" data-row="c1-institutional"><span class="fracture-status survives">SURVIVES</span><span class="fracture-desc">Third-party verifiers lower the cost of forming posteriors about strangers (T8). The GSS 2018 gradient — White 39%, Black 16%, Hispanic 16% — tracks verifier access and sample composition, not moral quality (Alesina &amp; La Ferrara 2002).</span></div>
+          <div class="fracture-row" data-row="c1-campaign"><span class="fracture-status fractures">FRACTURES</span><span class="fracture-desc">A campaign that only demands "be more trustworthy" touches no channel, no sample, no prior, and no incentive. By T6 and T10 it cannot move a single posterior. The consensus prescription fractures against the three-lever limit.</span></div>
+          <div class="fracture-row" data-row="c1-surveillance"><span class="fracture-status silent">SILENT</span><span class="fracture-desc">Monitoring substitutes for trust rather than feeding it: exposure is removed, so the trust act is displaced, not deepened. The architecture goes silent because the phenomenon itself has been replaced (Falk &amp; Kosfeld 2006).</span></div>
+        </div>
+      </div>
+
+      <div class="injector" data-injector="c2">
+        <h4>C2 · Intention unverifiability <span class="tag-badge axiom">FUNDAMENTAL</span></h4>
+        <p class="injector__desc">The trusted act is a function of the other's private information and incentives at the moment of decision. No mechanism can observe intentions — only acts, and future acts are not yet performed. This is not an engineering limitation; it is the definitional content of A1 plus A2. Toggle attempts to close the fence.</p>
+        <div class="injector__controls">
+          <button type="button" class="injector__toggle" data-target="c2-surveillance">Perfect surveillance</button>
+          <button type="button" class="injector__toggle" data-target="c2-contracts">Complete contracts</button>
+          <button type="button" class="injector__toggle" data-target="c2-oracle">Guaranteed prediction (oracle)</button>
+        </div>
+        <div class="fracture-map">
+          <div class="fracture-row" data-row="c2-surveillance"><span class="fracture-status silent">SILENT</span><span class="fracture-desc">Perfect observation still observes acts, never intentions (A1), and commitment still precedes the act (A2). Trust is replaced by compliance: monitored performance rises while measured trust falls. The phenomenon is displaced, not closed.</span></div>
+          <div class="fracture-row" data-row="c2-contracts"><span class="fracture-status survives">SURVIVES</span><span class="fracture-desc">Complete contracts relocate trust to the enforcer rather than eliminating it (T4). The architecture survives because enforceability is itself a future act — contracting is a channel change, not a fence closure.</span></div>
+          <div class="fracture-row" data-row="c2-oracle"><span class="fracture-status fractures">FRACTURES</span><span class="fracture-desc">A guaranteed oracle that reads the future act would destroy A2: the fence closes, the interaction becomes deterministic exchange, and "trust" — commitment against another's unreadable decision — ceases to exist. The concept itself fractures.</span></div>
+        </div>
+      </div>
+
+      <div class="bar-chart" role="img" aria-label="Bar chart of generalized trust by group, GSS 2018: White 39 percent, Black 16 percent, Hispanic 16 percent">
+        <h4>GSS 2018 · Generalized trust by group</h4>
+        <div class="bar-chart__row"><span class="bar-chart__label">White</span><div class="bar-chart__track"><div class="bar-chart__fill" style="width:39%"></div></div><span class="bar-chart__value">39%</span></div>
+        <div class="bar-chart__row"><span class="bar-chart__label">Black</span><div class="bar-chart__track"><div class="bar-chart__fill" style="width:16%"></div></div><span class="bar-chart__value">16%</span></div>
+        <div class="bar-chart__row"><span class="bar-chart__label">Hispanic</span><div class="bar-chart__track"><div class="bar-chart__fill" style="width:16%"></div></div><span class="bar-chart__value">16%</span></div>
+        <p style="font-size:.8rem;color:var(--text-muted);margin:.6rem 0 0">Percent agreeing "most people can be trusted." The gradient is sample-composition and verifier-access driven (T9), not a ranking of moral substance.</p>
+      </div>
+    </section>
+
+    <!-- =============== STATE 5 : SYNTHESIS + PREDICTION =============== -->
+    <section id="synthesis" data-fsm="5">
+      <h2>5. The Compressed Synthesis</h2>
+
+      <p>The whole edifice closes into a single sentence. Trust is a <strong>decision to commit exposure now whose payoff is controlled by another agent's future, unverifiable act</strong>, made under a posterior computed from finite, channel-structured evidence. Everything the consensus calls "trust" — feelings, virtues, social capital, cultural endowments — is a projection of that decision onto psychology, morality, and demography.</p>
+
+      <div class="emergence">
+        <h3>The emergence map</h3>
+        <p class="em-desc">Axioms in, theorems out, target at the bottom. No step after the axioms introduces a new law; the reconstruction is closed.</p>
+        <div class="emergence-map">
+          <div class="em-row">
+            <div class="em-node axiom">A1 · Agency Gap</div>
+            <div class="em-node axiom">A2 · Temporal Fence</div>
+            <div class="em-node axiom">A3 · Evidential Prior</div>
+          </div>
+          <div class="em-arrow">▼ L1 · L2</div>
+          <div class="em-row">
+            <div class="em-node theorem">T1 · T2 · T3</div>
+            <div class="em-node theorem">T4 · T5</div>
+          </div>
+          <div class="em-arrow">▼</div>
+          <div class="em-row">
+            <div class="em-node theorem">T6 · T7 · T8</div>
+            <div class="em-node theorem">T9 · T10</div>
+          </div>
+          <div class="em-arrow">▼</div>
+          <div class="em-node target">Trust — a decision under an information geometry</div>
+        </div>
+      </div>
+
+      <p><strong>Uncomfortable corollary.</strong> Since trust is a number someone computes about you — not a property you hold — accurate self-knowledge about another's posterior is asymmetric leverage. The agent who predicts the truster's exposure better than the truster predicts the agent's act collects the difference. "Trustworthiness" is thus not a moral reward; it is an information asymmetry that trust makes exploitable. This is why surveillance corrodes trust even when it detects nothing: it advertises the asymmetry.</p>
+
+      <details class="deep-dive">
+        <summary>Where a Fourth Axiom Would Change Things</summary>
+        <p>A fourth axiom — <em>strategic posterior manipulation</em>, the capacity of agents to engineer the evidence channels others sample from — would open the theory to deception, trust-signaling arms races, and self-fulfilling reputation bubbles. The deconstruction stops here because manipulation is a second-order phenomenon: it presupposes that posteriors are formed from channels (A3), which presupposes the fence (A2) and the agency gap (A1). Adding it would change the predictive horizon of T6 and T9, but no earlier theorem. The current axioms are therefore the minimal closed set.</p>
+      </details>
+
+      <div class="predictive">
+        <h3>The predictive horizon</h3>
+        <p class="pred-desc">A concrete forecast derived from the axioms, then checked against an actual experiment.</p>
+        <div class="pred-block scenario">
+          <span class="pb-label">Scenario</span>
+          <span class="pb-body">A platform firm installs algorithmic surveillance over a relational-channel society, promising that visible oversight will "build trust" with its partners.</span>
+        </div>
+        <div class="pred-block consensus">
+          <span class="pb-label">Consensus prediction</span>
+          <span class="pb-body">Monitoring communicates care and signals trustworthiness; partners will trust more and perform better.</span>
+        </div>
+        <div class="pred-block axiomatic">
+          <span class="pb-label">Axiomatic prediction</span>
+          <span class="pb-body">Surveillance is a substitute for the trusted act, not a signal of trust (T1, T8): it removes exposure, replaces posterior formation with observation, and signals a low prior — monitoring is distrust made visible.</span>
+        </div>
+        <div class="pred-block verdict">
+          <span class="pb-label">Verdict</span>
+          <span class="pb-body">The axioms win. Falk &amp; Kosfeld (2006) show that principals who impose controls on their agents are trusted less and receive less cooperation — the control itself destroyed trust. The consensus prescription fails because it treats trust as a substance that surveillance can certify.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============== READER CHECK =============== -->
+    <section id="check" data-fsm="5">
+      <h2>6. Reader-Check</h2>
+      <p>Three questions. If you can answer all three from the axioms alone, the deconstruction is closed for you too.</p>
+
+      <div class="quiz" data-answer="b">
+        <fieldset>
+          <legend>1. Trust is best understood as:</legend>
+          <label><input type="radio" name="q1" value="a"><span>(a) A feeling or attitude inside the truster.</span></label>
+          <label><input type="radio" name="q1" value="b"><span>(b) A commitment decision computed from evidence.</span></label>
+          <label><input type="radio" name="q1" value="c"><span>(c) A moral substance a culture possesses.</span></label>
+          <div class="explanation">By T3, the amount committed encodes the posterior; a posterior is a statistic, not a feeling. The "feeling" reading is the consensus's derivative projection.</div>
+        </fieldset>
+      </div>
+
+      <div class="quiz" data-answer="b">
+        <fieldset>
+          <legend>2. Knowing you are trusted requires:</legend>
+          <label><input type="radio" name="q2" value="a"><span>(a) The other person's words of assurance.</span></label>
+          <label><input type="radio" name="q2" value="b"><span>(b) Unforced, uninsured forward exposure.</span></label>
+          <label><input type="radio" name="q2" value="c"><span>(c) A signed, enforceable contract.</span></label>
+          <div class="explanation">By T7 and L2, trust is detected only as a resource committed in advance — confidence without exposure is not trust, and assurance costs nothing.</div>
+        </fieldset>
+      </div>
+
+      <div class="quiz" data-answer="b">
+        <fieldset>
+          <legend>3. Different cultures measure trust differently because:</legend>
+          <label><input type="radio" name="q3" value="a"><span>(a) They possess different amounts of a moral substance.</span></label>
+          <label><input type="radio" name="q3" value="b"><span>(b) They operate on different evidence channels and priors.</span></label>
+          <label><input type="radio" name="q3" value="c"><span>(c) Some peoples are naturally more honest.</span></label>
+          <div class="explanation">By T9, religious, cultural, and ethnic variation is channel-endowment and sample-composition variance — the same three axioms, different parameters.</div>
+        </fieldset>
+      </div>
+
+      <div class="quiz-controls">
+        <button type="button" class="btn" data-quiz-check>Check answers</button>
+        <button type="button" class="btn btn--ghost" data-quiz-reset>Reset</button>
+        <span class="quiz-score" data-quiz-score aria-live="polite"></span>
+      </div>
+    </section>
+
+    <!-- =============== GLOSSARY =============== -->
+    <section id="glossary" data-fsm="5">
+      <h2>7. Glossary</h2>
+      <dl style="display:grid;gap:.6rem;margin:1rem 0;font-family:var(--font-sans);font-size:.95rem">
+        <div style="background:var(--bg-elevated);border:1px solid var(--border);border-left:3px solid var(--axiom);border-radius:var(--radius-sm);padding:.6rem .9rem">
+          <dt style="font-weight:700;color:var(--axiom)">Agency Gap (A1)</dt>
+          <dd style="margin:0;color:var(--text);line-height:1.5">The trusted party's act is their own decision — a function of their incentives and information, never of the truster's expectation.</dd>
+        </div>
+        <div style="background:var(--bg-elevated);border:1px solid var(--border);border-left:3px solid var(--axiom);border-radius:var(--radius-sm);padding:.6rem .9rem">
+          <dt style="font-weight:700;color:var(--axiom)">Temporal Fence (A2)</dt>
+          <dd style="margin:0;color:var(--text);line-height:1.5">The interval between commitment and revelation; exposure precedes observation. Trust exists only on this interval.</dd>
+        </div>
+        <div style="background:var(--bg-elevated);border:1px solid var(--border);border-left:3px solid var(--axiom);border-radius:var(--radius-sm);padding:.6rem .9rem">
+          <dt style="font-weight:700;color:var(--axiom)">Evidential Prior (A3)</dt>
+          <dd style="margin:0;color:var(--text);line-height:1.5">Every judgment of another's future act is a posterior computed from a finite sample drawn from some evidence channel.</dd>
+        </div>
+        <div style="background:var(--bg-elevated);border:1px solid var(--border);border-left:3px solid var(--deduction);border-radius:var(--radius-sm);padding:.6rem .9rem">
+          <dt style="font-weight:700;color:var(--deduction)">Evidence channel</dt>
+          <dd style="margin:0;color:var(--text);line-height:1.5">The source of observations feeding a posterior: first-hand sample, population base rate or transmitted norm, or third-party verifier.</dd>
+        </div>
+        <div style="background:var(--bg-elevated);border:1px solid var(--border);border-left:3px solid var(--deduction);border-radius:var(--radius-sm);padding:.6rem .9rem">
+          <dt style="font-weight:700;color:var(--deduction)">Reputation Statistic (L1)</dt>
+          <dd style="margin:0;color:var(--text);line-height:1.5">Past behavior summarized as a statistic of an observed sample; its predictive content for a future act is exactly the posterior it induces.</dd>
+        </div>
+        <div style="background:var(--bg-elevated);border:1px solid var(--border);border-left:3px solid var(--deduction);border-radius:var(--radius-sm);padding:.6rem .9rem">
+          <dt style="font-weight:700;color:var(--deduction)">Detection Trace (L2)</dt>
+          <dd style="margin:0;color:var(--text);line-height:1.5">The observable signature of being trusted: resources committed in advance, unforced and uninsured.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- =============== SOURCES =============== -->
+    <section id="sources" data-fsm="5">
+      <h2>8. Sources</h2>
+      <ol style="margin:1rem 0;padding-left:1.3rem;font-family:var(--font-sans);font-size:.9rem;line-height:1.6;color:var(--text)">
+        <li>Alesina, A., &amp; La Ferrara, E. (2002). <em>Who Trusts Others?</em> Journal of Public Economics, 85(2), 207–234. <a href="https://doi.org/10.1016/S0047-2727(01)00084-6">doi:10.1016/S0047-2727(01)00084-6</a></li>
+        <li>Arrow, K. (1972). <em>Gifts and Exchanges.</em> Philosophy &amp; Public Affairs, 1(4), 343–362.</li>
+        <li>Baier, A. (1986). <em>Trust and Antitrust.</em> Ethics, 96(2), 231–260. <a href="https://doi.org/10.1086/292745">doi:10.1086/292745</a></li>
+        <li>Berg, J., Dickhaut, J., &amp; McCabe, K. (1995). <em>Trust, Reciprocity, and Social History.</em> Games and Economic Behavior, 10(1), 122–142. <a href="https://doi.org/10.1006/game.1995.1027">doi:10.1006/game.1995.1027</a></li>
+        <li>Falk, A., &amp; Kosfeld, M. (2006). <em>The Hidden Costs of Control.</em> American Economic Review, 96(5), 1611–1630. <a href="https://doi.org/10.1257/aer.96.5.1611">doi:10.1257/aer.96.5.1611</a></li>
+        <li>Fehr, E., &amp; Rockenbach, B. (2003). <em>Detrimental Effects of Sanctions on Human Altruism.</em> Nature, 422, 137–140. <a href="https://doi.org/10.1038/nature01474">doi:10.1038/nature01474</a></li>
+        <li>Fukuyama, F. (1995). <em>Trust: The Social Virtues and the Creation of Prosperity.</em> Free Press.</li>
+        <li>General Social Survey (2018). Trust items, NORC at the University of Chicago. <a href="https://gssdataexplorer.norc.org/">gssdataexplorer.norc.org</a></li>
+        <li>Johnson, D. (2005). <em>God's Punishment and Public Goods.</em> Human Nature, 16(4), 410–446. <a href="https://doi.org/10.1007/s12110-005-1017-0">doi:10.1007/s12110-005-1017-0</a></li>
+        <li>Mayer, R. C., Davis, J. H., &amp; Schoorman, F. D. (1995). <em>An Integrative Model of Organizational Trust.</em> Academy of Management Review, 20(3), 709–734. <a href="https://doi.org/10.2307/258792">doi:10.2307/258792</a></li>
+        <li>Norenzayan, A. (2013). <em>Big Gods: How Religion Transformed Cooperation and Conflict.</em> Princeton University Press.</li>
+        <li>Uslaner, E. M. (2002). <em>The Moral Foundations of Trust.</em> Cambridge University Press.</li>
+        <li>Ward, P. R., et al. (2014). <em>Trust and Social Capital in Contemporary Society.</em> PLOS ONE, 9(4), e95555. <a href="https://doi.org/10.1371/journal.pone.0095555">doi:10.1371/journal.pone.0095555</a></li>
+      </ol>
+    </section>
+
+    <!-- =============== CONFIRM & ITERATE =============== -->
+    <section id="iterate" data-fsm="5">
+      <h2>9. Confirm &amp; Iterate</h2>
+      <div class="confirm-iterate">
+        <span class="ci-header">[CHECKPOINT C] · CONFIRM &amp; ITERATE</span>Deconstruction of "trust" is complete: three axioms, two lemmas, ten theorems, two constraints, one predictive test.
+
+        If this artifact is insufficient or you want to spiral deeper, name the fault line:
+        — "A4": add the manipulation axiom (strategic deception of posteriors)
+        — "Narrow": rebuild for AI / algorithmic systems only
+        — "Deepen": push to a fourth-axiom rebuild from scratch
+
+        Otherwise this deconstruction is closed.
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Generated by the <strong>first-principles-notes</strong> skill — LONG · DOMAIN_BEDROCK · ECONOMIC substrate · INTUITIVE rigor · WHOLE_SYSTEM target · ACADEMIC_WARM style.</p>
+      <div class="footnotes">
+        <p><sup>1</sup> GSS 2018 generalized-trust percentages (White 39%, Black 16%, Hispanic 16%) are reported per NORC's cumulative GSS trust items; precise figures vary by weighting.</p>
+        <p><sup>2</sup> Falk &amp; Kosfeld (2006) operationalized control as the principal's right to restrict the agent's choice set; Fehr &amp; Rockenbach (2003) found similar sanction effects in a trust game.</p>
+      </div>
+    </footer>
+  </main>
+
+  <!-- ================== MARGINALIA ================== -->
+  <aside class="marginalia" aria-label="Jargon graveyard">
+    <h4 class="mg-jargon-heading">Jargon Graveyard</h4>
+    <p style="font-size:.78rem;color:var(--text-muted);line-height:1.5;margin:.4rem 0">Each industry term buried here with its raw truth. Hover a highlighted term in §1 to focus its grave.</p>
+    <div class="sidenote sidenote--jargon" data-jargon="jargon-1">
+      <span class="ref">jargon-1</span>
+      <strong class="sn-term">trust</strong>
+      <span class="sn-truth">committing resources now against another agent's future decision you cannot control or fully verify in advance.</span>
+    </div>
+    <div class="sidenote sidenote--jargon" data-jargon="jargon-2">
+      <span class="ref">jargon-2</span>
+      <strong class="sn-term">willingness to be vulnerable</strong>
+      <span class="sn-truth">choosing to hold exposure that can be destroyed by another agent's future choice.</span>
+    </div>
+    <div class="sidenote sidenote--jargon" data-jargon="jargon-3">
+      <span class="ref">jargon-3</span>
+      <strong class="sn-term">high-trust / low-trust society</strong>
+      <span class="sn-truth">a population whose members habitually form high posteriors of cooperation from available evidence channels.</span>
+    </div>
+    <div class="sidenote sidenote--jargon" data-jargon="jargon-4">
+      <span class="ref">jargon-4</span>
+      <strong class="sn-term">generalized vs particularized trust</strong>
+      <span class="sn-truth">two posterior-formation channels: population base rates vs first-hand relational samples.</span>
+    </div>
+    <div class="sidenote sidenote--jargon" data-jargon="jargon-5">
+      <span class="ref">jargon-5</span>
+      <strong class="sn-term">trustworthiness</strong>
+      <span class="sn-truth">a track-record property that raises another agent's posterior of your future cooperation.</span>
+    </div>
+    <div class="sidenote sidenote--jargon" data-jargon="jargon-6">
+      <span class="ref">jargon-6</span>
+      <strong class="sn-term">social capital</strong>
+      <span class="sn-truth">the population-level stock of low-cost evidence and enforcement that lowers the cost of forming cooperation posteriors.</span>
+    </div>
+    <div class="sidenote sidenote--jargon" data-jargon="jargon-7">
+      <span class="ref">jargon-7</span>
+      <strong class="sn-term">building trust</strong>
+      <span class="sn-truth">raising another agent's posterior about your future actions by expanding the verifiable sample or aligning incentives.</span>
+    </div>
+    <div class="sidenote sidenote--jargon" data-jargon="jargon-8">
+      <span class="ref">jargon-8</span>
+      <strong class="sn-term">betrayal</strong>
+      <span class="sn-truth">the realized outcome where the trusted agent's decision returned a payoff to itself at the truster's exposed stake.</span>
+    </div>
+  </aside>
+</div>
+
+<script>
+(function(){
+  'use strict';
+  var $ = function(s, c){ return (c||document).querySelector(s); };
+  var $$ = function(s, c){ return Array.prototype.slice.call((c||document).querySelectorAll(s)); };
+
+  var body = document.body;
+  var html = document.documentElement;
+
+  function theme(){
+    var dark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', dark ? 'light' : 'dark');
+    try{ localStorage.setItem('fp-theme', html.getAttribute('data-theme')); }catch(e){}
+  }
+  var themeBtn = $('#themeBtn');
+  if(themeBtn){ themeBtn.addEventListener('click', theme); }
+
+  var focusBtn = $('#focusBtn');
+  if(focusBtn){
+    focusBtn.addEventListener('click', function(){
+      body.classList.toggle('focus-mode');
+      try{ localStorage.setItem('fp-focus', body.classList.contains('focus-mode') ? '1' : '0'); }catch(e){}
+    });
+  }
+
+  var cleanserBtn = $('#cleanserBtn');
+  if(cleanserBtn){
+    cleanserBtn.addEventListener('click', function(){
+      body.classList.toggle('cleansed');
+      var on = body.classList.contains('cleansed');
+      cleanserBtn.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+  }
+
+  $$('.axiom-card').forEach(function(card){
+    card.addEventListener('click', function(){ card.classList.toggle('flipped'); });
+    card.addEventListener('keydown', function(e){
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); card.classList.toggle('flipped'); }
+    });
+  });
+
+  var AX_STATEMENTS = {
+    a1: 'A1 · Agency Gap — Another agent\'s future action is that agent\'s own decision. The trusted party\'s act is a function of their own incentives and information, never of your posterior over it.',
+    a2: 'A2 · Temporal Fence — Exposure precedes revelation. The act that determines the truster\'s payoff occurs after the truster\'s commitment and is not observable at commitment time.',
+    a3: 'A3 · Evidential Prior — Every probability assigned to another agent\'s future action is a posterior computed from a finite sample drawn from some evidence channel, carrying estimation error and prior dependence.'
+  };
+  var LEMMA_STATEMENTS = {
+    l1: 'L1 · Reputation Statistic — A record of past behavior is a summary statistic of an observed sample; its predictive content for a future act is exactly the posterior it induces.',
+    l2: 'L2 · Detection Trace — An act of trust is a physical trace: resources committed before the trusted act, unforced and uninsured, readable before the trusted act is performed.'
+  };
+
+  var ledgerTrace = $('#ledgerTrace');
+  var ledgerTraceBody = $('#ledgerTraceBody');
+  function showTrace(text){
+    if(!ledgerTrace || !ledgerTraceBody) return;
+    if(!text){ ledgerTrace.classList.remove('visible'); return; }
+    ledgerTraceBody.textContent = text;
+    ledgerTrace.hidden = false;
+    ledgerTrace.classList.add('visible');
+  }
+  function refOf(token){
+    token = (token||'').trim().toLowerCase();
+    if(AX_STATEMENTS[token]) return AX_STATEMENTS[token];
+    if(LEMMA_STATEMENTS[token]) return LEMMA_STATEMENTS[token];
+    var id = token.replace(/^t/, 'T');
+    var t = document.getElementById(id);
+    if(t){
+      var claim = t.querySelector('.theorem-claim');
+      if(claim) return claim.textContent;
+    }
+    return null;
+  }
+  function bindTrace(el){
+    el.addEventListener('mouseenter', function(){ showTrace(refOf(el.textContent)); });
+    el.addEventListener('focus', function(){ showTrace(refOf(el.textContent)); });
+    el.addEventListener('mouseleave', function(){ showTrace(null); });
+    el.addEventListener('blur', function(){ showTrace(null); });
+  }
+  $$('.axiom-ref, .theorem-header .cite').forEach(bindTrace);
+  $$('.lemma-list li').forEach(function(li){
+    li.addEventListener('mouseenter', function(){
+      var st = li.querySelector('.lemma-statement');
+      if(st) showTrace(st.textContent);
+    });
+    li.addEventListener('mouseleave', function(){ showTrace(null); });
+  });
+
+  var removed = {};
+  $$('.structural-test button[data-remove]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var target = btn.getAttribute('data-remove');
+      if(target === 'reset'){
+        removed = {};
+        $$('.structural-test button').forEach(function(b){ b.classList.remove('active'); });
+        $$('.axiom-card').forEach(function(c){ c.classList.remove('collapsed'); });
+        $$('.theorem').forEach(function(t){ t.classList.remove('collapsed'); });
+        var note0 = $('#stNote');
+        if(note0) note0.textContent = 'All axioms restored. The full chain T1–T10 stands.';
+        return;
+      }
+      btn.classList.toggle('active');
+      if(removed[target]){ delete removed[target]; } else { removed[target] = true; }
+      var ids = ['a1','a2','a3'];
+      $$('.axiom-card').forEach(function(c, i){
+        if(removed[ids[i]]) c.classList.add('collapsed'); else c.classList.remove('collapsed');
+      });
+      $$('.theorem').forEach(function(t){
+        var deps = (t.getAttribute('data-depends-on')||'').split(',');
+        var collapsed = deps.some(function(d){ return removed[d.trim()]; });
+        t.classList.toggle('collapsed', collapsed);
+      });
+      var keys = Object.keys(removed);
+      var note = $('#stNote');
+      if(!note) return;
+      if(!keys.length){
+        note.textContent = 'All axioms restored. The full chain T1–T10 stands.';
+      } else {
+        var collapsedList = $$('.theorem.collapsed').map(function(t){ return t.id; }).join(', ');
+        note.textContent = 'Removed: ' + keys.join(', ').toUpperCase() + '. Collapsed theorems: ' + (collapsedList || 'none yet') + '.';
+      }
+    });
+  });
+
+  $$('.injector').forEach(function(inj){
+    var rows = $$('.fracture-row', inj);
+    var toggles = $$('.injector__toggle', inj);
+    function select(btn){
+      toggles.forEach(function(b){ b.classList.toggle('active', b === btn); });
+      var target = btn.getAttribute('data-target');
+      rows.forEach(function(r){ r.hidden = r.getAttribute('data-row') !== target; });
+    }
+    toggles.forEach(function(btn, i){
+      btn.addEventListener('click', function(){ select(btn); });
+      if(i === 0) select(btn);
+    });
+  });
+
+  $$('.quiz').forEach(function(quiz){
+    var inputs = $$('input[type="radio"]', quiz);
+    inputs.forEach(function(inp){
+      inp.addEventListener('change', function(){ quiz.classList.remove('checked'); });
+    });
+  });
+  var checkBtn = $('[data-quiz-check]');
+  var resetBtn = $('[data-quiz-reset]');
+  var scoreEl = $('[data-quiz-score]');
+  if(checkBtn){
+    checkBtn.addEventListener('click', function(){
+      var correct = 0, total = 0;
+      $$('.quiz').forEach(function(quiz){
+        var answer = quiz.getAttribute('data-answer');
+        var inputs = $$('input[type="radio"]', quiz);
+        var chosen = null;
+        inputs.forEach(function(inp){ if(inp.checked) chosen = inp.value; });
+        quiz.classList.add('checked');
+        inputs.forEach(function(inp){
+          inp.disabled = true;
+          var label = inp.closest('label');
+          if(!label) return;
+          label.classList.remove('correct-answer','incorrect-answer');
+          if(inp.value === answer){ label.classList.add('correct-answer'); }
+          else if(inp.checked){ label.classList.add('incorrect-answer'); }
+        });
+        if(!chosen) return;
+        total++;
+        if(chosen === answer) correct++;
+      });
+      if(scoreEl) scoreEl.textContent = 'Score: ' + correct + ' / ' + total;
+    });
+  }
+  if(resetBtn){
+    resetBtn.addEventListener('click', function(){
+      $$('.quiz').forEach(function(quiz){
+        quiz.classList.remove('checked');
+        $$('input[type="radio"]', quiz).forEach(function(inp){
+          inp.checked = false;
+          inp.disabled = false;
+          var label = inp.closest('label');
+          if(label) label.classList.remove('correct-answer','incorrect-answer');
+        });
+      });
+      if(scoreEl) scoreEl.textContent = '';
+    });
+  }
+
+  $$('.jargon').forEach(function(span){
+    var id = span.id;
+    if(!id) return;
+    var note = $('[data-jargon="' + id + '"]');
+    if(!note) return;
+    span.addEventListener('mouseenter', function(){ note.classList.add('sidenote--focused'); });
+    span.addEventListener('focus', function(){ note.classList.add('sidenote--focused'); });
+    span.addEventListener('mouseleave', function(){ note.classList.remove('sidenote--focused'); });
+    span.addEventListener('blur', function(){ note.classList.remove('sidenote--focused'); });
+  });
+
+  var progress = $('#progressFill');
+  var tracker = $('#fsmTracker');
+  var sections = $$('section[data-fsm]');
+  var tocLinks = $$('.toc a');
+  function onScroll(){
+    var doc = document.documentElement;
+    var max = doc.scrollHeight - window.innerHeight;
+    var p = max > 0 ? (window.scrollY / max) * 100 : 0;
+    if(progress) progress.style.width = p + '%';
+    var current = null;
+    sections.forEach(function(sec){
+      if(window.scrollY >= sec.offsetTop - 140) current = sec;
+    });
+    if(tracker){
+      $$('li', tracker).forEach(function(li){
+        var t = li.getAttribute('data-target');
+        var state = li.getAttribute('data-fsm-state');
+        var isCurrent = t && current && current.id === t.slice(1);
+        var passed = current && parseInt(state,10) <= parseInt(current.getAttribute('data-fsm'),10);
+        li.classList.toggle('active', !!isCurrent);
+        li.classList.toggle('completed', !isCurrent && !!passed);
+      });
+    }
+    tocLinks.forEach(function(a){ a.classList.remove('active'); });
+    if(current){
+      var link = $('.toc a[href="#' + current.id + '"]');
+      if(link) link.classList.add('active');
+    }
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  document.addEventListener('keydown', function(e){
+    if(e.target && /input|textarea|select/i.test(e.target.tagName)) return;
+    if(e.key === 't' || e.key === 'T') theme();
+    if(e.key === 'f' || e.key === 'F'){ body.classList.toggle('focus-mode'); }
+  });
+
+  try{
+    var savedTheme = localStorage.getItem('fp-theme');
+    if(savedTheme) html.setAttribute('data-theme', savedTheme);
+    if(localStorage.getItem('fp-focus') === '1') body.classList.add('focus-mode');
+  }catch(e){}
+})();
+</script>
+</body>
+</html>

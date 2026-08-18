@@ -1,0 +1,2209 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HPKE from Zero: Hybrid Public Key Encryption Explained</title>
+<meta name="description" content="A long-form, narrative-first introduction to HPKE (RFC 9180) built for readers with no cryptography background. Six chapters from the key-distribution problem to Encrypted Client Hello.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg:            #FDFBF7;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #2D3748;
+  --text-muted:    #718096;
+  --text-strong:   #1A202C;
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  --accent2:        #B7791F;
+  --accent2-strong: #975A16;
+  --accent2-soft:   #FEEBC8;
+  --border:        #E4DFD5;
+  --sidenote-bg:   #EDF2F7;
+  --code-bg:       #EDF2F7;
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #1A202C;
+  --bg-elevated:   #2D3748;
+  --bg-sunken:     #171923;
+  --text:          #E2E8F0;
+  --text-muted:    #A0AEC0;
+  --text-strong:   #F7FAFC;
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent2:        #F6AD55;
+  --accent2-strong: #FBD38D;
+  --accent2-soft:   #4A2E14;
+  --border:        #2D3748;
+  --sidenote-bg:   #2A2F3A;
+  --code-bg:       #2A2F3A;
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: var(--line);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   PROGRESS BAR (fixed top)
+============================================================ */
+.progress-bar{
+  position: fixed; top:0; left:0; right:0;
+  height: 3px;
+  background: transparent;
+  z-index: 100;
+}
+.progress-bar__fill{
+  height:100%;
+  width:0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+
+/* ============================================================
+   LAYOUT — 3 column grid
+============================================================ */
+.app{
+  display:grid;
+  grid-template-columns: minmax(220px, 20%) minmax(0, 1fr) minmax(240px, 20%);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 32px 128px;
+}
+
+.navigator{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding-right: 8px;
+}
+.navigator::-webkit-scrollbar{width:6px}
+.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+.canvas{
+  max-width: var(--measure);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.marginalia{
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+body.focus-mode .navigator,
+body.focus-mode .marginalia{
+  display:none;
+}
+body.focus-mode .app{
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+@media (max-width: 960px){
+  .app{
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px 96px;
+  }
+  .navigator{
+    position: relative;
+    top: 0;
+    max-height: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .marginalia{
+    order: 3;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+}
+
+/* ============================================================
+   NAVIGATOR
+============================================================ */
+.navigator__meta{
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.navigator__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+.navigator__reading-time{
+  color: var(--text);
+  font-size: 13px;
+}
+
+.toc{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc li{margin: 2px 0}
+.toc a{
+  display: block;
+  padding: 6px 10px;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition);
+  line-height: 1.4;
+}
+.toc a:hover{
+  color: var(--text);
+  background: var(--sidenote-bg);
+}
+.toc a.is-active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--sidenote-bg);
+  font-weight: 500;
+}
+.toc .toc-l3{ padding-left: 20px; font-size: 13px }
+
+/* ============================================================
+   CANVAS (main reading area)
+============================================================ */
+.canvas h1{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin: 8px 0 16px;
+  letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--text-strong);
+  margin: 56px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+.canvas h2:first-of-type{ border-top: none; padding-top: 0 }
+.canvas h3{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-strong);
+  margin: 32px 0 12px;
+  scroll-margin-top: 24px;
+}
+.canvas p{ margin: 0 0 16px }
+.canvas strong{ color: var(--text-strong); font-weight: 700 }
+.canvas em{ font-style: italic }
+.canvas a{
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.canvas a:hover{ color: var(--accent-strong) }
+
+.source{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--sidenote-bg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all var(--transition);
+}
+.source::before{ content: "↗ "; opacity: .6 }
+.source:hover{
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+.bar-chart__caption{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+.bar-chart__caption a{ color: var(--text-muted); text-decoration: underline dotted }
+.bar-chart__caption a:hover{ color: var(--accent) }
+.provenance-note{
+  margin: 32px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--sidenote-bg);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-left: 3px solid var(--text-muted);
+}
+
+.canvas ul, .canvas ol{
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.canvas li{ margin: 4px 0 }
+
+.canvas blockquote{
+  margin: 24px 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--sidenote-bg);
+  color: var(--text);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+}
+
+.canvas code{
+  font-family: var(--font-mono);
+  font-size: .9em;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.canvas pre{
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 24px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  position: relative;
+}
+.canvas pre code{ background: transparent; padding: 0 }
+
+/* Hook block */
+.hook{
+  margin: 24px 0 48px;
+  padding: 24px 28px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.hook__label{
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Prerequisites and objectives */
+.meta-block{
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.meta-block h4{
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.meta-block ul{ margin: 0; padding-left: 20px }
+.meta-block li{ margin: 4px 0; color: var(--text) }
+
+/* Callouts */
+.callout{
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--info);
+  background: var(--info-bg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+}
+.callout__label{
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.callout--tip{ border-left-color: var(--success); background: var(--success-bg) }
+.callout--tip .callout__label{ color: var(--success) }
+.callout--warn{ border-left-color: var(--warn); background: var(--warn-bg) }
+.callout--warn .callout__label{ color: var(--warn) }
+.callout--danger{ border-left-color: var(--danger); background: var(--danger-bg) }
+.callout--danger .callout__label{ color: var(--danger) }
+
+/* Feynman check */
+.feynman{
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+}
+.feynman::before{
+  content: "🧒 Explain in one sentence:";
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Tooltips on vocabulary */
+.term{
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+  position: relative;
+}
+.term:hover::after{
+  content: attr(data-def);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-strong);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-style: normal;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  z-index: 10;
+  box-shadow: var(--shadow);
+  line-height: 1.4;
+}
+
+/* Marginalia sidenotes */
+.sidenote{
+  margin: 24px 0;
+  padding: 12px 14px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.sidenote strong{ color: var(--text); display: block; margin-bottom: 4px; font-weight: 600 }
+
+/* ============================================================
+   FLIP CARD
+============================================================ */
+.flip-card{
+  perspective: 1000px;
+  height: 180px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+.flip-card__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg) }
+
+.flip-card__face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__front{
+  background: var(--bg-elevated);
+}
+.flip-card__back{
+  background: var(--accent);
+  color: white;
+  transform: rotateY(180deg);
+}
+.flip-card__label{
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.flip-card__back .flip-card__label{ color: rgba(255,255,255,.85) }
+.flip-card__content{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PROGRESSIVE DISCLOSURE
+============================================================ */
+.deep-dive{
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+.deep-dive > summary{
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  transition: background var(--transition);
+}
+.deep-dive > summary::-webkit-details-marker{ display: none }
+.deep-dive > summary::before{
+  content: "▶";
+  color: var(--accent);
+  font-size: 10px;
+  transition: transform var(--transition);
+}
+.deep-dive[open] > summary::before{ transform: rotate(90deg) }
+.deep-dive > summary:hover{ background: var(--sidenote-bg) }
+.deep-dive__label{
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  margin-right: auto;
+}
+.deep-dive > *:not(summary){
+  padding: 0 18px 16px;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideDown{
+  from{ opacity: 0; transform: translateY(-8px) }
+  to  { opacity: 1; transform: translateY(0) }
+}
+
+/* ============================================================
+   CSS-ONLY BAR CHART
+============================================================ */
+.bar-chart{
+  margin: 32px 0;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.bar-chart__title{
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 16px;
+}
+.bar-row{
+  display: grid;
+  grid-template-columns: 140px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.bar-label{ color: var(--text) }
+.bar-track{
+  background: var(--sidenote-bg);
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill{
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  border-radius: 4px;
+  transition: width 400ms cubic-bezier(.4,0,.2,1);
+}
+.bar-row:hover .bar-fill{ filter: brightness(1.15) }
+.bar-value{ color: var(--text-muted); font-weight: 600; text-align: right }
+
+@media (max-width: 640px){
+  .bar-row{ grid-template-columns: 100px 1fr 40px; font-size: 13px }
+}
+
+/* ============================================================
+   CONCEPT FLOW (3-step)
+============================================================ */
+.concept-flow{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 32px 0;
+}
+.concept-flow__step{
+  padding: 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.concept-flow__step:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.concept-flow__num{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.concept-flow__arrow{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 20px;
+  user-select: none;
+}
+@media (max-width: 640px){
+  .concept-flow{ grid-template-columns: 1fr; }
+  .concept-flow__arrow{ transform: rotate(90deg); justify-self: center }
+}
+
+/* ============================================================
+   GLOSSARY
+============================================================ */
+.glossary{ margin: 32px 0 }
+.glossary dl{ margin: 0 }
+.glossary dt{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: 16px;
+  font-size: 15px;
+}
+.glossary dd{
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 15px;
+  padding-left: 0;
+}
+
+/* ============================================================
+   QUIZ
+============================================================ */
+.quiz{
+  margin: 56px 0 24px;
+  padding: 32px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.quiz h2{
+  font-family: var(--font-sans);
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.quiz__intro{
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.quiz fieldset{
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.quiz legend{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.quiz__option{
+  display: block;
+  padding: 12px 16px;
+  margin: 6px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  transition: all var(--transition);
+  position: relative;
+  padding-left: 44px;
+}
+.quiz__option::before{
+  content: "";
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  transition: all var(--transition);
+}
+.quiz__option:hover{ border-color: var(--accent); background: var(--sidenote-bg) }
+.quiz__option input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.quiz__option:has(input:checked){
+  border-color: var(--accent);
+  background: var(--sidenote-bg);
+}
+.quiz__option:has(input:checked)::before{
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg-elevated);
+}
+.quiz__option.correct-answer{
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--text-strong);
+}
+.quiz__option.correct-answer::before{
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 3px var(--success-bg);
+}
+.quiz__option.incorrect-answer{
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+.quiz__option.incorrect-answer::before{
+  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: inset 0 0 0 3px var(--danger-bg);
+}
+
+.quiz__explanation{
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__explanation{ display: block }
+
+.quiz__actions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.btn{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--transition);
+}
+.btn:hover{ background: var(--accent-strong); border-color: var(--accent-strong) }
+.btn--ghost{ background: transparent; color: var(--accent) }
+.btn--ghost:hover{ background: var(--sidenote-bg); color: var(--accent-strong) }
+
+.quiz__score{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__score{ display: block }
+
+/* ============================================================
+   FLOATING CONTROLS
+============================================================ */
+.controls{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+}
+.control-btn{
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  padding: 0;
+}
+.control-btn:hover{
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.control-btn svg{ width: 18px; height: 18px }
+.control-btn[data-active="true"]{ background: var(--accent); color: white }
+
+/* ============================================================
+   PRINT
+============================================================ */
+@media print{
+  .navigator, .marginalia, .controls, .progress-bar, .quiz__actions{ display: none !important }
+  .app{ grid-template-columns: 1fr; max-width: none; padding: 0 }
+  body{ background: white; color: black; font-size: 12pt }
+  .canvas h1, .canvas h2, .canvas h3{ page-break-after: avoid }
+  .flip-card{ height: auto }
+  .flip-card__inner{ transform: none !important; height: auto }
+  .flip-card__face{ position: static; padding: 8px 0; box-shadow: none; border: none }
+  .flip-card__back{ display: block; background: white; color: black }
+  .deep-dive[open] > *:not(summary){ animation: none }
+}
+
+/* ============================================================
+   PHASE ORBIT
+============================================================ */
+.orbit{
+  margin: 0 0 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.orbit__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+.orbit__track{
+  position: relative;
+  padding-left: 22px;
+}
+.orbit__track::before{
+  content: "";
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.orbit__node{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--transition);
+  user-select: none;
+}
+.orbit__node::before{
+  content: "";
+  position: absolute;
+  left: -22px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  transition: all var(--transition);
+  box-sizing: border-box;
+}
+.orbit__node[data-reached="true"]::before{
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.orbit__node[data-active="true"]{
+  color: var(--text-strong);
+  font-weight: 600;
+}
+.orbit__node[data-active="true"]::before{
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.orbit__node:hover{ color: var(--text) }
+
+/* ============================================================
+   MISCONCEPTION PRE-MORTEM
+============================================================ */
+.premortem{
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--accent2-soft);
+  border-left: 4px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text);
+}
+.premortem__label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 8px;
+}
+.premortem__wrong{ text-decoration: line-through; color: var(--text-muted) }
+.premortem__truth{ font-weight: 600; color: var(--text-strong) }
+
+/* ============================================================
+   SCAFFOLD CARD (S/I/P/R)
+============================================================ */
+.scaffold{
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.scaffold__concept{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scaffold__concept::before{
+  content: "◆";
+  color: var(--accent);
+  font-size: 12px;
+}
+.scaffold__row{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px 16px;
+  margin: 12px 0;
+  align-items: start;
+}
+.scaffold__row-label{
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 4px;
+}
+.scaffold__row-body{ font-size: 15px; line-height: 1.65 }
+.scaffold__row-body p:last-child{ margin-bottom: 0 }
+
+.scaffold__probe{
+  margin: 8px 0 0;
+  border: 1px dashed var(--accent2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  overflow: hidden;
+}
+.scaffold__probe > summary{
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent2-strong);
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  user-select: none;
+  transition: background var(--transition);
+}
+.scaffold__probe > summary::-webkit-details-marker{ display: none }
+.scaffold__probe > summary::before{
+  content: "🤔 Probe";
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent2-strong);
+}
+.scaffold__probe[open] > summary::after{
+  content: "";
+  position: absolute;
+}
+.scaffold__probe > summary:hover{ background: var(--accent2-soft) }
+.scaffold__resolve{
+  padding: 12px 14px 14px 14px;
+  background: var(--accent2-soft);
+  border-top: 1px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.scaffold__resolve::before{
+  content: "💡 Resolve";
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINT
+============================================================ */
+.checkpoint{
+  margin: 32px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+}
+.checkpoint__label{
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.checkpoint__question{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.checkpoint textarea{
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--transition);
+  box-sizing: border-box;
+}
+.checkpoint textarea:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.checkpoint__actions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.checkpoint__expert{
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  display: none;
+}
+.checkpoint.is-revealed .checkpoint__expert{ display: block; animation: slideDown 300ms cubic-bezier(.4,0,.2,1) }
+.checkpoint__expert-label{
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.checkpoint__saved{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   LAUNCH PAD
+============================================================ */
+.launchpad{
+  margin: 48px 0 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.launchpad::before{
+  content: "🚀";
+  position: absolute;
+  top: -16px; right: -8px;
+  font-size: 96px;
+  opacity: .06;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+.launchpad__label{
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--accent2);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.launchpad__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+.launchpad__problem{
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.launchpad__hints{
+  border-top: 1px dashed var(--border);
+  padding-top: 20px;
+  font-family: var(--font-sans);
+}
+.launchpad__hints-label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: block;
+}
+.launchpad__hint{
+  margin: 10px 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-left: 3px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  display: none;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.launchpad__hint.is-visible{ display: block }
+.launchpad__hint-label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 4px;
+  letter-spacing: .08em;
+}
+.launchpad__reveal{
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all var(--transition);
+}
+.launchpad__reveal:hover{
+  background: var(--accent2);
+  color: white;
+}
+.launchpad__reveal:disabled{
+  opacity: .4;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER
+============================================================ */
+.canvas .term-amp{
+  border-bottom: 1px dashed var(--accent2);
+  cursor: help;
+  transition: background var(--transition);
+}
+.canvas .term-amp:hover,
+.canvas .term-amp.is-active{
+  background: var(--accent2-soft);
+  border-bottom-color: var(--accent2-strong);
+}
+.amplifier{
+  position: sticky;
+  top: 24px;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: var(--accent2-soft);
+  border: 1px solid var(--accent2);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  min-height: 96px;
+  transition: opacity var(--transition);
+}
+.amplifier__label{
+  display: block;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 6px;
+}
+.amplifier__term{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+  display: block;
+  font-size: 14px;
+}
+.amplifier__body{ margin: 0 }
+.amplifier__empty{ color: var(--text-muted); font-style: italic }
+.amp-notes{ display: none }
+
+/* ============================================================
+   MISC
+============================================================ */
+.footer{
+  max-width: var(--measure);
+  margin: 64px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-align: center;
+}
+.kbd{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<div class="app">
+
+  <!-- =========================================================
+       LEFT — NAVIGATOR
+       ========================================================= -->
+  <aside class="navigator" aria-label="Table of contents">
+    <div class="navigator__meta">
+      <p class="navigator__title">Reading time</p>
+      <p class="navigator__reading-time" id="readingTime">~ 38 min</p>
+    </div>
+
+    <div class="orbit" aria-label="Learning phases">
+      <p class="orbit__title">Learning path</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Anchor</div>
+        <div class="orbit__node" data-target="bridge">2 · Bridge</div>
+        <div class="orbit__node" data-target="exposition">3 · Construct</div>
+        <div class="orbit__node" data-target="application">4 · Apply</div>
+        <div class="orbit__node" data-target="boundary">5 · Boundary</div>
+        <div class="orbit__node" data-target="synthesis">6 · Fade</div>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="toc" id="toc">
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- =========================================================
+       MIDDLE — CANVAS
+       ========================================================= -->
+  <main class="canvas" id="canvas">
+
+    <h1>HPKE from Zero: Hybrid Public Key Encryption Explained</h1>
+
+    <!-- HOOK -->
+    <div class="hook">
+      <span class="hook__label">🎣 The hook</span>
+      <p>In 1976, two researchers published a paper that let two people who had <em>never met</em>, talking on a channel everyone could hear, end up holding the same secret that nobody else could learn. It sounded like magic. It worked. And for the next 45 years, every protocol that tried to package that magic for everyday use — PGP, ECIES, JOSE — got the fine details subtly, sometimes dangerously wrong, each in its own idiosyncratic way. In February 2022, the internet's cryptography body (the CFRG) published one clean, reusable recipe that fixes all of that: <strong>Hybrid Public Key Encryption (HPKE)</strong>, <a href="https://www.rfc-editor.org/rfc/rfc9180" target="_blank" rel="noopener">RFC 9180</a>.</p>
+      <p>You already use it. When your browser opens a website hosted on Cloudflare, the <em>name of the site you're visiting</em> is hidden from your ISP using HPKE. When Apple's iCloud Private Relay forwards your DNS lookups, HPKE hides them from the middleman. By the end of this note you'll be able to explain — and even design around — exactly what HPKE does and why it suddenly seems to be everywhere.</p>
+    </div>
+
+    <!-- PREREQUISITES + OBJECTIVES -->
+    <div class="meta-block">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>Almost nothing. We assume <strong>zero cryptography background</strong> — this note builds every idea from scratch.</li>
+        <li>A loose idea that "encryption" scrambles a message so only someone with a key can read it.</li>
+        <li>Comfort following a short, numbered procedure (step 1 → step 2 → step 3). That's the most advanced skill required.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>By the end you will be able to…</h4>
+      <ul>
+        <li><strong>Explain</strong> why one cipher cannot do everything, and why "hybrid" means bolting two very different ciphers together.</li>
+        <li><strong>Trace</strong> the three ingredients — KEM, KDF, AEAD — through a single HPKE session.</li>
+        <li><strong>Select</strong> the correct HPKE mode (base / psk / auth / auth_psk) for a given threat scenario.</li>
+        <li><strong>Analyze</strong> a real deployment (Encrypted Client Hello) and point at where HPKE sits in the flow.</li>
+        <li><strong>Evaluate</strong> the boundary: what base-mode HPKE does and does not protect against.</li>
+      </ul>
+    </div>
+
+    <!-- =====================================================
+         CHAPTER 1 — STATE 1 — Epistemic Baseline
+         ===================================================== -->
+    <h2 id="baseline">Chapter 1 · The hard problem: two strangers, one secret</h2>
+
+    <p><strong>The foundational truth.</strong> Every practical encryption scheme is built from two very different kinds of cryptography bolted together: a <em>slow, flexible</em> part that lets strangers create a shared secret without meeting, and a <em>fast</em> part that actually protects the messages.</p>
+
+    <p><strong>Why you already know this.</strong> Your phone unlocks with a PIN in milliseconds — that's fast crypto. But the PIN was set up on a device you already trusted. When you log into a <em>new</em> website, no PIN exists yet; instead the browser grinds through slow, clever "certificate" math that works between total strangers. Same idea, two speeds.</p>
+
+    <h3>The story of two strangers</h3>
+    <p>Meet Amara in Nairobi and Ben in Berlin. Amara must send Ben a private document over the internet. Their problem is the founding problem of cryptography: <strong>any message Amara sends can be copied and replayed by anyone who watches the wires.</strong> Ben and Amara have never exchanged a password. How can she send something only he can read?</p>
+
+    <p>The first tool in the box is <strong>symmetric encryption</strong>. Imagine a single padlock whose key both sides share. It's beautiful in practice: it scrambles gigabytes at breathtaking speed, and a single shared secret can protect an entire conversation. But look at the name — <em>symmetric</em>. Both ends hold the <em>same</em> key. And that means Amara and Ben must somehow get the key to each other before they can use it. That's the chicken-and-egg: to share a secret safely, they'd need a secret already.</p>
+
+    <p>The second tool in the box is <strong>asymmetric</strong> — or public-key — cryptography. Here each person owns <em>two</em> keys: a <strong>public key</strong> anyone can see, and a <strong>private key</strong> only they hold. Amara can take Ben's public key, do a few lines of math with it, and produce a secret that <em>only Ben's private key</em> can recover — no prior meeting required. The chicken-and-egg vanishes. But this magic is expensive: public-key math is orders of magnitude slower than symmetric encryption, and it only comfortably handles small payloads.</p>
+
+    <div class="sidenote">
+      <strong>Historical trivia · 1976</strong>
+      Whitfield Diffie and Martin Hellman published "New Directions in Cryptography" in 1976, the paper that made public-key cryptography a public idea — though the British signals agency GCHQ had secretly invented the same concept years earlier. The paper's title is a good description of what it did to the field. <a href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" target="_blank" rel="noopener">Source</a>
+    </div>
+
+    <p>So we have one tool that's fast but needs a pre-arranged key, and another that needs no pre-arrangement but is slow. The resolution is so obvious in hindsight that it became the standard pattern of the whole field: <strong>use the slow public-key machinery only to agree on a small random secret, then hand the heavy lifting — encrypting the actual message — to the fast symmetric machine.</strong> That two-step pattern is precisely what the word <em>hybrid</em> in HPKE means.</p>
+
+    <div class="feynman">Encryption has two tools: one is slow but lets strangers share a secret without meeting, and one is fast but needs a shared secret first — so smart people use the slow one just to create a small secret, then let the fast one do the real work.</div>
+
+    <!-- =====================================================
+         CHAPTER 2 — STATE 2 — Cognitive Bridge
+         ===================================================== -->
+    <h2 id="bridge">Chapter 2 · The Two-Box Courier: a bridge you can lift a crate with</h2>
+
+    <p>Let's make the previous chapter physical. Consider a small rare-book shop in Lyon. Its owner, Ana, runs a repair service: customers mail her crates of books, she restores them, and ships them back. Ana publishes a catalog that contains one strange offer: <em>anyone</em> may send a book for repair by sealing it in Ana's special "public repair box."</p>
+
+    <p>The public repair box works like this: it comes with a padlock <em>that anyone can snap shut, but only Ana's master key can open</em>. That's the public-key trick made tangible — one lock, many copies of the closing mechanism, one key.</p>
+
+    <p>Here's the catch that drives the whole design. Snapping that magic padlock is a slow, careful ritual, and the box is small. Nobody wants to do it to a crate full of books. So Ana's instructions tell customers a two-box recipe:</p>
+
+    <ol>
+      <li><strong>The crate.</strong> Put your books in an ordinary wooden crate and seal it with any cheap lock you own — a <em>normal</em> lock with a normal small key.</li>
+      <li><strong>The key box.</strong> Take the small key to that crate lock and drop it inside Ana's little public padlock box. Snap the padlock shut.</li>
+      <li>Mail both boxes. The courier handles a crate and a small box, side by side.</li>
+    </ol>
+
+    <p>Now watch what the snooping border inspector sees. Every day, a courier walks past with two boxes: an unopenable little padlock box and a plain crate. The inspector can shake the crate, weigh it, even <em>mail it somewhere else</em>. But she can never open the crate, because the only key to it is sitting inside the padlock box — and only Ana's master key opens that.</p>
+
+    <p>The elegance is in the division of labour. The fancy public padlock is used exactly once, on a tiny payload. The bulk — the whole crate — is protected by a cheap, fast lock. And yet the net result is total secrecy, because the two locks are <em>chained</em>: you can't reach the crate without first opening the padlock box.</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>The sender invents a fresh random crate-key</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Seals the crate-key in Ana's public padlock box, and the message in a fast, cheap crate</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Ana opens the padlock box with her master key, then opens the crate</div>
+    </div>
+
+    <p>This is the model we'll use for the rest of the note. Call it <strong>The Two-Box Courier</strong>. Every formal term in the chapters ahead is just a named piece of this picture:</p>
+
+    <ul>
+      <li>Ana's <em>public padlock</em> → the recipient's <strong>public key</strong>.</li>
+      <li>Ana's <em>master key</em> → the recipient's <strong>private key</strong>.</li>
+      <li>The <em>small random crate-key</em> → the <strong>shared secret</strong> both sides end with.</li>
+      <li>The <em>little padlock box</em> → the <strong>encapsulated key</strong> (called <code>enc</code>) that travels to the receiver.</li>
+      <li>The <em>cheap crate lock</em> → <strong>symmetric encryption</strong>.</li>
+      <li>The <em>crate</em> → the message.</li>
+      <li>The <em>delivery note taped to the crate</em> ("repair service, Ana") → the <code>info</code> string.</li>
+      <li>The <em>courier and the border inspector</em> → the untrusted network in between.</li>
+    </ul>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+      <p><span class="premortem__wrong">"The message itself travels inside the fancy public padlock box — that is, HPKE encrypts the message directly with the receiver's public key."</span></p>
+      <p>This is wrong because the public padlock is slow and small; sealing a whole crate with it would take hours and the box won't fit. The magic is wasted on bulk.</p>
+      <p><span class="premortem__truth">What's actually true:</span> only the <em>tiny key</em> rides in the padlock box. The heavy crate is sealed with a cheap, fast lock, and the whole thing stays private because nobody can reach the crate-key except Ana. Public-key crypto never touches the message — only the key to the message.</p>
+    </div>
+
+    <p>Keep this picture pinned to your forehead for one more chapter. If you can answer "which box is which?" at any moment, you know HPKE.</p>
+
+    <div class="feynman">Ana publishes a padlock anyone can snap shut but only she can open; senders lock a tiny key in it, lock their crate with that key, and mail both — so the inspector never gets a key, only boxes.</div>
+
+    <!-- =====================================================
+         CHAPTER 3 — STATE 3 — Scaffolded Exposition
+         ===================================================== -->
+    <h2 id="exposition">Chapter 3 · Inside HPKE: three machines and four trust settings</h2>
+
+    <p>Now we open the Two-Box Courier and look at the machinery. HPKE is a precise, standardized recipe. It names three machines — the KEM, the KDF, and the AEAD — and then says exactly how to wire them together. We'll take them one at a time.</p>
+
+    <!-- Scaffold 1 — KEM -->
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Machine 1 — The KEM (the key box machine)</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>A <strong>Key Encapsulation Mechanism (KEM)</strong> is a machine that, given the recipient's public key, produces two things at once: a fresh random <span class="term-amp" data-note="shared-secret">shared secret</span> and a small capsule — the <strong>encapsulated key</strong>, written <code>enc</code> — that encodes how that secret is recovered. The recipient feeds <code>enc</code> and their private key back into the machine and reconstructs <em>the identical</em> secret. The secret itself is never transmitted; it is re-created on each side.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>This is the public padlock box, end to end. The sender invents a random crate-key, clicks it into a padlock box addressed to Ana, and ships the box. Ana unlocks it with her master key.</p>
+          <p>In numbers (the default <em>DHKEM(X25519)</em> ciphersuite): the capsule <code>enc</code> is <strong>32 bytes</strong> — smaller than this sentence — and the shared secret is another <strong>32 bytes</strong>. The "key box" is genuinely tiny.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>An eavesdropper records the capsule <code>enc</code> and the recipient's public key. Can they reconstruct the shared secret?</summary>
+        <div class="scaffold__resolve">No — and this is the entire point of the public-key trick. The capsule and the public key are both public; the math guarantees that without a private key, observing both reveals nothing usable about the secret. The inspector can hold the padlock box and the catalog copy of Ana's padlock all day; only Ana's master key opens it.</div>
+      </details>
+    </section>
+    <div class="feynman">A KEM is a machine that mails a secret to one specific person: anyone can drop in a coin, but only the owner's master key pops the box open.</div>
+
+    <!-- Checkpoint -->
+    <div class="checkpoint" data-checkpoint-id="cp1">
+      <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+      <p class="checkpoint__question">In the Two-Box Courier: which box is the KEM's output, and which box is the symmetric cipher's output?</p>
+      <textarea placeholder="Write your answer in your own words before checking…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Expert answer</span>
+        <p>The KEM produces the small padlock box (the capsule <code>enc</code>) <em>and</em> the secret inside it (the crate-key). The symmetric cipher produces the crate — the encrypted message — whose lock is driven by a key derived from that secret. Two boxes, two machines, chained.</p>
+      </div>
+    </div>
+
+    <!-- Scaffold 2 — AEAD -->
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Machine 2 — The AEAD (the crate lock that tattles)</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>An <strong>AEAD</strong> — short for <em>Authenticated Encryption with Associated Data</em> — is the fast symmetric machine. Given a key, it both <strong>encrypts</strong> (scrambles the message) and <strong>authenticates</strong> (proves the message wasn't tampered with) in a single pass. Its output is the ciphertext: the plaintext, plus a small fixed <strong>tag</strong> (16 bytes for standard suites) that acts as a tamper-evident seal.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Imagine the crate lock is also a strip of sticky tape that records fingerprints: if anyone pries the crate open and re-seals it, the tape shows the damage. In sizes: with AES-128-GCM, a 1,000-byte message becomes a 1,016-byte ciphertext — your message plus 16 bytes of seal.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>The inspector can't open the crate, but they can swap it for a different crate, or re-mail yesterday's crate. Does the crate lock detect that?</summary>
+        <div class="scaffold__resolve">Half of it. Swapping in a <em>different</em> crate: yes — the seal doesn't match, and the receiver's machine spits out garbage rather than a forgery. Re-mailing <em>yesterday's crate, untouched</em>: no — the seal still verifies fine. The lock can't tell old from new. That's why HPKE gives each context a fresh key and a counting nonce (more in the deep dive), and why some applications need their own replay protection on top.</div>
+      </details>
+    </section>
+    <div class="feynman">An AEAD is a lock that also glues a name-tag onto your box: if anyone re-wrapped it, the name-tag tears.</div>
+
+    <!-- Scaffold 3 — KDF -->
+    <section class="scaffold" id="exposition-3">
+      <h3 class="scaffold__concept">Machine 3 — The KDF (the master-key mixer)</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>A <strong>KDF</strong> — <em>Key Derivation Function</em> — is a machine that takes one secret and expands it into several independent keys and nonces, each with its own purpose, so that knowing one output teaches you nothing about the others or about the original. HPKE runs the shared secret through a KDF (labelled with the <span class="term-amp" data-note="cipher-suite">cipher suite</span> and the <code>info</code> string) to produce three things: the message <strong>key</strong>, a <strong>base nonce</strong> for message counters, and an <strong>exporter secret</strong> for applications that need to derive their own material.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Think of a grand hotel. The front desk holds one master key, and from it mints a separate keycard for every room and every day. A stolen keycard opens exactly its own room; it can't be reverse-engineered into the master key or the other rooms. The KDF is that front desk.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Why not skip the KDF and just use the shared secret directly as the message key?</summary>
+        <div class="scaffold__resolve">Because a raw secret reused for several purposes at once is a classic way ciphers break — the same bits used as both an encryption key and a nonce can collide and unlock attacks. The KDF's labelled expansion gives each role its own independent key, and it <em>binds context</em>: the key depends on the exact suite and the <code>info</code> string, so a ciphertext produced under one context can't be replayed under another.</div>
+      </details>
+    </section>
+    <div class="feynman">A KDF is a blender that turns one bottle of juice into separate cups, each tasting independent — spill one and nobody can reconstruct the bottle.</div>
+
+    <!-- Scaffold 4 — modes -->
+    <section class="scaffold" id="exposition-4">
+      <h3 class="scaffold__concept">The four trust settings: who is the courier, really?</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>HPKE ships in four <strong>modes</strong> that decide <em>who is authenticated</em> before the secret is handed over:</p>
+          <ul>
+            <li><strong>base</strong> — only the <em>receiver</em> is authenticated (only Ana can open the padlock box). The sender is anonymous.</li>
+            <li><strong>psk</strong> — both sides must additionally know a <em>pre-shared key</em> (a shared passphrase from before).</li>
+            <li><strong>auth</strong> — the <em>sender's</em> public key proves who they are, alongside the receiver's key.</li>
+            <li><strong>auth_psk</strong> — both: a known sender <em>and</em> a shared passphrase.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Three couriers, three doors. (1) A whistleblower leaves a crate with no return address: the shop accepts it — <em>base</em>. (2) The courier network and the shop share a secret knock from an earlier arrangement: <em>psk</em>. (3) A registered courier hands over a signed badge along with the crate: <em>auth</em>. In one table: base authenticates receiver only; psk adds a shared secret; auth adds a sender identity; auth_psk adds both.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>A browser encrypting a website's name uses ECH with HPKE. Which mode does it need — and which mode would an encrypted notes app use to prove who wrote a note?</summary>
+        <div class="scaffold__resolve">The browser uses <em>base</em>: it has nothing to prove, and the whole point is that any anonymous browser can hand Ana a sealed box. The notes app, though, wants to know <em>who</em> is writing — that's <em>auth</em>, because the sender's public key is bound into the keys, so the receiver can verify the writer. Mode choice is a threat-model decision, not a preference.</div>
+      </details>
+    </section>
+    <div class="feynman">The four modes are four ways of asking "who are you?" before handing over the secret — nobody, the password, the badge, or both.</div>
+
+    <!-- Deep dive -->
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Deep dive</span> The wiring: one envelope, one counter, and why labels save lives</summary>
+      <p>When a sender runs <code>SetupBaseS</code>, HPKE computes a <code>context</code> containing the derived key, a <em>base nonce</em>, and a sequence counter. Every message encrypted with that context uses nonce = <code>base_nonce XOR</code> the running sequence number — so two messages from one context can never reuse a nonce, which is the AEAD rule that keeps GCM safe. The whole envelope on the wire is just:</p>
+      <pre><code>envelope = enc (32 bytes, the capsule) || ciphertext (message + 16-byte tag)</code></pre>
+      <p>The key schedule is <em>labelled</em>: every derivation is <code>ExtractAndExpand</code> with a label like <code>"key"</code> or <code>"base_nonce"</code>, plus a hash of the mode, suite, <code>info</code>, and (in auth modes) the sender's public key. This labelling is what makes HPKE safe to reuse across many protocols: a key derived under ECH's <code>info</code> can't be confused with one derived under ODoH's. Notably, HPKE is not simply "yet another ECIES" — the whole point of <a href="https://www.rfc-editor.org/rfc/rfc9180" target="_blank" rel="noopener">RFC 9180</a> was to pick <em>one</em> canonical scheme with no ambiguities, and the CFRG backed it up with formally verified reference code (hacspec / F*).</p>
+    </details>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Predict</span>
+      <p>Before the next chapter: you now know the envelope is <code>enc || ciphertext</code>. If a network observer can't decrypt it, but the <em>name of the website you're visiting</em> still leaks in plaintext over the TLS handshake — which tiny HPKE envelope could hide it? Write your guess in one sentence before scrolling.</p>
+    </div>
+
+    <!-- =====================================================
+         CHAPTER 4 — STATE 4 — Contextual Application
+         ===================================================== -->
+    <h2 id="application">Chapter 4 · In the wild: Encrypted Client Hello and friends</h2>
+
+    <p>Here's the scene. You open a browser and connect to <code>news.example.com</code>. The content is encrypted — but for decades, the very <em>first packet</em> your browser sends contained a plaintext field called the <strong>Server Name Indication (SNI)</strong>: literally the name of the site you're visiting, readable by every network operator, ISP, and café between you and the server. Content was locked; the <em>name</em> was shouted in a library. This is the gap <a href="https://www.rfc-editor.org/rfc/rfc9849" target="_blank" rel="noopener">Encrypted Client Hello (ECH)</a> was built to close — and it is HPKE in action.</p>
+
+    <h3>How your browser wraps the site name</h3>
+    <p>The site's operator publishes a special record in DNS: an <em>ECHConfig</em> containing an HPKE public key (and a chosen suite — in practice <code>DHKEM(X25519, HKDF-SHA256)</code> with <code>AES-128-GCM</code>) alongside a decoy hostname. When your browser connects:</p>
+    <ol>
+      <li>It fetches the ECHConfig from DNS and builds the <em>real</em> handshake message — the <strong>ClientHelloInner</strong> — containing the true site name.</li>
+      <li>It runs <code>SetupBaseS</code> against the ECH public key: the KEM mints a fresh capsule <code>enc</code> and shared secret; the KDF expands that secret into a context key; the AEAD seals the inner handshake message (plus a 16-byte tag).</li>
+      <li>It wraps that blob into a <strong>ClientHelloOuter</strong> addressed to the <em>decoy</em> hostname (e.g. <code>cloudflare-ech.com</code>), and sends only that.</li>
+      <li>The server's private key runs <code>SetupBaseR</code>, recovers the context, opens the blob, and reads the true site name. Everything in between — including the site's own CDN edge — saw only the decoy and an opaque envelope.</li>
+    </ol>
+    <p>Numbers for the worked trace, using X25519: the envelope the observer sees is <code>enc</code> = 32 bytes plus the sealed inner handshake = <em>a few hundred bytes</em>. A whole privacy feature, delivered by a tiny padlock box.</p>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">📅 Dated facts</span>
+      <p>Firefox shipped ECH support in version 118 (October 2023) and enabled it by default from Firefox 119; Cloudflare rolled ECH out across all plans on 29 September 2023, and ECH was standardized as RFC 9849 in March 2026. Sources: <a href="https://blog.mozilla.org/en/firefox/encrypted-hello/" target="_blank" rel="noopener">Mozilla blog, Oct 2023</a> · <a href="https://blog.cloudflare.com/announcing-encrypted-client-hello/" target="_blank" rel="noopener">Cloudflare, Sep 2023</a> · <a href="https://www.rfc-editor.org/rfc/rfc9849" target="_blank" rel="noopener">RFC 9849</a></p>
+    </div>
+
+    <h3>Two more places the padlock box shows up</h3>
+    <p><strong>Oblivious DNS over HTTPS (ODoH).</strong> Your DNS query — "what's the IP of <code>news.example.com</code>?" — is also read by whoever carries it. ODoH (<a href="https://www.rfc-editor.org/rfc/rfc9230" target="_blank" rel="noopener">RFC 9230</a>) puts HPKE on the query itself: a <em>proxy</em> forwards your encrypted query to a <em>target</em> resolver. The proxy sees your IP but not the query; the target reads the query but never sees your IP. Apple's iCloud Private Relay is built on this separation, with Cloudflare as a partner. <a href="https://developers.cloudflare.com/1.1.1.1/encryption/oblivious-dns-over-https/" target="_blank" rel="noopener">Source</a></p>
+    <p><strong>Messaging Layer Security (MLS).</strong> End-to-end encrypted group chat needs to hand a brand-new member the group's secrets. MLS (<a href="https://www.rfc-editor.org/rfc/rfc9420" target="_blank" rel="noopener">RFC 9420</a>) encrypts each new member's "welcome kit" to their own HPKE public key — a padlock box addressed to exactly one person, sent through a server that can't read it.</p>
+
+    <!-- Data chart -->
+    <div class="bar-chart">
+      <div class="bar-chart__title">Size of the "key box": what the sender must ship alongside the message</div>
+      <div class="bar-row">
+        <div class="bar-label">X25519 (classical)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:2%"></div></div>
+        <div class="bar-value">2%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">ML-KEM-512</div>
+        <div class="bar-track"><div class="bar-fill" style="width:49%"></div></div>
+        <div class="bar-value">49%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">ML-KEM-768</div>
+        <div class="bar-track"><div class="bar-fill" style="width:69%"></div></div>
+        <div class="bar-value">69%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">ML-KEM-1024</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        <div class="bar-value">100%</div>
+      </div>
+      <p class="bar-chart__caption">Bars are capsule sizes as a % of the largest (ML-KEM-1024). Raw sizes, in bytes: X25519 capsule = 32; ML-KEM-512 ciphertext = 768; ML-KEM-768 = 1088; ML-KEM-1024 = 1568. Source: <a href="https://www.rfc-editor.org/rfc/rfc9180" target="_blank" rel="noopener">RFC 9180</a> (X25519) and <a href="https://csrc.nist.gov/pubs/fips/203/final" target="_blank" rel="noopener">FIPS 203</a> (NIST, Aug 2024) for ML-KEM.</p>
+    </div>
+
+    <!-- Flip card -->
+    <div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Active recall — Question</span>
+          <div class="flip-card__content">Why does HPKE make the sender mint a <em>brand-new</em> random key for every single encapsulation, rather than reuse one?</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Answer</span>
+          <div class="flip-card__content">Three reasons chained together: (1) each fresh capsule is unlinkable — an observer can't tell that two envelopes came from the same sender; (2) each fresh context starts a new nonce counter, so AEAD nonces are never reused across messages; (3) an ephemeral key that leaks compromises exactly one message, not the sender's identity or history.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================
+         CHAPTER 5 — STATE 5 — Boundary Testing
+         ===================================================== -->
+    <h2 id="boundary">Chapter 5 · Where it breaks: HPKE is a tool with honest limits</h2>
+
+    <p>HPKE is not a magic box. It is a well-defined envelope with precisely scoped guarantees, and the scoping is where people get hurt. Let's push on the edges.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Common misconception</span>
+      <p><strong>"HPKE base mode authenticates the sender."</strong> It doesn't. In base mode, only the <em>receiver</em> is authenticated — the sender is anonymous, exactly like the whistleblower's crate with no return address. Anyone who knows Ana's public padlock can send her a box. If you need to know who wrote the message, base mode is the wrong tool: you want <em>auth</em> mode (sender public key bound in) or a separate signature.</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Edge case 1 — Replay</span>
+      <p>HPKE has <strong>no built-in replay protection</strong>. A captured envelope can be re-sent, and the receiver — recomputing the same context — will happily accept it again. The seal verifies; the crate is just <em>old</em>. Applications that care about freshness (a login token, a payment) must add their own: timestamps, counters, or a dedup store keyed on <code>enc</code>.</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Edge case 2 — The leaking master key</span>
+      <p>If Ana's master key (the recipient's long-term private key) leaks, <em>every envelope ever recorded</em> falls open, because the shared secret in each one is a function of that key. HPKE gives you secrecy <em>before</em> the key leaks and nothing <em>after</em> — no backward secrecy against recipient-key compromise. That's why production services rotate ECH keys, and why full handshakes like TLS use fresh keys on <em>both</em> sides.</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Edge case 3 — Quantum harvest, later decrypt</span>
+      <p>The default <span class="term-amp" data-note="post-quantum">X25519</span> KEM is classical: a future quantum computer could break the recorded capsules. An attacker who records envelopes today and decrypts them in the future wins anyway. The fix in flight: ML-KEM (FIPS 203) ciphersuites for HPKE are being standardized — at the price of the bigger padlock boxes you saw in the chart.</p>
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Predict</span>
+      <p>One prediction to close on: an attacker records every envelope your server ever received, then steals its private key in 2030. What fraction of the recorded traffic can they decrypt? Write your answer in one sentence before reading the final chapter.</p>
+    </div>
+
+    <!-- =====================================================
+         CONNECTION MAP
+         ===================================================== -->
+    <h2 id="connections">How this connects</h2>
+    <ul>
+      <li><strong>TLS 1.3</strong> — the same hybrid instinct, one level up: a handshake negotiates fresh keys on both sides, which is why TLS (unlike single-recipient HPKE) gets true forward secrecy.</li>
+      <li><strong>MLS / the Double Ratchet</strong> — MLS leans on HPKE for joining members; Signal-style ratcheting is the "keep the secret fresh forever" sibling.</li>
+      <li><strong>Post-quantum hybrid key exchange</strong> — combining X25519 <em>and</em> ML-KEM ("hybrid" in its second, post-quantum sense) mirrors how HPKE itself hybridizes two crypto speeds.</li>
+      <li><strong>The KEM/DEM paradigm</strong> — coined by Cramer and Shoup in 1998: split any scheme into key encapsulation + data encapsulation. HPKE is its standardized, audited descendant.</li>
+      <li><strong>Oblivious HTTP &amp; privacy gateways</strong> — ODoH's bigger sibling: same padlock box, used to make servers "oblivious" of the data they route.</li>
+    </ul>
+
+    <!-- =====================================================
+         CHAPTER 6 — STATE 6 — Synthesis
+         ===================================================== -->
+    <h2 id="synthesis">Chapter 6 · The whole picture</h2>
+
+    <p>Here's the entire note in four sentences, without the crates. HPKE is a standardized envelope for a two-layer scheme: a <strong>KEM</strong> wraps a fresh random secret to the recipient's public key; a <strong>KDF</strong> expands that secret into per-context keys and nonces; an <strong>AEAD</strong> protects the message and detects tampering; and the four <strong>modes</strong> tune who gets authenticated. The result is confidentiality and integrity for anonymous, one-way messages from a sender who knows the recipient's public key, carried through channels that may be actively untrusted. That exact shape is what makes it the workhorse of ECH, ODoH, and MLS. And its limits are equally precise: no sender authentication in base mode, no built-in replay protection, no backward secrecy after a recipient key leak, and no quantum resistance unless you choose the newer KEM.</p>
+
+    <blockquote>
+      <strong>If you remember only one thing:</strong> HPKE wraps a secret to one specific person — the public key opens the outer box, and the fast symmetric lock it unlocks is what actually protects your message.
+    </blockquote>
+
+    <!-- Launch Pad -->
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+      <h3 class="launchpad__title">Design brief: an encrypted dead-drop service</h3>
+      <p class="launchpad__problem">You're building a public "dead drop": anyone can post an encrypted note to a public board, and only the note's owner can read it. The board server is <em>honest but curious</em> — it never tampers, but it will read anything it can. Design the envelope: (1) choose the HPKE mode and justify it; (2) decide what to put in the <code>info</code> string; (3) design replay protection — a note copy-pasted onto the board twice must be detectable; (4) specify the on-wire format (which fields, in what order, and why). Then list the two failure scenarios a security reviewer should probe. A rubric for self-checking: mode correctness, context binding, replay handling, and an honest acknowledgment of what the design cannot protect against.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Stuck? Reveal a hint at a time.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Reveal hint 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Hint 1 — reframe</span>
+          <p>Each owner is an Ana who publishes a padlock; a note is a crate. Ask who must be authenticated: nobody — owners receive, strangers post. That points to <em>base</em> mode. But you must still bind every note to the <em>specific</em> owner's public key so it can't be misrouted to a different padlock box.</p>
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Hint 2 — key concept</span>
+          <p>The <code>info</code> string is folded into every derived key by the KDF. Put the owner's key id and the note id there. For replay, remember that each encapsulation already mints a fresh <code>enc</code> — that 32-byte capsule is a natural dedup token the server can index.</p>
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Hint 3 — setup</span>
+          <p>A minimal envelope: <code>owner_key_id || enc (32 B) || ciphertext (note + 16 B tag)</code>. The server stores it under a hash of <code>enc</code> and rejects duplicates. Reviewer probes: what happens when the owner's key leaks (answer: the KEM must be re-keyed, past notes fall); and what a <em>malicious</em> server can do (answer: HPKE can't stop the host from refusing to delete — say so explicitly; that's out of scope, not a bug).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Glossary -->
+    <h2 id="glossary">Glossary</h2>
+    <div class="glossary">
+      <dl>
+        <dt>HPKE</dt><dd>Hybrid Public Key Encryption — a standardized envelope combining a KEM, a KDF, and an AEAD, defined in RFC 9180 (2022). <em>(In the Two-Box Courier: the whole shipping recipe — two boxes, chained locks.)</em></dd>
+        <dt>KEM (Key Encapsulation Mechanism)</dt><dd>A machine that wraps a fresh random shared secret to a recipient's public key, outputting the capsule <code>enc</code> and the secret. <em>(The public padlock plus the tiny key box.)</em></dd>
+        <dt>Encapsulated key (<code>enc</code>)</dt><dd>The capsule that carries the shared secret to the receiver; for DHKEM(X25519) it is 32 bytes. <em>(The small padlock box.)</em></dd>
+        <dt>Shared secret</dt><dd>The 32-byte random key both sides re-create independently; never transmitted. <em>(The small crate-key.)</em></dd>
+        <dt>AEAD</dt><dd>Authenticated Encryption with Associated Data — a symmetric machine that encrypts and authenticates in one pass, outputting plaintext-sized ciphertext plus a 16-byte tamper tag. <em>(The crate lock with the tattling seal.)</em></dd>
+        <dt>KDF (Key Derivation Function)</dt><dd>A machine that expands one secret into several independent keys and nonces, binding in context labels. <em>(The front-desk key mixer in the grand hotel.)</em></dd>
+        <dt><code>info</code> string</dt><dd>Application-supplied context data folded into every derived key. <em>(The delivery note taped to the crate.)</em></dd>
+        <dt>Public key / private key</dt><dd>The two halves of asymmetric cryptography: public = usable by anyone to seal; private = only the owner's to open. <em>(The published padlock / Ana's master key.)</em></dd>
+        <dt>Cipher suite</dt><dd>A named combination of KEM, KDF, and AEAD; HPKE's default is DHKEM(X25519, HKDF-SHA256) + HKDF-SHA256 + AES-128-GCM. <em>(The specific brand of padlock, lock, and tape the shop sells.)</em></dd>
+        <dt>Modes (base / psk / auth / auth_psk)</dt><dd>The four trust configurations: base = anonymous sender; psk = shared passphrase; auth = sender's public key identifies them; auth_psk = both. <em>(Who must answer "who are you?" before the secret is handed over.)</em></dd>
+        <dt>Encapsulation / Decapsulation</dt><dd>The sender's act of wrapping a secret to a key (encapsulate) and the receiver's act of recovering it (decapsulate). <em>(Snapping the padlock shut / opening it with the master key.)</em></dd>
+        <dt>Exporter secret</dt><dd>An extra derived key applications can use to mint their own material without touching the message key. <em>(A spare keycard the front desk can issue without re-keying the hotel.)</em></dd>
+        <dt>Post-quantum</dt><dd>Resistant to attacks from future quantum computers; HPKE's default X25519 is not, while ML-KEM-based suites aim to be. <em>(A padlock no future super-tool can pick.)</em></dd>
+      </dl>
+    </div>
+
+    <!-- =====================================================
+         KNOWLEDGE CHECK
+         ===================================================== -->
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Knowledge check</h2>
+      <p class="quiz__intro">3 questions. Pick the best answer for each and click <em>Check answers</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Which statement best describes what HPKE actually does with the receiver's public key?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> It uses the public key to encrypt the entire message, then sends the public-key ciphertext.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> It uses the public key to wrap a fresh random secret, then protects the message with fast symmetric encryption.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> It signs the message so the receiver can verify who sent it.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> It converts the receiver's public key into a symmetric key that can be reused for every future message.</label>
+        <div class="quiz__explanation"><strong>Why:</strong> The correct answer is the "hybrid" heart of HPKE: the public key only wraps a small secret (the KEM's job), and the AEAD does the bulk encryption. Option A is the classic pre-mortem wrong model; C confuses encryption with signing; D wrongly implies a reusable static session key.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>2. Your app must prove to recipients that a message really came from one of your registered users. Which HPKE mode is the right tool?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> base</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> psk</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> auth</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> It doesn't matter — every mode authenticates the sender.</label>
+        <div class="quiz__explanation"><strong>Why:</strong> auth binds the sender's public key into the key schedule, so the receiver can verify the writer. base authenticates only the receiver; psk authenticates a shared passphrase, not a person; and the last option is the documented misconception from Chapter 5.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>3. An observer records one of your server's HPKE envelopes today. In 2030 the server's long-term private key leaks. What can they decrypt, assuming the standard X25519 ciphersuite?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Nothing — HPKE provides perfect forward secrecy.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Only messages sent after the leak.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Every envelope they recorded before the leak, too.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Nothing, because X25519 is post-quantum.</label>
+        <div class="quiz__explanation"><strong>Why:</strong> The shared secret is a function of the recipient's long-term key, so past recordings fall open once that key leaks (this is why keys are rotated). Options A and D are both wrong — HPKE gives no backward secrecy against recipient-key compromise, and X25519 is a classical (non-quantum-resistant) algorithm.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Check answers</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Reset</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <!-- Sources -->
+    <h2 id="sources">Sources &amp; further reading</h2>
+    <ul>
+      <li>Barnes, Bhargavan, Lipp, Wood — "Hybrid Public Key Encryption", <a class="source" href="https://www.rfc-editor.org/rfc/rfc9180" target="_blank" rel="noopener">RFC 9180</a>, IRTF CFRG, Feb 2022. The standard itself.</li>
+      <li>Cloudflare — <a class="source" href="https://blog.cloudflare.com/hybrid-public-key-encryption/" target="_blank" rel="noopener">"HPKE: Standardizing public-key encryption (finally!)"</a>, Feb 2022. Motivation, design goals, formal verification, implementations.</li>
+      <li>Rescorla, Oku, Sullivan, Wood — "TLS Encrypted Client Hello", <a class="source" href="https://www.rfc-editor.org/rfc/rfc9849" target="_blank" rel="noopener">RFC 9849</a>, IETF, Mar 2026.</li>
+      <li>Mozilla — <a class="source" href="https://blog.mozilla.org/en/firefox/encrypted-hello/" target="_blank" rel="noopener">"Say (an encrypted) hello to a more private internet"</a>, Oct 2023. ECH in Firefox 118.</li>
+      <li>Kinnear, McManus, Pauly, Verma, Wood — "Oblivious DNS over HTTPS", <a class="source" href="https://www.rfc-editor.org/rfc/rfc9230" target="_blank" rel="noopener">RFC 9230</a>, June 2022.</li>
+      <li>Cloudflare — <a class="source" href="https://developers.cloudflare.com/1.1.1.1/encryption/oblivious-dns-over-https/" target="_blank" rel="noopener">ODoH docs</a>, incl. the iCloud Private Relay note.</li>
+      <li>Barnes, Beurdouche, Robert, et al. — "The Messaging Layer Security (MLS) Protocol", <a class="source" href="https://www.rfc-editor.org/rfc/rfc9420" target="_blank" rel="noopener">RFC 9420</a>, July 2023.</li>
+      <li>NIST — "FIPS 203: Module-Lattice-Based Key-Encapsulation Mechanism Standard", <a class="source" href="https://csrc.nist.gov/pubs/fips/203/final" target="_blank" rel="noopener">FIPS 203</a>, Aug 2024. ML-KEM parameter sizes.</li>
+      <li>Connolly et al. — "ML-KEM for HPKE", <a class="source" href="https://datatracker.ietf.org/doc/draft-connolly-cfrg-hpke-mlkem" target="_blank" rel="noopener">Internet-Draft</a>, 2024. Post-quantum HPKE ciphersuites.</li>
+      <li>Wikipedia — <a class="source" href="https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange" target="_blank" rel="noopener">Diffie–Hellman key exchange</a>, history anchor.</li>
+    </ul>
+
+    <div class="footer">
+      <p>Keyboard: <span class="kbd">J</span>/<span class="kbd">K</span> scroll · <span class="kbd">F</span> focus mode · <span class="kbd">T</span> theme · <span class="kbd">P</span> print</p>
+    </div>
+
+  </main>
+
+  <!-- =========================================================
+       RIGHT — MARGINALIA
+       ========================================================= -->
+  <aside class="marginalia" aria-label="Sidenotes">
+
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Term amplifier</span>
+      <p class="amplifier__empty">Hover a <span style="border-bottom:1px dashed var(--accent2)">dashed</span> term in the main text to expand it here.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="shared-secret">
+        <span class="amplifier__term">Shared secret</span>
+        <p class="amplifier__body">A random 32-byte value that both sender and receiver end up holding, without it ever being transmitted. The KEM re-creates it independently on each side; everything else in HPKE hangs off it. <em>(The small crate-key.)</em></p>
+      </div>
+      <div data-note-id="cipher-suite">
+        <span class="amplifier__term">Cipher suite</span>
+        <p class="amplifier__body">A named, pre-agreed combination of a KEM, a KDF, and an AEAD (plus any extra parameters). Both sides must use the same suite or the key schedules won't match. HPKE's recommended default is DHKEM(X25519, HKDF-SHA256) + HKDF-SHA256 + AES-128-GCM. <em>(The specific brand of padlock, lock, and seal.)</em></p>
+      </div>
+      <div data-note-id="post-quantum">
+        <span class="amplifier__term">Post-quantum</span>
+        <p class="amplifier__body">An algorithm that stays secure even against a future large-scale quantum computer. HPKE's default KEM (X25519, an elliptic-curve scheme) is <em>not</em> post-quantum; ML-KEM-based suites (FIPS 203) are being added precisely because of "harvest now, decrypt later" attacks. <em>(A padlock no future super-tool can pick.)</em></p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Sidenote · The CFRG's three-year fix</strong>
+      The Crypto Forum Research Group spent about three years turning accumulated public-key-encryption experience into RFC 9180, aiming for a scheme that is simple, reusable, and safe to compose — and backed it with formally verified reference code (hacspec / F*). Implementations now ship in OpenSSL, BoringSSL, NSS, and Cloudflare's CIRCL. <a href="https://blog.cloudflare.com/hybrid-public-key-encryption/" target="_blank" rel="noopener">Source</a>
+    </div>
+    <div class="sidenote">
+      <strong>Sidenote · ESNI → ECH</strong>
+      ECH's predecessor, ESNI, was deployed experimentally by Mozilla (Firefox 63, 2018) but only encrypted the site-name field — leaving enough other handshake metadata to fingerprint the destination. The redesign encrypted the <em>entire</em> inner handshake message with HPKE. The name changed, and so did the scope. <a href="https://privsee.io/blog/encrypted-client-hello" target="_blank" rel="noopener">Source</a>
+    </div>
+    <div class="sidenote">
+      <strong>Sidenote · Two meanings of "hybrid"</strong>
+      HPKE's "hybrid" means combining asymmetric and symmetric crypto. In the post-quantum world, "hybrid" gained a second meaning: running a classical algorithm <em>and</em> a quantum-resistant one together (e.g. X25519 + ML-KEM), so security holds as long as either survives. Same word, two layers of defence.
+    </div>
+  </aside>
+
+</div>
+
+<!-- Floating controls -->
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Focus mode (F)" aria-label="Toggle focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Theme (T)" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</div>
+
+<script>
+/* ============================================================
+   PERSISTENCE — theme + reading position + quiz state
+============================================================ */
+const STORAGE_KEY = 'edu-notes:' + (document.title || 'untitled');
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY + ':' + k)); }catch{ return null; } },
+  set(k,v){ try{ localStorage.setItem(STORAGE_KEY + ':' + k, JSON.stringify(v)); }catch{} },
+};
+
+/* THEME */
+(function initTheme(){
+  const saved = store.get('theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  store.set('theme', next);
+});
+
+/* FOCUS MODE */
+(function initFocus(){
+  if(store.get('focus')) document.body.classList.add('focus-mode');
+})();
+document.getElementById('focusBtn').addEventListener('click', () => {
+  document.body.classList.toggle('focus-mode');
+  const on = document.body.classList.contains('focus-mode');
+  document.getElementById('focusBtn').setAttribute('data-active', on ? 'true' : 'false');
+  store.set('focus', on);
+});
+
+/* TABLE OF CONTENTS */
+(function buildTOC(){
+  const canvas = document.getElementById('canvas');
+  const toc = document.getElementById('toc');
+  const headings = canvas.querySelectorAll('h2, h3');
+  headings.forEach(h => {
+    if(!h.id){
+      h.id = h.textContent.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g,'')
+        .trim().replace(/\s+/g,'-').slice(0,60);
+    }
+    const li = document.createElement('li');
+    if(h.tagName === 'H3') li.className = 'toc-l3';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+})();
+
+/* INTERSECTION OBSERVER — highlight current section */
+(function initObserver(){
+  const links = document.querySelectorAll('.toc a');
+  const map = new Map();
+  links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = map.get(e.target.id);
+      if(!link) return;
+      if(e.isIntersecting){
+        document.querySelectorAll('.toc a.is-active').forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  document.querySelectorAll('#canvas h2, #canvas h3').forEach(h => observer.observe(h));
+})();
+
+/* PROGRESS BAR + reading position restore */
+(function initProgress(){
+  const fill = document.getElementById('progressFill');
+  function update(){
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    fill.style.width = pct + '%';
+    store.set('scroll', scrolled);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  const saved = store.get('scroll');
+  if(typeof saved === 'number' && saved > 100){
+    setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 60);
+  }
+})();
+
+/* FLIP CARDS */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+  card.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      card.classList.toggle('is-flipped');
+    }
+  });
+});
+
+/* QUIZ */
+(function initQuiz(){
+  const quiz = document.getElementById('quiz');
+  if(!quiz) return;
+  const check = document.getElementById('quizCheck');
+  const reset = document.getElementById('quizReset');
+  const score = document.getElementById('quizScore');
+
+  const prior = store.get('quiz') || {};
+  Object.entries(prior).forEach(([name, val]) => {
+    const input = quiz.querySelector(`input[name="${name}"][value="${val}"]`);
+    if(input) input.checked = true;
+  });
+
+  quiz.addEventListener('change', () => {
+    const state = {};
+    quiz.querySelectorAll('input[type=radio]:checked').forEach(i => state[i.name] = i.value);
+    store.set('quiz', state);
+  });
+
+  check.addEventListener('click', () => {
+    let correct = 0, total = 0;
+    quiz.querySelectorAll('fieldset').forEach(fs => {
+      const answer = parseInt(fs.dataset.answer, 10);
+      const selected = fs.querySelector('input:checked');
+      total++;
+      fs.querySelectorAll('.quiz__option').forEach(o => {
+        o.classList.remove('correct-answer','incorrect-answer');
+      });
+      const correctOption = fs.querySelector(`input[value="${answer}"]`);
+      if(correctOption) correctOption.closest('.quiz__option').classList.add('correct-answer');
+      if(selected && parseInt(selected.value, 10) !== answer){
+        selected.closest('.quiz__option').classList.add('incorrect-answer');
+      }
+      if(selected && parseInt(selected.value, 10) === answer) correct++;
+    });
+    quiz.classList.add('is-graded');
+    const pct = Math.round((correct / total) * 100);
+    let msg = `${correct} / ${total} correct (${pct}%)`;
+    if(pct === 100) msg += ' — 🎯 nailed it';
+    else if(pct >= 66) msg += ' — solid';
+    else msg += ' — worth another pass through the boundaries section';
+    score.textContent = msg;
+  });
+
+  reset.addEventListener('click', () => {
+    quiz.querySelectorAll('input[type=radio]').forEach(i => i.checked = false);
+    quiz.querySelectorAll('.quiz__option').forEach(o => o.classList.remove('correct-answer','incorrect-answer'));
+    quiz.classList.remove('is-graded');
+    score.textContent = '';
+    store.set('quiz', {});
+  });
+})();
+
+/* KEYBOARD SHORTCUTS */
+document.addEventListener('keydown', e => {
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  switch(e.key.toLowerCase()){
+    case 'j': window.scrollBy({ top: 200, behavior: 'smooth' }); break;
+    case 'k': window.scrollBy({ top: -200, behavior: 'smooth' }); break;
+    case 'f': document.getElementById('focusBtn').click(); break;
+    case 't': document.getElementById('themeBtn').click(); break;
+    case 'p': window.print(); break;
+  }
+});
+
+/* PHASE ORBIT */
+(function initOrbit(){
+  const nodes = Array.from(document.querySelectorAll('.orbit__node'));
+  if(!nodes.length) return;
+  const reached = new Set(store.get('reached') || []);
+  nodes.forEach(n => {
+    if(reached.has(n.dataset.target)) n.setAttribute('data-reached','true');
+  });
+  nodes.forEach(n => {
+    n.addEventListener('click', () => {
+      const target = document.getElementById(n.dataset.target);
+      if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+  const targets = nodes.map(n => document.getElementById(n.dataset.target)).filter(Boolean);
+  if(!targets.length) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const node = nodes.find(n => n.dataset.target === e.target.id);
+      if(!node) return;
+      if(e.isIntersecting){
+        node.setAttribute('data-reached','true');
+        reached.add(e.target.id);
+        store.set('reached', Array.from(reached));
+        nodes.forEach(n => n.removeAttribute('data-active'));
+        node.setAttribute('data-active','true');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  targets.forEach(t => observer.observe(t));
+})();
+
+/* CONTEXTUAL AMPLIFIER */
+(function initAmplifier(){
+  const amp = document.getElementById('amplifier');
+  const pool = document.getElementById('ampNotes');
+  if(!amp || !pool) return;
+  const emptyHtml = amp.innerHTML;
+  let currentId = null;
+
+  function show(id){
+    if(id === currentId) return;
+    const note = pool.querySelector(`[data-note-id="${id}"]`);
+    if(!note) return;
+    currentId = id;
+    amp.innerHTML = '<span class="amplifier__label">Term amplifier</span>' + note.innerHTML;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+    document.querySelectorAll(`.term-amp[data-note="${id}"]`).forEach(t => t.classList.add('is-active'));
+  }
+  function reset(){
+    currentId = null;
+    amp.innerHTML = emptyHtml;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+  }
+
+  document.querySelectorAll('.term-amp[data-note]').forEach(t => {
+    t.addEventListener('mouseenter', () => show(t.dataset.note));
+    t.addEventListener('focus', () => show(t.dataset.note));
+    t.setAttribute('tabindex','0');
+  });
+  const canvas = document.getElementById('canvas');
+  if(canvas){
+    canvas.addEventListener('mouseleave', reset);
+  }
+})();
+
+/* METACOGNITIVE CHECKPOINTS */
+(function initCheckpoints(){
+  document.querySelectorAll('.checkpoint').forEach(cp => {
+    const id = cp.dataset.checkpointId;
+    const ta = cp.querySelector('textarea');
+    const savedLabel = cp.querySelector('[data-checkpoint-saved]');
+    const revealBtn = cp.querySelector('[data-checkpoint-reveal]');
+    if(!id || !ta) return;
+
+    const prior = store.get('cp:' + id);
+    if(prior){ ta.value = prior; if(savedLabel) savedLabel.textContent = 'Saved'; }
+
+    let t;
+    ta.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        store.set('cp:' + id, ta.value);
+        if(savedLabel) savedLabel.textContent = 'Saved';
+      }, 400);
+    });
+
+    if(revealBtn){
+      revealBtn.addEventListener('click', () => {
+        cp.classList.toggle('is-revealed');
+        revealBtn.textContent = cp.classList.contains('is-revealed')
+          ? 'Hide expert answer'
+          : 'Compare to expert answer';
+      });
+    }
+  });
+})();
+
+/* LAUNCH PAD */
+(function initLaunchpad(){
+  const btn = document.getElementById('hintBtn');
+  if(!btn) return;
+  const hints = Array.from(document.querySelectorAll('.launchpad__hint'));
+  const total = hints.length;
+  let shown = 0;
+
+  const prior = parseInt(store.get('hints') || 0, 10);
+  for(let i=0; i<prior && i<total; i++){
+    hints[i].classList.add('is-visible');
+    shown = i + 1;
+  }
+  updateBtn();
+
+  btn.addEventListener('click', () => {
+    if(shown >= total) return;
+    hints[shown].classList.add('is-visible');
+    shown++;
+    store.set('hints', shown);
+    updateBtn();
+  });
+
+  function updateBtn(){
+    if(shown >= total){
+      btn.textContent = 'All hints revealed';
+      btn.disabled = true;
+    } else {
+      btn.textContent = `Reveal hint ${shown + 1} of ${total}`;
+    }
+  }
+})();
+</script>
+</body>
+</html>
