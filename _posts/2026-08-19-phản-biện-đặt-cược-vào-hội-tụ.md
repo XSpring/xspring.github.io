@@ -1,41 +1,14 @@
 # Đặt cược vào hội tụ: người thu nhập ngoại tệ tại Việt Nam nên mua tài sản phi mậu dịch giá rẻ và giữ đô-la để bảo hiểm tỷ giá?
 
-> **Type:** Forged dialectic critique · **Version:** 1.0.0 · **Reading time:** ~10 min
-> **Method:** Socratic Dialectic Engine v2.2 (10 states)
+> **Version:** 1.0.0 · **Reading time:** ~10 min
 
-Phản biện Radiating Implication rút ra từ vòng dialectic trước (*"Ăn rẻ — tích trữ đắt"*): *"Đặt cược vào hội tụ — mua tài sản phi mậu dịch đang bị định giá thấp, đồng thời giữ đô-la để tự bảo hiểm rủi ro tỷ giá."* — Luận điểm này đúng về **dòng** (flow: tiêu dùng rẻ — lợi thế gần như chắc chắn), nhưng công thức "mua đất + giữ USD" hiểu theo nghĩa đen là **bẫy bán lẻ**: nó cộng hai lớp rủi ro (không khớp đơn vị tiền tệ + không có lối thoát hợp pháp) thay vì tự bảo hiểm. Lợi suất hội tụ là thật, nhưng chỉ thu hoạch được qua công cụ **có lối thoát và quản trị tiền tệ**.
+Phản biện từ hệ quả (Radiating Implication) rút ra từ vòng dialectic trước (*"Ăn rẻ — tích trữ đắt"*): *"Đặt cược vào hội tụ — mua tài sản phi mậu dịch đang bị định giá thấp, đồng thời giữ đô-la để tự bảo hiểm rủi ro tỷ giá."* — Luận điểm này đúng về **dòng** (flow: tiêu dùng rẻ — lợi thế gần như chắc chắn), nhưng công thức "mua đất + giữ USD" hiểu theo nghĩa đen là **bẫy bán lẻ**: nó cộng hai lớp rủi ro (không khớp đơn vị tiền tệ + không có lối thoát hợp pháp) thay vì tự bảo hiểm. Lợi suất hội tụ là thật, nhưng chỉ thu hoạch được qua công cụ **có lối thoát và quản trị tiền tệ**.
 
 ---
 
 ## 🛤️ The Dialectic Tracker
 
 [**`S1`** 📘 Thesis](#-the-thesis) → [**`S2`** 🔍 Cross-Examine](#-the-cross-examination) → [**`S4`** ⚔️ Collide](#️-the-antithesis-the-collision) → [**`S5`** 💎 Sublate](#-the-synthesis-the-aufheben) → [**`S7`** 🌊 Radiate](#-the-radiating-implication)
-
-## ⚙️ Engine Status — Dialectic Pipeline Executed
-
-The Socratic Dialectic Engine walked all 10 states. Block này là audit trail công khai — bạn có thể xác minh pipeline nào đã chạy và feedback gate nào được mở, xóa, hay bỏ qua.
-
-- [x] **S−1** — Strategic Interview (bốn Dimensions — defaults được khai báo, user chọn branch trực tiếp)
-- [x] **S0**  — Scoping & Assumptions
-- [x] **S1**  — Thesis Formalization + Premise Excavation
-- [x] **S2**  — Per-Premise Cross-Examination + Steel-Man Rubric
-- [x] **S3**  — Fallacy Diagnostic (12-fallacy audit)
-- [x] **S4**  — Antithesis Collision + Tension Naming
-- [x] **S5**  — Aufheben / Toulmin Synthesis
-- [x] **S6**  — Empirical Illustration (web-enabled: World Bank, Reuters, báo VN)
-- [x] **S7**  — Radiating Implication + Applied Test
-- [x] **S8**  — Residuals & Boundary Conditions
-
-**Feedback gates:**
-
-| Gate | Purpose | Status |
-|---|---|---|
-| **Gate 0** | Confirm four Dimensions | ✅ Cleared (defaults khai báo cho Loop 2) |
-| **Gate 1** | Confirm sharpened Thesis + Premises | ⏭️ Skipped (branch trực tiếp) |
-| **Gate 2** | Confirm Antithesis passes Steel-Man | ⏭️ Skipped (MEDIUM path) |
-| **Gate 3** | Confirm chapter ToC | ⏭️ Skipped (LONG only) |
-| **Gate 4** | Confirm Toulmin Synthesis lands | ⏭️ Skipped (LONG only) |
-| **Gate 5** | Iterate / Spiral / Branch / Close | 🔓 Open (see end of document) |
 
 ## Table of Contents
 
