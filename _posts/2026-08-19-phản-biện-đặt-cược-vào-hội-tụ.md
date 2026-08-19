@@ -46,12 +46,6 @@ The Strategic Interview captured (or defaulted) the following four Dimensions be
 | **Dialectical Trajectory** | FORTIFY (nhưng công thức nghĩa đen bị đảo — gần INVERT ở mức văn bản) | Ý tưởng "đặt cược vào hội tụ" có lõi đúng (dòng tiêu dùng), nhưng phiên bản "mua đất + giữ USD" hiểu theo nghĩa đen phải bị đảo ngược. |
 | **Depth** | SINGLE_COLLISION | Một vòng 10-state duy nhất trong miền thị trường cận biên. |
 
-> [!NOTE]
-> Additional defaults adopted:
-> - TARGET_LENGTH = MEDIUM (~2.000 từ); OUTPUT = MARKDOWN (GFM, chia sẻ được trên mạng xã hội); ngôn ngữ = tiếng Việt.
-> - TARGET_AUDIENCE = chuyên gia kinh tế / người Việt thu nhập ngoại tệ (bao gồm người gốc Việt định cư nước ngoài và người nước ngoài làm việc tại VN) đang cân nhắc đặt tài sản vào thị trường VN.
-> - Loop này nhận premise từ vòng trước: vòng trước đã chứng minh "ăn rẻ — tích trữ đắt". Vòng này chỉ hỏi một câu: *"tích trữ đắt" hiểu thành "mua đất + giữ USD" có đứng vững không?*
-
 ---
 
 ## 🎯 Scope & Assumptions
@@ -125,12 +119,12 @@ Synthesis dưới dạng cấu trúc. Mọi lập luận không phân rã đư�
 
 ```mermaid
 flowchart TD
-    G[GROUNDS<br/>Bằng chứng, dữ liệu<br/><br/>HCM apt 2015→2025 gần gấp 3, đất 4.8x; VND mất giá ~22%/10 năm; 2020 -14.3%; 2022–23 54 tổ chức trễ trả trái phiếu; luật chặn người nước ngoài sở hữu QSDĐ]
-    W[WARRANT<br/>Cầu logic<br/><br/>Lợi suất thực = (Δ giá tài sản VND − Δ tỷ giá) × xác suất thoát thành công; chiết khấu thị trường cận biên chứa premium thanh khoản/pháp lý]
-    B[BACKING<br/>Lý thuyết nền<br/><br/>Illiquidity premium + quyền sở hữu (ownership rights) quyết định giá trị kỳ vọng; lý thuyết danh mục — phòng hộ phải khớp đơn vị]
-    C[CLAIM<br/>Vị thế tổng hợp<br/><br/>Hội tụ VN là nguồn lợi suất thật, nhưng chỉ thu hoạch được qua công cụ có lối thoát + quản trị tiền tệ]
-    Q[QUALIFIER<br/>Phạm vi hiệu lực<br/><br/>Đúng cho người chân trời ≥7–10 năm, có lối thoát hợp pháp, danh mục không phụ thuộc vị thế VND]
-    R[REBUTTAL<br/>Trường hợp phản bác<br/><br/>Người gốc Việt định cư nước ngoài được cấp GCN QSDĐ — công cụ đất khả dụng hơn; rủi ro kiểm soát vốn khi thoát]
+    G["GROUNDS<br/>Bằng chứng, dữ liệu<br/><br/>HCM apt 2015→2025 gần gấp 3, đất 4.8x; VND mất giá ~22%/10 năm; 2020 -14.3%; 2022–23 54 tổ chức trễ trả trái phiếu; luật chặn người nước ngoài sở hữu QSDĐ"]
+    W["WARRANT<br/>Cầu logic<br/><br/>Lợi suất thực = (Δ giá tài sản VND − Δ tỷ giá) × xác suất thoát thành công; chiết khấu thị trường cận biên chứa premium thanh khoản/pháp lý"]
+    B["BACKING<br/>Lý thuyết nền<br/><br/>Illiquidity premium + quyền sở hữu (ownership rights) quyết định giá trị kỳ vọng; lý thuyết danh mục — phòng hộ phải khớp đơn vị"]
+    C["CLAIM<br/>Vị thế tổng hợp<br/><br/>Hội tụ VN là nguồn lợi suất thật, nhưng chỉ thu hoạch được qua công cụ có lối thoát + quản trị tiền tệ"]
+    Q["QUALIFIER<br/>Phạm vi hiệu lực<br/><br/>Đúng cho người chân trời ≥7–10 năm, có lối thoát hợp pháp, danh mục không phụ thuộc vị thế VND"]
+    R["REBUTTAL<br/>Trường hợp phản bác<br/><br/>Người gốc Việt định cư nước ngoài được cấp GCN QSDĐ — công cụ đất khả dụng hơn; rủi ro kiểm soát vốn khi thoát"]
     G --> W --> C
     B --> W
     Q -.->|scopes| C
@@ -504,26 +498,7 @@ Ba câu hỏi. Chúng kiểm tra xem bạn có thể bảo vệ *cấu trúc* c�
 
 ---
 
-## Continue or Iterate?
-
-Gate 5 offer. Radiating Implication mà tôi rút ra:
-
-> **"Chiết khấu thị trường cận biên không phải chiết khấu hội tụ thuần — phần lớn là bù rủi ro thanh khoản/pháp lý đội lốt cơ hội, và 'frontier market premium' phải được tách bạch trước khi ai đó đặt cược vào hội tụ."**
-
-Bạn có bốn nước đi kế tiếp:
-
-- **(a) Spiral** — feed synthesis này về làm Thesis mới cho một vòng dialectic khác trong miền lý thuyết định giá thị trường cận biên ("premium có thật hay là bù rủi ro đội lốt").
-- **(b) Refine** — cải thiện bất kỳ phần cụ thể nào (nói rõ phần nào).
-- **(c) Branch** — mang Radiating Implication đi lập luận riêng, trong miền kế cận: "định giá frontier market premium một cách hệ thống".
-- **(d) Close out** — artifact này đứng nguyên như hiện tại.
-
-Cho biết bạn chọn gì, hoặc đề xuất nước đi riêng. (Nếu muốn, tôi cũng có thể render bản HTML tương tác đầy đủ — Paradox Meter, Logic Linters, quiz tự chấm — từ vòng này hoặc Loop 1.)
-
----
-
 ## Method note
-
-Artifact này được rèn bằng Socratic Dialectic Engine v2.2 — 10 states xuyên năm feedback gates (Gate 0: Interview → Gate 1: Thesis & Premises → Gate 2: Antithesis → Gate 3: ToC (LONG only) → Gate 4: Synthesis (LONG only) → Gate 5: Iterate). Đây là Loop 2 (Branch): nhận Radiating Implication của Loop 1 làm Thesis, đưa nó vào miền kinh tế học hội tụ và đầu tư thị trường cận biên.
 
 **Research mode:** Web-enabled. Số liệu giá BĐS từ Batdongsan/VnExpress (2025), Savills qua VnEconomy (2025), JLL/Global Property Guide (2020–2026), Cushman & Wakefield (2025); khủng hoảng 2022–23 từ Reuters (2023-10-26) và TheInvestor.vn (2023); luật sở hữu từ Luật Đất đai 2024 và Luật Nhà ở 2023 qua Hệ thống Pháp luật và báo Đại biểu Nhân dân, đề xuất HoREA qua VnExpress (2025-08-14); tỷ giá từ World Bank, FRED và CEIC (2015–2025).
 
