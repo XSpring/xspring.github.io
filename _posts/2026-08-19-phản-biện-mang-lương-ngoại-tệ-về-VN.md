@@ -42,11 +42,6 @@ The Strategic Interview captured (or defaulted) the following four Dimensions be
 | **Dialectical Trajectory** | FORTIFY | Lõi kinh tế của bài viết (giá hai tầng) là đúng và xứng đáng được giữ lại, nhưng phải được sửa điều kiện và thu hẹp phạm vi. |
 | **Depth** | SINGLE_COLLISION | Một vòng 10-state duy nhất. |
 
-> [!NOTE]
-> Additional defaults adopted:
-> - TARGET_LENGTH = MEDIUM (~2.000 từ); OUTPUT = MARKDOWN (GFM, chia sẻ được trên mạng xã hội); ngôn ngữ = tiếng Việt.
-> - TARGET_AUDIENCE = chuyên gia kinh tế / người Việt thu nhập cao đang cân nhắc quyết định về nước, đã đọc bài viết gốc.
-
 ---
 
 ## 🎯 Scope & Assumptions
