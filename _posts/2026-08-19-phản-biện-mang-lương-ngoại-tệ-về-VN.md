@@ -122,8 +122,8 @@ flowchart TD
     R[REBUTTAL<br/>Phản ví dụ<br/><br/>Học phí quốc tế/Singapore là cột đắt —<br/>nhưng đó là lựa chọn nhập khẩu giỏ Mỹ,<br/>không phải định luật]
     G --> W --> C
     B --> W
-    Q -.->|giới hạn| C
-    R -.->|không lật đổ| C
+    Q -->|giới hạn| C
+    R -->|không lật đổ| C
 
     style C fill:#EDE9FE,stroke:#6B46C1,stroke-width:2px
     style R fill:#FEF6E4,stroke:#B7791F
