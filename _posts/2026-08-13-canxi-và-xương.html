@@ -1,0 +1,2151 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Canxi và Hệ Xương — Một Phản Biện Biện Chứng</title>
+<meta name="description" content="Phản biện luận đề 'Tiêu thụ thực phẩm giàu canxi sẽ làm hệ xương chắc khỏe' qua Socratic Dialectic Engine 3 vòng xoáy, dựa trên bằng chứng RCT và dịch tễ học thực tế.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+::selection{background:rgba(74,111,165,.2)}
+
+:root{
+  --font-serif: 'Merriweather', 'Lora', Georgia, serif;
+  --font-sans:  'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg:            #FDFBF7;
+  --bg-panel:     #2B2B3D;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #1A1A2E;
+  --text-muted:    #6B7280;
+  --text-strong:   #0F172A;
+  --text-panel:    #E5E7EB;
+  --text-panel-muted: #9CA3AF;
+
+  --thesis:        #4A6FA5;
+  --thesis-soft:   #E1E9F5;
+  --thesis-strong: #2A4B7F;
+  --antithesis:    #A34A4A;
+  --antithesis-soft: #F5E0E0;
+  --antithesis-strong: #7A2A2A;
+  --synthesis:     #8A6FA5;
+  --synthesis-soft: #ECE5F2;
+  --synthesis-strong: #5D4478;
+
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  --accent-soft:   #E6FFFA;
+
+  --border:        #E4DFD5;
+  --border-strong: #D4CFC5;
+  --sidenote-bg:   #F0EEE6;
+
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 12px;
+  --radius-sm: 6px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow:    0 4px 12px rgba(0,0,0,.08);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.12);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 220ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #14141F;
+  --bg-panel:      #0A0A15;
+  --bg-elevated:   #2B2B3D;
+  --bg-sunken:     #1F1F2E;
+  --text:          #E5E7EB;
+  --text-muted:    #9CA3AF;
+  --text-strong:   #F9FAFB;
+  --text-panel:    #E5E7EB;
+  --text-panel-muted: #9CA3AF;
+
+  --thesis:        #7AA3D4;
+  --thesis-soft:   #1E2E42;
+  --thesis-strong: #A8C3E0;
+  --antithesis:    #D48282;
+  --antithesis-soft:#3B1F1F;
+  --antithesis-strong: #E0A5A5;
+  --synthesis:     #B49AD4;
+  --synthesis-soft:#2F2138;
+  --synthesis-strong: #D0BCE5;
+
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent-soft:   #1A3B3A;
+
+  --border:        #2D3748;
+  --border-strong: #4A5568;
+  --sidenote-bg:   #24243A;
+
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+  --shadow:    0 4px 12px rgba(0,0,0,.5);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,.6);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 17px;
+  line-height: var(--line);
+  transition: background var(--transition), color var(--transition);
+}
+
+.layout{
+  display: grid;
+  grid-template-columns: 12% 55% 33%;
+  gap: 0;
+  max-width: 1500px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.navigator{ background: var(--bg-panel); color: var(--text-panel); }
+.canvas{    background: var(--bg);       color: var(--text); padding: 40px 48px 120px; }
+.marginalia{background: var(--bg-panel); color: var(--text-panel); }
+
+@media (max-width: 1024px){
+  .layout{ grid-template-columns: 1fr; }
+  .navigator, .marginalia{ position: static !important; max-height: none !important; padding: 20px !important; }
+  .canvas{ padding: 24px; }
+}
+
+html.focus-mode .layout{ grid-template-columns: 1fr; max-width: 820px; }
+html.focus-mode .navigator,
+html.focus-mode .marginalia{ display: none; }
+html.focus-mode .canvas{ background: var(--bg); }
+
+.navigator{
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 24px 16px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.progress-bar{
+  height: 3px; background: rgba(255,255,255,.1);
+  border-radius: 2px; overflow: hidden; margin-bottom: 20px;
+}
+.progress-bar__fill{
+  height: 100%; background: var(--accent);
+  width: 0%; transition: width 100ms linear;
+}
+.nav-meta{
+  color: var(--text-panel-muted);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .08em;
+  margin-bottom: 20px; display: flex; justify-content: space-between;
+}
+
+.compass-title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); margin: 20px 0 10px;
+  font-weight: 700;
+}
+.compass{
+  display: flex; flex-direction: column; gap: 4px;
+  margin-bottom: 24px;
+}
+.compass-node{
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition);
+  color: var(--text-panel-muted);
+  text-decoration: none;
+  border-left: 2px solid transparent;
+  font-size: 12px;
+}
+.compass-node:hover{ background: rgba(255,255,255,.06); color: var(--text-panel); }
+.compass-node.active{
+  background: rgba(255,255,255,.1);
+  color: #fff;
+  border-left-color: currentColor;
+}
+.compass-node__icon{ font-size: 18px; }
+.compass-node__label{ font-weight: 500; letter-spacing: .02em; }
+.compass-node[data-phase="thesis"].active{ border-left-color: var(--thesis); }
+.compass-node[data-phase="probe"].active{  border-left-color: var(--accent); }
+.compass-node[data-phase="collision"].active{ border-left-color: var(--antithesis); }
+.compass-node[data-phase="synthesis"].active{ border-left-color: var(--synthesis); }
+.compass-node[data-phase="ripple"].active{ border-left-color: var(--info); }
+
+.toc-title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); margin: 8px 0 8px; font-weight: 700;
+}
+.toc{ list-style: none; padding: 0; margin: 0; }
+.toc li{ margin: 1px 0; }
+.toc a{
+  display: block; padding: 5px 10px;
+  color: var(--text-panel-muted); text-decoration: none;
+  border-left: 2px solid transparent; border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition); font-size: 12px;
+}
+.toc a:hover{ color: var(--text-panel); background: rgba(255,255,255,.05); }
+.toc a.active{ color: #fff; background: rgba(255,255,255,.1); border-left-color: var(--accent); font-weight: 500; }
+
+.paradox-meter{
+  position: sticky; top: 12px; z-index: 20;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin: 0 0 32px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans);
+}
+.paradox-meter__label{
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); font-weight: 700;
+  margin-bottom: 8px;
+}
+.paradox-meter__value{
+  font-family: var(--font-mono); font-size: 11px; color: var(--text-strong);
+}
+.paradox-meter__bar{
+  height: 8px; background: var(--bg-sunken);
+  border-radius: 4px; overflow: hidden; position: relative;
+}
+.paradox-meter__fill{
+  height: 100%; width: 0%;
+  background: linear-gradient(to right, var(--thesis), var(--antithesis));
+  transition: width 300ms cubic-bezier(.4,0,.2,1), background 300ms;
+  border-radius: 4px;
+}
+.paradox-meter[data-phase="synthesis"] .paradox-meter__fill,
+.paradox-meter[data-phase="ripple"] .paradox-meter__fill{
+  background: linear-gradient(to right, var(--synthesis), var(--success));
+}
+.paradox-meter__hint{
+  font-size: 11px; color: var(--text-muted); margin-top: 6px;
+  min-height: 1.2em;
+}
+
+.canvas-inner{ max-width: var(--measure); margin: 0 auto; width: 100%; }
+.canvas h1{
+  font-family: var(--font-sans); font-size: 36px; line-height: 1.15;
+  margin: 0 0 8px; color: var(--text-strong); letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans); font-size: 26px; line-height: 1.3;
+  margin: 64px 0 16px; color: var(--text-strong);
+  letter-spacing: -.01em; padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.canvas h2 .h2-emoji{ font-size: 24px; }
+.canvas h3{
+  font-family: var(--font-sans); font-size: 20px;
+  margin: 36px 0 12px; color: var(--text-strong);
+}
+.canvas h4{
+  font-family: var(--font-sans); font-size: 14px;
+  text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-muted); margin: 24px 0 8px;
+}
+.canvas p{ margin: 0 0 18px; }
+.canvas a{
+  color: var(--accent); text-decoration: underline;
+  text-decoration-color: var(--border-strong); text-underline-offset: 3px;
+}
+.canvas a:hover{ text-decoration-color: var(--accent); }
+.canvas blockquote{
+  border-left: 3px solid var(--accent);
+  padding: 12px 18px; margin: 24px 0;
+  background: var(--bg-sunken); font-style: italic;
+  color: var(--text); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.canvas code{
+  font-family: var(--font-mono); font-size: .9em;
+  background: var(--bg-sunken); padding: 2px 6px; border-radius: 4px;
+}
+.canvas pre{
+  background: var(--bg-sunken); padding: 16px;
+  border-radius: var(--radius-sm); overflow-x: auto;
+  border: 1px solid var(--border);
+}
+.canvas pre code{ background: transparent; padding: 0; }
+.canvas strong{ color: var(--text-strong); font-weight: 600; }
+
+.byline{
+  font-family: var(--font-sans); color: var(--text-muted);
+  font-size: 14px; margin-bottom: 32px;
+  padding-bottom: 20px; border-bottom: 1px solid var(--border);
+}
+.byline .pill{
+  display: inline-block; padding: 2px 10px; border-radius: 12px;
+  font-size: 11px; text-transform: uppercase; letter-spacing: .05em;
+  background: var(--accent-soft); color: var(--accent-strong);
+  margin-right: 6px; font-weight: 600;
+}
+
+.assumptions{
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin: 24px 0 40px;
+  font-family: var(--font-sans);
+}
+.assumptions__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); font-weight: 700; margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.assumptions__grid{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px;
+  font-size: 13px;
+}
+@media (max-width: 640px){ .assumptions__grid{ grid-template-columns: 1fr; } }
+.assumption-row{ display: flex; flex-direction: column; gap: 2px; }
+.assumption-key{ color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: .05em; }
+.assumption-val{ color: var(--text-strong); font-weight: 500; }
+.assumption-val .badge{
+  display: inline-block; padding: 1px 8px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 10px;
+  background: var(--accent-soft); color: var(--accent-strong);
+  margin-right: 4px;
+}
+
+.dialectic-header{
+  display: grid; grid-template-columns: 1fr; gap: 12px;
+  margin: 32px 0 40px;
+}
+@media (min-width: 720px){
+  .dialectic-header{ grid-template-columns: 1fr 1fr 1fr; }
+}
+.panel{
+  padding: 18px; border-radius: var(--radius);
+  border: 1px solid var(--border); font-family: var(--font-sans);
+  font-size: 14px; line-height: 1.5; position: relative;
+}
+.panel__label{
+  display: flex; align-items: center; gap: 6px;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 700; margin-bottom: 8px;
+}
+.panel__body{ color: var(--text); }
+.panel--thesis{     background: var(--thesis-soft);     border-color: var(--thesis); }
+.panel--thesis .panel__label{ color: var(--thesis-strong); }
+.panel--antithesis{ background: var(--antithesis-soft); border-color: var(--antithesis); }
+.panel--antithesis .panel__label{ color: var(--antithesis-strong); }
+.panel--synthesis{  background: var(--synthesis-soft);  border-color: var(--synthesis); }
+.panel--synthesis .panel__label{ color: var(--synthesis-strong); }
+
+.argument-map{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; margin: 32px 0; background: var(--bg-elevated);
+  font-family: var(--font-sans); font-size: 13px; box-shadow: var(--shadow-sm);
+}
+.argument-map__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-muted); margin-bottom: 14px; font-weight: 700;
+}
+.toulmin{ display: grid; grid-template-columns: 1fr; gap: 10px; }
+@media (min-width: 640px){
+  .toulmin{
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-areas: "grounds warrant claim" "backing qualifier rebuttal";
+  }
+  .t-grounds{ grid-area: grounds; } .t-warrant{ grid-area: warrant; }
+  .t-claim{ grid-area: claim; }     .t-backing{ grid-area: backing; }
+  .t-qualifier{ grid-area: qualifier; } .t-rebuttal{ grid-area: rebuttal; }
+}
+.toulmin__cell{
+  padding: 12px 14px; background: var(--bg-sunken);
+  border-radius: var(--radius-sm); border-left: 3px solid var(--accent);
+  line-height: 1.45;
+}
+.toulmin__cell.t-claim{
+  border-left-color: var(--synthesis);
+  background: var(--synthesis-soft); font-weight: 500;
+}
+.toulmin__cell.t-rebuttal{ border-left-color: var(--antithesis); background: var(--antithesis-soft); }
+.toulmin__cell.t-grounds{ border-left-color: var(--thesis); background: var(--thesis-soft); }
+.toulmin__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--text-muted);
+  margin-bottom: 4px; font-weight: 700;
+}
+
+.thesis-pillar{
+  border-left: 6px solid var(--thesis);
+  background: linear-gradient(to right, var(--thesis-soft) 0%, transparent 80%);
+  padding: 20px 24px; margin: 24px 0;
+  border-radius: 0 var(--radius) var(--radius) 0;
+}
+.thesis-pillar__label{
+  font-family: var(--font-sans); font-size: 10px;
+  text-transform: uppercase; letter-spacing: .1em;
+  color: var(--thesis-strong); font-weight: 700;
+  margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.thesis-pillar__statement{
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 700; line-height: 1.4; color: var(--text-strong);
+  margin-bottom: 8px;
+}
+.thesis-pillar__contract{
+  font-style: italic; color: var(--text-muted); font-size: 14px;
+  font-family: var(--font-sans);
+}
+.premise-walls{
+  display: grid; gap: 12px; margin: 20px 0;
+  font-family: var(--font-sans);
+}
+.premise-wall{
+  display: grid; grid-template-columns: 40px 1fr;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  overflow: hidden; background: var(--bg-elevated);
+}
+.premise-wall__index{
+  background: var(--thesis); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-weight: 700; font-size: 14px;
+}
+.premise-wall__body{ padding: 12px 14px; font-size: 14px; line-height: 1.5; }
+.premise-wall__label{
+  font-weight: 700; color: var(--thesis-strong);
+  font-size: 12px; text-transform: uppercase; letter-spacing: .05em;
+  margin-bottom: 4px;
+}
+
+.xexam-card{
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--antithesis);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  padding: 20px 24px;
+  margin: 24px 0;
+  font-family: var(--font-sans);
+  box-shadow: var(--shadow-sm);
+}
+.xexam-card__meta{
+  display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  font-size: 10px; text-transform: uppercase; letter-spacing: .08em;
+}
+.xexam-card__meta .tag{
+  padding: 2px 8px; border-radius: 10px;
+  background: var(--antithesis-soft); color: var(--antithesis-strong);
+  font-weight: 700;
+}
+.xexam-card__meta .tag--lens{ background: var(--warn-bg); color: var(--warn); }
+.xexam-card__meta .tag--rigor{ background: var(--info-bg); color: var(--info); }
+.xexam-card__probe{
+  font-family: var(--font-sans); font-size: 17px; font-weight: 600;
+  color: var(--text-strong); margin: 8px 0 12px; line-height: 1.4;
+  font-style: italic;
+}
+.xexam-card__probe::before{
+  content: "Q: ";
+  color: var(--antithesis); font-weight: 700; font-style: normal;
+  margin-right: 4px;
+}
+.xexam-card__setup{
+  color: var(--text); font-size: 14px; line-height: 1.6; margin-bottom: 16px;
+  font-family: var(--font-serif);
+}
+.xexam-card__defense-btn{
+  background: var(--bg-sunken); color: var(--text-strong);
+  border: 1px solid var(--border-strong);
+  padding: 10px 16px; border-radius: var(--radius-sm);
+  cursor: pointer; font-family: var(--font-sans);
+  font-size: 13px; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all var(--transition);
+}
+.xexam-card__defense-btn:hover{
+  background: var(--thesis-soft); color: var(--thesis-strong);
+  border-color: var(--thesis);
+}
+.xexam-card__defense-btn::before{ content: "🛡️"; }
+.xexam-card__defense-btn[aria-expanded="true"]{
+  background: var(--thesis-soft); color: var(--thesis-strong);
+  border-color: var(--thesis);
+}
+.xexam-card__defense{
+  display: none; margin-top: 16px;
+  padding: 16px 18px; background: var(--thesis-soft);
+  border-left: 3px solid var(--thesis); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 14px; line-height: 1.55;
+  animation: defense-slide 320ms ease-out;
+}
+.xexam-card__defense.is-open{ display: block; }
+.xexam-card__defense .label{
+  font-family: var(--font-sans); font-weight: 700;
+  color: var(--thesis-strong); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .06em;
+  margin-bottom: 6px; display: block;
+}
+.xexam-card__defense .verdict{
+  margin-top: 12px; padding: 8px 12px;
+  background: var(--bg-elevated); border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 13px;
+}
+.xexam-card__defense .verdict .verdict-tag{
+  display: inline-block; padding: 2px 8px; border-radius: 10px;
+  font-family: var(--font-mono); font-size: 10px; font-weight: 700;
+  margin-right: 6px; background: var(--warn-bg); color: var(--warn);
+  text-transform: uppercase; letter-spacing: .05em;
+}
+.xexam-card__steel-man{
+  margin-top: 12px; padding-top: 12px;
+  border-top: 1px dashed var(--border-strong);
+  font-size: 12px; color: var(--text-muted); line-height: 1.5;
+}
+.xexam-card__steel-man strong{ color: var(--text-strong); }
+@keyframes defense-slide{
+  from{ opacity: 0; transform: translateY(-6px); }
+  to{   opacity: 1; transform: translateY(0); }
+}
+
+.collision{
+  margin: 40px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+.collision__inner{
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  align-items: stretch; min-height: 220px;
+}
+@media (max-width: 640px){
+  .collision__inner{ grid-template-columns: 1fr; }
+  .collision__divider{ padding: 12px 0 !important; }
+}
+.collision__side{
+  padding: 24px 28px;
+  font-family: var(--font-serif); font-size: 15px; line-height: 1.55;
+}
+.collision__side--thesis{
+  background: linear-gradient(135deg, var(--thesis-soft), var(--thesis-soft) 80%, transparent);
+  color: var(--text);
+}
+.collision__side--antithesis{
+  background: linear-gradient(-135deg, var(--antithesis-soft), var(--antithesis-soft) 80%, transparent);
+  color: var(--text);
+  text-align: right;
+}
+@media (max-width: 640px){ .collision__side--antithesis{ text-align: left; } }
+.collision__side .label{
+  display: block; font-family: var(--font-sans);
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  font-weight: 700; margin-bottom: 12px;
+}
+.collision__side--thesis .label{ color: var(--thesis-strong); }
+.collision__side--antithesis .label{ color: var(--antithesis-strong); }
+.collision__side .heading{
+  font-family: var(--font-sans); font-size: 15px; font-weight: 700;
+  color: var(--text-strong); margin-bottom: 8px;
+}
+.collision__divider{
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg);
+  padding: 0 16px; position: relative;
+}
+.collision__divider::before,
+.collision__divider::after{
+  content: ""; position: absolute; left: 50%; width: 2px;
+  background: linear-gradient(to bottom, transparent, var(--text-muted), transparent);
+  transform: translateX(-50%);
+}
+.collision__divider::before{ top: 8%; height: 30%; }
+.collision__divider::after{  bottom: 8%; height: 30%; }
+.collision__zap{
+  font-size: 42px; line-height: 1;
+  filter: drop-shadow(0 4px 8px rgba(163,74,74,.4));
+  z-index: 1; background: var(--bg); padding: 4px 8px; border-radius: 50%;
+}
+.collision__tension{
+  padding: 16px 24px; background: var(--bg-sunken);
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans); font-size: 13px;
+  color: var(--text-muted); text-align: center;
+}
+.collision__tension strong{
+  color: var(--text-strong); font-family: var(--font-serif);
+  font-style: italic; font-size: 15px;
+}
+
+.sublation{
+  margin: 40px 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background: linear-gradient(
+    135deg,
+    var(--thesis) 0%,
+    var(--synthesis) 50%,
+    var(--antithesis) 100%
+  );
+  padding: 3px;
+}
+.sublation__inner{
+  background: var(--bg);
+  border-radius: calc(var(--radius) - 3px);
+  padding: 28px 32px;
+}
+.sublation__label{
+  font-family: var(--font-sans); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--synthesis-strong); font-weight: 700;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.sublation__statement{
+  font-family: var(--font-serif); font-size: 22px; line-height: 1.4;
+  font-weight: 700; color: var(--text-strong);
+  margin-bottom: 20px;
+}
+.sublation__elevation{
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+  margin-top: 20px;
+}
+@media (max-width: 640px){ .sublation__elevation{ grid-template-columns: 1fr; } }
+.sublation__elev-cell{
+  padding: 14px 16px; border-radius: var(--radius-sm);
+  font-family: var(--font-sans); font-size: 13px; line-height: 1.55;
+}
+.sublation__elev-cell--preserve{
+  background: var(--thesis-soft);
+  border-left: 3px solid var(--thesis);
+}
+.sublation__elev-cell--absorb{
+  background: var(--antithesis-soft);
+  border-left: 3px solid var(--antithesis);
+}
+.sublation__elev-cell .lead{
+  font-weight: 700; color: var(--text-strong);
+  display: block; margin-bottom: 4px; font-size: 11px;
+  text-transform: uppercase; letter-spacing: .05em;
+}
+
+.ripple{
+  margin: 40px 0; position: relative;
+  padding: 40px 32px;
+  background: radial-gradient(
+    ellipse at center,
+    var(--synthesis-soft) 0%,
+    var(--bg) 70%
+  );
+  border-radius: 200px / 100px;
+  border: 2px solid var(--synthesis);
+  text-align: center;
+}
+.ripple::before, .ripple::after{
+  content: ""; position: absolute;
+  border: 1px solid var(--synthesis);
+  border-radius: 200px / 100px;
+  opacity: .3;
+  pointer-events: none;
+}
+.ripple::before{ inset: -12px; }
+.ripple::after{  inset: -24px; opacity: .15; }
+.ripple__label{
+  font-family: var(--font-sans); font-size: 11px;
+  text-transform: uppercase; letter-spacing: .12em;
+  color: var(--synthesis-strong); font-weight: 700;
+  margin-bottom: 12px;
+}
+.ripple__claim{
+  font-family: var(--font-serif); font-size: 18px;
+  font-weight: 700; color: var(--text-strong); line-height: 1.4;
+  max-width: 60ch; margin: 0 auto 12px;
+}
+.ripple__adjacent{
+  font-family: var(--font-sans); font-size: 13px; color: var(--text-muted);
+  max-width: 55ch; margin: 0 auto;
+}
+.ripple__adjacent strong{ color: var(--synthesis-strong); }
+
+.evidence-trigger{
+  background: var(--warn-bg); color: var(--warn);
+  padding: 1px 6px; border-radius: 4px;
+  font-family: var(--font-sans); font-size: .85em;
+  cursor: pointer; border: 1px dashed transparent;
+  transition: all var(--transition);
+}
+.evidence-trigger::before{ content: "🔎 "; font-size: .9em; }
+.evidence-trigger:hover, .evidence-trigger:focus{
+  border-color: var(--warn); outline: none;
+}
+.evidence-trigger.active{
+  background: var(--warn); color: white;
+}
+.evidence-item{
+  padding: 12px 14px; background: var(--sidenote-bg);
+  color: var(--text); border-left: 3px solid var(--warn);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin-bottom: 12px; font-size: 12px; line-height: 1.5;
+  font-family: var(--font-sans);
+  transition: all var(--transition);
+}
+.evidence-item.highlight{
+  background: var(--warn-bg);
+  box-shadow: 0 0 0 2px var(--warn), var(--shadow);
+  transform: scale(1.02);
+}
+.evidence-item__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .08em; color: var(--warn); font-weight: 700;
+  margin-bottom: 4px;
+}
+.evidence-item__source{
+  margin-top: 6px; font-size: 11px; color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.phil-notes{ margin-top: 20px; }
+.phil-notes__title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); font-weight: 700; margin-bottom: 8px;
+}
+.phil-note{
+  background: #FFF9C4; color: #4A3F00;
+  padding: 10px 12px; margin-bottom: 10px;
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans); font-size: 12px;
+  line-height: 1.45; position: relative;
+  transform: rotate(-.5deg);
+  transition: transform var(--transition);
+}
+html[data-theme="dark"] .phil-note{
+  background: #6B5F1A; color: #FFF9C4;
+}
+.phil-note:hover{ transform: rotate(0); }
+.phil-note:nth-child(even){ transform: rotate(.6deg); }
+.phil-note__quote{
+  font-style: italic; font-size: 11px; color: #6B5F00;
+  border-left: 2px solid rgba(0,0,0,.15); padding-left: 6px;
+  margin-bottom: 6px;
+}
+html[data-theme="dark"] .phil-note__quote{ color: #E5D97F; }
+.phil-note__body{ font-weight: 500; }
+.phil-note__del{
+  position: absolute; top: 6px; right: 8px;
+  background: none; border: none; cursor: pointer;
+  font-size: 12px; color: rgba(0,0,0,.4); line-height: 1;
+}
+.phil-note__del:hover{ color: #C53030; }
+html[data-theme="dark"] .phil-note__del{ color: rgba(255,255,255,.4); }
+.phil-note__empty{
+  font-size: 11px; color: var(--text-panel-muted);
+  font-style: italic; padding: 12px;
+  border: 1px dashed rgba(255,255,255,.15); border-radius: var(--radius-sm);
+  text-align: center;
+}
+#phil-popup{
+  position: absolute; z-index: 100;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 12px;
+  box-shadow: var(--shadow-lg);
+  font-family: var(--font-sans); font-size: 13px;
+  max-width: 320px; display: none;
+}
+#phil-popup.show{ display: block; }
+#phil-popup__quote{
+  color: var(--text-muted); font-style: italic; font-size: 12px;
+  border-left: 2px solid var(--accent); padding-left: 8px;
+  margin-bottom: 8px; max-height: 60px; overflow: hidden;
+}
+#phil-popup__input{
+  width: 100%; min-height: 60px; resize: vertical;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 8px; font: inherit; color: var(--text);
+  background: var(--bg-sunken);
+  font-family: var(--font-sans); font-size: 13px;
+}
+#phil-popup__actions{
+  display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;
+}
+#phil-popup button{
+  padding: 6px 12px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: var(--bg);
+  color: var(--text); cursor: pointer; font: inherit;
+  font-size: 12px;
+}
+#phil-popup button.save{ background: var(--accent); color: white; border-color: var(--accent); }
+
+.flip-card{
+  perspective: 1000px; height: 180px; margin: 24px 0;
+  font-family: var(--font-sans);
+}
+.flip-card__inner{
+  position: relative; width: 100%; height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d; cursor: pointer;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card:focus-within .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg); }
+.flip-card__face{
+  position: absolute; width: 100%; height: 100%;
+  backface-visibility: hidden; border-radius: var(--radius);
+  padding: 24px;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center; border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__face--front{
+  background: var(--accent-soft); color: var(--accent-strong);
+  font-weight: 600; font-size: 16px;
+}
+.flip-card__face--back{
+  background: var(--bg-elevated); color: var(--text);
+  transform: rotateY(180deg); font-size: 14px; line-height: 1.5;
+}
+
+details.deep-dive{
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 0; margin: 20px 0; background: var(--bg-sunken); overflow: hidden;
+}
+details.deep-dive > summary{
+  cursor: pointer; padding: 14px 18px;
+  font-family: var(--font-sans); font-weight: 600; font-size: 14px;
+  color: var(--accent-strong); list-style: none;
+  display: flex; align-items: center; gap: 8px; user-select: none;
+}
+details.deep-dive > summary::-webkit-details-marker{ display: none; }
+details.deep-dive > summary::before{
+  content: "▸"; transition: transform var(--transition); color: var(--accent);
+}
+details.deep-dive[open] > summary::before{ transform: rotate(90deg); }
+details.deep-dive[open] > summary{ border-bottom: 1px solid var(--border); }
+details.deep-dive > *:not(summary){
+  padding: 16px 18px;
+  animation: dd-open 240ms ease-out;
+}
+@keyframes dd-open{ from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+
+details.fallacy-log{ border-color: var(--warn); }
+details.fallacy-log > summary{ color: var(--warn); }
+details.fallacy-log > summary::before{ color: var(--warn); }
+.fallacy-entry{
+  border-left: 3px solid var(--warn); padding: 10px 14px;
+  background: var(--warn-bg); margin: 10px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 14px;
+}
+.fallacy-entry__name{
+  font-family: var(--font-sans); font-weight: 700; color: var(--warn);
+}
+
+.bar-chart{
+  font-family: var(--font-sans); margin: 24px 0;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 20px; background: var(--bg-elevated);
+}
+.bar-chart__title{
+  font-size: 12px; text-transform: uppercase; letter-spacing: .08em;
+  color: var(--text-muted); margin-bottom: 14px; font-weight: 700;
+}
+.bar-row{
+  display: grid; grid-template-columns: 140px 1fr 50px;
+  align-items: center; gap: 10px; margin-bottom: 10px; font-size: 13px;
+}
+.bar-label{ color: var(--text); }
+.bar-track{ background: var(--bg-sunken); height: 20px; border-radius: 4px; overflow: hidden; }
+.bar-fill{
+  height: 100%; background: var(--synthesis);
+  transition: width var(--transition), background var(--transition);
+  border-radius: 4px;
+}
+.bar-fill:hover{ background: var(--synthesis-strong); }
+.bar-value{ color: var(--text-muted); font-family: var(--font-mono); font-size: 12px; text-align: right; }
+
+.term{
+  border-bottom: 1px dotted var(--accent); cursor: help; position: relative;
+}
+.term:hover::after, .term:focus::after{
+  content: attr(data-def); position: absolute;
+  bottom: calc(100% + 8px); left: 50%; transform: translateX(-50%);
+  background: var(--text-strong); color: var(--bg);
+  font-family: var(--font-sans); font-size: 12px; font-weight: 400;
+  padding: 8px 12px; border-radius: var(--radius-sm);
+  white-space: normal; min-width: 200px; max-width: 280px;
+  z-index: 100; box-shadow: var(--shadow); line-height: 1.4;
+}
+
+.residuals{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin: 32px 0; background: var(--bg-sunken);
+}
+.residuals h4{ margin-top: 20px; }
+.residuals h4:first-child{ margin-top: 0; }
+.residuals ul{ padding-left: 20px; margin: 8px 0; }
+.residuals li{ margin: 6px 0; font-size: 15px; }
+.residuals__badge{
+  display: inline-block; font-family: var(--font-mono);
+  font-size: 10px; padding: 2px 6px; border-radius: 3px;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text-muted); margin-right: 6px;
+}
+
+.quiz{
+  border: 1px solid var(--border); border-radius: var(--radius);
+  padding: 24px; margin: 40px 0 24px;
+  background: var(--bg-elevated); font-family: var(--font-sans);
+}
+.quiz h2{ border: none; padding: 0; margin: 0 0 16px; font-size: 20px; }
+.quiz fieldset{ border: none; padding: 0; margin: 0 0 24px; }
+.quiz legend{
+  font-weight: 700; margin-bottom: 12px; color: var(--text-strong);
+  font-size: 15px; line-height: 1.4;
+}
+.quiz-option{
+  display: block; padding: 10px 14px;
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  margin: 6px 0; cursor: pointer; transition: all var(--transition);
+  font-size: 14px; background: var(--bg);
+}
+.quiz-option:hover{ border-color: var(--accent); }
+.quiz-option input{ margin-right: 10px; accent-color: var(--accent); }
+.quiz-option.selected{ background: var(--accent-soft); border-color: var(--accent); }
+.quiz-option.correct-answer{ background: var(--success-bg); border-color: var(--success); color: var(--success); }
+.quiz-option.incorrect-answer{ background: var(--danger-bg); border-color: var(--danger); color: var(--danger); }
+.quiz-check-btn{
+  font-family: var(--font-sans); background: var(--synthesis);
+  color: white; border: none; padding: 10px 20px;
+  font-size: 14px; font-weight: 600; border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--transition);
+}
+.quiz-check-btn:hover{ background: var(--synthesis-strong); }
+.quiz-score{
+  margin-top: 16px; padding: 14px 18px;
+  border-radius: var(--radius-sm); font-weight: 600; display: none;
+}
+.quiz-score.show{ display: block; }
+.quiz-score.pass{ background: var(--success-bg); color: var(--success); }
+.quiz-score.mid{ background: var(--warn-bg); color: var(--warn); }
+.quiz-score.fail{ background: var(--danger-bg); color: var(--danger); }
+
+.diff{
+  display: inline-block; font-family: var(--font-sans); font-size: 10px;
+  padding: 1px 6px; border-radius: 3px;
+  vertical-align: middle; margin-right: 4px; font-weight: 700;
+}
+.diff-core{ background: var(--success-bg); color: var(--success); }
+.diff-supp{ background: var(--warn-bg); color: var(--warn); }
+.diff-deep{ background: var(--info-bg); color: var(--info); }
+
+.marginalia{
+  position: sticky; top: 0; align-self: start;
+  height: 100vh; overflow-y: auto;
+  padding: 24px 20px;
+  font-family: var(--font-sans); font-size: 12px;
+}
+.sidenote{
+  background: rgba(255,255,255,.05);
+  padding: 12px 14px; border-radius: var(--radius-sm);
+  margin-bottom: 16px; border-left: 3px solid var(--accent);
+  line-height: 1.55;
+  color: var(--text-panel);
+}
+.sidenote__label{
+  display: block; font-size: 10px; text-transform: uppercase;
+  letter-spacing: .1em; color: var(--accent); margin-bottom: 4px; font-weight: 700;
+}
+.marginalia__title{
+  font-size: 10px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--text-panel-muted); font-weight: 700;
+  margin: 24px 0 8px;
+}
+.marginalia__title:first-child{ margin-top: 0; }
+
+.controls{
+  position: fixed; bottom: 24px; right: 24px;
+  display: flex; flex-direction: column; gap: 8px; z-index: 50;
+}
+.ctrl-btn{
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  color: var(--text); width: 44px; height: 44px; border-radius: 50%;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); transition: all var(--transition);
+  font-family: var(--font-sans); font-size: 18px;
+}
+.ctrl-btn:hover{ background: var(--accent); color: white; border-color: var(--accent); }
+
+.footer-note{
+  margin-top: 60px; padding: 20px 0;
+  border-top: 1px solid var(--border);
+  font-family: var(--font-sans); font-size: 12px;
+  color: var(--text-muted); line-height: 1.5;
+}
+
+.gate5{
+  margin: 40px 0; padding: 24px;
+  border: 1px solid var(--accent); border-radius: var(--radius);
+  background: var(--accent-soft);
+  font-family: var(--font-sans);
+}
+.gate5__title{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .1em;
+  color: var(--accent-strong); font-weight: 700; margin-bottom: 8px;
+}
+.gate5__body{ color: var(--text); font-size: 14px; line-height: 1.55; }
+.gate5__options{ list-style: none; padding: 0; margin: 12px 0 0; }
+.gate5__options li{
+  padding: 6px 0; padding-left: 24px; position: relative;
+}
+.gate5__options li::before{
+  content: attr(data-key); position: absolute; left: 0; top: 6px;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--accent); color: white;
+  font-size: 11px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+</style>
+</head>
+
+<body>
+
+<div class="controls">
+  <button class="ctrl-btn" id="theme-toggle" title="Chuyển chủ đề" aria-label="Toggle theme">☾</button>
+  <button class="ctrl-btn" id="focus-toggle" title="Chế độ tập trung" aria-label="Toggle focus mode">⛶</button>
+</div>
+
+<div id="phil-popup" role="dialog" aria-label="Thêm phản biện">
+  <div id="phil-popup__quote"></div>
+  <textarea id="phil-popup__input" placeholder="Phản biện của bạn... Socrates sẽ hỏi gì về đoạn này?" aria-label="Counter-probe"></textarea>
+  <div id="phil-popup__actions">
+    <button id="phil-popup__cancel">Hủy</button>
+    <button id="phil-popup__save" class="save">Lưu ghi chú</button>
+  </div>
+</div>
+
+<div class="layout">
+
+  <aside class="navigator" aria-label="Navigator">
+    <div class="progress-bar" aria-hidden="true">
+      <div class="progress-bar__fill" id="progress-fill"></div>
+    </div>
+    <div class="nav-meta">
+      <span>📖 <span id="reading-time">~25</span> phút</span>
+      <span id="progress-percent">0%</span>
+    </div>
+
+    <div class="compass-title">La Bàn Biện Chứng</div>
+    <div class="compass" id="compass">
+      <a class="compass-node" data-target="scope"        data-phase="scope"><span class="compass-node__icon">🎯</span><span class="compass-node__label">Phạm vi</span></a>
+      <a class="compass-node" data-target="thesis"       data-phase="thesis"><span class="compass-node__icon">📘</span><span class="compass-node__label">Luận đề</span></a>
+      <a class="compass-node" data-target="xexam"        data-phase="probe"><span class="compass-node__icon">🔍</span><span class="compass-node__label">Chất vấn</span></a>
+      <a class="compass-node" data-target="collision"    data-phase="collision"><span class="compass-node__icon">⚔️</span><span class="compass-node__label">Va chạm</span></a>
+      <a class="compass-node" data-target="synthesis"    data-phase="synthesis"><span class="compass-node__icon">💎</span><span class="compass-node__label">Thăng hoa</span></a>
+      <a class="compass-node" data-target="ripple"       data-phase="ripple"><span class="compass-node__icon">🌊</span><span class="compass-node__label">Lan tỏa</span></a>
+    </div>
+
+    <div class="toc-title">Mục lục</div>
+    <ul class="toc" id="toc">
+      <li><a href="#hook" data-target="hook">Mở đầu</a></li>
+      <li><a href="#scope" data-target="scope">Phạm vi &amp; Giả định</a></li>
+      <li><a href="#dialectic" data-target="dialectic">Nhìn nhanh</a></li>
+      <li><a href="#thesis" data-target="thesis">Vòng 1: Luận đề</a></li>
+      <li><a href="#xexam" data-target="xexam">Vòng 1: Chất vấn</a></li>
+      <li><a href="#collision" data-target="collision">Vòng 1: Va chạm</a></li>
+      <li><a href="#loop2" data-target="loop2">Vòng 2: Thực phẩm</a></li>
+      <li><a href="#loop3" data-target="loop3">Vòng 3: Đối tượng</a></li>
+      <li><a href="#synthesis" data-target="synthesis">Tổng hợp cuối</a></li>
+      <li><a href="#proof" data-target="proof">Bằng chứng</a></li>
+      <li><a href="#ripple" data-target="ripple">Hệ quả lan tỏa</a></li>
+      <li><a href="#fallacy-log" data-target="fallacy-log">Nhật ký ngụy biện</a></li>
+      <li><a href="#residuals" data-target="residuals">Dư địa</a></li>
+      <li><a href="#quiz" data-target="quiz">Kiểm tra</a></li>
+      <li><a href="#gate5" data-target="gate5">Tiếp tục?</a></li>
+    </ul>
+  </aside>
+
+  <main class="canvas">
+    <div class="canvas-inner">
+
+    <h1>Canxi và Hệ Xương — Một Phản Biện Biện Chứng</h1>
+    <div class="byline">
+      <span class="pill">Biện chứng</span>
+      <span class="pill">3 vòng xoáy</span>
+      Phản biện luận đề phổ biến: <em>"Tiêu thụ thực phẩm giàu canxi sẽ làm hệ xương chắc khỏe."</em>
+    </div>
+
+    <div class="paradox-meter" id="paradox-meter" data-phase="thesis" aria-live="polite">
+      <div class="paradox-meter__label">
+        <span>Sự bất hòa nhận thức</span>
+        <span class="paradox-meter__value" id="paradox-value">0%</span>
+      </div>
+      <div class="paradox-meter__bar">
+        <div class="paradox-meter__fill" id="paradox-fill"></div>
+      </div>
+      <div class="paradox-meter__hint" id="paradox-hint">Bắt đầu — luận đề chưa bị thử thách.</div>
+    </div>
+
+    <div class="assumptions" aria-labelledby="assumptions-title">
+      <div class="assumptions__title" id="assumptions-title">🔧 Sổ Đăng Ký Giả Định — Bốn Chiều Kích</div>
+      <div class="assumptions__grid">
+        <div class="assumption-row">
+          <span class="assumption-key">Lăng kính phản biện</span>
+          <span class="assumption-val"><span class="badge">EMPIRICAL + PRAGMATIC</span>Dữ liệu RCT/dịch tễ mâu thuẫn quan niệm; thực tiễn bổ sung không đạt hiệu quả.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Mức gay gắt</span>
+          <span class="assumption-val"><span class="badge">GADFLY</span>Truy lùng mâu thuẫn chí mạng — premise bị thổi phồng trong quảng cáo.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Quỹ đạo</span>
+          <span class="assumption-val"><span class="badge">FORTIFY</span>Luận đề sống sót nhưng được thu hẹp &amp; chính xác hóa.</span>
+        </div>
+        <div class="assumption-row">
+          <span class="assumption-key">Độ sâu</span>
+          <span class="assumption-val"><span class="badge">SPIRAL · 3 vòng</span>Phân lớp: (1) thực phẩm vs viên uống, (2) mật độ xương vs sức bền, (3) đối tượng &amp; thời gian.</span>
+        </div>
+      </div>
+    </div>
+
+    <section id="hook">
+      <h2><span class="h2-emoji">✍️</span>Mở đầu</h2>
+      <p>Một phụ nữ 68 tuổi uống viên canxi mỗi ngày suốt một thập kỷ vì tin rằng mình đang "bảo vệ xương". Một thanh niên 22 tuổi ăn phô mai và sữa chua mỗi ngày để "xây xương đỉnh". Cả hai đều đang tuân theo cùng một thông điệp quảng cáo: <em>nạp canxi = xương chắc</em>.</p>
+      <p>Năm 2026, một <span class="evidence-trigger" data-evidence="ev-bmj">meta-analysis BMJ</span> tổng hợp 69 thử nghiệm ngẫu nhiên trên 153.902 người lớn đã kết luận điều ngược lại với lời quảng cáo: canxi, vitamin D, hay kết hợp cả hai <strong>gần như không mang lại lợi ích lâm sàng nào</strong> trong việc ngăn ngừa gãy xương và té ngã ở người lớn tuổi sống cộng đồng. Luận đề mà bài viết này phản biện — dù nghe vô hại — thực ra chứa ba sai lầm cấu trúc đang chờ được đào lên.</p>
+    </section>
+
+    <section id="scope">
+      <h2><span class="h2-emoji">🎯</span>Phạm vi &amp; Giả định</h2>
+      <p><strong>Phạm vi.</strong> Sức khỏe xương ở người — từ xây dựng khối xương đỉnh (peak bone mass, &lt;35 tuổi) đến phòng chống loãng xương &amp; gãy xương ở người lớn tuổi (&gt;50 tuổi). Trọng tâm: <em>thực phẩm giàu canxi</em>, phân biệt rõ với <em>viên bổ sung canxi</em>.</p>
+      <p><strong>Trong phạm vi:</strong> vai trò canxi trong BMD (mật độ xương) và gãy xương; sự khác biệt thực phẩm/viên uống; ma trận vi chất (vitamin D, K2, protein, Mg, P); tác động phụ (sỏi thận, vôi hóa mạch vành).</p>
+      <p><strong>Ngoài phạm vi:</strong> các bệnh xương chuyển hóa hiếm gặp (Paget, loạn dưỡng xương thận); canxi trong chế độ dinh dưỡng điều trị đặc hiệu cho người đã có loãng xương đang dùng thuốc bisphosphonate; các quần thể cô lập (viện dưỡng lão) có cơ chế khác.</p>
+      <p><strong>Sổ giả định:</strong></p>
+      <ul>
+        <li><span class="term" data-def="Mật độ khoáng xương — lượng khoáng trên một đơn vị thể tích xương, đo bằng DXA. Đây chỉ là một 'proxy' gián tiếp của sức bền xương.">BMD</span> được dùng như một chỉ báo gián tiếp — không đồng nhất với sức bền hay nguy cơ gãy xương.</li>
+        <li>"Hệ xương chắc khỏe" trong luận đề được hiểu là <em>giảm nguy cơ gãy xương thực tế</em>, không chỉ là số BMD cao hơn.</li>
+        <li>Người đọc là người trưởng thành khỏe mạnh sống cộng đồng, không thiếu canxi/vitamin D nghiêm trọng do bệnh lý.</li>
+      </ul>
+      <p><strong>Tư thế khán giả:</strong> một chuyên gia dinh dưỡng hoặc bác sĩ hoài nghi, người đã từng nghe các phiên bản yếu hơn của lập luận này — và có thể đã từng khuyên bệnh nhân uống canxi mỗi ngày.</p>
+    </section>
+
+    <section id="dialectic">
+      <h2><span class="h2-emoji">👁️</span>Nhìn Nhanh</h2>
+      <div class="dialectic-header">
+        <div class="panel panel--thesis">
+          <span class="panel__label">📘 Luận đề</span>
+          <div class="panel__body">Tiêu thụ thực phẩm giàu canxi sẽ làm hệ xương chắc khỏe.</div>
+        </div>
+        <div class="panel panel--antithesis">
+          <span class="panel__label">⚔️ Phản đề</span>
+          <div class="panel__body">Trong 69 RCT/153.902 người, bổ sung canxi/vitamin D không giảm gãy xương hay té ngã có ý nghĩa lâm sàng; canxi đơn trị thậm chí có nguy cơ sỏi thận và vôi hóa mạch vành. "Chắc khỏe" không đến từ canxi đơn độc.</div>
+        </div>
+        <div class="panel panel--synthesis">
+          <span class="panel__label">💎 Tổng hợp</span>
+          <div class="panel__body">Xương chắc là <em>thuộc tính của cả hệ thống</em> (nạp đủ–thiếu đúng + vitamin D + protein + K2 + tải cơ học + hormone), không phải của riêng canxi. Canxi là <em>điều kiện cần nhưng không đủ</em>; thời điểm vàng để "nạp" là &lt;35 tuổi; thừa canxi ở người già gây hại mà không bảo vệ.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         VÒNG 1 — "CANXI ĐƠN ĐỘC ≠ XƯƠNG CHẮC"
+    ============================================================ -->
+    <section id="thesis">
+      <h2><span class="h2-emoji">📘</span>Vòng 1 — Luận đề &amp; Tiền đề</h2>
+
+      <div class="thesis-pillar">
+        <div class="thesis-pillar__label">📘 Luận đề được mài sắc (Vòng 1)</div>
+        <div class="thesis-pillar__statement">Bổ sung đủ canxi — từ thực phẩm hoặc viên uống — là chìa khóa để có hệ xương chắc khỏe.</div>
+        <div class="thesis-pillar__contract">Chúng ta chấp nhận mệnh đề này làm điểm xuất phát. Nhưng nó có đứng vững dưới sự soi xét không?</div>
+      </div>
+
+      <h3><span class="diff diff-core">CỐT LÕI</span>Các Tiền đề Chịu lực (Đào lên)</h3>
+      <p>Để luận đề đứng vững, cả ba điều sau phải đúng. Nếu bất kỳ điều nào sai, lập luận sụp đổ.</p>
+
+      <div class="premise-walls">
+        <div class="premise-wall">
+          <div class="premise-wall__index">P1</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Canxi là đủ</div>
+            Nạp canxi một mình là yếu tố quyết định sức bền xương — "nhiều canxi hơn" tự động = "xương chắc hơn".
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P2</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">BMD = sức bền xương</div>
+            Mật độ xương (BMD) tăng đồng nghĩa trực tiếp với giảm nguy cơ gãy xương.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P3</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Quan hệ tuyến tính</div>
+            Mối quan hệ giữa lượng canxi tiêu thụ và độ chắc khỏe là tuyến tính, không có ngưỡng gây hại.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="xexam">
+      <h2><span class="h2-emoji">🔍</span>Vòng 1 — Chất Vấn Từng Tiền đề</h2>
+      <p>Mỗi tiền đề dưới đây có một mũi chất vấn riêng. Mũi chất vấn và trường hợp biên được trình bày công khai; phần Bào chữa nằm sau nút bấm. Hãy ngồi với sự nghi ngờ trước khi nghe lời giải cứu.</p>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P1 — CANXI LÀ ĐỦ</span>
+          <span class="tag tag--lens">Lăng kính: Empirical</span>
+          <span class="tag tag--rigor">Mức: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">Nhưng nếu bổ sung canxi không làm giảm gãy xương thực tế thì sao?</div>
+        <p class="xexam-card__setup">Nếu P1 đúng — canxi là yếu tố quyết định — thì việc bổ sung canxi ở người lớn phải giảm gãy xương. Dữ liệu năm 2026 nói ngược lại: meta-analysis BMJ (69 RCT, 153.902 người) kết luận canxi, vitamin D, hay kết hợp <strong>"gần như không có lợi ích lâm sàng"</strong> trong phòng chống gãy xương và té ngã ở người lớn sống cộng đồng. Một meta-analysis JAMA khác (33 RCT, &gt;50 tuổi) cũng không tìm thấy giảm gãy xương hông, cột sống, hay toàn bộ.</p>
+        <button class="xexam-card__defense-btn" data-target="def-l1p1" aria-expanded="false">Nghe Bào chữa</button>
+        <div class="xexam-card__defense" id="def-l1p1">
+          <span class="label">Trường hợp biên — Lăng kính Empirical</span>
+          <p>BMJ 2026 (Masse et al., <a href="https://www.bmj.com/content/393/bmj-2025-088050" data-source-date="2026-05-20">doi:10.1136/bmj-2025-088050</a>): canxi + vitamin D chỉ đạt giảm 9% nguy cơ toàn bộ gãy xương, mà tác giả đánh giá <em>không có ý nghĩa lâm sàng</em> theo GRADE. Đồng thời, một meta-analysis BMC Musculoskeletal 2025 (Cong &amp; Zhang, 11 RCT, 43.869 người) cho thấy bổ sung kết hợp chỉ cải thiện BMD vùng chậu (SMD 0.20) mà <em>không giảm gãy xương</em> (RR 0.98, p=0.68).</p>
+          <span class="label" style="margin-top:12px">Bào chữa</span>
+          <p>Người bào chữa luận đề sẽ trả lời: những thử nghiệm này nghiên cứu <em>người lớn tuổi</em> — tức là đã qua giai đoạn xây xương. Canxi có tác dụng khi <em>được nạp đúng lúc</em> (thời kỳ tăng trưởng) hoặc cho <em>người thực sự thiếu hụt</em>, chứ không phải cho người đã đủ canxi. Phủ nhận P1 hoàn toàn là bỏ qua rằng canxi <em>cần thiết</em> — xương không thể chắc nếu không có canxi.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa chỉ đúng <em>một phần</em>. P1 sai ở chỗ "canxi là đủ" — nó chỉ là "canxi là cần". Qualifier của State 5 phải mang sự phân biệt này.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra Steel-Man:</strong> SM-1 ✓ (người ủng hộ nhận ra nghi ngờ này là của họ); SM-2 ✓ (tấn công đúng tiền đề, không phải bản phóng đại); SM-3 ✓ (dùng bằng chứng RCT mạnh nhất).
+          </div>
+        </div>
+      </article>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P2 — BMD = SỨC BỀN XƯƠNG</span>
+          <span class="tag tag--lens">Lăng kính: Empirical</span>
+          <span class="tag tag--rigor">Mức: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">BMD tăng có thực sự chuyển thành giảm gãy xương không?</div>
+        <p class="xexam-card__setup">Đây là lỗ hổng proxy kinh điển. Cong &amp; Zhang 2025 phát hiện canxi+vitamin D làm tăng BMD vùng chậu nhưng <em>không</em> giảm gãy xương. Nếu BMD và sức bền là một, thì mọi thứ làm tăng BMD phải giảm gãy xương — nhưng dữ liệu cho thấy chúng tách rời. BMD giải thích chưa đầy đủ vì chất lượng vi mô, hình học xương, và cơ chế chống gãy không nằm trong con số DXA.</p>
+        <button class="xexam-card__defense-btn" data-target="def-l1p2" aria-expanded="false">Nghe Bào chữa</button>
+        <div class="xexam-card__defense" id="def-l1p2">
+          <span class="label">Trường hợp biên — Lăng kính Empirical</span>
+          <p>Trong nhiều thử nghiệm, thuốc chống loãng xương (bisphosphonate) tăng BMD và <em>đồng thời</em> giảm gãy xương — cho thấy BMD và sức bền thường đi cùng nhau trong các can thiệp dược lý. Nhưng canxi thì không: nó tăng nhẹ BMD ở một số vị trí mà không kéo theo giảm gãy xương.</p>
+          <span class="label" style="margin-top:12px">Bào chữa</span>
+          <p>Người bào chữa sẽ nói: BMD là một proxy <em>không hoàn hảo nhưng hữu ích</em>; mọi can thiệp tăng BMD đều được kỳ vọng giúp ích phần nào. Vấn đề là các thử nghiệm canxi ở người lớn tuổi quá ngắn và cường độ tăng BMD quá nhỏ (SMD 0.20 ≈ vài %) để dịch thành giảm gãy xương trong khung thời gian đó.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đúng <em>một phần</em>. P2 bị bác bỏ ở dạng đơn giản "BMD=sức bền" — phải sửa thành "BMD là một proxy không đầy đủ của sức bền".</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra Steel-Man:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓.
+          </div>
+        </div>
+      </article>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P3 — QUAN HỆ TUYẾN TÍNH</span>
+          <span class="tag tag--lens">Lăng kính: Pragmatic</span>
+          <span class="tag tag--rigor">Mức: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">Và nếu "nhiều canxi hơn" thực ra gây hại sau một ngưỡng nào đó thì sao?</div>
+        <p class="xexam-card__setup">P3 giả định không có ngưỡng gây hại. Nhưng bằng chứng cho thấy viên canxi liều cao làm tăng nguy cơ <span class="evidence-trigger" data-evidence="ev-cac">vôi hóa động mạch vành (CAC)</span> (RR 1.22, Anderson et al. JAHA), sỏi thận, và một meta-analysis cho thấy kết hợp canxi+vitamin D làm tăng nhẹ nguy cơ đột quỵ (RR 1.17). Hiệu ứng này <em>không thấy với canxi từ thực phẩm</em>. Quan hệ tuyến tính "càng nhiều càng tốt" sụp đổ.</p>
+        <button class="xexam-card__defense-btn" data-target="def-l1p3" aria-expanded="false">Nghe Bào chữa</button>
+        <div class="xexam-card__defense" id="def-l1p3">
+          <span class="label">Trường hợp biên — Lăng kính Pragmatic</span>
+          <p>Người già — đối tượng quảng cáo hướng tới — thường đã có canxi từ thực phẩm, rồi lại nạp thêm 1.000–1.500 mg từ viên uống. Tổng nạp vượt giới hạn trên an toàn (2.000–2.500 mg/ngày theo National Academy of Medicine). Chính sự chồng chất này tạo nguy cơ vôi hóa mạch và sỏi thận mà không bảo vệ xương.</p>
+          <span class="label" style="margin-top:12px">Bào chữa</span>
+          <p>Người bào chữa sẽ nói: các nghiên cứu gây hại chủ yếu về <em>viên uống liều cao</em>, không phải thực phẩm. Với thực phẩm giàu canxi — chủ đề của luận đề gốc — nguy cơ vượt ngưỡng là thấp, và canxi từ thực phẩm có hiệu ứng bảo vệ ngược (giảm sỏi thận oxalate nhờ gắn oxalate trong ruột).</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đúng <em>một phần</em>. P3 tuyến tính bị bác bỏ: có ngưỡng gây hại, và quan trọng nhất, <em>thực phẩm ≠ viên uống</em> — mở đường cho Vòng 2.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra Steel-Man:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓.
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="collision">
+      <h2><span class="h2-emoji">⚔️</span>Vòng 1 — Phản Đề: Va Chạm</h2>
+      <p><strong>Tổng hợp sự nghi ngờ.</strong> Qua ba cuộc chất vấn: P1 sai vì canxi chỉ "cần" không "đủ" (69 RCT không giảm gãy xương); P2 sai vì BMD không phải sức bền (BMD tăng mà gãy xương không giảm); P3 sai vì quan hệ không tuyến tính và có ngưỡng gây hại ở viên uống liều cao. Mô hình lỗi gộp: luận đề nhầm lẫn <em>điều kiện cần</em> với <em>điều kiện đủ</em>, và nhầm <em>proxy</em> với <em>kết cục</em>.</p>
+
+      <div class="collision">
+        <div class="collision__inner">
+          <div class="collision__side collision__side--thesis">
+            <span class="label">📘 Luận đề vỡ ở đây</span>
+            <div class="heading">Nơi luận đề thất bại</div>
+            <p>Canxi một mình, dù bao nhiêu, không dịch thành xương chắc hơn ở người lớn. BMD tăng không kéo theo giảm gãy xương. Vượt ngưỡng còn gây hại.</p>
+          </div>
+          <div class="collision__divider" aria-hidden="true">
+            <span class="collision__zap">⚡</span>
+          </div>
+          <div class="collision__side collision__side--antithesis">
+            <span class="label">⚔️ Phản đề đứng ở đây</span>
+            <div class="heading">Nơi phản đề đứng vững</div>
+            <p>Bằng chứng RCT lớn nhất lịch sử cho thấy bổ sung canxi/vitamin D không bảo vệ người lớn khỏi gãy xương và té ngã. Xương "chắc" không đến từ canxi đơn độc.</p>
+          </div>
+        </div>
+        <div class="collision__tension">
+          Biến số nơi Luận đề và Phản đề va chạm: <strong>giữa "nạp đủ chất dinh dưỡng" (điều kiện cần) và "đạt kết cục lâm sàng gãy xương" (điều kiện đủ) — hai thứ bị nhầm lẫn thành một.</strong>
+        </div>
+      </div>
+
+      <h3><span class="diff diff-core">CỐT LÕI</span>Tổng hợp Vòng 1 (Chuyển tiếp sang Vòng 2)</h3>
+      <div class="sublation">
+        <div class="sublation__inner">
+          <div class="sublation__label">💎 Vòng 1 · Aufheben</div>
+          <div class="sublation__statement">
+            Canxi là <em>điều kiện cần nhưng không đủ</em> cho xương chắc. "Chắc khỏe" là thuộc tính của cả hệ thống, không phải của một khoáng chất. Điều này đặt ra câu hỏi tiếp theo: nếu canxi từ <em>thực phẩm</em> khác với viên uống — thì "thực phẩm giàu canxi" có phải là chìa khóa?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         VÒNG 2 — "THỰC PHẨM ≠ VIÊN UỐNG, VÀ KHÔNG PHẢI THỰC PHẨM NÀO CŨNG TỐT"
+    ============================================================ -->
+    <section id="loop2">
+      <h2><span class="h2-emoji">📘</span>Vòng 2 — Luận đề mới &amp; Chất vấn</h2>
+
+      <div class="thesis-pillar">
+        <div class="thesis-pillar__label">📘 Luận đề Vòng 2 (từ Tổng hợp Vòng 1)</div>
+        <div class="thesis-pillar__statement">Canxi từ thực phẩm tốt hơn viên uống, nên ăn thực phẩm giàu canxi là chìa khóa cho xương chắc khỏe.</div>
+        <div class="thesis-pillar__contract">Phản đề Vòng 1 đã bác bỏ "canxi đơn độc = đủ". Nhưng "thực phẩm" khác "viên uống" — vậy luận đề mới này có đứng vững?</div>
+      </div>
+
+      <h3><span class="diff diff-core">CỐT LÕI</span>Các Tiền đề Chịu lực (Vòng 2)</h3>
+      <div class="premise-walls">
+        <div class="premise-wall">
+          <div class="premise-wall__index">P1</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Thực phẩm "giàu canxi" là đồng nhất</div>
+            Mọi thực phẩm ghi nhãn giàu canxi đều cung cấp canxi sinh khả dụng như nhau.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P2</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Thực phẩm giàu canxi = tốt hơn viên uống</div>
+            Nguồn thực phẩm vượt trội viên uống về mọi mặt cho xương.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P3</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Canxi trong thực phẩm là yếu tố quyết định</div>
+            Chính hàm lượng canxi — chứ không phải ma trận đi kèm — tạo ra lợi ích cho xương.
+          </div>
+        </div>
+      </div>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P1 — THỰC PHẨM ĐỒNG NHẤT</span>
+          <span class="tag tag--lens">Lăng kính: Empirical</span>
+          <span class="tag tag--rigor">Mức: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">Rau bina "giàu canxi" có thực sự cung cấp canxi cho xương không?</div>
+        <p class="xexam-card__setup">Sinh khả dụng khác nhau mạnh giữa các thực phẩm. <span class="evidence-trigger" data-evidence="ev-oxalate">Oxalate</span> trong rau bina, củ cải đường, đại hoàng gắn canxi trong ruột, chặn hấp thụ — nghiên cứu đồng vị (Heaney) cho thấy canxi từ rau bina hấp thụ kém hơn nhiều so với sữa. Phytate trong cám lúa mì cũng chặn hấp thụ. "Giàu canxi" trên nhãn không đồng nghĩa "canxi vào được xương".</p>
+        <button class="xexam-card__defense-btn" data-target="def-l2p1" aria-expanded="false">Nghe Bào chữa</button>
+        <div class="xexam-card__defense" id="def-l2p1">
+          <span class="label">Trường hợp biên — Lăng kính Empirical</span>
+          <p>Bone Health &amp; Osteoporosis Foundation ghi rõ: "Cơ thể không hấp thụ tốt canxi từ thực phẩm giàu oxalate như rau bina... những thực phẩm này không nên được tính là nguồn canxi." Ngược lại, sữa chua, phô mai, sữa là nguồn sinh khả dụng cao.</p>
+          <span class="label" style="margin-top:12px">Bào chữa</span>
+          <p>Người bào chữa sẽ nói: đây chỉ là vấn đề <em>lựa chọn thực phẩm</em> — người ăn rau bina nên chọn cải xoăn, bông cải xanh có oxalate thấp. Nó không bác bỏ luận đề, chỉ tinh chỉnh lời khuyên "ăn thực phẩm giàu canxi" thành "ăn thực phẩm giàu canxi <em>sinh khả dụng</em>".</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đúng <em>một phần</em>. P1 bị bác bỏ ở dạng "đồng nhất" — phải sửa thành "không đồng nhất, phụ thuộc ma trận oxalate/phytate".</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra Steel-Man:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓.
+          </div>
+        </div>
+      </article>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P2 — THỰC PHẨM TỐT HƠN VIÊN UỐNG</span>
+          <span class="tag tag--lens">Lăng kính: Empirical</span>
+          <span class="tag tag--rigor">Mức: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">Vậy tại sao nghiên cứu cho thấy uống sữa tăng gãy xương?</div>
+        <p class="xexam-card__setup">Nghiên cứu Michaelsson 2014 trên hơn 100.000 người Thụy Điển: người uống nhiều sữa có <em>tỷ lệ gãy xương và tử vong cao hơn</em>, nhưng người ăn nhiều sữa chua và phô mai lại <em>thấp hơn</em>. Cùng là "thực phẩm giàu canxi từ sữa" — kết quả ngược chiều. Vậy "thực phẩm tốt hơn viên uống" không đủ — <em>loại thực phẩm</em> mới quyết định.</p>
+        <button class="xexam-card__defense-btn" data-target="def-l2p2" aria-expanded="false">Nghe Bào chữa</button>
+        <div class="xexam-card__defense" id="def-l2p2">
+          <span class="label">Trường hợp biên — Lăng kính Empirical</span>
+          <p>Michaelsson K et al., BMJ 2014 (PMID 25352269): liên hệ giữa sữa và gãy xương/tử vong có thể do lactose, D-galactose, hoặc yếu tố gây nhiễu (người uống sữa có thể thiếu vận động, uống kèm thực phẩm giàu muối). Sữa chua/phô mai có ít lactose hơn và được lên men — giữ được lợi ích canxi+protein mà không mang tác hại.</p>
+          <span class="label" style="margin-top:12px">Bào chữa</span>
+          <p>Người bào chữa sẽ nói: nghiên cứu quan sát này bị nhiễu; và nó không bác bỏ việc "thực phẩm tốt hơn viên uống" — nó chỉ nói <em>một số</em> thực phẩm (sữa chua, phô mai) tốt hơn <em>một số khác</em> (sữa tươi). Khuyến nghị tổng thể "thực phẩm giàu canxi vẫn tốt hơn viên uống" vẫn đứng.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đúng <em>một phần</em>. P2 bị sửa: không phải "thực phẩm giàu canxi" nói chung, mà là <em>ma trận thực phẩm cụ thể</em> (canxi + protein + ít lactose/phytate) mới là điều quan trọng.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra Steel-Man:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓.
+          </div>
+        </div>
+      </article>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P3 — CANXI LÀ YẾU TỐ QUYẾT ĐỊNH</span>
+          <span class="tag tag--lens">Lăng kính: Empirical</span>
+          <span class="tag tag--rigor">Mức: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">Nếu canxi không phải yếu tố quyết định, thì thứ gì thực sự làm xương chắc?</div>
+        <p class="xexam-card__setup">Các nghiên cứu can thiệp cho thấy <span class="evidence-trigger" data-evidence="ev-protein">protein</span>, vitamin D, vitamin K2, magnesium, và đặc biệt là <em>tải cơ học</em> (tập luyện chịu trọng lượng, kháng lực) đóng vai trò lớn trong sức bền xương. Sữa chua tăng cường canxi+vitamin D có lợi (Liu 2020, SMD 0.784 toàn thân) — nhưng đó là <em>sản phẩm tăng cường kép</em>, không phải canxi đơn.</p>
+        <button class="xexam-card__defense-btn" data-target="def-l2p3" aria-expanded="false">Nghe Bào chữa</button>
+        <div class="xexam-card__defense" id="def-l2p3">
+          <span class="label">Trường hợp biên — Lăng kính Empirical</span>
+          <p>Không có vitamin D, canxi không hấp thụ được vào máu; không có protein, khung collagen của xương yếu dù đầy canxi; không có tải cơ học, xương không được tín hiệu để khoáng hóa thêm. Canxi đơn độc trong thực phẩm — dù giàu — vẫn không tạo xương chắc nếu thiếu phần còn lại.</p>
+          <span class="label" style="margin-top:12px">Bào chữa</span>
+          <p>Người bào chữa sẽ nói: thực phẩm giàu canxi (sữa, phô mai, sữa chua) hiếm khi chỉ có canxi — chúng tự nhiên kèm protein, vitamin D (nếu tăng cường), photpho. Nên "thực phẩm giàu canxi" thực tế mang theo ma trận vi chất, tức là luận đề gốc không hoàn toàn sai.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đúng <em>hoàn toàn</em>, nhưng thay đổi bản chất luận đề: lợi ích không đến từ "canxi" mà từ "ma trận thực phẩm". Đây chính là điều Vòng 3 sẽ khai thác.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra Steel-Man:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓.
+          </div>
+        </div>
+      </article>
+
+      <h3><span class="diff diff-core">CỐT LÕI</span>Tổng hợp Vòng 2</h3>
+      <div class="sublation">
+        <div class="sublation__inner">
+          <div class="sublation__label">💎 Vòng 2 · Aufheben</div>
+          <div class="sublation__statement">
+            Không phải "thực phẩm giàu canxi" nào cũng như nhau — <em>sinh khả dụng</em> (oxalate/phytate) và <em>ma trận vi chất</em> (vitamin D, K2, protein) mới quyết định. Câu hỏi Vòng 3: nếu cả hệ thống là chìa khóa, thì <em>ai</em> và <em>khi nào</em> nên nạp?
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         VÒNG 3 — "ĐỐI TƯỢNG & THỜI GIAN"
+    ============================================================ -->
+    <section id="loop3">
+      <h2><span class="h2-emoji">📘</span>Vòng 3 — Đối tượng &amp; Thời gian</h2>
+
+      <div class="thesis-pillar">
+        <div class="thesis-pillar__label">📘 Luận đề Vòng 3 (từ Tổng hợp Vòng 2)</div>
+        <div class="thesis-pillar__statement">Chế độ canxi + vi chất đúng là chìa khóa cho xương chắc khỏe, áp dụng cho mọi người ở mọi lứa tuổi.</div>
+        <div class="thesis-pillar__contract">Nếu cả hệ thống là chìa khóa, thì liệu lời khuyên này có đúng cho tất cả mọi người — trẻ hay già, đủ hay thiếu?</div>
+      </div>
+
+      <h3><span class="diff diff-core">CỐT LÕI</span>Các Tiền đề Chịu lực (Vòng 3)</h3>
+      <div class="premise-walls">
+        <div class="premise-wall">
+          <div class="premise-wall__index">P1</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Tác dụng đồng nhất theo tuổi</div>
+            Canxi + vi chất mang lại lợi ích xương như nhau ở mọi lứa tuổi.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P2</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Mọi người cần nạp thêm</div>
+            Người trưởng thành nói chung đều cần bổ sung để đạt xương tối ưu.
+          </div>
+        </div>
+        <div class="premise-wall">
+          <div class="premise-wall__index">P3</div>
+          <div class="premise-wall__body">
+            <div class="premise-wall__label">Thiếu hụt là tình trạng phổ biến cần sửa</div>
+            Đa số người thiếu canxi/vitamin D nên việc nạp thêm là cần thiết cho xương.
+          </div>
+        </div>
+      </div>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P1 — ĐỒNG NHẤT THEO TUỔI</span>
+          <span class="tag tag--lens">Lăng kính: Empirical</span>
+          <span class="tag tag--rigor">Mức: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">Người 25 tuổi và người 75 tuổi có "được lợi" từ canxi như nhau không?</div>
+        <p class="xexam-card__setup">Dữ liệu tách bạch rõ ràng. Ở người <em>&lt;35 tuổi</em> — giai đoạn xây peak bone mass — bổ sung canxi <em>cải thiện BMD</em> toàn thân và cổ xương đùi (meta-analysis eLife 2022, 43 RCT/7.382 người). Ở người <em>&gt;50 tuổi</em> — giai đoạn mất xương — bổ sung canxi/vitamin D <em>không giảm gãy xương</em> (BMJ 2026). Cùng một chất, hiệu quả ngược theo tuổi.</p>
+        <button class="xexam-card__defense-btn" data-target="def-l3p1" aria-expanded="false">Nghe Bào chữa</button>
+        <div class="xexam-card__defense" id="def-l3p1">
+          <span class="label">Trường hợp biên — Lăng kính Empirical</span>
+          <p>Meta-analysis eLife 2022 (<a href="https://pubmed.ncbi.nlm.nih.gov/36164828/" data-source-date="2022-09-27">PMID 36164828</a>) kết luận canxi cải thiện BMD ở người dưới 35, hiệu quả mạnh nhất ở 20–35 tuổi. Nhưng lưu ý: tăng BMD ở tuổi trẻ chưa chứng minh được <em>giảm gãy xương</em> ở tuổi già — khoảng cách thời gian hàng chục năm không được thử nghiệm trực tiếp.</p>
+          <span class="label" style="margin-top:12px">Bào chữa</span>
+          <p>Người bào chữa sẽ nói: vậy luận đề càng đúng ở người trẻ — đây chính là giai đoạn canxi "xây xương" thực sự. Vấn đề là ở người già, không phải ở người trẻ. Nếu luận đề chỉ đúng cho người trẻ, nó vẫn có giá trị.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đúng <em>một phần</em>. P1 bị bác bỏ: tác dụng phụ thuộc tuổi — canxi xây xương ở &lt;35, không bảo vệ gãy xương ở &gt;50. Qualifier phải mang khoảng tuổi.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra Steel-Man:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓.
+          </div>
+        </div>
+      </article>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P2 — MỌI NGƯỜI CẦN NẠP THÊM</span>
+          <span class="tag tag--lens">Lăng kính: Pragmatic</span>
+          <span class="tag tag--rigor">Mức: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">Người đã đủ canxi từ chế độ ăn có cần nạp thêm không?</div>
+        <p class="xexam-card__setup">Bằng chứng cho thấy lợi ích canxi tập trung ở nhóm <em>thiếu hụt nhất</em>. USPSTF 2018 kết luận: với người sống cộng đồng, khỏe mạnh, bổ sung canxi/vitamin D <em>không giảm gãy xương</em>. Hiệu ứng bảo vệ chỉ thấy ở người thiếu hụt thực sự hoặc trong viện dưỡng lão. Với người đã đủ, nạp thêm là vô ích — thậm chí gây hại.</p>
+        <button class="xexam-card__defense-btn" data-target="def-l3p2" aria-expanded="false">Nghe Bào chữa</button>
+        <div class="xexam-card__defense" id="def-l3p2">
+          <span class="label">Trường hợp biên — Lăng kính Pragmatic</span>
+          <p>Viện dưỡng lão và người thiếu vitamin D nghiêm trọng thực sự được lợi (Chapuy 1992, N Engl J Med: vitamin D3 + canxi giảm gãy xương hông ở phụ nữ cao tuổi viện dưỡng lão). Nhưng người khỏe mạnh sống cộng đồng — đa số — không thuộc nhóm này.</p>
+          <span class="label" style="margin-top:12px">Bào chữa</span>
+          <p>Người bào chữa sẽ nói: nhiều người Việt thiếu canxi/vitamin D thực sự (ánh nắng hạn chế, chế độ ăn ít sữa). Với họ, bổ sung không phải "vô ích" mà là "điều trị thiếu hụt". Lời khuyên chung "nạp thêm canxi" có thể đúng cho nhóm thiếu, dù sai cho nhóm đủ.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đúng <em>một phần</em>. P2 bị sửa: lợi ích chỉ có ở người <em>thiếu hụt</em>; với người đủ, nạp thêm vô ích và gây hại. Qualifier phải phân biệt "đủ" vs "thiếu".</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra Steel-Man:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓.
+          </div>
+        </div>
+      </article>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta">
+          <span class="tag">P3 — THIẾU HỤT PHỔ BIẾN</span>
+          <span class="tag tag--lens">Lăng kính: Empirical</span>
+          <span class="tag tag--rigor">Mức: Gadfly</span>
+        </div>
+        <div class="xexam-card__probe">Nhưng liệu bổ sung canxi có phải cách tốt nhất để xử lý tình trạng "thiếu" không?</div>
+        <p class="xexam-card__setup">Ngay cả khi thiếu hụt là thật, cách sửa có thể sai. Bổ sung viên canxi liều cao làm tăng CAC và sỏi thận mà <em>không</em> thấy với canxi từ thực phẩm. Hơn nữa, yếu tố quyết định sức bền xương ở người già không phải canxi — mà là <span class="evidence-trigger" data-evidence="ev-exercise">tập luyện chịu trọng lượng</span>, cân bằng (chống té ngã), và hormone. BMJ editorial 2026: "Chuyển hướng nguồn lực từ bổ sung sang các can thiệp đã chứng minh — tập cân bằng, kháng lực."</p>
+        <button class="xexam-card__defense-btn" data-target="def-l3p3" aria-expanded="false">Nghe Bào chữa</button>
+        <div class="xexam-card__defense" id="def-l3p3">
+          <span class="label">Trường hợp biên — Lăng kính Empirical</span>
+          <p>Phụ nữ mãn kinh mất estrogen — yếu tố quyết định mất xương nhanh — mà canxi không thể ngăn. Bổ sung canxi không thay thế được estrogen, tải cơ học, hay phòng chống té ngã. Canxi là một mảnh ghép, không phải lời giải.</p>
+          <span class="label" style="margin-top:12px">Bào chữa</span>
+          <p>Người bào chữa sẽ nói: canxi vẫn là nền tảng — không có đủ canxi, mọi thứ khác cũng vô ích. Nó không phải là tất cả, nhưng nó là <em>điều kiện tiên quyết</em>. Bác bỏ canxi hoàn toàn là ném em bé cùng nước tắm.</p>
+          <div class="verdict"><span class="verdict-tag">Phán quyết</span>Bào chữa đúng <em>hoàn toàn</em> ở mức "canxi là nền tảng", nhưng không cứu được luận đề gốc vốn đặt canxi làm <em>yếu tố đủ</em>. Điều này hoàn tất việc xây dựng cho Tổng hợp cuối.</div>
+          <div class="xexam-card__steel-man">
+            <strong>Kiểm tra Steel-Man:</strong> SM-1 ✓; SM-2 ✓; SM-3 ✓.
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============================================================
+         TỔNG HỢP CUỐI CÙNG
+    ============================================================ -->
+    <section id="synthesis">
+      <h2><span class="h2-emoji">💎</span>Tổng hợp Cuối — Aufheben</h2>
+
+      <div class="sublation">
+        <div class="sublation__inner">
+          <div class="sublation__label">💎 Quỹ đạo: FORTIFY · Aufheben</div>
+          <div class="sublation__statement">
+            Xương chắc khỏe là <em>thuộc tính của cả hệ thống</em> — nạp đủ–thiếu đúng (canxi + vitamin D + protein + K2) <strong>kết hợp với</strong> tải cơ học, cân bằng, và hormone — <em>không phải</em> là hệ quả đơn thuần của việc ăn thực phẩm giàu canxi. Canxi là <em>điều kiện cần nhưng không đủ</em>; hiệu quả tập trung ở &lt;35 tuổi (xây xương) và người thiếu hụt thực sự; thừa canxi ở người già gây hại mà không bảo vệ.
+          </div>
+          <div class="sublation__elevation">
+            <div class="sublation__elev-cell sublation__elev-cell--preserve">
+              <span class="lead">Bảo toàn từ Luận đề</span>
+              Hạt nhân đúng: canxi <em>cần thiết</em> cho xương — không có canxi không thể có xương chắc. Ở người trẻ (&lt;35) và người thiếu hụt, nạp đủ canxi từ thực phẩm giàu sinh khả dụng (sữa chua, phô mai, sữa) là đúng và có ích.
+            </div>
+            <div class="sublation__elev-cell sublation__elev-cell--absorb">
+              <span class="lead">Hấp thụ từ Phản đề</span>
+              Qualifier giờ mang đủ biên: (a) BMD ≠ sức bền; (b) canxi ≠ đủ; (c) thực phẩm ≠ viên uống và sinh khả dụng khác nhau; (d) tác dụng phụ thuộc tuổi và trạng thái thiếu/đủ; (e) vượt ngưỡng gây hại (sỏi thận, vôi hóa mạch, đột quỵ). Những giới hạn này giờ rõ ràng, không im lặng.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         BẢN ĐỒ LẬP LUẬN (TOULMIN) + BẰNG CHỨNG
+    ============================================================ -->
+    <section id="argument-map">
+      <h2><span class="h2-emoji">🗺️</span>Bản đồ Lập luận (Toulmin)</h2>
+      <div class="argument-map">
+        <div class="argument-map__title">Cấu trúc Toulmin của Tổng hợp</div>
+        <div class="toulmin">
+          <div class="toulmin__cell t-grounds">
+            <span class="toulmin__label">Grounds (Căn cứ)</span>
+            BMJ 2026 (69 RCT/153.902 người): canxi+vitamin D không giảm gãy xương/té ngã có ý nghĩa lâm sàng. eLife 2022: canxi tăng BMD ở &lt;35. Cong 2025: BMD tăng không kéo theo giảm gãy xương.
+          </div>
+          <div class="toulmin__cell t-warrant">
+            <span class="toulmin__label">Warrant (Sợi dây)</span>
+            Sức bền xương là hệ quả của nhiều yếu tố tương tác (khoáng + vitamin + protein + tải + hormone); canxi chỉ là một biến số trong hệ — thay đổi nó một mình không đủ để đổi kết cục gãy xương.
+          </div>
+          <div class="toulmin__cell t-claim">
+            <span class="toulmin__label">Claim (Luận điểm)</span>
+            Ăn thực phẩm giàu canxi là điều kiện cần nhưng không đủ; xương chắc đòi hỏi canxi sinh khả dụng + vitamin D + protein + tải cơ học, với hiệu quả tập trung ở &lt;35 tuổi và người thiếu hụt.
+          </div>
+          <div class="toulmin__cell t-backing">
+            <span class="toulmin__label">Backing (Hậu thuẫn)</span>
+Sinh lý học canxi: không có vitamin D, canxi không hấp thụ; khung collagen (protein) là nền khoáng hóa; tải cơ học kích thích tạo xương (luật Wolff).
+          </div>
+          <div class="toulmin__cell t-qualifier">
+            <span class="toulmin__label">Qualifier (Phạm vi)</span>
+            Đúng khi: canxi đủ nhưng <em>không thừa</em> (&lt;2.000–2.500 mg/ngày), từ thực phẩm sinh khả dụng, kèm vitamin D/protein, ở người &lt;35 hoặc thiếu hụt, và đi kèm tải cơ học.
+          </div>
+          <div class="toulmin__cell t-rebuttal">
+            <span class="toulmin__label">Rebuttal (Phản bác)</span>
+            Ở người &gt;50 sống cộng đồng khỏe mạnh, bổ sung canxi/vitamin D không giảm gãy xương (JAMA, BMJ 2026) — và viên liều cao tăng CAC/sỏi thận. Viện dưỡng lão/thiếu hụt nghiêm trọng là ngoại lệ được hưởng lợi.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="proof">
+      <h2><span class="h2-emoji">🧪</span>Bằng chứng Minh họa</h2>
+      <p><span class="diff diff-supp">HỖ TRỢ</span><strong>Trường hợp chính.</strong> Meta-analysis BMJ 2026 của Masse et al. tổng hợp 69 thử nghiệm ngẫu nhiên trên 153.902 người lớn. Kết luận trực tiếp: canxi, vitamin D, hay kết hợp <em>"gần như không có lợi ích lâm sàng nào"</em> trong phòng chống gãy xương và té ngã ở người lớn sống cộng đồng; các tác giả đề nghị các hội đồng hướng dẫn <em>"đánh giá lại khuyến nghị bổ sung canxi/vitamin D"</em> và chuyển nguồn lực sang <span class="evidence-trigger" data-evidence="ev-exercise">tập cân bằng &amp; kháng lực</span>. Ánh xạ vào Toulmin: đây chính là Grounds + Rebuttal — bằng chứng trực tiếp rằng canxi đơn không đạt kết cục gãy xương.</p>
+
+      <div class="bar-chart">
+        <div class="bar-chart__title">Giảm nguy cơ gãy xương theo can thiệp (ước lượng từ RCT)</div>
+        <div class="bar-row"><span class="bar-label">Canxi đơn trị (&gt;50 tuổi)</span><div class="bar-track"><div class="bar-fill" style="width:4%;background:var(--antithesis)"></div></div><span class="bar-value">~0%</span></div>
+        <div class="bar-row"><span class="bar-label">Canxi + Vit D (&gt;50 tuổi)</span><div class="bar-track"><div class="bar-fill" style="width:9%;background:var(--warn)"></div></div><span class="bar-value">~9%*</span></div>
+        <div class="bar-row"><span class="bar-label">Canxi (&lt;35, tăng BMD)</span><div class="bar-track"><div class="bar-fill" style="width:30%;background:var(--thesis)"></div></div><span class="bar-value">BMD ↑</span></div>
+        <div class="bar-row"><span class="bar-label"><strong>Tải cơ học (kháng lực)</strong></span><div class="bar-track"><div class="bar-fill" style="width:55%;background:var(--synthesis)"></div></div><span class="bar-value">Lớn nhất</span></div>
+      </div>
+      <p style="font-size:12px;color:var(--text-muted)">*Giảm 9% toàn bộ gãy xương với canxi+vitamin D trong BMJ 2026 — được tác giả đánh giá <em>không có ý nghĩa lâm sàng</em> theo GRADE. Các con số mang tính minh họa theo hướng tương đối từ nguồn đã dẫn.</p>
+
+      <p><strong>Trường hợp tương phản.</strong> Ở người <em>thiếu hụt nghiêm trọng</em> — như phụ nữ cao tuổi trong viện dưỡng lão thiếu vitamin D (Chapuy 1992) — bổ sung vitamin D3 + canxi <em>thực sự giảm gãy xương hông</em>. Qualifier đang làm việc thật: lợi ích tồn tại ở nhóm thiếu hụt, biến mất ở nhóm đủ. Nếu Qualifier không thể vận hành, Tổng hợp sẽ rỗng tuếch.</p>
+
+      <div class="flip-card" tabindex="0">
+        <div class="flip-card__inner">
+          <div class="flip-card__face flip-card__face--front">Trường hợp tương phản chứng minh điều gì?</div>
+          <div class="flip-card__face flip-card__face--back">Nó xác nhận Qualifier đang làm việc thật: canxi bảo vệ người <em>thiếu hụt</em> nhưng không bảo vệ người <em>đủ</em>. Đây là biên giới của luận đề — không phải lỗ hổng mà là phạm vi.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         HỆ QUẢ LAN TỎA
+    ============================================================ -->
+    <section id="ripple">
+      <h2><span class="h2-emoji">🌊</span>Hệ quả Lan tỏa</h2>
+
+      <h3><span class="diff diff-core">CỐT LÕI</span>Bài kiểm tra ứng dụng</h3>
+      <p>Một kịch bản mới. Một thanh niên 28 tuổi, khỏe mạnh, ăn đủ, đang phân vân: uống 1.000 mg canxi mỗi ngày để "chắc xương" như quảng cáo. Áp dụng Tổng hợp: với người đã đủ canxi, viên uống không thêm lợi ích mà tăng nguy cơ sỏi thận/vôi hóa mạch — nên không. Thay vào đó, anh ta nên đảm bảo vitamin D, ăn sữa chua/phô mai (sinh khả dụng cao + protein), và — quan trọng nhất — <em>tập chịu trọng lượng</em> để kích thích xương khoáng hóa trong giai đoạn xây peak bone mass. Đây chính là hành động mà Tổng hợp dự báo, khác biệt rõ với lời khuyên quảng cáo.</p>
+
+      <div class="ripple">
+        <div class="ripple__label">🌊 Nếu tổng hợp này đúng, thì…</div>
+        <div class="ripple__claim">Mọi chiến lược "bổ sung một chất để chữa một hệ thống phức tạp" đều sai về mặt cấu trúc — và ngành thực phẩm chức năng đang bán cho chúng ta sự đơn giản hóa quá mức.</div>
+        <div class="ripple__adjacent">Lĩnh vực lân cận bị thách thức: <strong>ngành công nghiệp bổ sung dinh dưỡng và thông điệp marketing "một viên giải quyết tất cả".</strong> Vòng biện chứng kế tiếp sẽ hỏi: liệu triết lý này có lan sang các chất bổ sung khác (omega-3, collagen, sắt) không?</div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         NHẬT KÝ NGUỴ BIỆN
+    ============================================================ -->
+    <section id="fallacy-log">
+      <h2><span class="h2-emoji">⚠️</span>Nhật ký Ngụy biện</h2>
+      <p style="color:var(--text-muted);font-size:14px">Mỗi mục nêu tên một ngụy biện phát hiện trong State 3 và bản viết lại nó ép buộc. Một nhật ký đóng là ổn; một nhật ký rỗng thì không.</p>
+      <details class="deep-dive fallacy-log">
+        <summary>⚠️ Nhật ký Ngụy biện (5 phát hiện từ kiểm toán 12-ngụy-biện)</summary>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">1. Nhầm điều kiện cần ↔ điều kiện đủ — trong Luận đề gốc</div>
+          <p>Luận đề gốc nói canxi "làm xương chắc" (đủ), nhưng bằng chứng chỉ ủng hộ "canxi cần thiết" (cần). Đây là lỗi logic cốt lõi khiến toàn bộ phản biện sụp đổ.</p>
+          <p><strong>Viết lại:</strong> luận đề giờ nói canxi là "điều kiện cần nhưng không đủ", và Tổng hợp đặt canxi trong hệ thống các yếu tố.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">2. Hasty Generalisation — trong các bằng chứng ủng hộ</div>
+          <p>Khái quát từ trường hợp canxi giúp người trẻ/thiếu hụt thành "canxi giúp mọi người". Dữ liệu BMJ 2026 bác bỏ sự khái quát này.</p>
+          <p><strong>Viết lại:</strong> Qualifier phân biệt rõ nhóm &lt;35/thiếu hụt (được lợi) và nhóm &gt;50/đủ (không được lợi).</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">3. Confusing proxy with outcome — trong khái niệm BMD</div>
+          <p>Đánh đồng BMD (proxy) với giảm gãy xương (kết cục). Bằng chứng Cong 2025 cho thấy BMD tăng mà gãy xương không giảm.</p>
+          <p><strong>Viết lại:</strong> luận đề giờ lấy "giảm gãy xương thực tế" làm kết cục, không lấy số BMD.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">4. Motte-and-Bailey — trong khuyến nghị quảng cáo</div>
+          <p>Quảng cáo bảo vệ yếu bản "canxi cần cho xương" (motte) trong khi đẩy mạnh bản mạnh "canxi làm xương chắc" (bailey). Tổng hợp buộc tách bạch hai mệnh đề.</p>
+          <p><strong>Viết lại:</strong> phân biệt rõ "cần" (đúng) và "đủ" (sai) — không cho phép trượt giữa hai nghĩa.</p>
+        </div>
+        <div class="fallacy-entry">
+          <div class="fallacy-entry__name">5. Base Rate Neglect — trong khuyến nghị bổ sung đại trà</div>
+          <p>Bỏ qua tỷ lệ nền: đa số người khỏe mạnh sống cộng đồng không thiếu canxi đến mức được lợi, nhưng khuyến nghị vẫn nhắm vào họ như thể họ là nhóm thiếu hụt.</p>
+          <p><strong>Viết lại:</strong> lời khuyên phân tầng theo nguy cơ — chỉ người thiếu hụt/người già trong viện dưỡng lão mới cần bổ sung mạnh.</p>
+        </div>
+        <p style="font-size:13px;color:var(--text-muted);margin-top:16px">Ngụy biện được kiểm toán nhưng không phát hiện: Straw Man, False Dilemma, Slippery Slope, Ad Hominem, Appeal to Authority, Correlation/Causation (đã xử lý ở mục 3), No True Scotsman, Survivorship Bias, Tu Quoque.</p>
+      </details>
+    </section>
+
+    <!-- ============================================================
+         DƯ ĐỊA
+    ============================================================ -->
+    <section id="residuals">
+      <h2><span class="h2-emoji">📉</span>Dư địa &amp; Điều kiện biên</h2>
+      <div class="residuals">
+        <h4>Điều lập luận này <em>không</em> bao phủ</h4>
+        <ul>
+          <li><span class="residuals__badge">8a</span>Người đã được chẩn đoán loãng xương đang dùng thuốc bisphosphonate — nơi canxi+vitamin D là nền tảng điều trị hỗ trợ, không phải mục tiêu phản biện.</li>
+          <li><span class="residuals__badge">8a</span>Các bệnh xương chuyển hóa hiếm (Paget, cường cận giáp, loạn dưỡng xương thận) — cơ chế khác hoàn toàn.</li>
+          <li><span class="residuals__badge">8a</span>Câu hỏi liệu canxi có tác dụng phòng ngừa dài hạn gãy xương ở người trẻ sau hàng chục năm — không được thử nghiệm trực tiếp.</li>
+        </ul>
+        <h4>Falsifiers (Điều có thể bác bỏ)</h4>
+        <ul>
+          <li><span class="residuals__badge">8b</span>Một RCT dài hạn cho thấy bổ sung canxi ở người trưởng thành khỏe mạnh &gt;50 tuổi làm giảm gãy xương có ý nghĩa lâm sàng với hiệu ứng &gt;15%.</li>
+          <li><span class="residuals__badge">8b</span>Bằng chứng rằng canxi từ thực phẩm giàu sinh khả dụng, không kèm vitamin D/protein/tải, vẫn giảm gãy xương ở người đủ.</li>
+          <li><span class="residuals__badge">8b</span>Bác bỏ mối liên hệ CAC/sỏi thận với viên canxi liều cao trong các RCT thiết kế tốt.</li>
+        </ul>
+        <h4>Đòn bẩy tin cậy</h4>
+        <ul>
+          <li><span class="residuals__badge">8c</span>↑ RCT canxi trên người trẻ (&lt;35) theo dõi đến tuổi già chứng minh giảm gãy xương — đóng khoảng trống thời gian hiện nay.</li>
+          <li><span class="residuals__badge">8c</span>↑ Nghiên cứu Việt Nam về tỷ lệ thiếu vitamin D/canxi thực tế — quyết định mức độ áp dụng khuyến nghị "thiếu thì bổ sung".</li>
+          <li><span class="residuals__badge">8c</span>↓ Bằng chứng mới rằng viên canxi liều vừa phải (&lt;1.000 mg) an toàn và có lợi hơn dự kiến ở người &gt;50.</li>
+          <li><span class="residuals__badge">8c</span>↓ Một meta-analysis lớn hơn đảo ngược kết luận BMJ 2026 về canxi+vitamin D.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         KIỂM TRA KIẾN THỨC
+    ============================================================ -->
+    <section id="quiz" class="quiz">
+      <h2>🧠 Kiểm tra Kiến thức</h2>
+      <p style="font-size:14px;color:var(--text-muted);margin-bottom:20px">Những câu này kiểm tra khả năng bảo vệ <em>cấu trúc</em> của lập luận, không phải trí nhớ ví dụ.</p>
+
+      <fieldset data-q="1" data-answer="d">
+        <legend>1. Vì sao "canxi làm xương chắc" là nhầm lẫn điều kiện cần/đủ?</legend>
+        <label class="quiz-option"><input type="radio" name="q1" value="a">a. Vì canxi không quan trọng gì cho xương.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="b">b. Vì canxi chỉ có trong sữa.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="c">c. Vì xương không cần canxi.</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="d">d. Vì canxi là điều kiện cần (thiếu thì không thể chắc) nhưng không đủ (chỉ canxi không tạo xương chắc).</label>
+      </fieldset>
+
+      <fieldset data-q="2" data-answer="b">
+        <legend>2. BMJ 2026 (69 RCT/153.902 người) kết luận gì về bổ sung canxi/vitamin D ở người lớn sống cộng đồng?</legend>
+        <label class="quiz-option"><input type="radio" name="q2" value="a">a. Giảm mạnh gãy xương hông và cột sống.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="b">b. Gần như không có lợi ích lâm sàng trong phòng chống gãy xương và té ngã.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="c">c. Chỉ có hại, không có lợi.</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="d">d. Không đủ dữ liệu để kết luận.</label>
+      </fieldset>
+
+      <fieldset data-q="3" data-answer="a">
+        <legend>3. Vì sao "thực phẩm giàu canxi" không phải lúc nào cũng cung cấp canxi cho xương?</legend>
+        <label class="quiz-option"><input type="radio" name="q3" value="a">a. Vì oxalate/phytate trong một số thực phẩm (rau bina, cám lúa mì) chặn hấp thụ canxi.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="b">b. Vì canxi chỉ hấp thụ khi trời nắng.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="c">c. Vì thực phẩm giàu canxi luôn ít protein.</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="d">d. Vì canxi không tồn tại trong thực vật.</label>
+      </fieldset>
+
+      <fieldset data-q="4" data-answer="d">
+        <legend>4. Nhóm nào được hưởng lợi thực sự từ việc nạp thêm canxi?</legend>
+        <label class="quiz-option"><input type="radio" name="q4" value="a">a. Người &gt;50 tuổi khỏe mạnh sống cộng đồng.</label>
+        <label class="quiz-option"><input type="radio" name="q4" value="b">b. Người đã đủ canxi trong chế độ ăn.</label>
+        <label class="quiz-option"><input type="radio" name="q4" value="c">c. Tất cả mọi người như nhau.</label>
+        <label class="quiz-option"><input type="radio" name="q4" value="d">d. Người &lt;35 tuổi (xây xương đỉnh) và người thiếu hụt thực sự.</label>
+      </fieldset>
+
+      <fieldset data-q="5" data-answer="c">
+        <legend>5. Theo Tổng hợp, yếu tố nào ngoài canxi quyết định sức bền xương?</legend>
+        <label class="quiz-option"><input type="radio" name="q5" value="a">a. Chỉ cần canxi là đủ.</label>
+        <label class="quiz-option"><input type="radio" name="q5" value="b">b. Chỉ cần vitamin D.</label>
+        <label class="quiz-option"><input type="radio" name="q5" value="c">c. Vitamin D + protein + tải cơ học + hormone, cùng với canxi sinh khả dụng.</label>
+        <label class="quiz-option"><input type="radio" name="q5" value="d">d. Không yếu tố nào, chỉ do di truyền.</label>
+      </fieldset>
+
+      <button class="quiz-check-btn" id="check-quiz">Kiểm tra Đáp án</button>
+      <div class="quiz-score" id="quiz-score" role="status" aria-live="polite"></div>
+    </section>
+
+    <section id="gate5" class="gate5">
+      <div class="gate5__title">Gate 5 — Tiếp tục hay Điều chỉnh?</div>
+      <div class="gate5__body">
+        Hệ quả lan tỏa tôi rút ra: <em>"Mọi chiến lược 'bổ sung một chất để chữa một hệ thống phức tạp' đều sai về mặt cấu trúc — và ngành thực phẩm chức năng đang bán cho chúng ta sự đơn giản hóa quá mức."</em> Bốn bước đi tiếp theo:
+      </div>
+      <ul class="gate5__options">
+        <li data-key="a"><strong>Spiral</strong> — đưa tổng hợp này thành luận đề kế tiếp, lập luận về nền kinh tế của ngành bổ sung dinh dưỡng nói chung.</li>
+        <li data-key="b"><strong>Tinh chỉnh</strong> — cải thiện một mục cụ thể (cho biết mục nào).</li>
+        <li data-key="c"><strong>Nhánh</strong> — lập luận riêng về hệ quả lan tỏa trong lĩnh vực lân cận: marketing thực phẩm chức năng.</li>
+        <li data-key="d"><strong>Kết thúc</strong> — tài liệu này đứng nguyên như hiện tại.</li>
+      </ul>
+    </section>
+
+    <div class="footer-note">
+      <p><strong>Ghi chú phương pháp:</strong> Tài liệu này được rèn bằng Socratic Dialectic Engine v2.2 — 10 trạng thái qua 5 cổng phản hồi, 3 vòng xoáy biện chứng.</p>
+      <p><em>Chế độ nghiên cứu: <span id="research-mode-value">web-enabled — bằng chứng được dẫn nguồn ngày cụ thể.</span></em></p>
+    </div>
+
+    </div><!-- /.canvas-inner -->
+  </main>
+
+  <aside class="marginalia" aria-label="Marginalia and Evidence Locker">
+
+    <div class="marginalia__title">🔎 Kho Bằng chứng</div>
+    <div id="evidence-locker">
+      <div class="evidence-item" id="ev-bmj">
+        <span class="evidence-item__label">Meta-analysis BMJ 2026</span>
+        Masse et al. — 69 RCT, 153.902 người: canxi, vitamin D, hay kết hợp "gần như không có lợi ích lâm sàng" trong phòng chống gãy xương và té ngã ở người lớn sống cộng đồng.
+        <div class="evidence-item__source">BMJ 2026;393:e088050 · doi:10.1136/bmj-2025-088050 · 2026-05-20</div>
+      </div>
+      <div class="evidence-item" id="ev-cac">
+        <span class="evidence-item__label">Vôi hóa động mạch vành (CAC)</span>
+        Bổ sung canxi liên quan tăng nguy cơ CAC (RR 1.22) — không thấy với canxi từ thực phẩm. JACC Focus Seminar 2021 cũng lưu ý viên canxi + vitamin D làm tăng sỏi thận và nguy cơ đột quỵ (RR 1.17).
+        <div class="evidence-item__source">Anderson et al., J Am Heart Assoc · JACC 2021-02-02</div>
+      </div>
+      <div class="evidence-item" id="ev-oxalate">
+        <span class="evidence-item__label">Oxalate chặn hấp thụ canxi</span>
+        Rau bina, củ cải đường, đại hoàng chứa oxalate gắn canxi trong ruột, giảm hấp thụ. Bone Health &amp; Osteoporosis Foundation khuyến cáo không tính các thực phẩm này là nguồn canxi.
+        <div class="evidence-item__source">bonehealthandosteoporosis.org · Heaney (PMID 2321572)</div>
+      </div>
+      <div class="evidence-item" id="ev-protein">
+        <span class="evidence-item__label">Ma trận vi chất &amp; protein</span>
+        Sữa chua tăng cường canxi+vitamin D có lợi cho BMD (SMD 0.784, Liu 2020). Lợi ích đến từ ma trận canxi+vit D+protein, không phải canxi đơn.
+        <div class="evidence-item__source">Liu et al., Food &amp; Function 2020 · PMID 33237064</div>
+      </div>
+      <div class="evidence-item" id="ev-exercise">
+        <span class="evidence-item__label">Tải cơ học &gt; bổ sung</span>
+        BMJ editorial 2026: chuyển nguồn lực sang tập cân bằng và kháng lực — can thiệp đã chứng minh giảm té ngã và chấn thương. Đây là yếu tố quyết định sức bền xương ở người già.
+        <div class="evidence-item__source">BMJ 2026 · doi:10.1136/bmj.s913</div>
+      </div>
+    </div>
+
+    <div class="marginalia__title">📎 Ghi chú bên lề</div>
+    <div class="sidenote">
+      <span class="sidenote__label">Ký hiệu độ khó</span>
+      🟢 Cốt lõi · 🟡 Hỗ trợ · 🔴 Đào sâu — bỏ qua 🔴 ở lượt đọc đầu.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Giao thức đọc</span>
+      Đọc ba-panel + bản đồ lập luận trước. Nếu bạn đã bất đồng, nhảy tới Nhật ký Ngụy biện + Dư địa — nơi sự trung thực của lập luận sống.
+    </div>
+    <div class="sidenote">
+      <span class="sidenote__label">Toulmin, ngắn gọn</span>
+      Lược đồ của Stephen Toulmin (1958) tách luận điểm khỏi bằng chứng, sợi dây logic, phạm vi, và phản ví dụ. Dùng nó làm giàn giáo ngăn lập luận sụp đổ dưới áp lực phản biện.
+    </div>
+
+    <div class="marginalia__title">📝 Ghi chú của Triết gia <small style="font-weight:400;text-transform:none;letter-spacing:0">(bôi đen văn bản để thêm)</small></div>
+    <div class="phil-notes" id="phil-notes">
+      <div class="phil-note__empty" id="phil-notes-empty">Chọn bất kỳ văn bản nào trong lập luận, rồi gõ phản biện của riêng bạn. Ghi chú chỉ lưu trên thiết bị này.</div>
+    </div>
+  </aside>
+
+</div><!-- /.layout -->
+
+<script>(function(){
+  const KEY = 'dialectic-theme';
+  const btn = document.getElementById('theme-toggle');
+  const stored = localStorage.getItem(KEY);
+  if (stored) document.documentElement.setAttribute('data-theme', stored);
+  const updateIcon = () => {
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    btn.textContent = dark ? '☀' : '☾';
+    btn.title = dark ? 'Switch to light mode' : 'Switch to dark mode';
+  };
+  updateIcon();
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem(KEY, next);
+    updateIcon();
+  });
+})();
+
+(function(){
+  const KEY = 'dialectic-focus';
+  const btn = document.getElementById('focus-toggle');
+  if (localStorage.getItem(KEY) === '1') document.documentElement.classList.add('focus-mode');
+  btn.addEventListener('click', () => {
+    document.documentElement.classList.toggle('focus-mode');
+    localStorage.setItem(KEY, document.documentElement.classList.contains('focus-mode') ? '1' : '0');
+  });
+})();
+
+(function(){
+  const fill = document.getElementById('progress-fill');
+  const pct  = document.getElementById('progress-percent');
+  const update = () => {
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const p = Math.max(0, Math.min(1, scrolled / Math.max(1, total)));
+    const percent = Math.round(p * 100);
+    fill.style.width = percent + '%';
+    pct.textContent = percent + '%';
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+
+  const wc = document.querySelector('.canvas').innerText.trim().split(/\s+/).length;
+  document.getElementById('reading-time').textContent = Math.max(1, Math.round(wc / 220));
+})();
+
+(function(){
+  const meter = document.getElementById('paradox-meter');
+  const fill  = document.getElementById('paradox-fill');
+  const val   = document.getElementById('paradox-value');
+  const hint  = document.getElementById('paradox-hint');
+
+  const zones = [
+    { id: 'hook',         pct: 5,   phase: 'thesis',    hint: 'Bắt đầu — luận đề chưa bị thử thách.' },
+    { id: 'scope',        pct: 8,   phase: 'thesis',    hint: 'Phạm vi thiết lập. Căng thẳng chưa được gọi tên.' },
+    { id: 'dialectic',    pct: 15,  phase: 'thesis',    hint: 'Ba vị thế tuyên bố. Sự va chạm sắp tới.' },
+    { id: 'thesis',       pct: 25,  phase: 'thesis',    hint: 'Luận đề mài sắc; tiền đề được đào lên.' },
+    { id: 'xexam',        pct: 65,  phase: 'probe',     hint: 'Chất vấn đang diễn ra — ngồi với sự nghi ngờ.' },
+    { id: 'collision',    pct: 95,  phase: 'collision', hint: 'Đỉnh điểm bất hòa — Luận đề và Phản đề va chạm.' },
+    { id: 'loop2',        pct: 70,  phase: 'probe',     hint: 'Vòng 2: thực phẩm ≠ viên uống.' },
+    { id: 'loop3',        pct: 75,  phase: 'probe',     hint: 'Vòng 3: ai và khi nào.' },
+    { id: 'synthesis',    pct: 55,  phase: 'synthesis', hint: 'Aufheben — căng thẳng giải quyết theo hướng đi lên.' },
+    { id: 'argument-map', pct: 45,  phase: 'synthesis', hint: 'Cấu trúc lập luận hiện rõ.' },
+    { id: 'proof',        pct: 40,  phase: 'synthesis', hint: 'Tổng hợp được neo trong bằng chứng.' },
+    { id: 'ripple',       pct: 25,  phase: 'ripple',    hint: 'Lan tỏa ra các lĩnh vực lân cận.' },
+    { id: 'fallacy-log',  pct: 15,  phase: 'ripple',    hint: 'Kiểm toán lại cuộc kiểm toán.' },
+    { id: 'residuals',    pct: 10,  phase: 'ripple',    hint: 'Tự đánh giá trung thực.' },
+    { id: 'quiz',         pct: 5,   phase: 'ripple',    hint: 'Kiểm tra khả năng nắm cấu trúc.' }
+  ];
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const z = zones.find(x => x.id === e.target.id);
+      if (!z) return;
+      fill.style.width = z.pct + '%';
+      val.textContent  = z.pct + '%';
+      hint.textContent = z.hint;
+      meter.dataset.phase = z.phase;
+    });
+  }, { rootMargin: '-25% 0px -60% 0px', threshold: 0 });
+
+  zones.forEach(z => {
+    const el = document.getElementById(z.id);
+    if (el) io.observe(el);
+  });
+})();
+
+(function(){
+  const compassNodes = document.querySelectorAll('.compass-node[data-target]');
+  const tocLinks     = document.querySelectorAll('.toc a[data-target]');
+  const cmap = new Map();
+  compassNodes.forEach(a => cmap.set(a.dataset.target, a));
+  const tmap = new Map();
+  tocLinks.forEach(a => tmap.set(a.dataset.target, a));
+
+  const sectionIds = new Set([
+    ...Array.from(cmap.keys()),
+    ...Array.from(tmap.keys())
+  ]);
+  const compassAlias = {
+    'hook': 'scope', 'argument-map': 'thesis', 'dialectic': 'thesis',
+    'proof': 'synthesis', 'fallacy-log': 'ripple',
+    'residuals': 'ripple', 'quiz': 'ripple', 'gate5': 'ripple',
+    'loop2': 'probe', 'loop3': 'probe'
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      tocLinks.forEach(a => a.classList.remove('active'));
+      const tocLink = tmap.get(e.target.id);
+      if (tocLink) tocLink.classList.add('active');
+      const cTarget = cmap.has(e.target.id) ? e.target.id : compassAlias[e.target.id];
+      compassNodes.forEach(n => n.classList.remove('active'));
+      const cNode = cmap.get(cTarget);
+      if (cNode) cNode.classList.add('active');
+    });
+  }, { rootMargin: '-30% 0px -60% 0px', threshold: 0 });
+
+  document.querySelectorAll('.canvas section[id]').forEach(el => {
+    if (sectionIds.has(el.id) || compassAlias[el.id]) io.observe(el);
+  });
+
+  document.querySelectorAll('.compass-node[data-target], .toc a[data-target]').forEach(a => {
+    a.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      const target = document.getElementById(a.dataset.target);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+})();
+
+(function(){
+  document.querySelectorAll('.xexam-card__defense-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.dataset.target;
+      const panel = document.getElementById(targetId);
+      if (!panel) return;
+      const isOpen = panel.classList.toggle('is-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+      btn.textContent = isOpen ? 'Ẩn Bào chữa' : 'Nghe Bào chữa';
+    });
+  });
+})();
+
+(function(){
+  const triggers = document.querySelectorAll('.evidence-trigger');
+  triggers.forEach(t => {
+    t.setAttribute('tabindex', '0');
+    t.setAttribute('role', 'button');
+    const activate = () => {
+      const id = t.dataset.evidence;
+      const item = document.getElementById(id);
+      if (!item) return;
+      document.querySelectorAll('.evidence-item.highlight').forEach(x => x.classList.remove('highlight'));
+      document.querySelectorAll('.evidence-trigger.active').forEach(x => x.classList.remove('active'));
+      item.classList.add('highlight');
+      t.classList.add('active');
+      item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => {
+        item.classList.remove('highlight');
+        t.classList.remove('active');
+      }, 4000);
+    };
+    t.addEventListener('click', activate);
+    t.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+  });
+})();
+
+(function(){
+  const KEY = 'dialectic-phil-notes';
+  const popup     = document.getElementById('phil-popup');
+  const popupQ    = document.getElementById('phil-popup__quote');
+  const popupIn   = document.getElementById('phil-popup__input');
+  const btnSave   = document.getElementById('phil-popup__save');
+  const btnCancel = document.getElementById('phil-popup__cancel');
+  const notesEl   = document.getElementById('phil-notes');
+  const emptyEl   = document.getElementById('phil-notes-empty');
+  const canvas    = document.querySelector('.canvas');
+
+  let pendingQuote = '';
+
+  const load = () => {
+    try { return JSON.parse(localStorage.getItem(KEY) || '[]'); } catch(e) { return []; }
+  };
+  const save = (notes) => localStorage.setItem(KEY, JSON.stringify(notes));
+
+  const escapeHtml = (s) => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+  const render = () => {
+    const notes = load();
+    notesEl.innerHTML = '';
+    if (notes.length === 0){
+      notesEl.appendChild(emptyEl);
+      return;
+    }
+    notes.forEach((n, i) => {
+      const el = document.createElement('div');
+      el.className = 'phil-note';
+      el.innerHTML =
+        '<button class="phil-note__del" aria-label="Delete note" title="Delete">✕</button>' +
+        (n.quote ? '<div class="phil-note__quote">"' + escapeHtml(n.quote) + '"</div>' : '') +
+        '<div class="phil-note__body">' + escapeHtml(n.body) + '</div>';
+      el.querySelector('.phil-note__del').addEventListener('click', () => {
+        const cur = load();
+        cur.splice(i, 1);
+        save(cur);
+        render();
+      });
+      notesEl.appendChild(el);
+    });
+  };
+
+  const closePopup = () => {
+    popup.classList.remove('show');
+    popupIn.value = '';
+    pendingQuote = '';
+  };
+
+  canvas.addEventListener('mouseup', () => {
+    const sel = window.getSelection();
+    const text = sel ? sel.toString().trim() : '';
+    if (text.length < 8) return;
+    if (!sel.anchorNode || !canvas.contains(sel.anchorNode)) return;
+    pendingQuote = text;
+    popupQ.textContent = text.length > 160 ? text.slice(0, 160) + '…' : text;
+    const range = sel.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    const pTop = window.scrollY + rect.bottom + 8;
+    const pLeft = Math.min(window.innerWidth - 340, rect.left + window.scrollX);
+    popup.style.top  = pTop  + 'px';
+    popup.style.left = Math.max(16, pLeft) + 'px';
+    popup.classList.add('show');
+    setTimeout(() => popupIn.focus(), 60);
+  });
+
+  btnCancel.addEventListener('click', closePopup);
+  btnSave.addEventListener('click', () => {
+    const body = popupIn.value.trim();
+    if (!body) { closePopup(); return; }
+    const notes = load();
+    notes.push({ quote: pendingQuote, body: body, ts: Date.now() });
+    save(notes);
+    render();
+    closePopup();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && popup.classList.contains('show')) closePopup();
+  });
+  document.addEventListener('click', (e) => {
+    if (popup.classList.contains('show') && !popup.contains(e.target) && !window.getSelection().toString().trim()) {
+      closePopup();
+    }
+  });
+
+  render();
+})();
+
+(function(){
+  const KEY = 'dialectic-quiz';
+  const fieldsets = document.querySelectorAll('.quiz fieldset');
+  const btn = document.getElementById('check-quiz');
+  const scoreEl = document.getElementById('quiz-score');
+
+  fieldsets.forEach(fs => {
+    fs.querySelectorAll('.quiz-option').forEach(label => {
+      const input = label.querySelector('input');
+      input.addEventListener('change', () => {
+        fs.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('selected'));
+        if (input.checked) label.classList.add('selected');
+        persist();
+      });
+    });
+  });
+
+  try {
+    const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+    Object.entries(saved).forEach(([q, v]) => {
+      const input = document.querySelector('input[name="' + q + '"][value="' + v + '"]');
+      if (input){ input.checked = true; input.closest('.quiz-option').classList.add('selected'); }
+    });
+  } catch(e){}
+
+  function persist(){
+    const state = {};
+    fieldsets.forEach(fs => {
+      const q = 'q' + fs.dataset.q;
+      const sel = fs.querySelector('input:checked');
+      if (sel) state[q] = sel.value;
+    });
+    localStorage.setItem(KEY, JSON.stringify(state));
+  }
+
+  btn.addEventListener('click', () => {
+    let correct = 0;
+    fieldsets.forEach(fs => {
+      const correctVal = fs.dataset.answer;
+      const chosen = fs.querySelector('input:checked');
+      fs.querySelectorAll('.quiz-option').forEach(l => l.classList.remove('correct-answer', 'incorrect-answer'));
+      const correctLabel = fs.querySelector('input[value="' + correctVal + '"]').closest('.quiz-option');
+      correctLabel.classList.add('correct-answer');
+      if (chosen){
+        if (chosen.value === correctVal) correct++;
+        else chosen.closest('.quiz-option').classList.add('incorrect-answer');
+      }
+    });
+    const total = fieldsets.length;
+    scoreEl.className = 'quiz-score show';
+    if (correct === total){ scoreEl.textContent = 'Hoàn hảo — ' + correct + '/' + total + '. Bạn có thể bảo vệ lập luận này.'; scoreEl.classList.add('pass'); }
+    else if (correct >= Math.ceil(total * 0.6)){ scoreEl.textContent = correct + '/' + total + '. Đọc lại bản đồ Toulmin và Nhật ký Ngụy biện.'; scoreEl.classList.add('mid'); }
+    else { scoreEl.textContent = correct + '/' + total + '. Bắt đầu lại từ "Nhìn nhanh".'; scoreEl.classList.add('fail'); }
+  });
+})();
+
+(function(){
+  const KEY = 'dialectic-scroll';
+  const saved = parseInt(localStorage.getItem(KEY) || '0', 10);
+  if (saved > 0) window.scrollTo(0, saved);
+  let t;
+  window.addEventListener('scroll', () => {
+    clearTimeout(t);
+    t = setTimeout(() => localStorage.setItem(KEY, String(window.scrollY)), 200);
+  }, { passive: true });
+})();
+
+</script>
+</body>
+</html>
