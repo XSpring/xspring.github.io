@@ -1,6 +1,6 @@
 ---
 title: "The 7 Harnesses of AI Agent Engineering: From Model to Enterprise AI Workforce"
-author: "Orchestrated via the educational-notes skill"
+author: "L"
 audience: "AI engineers, solution architects, data specialists, and technology leaders preparing agents for enterprise production"
 length: "LONG (12 chapters)"
 modality: "narrative"
