@@ -369,9 +369,6 @@ Walking through the application: Synthesis buộc anh ta đặt ba câu hỏi th
 
 The adjacent domain fundamentally challenged by this implication là **lý thuyết định giá tài sản tại thị trường cận biên — "frontier market premium" có thật hay chỉ là bù rủi ro đội lốt** (và rộng hơn: hiệu ứng "home bias" + vấn đề agency trong đầu tư nước ngoài). Vòng dialectic kế tiếp sẽ lấy implication này làm Thesis và chất vấn nó trong miền đó: liệu premium của thị trường cận biên có phải là thứ có thể thu hoạch một cách hệ thống, hay nó chỉ là khoản đền bù cho người chấp nhận rủi ro mà tổ chức tài chính đã tính đúng giá từ lâu?
 
-> [!TIP]
-> Radiating Implication này là hạt giống cho vòng dialectic kế tiếp — xem ghi chú "Continue or Iterate?" ở cuối tài liệu.
-
 ---
 
 ## ⚠️ Fallacy Log
@@ -506,7 +503,7 @@ Ba câu hỏi. Chúng kiểm tra xem bạn có thể bảo vệ *cấu trúc* c�
 
 ## 📚 Appendix — The Evidence Locker
 
-Tất cả footnotes được tham chiếu ở trên. Gói lại ở đây để giữ thân bài sạch trong khi cho phép bạn kiểm tra nguồn một cú bấm.
+Tất cả footnotes được tham chiếu ở trên.
 
 [^1]: VnEconomy (2025-04-24), "Hanoi's primary apartment market continues its upward trend" — Savills: giá sơ cấp Hà Nội Q1/2025 tăng 32% YoY, trung bình 5 năm +22%/năm. https://en.vneconomy.vn/hanois-primary-apartment-market-continues-its-upward-trend.htm — dùng trong Premise 1 Edge Case và The Proof.
 
