@@ -1,41 +1,10 @@
 # Mang lương Mỹ về Việt Nam: bài viết đúng ở đâu, sai ở đâu?
 
-> **Type:** Forged dialectic critique · **Version:** 1.2.0 · **Reading time:** ~10 min
-> **Method:** Socratic Dialectic Engine v2.2 (10 states)
+> **Version:** 1.2.0 · **Reading time:** ~10 min
 
 Phản biện luận điểm phổ biến trên mạng xã hội: *"Cái rẻ ở Việt Nam không phải hàng hóa, là lao động; 'sống sướng' chỉ là mua được giờ người khác; tiết kiệm quy đổi theo tỷ giá nên về nước không tích lũy được hơn."* — Luận điểm này đúng về xu hướng, sai về tính tuyệt đối; và lợi thế thật của việc mang thu nhập đô-la về nước nằm ở một cấu trúc mà bài viết bỏ lỡ: **ăn rẻ, tích trữ đắt.**
 
 ---
-
-## 🛤️ The Dialectic Tracker
-
-[**`S1`** 📘 Thesis](#-the-thesis) → [**`S2`** 🔍 Cross-Examine](#-the-cross-examination) → [**`S4`** ⚔️ Collide](#️-the-antithesis-the-collision) → [**`S5`** 💎 Sublate](#-the-synthesis-the-aufheben) → [**`S7`** 🌊 Radiate](#-the-radiating-implication)
-
-## ⚙️ Engine Status — Dialectic Pipeline Executed
-
-The Socratic Dialectic Engine walked all 10 states. This block is the public audit trail — you can verify which pipeline stages ran and which feedback gates were opened, cleared, or explicitly skipped.
-
-- [x] **S−1** — Strategic Interview (four Dimensions captured — defaults declared, user opted into delivery)
-- [x] **S0**  — Scoping & Assumptions
-- [x] **S1**  — Thesis Formalization + Premise Excavation
-- [x] **S2**  — Per-Premise Cross-Examination + Steel-Man Rubric
-- [x] **S3**  — Fallacy Diagnostic (12-fallacy audit)
-- [x] **S4**  — Antithesis Collision + Tension Naming
-- [x] **S5**  — Aufheben / Toulmin Synthesis
-- [x] **S6**  — Empirical Illustration (web-enabled: Numbeo 2025–26, IMF, báo VN)
-- [x] **S7**  — Radiating Implication + Applied Test
-- [x] **S8**  — Residuals & Boundary Conditions
-
-**Feedback gates:**
-
-| Gate | Purpose | Status |
-|---|---|---|
-| **Gate 0** | Confirm four Dimensions | ✅ Cleared (defaults declared) |
-| **Gate 1** | Confirm sharpened Thesis + Premises | ⏭️ Skipped (user requested direct delivery) |
-| **Gate 2** | Confirm Antithesis passes Steel-Man | ⏭️ Skipped (MEDIUM path) |
-| **Gate 3** | Confirm chapter ToC | ⏭️ Skipped (LONG only) |
-| **Gate 4** | Confirm Toulmin Synthesis lands | ⏭️ Skipped (LONG only) |
-| **Gate 5** | Iterate / Spiral / Branch / Close | 🔓 Open (see end of document) |
 
 ## Table of Contents
 
@@ -533,26 +502,7 @@ Ba câu hỏi. Chúng kiểm tra xem bạn có thể bảo vệ *cấu trúc* c�
 
 ---
 
-## Continue or Iterate?
-
-Gate 5 offer. Radiating Implication mà tôi rút ra:
-
-> **"Đặt cược vào hội tụ: người thu nhập ngoại tệ tại VN nên mua tài sản phi mậu dịch đang bị định giá thấp, đồng thời giữ đô-la để tự bảo hiểm rủi ro tỷ giá."**
-
-Bạn có bốn nước đi kế tiếp:
-
-- **(a) Spiral** — feed synthesis này về làm Thesis mới cho một vòng dialectic khác trong miền kinh tế học hội tụ và thị trường cận biên.
-- **(b) Refine** — cải thiện bất kỳ phần cụ thể nào (nói rõ phần nào).
-- **(c) Branch** — mang Radiating Implication đi lập luận riêng, trong miền kế cận: "đặt cược hội tụ có phải là chiến lược đầu tư đứng đắn?"
-- **(d) Close out** — artifact này đứng nguyên như hiện tại.
-
-Cho biết bạn chọn gì, hoặc đề xuất nước đi riêng. (Nếu muốn, tôi cũng có thể render bản HTML tương tác đầy đủ — Paradox Meter, Logic Linters, quiz tự chấm — từ cùng nội dung này.)
-
----
-
 ## Method note
-
-Artifact này được rèn bằng Socratic Dialectic Engine v2.2 — 10 states xuyên năm feedback gates (Gate 0: Interview → Gate 1: Thesis & Premises → Gate 2: Antithesis → Gate 3: ToC (LONG only) → Gate 4: Synthesis (LONG only) → Gate 5: Iterate).
 
 **Research mode:** Web-enabled. Số liệu Numbeo truy cập qua tìm kiếm (cập nhật 2025–2026); chỉ số Phở Bát Đàn từ Vietnam Business Insider (2023); giá phở 2025 từ báo VietNamNet/Công Luận; mức lương tối thiểu từ Nghị định 74/2024/NĐ-CP; cơ sở lý thuyết từ IMF Working Papers về Balassa-Samuelson.
 
