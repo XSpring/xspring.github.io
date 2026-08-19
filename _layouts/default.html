@@ -2,7 +2,16 @@
 <html lang="en">
 
   {% include head.html %}
+  <script type="module">
+    // Fixes Jekyll's class naming conflict
+    Array.from(document.getElementsByClassName("language-mermaid")).forEach(element => {
+      element.classList.add("mermaid");
+    });
 
+    // Imports and initializes Mermaid
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
   <body>
 
     {% include navigation.html %}
