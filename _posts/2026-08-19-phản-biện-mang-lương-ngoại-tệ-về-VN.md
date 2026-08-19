@@ -114,12 +114,12 @@ Synthesis trong dạng cấu trúc. Mọi lập luận không phân rã được
 
 ```mermaid
 flowchart TD
-    G[GROUNDS<br/>Bằng chứng, dữ liệu, quan sát<br/><br/>Numbeo: thuê nhà -80%, gạo -80%,<br/>nhà hàng -4.6x; nhưng gas 0%, bò -37%<br/>IMF xác nhận hiệu ứng B-S ở nước đang phát triển]
-    W[WARRANT<br/>Cầu logic<br/><br/>Giá phi mậu dịch gắn lương nội địa,<br/>giá mậu dịch gắn thị trường toàn cầu;<br/>người có ngoại tệ hưởng được cả hai]
-    B[BACKING<br/>Lý thuyết sâu<br/><br/>Balassa–Samuelson (1964): nước lương thấp<br/>có giá phi mậu dịch rẻ hơn]
-    C[CLAIM<br/>Vị trí tổng hợp<br/><br/>Ăn rẻ, tích trữ đắt — lợi thế đô-la nằm ở<br/>việc tách tiêu dùng phi mậu dịch khỏi tài sản mậu dịch]
-    Q[QUALIFIER<br/>Phạm vi giá trị<br/><br/>Đúng khi: giữ tài sản ngoại tệ/mậu dịch,<br/>tiêu tầng phi mậu dịch, chấp nhận địa tô co hẹp]
-    R[REBUTTAL<br/>Phản ví dụ<br/><br/>Học phí quốc tế/Singapore là cột đắt —<br/>nhưng đó là lựa chọn nhập khẩu giỏ Mỹ,<br/>không phải định luật]
+    G["GROUNDS<br/>Bằng chứng, dữ liệu, quan sát<br/><br/>Numbeo: thuê nhà -80%, gạo -80%,<br/>nhà hàng -4.6x; nhưng gas 0%, bò -37%<br/>IMF xác nhận hiệu ứng B-S ở nước đang phát triển"]
+    W["WARRANT<br/>Cầu logic<br/><br/>Giá phi mậu dịch gắn lương nội địa,<br/>giá mậu dịch gắn thị trường toàn cầu;<br/>người có ngoại tệ hưởng được cả hai"]
+    B["BACKING<br/>Lý thuyết sâu<br/><br/>Balassa–Samuelson (1964): nước lương thấp<br/>có giá phi mậu dịch rẻ hơn"]
+    C["CLAIM<br/>Vị trí tổng hợp<br/><br/>Ăn rẻ, tích trữ đắt — lợi thế đô-la nằm ở<br/>việc tách tiêu dùng phi mậu dịch khỏi tài sản mậu dịch"]
+    Q["QUALIFIER<br/>Phạm vi giá trị<br/><br/>Đúng khi: giữ tài sản ngoại tệ/mậu dịch,<br/>tiêu tầng phi mậu dịch, chấp nhận địa tô co hẹp"]
+    R["REBUTTAL<br/>Phản ví dụ<br/><br/>Học phí quốc tế/Singapore là cột đắt —<br/>nhưng đó là lựa chọn nhập khẩu giỏ Mỹ,<br/>không phải định luật"]
     G --> W --> C
     B --> W
     Q -.->|giới hạn| C
