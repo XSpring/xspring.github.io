@@ -1,0 +1,2893 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cảm xúc và màn hình — Khảo cứu #2: Những ngón tay vô hình trong điện thoại của bạn</title>
+<meta name="description" content="Khảo cứu về cách các ứng dụng di động được thiết kế để chi phối và điều phối cảm xúc người dùng: phần thưởng ngẫu nhiên, cuộn vô tận, FOMO, so sánh xã hội, loot box, playlist theo tâm trạng — và xếp hạng những cảm xúc dễ bị ảnh hưởng nhất.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg:            #FDFBF7;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #2D3748;
+  --text-muted:    #718096;
+  --text-strong:   #1A202C;
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  /* Secondary accent — used for interactive elements (probes, hints, checkpoints)
+     so structural accents (teal) stay visually separate from "try this" accents (amber). */
+  --accent2:        #B7791F;
+  --accent2-strong: #975A16;
+  --accent2-soft:   #FEEBC8;
+  --border:        #E4DFD5;
+  --sidenote-bg:   #EDF2F7;
+  --code-bg:       #EDF2F7;
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #1A202C;
+  --bg-elevated:   #2D3748;
+  --bg-sunken:     #171923;
+  --text:          #E2E8F0;
+  --text-muted:    #A0AEC0;
+  --text-strong:   #F7FAFC;
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent2:        #F6AD55;
+  --accent2-strong: #FBD38D;
+  --accent2-soft:   #4A2E14;
+  --border:        #2D3748;
+  --sidenote-bg:   #2A2F3A;
+  --code-bg:       #2A2F3A;
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: var(--line);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   PROGRESS BAR (fixed top)
+============================================================ */
+.progress-bar{
+  position: fixed; top:0; left:0; right:0;
+  height: 3px;
+  background: transparent;
+  z-index: 100;
+}
+.progress-bar__fill{
+  height:100%;
+  width:0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+
+/* ============================================================
+   LAYOUT — 3 column grid
+============================================================ */
+.app{
+  display:grid;
+  grid-template-columns: minmax(220px, 20%) minmax(0, 1fr) minmax(240px, 20%);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 32px 128px;
+}
+
+.navigator{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding-right: 8px;
+}
+.navigator::-webkit-scrollbar{width:6px}
+.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+.canvas{
+  max-width: var(--measure);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.marginalia{
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Focus mode: collapse side panels */
+body.focus-mode .navigator,
+body.focus-mode .marginalia{
+  display:none;
+}
+body.focus-mode .app{
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+/* Mobile */
+@media (max-width: 960px){
+  .app{
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px 96px;
+  }
+  .navigator{
+    position: relative;
+    top: 0;
+    max-height: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .marginalia{
+    order: 3;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+}
+
+/* ============================================================
+   NAVIGATOR
+============================================================ */
+.navigator__meta{
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.navigator__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+.navigator__reading-time{
+  color: var(--text);
+  font-size: 13px;
+}
+
+.toc{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc li{margin: 2px 0}
+.toc a{
+  display: block;
+  padding: 6px 10px;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition);
+  line-height: 1.4;
+}
+.toc a:hover{
+  color: var(--text);
+  background: var(--sidenote-bg);
+}
+.toc a.is-active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--sidenote-bg);
+  font-weight: 500;
+}
+.toc .toc-l3{ padding-left: 20px; font-size: 13px }
+
+/* ============================================================
+   CANVAS (main reading area)
+============================================================ */
+.canvas h1{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin: 8px 0 16px;
+  letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--text-strong);
+  margin: 56px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+.canvas h2:first-of-type{ border-top: none; padding-top: 0 }
+.canvas h3{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-strong);
+  margin: 32px 0 12px;
+  scroll-margin-top: 24px;
+}
+.canvas p{ margin: 0 0 16px }
+.canvas strong{ color: var(--text-strong); font-weight: 700 }
+.canvas em{ font-style: italic }
+.canvas a{
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.canvas a:hover{ color: var(--accent-strong) }
+
+/* Source citation — subtle inline badge for linked evidence */
+.source{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--sidenote-bg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all var(--transition);
+}
+.source::before{ content: "↗ "; opacity: .6 }
+.source:hover{
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+/* Chart caption line — usually holds the data source */
+.bar-chart__caption{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+.bar-chart__caption a{ color: var(--text-muted); text-decoration: underline dotted }
+.bar-chart__caption a:hover{ color: var(--accent) }
+/* Provenance footer — printed when the note was generated without live web tools */
+.provenance-note{
+  margin: 32px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--sidenote-bg);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-left: 3px solid var(--text-muted);
+}
+
+.canvas ul, .canvas ol{
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.canvas li{ margin: 4px 0 }
+
+.canvas blockquote{
+  margin: 24px 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--sidenote-bg);
+  color: var(--text);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+}
+
+.canvas code{
+  font-family: var(--font-mono);
+  font-size: .9em;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.canvas pre{
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 24px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  position: relative;
+}
+.canvas pre code{ background: transparent; padding: 0 }
+
+/* Hook block (curiosity primer at the top) */
+.hook{
+  margin: 24px 0 48px;
+  padding: 24px 28px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.hook__label{
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Prerequisites and objectives blocks */
+.meta-block{
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.meta-block h4{
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.meta-block ul{ margin: 0; padding-left: 20px }
+.meta-block li{ margin: 4px 0; color: var(--text) }
+
+/* Callouts */
+.callout{
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--info);
+  background: var(--info-bg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+}
+.callout__label{
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.callout--tip{ border-left-color: var(--success); background: var(--success-bg) }
+.callout--tip .callout__label{ color: var(--success) }
+.callout--warn{ border-left-color: var(--warn); background: var(--warn-bg) }
+.callout--warn .callout__label{ color: var(--warn) }
+.callout--danger{ border-left-color: var(--danger); background: var(--danger-bg) }
+.callout--danger .callout__label{ color: var(--danger) }
+
+/* Feynman check */
+.feynman{
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+}
+.feynman::before{
+  content: "🧒 Explain in one sentence:";
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Tooltips on vocabulary */
+.term{
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+  position: relative;
+}
+.term:hover::after{
+  content: attr(data-def);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-strong);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-style: normal;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  z-index: 10;
+  box-shadow: var(--shadow);
+  line-height: 1.4;
+}
+
+/* Marginalia sidenotes */
+.sidenote{
+  margin: 24px 0;
+  padding: 12px 14px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.sidenote strong{ color: var(--text); display: block; margin-bottom: 4px; font-weight: 600 }
+
+/* ============================================================
+   FLIP CARD (active recall)
+============================================================ */
+.flip-card{
+  perspective: 1000px;
+  height: 180px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+.flip-card__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg) }
+
+.flip-card__face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__front{
+  background: var(--bg-elevated);
+}
+.flip-card__back{
+  background: var(--accent);
+  color: white;
+  transform: rotateY(180deg);
+}
+.flip-card__label{
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.flip-card__back .flip-card__label{ color: rgba(255,255,255,.85) }
+.flip-card__content{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PROGRESSIVE DISCLOSURE (details/summary)
+============================================================ */
+.deep-dive{
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+.deep-dive > summary{
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  transition: background var(--transition);
+}
+.deep-dive > summary::-webkit-details-marker{ display: none }
+.deep-dive > summary::before{
+  content: "▶";
+  color: var(--accent);
+  font-size: 10px;
+  transition: transform var(--transition);
+}
+.deep-dive[open] > summary::before{ transform: rotate(90deg) }
+.deep-dive > summary:hover{ background: var(--sidenote-bg) }
+.deep-dive__label{
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  margin-right: auto;
+}
+.deep-dive > *:not(summary){
+  padding: 0 18px 16px;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideDown{
+  from{ opacity: 0; transform: translateY(-8px) }
+  to  { opacity: 1; transform: translateY(0) }
+}
+
+/* ============================================================
+   CSS-ONLY BAR CHART
+============================================================ */
+.bar-chart{
+  margin: 32px 0;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.bar-chart__title{
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 16px;
+}
+.bar-row{
+  display: grid;
+  grid-template-columns: 140px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.bar-label{ color: var(--text) }
+.bar-track{
+  background: var(--sidenote-bg);
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill{
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  border-radius: 4px;
+  transition: width 400ms cubic-bezier(.4,0,.2,1);
+}
+.bar-row:hover .bar-fill{ filter: brightness(1.15) }
+.bar-value{ color: var(--text-muted); font-weight: 600; text-align: right }
+
+@media (max-width: 640px){
+  .bar-row{ grid-template-columns: 100px 1fr 40px; font-size: 13px }
+}
+
+/* ============================================================
+   CONCEPT FLOW (3-step)
+============================================================ */
+.concept-flow{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 32px 0;
+}
+.concept-flow__step{
+  padding: 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.concept-flow__step:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.concept-flow__num{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.concept-flow__arrow{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 20px;
+  user-select: none;
+}
+@media (max-width: 640px){
+  .concept-flow{ grid-template-columns: 1fr; }
+  .concept-flow__arrow{ transform: rotate(90deg); justify-self: center }
+}
+
+/* ============================================================
+   GLOSSARY
+============================================================ */
+.glossary{ margin: 32px 0 }
+.glossary dl{ margin: 0 }
+.glossary dt{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: 16px;
+  font-size: 15px;
+}
+.glossary dd{
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 15px;
+  padding-left: 0;
+}
+
+/* ============================================================
+   QUIZ
+============================================================ */
+.quiz{
+  margin: 56px 0 24px;
+  padding: 32px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.quiz h2{
+  font-family: var(--font-sans);
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.quiz__intro{
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.quiz fieldset{
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.quiz legend{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.quiz__option{
+  display: block;
+  padding: 12px 16px;
+  margin: 6px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  transition: all var(--transition);
+  position: relative;
+  padding-left: 44px;
+}
+.quiz__option::before{
+  content: "";
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  transition: all var(--transition);
+}
+.quiz__option:hover{ border-color: var(--accent); background: var(--sidenote-bg) }
+.quiz__option input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.quiz__option:has(input:checked){
+  border-color: var(--accent);
+  background: var(--sidenote-bg);
+}
+.quiz__option:has(input:checked)::before{
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg-elevated);
+}
+.quiz__option.correct-answer{
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--text-strong);
+}
+.quiz__option.correct-answer::before{
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 3px var(--success-bg);
+}
+.quiz__option.incorrect-answer{
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+.quiz__option.incorrect-answer::before{
+  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: inset 0 0 0 3px var(--danger-bg);
+}
+
+.quiz__explanation{
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__explanation{ display: block }
+
+.quiz__actions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.btn{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--transition);
+}
+.btn:hover{ background: var(--accent-strong); border-color: var(--accent-strong) }
+.btn--ghost{ background: transparent; color: var(--accent) }
+.btn--ghost:hover{ background: var(--sidenote-bg); color: var(--accent-strong) }
+
+.quiz__score{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__score{ display: block }
+
+/* ============================================================
+   FLOATING CONTROLS
+============================================================ */
+.controls{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+}
+.control-btn{
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  padding: 0;
+}
+.control-btn:hover{
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.control-btn svg{ width: 18px; height: 18px }
+.control-btn[data-active="true"]{ background: var(--accent); color: white }
+
+/* ============================================================
+   PRINT
+============================================================ */
+@media print{
+  .navigator, .marginalia, .controls, .progress-bar, .quiz__actions{ display: none !important }
+  .app{ grid-template-columns: 1fr; max-width: none; padding: 0 }
+  body{ background: white; color: black; font-size: 12pt }
+  .canvas h1, .canvas h2, .canvas h3{ page-break-after: avoid }
+  .flip-card{ height: auto }
+  .flip-card__inner{ transform: none !important; height: auto }
+  .flip-card__face{ position: static; padding: 8px 0; box-shadow: none; border: none }
+  .flip-card__back{ display: block; background: white; color: black }
+  .deep-dive[open] > *:not(summary){ animation: none }
+}
+
+/* ============================================================
+   PHASE ORBIT (6-node progress in left navigator)
+============================================================ */
+.orbit{
+  margin: 0 0 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.orbit__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+.orbit__track{
+  position: relative;
+  padding-left: 22px;
+}
+.orbit__track::before{
+  content: "";
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.orbit__node{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--transition);
+  user-select: none;
+}
+.orbit__node::before{
+  content: "";
+  position: absolute;
+  left: -22px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  transition: all var(--transition);
+  box-sizing: border-box;
+}
+.orbit__node[data-reached="true"]::before{
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.orbit__node[data-active="true"]{
+  color: var(--text-strong);
+  font-weight: 600;
+}
+.orbit__node[data-active="true"]::before{
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.orbit__node:hover{ color: var(--text) }
+
+/* ============================================================
+   MISCONCEPTION PRE-MORTEM (State 2 tail)
+============================================================ */
+.premortem{
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--accent2-soft);
+  border-left: 4px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text);
+}
+.premortem__label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 8px;
+}
+.premortem__wrong{ text-decoration: line-through; color: var(--text-muted) }
+.premortem__truth{ font-weight: 600; color: var(--text-strong) }
+
+/* ============================================================
+   SCAFFOLD CARD (S/I/P/R micro-loop, State 3)
+============================================================ */
+.scaffold{
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.scaffold__concept{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scaffold__concept::before{
+  content: "◆";
+  color: var(--accent);
+  font-size: 12px;
+}
+.scaffold__row{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px 16px;
+  margin: 12px 0;
+  align-items: start;
+}
+.scaffold__row-label{
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 4px;
+}
+.scaffold__row-body{ font-size: 15px; line-height: 1.65 }
+.scaffold__row-body p:last-child{ margin-bottom: 0 }
+
+/* Probe/Resolve details — nested within the scaffold card */
+.scaffold__probe{
+  margin: 8px 0 0;
+  border: 1px dashed var(--accent2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  overflow: hidden;
+}
+.scaffold__probe > summary{
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent2-strong);
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  user-select: none;
+  transition: background var(--transition);
+}
+.scaffold__probe > summary::-webkit-details-marker{ display: none }
+.scaffold__probe > summary::before{
+  content: "🤔 Probe";
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent2-strong);
+}
+.scaffold__probe[open] > summary::after{
+  content: "";
+  position: absolute;
+}
+.scaffold__probe > summary:hover{ background: var(--accent2-soft) }
+.scaffold__resolve{
+  padding: 12px 14px 14px 14px;
+  background: var(--accent2-soft);
+  border-top: 1px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.scaffold__resolve::before{
+  content: "💡 Resolve";
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINT (textarea + reveal)
+============================================================ */
+.checkpoint{
+  margin: 32px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+}
+.checkpoint__label{
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.checkpoint__question{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.checkpoint textarea{
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--transition);
+  box-sizing: border-box;
+}
+.checkpoint textarea:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.checkpoint__actions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.checkpoint__expert{
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  display: none;
+}
+.checkpoint.is-revealed .checkpoint__expert{ display: block; animation: slideDown 300ms cubic-bezier(.4,0,.2,1) }
+.checkpoint__expert-label{
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.checkpoint__saved{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   LAUNCH PAD (Extension Problem, State 6)
+============================================================ */
+.launchpad{
+  margin: 48px 0 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.launchpad::before{
+  content: "🚀";
+  position: absolute;
+  top: -16px; right: -8px;
+  font-size: 96px;
+  opacity: .06;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+.launchpad__label{
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--accent2);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.launchpad__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+.launchpad__problem{
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.launchpad__hints{
+  border-top: 1px dashed var(--border);
+  padding-top: 20px;
+  font-family: var(--font-sans);
+}
+.launchpad__hints-label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: block;
+}
+.launchpad__hint{
+  margin: 10px 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-left: 3px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  display: none;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.launchpad__hint.is-visible{ display: block }
+.launchpad__hint-label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 4px;
+  letter-spacing: .08em;
+}
+.launchpad__reveal{
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all var(--transition);
+}
+.launchpad__reveal:hover{
+  background: var(--accent2);
+  color: white;
+}
+.launchpad__reveal:disabled{
+  opacity: .4;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER (right-panel hover-to-elaborate)
+============================================================ */
+/* Terms in the canvas that are wired to amplifier notes */
+.canvas .term-amp{
+  border-bottom: 1px dashed var(--accent2);
+  cursor: help;
+  transition: background var(--transition);
+}
+.canvas .term-amp:hover,
+.canvas .term-amp.is-active{
+  background: var(--accent2-soft);
+  border-bottom-color: var(--accent2-strong);
+}
+/* The sticky slot at the top of the marginalia column */
+.amplifier{
+  position: sticky;
+  top: 24px;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: var(--accent2-soft);
+  border: 1px solid var(--accent2);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  min-height: 96px;
+  transition: opacity var(--transition);
+}
+.amplifier__label{
+  display: block;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 6px;
+}
+.amplifier__term{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+  display: block;
+  font-size: 14px;
+}
+.amplifier__body{ margin: 0 }
+.amplifier__empty{ color: var(--text-muted); font-style: italic }
+/* Hidden data pool — right-panel notes stored here, activated by JS */
+.amp-notes{ display: none }
+
+/* ============================================================
+   MISC
+============================================================ */
+.footer{
+  max-width: var(--measure);
+  margin: 64px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-align: center;
+}
+.kbd{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+</style>
+</head>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<div class="app">
+
+  <!-- =========================================================
+       LEFT — NAVIGATOR (sticky ToC)
+       ========================================================= -->
+  <aside class="navigator" aria-label="Table of contents">
+    <div class="navigator__meta">
+      <p class="navigator__title">Reading time</p>
+      <p class="navigator__reading-time" id="readingTime">~ 38 min</p>
+    </div>
+
+    <!-- Phase Orbit — 6 phase nodes that light up as the reader scrolls past each section.
+         Each node targets a section id in the canvas: #baseline, #bridge, #exposition, #application, #boundary, #synthesis. -->
+    <div class="orbit" aria-label="Learning phases">
+      <p class="orbit__title">Learning path</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Anchor</div>
+        <div class="orbit__node" data-target="bridge">2 · Bridge</div>
+        <div class="orbit__node" data-target="exposition">3 · Construct</div>
+        <div class="orbit__node" data-target="application">4 · Apply</div>
+        <div class="orbit__node" data-target="boundary">5 · Boundary</div>
+        <div class="orbit__node" data-target="synthesis">6 · Fade</div>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="toc" id="toc">
+        <!-- Auto-populated by JS from h2/h3 in .canvas -->
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- =========================================================
+       MIDDLE — CANVAS (main content)
+       ========================================================= -->
+  <main class="canvas" id="canvas">
+
+    <h1>Cảm xúc và màn hình — Khảo cứu #2: Những ngón tay vô hình trong điện thoại của bạn</h1>
+<style>
+.feynman::before{ content:"🧒 Giải thích trong một câu:" }
+.hook__label{ content:"🎣 Câu mở đầu" }
+.rank-card{ margin:28px 0; padding:20px 24px; background:var(--bg-elevated); border:1px solid var(--border); border-radius:var(--radius); box-shadow:var(--shadow-sm); }
+.rank-card__head{ display:flex; align-items:baseline; gap:12px; font-family:var(--font-sans); }
+.rank-card__rank{ font-weight:700; font-size:20px; color:var(--accent); }
+.rank-card__name{ font-weight:700; font-size:1.05rem; color:var(--text-strong); }
+.rank-card__tag{ color:var(--text-muted); font-size:13px; font-family:var(--font-sans); }
+.rank-scores{ display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:12px 0; font-family:var(--font-sans); font-size:12px; }
+.rank-score{ background:var(--sidenote-bg); border-radius:var(--radius-sm); padding:8px 10px; }
+.rank-score strong{ display:block; font-size:16px; color:var(--text-strong); }
+.rank-analysis{ font-size:15px; line-height:1.65; }
+.rank-table{ width:100%; border-collapse:collapse; font-family:var(--font-sans); font-size:14px; margin:20px 0; }
+.rank-table th, .rank-table td{ text-align:left; padding:10px 12px; border-bottom:1px solid var(--border); }
+.rank-table thead th{ font-size:11px; text-transform:uppercase; letter-spacing:.06em; color:var(--text-muted); }
+.rank-table tbody tr:hover{ background:var(--sidenote-bg) }
+.rank-table .num{ font-weight:700; color:var(--text-strong); }
+</style>
+
+    <!-- HOOK -->
+    <div class="hook">
+      <span class="hook__label">🎣 Câu mở đầu</span>
+      Một ngày bình thường của bạn: bạn mở khóa điện thoại <strong>96 lần</strong>, nhận <strong>56–65 thông báo</strong>, và dành trung bình <strong>gần 4 giờ 40 phút</strong> cho màn hình — tức gần <strong>70 ngày mỗi năm</strong>, ngón tay chạm kính. Bây giờ đến câu hỏi nghiêm túc: trong suốt khoảng thời gian đó, <em>ai</em> thực sự chọn những gì bạn thấy, và <em>ai</em> thực sự chọn những cảm xúc bạn mang đi ngủ? Câu trả lời hiếm khi là "chính bạn" như bạn tưởng. Bài khảo cứu này sẽ mở chiếc máy đó ra: cách các ứng dụng — từ game, mạng xã hội đến app nghe nhạc — được thiết kế để chạm đúng cảm xúc của bạn, dẫn dụ bạn ở lại lâu hơn, và cách bạn có thể nhận ra bàn tay vô hình đó.
+    </div>
+
+    <!-- PREREQUISITES + OBJECTIVES -->
+    <div class="meta-block">
+      <h4>Trước khi bắt đầu</h4>
+      <ul>
+        <li>Không cần kiến thức tâm lý học hay kỹ thuật trước đó.</li>
+        <li>Có một chiếc điện thoại và ít nhất một ứng dụng bạn dùng hằng ngày — để làm thí nghiệm.</li>
+        <li>Đã đọc <em>Cảm xúc con người — Khảo cứu #1</em> thì rất tốt, nhưng bài này tự chứa đủ.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Sau bài này bạn sẽ có thể…</h4>
+      <ul>
+        <li><strong>Phân tích</strong> mối quan hệ hai chiều giữa cảm xúc và hành vi dùng điện thoại.</li>
+        <li><strong>Giải thích</strong> được cơ chế phần thưởng ngẫu nhiên, cuộn vô tận và nền kinh tế chú ý.</li>
+        <li><strong>Liệt kê &amp; phân loại</strong> các kỹ thuật chi phối cảm xúc của game, mạng xã hội và app nghe nhạc.</li>
+        <li><strong>Đánh giá</strong> một tính năng điều phối cảm xúc theo ba trục: khả thi kỹ thuật · độ giữ chân · tác hại.</li>
+        <li><strong>Xếp hạng và bảo vệ</strong> lập luận về cảm xúc nào dễ bị chi phối nhất bởi màn hình.</li>
+        <li><strong>Tạo lập</strong> một thiết kế "cái phanh cảm xúc" dùng chính các cơ chế đã học.</li>
+      </ul>
+    </div>
+<!-- =========================================================
+     CHƯƠNG 1 — MỐI LIÊN HỆ HAI CHIỀU (STATE 1-6, ids: baseline..synthesis)
+     ========================================================= -->
+<h2 id="baseline">Chương 1 · Mối liên hệ hai chiều: cái van và cái máy bơm</h2>
+<p>Trước khi nói về kỹ thuật, hãy nhìn vào con số. Người dùng điện thoại trên toàn cầu dành trung bình <strong>3 giờ 52 phút mỗi ngày</strong> cho thiết bị của mình; người Mỹ <strong>4 giờ 43 phút</strong>; người Việt Nam <strong>3 giờ 32 phút</strong><a class="source" href="https://prioridata.com/data/smartphone-usage-statistics/">Statista/Priori 2024–25</a>. Người dùng trung bình mở khóa điện thoại <strong>96 lần mỗi ngày</strong>, và 57% người lớn ở Mỹ mở điện thoại trong vòng <em>năm phút đầu tiên</em> sau khi thức dậy<a class="source" href="https://techrt.com/smartphone-statistics/">TechRT 2025</a>. Trung bình một người nhận <strong>56–65 thông báo mỗi ngày</strong> — con số được đo trực tiếp từ thiết bị, không phải tự khai<a class="source" href="https://pielot.org/pubs/Pielot2018-MHCI-Dismissed.pdf">Pielot et al. 2018</a>. Cộng mọi loại màn hình lại, chúng ta dành khoảng <strong>40% giờ thức</strong> cho tương tác số<a class="source" href="https://datareportal.com/reports/digital-2025-sub-section-ever-more-connected">DataReportal 2025</a>.</p>
+<p>Những con số này đáng chú ý vì một lý do tế nhị: <strong>con người không thèm một màn hình.</strong> Con người thèm cảm xúc — cảm giác được kết nối, được giải trí, được an ủi, được thắng. Màn hình chỉ là cửa sổ. Vậy câu hỏi nền tảng của chương này là: <em>mối quan hệ giữa cảm xúc và điện thoại là một chiều hay hai chiều?</em> Nếu là một chiều, điện thoại chỉ là công cụ ta dùng để xoa dịu bản thân. Nếu là hai chiều, điện thoại vừa xoa dịu <em>vừa</em> bơm thêm cảm xúc mới — và bản chất của bài toán thay đổi hoàn toàn.</p>
+
+<h2 id="bridge">Một hình ảnh quen thuộc: chiếc điện thoại như một sòng bạc mini</h2>
+<p>Hãy đặt cạnh nhau hai khung cảnh: một sảnh máy đánh bạc ở Las Vegas và feed ứng dụng của bạn.</p>
+<ul>
+  <li><strong>Cần kéo máy</strong> ↔ <strong>ngón tay cuộn trang</strong> — cùng một động tác lặp, không có đích.</li>
+  <li><strong>Tiếng chuông trúng thưởng</strong> ↔ <strong>một cái like, một banner thông báo</strong> — âm thanh và ánh sáng được tối ưu để báo hiệu "phần thưởng vừa đến".</li>
+  <li><strong>"Gần trúng"</strong> ↔ <strong>video dở dang, thông báo "bạn còn 1 lượt"</strong> — cảm giác suýt thắng là mồi mạnh nhất.</li>
+  <li><strong>Điểm thẻ trung thành</strong> ↔ <strong>chuỗi ngày (streak), huy hiệu</strong> — không thể phá chuỗi vì đã "đầu tư" quá nhiều.</li>
+  <li>Và quan trọng nhất: <strong>nhà cái luôn thắng</strong> ↔ mỗi phiên màn hình đều có lợi cho người thiết kế, không phải cho bạn.</li>
+</ul>
+<p>Đây là hình ảnh trung tâm của toàn bài: <strong>chiếc điện thoại là một sòng bạc cảm xúc mini.</strong> Mỗi ứng dụng là một chiếc máy đánh bạc được tính toán kỹ, và thứ bạn đặt cược — đồng tiền của sòng bạc này — là thời gian, sự chú ý và cảm xúc của chính bạn. Giữ hình ảnh này trong đầu; mọi chương sau đều quay về nó.</p>
+
+<div class="concept-flow">
+  <div class="concept-flow__step"><span class="concept-flow__num">01</span>Cảm xúc khó chịu xuất hiện: buồn chán, lo âu, cô đơn, mệt mỏi</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">02</span>Mở app: phần thưởng ngẫu nhiên, cuộn vô tận, thông báo</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">03</span>Màn hình trả về cảm xúc mới: thỏa mãn, hưng phấn, FOMO, phẫn nộ</div>
+</div>
+
+<div class="premortem">
+  <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người rời khỏi bức tranh này với ý nghĩ…</span>
+  <p><span class="premortem__wrong">"Dùng điện thoại quá nhiều là do bạn yếu ý chí."</span></p>
+  <p>Điều này sai vì hành vi của bạn đang được <strong>thiết kế bằng thí nghiệm</strong>: mỗi cơ chế trong sòng bạc mini đều được A/B test trên hàng triệu người dùng để tối ưu hóa thời gian ở lại — giống như sòng bạc thật tối ưu hóa từng chiếc máy. Đổ lỗi cho ý chí giống như đổ lỗi cho con bạc vì thua trước chiếc máy do 70 năm kỹ thuật chế tác.</p>
+  <p><span class="premortem__truth">Sự thật là:</span> vấn đề nằm ở <strong>thiết kế môi trường</strong> (kiến trúc lựa chọn), không phải ở tính cách cá nhân. Điều này không có nghĩa bạn vô can — nó nghĩa là vũ khí đúng đắn không phải "ép mình", mà là hiểu cỗ máy (nội dung của bài này).</p>
+</div>
+
+<h2 id="exposition">Xây mô hình từng mảnh</h2>
+
+<section class="scaffold" id="exposition-1">
+  <h3 class="scaffold__concept">Mảnh 1 · Chiếc van điều áp: điện thoại là công cụ điều chỉnh cảm xúc</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Ta thường mở điện thoại không phải vì nhu cầu thông tin, mà vì một <strong>cảm xúc khó chịu</strong> vừa xuất hiện: buồn chán, cô đơn, lo âu, mệt mỏi. Điện thoại là cách nhanh nhất để "đổi kênh" cảm xúc. Một tổng hợp 59 nghiên cứu cho thấy <strong>buồn chán liên hệ khá mạnh với việc sử dụng có vấn đề</strong> (r ≈ 0,34)<a class="source" href="https://www.sciencedirect.com/science/article/pii/S2451958823000465">Boredom meta-analysis 2023</a>. Nghiên cứu CHI 2019 với 399 người trẻ gọi điện thoại là "vật gắn bó an ủi" — đúng vai <strong>chiếc núm vú giả</strong> của trẻ: ta bú nó khi buồn, chờ đợi, ở một mình<a class="source" href="https://dl.acm.org/doi/10.1145/3290605.3300536">CHI 2019 Pacifier</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Đứng chờ tàu 10 phút, tay không, không có gì làm. Ba mươi giây đầu trằn trọc — rồi tay "tự rút" điện thoại, không cần quyết định. Đó là cơ chế <strong>điều chỉnh cảm xúc</strong>: cảm giác khó chịu của khoảng trống được giải quyết ngay lập tức bằng một phiên cuộn.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu điện thoại là van xả cảm xúc, tại sao sau khi cuộn 20 phút bạn thường… trống rỗng hơn lúc bắt đầu?</summary>
+    <div class="scaffold__resolve">Vì chiếc van xả cần <strong>nhiên liệu</strong>: mỗi phiên cuộn không giải quyết nguyên nhân của cảm xúc, nó chỉ tạm phủ lên. Khi màn hình tắt, cảm xúc cũ trở lại nguyên vẹn — và vòng lặp tiếp tục. Van xả đúng nghĩa là thứ làm cạn năng lượng cảm xúc; cuộn trang chỉ tạm thời chuyển hướng nó.</div>
+  </details>
+</section>
+<div class="feynman">Điện thoại hoạt động như thế nào trong chuyện cảm xúc? — Nó như chiếc điều khiển từ xa: ta bấm để đổi cảm xúc đang khó chịu thành cảm xúc dễ chịu hơn, nhưng thường chỉ đổi tạm.</div>
+
+<section class="scaffold" id="exposition-2">
+  <h3 class="scaffold__concept">Mảnh 2 · Nhà máy cảm xúc: màn hình không chỉ xoa dịu, nó còn sinh ra cảm xúc</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Đây là chiều thứ hai — và là chiều mà các công ty công nghệ đầu tư nhiều nhất. Dùng điện thoại tạo ra những cảm xúc mà trước kỷ nguyên smartphone gần như không tồn tại ở cường độ này: <strong>FOMO</strong> (nỗi sợ bỏ lỡ — nỗi lo lan tỏa rằng người khác đang có trải nghiệm thú vị mà mình vắng mặt), <strong>hưng phấn mong đợi</strong> mỗi lần có thông báo, <strong>phẫn nộ</strong> với nội dung được thuật toán đẩy tới. Một nghiên cứu 2024 về "thông báo thông minh" cho thấy chính yếu tố <strong>giải trí</strong> và <strong>tính kịp thời</strong> của nội dung được đẩy làm tăng FOMO (β ≈ 0,31 và 0,29), và FOMO lại là cầu nối toàn phần dẫn đến sử dụng có vấn đề<a class="source" href="https://doi.org/10.1177/20570473241239359">Smart push &amp; FoMO 2024</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bật app lúc 23 giờ để "xem năm phút". Một giờ sáng mắt bạn vẫn dán màn hình — không phải vì bạn lười, mà vì mỗi video mới lại mở ra một cảm xúc mới, và cảm xúc đó báo "chưa dừng được".</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Cảm xúc nào trên màn hình "mới mẻ" nhất so với đời thật?</summary>
+    <div class="scaffold__resolve">FOMO và <strong>so sánh xã hội cường độ cao</strong>. Ở đời thật ta chỉ so sánh với vài người quen biết và ta nhìn thấy bối cảnh đầy đủ của họ. Trên màn hình ta so sánh với hàng nghìn "cuộc đời chọn lọc" — phần đẹp nhất, thắng nhất của người khác, không có bối cảnh. Không nền văn hóa nào từng đặt con người vào điều kiện đó trước đây.</div>
+  </details>
+</section>
+<div class="feynman">Cảm xúc trên màn hình khác cảm xúc đời thật chỗ nào? — Như xem một tấm ảnh đã chỉnh sửa thay vì nhìn thẳng: mạnh hơn, gọn hơn, và không có phần hậu trường.</div>
+
+<section class="scaffold" id="exposition-3">
+  <h3 class="scaffold__concept">Mảnh 3 · Vòng lặp: cảm xúc → hành vi → cảm xúc</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Hai chiều trên không phải hai hiện tượng riêng — chúng nối thành <strong>một vòng</strong>: cảm xúc khó chịu → mở app → app bơm cảm xúc mới → cảm xúc mới lại thúc hành vi tiếp. Mô hình I‑PACE trong nghiên cứu rối loạn sử dụng mô tả chính xác vòng này: đặc điểm cá nhân (dễ buồn chán) × trạng thái cảm xúc (lo âu, trầm) × phản ứng nhận thức (thèm) → hành vi → lặp lại. Nghiên cứu thực chứng: <strong>khuynh hướng buồn chán làm trung gian</strong> giữa trầm cảm/lo âu và sử dụng điện thoại có vấn đề — tức người càng dễ buồn chán thì cảm xúc tiêu cực càng dễ biến thành hành vi dùng nhiều<a class="source" href="https://journals.sagepub.com/doi/10.1177/0894439317741087">Elhai et al. 2018</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Cô đơn → mở mạng xã hội → thấy bạn bè vui vẻ nơi khác → cô đơn tăng lên → mở tiếp tục. Cùng một thiết bị, cùng một phiên, mồi câu và kết quả đều là cảm xúc.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu vòng lặp này đúng, vì sao "cai điện thoại" bằng cách cấm mang máy thường thất bại?</summary>
+    <div class="scaffold__resolve">Vì gốc rễ của vòng lặp là <strong>cảm xúc chưa được xử lý</strong>, không phải thiết bị. Cấm công cụ không cấm được cảm xúc — cảm xúc sẽ tìm một công cụ khác: ăn vặt, mua sắm online, thuốc lá, game trên máy tính. Chương 6 sẽ quay lại điểm này: chìa khóa không phải "cất máy" mà là nhìn thẳng vào cảm xúc mồi.</div>
+  </details>
+</section>
+<div class="feynman">Tóm một câu cả ba mảnh? — Cảm xúc dắt tay ta đến điện thoại, điện thoại trả lại cảm xúc mới, cảm xúc mới dắt tay ta đến… điện thoại. Một vòng tròn.</div>
+
+<div class="checkpoint" data-checkpoint-id="cp1">
+  <span class="checkpoint__label">🛑 Dừng lại &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Trong ngày vừa qua, liệt kê ba lần bạn mở điện thoại không vì nhu cầu công việc. Với mỗi lần: cảm xúc <em>trước</em> khi mở là gì, và cảm xúc <em>sau</em> khi cuộn là gì?</p>
+  <textarea placeholder="Viết câu trả lời bằng chính lời của bạn trước khi xem gợi ý…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời chuyên gia</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Câu trả lời chuyên gia</span>
+    Điểm mấu chốt không phải "bạn có mở hay không" mà là "cảm xúc nào dẫn bạn đến, và cảm xúc nào để bạn lại". Hầu hết các phiên bắt đầu từ một cảm xúc khó chịu (chán, lo, mệt, cô đơn) và kết thúc bằng một cảm xúc khác (hưng phấn ngắn, trống rỗng, FOMO, hối tiếc). Nếu bạn không nhớ nổi cảm xúc sau khi cuộn — đó chính là dấu hiệu rõ nhất: phiên đó được điều khiển bởi thiết kế, không phải bởi bạn.
+  </div>
+</div>
+
+<h2 id="application">Trong đời thực: đếm một ngày của bạn</h2>
+<p>Thay vì tin lời tôi, hãy tự làm thí nghiệm trong tự nhiên:</p>
+<ol>
+  <li>Bật <strong>Screen Time</strong> (iOS) hoặc <strong>Digital Wellbeing</strong> (Android) — ghi lại tổng thời gian và <strong>số lần mở khóa</strong> của một ngày.</li>
+  <li>Đếm số thông báo bạn nhận được (mọi app cộng lại).</li>
+  <li>Với ba phiên bất kỳ, ghi nhật ký hai dòng: cảm xúc trước khi mở · cảm xúc sau khi dừng.</li>
+</ol>
+<p>Rồi so sánh với mức trung bình bên dưới. Bạn không cần "trên hay dưới chuẩn" — chỉ cần nhìn thấy <em>hình dạng</em> vòng lặp của chính mình.</p>
+
+<div class="bar-chart">
+  <div class="bar-chart__title">Thời gian dùng điện thoại mỗi ngày (giờ:phút)</div>
+  <div class="bar-row"><div class="bar-label">Philippines</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">5:23</div></div>
+  <div class="bar-row"><div class="bar-label">Ghana</div><div class="bar-track"><div class="bar-fill" style="width:91%"></div></div><div class="bar-value">4:54</div></div>
+  <div class="bar-row"><div class="bar-label">Mỹ</div><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><div class="bar-value">4:43</div></div>
+  <div class="bar-row"><div class="bar-label">Toàn cầu</div><div class="bar-track"><div class="bar-fill" style="width:71%"></div></div><div class="bar-value">3:52</div></div>
+  <div class="bar-row"><div class="bar-label">Việt Nam</div><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div><div class="bar-value">3:32</div></div>
+  <p class="bar-chart__caption">Nguồn: <a href="https://prioridata.com/data/smartphone-usage-statistics/">Statista / Priori Data</a>, 2024–2025 (thời gian truy cập internet trên điện thoại, quý 3/2024).</p>
+</div>
+
+<div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem câu trả lời">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Nhớ lại chủ động — Câu hỏi</span>
+      <div class="flip-card__content">Người dùng trung bình mở khóa điện thoại bao nhiêu lần một ngày, và vì sao con số đó lại quan trọng với toàn bộ bài này?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Câu trả lời</span>
+      <div class="flip-card__content">Khoảng <strong>96 lần/ngày</strong> (TechRT 2025). Quan trọng vì mỗi lần mở khóa là một "cú kéo cần máy" — một cơ hội để thiết kế giữ chân bạn. 96 cú kéo nghĩa là gần như không có khoảng trống 30 phút nào trong ngày không bị đánh thức bởi một vòng lặp.</div>
+    </div>
+  </div>
+</div>
+
+<h2 id="boundary">Chỗ mô hình này dễ vỡ</h2>
+<p>Mô hình hai chiều (van + máy bơm) mạnh, nhưng có ba chỗ nó dễ bị hiểu sai:</p>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+  <strong>Tương quan ≠ nhân quả.</strong> Hầu hết nghiên cứu trong bài là cắt ngang: ta không biết chắc là điện thoại gây ra cảm xúc tiêu cực, hay người đang buồn dùng điện thoại nhiều hơn. Các phân tích tổng hợp lớn về mạng xã hội và hạnh phúc tìm thấy hệ số rất nhỏ — nghĩa là "dùng nhiều = kém vui" chỉ là một mảnh nhỏ của bức tranh, và hướng nhân quả vẫn đang được tranh luận.
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp ranh giới</span>
+  <strong>Không ai là "người dùng trung bình".</strong> Phân phối thời gian dùng rất lệch: một nhóm nhỏ người dùng nặng tạo ra phần lớn thời gian và doanh thu (bạn sẽ thấy số liệu về loot box ở Chương 2), trong khi người dùng vừa phải vẫn hoàn toàn khỏe mạnh. Đừng tự gán cho mình nhãn "nghiện" chỉ vì một con số trung bình — và cũng đừng an tâm giả tạo vì bạn "dưới chuẩn".
+</div>
+
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Dự đoán</span>
+  Trước khi đọc Chương 2, hãy đoán: nếu tắt <strong>toàn bộ</strong> thông báo trong 7 ngày, thời gian dùng điện thoại sẽ giảm hay không đổi — và cảm xúc nào sẽ thay đổi? (Spoiler thật: một thử nghiệm RCT đo trực tiếp — kết quả đi ngược trực giác, Chương 3 sẽ hé lộ.)
+</div>
+
+<h2 id="synthesis">Bức tranh tổng thể</h2>
+<p>Điện thoại vừa là <strong>chiếc van</strong> (xoa dịu cảm xúc) vừa là <strong>cái máy bơm</strong> (sinh ra cảm xúc mới). Cả hai nằm trong cùng một thiết bị, nối thành vòng lặp. Câu hỏi quyết định vì thế không phải "bạn dùng bao lâu" mà là "<strong>ai điều khiển vòng lặp</strong>". Chương sau sẽ mở chiếc máy bơm ra: cơ chế khiến ngón tay khó rời màn hình — và vì sao nó giống một cỗ máy đánh bạc đến vậy.</p>
+<!-- =========================================================
+     CHƯƠNG 2 — CỖ MÁY DẪN DỤ (ids ch2-*)
+     ========================================================= -->
+<h2 id="ch2-baseline">Chương 2 · Cỗ máy dẫn dụ: vì sao ngón tay khó rời</h2>
+<p>Bắt đầu từ một con số làm sáng tỏ mọi thứ. Một phiên TikTok trung bình dài <strong>10,85 phút</strong> — cao nhất trong mọi nền tảng xã hội; người dùng mở app khoảng <strong>19 lần mỗi ngày</strong>; và <strong>96% thời gian xem đến từ For You Page</strong> — nội dung do thuật toán chọn, <em>không phải</em> từ những người bạn đang theo dõi<a class="source" href="https://explodingtopics.com/blog/time-spent-on-tiktok">Exploding Topics 2025</a>. Từ năm 2019 (27 phút/ngày) con số này tăng gần gấp bốn lần<a class="source" href="https://explodingtopics.com/blog/time-spent-on-tiktok">Exploding Topics 2019→2025</a>. Hãy đọc lại câu "96% từ For You Page": bạn không chọn nội dung — nội dung chọn bạn. Đó là định nghĩa hoạt động của một cỗ máy dẫn dụ.</p>
+
+<h2 id="ch2-bridge">Cầu nối: kỷ luật có cứu nổi con bạc không?</h2>
+<p>Khi nói về máy đánh bạc, người ta hay đổ lỗi cho con bạc "thiếu kỷ luật". Nhưng những người thiết kế máy đánh bạc hiểu một điều ngược lại: <strong>kỷ luật không phải đối thủ của họ — bộ não là vậy.</strong> Nếu bạn đặt một con người tỉnh táo, có kế hoạch, trước một cỗ máy được tối ưu bằng 70 năm kỹ thuật về phần thưởng, bộ não đó sẽ thua. Vì vậy câu hỏi đúng không phải "sao bạn yếu thế" mà là "cỗ máy đã được lập trình những gì".</p>
+
+<div class="concept-flow">
+  <div class="concept-flow__step"><span class="concept-flow__num">01</span>Phần thưởng chắc chắn: biết trước kết quả → não nhàm, hành vi phai dần</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">02</span>Phần thưởng ngẫu nhiên: không biết kết quả → não đạt đỉnh <em>khoảng chờ</em></div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">03</span>Hành vi tự duy trì: quay lại mãi, dù phần thưởng nhỏ và hiếm</div>
+</div>
+
+<div class="premortem">
+  <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người rời khỏi bức tranh này với ý nghĩ…</span>
+  <p><span class="premortem__wrong">"Chỉ cần kỷ luật là thoát khỏi màn hình."</span></p>
+  <p>Điều này sai vì bộ não không được thiết kế để cưỡng lại <strong>phần thưởng ngẫu nhiên đúng lịch</strong>. Kỷ luật vẫn cần — nhưng nó là vũ khí sai mục tiêu khi cỗ máy được chế tạo chính xác để vượt qua nó.</p>
+  <p><span class="premortem__truth">Sự thật là:</span> chiến thắng không đến từ việc "cứng rắn hơn", mà từ việc <strong>đổi thiết kế môi trường</strong> — bỏ mồi ra khỏi tầm tay — giống cách sòng bạc cai nghiện đổi môi trường cho con bạc, chứ không bảo họ "cố lên".</p>
+</div>
+
+<h2 id="ch2-exposition">Ba bánh răng của cỗ máy</h2>
+
+<section class="scaffold" id="ch2-exp-1">
+  <h3 class="scaffold__concept">Bánh răng 1 · Phần thưởng ngẫu nhiên — cú kéo cần máy</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Khi kết quả không chắc chắn (đôi khi thưởng, đôi khi không), hoạt động của hệ thống kỳ vọng đạt đỉnh <em>ngay trước khi kết quả lộ ra</em> — và hành vi tự duy trì không cần phần thưởng lớn. Đây là nguyên lý <span class="term-amp" data-note="variable-reward">phần thưởng ngẫu nhiên</span> được Skinner đo đạc từ thập niên 1950 và là trái tim của máy đánh bạc hiện đại. Trên điện thoại, bạn gặp nó khắp nơi: thông báo "ai đó đã tương tác với bạn", hộp quà trong game, feed "bạn có thể thích". Đỉnh điểm là <span class="term-amp" data-note="lootbox"><strong>loot box</strong></span> (thùng quà mua bằng tiền thật trong game): một tổng hợp 15 nghiên cứu cho thấy chi tiêu loot box liên hệ với cờ bạc có vấn đề ở mức r ≈ 0,26<a class="source" href="https://ideas.repec.org/a/taf/intgms/v21y2021i3p460-479.html">Garea et al. 2021</a>; người mua loot box 16–24 tuổi ở Anh có khả năng cờ bạc có vấn đề <strong>gấp 4,4 lần</strong><a class="source" href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1091282/InGAME_Loot_Box_REA.pdf">Wardle &amp; Zendle 2020</a>; và <strong>top 5% người chi tiêu tạo ra một nửa doanh thu loot box</strong><a class="source" href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1091282/InGAME_Loot_Box_REA.pdf">Close et al. 2021</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Trò chơi trên điện thoại trao bạn một hộp quà. Nút "Mở" đổi màu, phát sáng. Bạn biết tỷ lệ trúng thấp. Bạn vẫn mở — không phải vì muốn vật phẩm, mà vì <strong>khoảnh khắc chờ kết quả</strong>.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao một cái like "cũng được, cũng chẳng sao" lại đủ giữ chân bạn cả buổi tối?</summary>
+    <div class="scaffold__resolve">Vì não bạn không nghiện "like" — nó nghiện <strong>khoảng chờ kết quả</strong>. Cái like vô thưởng vô phạt là "nguồn cấp" vừa đủ để duy trì việc kéo cần: một phiên có 3 like rải rác là một phiên được trả công ngẫu nhiên hoàn hảo.</div>
+  </details>
+</section>
+<div class="feynman">Vì sao máy đánh bạc giữ chân người ta? — Vì não không nghiện tiền, não nghiện khoảnh khắc "sắp biết kết quả" — và app đặt khoảnh khắc đó ở mỗi ngón tay trượt.</div>
+
+<section class="scaffold" id="ch2-exp-2">
+  <h3 class="scaffold__concept">Bánh răng 2 · Cuộn vô tận &amp; autoplay — xóa điểm dừng</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Mọi feed lớn đều <strong>xóa mốc kết thúc</strong>: cuộn không có đáy, video tự chạy tiếp, nội dung được tải sẵn để không có "giây chết". Không có tín hiệu tự nhiên nào báo "đủ rồi". Truyền hình có điểm dừng (hết chương trình, có quảng cáo); sách có trang cuối; bữa ăn có no. Feed thì không.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Hết video TikTok, video tiếp theo tự chạy — cùng loại nội dung, cùng nhịp. Nếu bạn phải bấm "xem tiếp", bạn sẽ dừng sớm hơn rất nhiều. Autoplay chính là cánh cửa không khóa của sòng bạc.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu mỗi video kết thúc bằng 3 giây màn hình trống, điều gì xảy ra với thời gian dùng?</summary>
+    <div class="scaffold__resolve">Giảm mạnh — vì 3 giây chết là <strong>tín hiệu điểm dừng</strong> cho phép não đánh giá "đủ rồi". Autoplay xóa tín hiệu đó; thiết kế đang làm giúp não bạn việc mà não lẽ ra phải tự làm.</div>
+  </details>
+</section>
+<div class="feynman">Cuộn vô tận giống gì trong đời thật? — Giống bữa tiệc buffet không có cuối bàn: bạn chỉ ngừng khi hết sức, không phải khi đủ.</div>
+
+<section class="scaffold" id="ch2-exp-3">
+  <h3 class="scaffold__concept">Bánh răng 3 · Nền kinh tế chú ý — nhà cái luôn thắng</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trong <span class="term-amp" data-note="attention-economy">nền kinh tế chú ý</span>, ứng dụng "miễn phí" kiếm tiền bằng sự chú ý và cảm xúc của bạn: thời gian bạn ở lại mỗi phiên là đơn vị tiền tệ, và quảng cáo được đặt ngay tại đỉnh cảm xúc. Bạn vừa là khách của sòng bạc vừa là sản phẩm được bán. Cấu trúc này giải thích vì sao mọi quyết định thiết kế đều nghiêng về "kéo dài phiên" — bất kể giá cảm xúc phải trả.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Video dài 90 giây dẫn đến cao trào cảm xúc → quảng cáo 15 giây → quay lại cao trào. Thời điểm chèn quảng cáo được đo và tối ưu: đúng lúc bạn "không thể bỏ dở" nhất.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Ai trả tiền cho thiết kế này?</summary>
+    <div class="scaffold__resolve">Nhà quảng cáo trả cho nền tảng; nền tảng trả cho đội ngũ tối ưu thời gian ở lại; bạn trả bằng <strong>thời gian, sự chú ý và cảm xúc</strong>. Trong sòng bạc cảm xúc, nhà cái luôn thắng — không phải vì gian lận, mà vì họ viết luật chơi.</div>
+  </details>
+</section>
+<div class="feynman">App miễn phí "sống" bằng gì? — Bằng sự chú ý của bạn: bạn ở lại, họ bán ánh mắt của bạn cho nhà quảng cáo. Bạn là khách và cũng là hàng.</div>
+
+<div class="checkpoint" data-checkpoint-id="cp2">
+  <span class="checkpoint__label">🛑 Dừng lại &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Ba bánh răng — phần thưởng ngẫu nhiên, cuộn vô tận, nền kinh tế chú ý — cái nào giải thích tốt nhất cho phiên màn hình dài nhất của bạn hôm qua? Đặt tên cho nó.</p>
+  <textarea placeholder="Viết câu trả lời bằng chính lời của bạn trước khi xem gợi ý…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời chuyên gia</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Câu trả lời chuyên gia</span>
+    Hầu hết các phiên dài bắt đầu bằng "khoảng chờ kết quả" (phần thưởng ngẫu nhiên) rồi bị giữ chân bởi cuộn vô tận — nhưng bánh răng quyết định nhất là nền kinh tế chú ý, vì nó lý giải <em>tại sao</em> hai cái kia tồn tại. Nếu phiên của bạn bắt đầu từ một thông báo "ai đó đã thích bài của bạn" và kết thúc một tiếng sau đó, bạn vừa chứng kiến cả ba bánh răng chạy đồng thời.
+  </div>
+</div>
+
+<h2 id="ch2-application">Trong đời thực: mổ phiên cuộn (session autopsy)</h2>
+<p>Chọn phiên màn hình dài nhất hôm qua và trả lời bốn câu:</p>
+<ol>
+  <li><strong>Cảm xúc khởi đầu</strong> là gì? (Chán? Lo? Cô đơn? Mệt?)</li>
+  <li><strong>Mồi</strong> nào giữ bạn ở lại mỗi khi bạn định dừng? (Video dở dang? Like mới? Bộ đếm ngược? "Phần tiếp theo ngay đây"?)</li>
+  <li>Có <strong>điểm dừng tự nhiên</strong> nào không? (Nếu không — bạn vừa phát hiện bánh răng số 2.)</li>
+  <li>Ở đỉnh phiên, app muốn bạn làm gì? (Nhấn vào quảng cáo? Mở hộp quà? Xem thêm một video?)</li>
+</ol>
+<p>Một phiên "biết mình" là phiên bạn có thể trả lời cả bốn câu. Phần lớn phiên — kể cả của người rất tỉnh táo — đều không trả lời được câu thứ ba.</p>
+
+<div class="bar-chart">
+  <div class="bar-chart__title">Thời gian TikTok mỗi ngày, 2019 → 2025 (phút)</div>
+  <div class="bar-row"><div class="bar-label">2019</div><div class="bar-track"><div class="bar-fill" style="width:28%"></div></div><div class="bar-value">27</div></div>
+  <div class="bar-row"><div class="bar-label">2020</div><div class="bar-track"><div class="bar-fill" style="width:39%"></div></div><div class="bar-value">38</div></div>
+  <div class="bar-row"><div class="bar-label">2021</div><div class="bar-track"><div class="bar-fill" style="width:46%"></div></div><div class="bar-value">45</div></div>
+  <div class="bar-row"><div class="bar-label">2022</div><div class="bar-track"><div class="bar-fill" style="width:53%"></div></div><div class="bar-value">52</div></div>
+  <div class="bar-row"><div class="bar-label">2023</div><div class="bar-track"><div class="bar-fill" style="width:57%"></div></div><div class="bar-value">55</div></div>
+  <div class="bar-row"><div class="bar-label">2024</div><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><div class="bar-value">58</div></div>
+  <div class="bar-row"><div class="bar-label">2025</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">97</div></div>
+  <p class="bar-chart__caption">Nguồn: <a href="https://explodingtopics.com/blog/time-spent-on-tiktok">Exploding Topics</a>, 2025 (ước tính từ các báo cáo ngành).</p>
+</div>
+
+<div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem câu trả lời">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Nhớ lại chủ động — Câu hỏi</span>
+      <div class="flip-card__content">Vì sao máy đánh bạc giữ chân người chơi dù ai cũng biết tỷ lệ thua?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Câu trả lời</span>
+      <div class="flip-card__content">Vì <strong>phần thưởng ngẫu nhiên</strong>: não nghiện khoảng chờ kết quả hơn là kết quả. Cơ chế này y hệt feed, thông báo và hộp quà của ứng dụng — người ta biết rõ, và vẫn kéo cần.</div>
+    </div>
+  </div>
+</div>
+
+<h2 id="ch2-boundary">Chỗ cỗ máy này dễ hiểu sai</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+  <strong>Cuộn nhiều ≠ rối loạn.</strong> "Sử dụng có vấn đề" cần nhiều hơn số phút: mất kiểm soát, ưu tiên màn hình hơn mọi thứ khác, và hậu quả tiêu cực kéo dài trong đời thật. Số phút không phải chẩn đoán — một người cuộn 4 tiếng nhưng vẫn hoàn thành công việc và hạnh phúc khác hẳn một người cuộn 4 tiếng vì không thể dừng.
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp ranh giới</span>
+  <strong>Đừng tự chẩn đoán "nghiện điện thoại".</strong> DSM‑5 (cẩm nang chẩn đoán tâm thần) không có chẩn đoán này; WHO chỉ công nhận "rối loạn chơi game" với tiêu chí nghiêm ngặt. Nếu bạn lo lắng kéo dài về việc dùng màn hình, hãy trao đổi với chuyên gia sức khỏe tâm thần — đừng tự gán nhãn từ một bài viết.
+</div>
+
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Dự đoán</span>
+  Giả sử nhà thiết kế thay phần thưởng ngẫu nhiên bằng phần thưởng cố định — ví dụ thông báo đều đặn "mỗi 19 giờ bạn có 1 món quà", kết quả biết trước. Theo cơ chế bánh răng 1, hành vi sẽ đổi thế nào?
+</div>
+
+<h2 id="ch2-synthesis">Tổng kết cỗ máy</h2>
+<p>Cỗ máy dẫn dụ gồm ba bánh răng khớp nhau: <strong>phần thưởng ngẫu nhiên</strong> kéo ta về, <strong>cuộn vô tận</strong> giữ ta ở lại, <strong>nền kinh tế chú ý</strong> giải thích vì sao cả hai được tối ưu đến vậy. Nhưng ai đã mài từng bánh răng? Chương sau mở hộp công cụ của người điều phối: những thủ thuật cụ thể mà game, mạng xã hội và app nghe nhạc dùng để chi phối cảm xúc của bạn.</p>
+<!-- =========================================================
+     CHƯƠNG 3 — HỘP CÔNG CỤ CỦA NGƯỜI ĐIỀU PHỐI (ids ch3-*)
+     ========================================================= -->
+<h2 id="ch3-baseline">Chương 3 · Hộp công cụ của người điều phối: ai chạm vào cảm xúc của bạn</h2>
+<p>Giờ ta mở hộp công cụ. Năm ngăn chính: <strong>game</strong>, <strong>mạng xã hội</strong>, <strong>âm nhạc</strong>, <strong>thông báo</strong> — và một ngăn mới nhất nhưng mạnh nhất về cảm xúc: <strong>hẹn hò</strong>. Mỗi ngăn có những thủ thuật riêng để chạm vào một cảm xúc cụ thể. Điều đáng ngạc nhiên không phải là các thủ thuật này tồn tại — mà là chúng <em>giống nhau đến mức nào</em> giữa các ngành khác nhau, và chúng đều bắt nguồn từ cùng một phòng thí nghiệm: phòng thí nghiệm của máy đánh bạc.</p>
+
+<h2 id="ch3-bridge">Cầu nối: comps của sòng bạc</h2>
+<p>Sòng bạc không chỉ cần bạn ở lại tối nay — nó cần bạn quay lại tuần sau. Vì thế nó tặng <strong>comps</strong>: bữa tối miễn phí, phòng khách sạn, "điểm thẻ" tích lũy theo mức cược. Chúng biến mối quan hệ "chơi–thắng" thành mối quan hệ "nợ nhau": <em>tôi đã đầu tư vào anh, anh quay lại nhé.</em> Các ứng dụng sao chép y hệt bằng <strong>streak, huy hiệu, "đã lâu không gặp, tặng bạn 1 ngày vàng"</strong>. Cùng một trò chơi trung thành, chỉ khác đồng tiền.</p>
+
+<div class="premortem">
+  <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người rời khỏi bức tranh này với ý nghĩ…</span>
+  <p><span class="premortem__wrong">"Mấy kỹ thuật giữ chân này chỉ dùng cho app giải trí."</span></p>
+  <p>Điều này sai vì <strong>mọi</strong> ứng dụng có mục tiêu "tham gia thường xuyên" đều dùng chung bộ công cụ — kể cả app học ngoại ngữ (streak 365 ngày), app thiền (đếm chuỗi ngày), app nghe nhạc (playlist cá nhân hóa), app sức khỏe (huy hiệu đốt calo).</p>
+  <p><span class="premortem__truth">Sự thật là:</span> câu hỏi đúng không phải "app có dùng kỹ thuật cảm xúc không" (gần như app nào cũng dùng) mà là "<strong>kỹ thuật đó phục vụ mục đích gì và có minh bạch không</strong>".</p>
+</div>
+
+<h2 id="ch3-exposition">Năm ngăn của hộp công cụ</h2>
+
+<section class="scaffold" id="ch3-exp-1">
+  <h3 class="scaffold__concept">Ngăn game · Chuỗi ngày, thùng quà, đếm ngược</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Game mobile là phòng thí nghiệm tinh vi nhất của toàn ngành. Bốn công cụ đáng chú ý nhất:</p>
+    <ul>
+      <li><span class="term-amp" data-note="streak"><strong>Streak (chuỗi ngày):</strong></span> đếm số ngày liên tiếp quay lại. Mục tiêu không phải ngày thứ 1 mà là nỗi sợ <em>mất chuỗi</em> ở ngày thứ 100.</li>
+      <li><strong>Loot box (thùng quà):</strong> phần thưởng ngẫu nhiên mua bằng tiền thật — liên hệ với cờ bạc có vấn đề (r ≈ 0,26), người 16–24 tuổi mua loot box có khả năng cờ bạc có vấn đề gấp 4,4 lần<a class="source" href="https://ideas.repec.org/a/taf/intgms/v21y2021i3p460-479.html">Garea 2021</a><a class="source" href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1091282/InGAME_Loot_Box_REA.pdf">Wardle &amp; Zendle 2020</a>.</li>
+      <li><strong>Pity system (hệ thống "an ủi"):</strong> "sau N lần không trúng, bảo đảm trúng". Biến thất bại thành <em>khoản đầu tư</em>: mỗi lần trượt là mỗi bước đến gần đích.</li>
+      <li><strong>Countdown (đếm ngược):</strong> "Sự kiện kết thúc trong 00:12:34" — khẩn cấp giả, bỏ qua việc đánh giá "đáng hay không".</li>
+    </ul></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bạn xây chuỗi 100 ngày. Một tối bận việc, app gửi: "Chuỗi 100 ngày của bạn sắp đứt! Chỉ còn 3 giờ." Bạn mở app lúc 23:59 chỉ để giữ chuỗi — thậm chí không chơi. Đó là chi phí chìm được vũ khí hóa.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao "sự kiện có hạn" trong game luôn kèm bộ đếm ngược thật to?</summary>
+    <div class="scaffold__resolve">Vì nó kích hoạt <strong>nỗi sợ mất mát</strong> (loss aversion) + <strong>khẩn cấp giả</strong>: cảm giác "sắp hết giờ" khiến não bỏ qua câu hỏi "mình có thực sự muốn không". Sòng bạc làm y hệt với ánh đèn và tiếng nhạc vào giờ cao điểm.</div>
+  </details>
+</section>
+<div class="feynman">Chuỗi ngày (streak) làm gì với cảm xúc bạn? — Nó biến "không chơi hôm nay" thành "mất thứ mình đã xây" — nỗi sợ mất công sức, không phải niềm vui chơi.</div>
+
+<section class="scaffold" id="ch3-exp-2">
+  <h3 class="scaffold__concept">Ngăn mạng xã hội · Like, FOMO và kính lúp so sánh</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Ba công cụ nổi bật nhất:</p>
+    <ul>
+      <li><strong>Phản hồi xã hội (like, bình luận):</strong> nghiên cứu tại Na Uy (315 người, trung bình dùng Instagram 56 phút/ngày) tách được hai yếu tố cảm xúc chủ đạo khi dùng Instagram: <strong>ghen tị</strong> và <strong>chờ đợi phản hồi</strong><a class="source" href="https://journals.sagepub.com/doi/10.1177/21582440231193916">Stapleton et al. 2023</a>.</li>
+      <li><span class="term-amp" data-note="fomo"><strong>FOMO:</strong></span> yếu tố giải trí (β ≈ 0,31) và tính kịp thời (β ≈ 0,29) của nội dung đẩy thông minh làm tăng FOMO, và FOMO dẫn đến sử dụng có vấn đề (β ≈ 0,45)<a class="source" href="https://doi.org/10.1177/20570473241239359">Smart push &amp; FoMO 2024</a>. Sinh viên có FOMO cao hơn bị thông báo làm gián đoạn nhiều hơn và học nông hơn<a class="source" href="https://www.sciencedirect.com/science/article/abs/pii/S0360131519301319">Rozgonjuk et al. 2019</a>.</li>
+      <li><strong>Kính lúp so sánh:</strong> <span class="term-amp" data-note="upward-comparison">so sánh hướng lên</span> (nhìn người "trên" mình) làm trung gian cho việc dùng mạng xã hội → tự trọng thấp hơn và triệu chứng trầm cảm cao hơn<a class="source" href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1597241/full">Frontiers in Psychology 2025</a>; xem ảnh "hướng lên" trên Instagram làm giảm body‑esteem<a class="source" href="https://link.springer.com/article/10.1007/s44202-024-00241-3">Discover Psychology 2024</a>.</li>
+    </ul></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Lướt một phút, bạn gặp: kỳ nghỉ đẹp của bạn cũ · bức ảnh body hoàn hảo · tin ai đó vừa được thăng chức. Ba lần so sánh trong ba giây — mỗi lần một nhát cắt vào tự trọng.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Kính lúp so sánh đặt "điểm cắt" ở đâu là tối ưu cho người thiết kế?</summary>
+    <div class="scaffold__resolve">Ở chỗ khiến bạn <strong>tiếp tục cuộn</strong>: ngay sau khi tự trọng chạm đáy, feed bơm nội dung an ủi ("nhìn đáng yêu quá", tin vui) để giữ bạn ở lại. Trải nghiệm được ráp như tàu lượn — lên xuống đều đặn, và mọi đoạn dốc đều có một lối ra "kéo dài phiên".</div>
+  </details>
+</section>
+<div class="feynman">Kính lúp so sánh trên mạng khác đời thật chỗ nào? — Ở đời thật bạn so với vài người quen; trên mạng bạn so với hàng nghìn "bản đẹp nhất" của người lạ.</div>
+
+<section class="scaffold" id="ch3-exp-3">
+  <h3 class="scaffold__concept">Ngăn âm nhạc · Autoplay &amp; playlist theo tâm trạng</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>App nghe nhạc biến cảm xúc thành dữ liệu. Nghiên cứu của Spotify gắn nhãn tâm trạng cho gần <strong>một triệu bài hát</strong> với <strong>287 từ mô tả cảm xúc</strong>, xây từ khoảng <strong>4 tỷ playlist</strong> của người dùng — rồi dùng lời bài hát và đặc tính âm học để dự đoán "bài này hợp tâm trạng nào"<a class="source" href="https://ojs.aaai.org/index.php/ICWSM/article/download/19326/19098">Spotify Research (ICWSM)</a>. Playlist "theo tâm trạng" (buồn, hạnh phúc, tập trung) là sản phẩm của hệ thống đó. <strong>Autoplay</strong> duy trì dòng chảy: không có khoảng lặng để não tự hỏi "mình còn muốn nghe không?".</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bạn buồn, bật playlist "buồn". Hệ thống giữ nguyên tâm trạng đó suốt đêm. Đáng chú ý: âm nhạc có thể làm được điều mà phần thưởng ngẫu nhiên không làm nổi — <strong>dẫn dắt cảm xúc có hướng</strong>. Nghiên cứu RCT cho thấy nghe <em>được dẫn dắt</em> (bắt đầu khớp tâm trạng, chuyển dần về tâm trạng mong muốn — <span class="term-amp" data-note="iso-principle">nguyên tắc iso</span>) giúp tăng bình tĩnh nhiều hơn nghe tự do<a class="source" href="https://doi.org/10.1177/10298649261421187">Iso-principle RCT 2024</a>.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao một app nghe nhạc lại cần biết bạn đang buồn hay đang phấn khích?</summary>
+    <div class="scaffold__resolve">Vì giữ chân không nằm ở "bài hát hay" mà ở "<strong>đúng bài đúng tâm trạng</strong>". Âm nhạc là công cụ điều chỉnh cảm xúc mạnh nhất trong túi bạn — app nào đo được tâm trạng và chủ động đáp ứng sẽ trở thành chiếc điều khiển cảm xúc mà bạn không muốn rời.</div>
+  </details>
+</section>
+<div class="feynman">App nhạc giữ chân bạn bằng gì? — Không phải bài hay nhất, mà là "bài đúng tâm trạng này": app biết bạn đang buồn, chọn bài hợp buồn, và bạn ở lại vì được đồng cảm.</div>
+
+<section class="scaffold" id="ch3-exp-4">
+  <h3 class="scaffold__concept">Ngăn thông báo · Tiếng chuông có chủ đích</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trung bình mỗi ngày bạn nhận <strong>46–65 thông báo</strong> (đo từ thiết bị)<a class="source" href="https://pielot.org/pubs/Pielot2018-MHCI-Dismissed.pdf">Pielot et al. 2018</a><a class="source" href="https://www.businessofapps.com/marketplace/push-notifications/research/push-notifications-statistics/">Business of Apps</a>. Mỗi thông báo là một <strong>tín hiệu</strong> (cue) được lập trình: giờ chuẩn, câu chữ chuẩn, icon chuẩn — để kích hoạt thói quen kiểm tra. Nhưng đây là phần nghịch lý nhất của toàn bài: một thử nghiệm RCT đo trực tiếp (N = 205) cho thấy <strong>tắt toàn bộ thông báo 7 ngày KHÔNG làm giảm thời gian dùng hay số lần kiểm tra</strong> — nhưng làm <strong>tăng FOMO</strong> và giảm cảm giác "kiểm tra có chủ đích"<a class="source" href="https://pure.uva.nl/ws/files/245971989/Beyond_the_Buzz.pdf">Beyond the Buzz (UvA), RCT</a>. Nghĩa là: người dùng <em>tự gián đoạn chính mình</em> để kiểm tra — cỗ máy đã nội hóa tiếng chuông thành thói quen.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Tắt hết thông báo, bạn vẫn mở app 60 lần/ngày — chỉ vì cơ thể "nhớ" phải kiểm tra. Điều đó nghĩa là kẻ giữ chân bạn không còn ở ngoài (chuông) mà đã ở trong (thói quen + phần thưởng ngẫu nhiên của nội dung).</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu thông báo bị tắt mà thời gian không giảm, vậy thứ thật sự giữ chân bạn là gì?</summary>
+    <div class="scaffold__resolve">Ba thứ: <strong>thói quen đã lập trình</strong>, <strong>phần thưởng ngẫu nhiên của nội dung</strong> (bánh răng 1) và <strong>nỗi sợ bỏ lỡ</strong> — thứ mà việc tắt chuông còn làm tăng lên. Kết luận thiết kế: "tắt thông báo" là bước một, không phải giải pháp.</div>
+  </details>
+</section>
+<div class="feynman">Vì sao tắt chuông không cứu bạn? — Vì "chuông" đã thành thói quen trong đầu: bạn tự bấm giờ kiểm tra, thậm chí còn lo lắng hơn khi không nghe thấy gì.</div>
+
+<section class="scaffold" id="ch3-exp-5">
+  <h3 class="scaffold__concept">Ngăn hẹn hò · Swipe là một cú kéo cần</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>App hẹn hò là minh chứng rõ nhất cho mâu thuẫn giữa lời hứa và thiết kế: quảng cáo là "công cụ kết nối", nhưng thuật toán được tối ưu để <strong>giữ chân</strong> — chứ không phải để bạn tìm thấy tình yêu rồi rời app. Mỗi lần vuốt là một <strong>cú kéo cần</strong>: kết quả ngẫu nhiên (match hay không), phần thưởng hiếm và đầy cảm xúc (một match), danh sách hồ sơ không đáy. Chính cơ chế phần thưởng ngẫu nhiên của máy đánh bạc được đặt lên thứ nhạy cảm nhất: kỳ vọng về tình yêu. Hệ quả — sự thân mật bị <strong>thương mại hóa</strong>: bạn không còn là người đi tìm kết nối, bạn là người dùng bị vắt kiệt cảm xúc, và nhiều người rời cuộc chơi với <strong>sự vỡ mộng và cô đơn</strong>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Vào app với hy vọng, vuốt 50 hồ sơ trong một phiên: vài match, vài tin nhắn "chào" khô khan, rồi tắt app — mệt mỏi hơn lúc mở. Phiên đó có điểm dừng rõ ràng không? Hầu như không: mỗi match mới là một "near-miss" đầy hứa hẹn, mỗi tin nhắn mới là một tia hy vọng để quay lại.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao một app "giúp tìm tình yêu" lại có động cơ giữ bạn <em>độc thân</em> trên app càng lâu càng tốt?</summary>
+    <div class="scaffold__resolve">Vì doanh thu của app hẹn hò tỉ lệ thuận với <strong>số người dùng quay lại mỗi ngày</strong> — và tỉ lệ nghịch với số người tìm được hạnh phúc rồi bỏ đi. Giống sòng bạc: nhà cái thắng khi bạn <em>tiếp tục chơi</em>, không phải khi bạn thắng và ra về. Nếu sản phẩm thành công, nó sẽ tự mất người dùng — nên thành công phải được trì hoãn mãi mãi.</div>
+  </details>
+</section>
+<div class="feynman">App hẹn hò thực chất là gì? — Là máy đánh bạc cảm xúc: bạn vuốt là kéo cần, match là phần thưởng ngẫu nhiên, và "nhà cái" thắng khi bạn quay lại — không phải khi bạn tìm được người để rời đi.</div>
+
+<div class="checkpoint" data-checkpoint-id="cp3">
+  <span class="checkpoint__label">🛑 Dừng lại &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Chọn <em>một</em> ứng dụng bạn dùng hằng ngày. Nó dùng kỹ thuật nào trong bốn ngăn (game / mạng xã hội / âm nhạc / thông báo)? Kỹ thuật đó chạm vào cảm xúc gì của bạn, và nó có minh bạch với bạn không?</p>
+  <textarea placeholder="Viết câu trả lời bằng chính lời của bạn trước khi xem gợi ý…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời chuyên gia</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Câu trả lời chuyên gia</span>
+    Hầu như mọi app lớn dùng ít nhất hai kỹ thuật chồng nhau. Ví dụ app nghe nhạc: playlist theo tâm trạng (ngăn âm nhạc) + thông báo "nghệ sĩ yêu thích vừa ra bài" (ngăn thông báo). Câu hỏi "minh bạch hay không" quan trọng hơn "có dùng hay không": streak trong app học ngoại ngữ là minh bạch và phục vụ bạn; loot box trong game nạp tiền thì không phải lúc nào cũng vậy. Nếu bạn trả lời "nó chạm vào FOMO của tôi và tôi không hề biết" — bạn vừa gặp trực tiếp bàn tay vô hình.
+  </div>
+</div>
+
+<h2 id="ch3-application">Trong đời thực: truy tìm kỹ thuật</h2>
+<p>Hãy "truy tìm" một kỹ thuật bạn gặp hôm nay, theo ba bước:</p>
+<ol>
+  <li><strong>Đặt tên cho nó</strong> — streak? autoplay? countdown? thông báo "ai đó đã…"? loot box? playlist theo tâm trạng?</li>
+  <li><strong>Gọi tên cảm xúc mồi</strong> — nó cần bạn đang ở trạng thái nào để hoạt động hiệu quả nhất? (chán? sợ mất? sợ bỏ lỡ? phấn khích?)</li>
+  <li><strong>Đo lường nó</strong> — khi kỹ thuật đó xuất hiện, bạn ở lại lâu hơn bao nhiêu?</li>
+</ol>
+<p>Mục tiêu không phải "bắt lỗi" ứng dụng — mà là biến thứ vô hình thành thứ bạn gọi được tên. Một cảm xúc được gọi tên đã mất đi một nửa quyền lực của nó.</p>
+
+<div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem câu trả lời">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Nhớ lại chủ động — Câu hỏi</span>
+      <div class="flip-card__content">Kỹ thuật "chuỗi ngày" (streak) lợi dụng cảm xúc nào làm đòn bẩy chính?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Câu trả lời</span>
+      <div class="flip-card__content">Nỗi sợ <strong>mất công sức đã bỏ</strong> + nỗi sợ mất danh hiệu: "mình đã xây 100 ngày, không thể bỏ". Đó là chi phí chìm được vũ khí hóa — cùng cơ chế comps của sòng bạc.</div>
+    </div>
+  </div>
+</div>
+
+<h2 id="ch3-boundary">Chỗ hộp công cụ này dễ hiểu sai</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+  <strong>Không phải kỹ thuật nào cũng xấu.</strong> Streak trong app học ngôn ngữ, huy hiệu trong app tập thể dục, playlist theo tâm trạng trong app nhạc — đều dùng đúng những cơ chế kể trên. Vấn đề không nằm ở bản thân kỹ thuật, mà ở <strong>mục đích</strong> (phục vụ bạn hay khai thác bạn) và <strong>tính minh bạch</strong>.
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp ranh giới</span>
+  <strong>Tác dụng cá nhân khác nhau rất lớn.</strong> Một kỹ thuật "nghiện" với người này là "công cụ hữu ích" với người kia; một người có thể miễn nhiễm với streak nhưng rất nhạy với so sánh hướng lên. Không ai hoàn toàn miễn nhiễm, cũng không ai chắc chắn bị cuốn — điều này dẫn thẳng đến Chương 5.
+</div>
+
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Dự đoán</span>
+  Nếu Instagram bỏ hoàn toàn nút like, bạn đoán điều gì xảy ra với thời gian ở lại và cảm xúc người dùng? (Gợi ý: các thử nghiệm ẩn like đã diễn ra trên quy mô lớn — kết quả không đơn giản như "bớt áp lực = dùng ít hơn".)
+</div>
+
+<h2 id="ch3-synthesis">Tổng kết hộp công cụ</h2>
+<p>Hộp công cụ rất chung: một kỹ thuật (streak, phần thưởng ngẫu nhiên, autoplay, thông báo) có thể chạm bảy cảm xúc khác nhau tùy cách ráp. Nhưng câu hỏi lớn hơn đang chờ: làm sao biến hộp công cụ này thành một <strong>sản phẩm điều phối cảm xúc có chủ đích</strong> — thứ mà các đội ngũ sản phẩm hàng đầu làm mỗi ngày? Chương sau đi sâu vào khía cạnh đó: động cơ cảm xúc, cung cảm xúc và ba trục đánh giá.</p>
+<!-- =========================================================
+     CHƯƠNG 4 — ĐI SÂU: ĐỘNG CƠ CẢM XÚC (ids ch4-*)
+     ========================================================= -->
+<h2 id="ch4-baseline">Chương 4 · Đi sâu: thiết kế một cỗ máy cảm xúc có chủ đích</h2>
+<p>Hộp công cụ ở Chương 3 là các thủ thuật rời rạc. Nhưng các sản phẩm thành công nhất không ráp thủ thuật một cách ngẫu hứng — chúng xây một <strong>kiến trúc cảm xúc</strong> có chủ đích. Kiến trúc đó có bốn lớp: <span class="term-amp" data-note="emotion-engine"><strong>động cơ cảm xúc</strong></span> (emotion engine — nguồn năng lượng cho hành vi), <strong>cung cảm xúc</strong> (emotion arc — đồ thị lên xuống của phiên trải nghiệm), <strong>lớp danh tính</strong> (khiến bạn thấy "rời app là rời chính mình"), và <strong>lớp Panopticon</strong> (cảm giác luôn bị nhìn — môi trường mà mọi lớp khác vận hành bên trong). Đọc xong chương này, bạn sẽ có bộ kính để "mổ" bất kỳ ứng dụng nào — kể cả ứng dụng lành mạnh.</p>
+
+<h2 id="ch4-bridge">Cầu nối: đồ thị của một chuyến tàu lượn</h2>
+<p>Một chuyến tàu lượn không gây nghiện vì nó cao — nó gây nghiện vì <strong>đồ thị</strong> lên xuống được thiết kế: leo chậm (chờ đợi) → rơi nhanh (sợ) → lao lên (hưng phấn) → giảm tốc (thỏa mãn). Người ta xếp hàng lần nữa vì nhớ đồ thị, không phải vì nhớ độ cao. Các ứng dụng cũng vậy: phiên của bạn là một tàu lượn. Chương này dạy bạn đọc đồ thị đó.</p>
+
+<div class="premortem">
+  <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người rời khỏi bức tranh này với ý nghĩ…</span>
+  <p><span class="premortem__wrong">"Thiết kế cảm xúc chỉ dùng cho app giải trí — còn các app 'nghiêm túc' thì không."</span></p>
+  <p>Điều này sai vì bộ công cụ nền tảng là <strong>trung lập</strong>: thông báo, streak, phần thưởng ngẫu nhiên xuất hiện trong cả app ngân hàng (thông báo "lương đã về"), app sức khỏe (huy hiệu 10.000 bước), app nghe nhạc (playlist tâm trạng), app thiền (chuỗi ngày). Thiết kế cảm xúc là ngôn ngữ chung; câu hỏi là <em>ai viết câu với ngôn ngữ đó</em>.</p>
+  <p><span class="premortem__truth">Sự thật là:</span> thiết kế cảm xúc không tốt cũng không xấu — nó là <strong>nghề</strong>. Có nghề phục vụ bạn (đưa bạn về tâm trạng bình tĩnh), có nghề khai thác bạn (giữ bạn trong vòng xoáy). Kỹ năng đáng học là phân biệt hai thứ bằng ba trục đánh giá ở phần sau.</p>
+</div>
+
+<h2 id="ch4-exposition">Bốn lớp kiến trúc cảm xúc</h2>
+
+<section class="scaffold" id="ch4-exp-1">
+  <h3 class="scaffold__concept">Lớp 1 · Động cơ cảm xúc — nguồn năng lượng của hành vi</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Mỗi sản phẩm gây gắn kết cao đều chạy bằng một nguồn cảm xúc chính — giống một cỗ máy cần một nguồn năng lượng. Vài ví dụ:</p>
+    <ul>
+      <li><strong>Mạng xã hội → hưng phấn mong đợi + ghen tị:</strong> nghiên cứu tại Na Uy xác định hai yếu tố chủ đạo khi dùng Instagram là <strong>ghen tị</strong> và <strong>chờ đợi phản hồi</strong><a class="source" href="https://journals.sagepub.com/doi/10.1177/21582440231193916">Stapleton et al. 2023</a>.</li>
+      <li><strong>Tin tức → phẫn nộ &amp; sợ hãi:</strong> nội dung có từ cảm xúc đạo đức lan truyền nhanh hơn <strong>20% mỗi từ</strong><a class="source" href="https://www.pnas.org/doi/abs/10.1073/pnas.1618923114">Brady et al. PNAS 2017</a>; sự tức giận lan <em>nhanh hơn</em> và <em>xa hơn</em> qua các liên kết yếu so với niềm vui<a class="source" href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0110184">Zhao et al. 2014</a><a class="source" href="https://www.tandfonline.com/doi/full/10.1080/03637751.2023.2236183">Han et al. 2023</a>.</li>
+      <li><strong>Game → thèm phần thưởng:</strong> khoảng chờ kết quả (Bánh răng 1, Chương 2) + pity system.</li>
+      <li><strong>App nghe nhạc → đồng cảm tâm trạng:</strong> "bài này hiểu mình đang buồn" — dữ liệu từ gần một triệu bài hát và 287 từ mô tả tâm trạng<a class="source" href="https://ojs.aaai.org/index.php/ICWSM/article/download/19326/19098">Spotify Research</a>.</li>
+    </ul>
+    <p>Cỗ máy nào chọn sai nguồn cảm xúc (không tương thích với người dùng) sẽ chết; cỗ máy chọn đúng thì chỉ cần một "đòn bẩy" nhỏ cũng xoay chuyển hành vi lớn.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Hai app cùng gửi một thông báo như nhau "Bạn có 3 tin mới". App A chạy bằng nguồn "tò mò" → bạn mở khi rảnh. App B chạy bằng nguồn "phẫn nộ + FOMO" (tin tức giật gân) → bạn mở <em>ngay</em>, giữa cuộc họp. Cùng kỹ thuật, khác động cơ, khác hẳn độ mạnh.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao "phẫn nộ" là nguồn năng lượng đắt giá đến thế cho cỗ máy tin tức?</summary>
+    <div class="scaffold__resolve">Vì nó <strong>không cần mồi</strong> (không cần bạn sẵn buồn chán hay sẵn tò mò) và nó <strong>tự lan tỏa</strong>: một cơn phẫn nộ được chia sẻ đi kèm nghĩa vụ xã hội ("ai đó cần biết"), lan rộng qua các liên kết yếu nhanh hơn mọi cảm xúc khác. Ít chi phí sản xuất, tối đa phạm vi — công thức hoàn hảo cho doanh thu quảng cáo.</div>
+  </details>
+</section>
+<div class="feynman">"Động cơ cảm xúc" là gì? — Là nguồn năng lượng chính của một cỗ máy: game chạy bằng thèm phần thưởng, tin tức chạy bằng phẫn nộ, app nhạc chạy bằng đồng cảm.</div>
+
+<section class="scaffold" id="ch4-exp-2">
+  <h3 class="scaffold__concept">Lớp 2 · Cung cảm xúc — đồ thị của phiên trải nghiệm</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Phiên trải nghiệm tốt không phẳng — nó có <strong>hình dạng</strong>. Hai đồ thị đáng chú ý nhất:</p>
+    <ul>
+      <li><strong>Đồ thị nghiện:</strong> phấn khích ngắn → trống rỗng → <em>phấn khích trở lại</em> → trống rỗng. Mỗi lượt "phấn khích" cần một cú kéo cần. Cảm xúc ròng ở cuối phiên: <strong>cạn kiệt, nhưng mồm muốn nữa</strong>.</li>
+      <li><strong>Đồ thị nuôi dưỡng (iso / lắng đọng):</strong> bắt đầu khớp tâm trạng hiện tại, chuyển dần về tâm trạng mong muốn, kết thúc bằng điểm dừng rõ ràng. Nghiên cứu RCT cho thấy lắng nghe <em>được dẫn dắt</em> theo hướng này giúp tăng bình tĩnh nhiều hơn nghe tự do<a class="source" href="https://doi.org/10.1177/10298649261421187">Iso-principle RCT 2024</a>. Một hệ thống nghiên cứu (MoodDJ) thậm chí xây dựng "hành trình cảm xúc" cho người nghe nhạc — chuyển từ tâm trạng xấu về tâm trạng tốt qua các bài được chọn theo thứ tự<a class="source" href="https://dl.acm.org/doi/10.1145/3627043.3659555">MoodDJ 2024</a>.</li>
+    </ul>
+    <p>Câu hỏi thiết kế mấu chốt: phiên của bạn <strong>kết thúc bằng cảm xúc nào</strong> — và cảm xúc đó khiến bạn quay lại để làm gì?</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Đồ thị nghiện: nút xanh lên mỗi 3 phút, rồi tụt. Đồ thị nuôi dưỡng: một đường dốc thoải đi lên, một lần hạ cánh rõ ràng. Cùng 40 phút, hai đồ thị, hai dư vị hoàn toàn khác.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao app nghiện luôn <em>tránh</em> cho phiên một kết thúc rõ ràng?</summary>
+    <div class="scaffold__resolve">Vì kết thúc rõ ràng tạo <strong>điểm dừng tâm lý</strong> — và điểm dừng là kẻ thù của thời gian ở lại. Đồ thị nghiện thiết kế sao cho bạn rời phiên giữa chừng cơn phấn khích ("thêm một video nữa") thay vì sau khi thỏa mãn. Kết thúc tốt đẹp là thứ bạn phải <em>tự tạo</em> (xem Chương 6).</div>
+  </details>
+</section>
+<div class="feynman">"Cung cảm xúc" khác gì với "cảm xúc"? — Cảm xúc là một điểm; cung cảm xúc là đồ thị của cả phiên: lên xuống thế nào, và quan trọng nhất — hạ cánh ở đâu.</div>
+
+<section class="scaffold" id="ch4-exp-3">
+  <h3 class="scaffold__concept">Lớp 3 · Danh tính và chi phí chìm — cánh cửa không lối thoát</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Lớp mạnh nhất và ít ai để ý nhất. Ứng dụng buộc bạn vào <strong>danh tính số</strong>: cấp độ, thành tích, chuỗi ngày, danh hiệu, đã lên "Top 10%". Rời app không còn là "bỏ một công cụ" — nó là <strong>bỏ một phần bản thân đã xây</strong>. Chi phí chìm (công sức đã đổ) được biến thành rào cản ra đi, và sự mất mát cảm nhận được (mất chuỗi, mất cấp) trở nên đau đớn hơn niềm vui ở lại là lớn. Cơ chế này giải thích vì sao người ta ở lại không vì vui — mà vì <strong>không nỡ</strong>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một người bạn nói: "Mình chán app này lắm, nhưng mình đã 3 năm 200 ngày streak, không thể bỏ được." Đó là chi phí chìm + danh tính: streak 1.200 ngày là thứ <em>định nghĩa</em> họ trong chính mắt họ.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao "mất chuỗi 1.200 ngày" đau hơn "mất một chiếc điện thoại mới"?</summary>
+    <div class="scaffold__resolve">Vì chiếc điện thoại là <strong>tài sản</strong> (thay được), còn chuỗi ngày là <strong>danh tính</strong> (thay không được). Não xử lý mất danh tính như mất một phần cơ thể — sự mất mát được cường điệu vì nó đụng vào câu "tôi là ai". Kẻ thiết kế biết điều đó: họ bán danh tính, không bán tính năng.</div>
+  </details>
+</section>
+<div class="feynman">Vì sao khó bỏ một app bạn đã xây 3 năm streak? — Vì rời app không còn là bỏ một công cụ — là bỏ một phần bản thân bạn đã xây. Danh tính trở thành cánh cửa không lối thoát.</div>
+
+<section class="scaffold" id="ch4-exp-4">
+  <h3 class="scaffold__concept">Lớp 4 · Panopticon — cảm giác luôn bị nhìn</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Lớp tinh vi nhất không nằm trong app — nó nằm trong <strong>không gian sống của bạn</strong>. Mỗi chiếc smartphone là một con mắt ghi hình: một điệu nhảy vô tư, một phát ngôn bốc đồng hay một sai lầm nhỏ đều có thể bị ghi lại, đăng tải và chế giễu. Khi cảm giác <span class="term-amp" data-note="panopticon">luôn bị nhìn</span> trở thành nền tảng của đời sống số, <strong>tính tự nhiên trong tương tác bị bóp chết</strong>: người ta đề phòng trong mọi cuộc gặp gỡ, e dè khi hẹn hò, sợ cam kết lâu dài — vì mọi lời nói, mọi hình ảnh đều có thể quay về "bán thân" mình. Đây không phải một cơ chế trong app; đây là môi trường mà toàn bộ các lớp khác vận hành bên trong.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Trước một buổi gặp mặt quan trọng, bạn tự dặn: "đừng nói lỡ, đừng làm gì kỳ cục, có thể bị quay lại". Cảm giác đó — lúc nào cũng có một khán giả tiềm năng — là thứ điện thoại đặt vào mọi tương tác, và nó căng thẳng hơn nhiều so với bất kỳ thuật toán nào trong từng app.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao "luôn bị nhìn" lại mạnh hơn cả phần thưởng ngẫu nhiên trong việc định hình hành vi?</summary>
+    <div class="scaffold__resolve">Vì phần thưởng ngẫu nhiên cần <em>cú kéo</em> để hoạt động; còn cảm giác bị giám sát <strong>không cần mồi</strong> — nó hoạt động mọi lúc, tự chỉnh hành vi của bạn ngay cả khi màn hình tắt. Nó là "bánh răng nền" khiến các lớp khác chạy hiệu quả hơn: người luôn e ngại sẽ dễ bị FOMO, so sánh hướng lên và streak chi phối hơn.</div>
+  </details>
+</section>
+<div class="feynman">"Luôn bị nhìn" đổi hành vi bạn thế nào? — Như phòng gương trong phòng tập: ai cũng sửa dáng khi biết mình bị nhìn — nhưng ở đây phòng gương theo bạn đi khắp nơi, và mở cả khi bạn không để ý.</div>
+
+<div class="deep-dive">
+  <span class="deep-dive__label">🔍 Đi sâu vào một sản phẩm cụ thể</span>
+  <h3>Trường hợp app nghe nhạc: cỗ máy cảm xúc hai chiều</h3>
+  <p>App nghe nhạc là ví dụ tinh tế nhất vì nó cho thấy <strong>cùng một nền móng, hai ngôi nhà khác nhau</strong>. Một mặt, nó dùng đúng hộp công cụ: autoplay (xóa điểm dừng), playlist theo tâm trạng dựng từ hàng triệu playlist và hàng trăm từ mô tả cảm xúc, thông báo cá nhân hóa. Đó là "cỗ máy giữ chân" thuần túy. Mặt khác, <strong>âm nhạc là thứ duy nhất trong túi bạn có thể chủ động dẫn dắt cảm xúc theo hướng bạn muốn</strong> — nguyên tắc iso (khớp tâm trạng hiện tại rồi chuyển dần) đã được chứng minh hiệu quả trong thử nghiệm lâm sàng<a class="source" href="https://doi.org/10.1177/10298649261421187">Iso-principle RCT 2024</a>, và hệ thống MoodDJ xây hẳn "hành trình cảm xúc" để người nghe tự chọn điểm đến<a class="source" href="https://dl.acm.org/doi/10.1145/3627043.3659555">MoodDJ 2024</a>. Cùng một nguồn dữ liệu (tâm trạng), người thiết kế có thể tối đa hóa thời gian ở lại, hoặc tối đa hóa "giúp bạn hạ cánh đúng tâm trạng rồi dừng". App bạn đang dùng nằm ở phía nào — bạn đã có bộ kính để tự kiểm tra.</p>
+</div>
+
+<div class="checkpoint" data-checkpoint-id="cp4">
+  <span class="checkpoint__label">🛑 Dừng lại &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Nhìn lại phiên màn hình "xấu" nhất gần đây của bạn (khiến bạn mệt, hối tiếc). Vẽ đồ thị cảm xúc của phiên đó: bắt đầu ở đâu, đỉnh ở đâu, và — quan trọng nhất — hạ cánh ở cảm xúc nào?</p>
+  <textarea placeholder="Viết câu trả lời bằng chính lời của bạn trước khi xem gợi ý…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời chuyên gia</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Câu trả lời chuyên gia</span>
+    Phiên "xấu" hầu như luôn hạ cánh ở một trong ba nơi: <strong>trống rỗng</strong> (chỉ có khoảng chờ, không có thỏa mãn), <strong>phẫn nộ</strong> (bị kéo vào tranh cãi), hoặc <strong>tự ti</strong> (so sánh hướng lên). Điểm chung: phiên đó được thiết kế để <em>không có kết thúc</em> — bạn rời giữa chừng chứ không rời sau khi thỏa mãn. Ngược lại, phiên "tốt" thường ngắn, có điểm dừng rõ, và hạ cánh bằng một cảm xúc bạn đã xác định trước (thư giãn, hiểu điều gì đó).
+  </div>
+</div>
+
+<h2 id="ch4-application">Ba trục đánh giá: mổ bất kỳ ứng dụng nào</h2>
+<p>Đây là công cụ cuối chương — một lược đồ ba trục để đánh giá bất kỳ tính năng điều phối cảm xúc nào:</p>
+<ul>
+  <li><strong>Trục 1 · Khả thi kỹ thuật (điểm 0–10):</strong> tính năng có xây được bằng công nghệ hiện tại không? Cần dữ liệu gì, chi phí gì? (Ví dụ: biết tâm trạng người dùng là khả thi — Spotify đã làm với hàng trăm từ mô tả.)</li>
+  <li><strong>Trục 2 · Độ giữ chân (điểm 0–10):</strong> tính năng có khiến người dùng quay lại / ở lại lâu hơn không? Mạnh đến mấy? (Ví dụ: streak giữ chân rất mạnh; thông báo có chủ đích giữ chân trung bình.)</li>
+  <li><strong>Trục 3 · Tác hại (điểm 0–10):</strong> hậu quả tiêu cực tiềm tàng cho người dùng? (Phẫn nộ có tác hại cao; iso-principle có tác hại thấp.)</li>
+</ul>
+<div class="callout callout--tip">
+  <span class="callout__label">💡 Cách dùng</span>
+  Với mỗi tính năng: chấm ba trục → nhìn hình dạng. <strong>Khả thi cao + giữ chân cao + tác hại cao</strong> = vùng đỏ (khai thác). <strong>Khả thi cao + giữ chân trung bình + tác hại thấp</strong> = vùng xanh (có thể phục vụ người dùng thật sự). Ví dụ bài tập: chấm "playlist theo tâm trạng" (khả thi 9 · giữ chân 7 · tác hại 4) rồi chấm "loot box" (khả thi 10 · giữ chân 9 · tác hại 8). Số khác nhau, nhìn là phân biệt được ngay.
+</div>
+
+<div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem câu trả lời">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Nhớ lại chủ động — Câu hỏi</span>
+      <div class="flip-card__content">Ba trục đánh giá một tính năng điều phối cảm xúc là gì? Áp nhanh cho "chuỗi ngày trong app học ngôn ngữ".</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Câu trả lời</span>
+      <div class="flip-card__content"><strong>Khả thi kỹ thuật · Độ giữ chân · Tác hại.</strong> Ví dụ streak học ngôn ngữ: khả thi 10 (chỉ cần đếm ngày), giữ chân 8–9 (mạnh), tác hại thấp–trung bình 3–4 (chỉ đau khi mất chuỗi) — vùng xanh, phục vụ người dùng.</div>
+    </div>
+  </div>
+</div>
+
+<h2 id="ch4-boundary">Chỗ kiến trúc này dễ hiểu sai</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+  <strong>Thiết kế cảm xúc "tốt" và "xấu" không tách biệt tuyệt đối.</strong> Cùng một tính năng có thể vừa phục vụ vừa khai thác: playlist tâm trạng vừa giúp bạn điều chỉnh cảm xúc vừa tối đa thời gian nghe. Đừng hỏi "tính năng này tốt hay xấu" — hãy hỏi "tính năng này <em>hạ cánh</em> người dùng ở đâu".
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp ranh giới</span>
+  <strong>Ba trục không phải máy đo tuyệt đối.</strong> Điểm số phụ thuộc ngữ cảnh: phẫn nộ có tác hại cao với người dùng nhạy cảm nhưng "phẫn nộ thể thao" (xem đội nhà thua) gần như vô hại. Trục chỉ là lược đồ tư duy, không phải bảng điểm cuối cùng — nó giúp bạn <em>đặt câu hỏi đúng</em>.
+</div>
+
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Dự đoán</span>
+  Chương 5 sẽ xếp hạng bảy cảm xúc theo mức độ dễ bị chi phối bởi màn hình. Trước khi xem bảng xếp hạng: theo bạn, cảm xúc nào đứng đầu — cảm xúc "to tiếng" (phẫn nộ, phấn khích) hay cảm xúc "tĩnh lặng" (buồn chán, cô đơn)?</div>
+
+<h2 id="ch4-synthesis">Tổng kết kiến trúc</h2>
+<p>Một cỗ máy cảm xúc hoàn chỉnh có bốn lớp: <strong>động cơ</strong> (nguồn năng lượng), <strong>cung cảm xúc</strong> (đồ thị phiên trải nghiệm — và điểm hạ cánh), <strong>danh tính + chi phí chìm</strong> (rào cản ra đi), và <strong>Panopticon</strong> (môi trường luôn bị nhìn làm mọi lớp khác mạnh lên). Ba trục đánh giá — khả thi · giữ chân · tác hại — biến bộ kính này thành công cụ hành động. Giờ đến câu hỏi mà tất cả các chương đều chuẩn bị cho bạn: <strong>trong bảy cảm xúc nền tảng, cảm xúc nào dễ bị chi phối nhất bởi màn hình?</strong></p>
+<!-- =========================================================
+     CHƯƠNG 5 — XẾP HẠNG CẢM XÚC DỄ BỊ CHI PHỐI (ids ch5-*)
+     ========================================================= -->
+<h2 id="ch5-baseline">Chương 5 · Xếp hạng: bảy cảm xúc dễ bị chi phối nhất bởi màn hình</h2>
+<p>Toàn bộ bài đến đây là bộ kính. Bây giờ ta dùng nó cho câu hỏi định giá nhất: <strong>trong các cảm xúc nền tảng, cảm xúc nào dễ bị màn hình chi phối nhất?</strong></p>
+<p>Phương pháp: tôi chấm bảy cảm xúc theo <strong>ba trục</strong> đã xây ở Chương 4 — <em>khả thi kỹ thuật</em> (màn hình có dễ dàng chạm vào nó không), <em>độ giữ chân</em> (nó có giữ người dùng ở lại không), <em>bằng chứng</em> (nghiên cứu định lượng ủng hộ mức độ này mạnh không) — mỗi trục 0–10, rồi cộng điểm. Điểm là <strong>tổng hợp của tôi từ dữ liệu trong bài</strong>, không phải thước đo chuẩn hóa khoa học: hãy xem nó như một lập luận có số liệu, sẵn sàng để bạn phản biện ở phần cuối.</p>
+
+<h2 id="ch5-bridge">Cầu nối: ai nhìn sòng bạc?</h2>
+<p>Trước khi mở bảng xếp hạng, hãy thử một dự đoán trực giác. Hầu hết mọi người đoán cảm xúc "to tiếng" — <strong>phẫn nộ</strong> — đứng đầu, vì nó đáng nhớ nhất và dễ bị kích động nhất trên tin tức. Dữ liệu sẽ phủ nhận một phần trực giác đó: cảm xúc to tiếng lan truyền <em>xa</em>, nhưng cảm xúc tĩnh lặng và quen thuộc — buồn chán, thèm phần thưởng — lại là những thứ mà <em>mọi</em> ứng dụng, mọi lúc, không cần mồi, có thể chạm vào. Vấn đề của phẫn nộ là nó cần nội dung gây phẫn nộ; vấn đề của buồn chán là bạn <em>luôn</em> có nó.</p>
+
+<div class="premortem">
+  <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người rời khỏi bức tranh này với ý nghĩ…</span>
+  <p><span class="premortem__wrong">"Xếp hạng cảm xúc nghĩa là 'cảm xúc X của bạn là xấu'."</span></p>
+  <p>Điều này sai vì bảng xếp hạng không đánh giá <em>cảm xúc của bạn</em> — nó đánh giá <em>mức độ dễ bị khai thác</em> của từng cảm xúc trong môi trường màn hình. Buồn chán không xấu; nó là nhiên liệu tự nhiên của sáng tạo. Điều bị chê trách là <em>thiết kế khai thác</em>, không phải cảm xúc bị khai thác.</p>
+  <p><span class="premortem__truth">Sự thật là:</span> mục đích bảng này là giúp bạn nhìn thấy <strong>điểm yếu của chính mình</strong> — và điểm yếu dễ thấy là điểm yếu dễ vá.</p>
+</div>
+
+<h2 id="ch5-exposition">Bảng xếp hạng</h2>
+
+<div class="bar-chart">
+  <div class="bar-chart__title">Điểm "dễ bị chi phối" của bảy cảm xúc (thang 27)</div>
+  <div class="bar-row"><div class="bar-label">Buồn chán</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">27</div></div>
+  <div class="bar-row"><div class="bar-label">Thèm phần thưởng</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">27</div></div>
+  <div class="bar-row"><div class="bar-label">FOMO</div><div class="bar-track"><div class="bar-fill" style="width:96%"></div></div><div class="bar-value">26</div></div>
+  <div class="bar-row"><div class="bar-label">Phẫn nộ</div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><div class="bar-value">23</div></div>
+  <div class="bar-row"><div class="bar-label">Tự ti / ghen tị</div><div class="bar-track"><div class="bar-fill" style="width:81%"></div></div><div class="bar-value">22</div></div>
+  <div class="bar-row"><div class="bar-label">Cô đơn</div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div><div class="bar-value">19</div></div>
+  <div class="bar-row"><div class="bar-label">Mệt mỏi / quá tải</div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div><div class="bar-value">19</div></div>
+  <p class="bar-chart__caption">Tổng hợp của tác giả từ dữ liệu định lượng trong bài (xem điểm chi tiết trong từng thẻ dưới đây).</p>
+</div>
+
+<table class="rank-table">
+  <thead>
+    <tr>
+      <th>Hạng</th>
+      <th>Cảm xúc</th>
+      <th>Vai trò trong cỗ máy</th>
+      <th>Khả thi kỹ thuật</th>
+      <th>Độ giữ chân</th>
+      <th>Bằng chứng</th>
+      <th>Tổng /27</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td class="num">#1</td><td>Buồn chán</td><td>Cửa ngõ của mọi phiên màn hình</td><td class="num">10</td><td class="num">9</td><td class="num">8</td><td class="num">27</td></tr>
+    <tr><td class="num">#2</td><td>Thèm phần thưởng / hưng phấn mong đợi</td><td>Nhiên liệu của cỗ máy</td><td class="num">10</td><td class="num">9</td><td class="num">8</td><td class="num">27</td></tr>
+    <tr><td class="num">#3</td><td>FOMO — nỗi sợ bỏ lỡ</td><td>Keo dán của thông báo</td><td class="num">9</td><td class="num">8</td><td class="num">9</td><td class="num">26</td></tr>
+    <tr><td class="num">#4</td><td>Phẫn nộ</td><td>Thuốc nổ của tin tức</td><td class="num">8</td><td class="num">6</td><td class="num">9</td><td class="num">23</td></tr>
+    <tr><td class="num">#5</td><td>Tự ti / ghen tị</td><td>Kính lúp của mạng xã hội</td><td class="num">7</td><td class="num">7</td><td class="num">8</td><td class="num">22</td></tr>
+    <tr><td class="num">#6</td><td>Cô đơn</td><td>Vòng xoáy của mạng xã hội</td><td class="num">6</td><td class="num">7</td><td class="num">6</td><td class="num">19</td></tr>
+    <tr><td class="num">#7</td><td>Mệt mỏi / quá tải</td><td>Hóa đơn của tất cả</td><td class="num">7</td><td class="num">6</td><td class="num">6</td><td class="num">19</td></tr>
+  </tbody>
+</table>
+<p>Bảng nhìn nhanh ở trên; chi tiết và nguồn cho từng cảm xúc nằm trong các thẻ bên dưới.</p>
+
+<div class="rank-card">
+  <div class="rank-card__head"><span class="rank-card__rank">#1</span><span class="rank-card__name">Buồn chán</span><span class="rank-card__tag">cửa ngõ của mọi phiên màn hình</span></div>
+  <div class="rank-scores">
+    <div class="rank-score"><strong>10</strong>Khả thi kỹ thuật</div>
+    <div class="rank-score"><strong>9</strong>Độ giữ chân</div>
+    <div class="rank-score"><strong>8</strong>Bằng chứng</div>
+  </div>
+  <p class="rank-analysis"><strong>27/27.</strong> Buồn chán là <em>cửa ngõ</em>: hầu như phiên nào cũng bắt đầu từ nó, và nó không cần nội dung gì đặc biệt — chỉ cần một khoảng trống. Tổng hợp 59 nghiên cứu cho thấy buồn chán liên hệ với sử dụng có vấn đề ở r ≈ 0,34<a class="source" href="https://www.sciencedirect.com/science/article/pii/S2451958823000465">Boredom meta-analysis 2023</a>; nghiên cứu "smartphone như núm vú giả" gọi chính xác vai trò xoa dịu cơn buồn của nó<a class="source" href="https://dl.acm.org/doi/10.1145/3290605.3300536">CHI 2019</a>. Lý do đứng đầu: khả thi tuyệt đối (mọi app đều chạm được), giữ chân cao, và bằng chứng phong phú nhất trong bảy cảm xúc.</p>
+</div>
+
+<div class="rank-card">
+  <div class="rank-card__head"><span class="rank-card__rank">#2</span><span class="rank-card__name">Thèm phần thưởng / hưng phấn mong đợi</span><span class="rank-card__tag">nhiên liệu của cỗ máy</span></div>
+  <div class="rank-scores">
+    <div class="rank-score"><strong>10</strong>Khả thi kỹ thuật</div>
+    <div class="rank-score"><strong>9</strong>Độ giữ chân</div>
+    <div class="rank-score"><strong>8</strong>Bằng chứng</div>
+  </div>
+  <p class="rank-analysis"><strong>27/27 — đứng đầu nhờ "không cần mồi".</strong> Hưng phấn mong đợi là nhiên liệu của phần thưởng ngẫu nhiên: thông báo, hộp quà, feed. Nó chia sẻ điểm số với buồn chán, nhưng xếp hạng thấp hơn vì một kỹ thuật: nó cần <em>một cú kéo</em> (thông báo, loot box) để thức dậy — trong khi buồn chán tự bật nguồn. Bằng chứng mạnh: liên hệ loot box ↔ cờ bạc r ≈ 0,26<a class="source" href="https://ideas.repec.org/a/taf/intgms/v21y2021i3p460-479.html">Garea 2021</a>; "khoảng chờ kết quả" là trái tim của máy đánh bạc hiện đại.</p>
+</div>
+
+<div class="rank-card">
+  <div class="rank-card__head"><span class="rank-card__rank">#3</span><span class="rank-card__name">FOMO — nỗi sợ bỏ lỡ</span><span class="rank-card__tag">keo dán của thông báo</span></div>
+  <div class="rank-scores">
+    <div class="rank-score"><strong>9</strong>Khả thi kỹ thuật</div>
+    <div class="rank-score"><strong>8</strong>Độ giữ chân</div>
+    <div class="rank-score"><strong>9</strong>Bằng chứng</div>
+  </div>
+  <p class="rank-analysis"><strong>26/27.</strong> FOMO là cảm xúc duy nhất <em>được sinh ra bởi</em> màn hình — không tồn tại ở cường độ này trước smartphone. Nội dung giải trí và tính kịp thời của thông báo thông minh làm tăng FOMO (β ≈ 0,31 và 0,29), và FOMO dẫn trực tiếp đến sử dụng có vấn đề (β ≈ 0,45)<a class="source" href="https://doi.org/10.1177/20570473241239359">Smart push &amp; FoMO 2024</a>. Đáng chú ý: FOMO bền đến mức <em>tắt toàn bộ thông báo</em> còn làm FOMO tăng lên<a class="source" href="https://pure.uva.nl/ws/files/245971989/Beyond_the_Buzz.pdf">UvA RCT 2024</a>.</p>
+</div>
+
+<div class="rank-card">
+  <div class="rank-card__head"><span class="rank-card__rank">#4</span><span class="rank-card__name">Phẫn nộ</span><span class="rank-card__tag">thuốc nổ của tin tức</span></div>
+  <div class="rank-scores">
+    <div class="rank-score"><strong>8</strong>Khả thi kỹ thuật</div>
+    <div class="rank-score"><strong>6</strong>Độ giữ chân</div>
+    <div class="rank-score"><strong>9</strong>Bằng chứng</div>
+  </div>
+  <p class="rank-analysis"><strong>23/27.</strong> Phẫn nộ là cảm xúc <em>lan truyền xa nhất</em>: nội dung có từ cảm xúc đạo đức lan nhanh hơn 20% mỗi từ<a class="source" href="https://www.pnas.org/doi/abs/10.1073/pnas.1618923114">Brady PNAS 2017</a>, và sự tức giận lan nhanh và xa hơn niềm vui qua các liên kết yếu<a class="source" href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0110184">Zhao 2014</a><a class="source" href="https://www.tandfonline.com/doi/full/10.1080/03637751.2023.2236183">Han 2023</a>. Nhưng độ giữ chân thấp hơn nhóm đầu: người ta không cuộn <em>lâu</em> vì phẫn nộ — phẫn nộ tạo phiên ngắn và bùng nổ, chứ không tạo phiên dài lặng lẽ. Xếp #4 là cảnh báo: đừng đánh giá "độ nguy hiểm" bằng độ ồn ào.</p>
+</div>
+
+<div class="rank-card">
+  <div class="rank-card__head"><span class="rank-card__rank">#5</span><span class="rank-card__name">Tự ti / ghen tị</span><span class="rank-card__tag">kính lúp của mạng xã hội</span></div>
+  <div class="rank-scores">
+    <div class="rank-score"><strong>7</strong>Khả thi kỹ thuật</div>
+    <div class="rank-score"><strong>7</strong>Độ giữ chân</div>
+    <div class="rank-score"><strong>8</strong>Bằng chứng</div>
+  </div>
+  <p class="rank-analysis"><strong>22/27.</strong> So sánh hướng lên trên mạng xã hội làm trung gian giữa việc dùng mạng và tự trọng thấp hơn / triệu chứng trầm cảm cao hơn<a class="source" href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1597241/full">Frontiers in Psychology 2025</a>; xem nội dung "hướng lên" giảm body‑esteem<a class="source" href="https://link.springer.com/article/10.1007/s44202-024-00241-3">Discover Psychology 2024</a>; và ghen tị là một trong hai yếu tố chủ đạo khi dùng Instagram<a class="source" href="https://journals.sagepub.com/doi/10.1177/21582440231193916">Stapleton 2023</a>. Xếp thấp hơn vì nó phụ thuộc môi trường: người ít dùng mạng xã hội gần như miễn nhiễm — khả thi thấp hơn ba cảm xúc đầu.</p>
+</div>
+
+<div class="rank-card">
+  <div class="rank-card__head"><span class="rank-card__rank">#6</span><span class="rank-card__name">Cô đơn</span><span class="rank-card__tag">vòng xoáy của mạng xã hội</span></div>
+  <div class="rank-scores">
+    <div class="rank-score"><strong>6</strong>Khả thi kỹ thuật</div>
+    <div class="rank-score"><strong>7</strong>Độ giữ chân</div>
+    <div class="rank-score"><strong>6</strong>Bằng chứng</div>
+  </div>
+  <p class="rank-analysis"><strong>19/27.</strong> Cô đơn là mồi của mạng xã hội: mở app để nối kết, thấy người khác vui, cô đơn tăng — rồi mở tiếp. Nhưng khả thi và bằng chứng định lượng thấp hơn nhóm đầu: cô đơn là trạng thái "đặc", ít chuyển thành phiên dài như buồn chán, và mạng xã hội <em>có thể</em> giảm cô đơn khi được dùng chủ động. Cô đơn nguy hiểm theo cách <em>dài hơi</em> (vòng xoáy tích tụ tháng năm), không phải cách <em>nhạy bén</em> như buồn chán.</p>
+</div>
+
+<div class="rank-card">
+  <div class="rank-card__head"><span class="rank-card__rank">#7</span><span class="rank-card__name">Mệt mỏi / quá tải</span><span class="rank-card__tag">hóa đơn của tất cả</span></div>
+  <div class="rank-scores">
+    <div class="rank-score"><strong>7</strong>Khả thi kỹ thuật</div>
+    <div class="rank-score"><strong>6</strong>Độ giữ chân</div>
+    <div class="rank-score"><strong>6</strong>Bằng chứng</div>
+  </div>
+  <p class="rank-analysis"><strong>19/27.</strong> Mệt mỏi là cảm xúc <em>kết quả</em> — hóa đơn phải trả cho các phiên dài, không phải nhiên liệu dẫn vào phiên. Nó dễ bị khai thác ở điểm yếu: mệt = ít tự vệ = dễ cuốn theo autoplay và thông báo. Nhưng khả thi thấp hơn (khó "đánh thức" một người đã mệt), và bằng chứng định lượng riêng cho nó mỏng hơn các cảm xúc khác. Nó đáng xếp cuối theo thang "dễ chi phối chủ động" — nhưng lại là dấu hiệu báo động hữu ích nhất cho chính bạn.</p>
+</div>
+
+<div class="checkpoint" data-checkpoint-id="cp5">
+  <span class="checkpoint__label">🛑 Dừng lại &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Kết quả có điều gì trái với trực giác của bạn không? Bạn đặt cược vào cảm xúc nào trước khi xem bảng — và giờ nhìn lại, cảm xúc nào là điểm yếu "riêng" của bạn? (Có thể khác với top bảng.)</p>
+  <textarea placeholder="Viết câu trả lời bằng chính lời của bạn trước khi xem gợi ý…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời chuyên gia</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Câu trả lời chuyên gia</span>
+    Điểm trái trực giác thường gặp nhất: phẫn nộ — thứ "ồn ào" nhất — lại không đứng đầu, vì nó tạo phiên ngắn, bùng nổ và cần nội dung đặc biệt; trong khi buồn chán — thứ yên lặng — là mồi phổ quát mọi lúc. Còn "điểm yếu riêng" của bạn không cần trùng top bảng: một người hiếm khi thấy chán nhưng rất nhạy với so sánh hướng lên sẽ có kẻ thù là #5, không phải #1. Bảng là bản đồ chung — bạn là người khoanh vùng trên bản đồ đó.
+  </div>
+</div>
+
+<h2 id="ch5-application">Trong đời thực: kiểm chứng bảng bằng chính dữ liệu của bạn</h2>
+<p>Đừng tin bảng này vì nó đẹp. Hãy kiểm chứng trong 48 giờ:</p>
+<ol>
+  <li>Mỗi lần mở khóa điện thoại, ghi một trong bảy cảm xúc "mồi" của lần đó (chán? thèm? FOMO? phẫn nộ? tự ti? cô đơn? mệt?).</li>
+  <li>Sau 48 giờ, đếm: cảm xúc nào là mồi <em>thường xuyên nhất</em> của riêng bạn?</li>
+</ol>
+<div class="callout callout--tip">
+  <span class="callout__label">💡 Kết quả kỳ vọng</span>
+  Với hầu hết mọi người, "buồn chán" chiếm 40–60% các lần mở khóa — khớp với vị trí #1. Nhưng nếu mồi của bạn là "phẫn nộ" thì bạn thuộc nhóm ít hơn và cần chiến lược khác (Chương 6). Dữ liệu của bạn đáng tin hơn bảng của tôi.
+</div>
+
+<div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem câu trả lời">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Nhớ lại chủ động — Câu hỏi</span>
+      <div class="flip-card__content">Vì sao phẫn nộ — cảm xúc "ồn ào" nhất — không xếp đầu bảng "dễ bị chi phối"?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Câu trả lời</span>
+      <div class="flip-card__content">Vì "độ nguy hiểm" và "độ lan xa" khác nhau. Phẫn nộ lan <em>xa nhất</em> (bằng chứng mạnh), nhưng giữ chân <em>kém</em>: nó tạo phiên ngắn bùng nổ, cần nội dung gây phẫn nộ — còn buồn chán tạo phiên dài lặng lẽ và tự bật nguồn không cần mồi.</div>
+    </div>
+  </div>
+</div>
+
+<h2 id="ch5-boundary">Chỗ bảng xếp hạng này dễ hiểu sai</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+  <strong>Xếp hạng không phải mức độ "tồi tệ" của cảm xúc.</strong> #1 "buồn chán" không nghĩa là buồn chán là cảm xúc tệ nhất — nó nghĩa là màn hình khai thác nó dễ nhất. Buồn chán trong đời thật là nguồn sáng tạo quý giá; vấn đề nằm ở thiết kế khai thác khoảng trống đó, không phải ở bản thân sự buồn chán.
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp ranh giới</span>
+  <strong>Bảng là tổng hợp của tác giả, không phải chuẩn khoa học.</strong> Các nghiên cứu đều có giới hạn (hầu hết là tương quan cắt ngang, mẫu không đại diện toàn cầu). Đừng trích dẫn "điểm 27/27" như một con số được công bố — hãy trích dẫn các nghiên cứu gốc, và coi bảng là công cụ tư duy để bạn tự chấm lại.
+</div>
+
+<div class="callout callout--tip">
+  <span class="callout__label">🧩 Ứng viên thứ tám</span>
+  Một cảm xúc mới nổi xứng đáng được nhắc, dù không vào top 7: <strong>nỗi sợ bị giám sát / e ngại xã hội</strong> (Panopticon, Chương 4). Nó bị loại khỏi bảng không vì yếu — mà vì nó là cảm xúc <em>môi trường</em>: hoạt động ở tầng nền, âm thầm điều chỉnh mọi cảm xúc khác thay vì xuất hiện như một "mồi" riêng. Hãy coi nó như một điểm cộng ngầm cho toàn bảng thay vì một hàng thứ tám.
+</div>
+
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Dự đoán</span>
+  Chương cuối đảo ngược vai trò: thay vì "màn hình chi phối cảm xúc", ta hỏi "bạn có thể chi phối màn hình bằng cảm xúc của mình không". Câu trả lời bắt đầu từ một khái niệm tưởng chừng ngược đời — một tính năng mà bạn sắp <em>thiết kế</em>.
+</div>
+
+<h2 id="ch5-synthesis">Tổng kết bảng xếp hạng</h2>
+<p>Bảy cảm xúc tạo thành bốn nhóm: <strong>cửa ngõ</strong> (buồn chán — #1), <strong>nhiên liệu</strong> (thèm phần thưởng — #2, FOMO — #3), <strong>thuốc nổ</strong> (phẫn nộ — #4) và <strong>kính lúp &amp; vòng xoáy</strong> (tự ti — #5, cô đơn — #6). Đứng cuối: mệt mỏi — <em>hóa đơn</em> bạn phải trả. Đọc thông điệp ngầm: cảm xúc tĩnh lặng và quen thuộc bị khai thác dễ hơn cảm xúc to tiếng. Chương cuối trả lời câu hỏi lớn nhất: <strong>ai thực sự cầm lái</strong> — và bạn có thể thiết kế một "cái phanh cảm xúc" cho chính mình không.</p>
+<!-- =========================================================
+     CHƯƠNG 6 — AI ĐANG CẦM LÁI? + TỔNG KẾT (ids ch6-*, launchpad, glossary, quiz, sources)
+     ========================================================= -->
+<h2 id="ch6-baseline">Chương 6 · Ai đang cầm lái?</h2>
+<p>Sau năm chương, bức tranh đã đầy đủ: điện thoại là một sòng bạc cảm xúc mini (Chương 1); cỗ máy dẫn dụ gồm phần thưởng ngẫu nhiên, cuộn vô tận và nền kinh tế chú ý (Chương 2); hộp công cụ có bốn ngăn: game, mạng xã hội, âm nhạc, thông báo (Chương 3); kiến trúc hoàn chỉnh gồm động cơ cảm xúc, cung cảm xúc và danh tính (Chương 4); và bảy cảm xúc dễ bị chi phối nhất đã được xếp hạng (Chương 5). Giờ chỉ còn một câu hỏi: <strong>ai cầm lái?</strong> Câu trả lời ngắn gọn: khi bạn không biết cỗ máy, lái là cỗ máy. Câu trả lời đầy đủ nằm ở chương này.</p>
+
+<h2 id="ch6-bridge">Cầu nối: tay lái của sòng bạc</h2>
+<p>Về tới hình ảnh mở đầu bài. Một sòng bạc không đuổi theo con bạc — nó đổi thiết kế: không đồng hồ, không cửa sổ, thảm dày hút bước chân, máy đổi chip ngay tầm tay. Khi môi trường được thiết kế tốt, hành vi con người được "lái" mà không cần ra lệnh. Câu đảo ngược của chương này: <strong>nếu thiết kế môi trường có thể lái hành vi của bạn vào app, thì thiết kế môi trường cũng có thể lái hành vi của bạn ra khỏi app.</strong> Điều khác biệt duy nhất là ai viết thiết kế — và chương này chuyển cây bút sang tay bạn.</p>
+
+<div class="premortem">
+  <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người rời khỏi bức tranh này với ý nghĩ…</span>
+  <p><span class="premortem__wrong">"Biết cách cỗ máy hoạt động sẽ tự động giúp tôi thoát ra."</span></p>
+  <p>Điều này sai vì <strong>hiểu biết không tự chuyển thành hành vi</strong>. Bạn có thể thuộc lòng cơ chế loot box và vẫn mở hộp quà tối nay — kiến thức tăng nhận thức, không tăng ý chí.</p>
+  <p><span class="premortem__truth">Sự thật là:</span> kiến thức chỉ có giá trị khi được biến thành <strong>thay đổi thiết kế môi trường cá nhân</strong> — nghĩa là bạn phải làm việc mà sòng bạc làm: đổi thiết kế, không cầu xin ý chí.</p>
+</div>
+
+<h2 id="ch6-exposition">Nối lại toàn bài: sáu sợi dây</h2>
+<p>Trước khi hành động, hãy nối sáu sợi dây xuyên suốt bài lại thành một tấm lưới:</p>
+<ul>
+  <li><strong>Sợi 1 · Sòng bạc:</strong> mọi cơ chế — phần thưởng ngẫu nhiên, cuộn vô tận, streak, loot box, thông báo — đều là hậu duệ của thiết kế máy đánh bạc. Nhà cái luôn thắng vì họ viết luật.</li>
+  <li><strong>Sợi 2 · Vòng lặp:</strong> cảm xúc dẫn đến mở app, app bơm cảm xúc mới, cảm xúc mới dẫn đến mở tiếp. Chống vòng lặp bằng "ép mình" là thua cuộc; chống bằng đổi thiết kế mới là chơi đúng sân.</li>
+  <li><strong>Sợi 3 · Hộp công cụ trung lập:</strong> streak, thông báo, playlist tâm trạng không tốt cũng không xấu — người viết câu mới quyết định. Ba trục đánh giá (khả thi · giữ chân · tác hại) là la bàn.</li>
+  <li><strong>Sợi 4 · Cảm xúc tĩnh lặng bị khai thác nhiều nhất:</strong> buồn chán và thèm phần thưởng đứng đầu vì không cần mồi; phẫn nộ lan xa nhưng phiên ngắn. Kẻ thù của bạn là cửa ngõ và nhiên liệu, không phải thuốc nổ.</li>
+  <li><strong>Sợi 5 · Danh tính:</strong> chi phí chìm và streak biến "bỏ app" thành "bỏ bản thân". Mọi chiến lược thoát đều phải xử lý lớp danh tính này trước.</li>
+  <li><strong>Sợi 6 · Từ cá nhân ra xã hội:</strong> vòng lặp cảm xúc không dừng ở trong app — nó chảy ra đời thực. Khi sự thân mật bị thương mại hóa (ngăn hẹn hò) và tính tự nhiên bị bóp chết bởi cảm giác luôn bị nhìn (Panopticon), hệ quả tích tụ thành cô đơn lan tỏa, mất niềm tin vào gắn kết giữa người với người — và cuối cùng là những quyết định lớn như "có nên mang một đứa trẻ đến thế giới này". Nền kinh tế chú ý bán cảm xúc hôm nay; xã hội trả hóa đơn trong một thập kỷ.</li>
+</ul>
+
+<div class="concept-flow">
+  <div class="concept-flow__step"><span class="concept-flow__num">01</span>Nhận diện cỗ máy: đặt tên cơ chế và cảm xúc mồi</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">02</span>Đổi thiết kế môi trường cá nhân: bỏ mồi khỏi tầm tay</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">03</span>Tự thiết kế "cái phanh cảm xúc" và vòng lặp nuôi dưỡng</div>
+</div>
+
+<h2 id="ch6-application">Bàn thử việc: thiết kế "cái phanh cảm xúc"</h2>
+<p>Đây là bài tập thiết kế cuối cùng — và là câu trả lời cho "ai cầm lái". Bạn sẽ thiết kế một <strong>tính năng phanh cảm xúc</strong> cho chính mình, dùng đúng hộp công cụ mà các ứng dụng đã dạy bạn, nhưng theo hướng nuôi dưỡng thay vì khai thác. Bài toán:</p>
+<div class="callout callout--tip">
+  <span class="callout__label">🧩 Bài toán thiết kế</span>
+  Thiết kế một tính năng trong điện thoại của bạn có tên <strong>"cái phanh cảm xúc"</strong>. Tiêu chí: (1) nó chạm đúng <em>điểm yếu riêng</em> của bạn từ Chương 5; (2) nó dùng ít nhất một cơ chế từ hộp công cụ (streak, phần thưởng, thông báo, autoplay ngược…); (3) nó hạ cánh người dùng ở một cảm xúc bạn <em>chọn</em>; (4) nó có một điểm dừng rõ ràng.
+</div>
+<p>Ba mẫu tham khảo — bạn có thể lấy nguyên hoặc tự biến tấu:</p>
+<ul>
+  <li><strong>Mẫu A — "Cú kéo ngược" (chống buồn chán):</strong> mỗi lần bạn <em>sắp</em> mở app mồi (mạng xã hội, game), màn hình hiện một câu hỏi 5 giây: "Cảm xúc mồi của lần này là gì?" — lấy cảm xúc làm tín hiệu dừng, giống như sòng bạc dùng thiết kế để lái hành vi.</li>
+  <li><strong>Mẫu B — "Cung hạ cánh" (chống thèm phần thưởng):</strong> khi bạn bật app nghe nhạc, thay vì autoplay vô tận, app hỏi tâm trạng hiện tại → tâm trạng muốn đạt → chạy playlist theo nguyên tắc iso: khớp hiện tại, chuyển dần, rồi <strong>tự dừng</strong> bằng một bài kết thúc rõ ràng (bài "câu thoại cuối" của phiên).</li>
+  <li><strong>Mẫu C — "Công tắc danh tính" (chống chi phí chìm):</strong> đổi cách app nói về bạn: thay vì "bạn đang giữ chuỗi 200 ngày", hiện "bạn có quyền nghỉ hôm nay mà không mất gì". Thiết kế lại văn bản để <em>giải phóng</em> thay vì trói buộc.</li>
+</ul>
+
+<div class="launchpad">
+  <span class="launchpad__label">🚀 Bàn phóng — thử một ý tưởng lớn hơn</span>
+  <h3 class="launchpad__title">"Cái phanh cảm xúc" cho mọi người</h3>
+  <p class="launchpad__problem">Nếu bạn có quyền thiết kế một tính năng <em>cho mọi người</em> (không chỉ cho mình), "cái phanh cảm xúc" của bạn sẽ đổi thế nào? Ví dụ: một nút "<strong>Hạ cánh</strong>" trên mọi app — bấm vào, app đưa bạn về cảm xúc bình tĩnh trong 90 giây rồi đóng lại, không hoàn tác. Hãy chấm ý tưởng đó bằng ba trục (khả thi · giữ chân · tác hại) — và hỏi: nếu các công ty không tự xây tính năng này, ai sẽ xây?</p>
+  <div class="launchpad__hints">
+    <span class="launchpad__hints-label">Bí? Mở gợi ý từng bước một.</span>
+    <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+    <div class="launchpad__hint" data-hint="1">
+      <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+      Ba trục đánh giá (Chương 4) là la bàn: khả thi kỹ thuật cao không? Có giữ chân theo hướng lành mạnh không? Tác hại thấp không? Một nút "Hạ cánh" không nằm ở vùng đỏ — vậy thứ ngăn các công ty xây nó nằm ở đâu?
+    </div>
+    <div class="launchpad__hint" data-hint="2">
+      <span class="launchpad__hint-label">Gợi ý 2 — khái niệm chủ chốt</span>
+      Ngược với "cuộn vô tận" (xóa điểm dừng), "Hạ cánh" là <strong>thiết kế điểm dừng có chủ đích</strong> — nguyên tắc iso và "cung hạ cánh" của Chương 4. Một tính năng tốt phải có điểm dừng rõ ràng và hạ cánh đúng cảm xúc bạn chọn.
+    </div>
+    <div class="launchpad__hint" data-hint="3">
+      <span class="launchpad__hint-label">Gợi ý 3 — khởi tạo</span>
+      Bắt đầu nhỏ: không cần xây nút toàn cầu. Thiết kế quy trình 90 giây cho <em>một</em> app (ví dụ app nghe nhạc): hỏi tâm trạng hiện tại → chọn tâm trạng muốn đạt → playlist iso → tự dừng bằng "bài hạ cánh". Chấm ba trục cho bản thiết kế đó.
+    </div>
+  </div>
+</div>
+
+<div class="checkpoint" data-checkpoint-id="cp6">
+  <span class="checkpoint__label">🛑 Dừng lại &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Viết mô tả một câu cho "cái phanh cảm xúc" của riêng bạn: nó chạm điểm yếu nào, dùng cơ chế nào, và hạ cánh bạn ở cảm xúc nào?</p>
+  <textarea placeholder="Viết câu trả lời bằng chính lời của bạn trước khi xem gợi ý…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời chuyên gia</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Câu trả lời chuyên gia</span>
+    Ví dụ mẫu: "Phanh của tôi chạm điểm yếu 'buồn chán lúc đêm khuya': khi tôi mở mạng xã hội sau 23 giờ, nó hiện ảnh nền tĩnh lặng kèm câu 'Khoảng trống này thuộc về bạn' trong 8 giây, rồi mới vào feed — và sau mỗi 20 phút nhắc tôi điểm dừng kế tiếp. Nó dùng kỹ thuật 'tín hiệu dừng' của cuộn vô tận theo hướng ngược lại, và hạ cánh tôi ở cảm giác 'chủ động'." Lưu ý: câu trả lời "đúng" duy nhất là câu khớp với <em>điểm yếu riêng và môi trường riêng</em> của bạn.
+  </div>
+</div>
+
+<h2 id="ch6-boundary">Chỗ "ai cầm lái" này dễ hiểu sai</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+  <strong>Bài này không chống công nghệ.</strong> Điện thoại là công cụ kỳ diệu: kết nối, học tập, chữa lành qua âm nhạc. Mục tiêu không phải "cai điện thoại" — mà là <strong>chuyển vai trò từ bị lái sang cầm lái</strong>: dùng đúng cơ chế để phục vụ mục đích của bạn, giống như streak trong app học ngoại ngữ.
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp ranh giới</span>
+  <strong>Trách nhiệm không nằm trọn ở cá nhân.</strong> Đổ toàn bộ gánh nặng lên "ý chí của bạn" là cách nói của nền kinh tế chú ý. Đồng thời, phủ nhận hoàn toàn vai trò cá nhân (đổ hết lên "chúng chúng thiết kế") là cách để bạn tiếp tục bị lái. Cả hai thái cực đều sai: thay đổi thật sự là <em>cả hai chiều</em> — thiết kế cá nhân và tiếng nói xã hội cho thiết kế có trách nhiệm.
+</div>
+
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Về câu hỏi mở ở Chương 1</span>
+  Câu hỏi "tắt toàn bộ thông báo 7 ngày thì sao" đã có lời giải ở Chương 3: thời gian không đổi, FOMO tăng. Giờ bạn đã có đủ bộ kính để giải thích vì sao — và để đoán chính xác điều sẽ xảy ra với chính mình.
+</div>
+
+<h2 id="ch6-synthesis">Kết luận toàn bài: nhà cái, người cầm lái</h2>
+<p>Chúng ta bắt đầu bằng một câu hỏi: <em>ai chọn những cảm xúc bạn mang đi ngủ?</em> Câu trả lời là: <strong>có hai người cầm lái trên cùng chiếc xe.</strong> Một người viết luật — sòng bạc mini trong túi bạn — và một người ngồi sau vô lăng, tin rằng mình đang lái. Bài này không thể biến sòng bạc thành hiền nhân; nó chỉ làm một việc: <strong>cho bạn thấy vô lăng nằm ở đâu.</strong> Nhận diện cỗ máy (Chương 1–2), đặt tên công cụ (Chương 3), mổ kiến trúc (Chương 4), khoanh vùng điểm yếu (Chương 5) — và giờ, thiết kế phanh cho chính mình (Chương 6). Sòng bạc thay đổi môi trường để lái hành vi bạn. Bạn có quyền làm điều tương tự — theo hướng ngược lại. Người cầm lái thực sự không phải người cuộn nhanh nhất; là người hiểu vô lăng.</p>
+<p>Và khi cỗ máy cảm xúc này quay đủ lâu, hóa đơn không chỉ là những phiên màn hình trống rỗng — nó là những kết nối đời thực bị thay bằng thao túng của thuật toán, là sự cạn kiệt niềm tin vào gắn kết giữa người với người. Bài toán "ai cầm lái" vì thế không chỉ là chuyện của một chiếc điện thoại; nó là chuyện của cả một thế hệ đang quyết định tương lai của mình. Nhưng — như mọi chương đã chỉ ra — bàn tay vô hình chỉ mạnh khi còn vô hình. Gọi tên được nó, bạn đã bắt đầu cầm lái.</p>
+
+<!-- ============ GLOSSARY ============ -->
+<h2 id="glossary">Từ vựng nhanh</h2>
+<p>Định nghĩa theo ngôn ngữ của bài này — mỗi thuật ngữ đi kèm một liên tưởng dễ nhớ.</p>
+<dl class="glossary">
+  <dt><span class="glossary__term">Động cơ cảm xúc</span> <span class="glossary__en">(emotion engine)</span></dt>
+  <dd>Nguồn năng lượng cảm xúc chính của một sản phẩm — thứ khiến bạn quay lại. Liên tưởng: <em>bình xăng của cỗ máy.</em></dd>
+  <dt><span class="glossary__term">Cung cảm xúc</span> <span class="glossary__en">(emotion arc)</span></dt>
+  <dd>Đồ thị lên xuống của cảm xúc trong một phiên trải nghiệm — và quan trọng nhất, điểm hạ cánh. Liên tưởng: <em>đồ thị tàu lượn.</em></dd>
+  <dt><span class="glossary__term">Phần thưởng ngẫu nhiên</span> <span class="glossary__en">(variable reward)</span></dt>
+  <dd>Kết quả không chắc chắn khiến não nghiện khoảng chờ, không phải kết quả. Liên tưởng: <em>cú kéo cần máy.</em></dd>
+  <dt><span class="glossary__term">Cuộn vô tận</span> <span class="glossary__en">(infinite scroll)</span></dt>
+  <dd>Feed không có đáy, xóa mọi tín hiệu điểm dừng. Liên tưởng: <em>buffet không cuối bàn.</em></dd>
+  <dt><span class="glossary__term">Nền kinh tế chú ý</span> <span class="glossary__en">(attention economy)</span></dt>
+  <dd>Mô hình kiếm tiền bằng thời gian và cảm xúc của người dùng. Liên tưởng: <em>nhà cái luôn thắng.</em></dd>
+  <dt><span class="glossary__term">FOMO</span> <span class="glossary__en">(fear of missing out)</span></dt>
+  <dd>Nỗi sợ người khác đang có trải nghiệm thú vị mà mình vắng mặt — cảm xúc sinh ra bởi màn hình. Liên tưởng: <em>keo dán của thông báo.</em></dd>
+  <dt><span class="glossary__term">So sánh hướng lên</span> <span class="glossary__en">(upward comparison)</span></dt>
+  <dd>So sánh mình với người "trên" — làm giảm tự trọng. Liên tưởng: <em>kính lúp của mạng xã hội.</em></dd>
+  <dt><span class="glossary__term">Streak / chuỗi ngày</span></dt>
+  <dd>Bộ đếm ngày liên tiếp, vũ khí hóa chi phí chìm và nỗi sợ mất công sức. Liên tưởng: <em>comps của sòng bạc.</em></dd>
+  <dt><span class="glossary__term">Loot box</span> <span class="glossary__en">(thùng quà)</span></dt>
+  <dd>Hộp quà trả tiền mở ra phần thưởng ngẫu nhiên — liên hệ với cờ bạc có vấn đề. Liên tưởng: <em>máy đánh bạc trong game.</em></dd>
+  <dt><span class="glossary__term">Pity system</span> <span class="glossary__en">(hệ thống an ủi)</span></dt>
+  <dd>"Sau N lần trượt, bảo đảm trúng" — biến thất bại thành khoản đầu tư. Liên tưởng: <em>mỗi cú trượt là một bước gần đích.</em></dd>
+  <dt><span class="glossary__term">Nguyên tắc iso</span> <span class="glossary__en">(iso-principle)</span></dt>
+  <dd>Âm nhạc khớp tâm trạng hiện tại rồi chuyển dần về tâm trạng mong muốn — cách dẫn dắt cảm xúc có hướng. Liên tưởng: <em>cung hạ cánh.</em></dd>
+  <dt><span class="glossary__term">Chi phí chìm</span> <span class="glossary__en">(sunk cost)</span></dt>
+  <dd>Công sức đã bỏ khiến việc dừng trở nên đắt đỏ về cảm xúc — dù nó không thay đổi giá trị tương lai. Liên tưởng: <em>cánh cửa không lối thoát.</em></dd>
+  <dt><span class="glossary__term">Panopticon kỹ thuật số</span> <span class="glossary__en">(digital panopticon)</span></dt>
+  <dd>Cảm giác luôn có thể bị ghi hình/giám sát nhờ smartphone — khiến ta tự kiểm duyệt và e ngại ngay trong đời thật, dù không ai đang thực sự nhìn. Liên tưởng: <em>tháp giám sát không cần cai ngục.</em></dd>
+</dl>
+
+<!-- ============ QUIZ ============ -->
+<h2 id="quiz-title">Kiểm tra: bạn đã nắm được gì</h2>
+<p class="quiz__intro">3 câu hỏi. Chọn đáp án đúng nhất cho mỗi câu, rồi bấm <em>Chấm điểm</em>.</p>
+<section class="quiz" id="quiz">
+  <fieldset data-answer="1">
+    <legend>1. Một tổng hợp 59 nghiên cứu tìm thấy mối liên hệ giữa cảm xúc nào và việc sử dụng điện thoại có vấn đề ở mức r ≈ 0,34 — và cảm xúc đó đứng đầu bảng "dễ bị chi phối" của Chương 5?</legend>
+    <label class="quiz__option"><input type="radio" name="q1" value="0"> Cô đơn — mở app để kết nối</label>
+    <label class="quiz__option"><input type="radio" name="q1" value="1"> Buồn chán — cảm xúc cửa ngõ của mọi phiên màn hình</label>
+    <label class="quiz__option"><input type="radio" name="q1" value="2"> Phẫn nộ — cảm xúc lan truyền xa nhất</label>
+    <label class="quiz__option"><input type="radio" name="q1" value="3"> Mệt mỏi — hóa đơn của các phiên dài</label>
+    <div class="quiz__explanation"><strong>Vì sao:</strong> Buồn chán đứng đầu bảng vì nó là "cửa ngõ": không cần mồi, mọi app đều chạm được, và bằng chứng r ≈ 0,34 từ tổng hợp 59 nghiên cứu là phong phú nhất trong bảy cảm xúc.</div>
+  </fieldset>
+  <fieldset data-answer="2">
+    <legend>2. Trong thử nghiệm RCT đo trực tiếp (N = 205), điều gì đã xảy ra khi tắt <em>toàn bộ</em> thông báo trong 7 ngày?</legend>
+    <label class="quiz__option"><input type="radio" name="q2" value="0"> Thời gian dùng và số lần kiểm tra giảm rõ rệt</label>
+    <label class="quiz__option"><input type="radio" name="q2" value="1"> Thời gian dùng giảm nhưng FOMO tăng lên</label>
+    <label class="quiz__option"><input type="radio" name="q2" value="2"> Thời gian dùng không đổi và FOMO tăng lên</label>
+    <label class="quiz__option"><input type="radio" name="q2" value="3"> Thời gian dùng không đổi và mọi người cảm thấy bình yên hơn</label>
+    <div class="quiz__explanation"><strong>Vì sao:</strong> RCT "Beyond the Buzz" (N = 205) đo được thời gian dùng và số lần kiểm tra <em>không giảm</em>, nhưng FOMO tăng — chứng minh "tiếng chuông" đã nội hóa thành thói quen tự gián đoạn.</div>
+  </fieldset>
+  <fieldset data-answer="1">
+    <legend>3. Cảm xúc nào lan truyền <em>nhanh hơn và xa hơn</em> qua các liên kết yếu (weak ties) so với niềm vui — khiến nó trở thành "thuốc nổ" lý tưởng của cỗ máy tin tức?</legend>
+    <label class="quiz__option"><input type="radio" name="q3" value="0"> Hưng phấn mong đợi</label>
+    <label class="quiz__option"><input type="radio" name="q3" value="1"> Tức giận</label>
+    <label class="quiz__option"><input type="radio" name="q3" value="2"> Buồn bã</label>
+    <label class="quiz__option"><input type="radio" name="q3" value="3"> Tò mò</label>
+    <div class="quiz__explanation"><strong>Vì sao:</strong> Tức giận lan nhanh và xa hơn niềm vui qua các liên kết yếu (Zhao 2014), và nội dung có từ cảm xúc đạo đức lan nhanh hơn 20% mỗi từ (Brady 2017) — lý do nó là "thuốc nổ" của cỗ máy tin tức.</div>
+  </fieldset>
+  <div class="quiz__actions">
+    <button type="button" class="btn" id="quizCheck">Chấm điểm</button>
+    <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+    <p class="quiz__score" id="quizScore"></p>
+  </div>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<h2 id="sources">Nguồn tham khảo</h2>
+<ol class="sources">
+  <li><a href="https://prioridata.com/data/smartphone-usage-statistics/">Statista / Priori Data — Smartphone usage statistics 2024–25</a> (thời gian dùng theo quốc gia).</li>
+  <li><a href="https://techrt.com/smartphone-statistics/">TechRT — Smartphone statistics 2025</a> (96 lần mở khóa, 57% kiểm tra trong 5 phút đầu).</li>
+  <li><a href="https://datareportal.com/reports/digital-2025-sub-section-ever-more-connected">DataReportal — Digital 2025: Ever more connected</a> (40% giờ thức online).</li>
+  <li><a href="https://pielot.org/pubs/Pielot2018-MHCI-Dismissed.pdf">Pielot, M. et al. — "Dismissed!" Proc. MobileHCI 2018</a> (56–65 thông báo/ngày, đo từ thiết bị).</li>
+  <li><a href="https://www.businessofapps.com/marketplace/push-notifications/research/push-notifications-statistics/">Business of Apps — Push notification statistics</a>.</li>
+  <li><a href="https://explodingtopics.com/blog/time-spent-on-tiktok">Exploding Topics — Time spent on TikTok 2019→2025</a> (phiên 10,85 phút; 96% thời gian từ For You Page).</li>
+  <li><a href="https://www.sciencedirect.com/science/article/pii/S2451958823000465">"Boredom and smartphone use" — meta-analysis, Computers in Human Behavior Reports 2023</a> (r ≈ 0,34; 59 nghiên cứu).</li>
+  <li><a href="https://dl.acm.org/doi/10.1145/3290605.3300536">Oulasvirta et al. — "Smartphone as a pacifier" CHI 2019</a>.</li>
+  <li><a href="https://www.pnas.org/doi/abs/10.1073/pnas.1618923114">Brady et al. — PNAS 2017</a> (+20% lan truyền mỗi từ cảm xúc đạo đức).</li>
+  <li><a href="https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0110184">Zhao et al. — PLOS ONE 2014</a> (tức giận lan nhanh qua weak ties).</li>
+  <li><a href="https://www.tandfonline.com/doi/full/10.1080/03637751.2023.2236183">Han et al. — Communication Monographs 2023</a> (phạm vi lan truyền theo cảm xúc).</li>
+  <li><a href="https://ideas.repec.org/a/taf/intgms/v21y2021i3p460-479.html">Garea et al. 2021 — meta-analysis loot box</a> (r ≈ 0,26).</li>
+  <li><a href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1091282/InGAME_Loot_Box_REA.pdf">UK DCMS / InGAME — Loot box Rapid Evidence Assessment</a> (Wardle &amp; Zendle 2020: gấp 4,4 lần; Close et al. 2021: top 5% chi tiêu = nửa doanh thu).</li>
+  <li><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1597241/full">Frontiers in Psychology 2025</a> (so sánh hướng lên làm trung gian, tự trọng &amp; trầm cảm).</li>
+  <li><a href="https://link.springer.com/article/10.1007/s44202-024-00241-3">Discover Psychology 2024</a> (ảnh hướng lên trên Instagram &amp; body-esteem).</li>
+  <li><a href="https://www.sciencedirect.com/science/article/abs/pii/S0360131519301319">Rozgonjuk et al. 2019</a> (FOMO &amp; gián đoạn học tập).</li>
+  <li><a href="https://pure.uva.nl/ws/files/245971989/Beyond_the_Buzz.pdf">"Beyond the Buzz" — UvA RCT 2024</a> (tắt thông báo: thời gian không giảm, FOMO tăng).</li>
+  <li><a href="https://doi.org/10.1177/20570473241239359">Smart push &amp; FoMO — 2024</a> (β ≈ 0,31 / 0,29 → FoMO → sử dụng có vấn đề β ≈ 0,45).</li>
+  <li><a href="https://ojs.aaai.org/index.php/ICWSM/article/download/19326/19098">Spotify Research — Lyrics &amp; acoustics for mood (ICWSM)</a> (gần 1M bài hát, 287 từ tâm trạng).</li>
+  <li><a href="https://doi.org/10.1177/10298649261421187">Nghe dẫn dắt theo nguyên tắc iso — RCT 2024</a> (tăng bình tĩnh).</li>
+  <li><a href="https://dl.acm.org/doi/10.1145/3627043.3659555">MoodDJ — hệ thống hành trình cảm xúc (2024)</a>.</li>
+  <li><a href="https://journals.sagepub.com/doi/10.1177/21582440231193916">Stapleton et al. 2023 — ghen tị &amp; chờ đợi phản hồi trên Instagram</a>.</li>
+</ol>
+<p class="sources__note">Lưu ý phương pháp: các nghiên cứu trích dẫn chủ yếu là tương quan cắt ngang; xếp hạng cảm xúc ở Chương 5 là tổng hợp của tác giả từ các nguồn trên (mỗi cảm xúc có thẻ điểm đi kèm nguồn), không phải thước đo chuẩn hóa.</p>
+</main>
+
+  <!-- =========================================================
+       RIGHT - MARGINALIA (sidenotes)
+       ========================================================= -->
+  <aside class="marginalia" aria-label="Sidenotes">
+
+    <!-- Contextual Amplifier -->
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Cụm từ cần mở rộng</span>
+      <p class="amplifier__empty">Di chuột vào một thuật ngữ gạch <span style="border-bottom:1px dashed var(--accent2)">chấm</span> trong bài để xem giải thích ngay đây.</p>
+    </div>
+
+    <!-- Amplifier notes -->
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="variable-reward">
+        <span class="amplifier__term">Phần thưởng ngẫu nhiên</span>
+        <p class="amplifier__body">Khi kết quả không chắc chắn (đôi khi thưởng, đôi khi không), não đạt đỉnh hoạt động <em>ngay trước khi kết quả lộ ra</em> — và hành vi tự duy trì mà không cần phần thưởng lớn. Đây là trái tim của máy đánh bạc hiện đại (kế thừa nghiên cứu của Skinner từ thập niên 1950) và của mọi "cú kéo cần" trên điện thoại: feed, thông báo, hộp quà. Não nghiện khoảng chờ, không phải kết quả.</p>
+      </div>
+      <div data-note-id="attention-economy">
+        <span class="amplifier__term">Nền kinh tế chú ý</span>
+        <p class="amplifier__body">Ứng dụng "miễn phí" kiếm tiền bằng sự chú ý và cảm xúc của bạn: thời gian ở lại là đơn vị tiền tệ, quảng cáo được đặt ngay tại đỉnh cảm xúc. Cấu trúc này giải thích vì sao mọi quyết định thiết kế đều nghiêng về "kéo dài phiên" — nhà cái luôn thắng vì họ viết luật chơi.</p>
+      </div>
+      <div data-note-id="fomo">
+        <span class="amplifier__term">FOMO — nỗi sợ bỏ lỡ</span>
+        <p class="amplifier__body">Cảm xúc duy nhất được <em>sinh ra bởi</em> màn hình: nỗi lo người khác đang có trải nghiệm thú vị mà mình vắng mặt. Nội dung giải trí (β≈0,31) và tính kịp thời của thông báo (β≈0,29) làm tăng FOMO, và FOMO dẫn trực tiếp đến sử dụng có vấn đề (β≈0,45). Nghịch lý: tắt toàn bộ thông báo còn làm FOMO tăng.</p>
+      </div>
+      <div data-note-id="upward-comparison">
+        <span class="amplifier__term">So sánh hướng lên</span>
+        <p class="amplifier__body">So sánh mình với người "trên" mình trên mạng xã hội làm trung gian giữa việc dùng mạng và tự trọng thấp hơn / triệu chứng trầm cảm cao hơn. Ở đời thật bạn so với vài người quen; trên màn hình bạn so với hàng nghìn "bản đẹp nhất" của người lạ — một điều kiện so sánh chưa từng tồn tại trong lịch sử loài người.</p>
+      </div>
+      <div data-note-id="lootbox">
+        <span class="amplifier__term">Loot box (thùng quà)</span>
+        <p class="amplifier__body">Hộp quà trả tiền thật để mở phần thưởng <em>ngẫu nhiên</em> trong game. Dữ liệu: liên hệ với cờ bạc có vấn đề r≈0,26 (tổng hợp 15 nghiên cứu); người 16–24 tuổi mua loot box có khả năng cờ bạc có vấn đề gấp 4,4 lần; top 5% người chi tiêu tạo ra một nửa doanh thu loot box.</p>
+      </div>
+      <div data-note-id="streak">
+        <span class="amplifier__term">Streak / chuỗi ngày</span>
+        <p class="amplifier__body">Bộ đếm ngày liên tiếp biến "không chơi hôm nay" thành "mất thứ mình đã xây" — vũ khí hóa chi phí chìm và nỗi sợ mất công sức. Cùng cơ chế "comps" của sòng bạc: tặng điểm tích lũy theo mức cược để người chơi cảm thấy <em>nợ</em> và phải quay lại.</p>
+      </div>
+      <div data-note-id="emotion-engine">
+        <span class="amplifier__term">Động cơ cảm xúc</span>
+        <p class="amplifier__body">Nguồn năng lượng cảm xúc chính của một sản phẩm: game chạy bằng thèm phần thưởng, tin tức chạy bằng phẫn nộ, mạng xã hội chạy bằng chờ đợi phản hồi + ghen tị, app nghe nhạc chạy bằng đồng cảm tâm trạng. Cỗ máy chọn đúng động cơ thì chỉ cần một đòn bẩy nhỏ cũng xoay chuyển hành vi lớn.</p>
+      </div>
+      <div data-note-id="iso-principle">
+        <span class="amplifier__term">Nguyên tắc iso</span>
+        <p class="amplifier__body">Âm nhạc khớp tâm trạng hiện tại, rồi <em>chuyển dần</em> về tâm trạng mong muốn — cách dẫn dắt cảm xúc có hướng, được kiểm chứng bằng RCT (nghe được dẫn dắt tăng bình tĩnh nhiều hơn nghe tự do). Là "bộ ngược" của autoplay: thay vì xóa điểm dừng, nó thiết kế một điểm hạ cánh rõ ràng.</p>
+      </div>
+      <div data-note-id="panopticon">
+        <span class="amplifier__term">Panopticon — cảm giác luôn bị nhìn</span>
+        <p class="amplifier__body">Thiết kế nhà tù của Bentham: một tháp giám sát trung tâm khiến tù nhân tự kỷ luật vì tin mình "có thể đang bị nhìn" — dù thực tế không ai nhìn. Smartphone biến đời sống thành Panopticon: mọi khoảnh khắc đều có thể bị ghi lại. Hệ quả là tính tự nhiên trong tương tác bị bóp chết: đề phòng, e ngại, sợ cam kết. Cảm giác này không cần "cú kéo" — nó tự hoạt động, là lớp nền làm mọi cơ chế giữ chân khác mạnh lên.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Chú thích 1 — Near-miss của máy đánh bạc</strong>
+      Chiếc máy đánh bạc hiện đại đầu tiên (Liberty Bell, 1895) đã phát hiện sức mạnh của <em>gần trúng</em>: gần trúng không chỉ không làm bạn nản, nó còn kích thích chơi tiếp. 70 năm sau, hiệu ứng near-miss vẫn được chứng minh làm tăng thời gian chơi. Feed của bạn đầy near-miss: video dở dang, thông báo "suýt hay".
+    </div>
+
+    <div class="sidenote">
+      <strong>Chú thích 2 — Cẩn thận với "dopamine"</strong>
+      "Dopamine" thường bị hiểu sai là chất khoái lạc. Thực tế nó là tín hiệu <em>kỳ vọng</em>: cao nhất ngay trước khi kết quả lộ ra, không phải lúc nhận thưởng. Nói "app kích thích dopamine" nghĩa là app tạo khoảng chờ (phần thưởng ngẫu nhiên) — không phải "cơn phê". Bài này dùng từ "dopamine" ít vì đơn giản, nhưng hãy nhớ điều này khi đọc các bài khác.
+    </div>
+
+    <div class="sidenote">
+      <strong>Chú thích 3 — Sòng bạc không đồng hồ, không cửa sổ</strong>
+      Sòng bạc xóa mọi tín hiệu thời gian: không đồng hồ, không cửa sổ, thảm dày hút bước chân — để bạn không nhận ra mình đã ở trong bao lâu. Feed của bạn làm y hệt: không đồng hồ, không cuối trang, không tín hiệu "đủ rồi". Thiết kế điểm dừng (Chương 6) là vũ khí chạy ngược lại đúng cơ chế đó.
+    </div>
+
+    <div class="sidenote">
+      <strong>Chú thích 4 — Panopticon kỹ thuật số</strong>
+      "Panopticon" là thiết kế nhà tù của Jeremy Bentham: một tháp giám sát trung tâm khiến tù nhân cảm thấy <em>luôn có thể bị nhìn</em> — dù thực tế không ai đang nhìn — nên họ tự kỷ luật mà không cần cai ngục. Smartphone biến toàn đời sống thành Panopticon: mọi hành động đều có thể bị ghi lại, và sự tự kiểm duyệt lan vào cả những khoảnh khắc riêng tư nhất. Cảm giác bị nhìn là lớp nền khiến mọi cơ chế giữ chân trong bài hoạt động hiệu quả hơn.
+    </div>
+
+  </aside>
+
+</div>
+
+<!-- Floating controls -->
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Toggle focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Đổi giao diện (T)" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</div>
+<script>
+/* ============================================================
+   PERSISTENCE — theme + reading position + quiz state
+   Uses localStorage. This file is saved to disk and opened
+   directly in a browser, so localStorage is available.
+============================================================ */
+const STORAGE_KEY = 'edu-notes:' + (document.title || 'untitled');
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY + ':' + k)); }catch{ return null; } },
+  set(k,v){ try{ localStorage.setItem(STORAGE_KEY + ':' + k, JSON.stringify(v)); }catch{} },
+};
+
+/* ============================================================
+   THEME
+============================================================ */
+(function initTheme(){
+  const saved = store.get('theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  store.set('theme', next);
+});
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function initFocus(){
+  if(store.get('focus')) document.body.classList.add('focus-mode');
+})();
+document.getElementById('focusBtn').addEventListener('click', () => {
+  document.body.classList.toggle('focus-mode');
+  const on = document.body.classList.contains('focus-mode');
+  document.getElementById('focusBtn').setAttribute('data-active', on ? 'true' : 'false');
+  store.set('focus', on);
+});
+
+/* ============================================================
+   TABLE OF CONTENTS — auto-generate from h2/h3
+============================================================ */
+(function buildTOC(){
+  const canvas = document.getElementById('canvas');
+  const toc = document.getElementById('toc');
+  const headings = canvas.querySelectorAll('h2, h3');
+  headings.forEach(h => {
+    if(!h.id){
+      h.id = h.textContent.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g,'')
+        .trim().replace(/\s+/g,'-').slice(0,60);
+    }
+    const li = document.createElement('li');
+    if(h.tagName === 'H3') li.className = 'toc-l3';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+})();
+
+/* ============================================================
+   INTERSECTION OBSERVER — highlight current section
+============================================================ */
+(function initObserver(){
+  const links = document.querySelectorAll('.toc a');
+  const map = new Map();
+  links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = map.get(e.target.id);
+      if(!link) return;
+      if(e.isIntersecting){
+        document.querySelectorAll('.toc a.is-active').forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  document.querySelectorAll('#canvas h2, #canvas h3').forEach(h => observer.observe(h));
+})();
+
+/* ============================================================
+   PROGRESS BAR + reading position restore
+============================================================ */
+(function initProgress(){
+  const fill = document.getElementById('progressFill');
+  function update(){
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    fill.style.width = pct + '%';
+    store.set('scroll', scrolled);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  // Restore prior position after a beat so layout settles
+  const saved = store.get('scroll');
+  if(typeof saved === 'number' && saved > 100){
+    setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 60);
+  }
+})();
+
+/* ============================================================
+   FLIP CARDS — click + keyboard support
+============================================================ */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+  card.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      card.classList.toggle('is-flipped');
+    }
+  });
+});
+
+/* ============================================================
+   QUIZ — auto grade + persist
+============================================================ */
+(function initQuiz(){
+  const quiz = document.getElementById('quiz');
+  if(!quiz) return;
+  const check = document.getElementById('quizCheck');
+  const reset = document.getElementById('quizReset');
+  const score = document.getElementById('quizScore');
+
+  // Restore prior answers
+  const prior = store.get('quiz') || {};
+  Object.entries(prior).forEach(([name, val]) => {
+    const input = quiz.querySelector(`input[name="${name}"][value="${val}"]`);
+    if(input) input.checked = true;
+  });
+
+  quiz.addEventListener('change', () => {
+    const state = {};
+    quiz.querySelectorAll('input[type=radio]:checked').forEach(i => state[i.name] = i.value);
+    store.set('quiz', state);
+  });
+
+  check.addEventListener('click', () => {
+    let correct = 0, total = 0;
+    quiz.querySelectorAll('fieldset').forEach(fs => {
+      const answer = parseInt(fs.dataset.answer, 10);
+      const selected = fs.querySelector('input:checked');
+      total++;
+      // Reset styling on all options first
+      fs.querySelectorAll('.quiz__option').forEach(o => {
+        o.classList.remove('correct-answer','incorrect-answer');
+      });
+      // Mark the correct one green
+      const correctOption = fs.querySelector(`input[value="${answer}"]`);
+      if(correctOption) correctOption.closest('.quiz__option').classList.add('correct-answer');
+      // If the user picked wrong, mark theirs red
+      if(selected && parseInt(selected.value, 10) !== answer){
+        selected.closest('.quiz__option').classList.add('incorrect-answer');
+      }
+      if(selected && parseInt(selected.value, 10) === answer) correct++;
+    });
+    quiz.classList.add('is-graded');
+    const pct = Math.round((correct / total) * 100);
+    let msg = `${correct} / ${total} correct (${pct}%)`;
+    if(pct === 100) msg += ' — 🎯 nailed it';
+    else if(pct >= 66) msg += ' — solid';
+    else msg += ' — worth another pass through the boundaries section';
+    score.textContent = msg;
+  });
+
+  reset.addEventListener('click', () => {
+    quiz.querySelectorAll('input[type=radio]').forEach(i => i.checked = false);
+    quiz.querySelectorAll('.quiz__option').forEach(o => o.classList.remove('correct-answer','incorrect-answer'));
+    quiz.classList.remove('is-graded');
+    score.textContent = '';
+    store.set('quiz', {});
+  });
+})();
+
+/* ============================================================
+   KEYBOARD SHORTCUTS
+============================================================ */
+document.addEventListener('keydown', e => {
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  switch(e.key.toLowerCase()){
+    case 'j': window.scrollBy({ top: 200, behavior: 'smooth' }); break;
+    case 'k': window.scrollBy({ top: -200, behavior: 'smooth' }); break;
+    case 'f': document.getElementById('focusBtn').click(); break;
+    case 't': document.getElementById('themeBtn').click(); break;
+    case 'p': window.print(); break;
+  }
+});
+
+/* ============================================================
+   PHASE ORBIT — light up phase nodes as reader scrolls;
+   clicking a node smooth-scrolls to that phase.
+============================================================ */
+(function initOrbit(){
+  const nodes = Array.from(document.querySelectorAll('.orbit__node'));
+  if(!nodes.length) return;
+  const reached = new Set(store.get('reached') || []);
+  // Restore already-reached state
+  nodes.forEach(n => {
+    if(reached.has(n.dataset.target)) n.setAttribute('data-reached','true');
+  });
+  // Click to jump
+  nodes.forEach(n => {
+    n.addEventListener('click', () => {
+      const target = document.getElementById(n.dataset.target);
+      if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+  // Observe each phase heading; mark reached + active on entry
+  const targets = nodes.map(n => document.getElementById(n.dataset.target)).filter(Boolean);
+  if(!targets.length) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const node = nodes.find(n => n.dataset.target === e.target.id);
+      if(!node) return;
+      if(e.isIntersecting){
+        node.setAttribute('data-reached','true');
+        reached.add(e.target.id);
+        store.set('reached', Array.from(reached));
+        nodes.forEach(n => n.removeAttribute('data-active'));
+        node.setAttribute('data-active','true');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  targets.forEach(t => observer.observe(t));
+})();
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER — hover .term-amp[data-note] → fill #amplifier
+============================================================ */
+(function initAmplifier(){
+  const amp = document.getElementById('amplifier');
+  const pool = document.getElementById('ampNotes');
+  if(!amp || !pool) return;
+  const emptyHtml = amp.innerHTML;
+  let currentId = null;
+
+  function show(id){
+    if(id === currentId) return;
+    const note = pool.querySelector(`[data-note-id="${id}"]`);
+    if(!note) return;
+    currentId = id;
+    amp.innerHTML = '<span class="amplifier__label">Term amplifier</span>' + note.innerHTML;
+    // Mark the corresponding term active
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+    document.querySelectorAll(`.term-amp[data-note="${id}"]`).forEach(t => t.classList.add('is-active'));
+  }
+  function reset(){
+    currentId = null;
+    amp.innerHTML = emptyHtml;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+  }
+
+  document.querySelectorAll('.term-amp[data-note]').forEach(t => {
+    t.addEventListener('mouseenter', () => show(t.dataset.note));
+    t.addEventListener('focus', () => show(t.dataset.note));
+    t.setAttribute('tabindex','0');
+  });
+  const canvas = document.getElementById('canvas');
+  if(canvas){
+    canvas.addEventListener('mouseleave', reset);
+  }
+})();
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINTS — textarea persistence + Compare to Expert
+============================================================ */
+(function initCheckpoints(){
+  document.querySelectorAll('.checkpoint').forEach(cp => {
+    const id = cp.dataset.checkpointId;
+    const ta = cp.querySelector('textarea');
+    const savedLabel = cp.querySelector('[data-checkpoint-saved]');
+    const revealBtn = cp.querySelector('[data-checkpoint-reveal]');
+    if(!id || !ta) return;
+
+    // Restore prior answer
+    const prior = store.get('cp:' + id);
+    if(prior){ ta.value = prior; if(savedLabel) savedLabel.textContent = 'Saved'; }
+
+    // Persist as user types (debounced)
+    let t;
+    ta.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        store.set('cp:' + id, ta.value);
+        if(savedLabel) savedLabel.textContent = 'Saved';
+      }, 400);
+    });
+
+    if(revealBtn){
+      revealBtn.addEventListener('click', () => {
+        cp.classList.toggle('is-revealed');
+        revealBtn.textContent = cp.classList.contains('is-revealed')
+          ? 'Hide expert answer'
+          : 'Compare to expert answer';
+      });
+    }
+  });
+})();
+
+/* ============================================================
+   LAUNCH PAD — progressive hint reveal
+============================================================ */
+(function initLaunchpad(){
+  const btn = document.getElementById('hintBtn');
+  if(!btn) return;
+  const hints = Array.from(document.querySelectorAll('.launchpad__hint'));
+  const total = hints.length;
+  let shown = 0;
+
+  // Restore prior state
+  const prior = parseInt(store.get('hints') || 0, 10);
+  for(let i=0; i<prior && i<total; i++){
+    hints[i].classList.add('is-visible');
+    shown = i + 1;
+  }
+  updateBtn();
+
+  btn.addEventListener('click', () => {
+    if(shown >= total) return;
+    hints[shown].classList.add('is-visible');
+    shown++;
+    store.set('hints', shown);
+    updateBtn();
+  });
+
+  function updateBtn(){
+    if(shown >= total){
+      btn.textContent = 'All hints revealed';
+      btn.disabled = true;
+    } else {
+      btn.textContent = `Reveal hint ${shown + 1} of ${total}`;
+    }
+  }
+})();
+</script>
+</body>
+</html>
+
