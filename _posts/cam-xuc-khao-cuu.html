@@ -1,0 +1,3010 @@
+﻿<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cảm xúc con người — Khảo cứu mở đầu</title>
+<meta name="description" content="Bài khảo cứu dài hơi về cảm xúc con người: cảm xúc là gì, vì sao con người có cảm xúc, có những loại cảm xúc nào, điều gì cai quản cảm xúc, trí nhớ gắn với cảm xúc ra sao, và làm sao nhận diện cảm xúc của chính mình. Mở đầu cho một loạt bài về cảm xúc.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg:            #FDFBF7;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #2D3748;
+  --text-muted:    #718096;
+  --text-strong:   #1A202C;
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  /* Secondary accent — used for interactive elements (probes, hints, checkpoints)
+     so structural accents (teal) stay visually separate from "try this" accents (amber). */
+  --accent2:        #B7791F;
+  --accent2-strong: #975A16;
+  --accent2-soft:   #FEEBC8;
+  --border:        #E4DFD5;
+  --sidenote-bg:   #EDF2F7;
+  --code-bg:       #EDF2F7;
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #1A202C;
+  --bg-elevated:   #2D3748;
+  --bg-sunken:     #171923;
+  --text:          #E2E8F0;
+  --text-muted:    #A0AEC0;
+  --text-strong:   #F7FAFC;
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent2:        #F6AD55;
+  --accent2-strong: #FBD38D;
+  --accent2-soft:   #4A2E14;
+  --border:        #2D3748;
+  --sidenote-bg:   #2A2F3A;
+  --code-bg:       #2A2F3A;
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: var(--line);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   PROGRESS BAR (fixed top)
+============================================================ */
+.progress-bar{
+  position: fixed; top:0; left:0; right:0;
+  height: 3px;
+  background: transparent;
+  z-index: 100;
+}
+.progress-bar__fill{
+  height:100%;
+  width:0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+
+/* ============================================================
+   LAYOUT — 3 column grid
+============================================================ */
+.app{
+  display:grid;
+  grid-template-columns: minmax(220px, 20%) minmax(0, 1fr) minmax(240px, 20%);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 32px 128px;
+}
+
+.navigator{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding-right: 8px;
+}
+.navigator::-webkit-scrollbar{width:6px}
+.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+.canvas{
+  max-width: var(--measure);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.marginalia{
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Focus mode: collapse side panels */
+body.focus-mode .navigator,
+body.focus-mode .marginalia{
+  display:none;
+}
+body.focus-mode .app{
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+/* Mobile */
+@media (max-width: 960px){
+  .app{
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px 96px;
+  }
+  .navigator{
+    position: relative;
+    top: 0;
+    max-height: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .marginalia{
+    order: 3;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+}
+
+/* ============================================================
+   NAVIGATOR
+============================================================ */
+.navigator__meta{
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.navigator__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+.navigator__reading-time{
+  color: var(--text);
+  font-size: 13px;
+}
+
+.toc{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc li{margin: 2px 0}
+.toc a{
+  display: block;
+  padding: 6px 10px;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition);
+  line-height: 1.4;
+}
+.toc a:hover{
+  color: var(--text);
+  background: var(--sidenote-bg);
+}
+.toc a.is-active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--sidenote-bg);
+  font-weight: 500;
+}
+.toc .toc-l3{ padding-left: 20px; font-size: 13px }
+
+/* ============================================================
+   CANVAS (main reading area)
+============================================================ */
+.canvas h1{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin: 8px 0 16px;
+  letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--text-strong);
+  margin: 56px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+.canvas h2:first-of-type{ border-top: none; padding-top: 0 }
+.canvas h3{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-strong);
+  margin: 32px 0 12px;
+  scroll-margin-top: 24px;
+}
+.canvas p{ margin: 0 0 16px }
+.canvas strong{ color: var(--text-strong); font-weight: 700 }
+.canvas em{ font-style: italic }
+.canvas a{
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.canvas a:hover{ color: var(--accent-strong) }
+
+/* Source citation — subtle inline badge for linked evidence */
+.source{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--sidenote-bg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all var(--transition);
+}
+.source::before{ content: "↗ "; opacity: .6 }
+.source:hover{
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+/* Chart caption line — usually holds the data source */
+.bar-chart__caption{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+.bar-chart__caption a{ color: var(--text-muted); text-decoration: underline dotted }
+.bar-chart__caption a:hover{ color: var(--accent) }
+/* Provenance footer — printed when the note was generated without live web tools */
+.provenance-note{
+  margin: 32px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--sidenote-bg);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-left: 3px solid var(--text-muted);
+}
+
+.canvas ul, .canvas ol{
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.canvas li{ margin: 4px 0 }
+
+.canvas blockquote{
+  margin: 24px 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--sidenote-bg);
+  color: var(--text);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+}
+
+.canvas code{
+  font-family: var(--font-mono);
+  font-size: .9em;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.canvas pre{
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 24px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  position: relative;
+}
+.canvas pre code{ background: transparent; padding: 0 }
+
+/* Hook block (curiosity primer at the top) */
+.hook{
+  margin: 24px 0 48px;
+  padding: 24px 28px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.hook__label{
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Prerequisites and objectives blocks */
+.meta-block{
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.meta-block h4{
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.meta-block ul{ margin: 0; padding-left: 20px }
+.meta-block li{ margin: 4px 0; color: var(--text) }
+
+/* Callouts */
+.callout{
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--info);
+  background: var(--info-bg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+}
+.callout__label{
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.callout--tip{ border-left-color: var(--success); background: var(--success-bg) }
+.callout--tip .callout__label{ color: var(--success) }
+.callout--warn{ border-left-color: var(--warn); background: var(--warn-bg) }
+.callout--warn .callout__label{ color: var(--warn) }
+.callout--danger{ border-left-color: var(--danger); background: var(--danger-bg) }
+.callout--danger .callout__label{ color: var(--danger) }
+
+/* Feynman check */
+.feynman{
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+}
+.feynman::before{
+  content: "🧒 Giải thích trong một câu:";
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Tooltips on vocabulary */
+.term{
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+  position: relative;
+}
+.term:hover::after{
+  content: attr(data-def);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-strong);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-style: normal;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  z-index: 10;
+  box-shadow: var(--shadow);
+  line-height: 1.4;
+}
+
+/* Marginalia sidenotes */
+.sidenote{
+  margin: 24px 0;
+  padding: 12px 14px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.sidenote strong{ color: var(--text); display: block; margin-bottom: 4px; font-weight: 600 }
+
+/* ============================================================
+   FLIP CARD (active recall)
+============================================================ */
+.flip-card{
+  perspective: 1000px;
+  height: 180px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+.flip-card__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg) }
+
+.flip-card__face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__front{
+  background: var(--bg-elevated);
+}
+.flip-card__back{
+  background: var(--accent);
+  color: white;
+  transform: rotateY(180deg);
+}
+.flip-card__label{
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.flip-card__back .flip-card__label{ color: rgba(255,255,255,.85) }
+.flip-card__content{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PROGRESSIVE DISCLOSURE (details/summary)
+============================================================ */
+.deep-dive{
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+.deep-dive > summary{
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  transition: background var(--transition);
+}
+.deep-dive > summary::-webkit-details-marker{ display: none }
+.deep-dive > summary::before{
+  content: "▶";
+  color: var(--accent);
+  font-size: 10px;
+  transition: transform var(--transition);
+}
+.deep-dive[open] > summary::before{ transform: rotate(90deg) }
+.deep-dive > summary:hover{ background: var(--sidenote-bg) }
+.deep-dive__label{
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  margin-right: auto;
+}
+.deep-dive > *:not(summary){
+  padding: 0 18px 16px;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideDown{
+  from{ opacity: 0; transform: translateY(-8px) }
+  to  { opacity: 1; transform: translateY(0) }
+}
+
+/* ============================================================
+   CSS-ONLY BAR CHART
+============================================================ */
+.bar-chart{
+  margin: 32px 0;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.bar-chart__title{
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 16px;
+}
+.bar-row{
+  display: grid;
+  grid-template-columns: 140px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.bar-label{ color: var(--text) }
+.bar-track{
+  background: var(--sidenote-bg);
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill{
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  border-radius: 4px;
+  transition: width 400ms cubic-bezier(.4,0,.2,1);
+}
+.bar-row:hover .bar-fill{ filter: brightness(1.15) }
+.bar-value{ color: var(--text-muted); font-weight: 600; text-align: right }
+
+@media (max-width: 640px){
+  .bar-row{ grid-template-columns: 100px 1fr 40px; font-size: 13px }
+}
+
+/* ============================================================
+   CONCEPT FLOW (3-step)
+============================================================ */
+.concept-flow{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 32px 0;
+}
+.concept-flow__step{
+  padding: 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.concept-flow__step:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.concept-flow__num{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.concept-flow__arrow{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 20px;
+  user-select: none;
+}
+@media (max-width: 640px){
+  .concept-flow{ grid-template-columns: 1fr; }
+  .concept-flow__arrow{ transform: rotate(90deg); justify-self: center }
+}
+
+/* ============================================================
+   GLOSSARY
+============================================================ */
+.glossary{ margin: 32px 0 }
+.glossary dl{ margin: 0 }
+.glossary dt{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: 16px;
+  font-size: 15px;
+}
+.glossary dd{
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 15px;
+  padding-left: 0;
+}
+
+/* ============================================================
+   QUIZ
+============================================================ */
+.quiz{
+  margin: 56px 0 24px;
+  padding: 32px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.quiz h2{
+  font-family: var(--font-sans);
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.quiz__intro{
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.quiz fieldset{
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.quiz legend{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.quiz__option{
+  display: block;
+  padding: 12px 16px;
+  margin: 6px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  transition: all var(--transition);
+  position: relative;
+  padding-left: 44px;
+}
+.quiz__option::before{
+  content: "";
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  transition: all var(--transition);
+}
+.quiz__option:hover{ border-color: var(--accent); background: var(--sidenote-bg) }
+.quiz__option input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.quiz__option:has(input:checked){
+  border-color: var(--accent);
+  background: var(--sidenote-bg);
+}
+.quiz__option:has(input:checked)::before{
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg-elevated);
+}
+.quiz__option.correct-answer{
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--text-strong);
+}
+.quiz__option.correct-answer::before{
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 3px var(--success-bg);
+}
+.quiz__option.incorrect-answer{
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+.quiz__option.incorrect-answer::before{
+  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: inset 0 0 0 3px var(--danger-bg);
+}
+
+.quiz__explanation{
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__explanation{ display: block }
+
+.quiz__actions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.btn{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--transition);
+}
+.btn:hover{ background: var(--accent-strong); border-color: var(--accent-strong) }
+.btn--ghost{ background: transparent; color: var(--accent) }
+.btn--ghost:hover{ background: var(--sidenote-bg); color: var(--accent-strong) }
+
+.quiz__score{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__score{ display: block }
+
+/* ============================================================
+   FLOATING CONTROLS
+============================================================ */
+.controls{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+}
+.control-btn{
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  padding: 0;
+}
+.control-btn:hover{
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.control-btn svg{ width: 18px; height: 18px }
+.control-btn[data-active="true"]{ background: var(--accent); color: white }
+
+/* ============================================================
+   PRINT
+============================================================ */
+@media print{
+  .navigator, .marginalia, .controls, .progress-bar, .quiz__actions{ display: none !important }
+  .app{ grid-template-columns: 1fr; max-width: none; padding: 0 }
+  body{ background: white; color: black; font-size: 12pt }
+  .canvas h1, .canvas h2, .canvas h3{ page-break-after: avoid }
+  .flip-card{ height: auto }
+  .flip-card__inner{ transform: none !important; height: auto }
+  .flip-card__face{ position: static; padding: 8px 0; box-shadow: none; border: none }
+  .flip-card__back{ display: block; background: white; color: black }
+  .deep-dive[open] > *:not(summary){ animation: none }
+}
+
+/* ============================================================
+   PHASE ORBIT (6-node progress in left navigator)
+============================================================ */
+.orbit{
+  margin: 0 0 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.orbit__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+.orbit__track{
+  position: relative;
+  padding-left: 22px;
+}
+.orbit__track::before{
+  content: "";
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.orbit__node{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--transition);
+  user-select: none;
+}
+.orbit__node::before{
+  content: "";
+  position: absolute;
+  left: -22px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  transition: all var(--transition);
+  box-sizing: border-box;
+}
+.orbit__node[data-reached="true"]::before{
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.orbit__node[data-active="true"]{
+  color: var(--text-strong);
+  font-weight: 600;
+}
+.orbit__node[data-active="true"]::before{
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.orbit__node:hover{ color: var(--text) }
+
+/* ============================================================
+   MISCONCEPTION PRE-MORTEM (State 2 tail)
+============================================================ */
+.premortem{
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--accent2-soft);
+  border-left: 4px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text);
+}
+.premortem__label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 8px;
+}
+.premortem__wrong{ text-decoration: line-through; color: var(--text-muted) }
+.premortem__truth{ font-weight: 600; color: var(--text-strong) }
+
+/* ============================================================
+   SCAFFOLD CARD (S/I/P/R micro-loop, State 3)
+============================================================ */
+.scaffold{
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.scaffold__concept{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scaffold__concept::before{
+  content: "◆";
+  color: var(--accent);
+  font-size: 12px;
+}
+.scaffold__row{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px 16px;
+  margin: 12px 0;
+  align-items: start;
+}
+.scaffold__row-label{
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 4px;
+}
+.scaffold__row-body{ font-size: 15px; line-height: 1.65 }
+.scaffold__row-body p:last-child{ margin-bottom: 0 }
+
+/* Probe/Resolve details — nested within the scaffold card */
+.scaffold__probe{
+  margin: 8px 0 0;
+  border: 1px dashed var(--accent2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  overflow: hidden;
+}
+.scaffold__probe > summary{
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent2-strong);
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  user-select: none;
+  transition: background var(--transition);
+}
+.scaffold__probe > summary::-webkit-details-marker{ display: none }
+.scaffold__probe > summary::before{
+  content: "🤔 Probe";
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent2-strong);
+}
+.scaffold__probe[open] > summary::after{
+  content: "";
+  position: absolute;
+}
+.scaffold__probe > summary:hover{ background: var(--accent2-soft) }
+.scaffold__resolve{
+  padding: 12px 14px 14px 14px;
+  background: var(--accent2-soft);
+  border-top: 1px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.scaffold__resolve::before{
+  content: "💡 Resolve";
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINT (textarea + reveal)
+============================================================ */
+.checkpoint{
+  margin: 32px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+}
+.checkpoint__label{
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.checkpoint__question{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.checkpoint textarea{
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--transition);
+  box-sizing: border-box;
+}
+.checkpoint textarea:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.checkpoint__actions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.checkpoint__expert{
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  display: none;
+}
+.checkpoint.is-revealed .checkpoint__expert{ display: block; animation: slideDown 300ms cubic-bezier(.4,0,.2,1) }
+.checkpoint__expert-label{
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.checkpoint__saved{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   LAUNCH PAD (Extension Problem, State 6)
+============================================================ */
+.launchpad{
+  margin: 48px 0 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.launchpad::before{
+  content: "🚀";
+  position: absolute;
+  top: -16px; right: -8px;
+  font-size: 96px;
+  opacity: .06;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+.launchpad__label{
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--accent2);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.launchpad__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+.launchpad__problem{
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.launchpad__hints{
+  border-top: 1px dashed var(--border);
+  padding-top: 20px;
+  font-family: var(--font-sans);
+}
+.launchpad__hints-label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: block;
+}
+.launchpad__hint{
+  margin: 10px 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-left: 3px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  display: none;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.launchpad__hint.is-visible{ display: block }
+.launchpad__hint-label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 4px;
+  letter-spacing: .08em;
+}
+.launchpad__reveal{
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all var(--transition);
+}
+.launchpad__reveal:hover{
+  background: var(--accent2);
+  color: white;
+}
+.launchpad__reveal:disabled{
+  opacity: .4;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER (right-panel hover-to-elaborate)
+============================================================ */
+/* Terms in the canvas that are wired to amplifier notes */
+.canvas .term-amp{
+  border-bottom: 1px dashed var(--accent2);
+  cursor: help;
+  transition: background var(--transition);
+}
+.canvas .term-amp:hover,
+.canvas .term-amp.is-active{
+  background: var(--accent2-soft);
+  border-bottom-color: var(--accent2-strong);
+}
+/* The sticky slot at the top of the marginalia column */
+.amplifier{
+  position: sticky;
+  top: 24px;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: var(--accent2-soft);
+  border: 1px solid var(--accent2);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  min-height: 96px;
+  transition: opacity var(--transition);
+}
+.amplifier__label{
+  display: block;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 6px;
+}
+.amplifier__term{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+  display: block;
+  font-size: 14px;
+}
+.amplifier__body{ margin: 0 }
+.amplifier__empty{ color: var(--text-muted); font-style: italic }
+/* Hidden data pool — right-panel notes stored here, activated by JS */
+.amp-notes{ display: none }
+
+/* ============================================================
+   MISC
+============================================================ */
+.footer{
+  max-width: var(--measure);
+  margin: 64px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-align: center;
+}
+.kbd{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<div class="app">
+
+  <!-- =========================================================
+       LEFT — NAVIGATOR (sticky ToC)
+       ========================================================= -->
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 35 phút</p>
+    </div>
+
+    <!-- Phase Orbit — 6 phase nodes that light up as the reader scrolls. -->
+    <div class="orbit" aria-label="Các giai đoạn học">
+      <p class="orbit__title">Lộ trình học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Xây dựng</div>
+        <div class="orbit__node" data-target="application">4 · Ứng dụng</div>
+        <div class="orbit__node" data-target="boundary">5 · Ranh giới</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng kết</div>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="toc" id="toc">
+        <!-- Auto-populated by JS from h2/h3 in .canvas -->
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- =========================================================
+       MIDDLE — CANVAS (main content)
+       ========================================================= -->
+  <main class="canvas" id="canvas">
+
+    <h1>Cảm xúc con người — Khảo cứu mở đầu</h1>
+
+    <!-- HOOK -->
+    <div class="hook">
+      <span class="hook__label">🎣 Mở màn</span>
+      Đêm thứ Tư, Lan nhận được email hủy hợp đồng lớn nhất năm. Trước khi cô kịp "nghĩ" gì, cơ thể đã hành động trước: tim đập thình thịch, bụng thắt lại, lòng bàn tay ướt — và trong tích tắc, cô đã muốn đập điện thoại xuống bàn. Khoảng thời gian giữa email và cú ném ấy, chính xác là nơi bài khảo cứu này bắt đầu. Điều gì vừa xảy ra trong cơ thể và não bộ của Lan mà không cần Lan ra lệnh? Nếu câu trả lời là "cảm xúc của cô ấy", thì <em>cảm xúc</em> là cái gì, đến từ đâu, có những loại nào, điều gì cai quản nó, nó gắn với trí nhớ ra sao — và làm sao để đọc được nó ở chính mình? Loạt bài này trả lời sáu câu hỏi đó; bài mở đầu hôm nay xây toàn bộ nền móng. Đây là bài khảo cứu dài hơi, hãy đọc từng bước một — và sẵn sàng nghi ngờ những điều "ai cũng biết" về cảm xúc.
+    </div>
+
+    <!-- PREREQUISITES + OBJECTIVES -->
+    <div class="meta-block">
+      <h4>Kiến thức nền cần có</h4>
+      <ul>
+        <li>Bạn biết rằng cơ thể phản ứng khi xúc động (tim đập nhanh, nổi da gà) — đó là nền tảng thực nghiệm của toàn bài.</li>
+        <li>Bạn hiểu sơ bộ ý "đặc điểm được giữ lại trong tiến hóa vì có ích" — không cần chi tiết, chỉ cần ý chính.</li>
+        <li>Bạn sẵn sàng ghi chú và tự kiểm tra: bài có nhiều <em>Probe</em> (thử thách ẩn) và <em>Checkpoint</em> — hãy thật sự trả lời trước khi mở đáp án.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đến cuối bài, bạn sẽ có thể…</h4>
+      <ul>
+        <li><strong>Nhận diện</strong> 4 thành phần của một cảm xúc và gọi tên chúng trong một tình huống thực tế.</li>
+        <li><strong>Phân biệt</strong> cảm xúc, tâm trạng, tính khí và cảm xúc nền.</li>
+        <li><strong>Đối chiếu</strong> hai dòng nghiên cứu về nguồn gốc cảm xúc — "bản năng cứng" (Darwin–Ekman) và "cảm xúc được dựng lên" (Barrett).</li>
+        <li><strong>Áp dụng</strong> mô hình điều chỉnh cảm xúc để phân tích một can thiệp thực tế trong môi trường làm việc.</li>
+        <li><strong>Nhận diện</strong> mối liên hệ hai chiều giữa cảm xúc và trí nhớ, và giải thích vì sao "trí nhớ đèn flash" sống động nhưng không nhất thiết chính xác.</li>
+        <li><strong>Đánh giá</strong> câu nói "cảm xúc là kẻ thù của lý trí" và các nhận định thường gặp về cảm xúc bằng lập luận dựa trên bằng chứng.</li>
+      </ul>
+    </div>
+<!-- =========================================================
+     CHƯƠNG 1 — Cảm xúc không phải kẻ thù của lý trí
+     ========================================================= -->
+    <h2 id="baseline">Chương 1 · Cảm xúc không phải kẻ thù của lý trí</h2>
+
+    <p><strong>Nền tảng.</strong> Trước khi định nghĩa bất cứ điều gì, hãy thừa nhận một điều bạn chưa bao giờ phải học: bạn không cần được dạy để biết sợ, biết vui, biết tức giận. Chúng tự đến — thường là trước khi bạn kịp suy nghĩ. Điều này nói lên rằng cảm xúc không phải thứ "học vẹt", không phải nút bấm bạn bật tắt được theo ý muốn. Chúng là một hệ thống sinh học: được lắp sẵn trong cơ thể, chạy tự động, và — điểm mấu chốt của toàn bộ loạt bài này — <strong>có chức năng</strong>. Bạn đã từng thấy hệ thống đó hoạt động hàng nghìn lần: khi sợ, tim bạn đập nhanh để bơm máu cho cơ bắp sẵn sàng chạy; khi buồn, bạn rút lui khỏi thế giới để lắng lại. Nếu ta gọi những phản ứng ấy là "cảm xúc", thì cảm xúc không phải thứ gì đó <em>chống lại</em> bạn — mà là một công cụ cơ thể bạn đang dùng.</p>
+
+    <p>Chương này chứng minh hai điều. Thứ nhất: một cảm xúc là một <strong>gói phản ứng gồm 4 thành phần</strong> chạy đồng thời, và các thành phần ấy có thể lệch nhịp với nhau. Thứ hai: cảm xúc — kể cả những cảm xúc khó chịu nhất — không phải kẻ thù của lý trí; chúng là <strong>tín hiệu</strong>. Một khi đã nắm được hai điều này, bốn chương còn lại chỉ là đào sâu vào từng ngóc ngách của gói phản ứng ấy.</p>
+
+    <h2 id="bridge">Cầu nối: Mô hình Bảng Đồng Hồ</h2>
+
+    <p>Hãy gọi thứ ta sẽ dùng xuyên suốt loạt bài là <strong>Mô hình Bảng Đồng Hồ</strong>. Chiếc xe máy hoặc xe hơi bạn đi hằng ngày có một bảng đồng hồ: đèn báo xăng, đồng hồ nhiệt độ nước, đèn áp suất dầu. Khi đèn vàng bật lên, bạn không nghi ngờ cái đèn — bạn hiểu ngay <em>phía sau nó có một tình trạng thật đang cần chú ý</em>: sắp hết xăng, nước đang sôi, dầu đang tụt. Đèn báo không tạo ra vấn đề; nó phản ánh vấn đề để bạn xử lý trước khi quá muộn.</p>
+
+    <p>Bây giờ hãy ánh xạ toàn bộ lên con người:</p>
+    <ul>
+      <li><strong>Đèn cảnh báo = cảm xúc</strong> (tức giận, sợ hãi, buồn, vui, ghê tởm…).</li>
+      <li><strong>Đồng hồ và cảm biến = tín hiệu cơ thể</strong> (tim đập nhanh, lòng bàn tay ướt, căng cơ, dạ dày thắt lại).</li>
+      <li><strong>Tình trạng thực của xe = hoàn cảnh thực của bạn</strong> (mối đe dọa, cơ hội, mất mát, bất công).</li>
+      <li><strong>Bộ não = hệ thống chẩn đoán</strong> — đọc tín hiệu, đối chiếu với kinh nghiệm cũ, rồi mới quyết định bật đèn nào.</li>
+      <li><strong>Bảo dưỡng xe = điều chỉnh cảm xúc</strong> — bạn không tháo dây đèn báo; bạn xử lý cái thứ phía sau nó.</li>
+    </ul>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Tình huống xảy ra (mất việc, bị chèn, tin tốt)</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Não đọc cảm biến + đối chiếu kinh nghiệm cũ</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Đèn bật = gói cảm xúc (4 thành phần cùng chạy)</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người bước qua cây cầu này với ý nghĩ…</span>
+      <p><span class="premortem__wrong">Cảm xúc "tiêu cực" là thứ xấu, phải kìm nén hoặc loại bỏ cho sạch.</span></p>
+      <p>Điều này sai vì cảm xúc — kể cả tức giận và sợ hãi — đã được chọn lọc tự nhiên giữ lại hàng trăm triệu năm vì chúng có việc phải làm. Nếu chúng thuần túy gây hại, loài mang chúng đã bị đào thải từ lâu.</p>
+      <p><span class="premortem__truth">Điều đúng là:</span> kìm nén không làm cảm xúc biến mất — nó chỉ tắt đèn báo mà để nguyên sự cố, và về lâu dài làm mòn chính hệ thống. Ta sẽ quay lại điểm này ở Chương 4.</p>
+    </div>
+
+    <h2 id="exposition">Xây dựng mô hình, từng mảnh một</h2>
+
+    <!-- Scaffold 1 -->
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Một cảm xúc là một gói 4 thành phần</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p><strong>Cảm xúc</strong> (emotion) không phải một "thứ" đơn lẻ. Nó là một gói phản ứng gồm bốn thành phần chạy gần như đồng thời: <strong>trải nghiệm chủ quan</strong> (cái "cảm giác" bạn gọi là tức giận hay vui), <strong>phản ứng sinh lý</strong> (tim, nhịp thở, hormone), <strong>xu hướng hành động</strong> (thôi thúc làm gì đó — ném điện thoại, bỏ chạy, ôm chầm lấy ai đó), và <strong>biểu lộ</strong> (khuôn mặt, giọng nói, tư thế).</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Quay lại với Lan. Email hủy hợp đồng vừa mở ra, bốn thành phần bật gần như đồng thời: cảm giác "tức điên" (trải nghiệm chủ quan), tim đập mạnh và tay ướt (sinh lý), thôi thúc ném điện thoại (xu hướng hành động), mặt đỏ và cắn chặt môi (biểu lộ). Hãy để ý: Lan không "quyết định" bật bốn thứ này. Chúng chạy.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Một người đỏ mặt, run tay, giọng lạc đi nhưng khăng khăng "tôi không sợ gì cả" — thành phần nào đang bật, thành phần nào dường như tắt?</summary>
+        <div class="scaffold__resolve">Sinh lý, xu hướng hành động, có thể cả biểu lộ đang chạy — nhưng <strong>trải nghiệm chủ quan</strong> không đồng bộ: người đó hoặc chưa "gắn nhãn" được điều đang xảy ra, hoặc đang cố kiềm chế. Đây là bài học quan trọng nhất của chương: <strong>các thành phần của gói cảm xúc có thể lệch nhịp.</strong> Đọc cảm xúc của mình không phải là bắt một "nút bấm" duy nhất.</div>
+      </details>
+    </section>
+    <div class="feynman">Cảm xúc giống như đèn báo trên xe: nó là cả một gói — cái đèn sáng, tiếng kêu, mùi khét — cùng báo một chuyện, chứ không phải một nút bấm riêng lẻ.</div>
+
+    <!-- Scaffold 2 -->
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Cảm xúc ≠ tâm trạng ≠ tính khí</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Một biến mới, và đây là lần phân biệt mà gần như mọi người đều lẫn: <strong>tâm trạng</strong> (mood). Cảm xúc là gói phản ứng ngắn, bùng lên quanh một sự kiện cụ thể. Tâm trạng kéo dài hơn nhiều — hàng giờ, hàng ngày — cường độ nhẹ hơn, và không dính vào một sự kiện rõ ràng nào. Còn <strong>tính khí</strong> (temperament) là khuynh hướng nền của bạn — "nóng tính", "điềm tĩnh", "nhạy cảm" — như kiểu loại xe bạn được sinh ra với.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Cơn giận vì bị chèn xe cháy trong năm phút rồi tắt — đó là cảm xúc. Nhưng nếu cả buổi sáng bạn thấy "bực bội" mà không có sự kiện nào đáng kể — đó là tâm trạng; thủ phạm thường là giấc ngủ, đường huyết, căng thẳng tích lũy. Còn một người nổi cáu một cách dự đoán được, lặp đi lặp lại suốt nhiều năm — đó là tính khí, nền tảng lâu dài hơn nhiều.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao phân biệt ba cấp độ này lại quan trọng cho mục tiêu "nhận diện cảm xúc của chính mình"?</summary>
+        <div class="scaffold__resolve">Vì nếu nhầm tâm trạng với cảm xúc, bạn sẽ đi tìm một "sự kiện gây ra" không tồn tại — và tự dằn vặt hoặc đổ lỗi sai cho người khác. Còn nếu nhận diện đúng cấp độ, bạn ứng phó khác nhau: xử lý sự kiện (cảm xúc), hoặc chăm sóc nền tảng — giấc ngủ, ăn uống, nghỉ ngơi (tâm trạng). Với tính khí thì câu hỏi không phải "sao tôi hay giận" mà là "tôi xây hệ thống đối phó thế nào" — chủ đề của Chương 4 và 5.</div>
+      </details>
+    </section>
+    <div class="feynman">Đèn báo (cảm xúc) sáng lên rồi tắt trong vài phút; tiếng máy nền rè rè cả ngày (tâm trạng) không phải vì một sự cố nào cụ thể; còn loại xe bạn lái (tính khí) thì đã định hình sẵn mọi thứ.</div>
+
+    <div class="checkpoint" data-checkpoint-id="cp1">
+      <span class="checkpoint__label">🛑 Dừng lại và tự kiểm tra</span>
+      <p class="checkpoint__question">Hãy nhớ lại một cơn bực bội hoặc vui mừng gần đây của bạn. Viết ra 4 thành phần của nó — cảm giác, cơ thể, thôi thúc hành động, biểu lộ. Không cần chính xác, chỉ cần đủ 4 ô.</p>
+      <textarea placeholder="Viết câu trả lời của bạn bằng lời của chính mình trước khi so sánh…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Câu trả lời mẫu</span>
+        Ví dụ: bị cắt xe trên đường — cảm giác: bực, muốn gầm lên; cơ thể: tim đập nhanh, hàm căng; thôi thúc: bấm còi inh ỏi, chửi; biểu lộ: nhăn mặt, nắm chặt tay lái. Nếu bạn điền được cả 4 ô, bạn đã sẵn sàng cho phần sau. Nếu thiếu, đừng lo — quay lại đoạn "gói 4 thành phần" và đọc chậm lại.
+      </div>
+    </div>
+
+    <!-- Scaffold 3 -->
+    <section class="scaffold" id="exposition-3">
+      <h3 class="scaffold__concept">Dưới mọi cảm xúc: cảm xúc nền (affect)</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Còn một tầng nữa nằm dưới cả 4 thành phần: <strong>cảm xúc nền</strong> (affect). Đó là trạng thái nền rất đơn giản của cơ thể — gồm hai chiều: <strong>dễ chịu–khó chịu</strong> (valence) và <strong>kích thích cao–thấp</strong> (arousal). Bạn có thể không tên được cảm xúc của mình, nhưng hầu như lúc nào cũng biết: "tôi thấy ổn", "tôi thấy tệ và bồn chồn". Đó chính là affect đang báo cáo.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Khi bạn vừa ngủ dậy mà vẫn mệt, bạn thường không "có cảm xúc" gì — nhưng bạn biết mình đang <em>khó chịu và chậm chạp</em>. Đó là affect: valence hơi tiêu cực, arousal thấp. Hai tiếng sau, sau một tách cà phê, cùng trạng thái nền đó đổi sang trung tính. Affect giống như mực nước và tốc độ nền của chiếc xe — mọi đèn báo đều phải bật trên nền đó. Ta sẽ quay lại bản đồ hai chiều này rất kỹ ở Chương 3.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu mọi cảm xúc đều "nằm trên" hai trục dễ chịu–khó chịu và kích thích, vậy 4 thành phần kia nằm ở đâu?</summary>
+        <div class="scaffold__resolve">Affect là <strong>nền</strong>, không phải cảm xúc. Khi bạn đã có một nền affect cụ thể (khó chịu + kích thích cao), não bộ vẫn còn việc phải làm: quyết định nền ấy là "sợ hãi" hay "tức giận" hay "hồi hộp" — rồi mới kéo theo gói 4 thành phần đầy đủ. Nói cách khác, affect cho bạn <em>cảm giác</em>; cái còn lại — nhãn, ý nghĩa, hành động — là công việc của cảm xúc. Sự tách biệt này sẽ trở thành mấu chốt của Chương 2.</div>
+      </details>
+    </section>
+    <div class="feynman">Cảm xúc nền giống như nhiệt độ trong xe — trước khi đèn báo nào bật, bạn đã biết "lạnh" hay "nóng" rồi.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Ba tầng dễ lẫn: cảm xúc nền, cảm xúc, và cảm giác</summary>
+      <p>Trong nghiên cứu hiện đại, người ta hay tách ba khái niệm mà tiếng Việt thường gộp làm một. <strong>Cảm xúc nền (affect)</strong> là hai chiều dễ chịu–khó chịu và kích thích, có mặt lúc nào cũng có. <strong>Cảm giác (feeling)</strong> là trải nghiệm chủ quan — bạn nhận ra và cảm nhận được điều gì đó đang xảy ra với mình. <strong>Cảm xúc (emotion)</strong> là gói đầy đủ — gồm cả nhãn bạn gán, ý nghĩa bạn hiểu, và hệ thống cơ thể + hành vi đi kèm. Một nhà khoa học có thể nói: "affect là dữ liệu, feeling là bản in, emotion là bức tranh hoàn chỉnh." Khi gặp từ nào trong bài này, hãy tự hỏi: người viết đang nói đến dữ liệu, bản in, hay bức tranh?</p>
+    </details>
+
+    <h2 id="application">Ứng dụng: Bản đồ cảm xúc toàn cầu</h2>
+
+    <p>Hãy đưa mô hình ra khỏi phạm vi một cá nhân. Năm 2024, tổ chức <strong>Gallup</strong> phỏng vấn mẫu đại diện dân số ở <strong>144 quốc gia</strong>, hỏi một câu rất đơn giản: <em>"Hôm qua bạn có cảm thấy [lo lắng / căng thẳng / buồn / tức giận / đau đớn] trong phần lớn thời gian không?"</em> Kết quả — mỗi cột là tỷ lệ người trưởng thành trên thế giới trả lời "có":</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Tỷ lệ người trưởng thành toàn cầu trải qua từng cảm xúc "trong phần lớn ngày hôm qua" — 2024</div>
+      <div class="bar-row">
+        <div class="bar-label">Lo lắng</div>
+        <div class="bar-track"><div class="bar-fill" style="width:39%"></div></div>
+        <div class="bar-value">39%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Căng thẳng</div>
+        <div class="bar-track"><div class="bar-fill" style="width:37%"></div></div>
+        <div class="bar-value">37%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Đau đớn thể xác</div>
+        <div class="bar-track"><div class="bar-fill" style="width:32%"></div></div>
+        <div class="bar-value">32%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Buồn</div>
+        <div class="bar-track"><div class="bar-fill" style="width:26%"></div></div>
+        <div class="bar-value">26%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Tức giận</div>
+        <div class="bar-track"><div class="bar-fill" style="width:22%"></div></div>
+        <div class="bar-value">22%</div>
+      </div>
+      <p class="bar-chart__caption">Nguồn: <a href="https://news.gallup.com/poll/695963/tracking-world-emotional-health.aspx" target="_blank" rel="noopener">Gallup — State of the World's Emotional Health</a>, dữ liệu 2024, xuất bản 10/2025.</p>
+    </div>
+
+    <p>Điều thú vị không phải các con số, mà là điều chúng chứng minh: <strong>cảm xúc là hiện tượng phổ quát và đo lường được.</strong> Gần 4 trong 10 người trưởng thành trên hành tinh trải qua lo lắng hoặc căng thẳng "trong phần lớn ngày hôm qua" — ở cùng một thời điểm. Giờ hãy áp dụng lăng kính 4 thành phần vào con số "37% căng thẳng".</p>
+
+    <p>Câu hỏi của Gallup đo chủ yếu thành phần <em>trải nghiệm chủ quan</em> — bạn có "cảm thấy" căng thẳng không. Nhưng nếu 37% ấy là những gói phản ứng thật, thì bên dưới mỗi câu trả lời "có" là cả một hệ thống đang chạy: tuyến thượng thận tiết cortisol, cơ bắp căng, nhịp tim cao hơn, và một bộ não đang báo "có gì đó cần chú ý". Mô hình bảng đồng hồ nhìn từ mái nhà toàn cầu: hàng trăm triệu người, mỗi người một bảng đồng hồ — nhưng các loại đèn thì giống nhau. Đó là lý do Gallup có thể đo chúng bằng cùng một câu hỏi ở 144 quốc gia.</p>
+
+    <p>Có một chi tiết trong số liệu Gallup đáng dừng lại: các cảm xúc tiêu cực — lo lắng, căng thẳng, buồn, giận — <strong>cao hơn hẳn một thập kỷ trước</strong> (lo lắng và căng thẳng đều đã từng ở quanh mức thấp hơn). Không ai kết luận vội "con người đang khổ hơn" từ một bảng số, nhưng con số này cho thấy cảm xúc không phải chuyện riêng tư, nội tâm — chúng phản ứng với hoàn cảnh xã hội, và có thể đo đếm theo năm tháng. Ta sẽ quay lại ý "cảm xúc phản ánh hoàn cảnh" ở Chương 2 (não đọc hoàn cảnh) và Chương 4 (điều gì khởi động cảm xúc).</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật thẻ để xem đáp án">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Gợi nhớ chủ động — Câu hỏi</span>
+          <div class="flip-card__content">Không cần nhìn lại: hãy kể đủ 4 thành phần của một cảm xúc, và 2 chiều của cảm xúc nền.</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Đáp án</span>
+          <div class="flip-card__content">4 thành phần: trải nghiệm chủ quan, phản ứng sinh lý, xu hướng hành động, biểu lộ. 2 chiều của affect: dễ chịu–khó chịu (valence) và kích thích cao–thấp (arousal).</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Ranh giới: nơi mô hình có thể đánh lừa bạn</h2>
+
+    <p>Mô hình gói 4 thành phần rất hữu ích — và chính vì quá gọn gàng, nó dễ bị hiểu sai theo ba cách. Hãy đọc kỹ.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+      <p><strong>"Cảm xúc chỉ là cảm giác."</strong> Sai. Nếu cảm xúc chỉ là cảm giác, thì người run tay, đỏ mặt nói "tôi không sợ" sẽ được xem là không có cảm xúc — nhưng gói phản ứng vẫn đang chạy đầy đủ. Cảm giác (trải nghiệm chủ quan) chỉ là một trong bốn thành phần. Hệ quả thực tế: nếu bạn "không cảm thấy gì" trong một cuộc xung đột, cơ thể bạn vẫn có thể đang báo động — và bạn sẽ phát hiện ra qua trục khuỷu của mình (tim, cơ, nhịp thở).</p>
+    </div>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+      <p><strong>"Cảm xúc phải được bộc lộ ra ngoài ngay."</strong> Sai. Biểu lộ là một thành phần, nhưng không bắt buộc. Các nền văn hóa có "luật trình diễn" (display rules) khác nhau — một nền văn hóa có thể xem việc kìm nét mặt ở nơi công cộng là phép lịch sự. Không bộc lộ ≠ không có cảm xúc. Và ngược lại, bộc lộ ≠ cảm xúc thật: diễn viên khóc đúng giờ mà chẳng "buồn" gì.</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Trường hợp biên</span>
+      <p><strong>Cảm xúc hỗn hợp.</strong> Bạn đứng trong đám cưới của bạn thân sắp chuyển đi xa — vừa vui vừa buồn, và cơ thể bạn không "chọn" một trong hai. Bốn thành phần có thể mâu thuẫn: sinh lý báo hưng phấn (arousal cao), trong khi trải nghiệm lại có vị buồn (valence âm). Mô hình gói 4 thành phần cho phép điều này mà không cần "phải chọn một cảm xúc". Còn một trường hợp biên nữa: trong căng thẳng cực độ, một số người bị <em>tê liệt cảm xúc</em> — hệ thống vẫn chạy nhưng thành phần trải nghiệm bị ngắt. Đó không phải "không có cảm xúc", mà là gói phản ứng đang chạy ở chế độ khẩn cấp — như đèn báo nhấp nháy liên tục đến mức bạn không còn nhìn thấy nó nữa.</p>
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán trước khi sang chương 2</span>
+      <p>Chương 1 đã nói: cảm xúc là gói phản ứng do não "chẩn đoán" từ cảm biến và kinh nghiệm. Giờ hãy ghi lại một phỏng đoán trước khi đọc tiếp: <strong>theo bạn, một cảm xúc như sợ hãi — có bao nhiêu phần trăm là "bẩm sinh, ai cũng giống nhau"?</strong> Viết ra một con số. Chương 2 sẽ cho bạn biết điều đó đúng hay sai — và câu trả lời gây tranh cãi gay gắt đến mức nào trong giới khoa học.</p>
+    </div>
+
+    <h2 id="synthesis">Tổng kết chương 1</h2>
+
+    <p>Cảm xúc không phải một thứ bạn "có" — nó là một quá trình sinh học gồm bốn đường chạy đồng thời: cảm giác, cơ thể, thôi thúc hành động và biểu lộ. Các đường này có thể lệch nhịp với nhau; cảm xúc không phân biệt "tốt/xấu" — nó là tín hiệu về một tình trạng đang diễn ra. Kìm nén tín hiệu không giải quyết tình trạng; nó chỉ khiến bạn không đọc được bảng đồng hồ của chính mình. Bên dưới tất cả, mọi cảm xúc đều nằm trên một nền hai chiều — dễ chịu–khó chịu và kích thích — thứ mà Gallup có thể đo ở 144 quốc gia.</p>
+
+    <blockquote>
+      <strong>Nếu chỉ nhớ một điều từ chương này:</strong> cảm xúc là tín hiệu — và tín hiệu thì không phải để loại bỏ, mà để đọc.
+    </blockquote>
+
+    <p><em>Đi tiếp:</em> Bây giờ câu hỏi nghiêm túc đầu tiên xuất hiện — <strong>tại sao con người lại có thứ hệ thống đèn báo này, và nó được "lắp đặt" từ bao giờ?</strong> Chương 2 đưa ta từ một cuốn sách viết năm 1872 của Charles Darwin đến cuộc tranh cãi vẫn chưa ngã ngũ trong khoa học hiện đại.</p>
+<!-- =========================================================
+     CHƯƠNG 2 — Cảm xúc từ đâu mà có
+     ========================================================= -->
+    <h2 id="ch2-baseline">Chương 2 · Cảm xúc từ đâu mà có: bản năng hay do não dựng lên?</h2>
+
+    <p><em>Chuyển tiếp từ chương 1:</em> Chương 1 đã chứng minh cảm xúc là gói phản ứng 4 thành phần — một hệ thống tín hiệu có chức năng, "lắp sẵn" trong cơ thể. Nhưng "lắp sẵn bởi ai, từ bao giờ, và có thật sự 'cứng' không" là một câu hỏi hoàn toàn khác — và nó từng gây ra một trong những cuộc tranh cãi dữ dội nhất trong lịch sử tâm lý học. Chương này là chuyến du hành từ năm 1872 đến hiện tại.</p>
+
+    <p><strong>Nền tảng.</strong> Cảm xúc không phải phát minh của nền văn minh. Chó vui mừng vẫy đuôi, mèo sợ hãi xù lông, và tổ tiên chúng ta — hàng triệu năm trước khi có ngôn ngữ — đã biết sợ, biết giận, biết buồn. Điều này gợi ý một giả thuyết mạnh: hệ thống đèn báo không phải do con người "thiết kế", mà là sản phẩm của chọn lọc tự nhiên — được giữ lại qua hàng trăm triệu năm vì nó giúp sinh vật sống sót. Câu hỏi của chương này không phải "cảm xúc có nguồn gốc sinh học không" (hầu như ai cũng đồng ý là có), mà là: <strong>phần nào của cảm xúc là "cứng" (bẩm sinh, giống nhau ở mọi người), và phần nào được não mỗi người dựng lên theo ngữ cảnh và kinh nghiệm?</strong></p>
+
+    <h2 id="ch2-bridge">Cầu nối: chiếc xe bạn thừa kế</h2>
+
+    <p>Quay lại Mô hình Bảng Đồng Hồ — giờ hãy thêm một chi tiết quan trọng: <strong>chiếc xe này không phải do bạn chế tạo.</strong> Nó được trao cho bạn khi bạn chào đời, đã lắp sẵn đèn báo, đã lắp sẵn bộ chẩn đoán. Câu hỏi khoa học là: các loại đèn báo ấy — và cách chúng bật — được "nạp sẵn" từ nhà máy giống hệt nhau ở mọi chiếc xe (mọi con người), hay mỗi chiếc xe còn được tinh chỉnh theo quãng đường đã đi (kinh nghiệm mỗi người)? Nói cách khác: khi bạn sợ, cái đèn "SỢ" bật lên vì nhà máy đã lắp sẵn mạch đó, hay vì bộ chẩn đoán của <em>chính bạn</em> — học từ quá khứ của bạn — quyết định rằng hoàn cảnh này đáng sợ?</p>
+
+    <p>Câu trả lời, hóa ra, là: <strong>cả hai — và tỷ lệ của "hai" đó là điều cả thế giới đang tranh cãi.</strong> Trước khi đi sâu, hãy giữ một thứ trong đầu: các thuật ngữ ta sắp gặp — <em>bản năng, cảm xúc cơ bản, cảm xúc được dựng lên</em> — đều là những câu trả lời khác nhau cho cùng một câu hỏi: "đèn báo được lắp từ đâu?"</p>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người bước qua cây cầu này với ý nghĩ…</span>
+      <p><span class="premortem__wrong">Mỗi cảm xúc là một "mạch cứng" riêng trong não, có dấu vân tay sinh học cố định — giận là một mạch, sợ là một mạch khác.</span></p>
+      <p>Điều này sai vì hàng chục năm đo đạc — từ khuôn mặt, giọng nói đến hoạt động não — đều không tìm ra một dấu hiệu riêng, cố định, đặc trưng cho từng cảm xúc. Cùng một kiểu nhíu mày có thể đi với giận, tập trung, hay khó chịu vì đầy hơi.</p>
+      <p><span class="premortem__truth">Điều đúng là:</span> cảm xúc có nền tảng sinh học sâu — nhưng phần "cứng" đó là các nguyên liệu thô (trạng thái nền hai chiều, phản ứng cơ thể, xu hướng hành động), còn cái nhãn và ý nghĩa cụ thể thì não dựng lên theo ngữ cảnh. Hãy để ta chứng minh từng bước.</p>
+    </div>
+
+    <h2 id="ch2-exposition">Ba trạm dừng trên con đường 150 năm</h2>
+
+    <!-- Scaffold 1 -->
+    <section class="scaffold" id="ch2-exp-1">
+      <h3 class="scaffold__concept">Trạm 1 — Darwin (1872): biểu lộ cảm xúc là phổ quát</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Năm 1872, Charles Darwin xuất bản <em>The Expression of the Emotions in Man and Animals</em> — cuốn sách khoa học đầu tiên nghiên cứu cảm xúc như một hiện tượng sinh học. Luận điểm chính: biểu lộ cảm xúc trên khuôn mặt và cơ thể là <strong>kế thừa từ tổ tiên chung</strong> — chúng ta có chúng vì động vật tổ tiên của chúng ta có chúng, và chúng từng có chức năng sinh tồn.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Bối cảnh lạ lùng: Darwin viết cuốn này ngay sau khi chỉnh xong bản in của <em>The Descent of Man</em>, trong vỏn vẹn khoảng 4 tháng. Ông gửi bảng câu hỏi ra khắp thế giới cho các nhà truyền giáo và quan chức, hỏi họ quan sát thấy những biểu hiện nào ở người bản địa nơi họ ở — để kiểm tra xem có biểu lộ nào "giống nhau ở mọi giống người" hay không. Cuốn sách còn tiên phong khi in kèm ảnh chụp khuôn mặt — thứ rất tốn kém thời bấy giờ. Darwin muốn người đọc <em>tự mình nhìn</em>, không chỉ tin lời ông.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao Darwin — vốn nổi tiếng thận trọng — lại dám kết luận biểu lộ cảm xúc là phổ quát, khi bằng chứng của ông chỉ là những bức thư trả lời từ người khác?</summary>
+        <div class="scaffold__resolve">Vì với Darwin, phổ quát là điều lý thuyết tiến hóa của ông <em>tiên đoán</em>: nếu mọi người đều có chung tổ tiên, các biểu lộ kế thừa từ tổ tiên ấy phải giống nhau — giống như ngôn ngữ khác nhau nhưng nét mặt khóc cười thì không. Quan trọng hơn, nó chống lại quan điểm phân biệt chủng tộc thời đó cho rằng "giống người" khác nhau về bản chất. Với Darwin, một nụ cười phổ quát là bằng chứng về sự thống nhất của loài người.</div>
+      </details>
+    </section>
+
+    <!-- Scaffold 2 -->
+    <section class="scaffold" id="ch2-exp-2">
+      <h3 class="scaffold__concept">Trạm 2 — Ekman (1972): sáu cảm xúc cơ bản "cứng"</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Đúng một thế kỷ sau, nhà tâm lý học Paul Ekman đưa ý tưởng của Darwin thành một học thuyết đầy đủ: <strong>sáu cảm xúc cơ bản</strong> — vui, buồn, sợ, giận, ghê tởm, ngạc nhiên — là những chương trình bẩm sinh, phổ quát, gắn với biểu lộ khuôn mặt riêng cho từng loại. Theo mô hình này, khi một người Nga, một người Brazil và một người Papua cùng sợ, khuôn mặt họ co giãn các cơ theo cùng một chương trình.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Vào cuối thập niên 1960, Ekman thực hiện các nghiên cứu thực địa với người Fore ở Papua New Guinea — một cộng đồng chưa tiếp xúc với truyền thông phương Tây. Ông kể họ những câu chuyện gợi cảm xúc, chụp ảnh biểu lộ của họ, rồi đưa ảnh đó cho người phương Tây đoán — và ngược lại. Kết quả mà Ekman báo cáo: mọi người nhận diện các biểu lộ chéo văn hóa với tỷ lệ cao. Đây là nền tảng của niềm tin phổ biến "cảm xúc ai cũng đọc được trên mặt" mà hầu hết chúng ta lớn lên với nó.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu sáu cảm xúc là bẩm sinh, phổ quát và hiện trên mặt, thì tại sao chúng ta không thấy "SỢ" dán trên mặt đồng nghiệp mỗi ngày?</summary>
+        <div class="scaffold__resolve">Chính Ekman trả lời câu này bằng khái niệm <strong>luật trình diễn</strong> (display rules): mạch bẩm sinh vẫn chạy, nhưng mỗi nền văn hóa dạy ta <em>che</em> hay <em>thay đổi</em> biểu lộ ở nơi công cộng. Bạn được dạy không cười to nơi trang trọng, không lộ sợ hãi khi đàm phán. Nên biểu lộ thật bị "mã hóa" lại — và việc đọc cảm xúc từ mặt trở nên khó hơn nhiều. Đây cũng chính là kẽ hở mà thế hệ nghiên cứu tiếp theo sẽ tấn công.</div>
+      </details>
+    </section>
+
+    <!-- Scaffold 3 -->
+    <section class="scaffold" id="ch2-exp-3">
+      <h3 class="scaffold__concept">Trạm 3 — Barrett (2006–2017): cảm xúc được não dựng lên</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Nhà khoa học thần kinh Lisa Feldman Barrett đưa ra lời phản bác hệ thống nhất: khi đo khuôn mặt, giọng nói và não bộ của người thật đang trải qua cảm xúc, các biểu hiện <strong>biến thiên rất lớn</strong> — không có "dấu vân tay" cố định nào cho từng cảm xúc. Theo Barrett, não không "bật mạch có sẵn"; nó <strong>dự đoán và dựng lên</strong> cảm xúc từ hai nguyên liệu thô: tín hiệu cơ thể (đặc biệt là cảm giác nội tạng) và khái niệm bạn học được từ văn hóa.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Một tổng hợp nhiều nghiên cứu đo cử động khuôn mặt khi người ta giận: mọi người <strong>nhăn mặt theo kiểu "giận" chỉ khoảng 35% thời gian</strong> — phần còn lại họ không nhăn mặt, hoặc nhăn kiểu khác. Ngược lại, người ta cũng nhăn mặt khi tập trung, khi đầy hơi, khi cân nhắc một lựa chọn khó. Kết luận của Barrett: cử động mặt mang thông tin <em>thô</em> (dễ chịu–khó chịu, kích thích), nhưng ý nghĩa cụ thể — "người này đang giận" — do <strong>não người xem dựng lên</strong>, dựa trên ngữ cảnh và kinh nghiệm, không phải do khuôn mặt "phát ra".</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu cảm xúc không có dấu vân tay sinh học cố định, thì cảm xúc có "thật" không? Hay Barrett đang nói cảm xúc là ảo giác?</summary>
+        <div class="scaffold__resolve">Cảm xúc hoàn toàn thật — Barrett không nói chúng là ảo giác. Cô ví von: tiền cũng không có "dấu vân tay" sinh học, nhưng tiền là thật và chi phối đời sống hàng tỷ người. Cảm xúc thật vì chúng có hậu quả thật: tim bạn đập nhanh, bạn hành động, bạn kể cho ai đó nghe. Điều Barrett bác bỏ là quan niệm "mỗi cảm xúc là một bộ phận sinh học riêng, lắp sẵn như một bộ phận trong xe". Thay vào đó: một cảm xúc là <em>một lần não bộ dựng nên một bức tranh</em> từ nguyên liệu thô và ngữ cảnh — mỗi lần một chút khác.</div>
+      </details>
+    </section>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Cơ thể gửi tín hiệu thô (tim, nội tạng, căng cơ)</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Não dự đoán ý nghĩa từ ngữ cảnh + kinh nghiệm + từ vựng đã học</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Kết quả: một "cảm xúc" cụ thể được dựng lên ở đúng thời điểm đó</div>
+    </div>
+
+    <div class="feynman">Khi bạn sợ, không có cái đèn "SỢ" nào trong não bật lên cả — não bạn tự vẽ cái đèn đó từ nguyên liệu cơ thể và những gì bạn đã học.</div>
+
+    <div class="checkpoint" data-checkpoint-id="cp2">
+      <span class="checkpoint__label">🛑 Dừng lại và tự kiểm tra</span>
+      <p class="checkpoint__question">Ba trạm dừng khác nhau ở điểm nào? Viết một câu phân biệt quan điểm của Darwin, Ekman và Barrett về nguồn gốc cảm xúc.</p>
+      <textarea placeholder="Viết câu trả lời của bạn bằng lời của chính mình trước khi so sánh…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Câu trả lời mẫu</span>
+        Darwin (1872): biểu lộ cảm xúc là kế thừa từ tổ tiên chung, do đó phổ quát. Ekman (1972): sáu cảm xúc cơ bản là chương trình bẩm sinh, có biểu lộ khuôn mặt riêng, phổ quát trên toàn thế giới. Barrett (2006–nay): không có dấu vân tay sinh học cố định; não dựng lên mỗi cảm xúc từ tín hiệu cơ thể + ngữ cảnh + khái niệm học được. Tóm gọn: bẩm sinh-phổ quát (Darwin/Ekman) so với dựng lên-theo ngữ cảnh (Barrett).
+      </div>
+    </div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Lý thuyết cảm xúc được dựng lên (Theory of Constructed Emotion)</summary>
+      <p>Barrett gọi tư duy "mỗi cảm xúc là một bộ phận cố định" là <strong>tư duy bản chất luận</strong> (essentialism) — kiểu tư duy nghĩ rằng mỗi loài, mỗi thứ có một "bản chất" lý tưởng ở trung tâm. Chính Darwin, trong cuốn <em>Nguồn gốc các loài</em>, đã giúp sinh học thoát khỏi cách nghĩ đó: một loài không có "bản chất" — nó là một quần thể gồm vô số cá thể khác nhau, và sự khác biệt không phải lỗi mà là quy luật. Barrett áp dụng cùng logic vào cảm xúc: "sợ hãi" không phải một thứ ở trung tâm, mà là một <strong>quần thể các trải nghiệm khác nhau</strong> — người ta có thể sợ mà mở to mắt, nhăn mặt, cười gượng, hay thậm chí ngủ gật (một phản ứng ngất ở động vật nhỏ khi bị bắt). Não học cách gộp vô số lần đó thành một khái niệm "sợ" từ ngôn ngữ và văn hóa. Đây là lý do từ vựng cảm xúc của bạn quan trọng đến vậy — và là cầu nối thẳng tới Chương 6 về nhận diện cảm xúc.</p>
+    </details>
+
+    <h2 id="ch2-application">Ứng dụng: khi "đọc mặt" trở thành ngành công nghiệp</h2>
+
+    <p>Cuộc tranh cãi Darwin–Ekman–Barrett không phải chuyện phòng thí nghiệm. Nó có hậu quả thật, tính bằng tiền và quyền lực. Từ những năm 2000, chính phủ Hoa Kỳ đã chi hàng triệu đô la mỗi năm để huấn luyện nhân viên thực thi pháp luật và an ninh "đọc cảm xúc trên mặt" — dựa trên giả định Ekman: cảm xúc thật hiện trên mặt, người dối trá sẽ "lộ tẩy". Đồng thời, một ngành công nghiệp <strong>emotion AI</strong> mọc lên: các công ty bán phần mềm quét khuôn mặt camera để đoán cảm xúc khách hàng, ứng viên, người qua đường.</p>
+
+    <p>Barrett và nhiều nhà khoa học khác chỉ ra điểm yếu chí mạng của cả hai: nếu cử động mặt không đặc trưng cho cảm xúc (chỉ khoảng 35% khi giận là "nhăn mặt kinh điển"), thì cả chương trình huấn luyện lẫn phần mềm đều đang đo <em>chuyển động của cơ</em>, không phải <em>cảm xúc</em> — và gán cho nó một cái nhãn sai. Nếu một thuật toán kết luận "đối tượng đang tức giận" chỉ vì nhíu mày, nó có thể đang đọc nhầm một người đang tập trung, đau bụng, hay lo lắng về thị lực. Hệ quả của việc tin vào "khuôn mặt nói lên cảm xúc" có thể là những quyết định sai — trong an ninh, tuyển dụng, và sau này là đánh giá học sinh.</p>
+
+    <p>Hãy áp dụng gói 4 thành phần của Chương 1 vào bài toán này: một chiếc camera chỉ nhìn thấy <em>biểu lộ</em> — một trong bốn thành phần. Muốn nói "người này đang giận", bạn cần cả trải nghiệm chủ quan (chỉ người đó biết), cả sinh lý (cần thiết bị), cả xu hướng hành động (không quan sát được từ khuôn mặt). Đọc cảm xúc từ mặt là cố gắng kết luận trạng thái của cả hệ thống từ một góc nhỏ — và đó chính là vấn đề mà bài toán Emotion AI đang vấp phải, một vấn đề ta sẽ mang theo tới phần Extension Problem cuối bài.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật thẻ để xem đáp án">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Gợi nhớ chủ động — Câu hỏi</span>
+          <div class="flip-card__content">Vì sao một người có thể nhíu mày mà không hề tức giận? Hãy kể ít nhất hai lý do.</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Đáp án</span>
+          <div class="flip-card__content">Vì cử động mặt không đặc trưng cho cảm xúc: cùng kiểu nhíu mày đi với tập trung, đau bụng, cân nhắc khó khăn; và một cảm xúc (giận) đi với rất nhiều cử động khác nhau. Ý nghĩa được não người xem dựng lên từ ngữ cảnh, không phải do khuôn mặt phát ra.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="ch2-boundary">Ranh giới: nơi mô hình bị hiểu sai và bẻ cong</h2>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+      <p><strong>"Cảm xúc nằm trong 'bộ não cảm xúc' — hệ viền (limbic system)."</strong> Đây là cách nói cực kỳ phổ biến trong sách phổ thông: con người có một "bộ não bò sát" và một "bộ não cảm xúc" riêng, và cảm xúc phát ra từ đó. Thực tế phức tạp hơn nhiều: không có một "trung tâm cảm xúc" duy nhất; cảm xúc liên quan đến nhiều vùng và mạng lưới phân tán khắp não, bao gồm cả vùng thường gọi là "vỏ não lý trí". Việc bám vào "hệ viền" khiến người ta lầm rằng cảm xúc và lý trí là hai tầng tách rời — đúng thứ nhị nguyên mà Chương 1 đã bác bỏ.</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Trường hợp biên: văn hóa định hình cảm xúc</span>
+      <p>Nếu mọi cảm xúc đều là "dựng lên từ khái niệm", thì khái niệm thiếu sẽ kéo theo trải nghiệm thiếu. Trong văn hóa Melanesia, cái khuôn mặt "mở to mắt há hốc" mà phương Tây đọc là <em>sợ hãi</em> lại được đọc là <em>hiếu chiến</em>. Nhiều nền văn hóa có những cảm xúc không có từ tương đương trong tiếng Việt hay tiếng Anh: người Tagalog có <em>gigil</em> — cơn thôi thúc không kìm được muốn véo/bóp thứ gì đó cực kỳ dễ thương; người Ilongot có <em>liget</em> — sự phấn khích hiếu chiến tràn đầy. Nếu cảm xúc chỉ là "cứng", những từ này lẽ ra không nên tồn tại. Sự tồn tại của chúng ủng hộ mạnh mẽ quan điểm Barrett: từ vựng văn hóa góp phần dựng nên trải nghiệm.</p>
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán trước khi sang chương 3</span>
+      <p>Chương 2 kết thúc ở một ngã rẽ: nếu cảm xúc không phải "sáu mạch cứng" thì <strong>có bao nhiêu loại cảm xúc?</strong> Hãy ghi lại phỏng đoán: bạn nghĩ con người có bao nhiêu cảm xúc phân biệt được — 6, 20, 50, hay hơn 100? Chương 3 sẽ bản đồ hóa câu trả lời, và bạn sẽ ngạc nhiên về mức độ đa dạng của nó.</p>
+    </div>
+
+    <h2 id="ch2-synthesis">Tổng kết chương 2</h2>
+
+    <p>150 năm nghiên cứu đã đi từ một câu hỏi đơn giản (biểu lộ có phổ quát không) đến một cuộc đối đầu lớn. Darwin và Ekman đúng ở chỗ cảm xúc có gốc rễ sinh học sâu, phổ quát ở cấp độ <em>nguyên liệu</em>. Barrett đúng ở chỗ phần "cứng" đó không đủ để tạo nên một cảm xúc cụ thể — cái nhãn và ý nghĩa phải được não dựng lên từ ngữ cảnh, kinh nghiệm và từ vựng bạn học được. Hệ quả thực tế to lớn: đừng tin rằng "nhìn mặt là biết người ta nghĩ gì" — và đừng tin phần mềm nào tuyên bố đọc được cảm xúc từ khuôn mặt. Cảm xúc là một bức tranh, không phải một con tem.</p>
+
+    <blockquote>
+      <strong>Nếu chỉ nhớ một điều từ chương này:</strong> phần "cứng" của cảm xúc là nguyên liệu thô — còn bức tranh hoàn chỉnh do não mỗi người tự vẽ, và ngôn ngữ của bạn là một phần của cây cọ.
+    </blockquote>
+
+    <p><em>Đi tiếp:</em> Nếu cảm xúc không phải "6 loại cứng", vậy chúng ta gọi tên và sắp xếp chúng thế nào? Chương 3 mở bản đồ các loại cảm xúc — và giới thiệu một kỹ năng sẽ đổi đời bạn: phân biệt cảm xúc một cách tinh tế.</p>
+<!-- =========================================================
+     CHƯƠNG 3 — Bản đồ các loại cảm xúc
+     ========================================================= -->
+    <h2 id="ch3-baseline">Chương 3 · Bản đồ các loại cảm xúc: 6 loại hay 27 loại — hay vô hạn?</h2>
+
+    <p><em>Chuyển tiếp từ chương 2:</em> Chương 2 kết thúc ở một ngã rẽ: nếu cảm xúc không phải "sáu mạch cứng" do Ekman lắp sẵn, mà là những bức tranh não dựng lên từ nguyên liệu thô và ngữ cảnh, thì câu hỏi "có bao nhiêu loại cảm xúc?" đột nhiên trở nên thú vị. Nếu nhà máy không lắp "sáu loại đèn", thì bảng đồng hồ của con người có bao nhiêu loại đèn?</p>
+
+    <p><strong>Nền tảng.</strong> Hầu hết chúng ta đều được dạy, một cách nào đó, rằng có "những cảm xúc cơ bản" — thường là sáu. Nhưng hãy thử một bài kiểm tra nhanh bằng kinh nghiệm của chính bạn: cảm giác khi nghe tin người thân ốm nặng và cảm giác khi bị chê bai trước đám đông — bạn có gọi chung cả hai là "buồn" không? Chắc chắn không; chúng <em>cảm giác khác nhau</em>. Chương này trả lời ba câu hỏi: các nhà khoa học đã sắp xếp cảm xúc như thế nào (bản đồ), vì sao bản đồ đó quan trọng, và vì sao số lượng cảm xúc bạn <em>tự mình phân biệt được</em> lại là thước đo sức khỏe tinh thần của bạn.</p>
+
+    <h2 id="ch3-bridge">Cầu nối: bản đồ GPS thay cho danh sách đèn</h2>
+
+    <p>Quay lại Mô hình Bảng Đồng Hồ — giờ thay đổi một chi tiết. Thay vì một danh sách đèn rời rạc ("đèn Xăng", "đèn Dầu", "đèn Nhiệt độ"), hãy nghĩ về bảng đồng hồ như một <strong>bản đồ GPS hai chiều</strong>. Mọi trạng thái của xe đều là một điểm trên bản đồ: trục ngang là "điều kiện đường" (thuận lợi ở bên này, nguy hiểm ở bên kia), trục dọc là "tốc độ đang chạy" (chậm rãi ở dưới, gấp gáp ở trên). Một chiếc xe đang lao nhanh xuống đường trơn — đó là "điểm" rất cụ thể trên bản đồ, nhưng không có một cái đèn riêng nào tên là "LAO NHANH ĐƯỜNG TRƠN" cả.</p>
+
+    <p>Bản đồ hai chiều ấy tương ứng chính xác với <strong>cảm xúc nền (affect)</strong> mà Chương 1 đã giới thiệu: trục ngang là <strong>dễ chịu–khó chịu</strong> (valence), trục dọc là <strong>kích thích cao–thấp</strong> (arousal). Cuộc tranh luận "bao nhiêu loại cảm xúc" hóa ra là cuộc tranh luận giữa hai cách vẽ: một bên vẽ <em>những điểm rời rạc</em> trên bản đồ (mỗi điểm là một "cảm xúc cơ bản"), một bên vẽ <em>cả mặt phẳng liên tục</em> (vô số điểm, vô số sắc thái).</p>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người bước qua cây cầu này với ý nghĩ…</span>
+      <p><span class="premortem__wrong">Cảm xúc chia làm hai nhóm: "tích cực" (tốt) và "tiêu cực" (xấu) — và mục tiêu đời người là tối đa cái tốt, loại bỏ cái xấu.</span></p>
+      <p>Điều này sai vì valence (dễ chịu hay không) không phải là giá trị (tốt hay xấu). Sợ hãi khó chịu nhưng nó từng cứu sống tổ tiên bạn; sự phấn khích dễ chịu nhưng có thể dẫn bạn vào rủi ro. "Tiêu cực" là một nhãn đánh giá, không phải một loại cảm xúc.</p>
+      <p><span class="premortem__truth">Điều đúng là:</span> mọi cảm xúc đều có chức năng và đều "đúng" trong ngữ cảnh của nó. Bản đồ hai chiều giúp ta thoát khỏi lối nghĩ "tích cực/tiêu cực" — và đó là lối thoát đầu tiên về phía sức khỏe tinh thần.</p>
+    </div>
+
+    <h2 id="ch3-exposition">Ba cách vẽ bản đồ cảm xúc</h2>
+
+    <!-- Scaffold 1 -->
+    <section class="scaffold" id="ch3-exp-1">
+      <h3 class="scaffold__concept">Cách 1 — Mô hình rời rạc: những "điểm" cơ bản</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Mô hình của Ekman (Chương 2) là mô hình rời rạc: sáu cảm xúc cơ bản, mỗi loại một điểm riêng trên bản đồ, mỗi loại một biểu lộ riêng. Một phiên bản phong phú hơn là <strong>bánh xe cảm xúc của Robert Plutchik</strong>: tám cảm xúc gốc (vui, buồn, giận, sợ, ghê tởm, ngạc nhiên, chấp nhận, mong đợi) xếp quanh một vòng tròn, và các cảm xúc phức hợp là "pha trộn" của các cặp gốc — ví dụ yêu = vui + chấp nhận.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Kiểu tư duy rời rạc rất quen thuộc với chúng ta — nó in trong biểu tượng cảm xúc (emoji): 😀 😢 😠 😨 🤢 😲 — đúng sáu cái, mỗi cái một mặt. Đó là lý do "sáu cảm xúc" ăn sâu đến vậy: nó được in lên màn hình điện thoại của bạn mỗi ngày.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Theo mô hình rời rạc, một cảm xúc như "ghen" — mô hình này giải thích nó bằng cách nào?</summary>
+        <div class="scaffold__resolve">Bằng pha trộn: ghen ≈ giận + sợ (mất điều mình có) + buồn (mất mát). Mô hình rời rạc không phủ nhận sự đa dạng — nó chỉ khẳng định đa dạng ấy là tổ hợp của vài nguyên tố gốc, như màu sắc là tổ hợp của vài màu cơ bản. Vấn đề nằm ở chỗ: liệu có thật sự tồn tại các "màu cơ bản" tâm lý học, hay đó chỉ là một cách vẽ tiện lợi?</div>
+      </details>
+    </section>
+
+    <!-- Scaffold 2 -->
+    <section class="scaffold" id="ch3-exp-2">
+      <h3 class="scaffold__concept">Cách 2 — Mô hình hai chiều: mặt phẳng liên tục</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Mô hình do James Russell đề xuất — <strong>mô hình hai chiều (circumplex)</strong> — vẽ cảm xúc là <em>vùng</em> trên mặt phẳng valence × arousal, không phải điểm rời rạc. "Phấn khích" = dễ chịu + kích thích cao; "thư giãn" = dễ chịu + kích thích thấp; "căng thẳng" = khó chịu + kích thích cao; "uể oải" = khó chịu + kích thích thấp. Giữa các vùng là vô số điểm trung gian — cảm xúc là một <strong>phổ liên tục</strong>, không phải danh sách.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Hãy đặt "hồi hộp trước buổi thuyết trình" và "phấn khích trước chuyến du lịch" lên cùng một mặt phẳng. Cả hai đều kích thích cao. Chúng khác nhau ở valence — một cái hơi khó chịu, một cái dễ chịu. Nhưng hãy để ý: <em>cơ thể bạn gần như không phân biệt được hai cái đó</em> — tim đập nhanh, tay lạnh, dạ dày cồn cào. Cùng một trạng thái cơ thể, hai cái nhãn khác nhau. Đây chính là bằng chứng sống cho Chương 2: não dựng nhãn từ ngữ cảnh.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu hai cảm xúc có thể có cùng tọa độ cơ thể (cùng kích thích, cùng độ dễ chịu) nhưng nhãn khác nhau, thì điều gì quyết định cái nhãn cuối cùng?</summary>
+        <div class="scaffold__resolve">Ngữ cảnh và kinh nghiệm. "Căng thẳng" hay "phấn khích" trước buổi thuyết trình không khác nhau ở cơ thể — khác nhau ở cách bạn đọc tình huống: sắp bị đánh giá (đe dọa) hay sắp được khen (cơ hội). Những người giỏi "đổi nhãn" căng thẳng thành phấn khích đang tận dụng đúng cơ chế này — và Chương 6 sẽ cho thấy đây là một kỹ năng học được.</div>
+      </details>
+    </section>
+
+    <!-- Scaffold 3 -->
+    <section class="scaffold" id="ch3-exp-3">
+      <h3 class="scaffold__concept">Cách 3 — Vượt ra ngoài "6": 27 loại và vô số sắc thái</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Năm 2017, nhóm của Alan Cowen và Dacher Keltner (Đại học California, Berkeley) thực hiện một nghiên cứu lớn: cho hơn 800 người xem hàng nghìn đoạn video ngắn và hỏi họ xếp mỗi đoạn vào cảm xúc nào, trên một thang liên tục. Kết quả thống kê cho thấy người ta phân biệt được ít nhất <strong>27 loại cảm xúc riêng biệt</strong> — và các cảm xúc "cơ bản" như sợ, buồn không còn là những khối rời rạc: sợ tách thành <em>kinh hoàng, lo âu, sợ hãi sinh tồn…</em>, buồn tách thành <em>cô đơn, thất vọng, đau buồn, mất mát…</em>. Con số 27 chỉ là "ít nhất" — nó bị chặn bởi giới hạn của danh sách từ trong thí nghiệm, không phải giới hạn của cảm xúc con người.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Tiếng Anh có hơn 100 từ chỉ các trạng thái cảm xúc phân biệt được. Còn các nền văn hóa khác có những cảm xúc "không dịch nổi": <em>gigil</em> (Tagalog) — cơn thôi thúc muốn véo vật gì cực dễ thương; <em>liget</em> (Ilongot, Philippines) — phấn khích hiếu chiến tràn trề; <em>sabor</em> (tiếng Đức) — sự tận hưởng chán ghét của riêng mình. Mỗi từ không dịch được như vậy là một "điểm" trên bản đồ mà nền văn hóa của bạn có thể không có — nghĩa là bản đồ đầy đủ lớn hơn nhiều so với từ vựng của riêng bạn.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu một nền văn hóa không có từ "tội lỗi", người lớn lên ở đó có cảm thấy tội lỗi không?</summary>
+        <div class="scaffold__resolve">Đây là câu hỏi khiến cả giới nghiên cứu chia rẽ. Câu trả lời tinh tế: họ vẫn có <em>nguyên liệu thô</em> (khó chịu, kích thích cao, muốn sửa sai), nhưng thứ được "dựng lên" có thể khác — thiếu khái niệm "tội lỗi", não họ có thể dựng nên "xấu hổ" hay "vi phạm tập thể" thay vì một cảm giác cá nhân về lương tâm. Từ vựng không tạo ra nguyên liệu, nhưng nó định hình <em>bức tranh cuối cùng</em>. Đây là lý do Chương 6 — kỹ năng nhận diện cảm xúc — bắt đầu từ việc <strong>mở rộng từ vựng cảm xúc của bạn</strong>.</div>
+      </details>
+    </section>
+
+    <div class="feynman">Cảm xúc không phải 6 cái nút trên máy; nó giống một bản đồ có vô số địa danh — và bạn càng biết nhiều tên địa danh, bạn càng định vị được mình đang đứng ở đâu.</div>
+
+    <div class="checkpoint" data-checkpoint-id="cp3">
+      <span class="checkpoint__label">🛑 Dừng lại và tự kiểm tra</span>
+      <p class="checkpoint__question">Lấy một cảm xúc "tiêu cực" bạn thường trải qua (ví dụ: bực bội, lo lắng, buồn). Đặt nó lên bản đồ hai chiều: valence của nó như thế nào, arousal của nó như thế nào? Rồi thử chia nó thành 2–3 cảm xúc mịn hơn.</p>
+      <textarea placeholder="Viết câu trả lời của bạn bằng lời của chính mình trước khi so sánh…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Câu trả lời mẫu</span>
+        Ví dụ "lo lắng trước kỳ thi": valence hơi âm (khó chịu), arousal cao (bồn chồn, tim đập nhanh). Chia mịn hơn: có thể là (a) sợ thất bại, (b) cô đơn khi phải tự ôn một mình, (c) cáu vì không tập trung được. Ba cái này dù cùng "lo lắng" nhưng cần ba cách xử lý khác nhau — và đó chính là điểm mấu chốt của Chương 6.
+      </div>
+    </div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Làm sao biết được "27 loại" — và vì sao nó quan trọng</summary>
+      <p>Nghiên cứu của Cowen &amp; Keltner không hỏi người tham gia "bạn thấy cảm xúc nào?" với một danh sách cố định (cách làm đó sẽ <em>ép</em> câu trả lời vào khung có sẵn). Thay vào đó, họ để người xem đánh giá mỗi video trên hàng chục thang cảm xúc cùng lúc, rồi dùng phương pháp thống kê để tìm xem người ta <em>thực sự</em> phân biệt bao nhiêu cụm. Kết quả "27" là con số các cụm mà người xem nhất quán tách biệt nhau. Điểm quan trọng về mặt khái niệm: con số này nói lên rằng <strong>sự phong phú của bản đồ cảm xúc phụ thuộc vào cách đo</strong> — và vì cách đo phụ thuộc vào ngôn ngữ, bản đồ của mỗi nền văn hóa có thể hơi khác nhau. Điều này hợp nhất hoàn toàn với Chương 2: nếu cảm xúc được dựng lên từ khái niệm, thì độ chi tiết của bản đồ phụ thuộc vào độ chi tiết của khái niệm bạn có.</p>
+    </details>
+
+    <h2 id="ch3-application">Ứng dụng: phân biệt ba "người anh em" hay bị trộn</h2>
+
+    <p>Hãy thử một bài toán thực tế mà ai cũng từng vướng. Bạn bị từ chối một cơ hội quan trọng — mất một dự án, trượt một vị trí. Ba ngày sau, bạn vẫn thấy "không ổn". Nếu bạn gộp tất cả vào một từ "buồn", bạn sẽ xử lý sai — vì "buồn" thật ra là ba thứ khác nhau, ở ba vị trí khác nhau trên bản đồ:</p>
+
+    <ul>
+      <li><strong>Thất vọng</strong> — bạn kỳ vọng đúng điều đó sẽ xảy ra, và nó không xảy ra. Valence âm, arousal vừa. Giải pháp hiệu quả: điều chỉnh kỳ vọng và thử lại với chiến lược khác.</li>
+      <li><strong>Hối hận</strong> — bạn tin mình đáng lẽ đã làm khác đi. Valence âm, arousal cao, kèm một vòng lặp "giá như". Giải pháp: nhìn nhận điều đã biết tại thời điểm quyết định, không phán xét bằng thông tin có sau.</li>
+      <li><strong>Buồn vì mất mát</strong> — một cái gì đó trong bản thân bạn (một phần hình ảnh bản thân, một cơ hội không lặp lại) thật sự mất đi. Valence âm, arousal thấp, nặng và chậm. Giải pháp: cho phép mình buồn — đây là lúc đèn báo đang làm đúng việc của nó.</li>
+    </ul>
+
+    <p>Ba cảm xúc này thường gộp chung thành "khó chịu" hoặc "buồn". Gộp chung thì bạn sẽ bơi trong một cảm xúc vô danh mà không biết xử lý gì. Tách đúng thì mỗi cái có một đáp án riêng. Đây chính là <strong>sự tinh tế trong phân biệt cảm xúc</strong> — thuật ngữ khoa học là <strong>emotional granularity</strong> — và nó sẽ trở thành trái tim của Chương 6. Bản đồ hai chiều không chỉ là lý thuyết: nó là công cụ định vị bạn đang đứng ở đâu, để bạn biết đi hướng nào.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật thẻ để xem đáp án">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Gợi nhớ chủ động — Câu hỏi</span>
+          <div class="flip-card__content">"Hồi hộp trước buổi thuyết trình" và "phấn khích trước chuyến đi" giống nhau ở điểm nào trên bản đồ, và khác nhau ở điểm nào?</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Đáp án</span>
+          <div class="flip-card__content">Giống: cùng arousal cao (tim đập nhanh, bồn chồn). Khác: valence — hồi hộp hơi khó chịu, phấn khích dễ chịu. Và vì cơ thể không phân biệt hai cái đó, cái nhãn cuối cùng do ngữ cảnh và cách bạn "đọc" tình huống quyết định.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="ch3-boundary">Ranh giới: những cạm bẫy của bản đồ</h2>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+      <p><strong>"Mục tiêu là luôn ở vùng tích cực của bản đồ."</strong> Sai theo hai cách. Một: "dễ chịu" không đồng nghĩa "tốt" — sự an toàn giả tạo (tránh né mọi rủi ro) nằm ở vùng dễ chịu nhưng hủy hoại cuộc đời. Hai: "khó chịu" không đồng nghĩa "xấu" — tức giận trước bất công, sợ hãi trước nguy hiểm thật, đều là những đèn báo cứu mạng. Cố "luôn tích cực" (toxic positivity) là cố tắt toàn bộ đèn báo của xe — rất nguy hiểm.</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Trường hợp biên</span>
+      <p><strong>Ngạc nhiên không có valence cố định.</strong> Cùng một khuôn mặt "há hốc", một người có thể ngạc nhiên vì tin tốt (valence dương) hay tin kinh khủng (valence âm) — bản thân "ngạc nhiên" chỉ là arousal cao với nhãn chưa định. Đó là lý do trong một số mô hình, ngạc nhiên bị xếp ra ngoài nhóm cảm xúc "có tính chất". Một trường hợp biên nữa: <strong>các cảm xúc chồng lấn</strong> — "nhẹ nhõm" và "buồn" có thể cùng tồn tại khi ai đó ra đi sau cơn bệnh dài. Bản đồ hai chiều không bắt bạn phải đứng ở đúng một tọa độ — bạn có thể đang ở một vùng mờ giữa nhiều cảm xúc.</p>
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán trước khi sang chương 4</span>
+      <p>Chương 3 đã cho bạn bản đồ. Giờ hãy tự hỏi trước khi đọc tiếp: <strong>điều gì <em>khởi động</em> một cảm xúc?</strong> Cùng một sự kiện (bị sếp nói nặng) mà hai người phản ứng hoàn toàn khác nhau — người này giận dữ, người kia chỉ buồn. Bạn nghĩ cái gì đứng giữa sự kiện và cảm xúc? Chương 4 sẽ mở nắp cỗ máy.</p>
+    </div>
+
+    <h2 id="ch3-synthesis">Tổng kết chương 3</h2>
+
+    <p>Bản đồ cảm xúc có thể được vẽ theo ba cách: những điểm rời rạc (Ekman, Plutchik), một mặt phẳng liên tục hai chiều (valence × arousal), hoặc một bản đồ phong phú với ít nhất 27 loại (Cowen &amp; Keltner) và vô số sắc thái theo từng nền văn hóa. Ba cách vẽ không mâu thuẫn nhau — chúng phục vụ ba mục đích. Nhưng cho việc nhận diện cảm xúc của chính mình, cách vẽ hữu ích nhất là cách vẽ <em>chi tiết nhất</em>: càng nhiều nhãn, bạn càng định vị được mình, càng biết phải làm gì. "Buồn" là một địa chỉ quá rộng; "thất vọng", "hối hận", "mất mát" là những địa chỉ hành động được.</p>
+
+    <blockquote>
+      <strong>Nếu chỉ nhớ một điều từ chương này:</strong> bản đồ cảm xúc của bạn chỉ chi tiết đến mức từ vựng cảm xúc của bạn — hãy bắt đầu xây vốn từ đó ngay từ hôm nay.
+    </blockquote>
+
+    <p><em>Đi tiếp:</em> Bạn đã biết cảm xúc có hình dạng gì (Chương 1), nó đến từ đâu (Chương 2) và có những loại nào (Chương 3). Giờ đến câu hỏi vận hành: <strong>điều gì thật sự cai quản cảm xúc — và làm sao ta có thể can thiệp vào nó?</strong> Chương 4 mở nắp cỗ máy.</p>
+<!-- =========================================================
+     CHƯƠNG 4 — Cỗ máy sinh ra cảm xúc
+     ========================================================= -->
+    <h2 id="ch4-baseline">Chương 4 · Cỗ máy sinh ra cảm xúc: ai cai quản, và can thiệp được không?</h2>
+
+    <p><em>Chuyển tiếp từ chương 3:</em> Chương 3 đã cho ta bản đồ các loại cảm xúc. Nhưng một bản đồ chỉ cho biết <em>nơi chốn</em>, không cho biết <em>điều gì đẩy chiếc xe tới đó</em>. Cùng một sự kiện — bị sếp nói nặng — mà hai người phản ứng hoàn toàn khác nhau: người này giận dữ, người kia chỉ buồn, người thứ ba hầu như không lay chuyển. Điều gì đứng giữa sự kiện và cảm xúc?</p>
+
+    <p><strong>Nền tảng.</strong> Cảm xúc không tự nhiên sinh ra như một sự kiện ngẫu nhiên. Chúng là <strong>đầu ra của một cỗ máy</strong> — và mọi cỗ máy đều có thể được hiểu, dự đoán, và ở một mức độ nhất định, điều khiển. Tin tốt của chương này: vì cỗ máy có nhiều công đoạn, nó có nhiều điểm can thiệp. Bạn không cần "kìm nén" cảm xúc (một chiến lược thất bại, như ta sẽ thấy) — bạn có thể can thiệp vào sớm hơn, ở những công đoạn mượt mà hơn. Câu hỏi của chương này là: <strong>cỗ máy gồm những công đoạn nào, và mỗi công đoạn đó cai quản cái gì?</strong></p>
+
+    <h2 id="ch4-bridge">Cầu nối: bộ chẩn đoán bên trong xe</h2>
+
+    <p>Quay lại Mô hình Bảng Đồng Hồ — giờ hãy nhìn vào phần chưa nói: <strong>bộ chẩn đoán điện tử (ECU)</strong> nằm bên trong xe. Khi xe đi vào một khúc cua trơn, ECU không lập tức bật đèn cảnh báo. Nó làm một chuỗi việc: nhận tín hiệu từ cảm biến (trượt bánh), đối chiếu với bản đồ dữ liệu đã lưu (khúc cua này nguy hiểm thế nào, lốp còn tốt không), rồi mới quyết định — bật đèn, giảm công suất, hay chỉ ghi nhận thôi.</p>
+
+    <p>Công đoạn giữa "nhận tín hiệu" và "bật đèn" ấy chính là điều Chương 4 quan tâm. Trong cơ thể bạn, công đoạn đó có một cái tên: <strong>đánh giá</strong> (appraisal) — não quyết định sự kiện này <em>có ý nghĩa gì với tôi</em> trước khi quyết định bật đèn nào. Và vì bộ chẩn đoán có thể được hiệu chỉnh (bảo dưỡng, cập nhật phần mềm, cài lại ngưỡng), cỗ máy cảm xúc không phải thứ bạn chịu đựng một cách bị động.</p>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người bước qua cây cầu này với ý nghĩ…</span>
+      <p><span class="premortem__wrong">Cách duy nhất để xử lý cảm xúc mạnh là "kìm nén" hoặc "trút ra" — nhịn lại, hoặc xả cho đã.</span></p>
+      <p>Điều này sai vì cả hai đều phản tác dụng về lâu dài: kìm nén không làm đèn tắt (nó chỉ giấu đèn đi, và hệ thống căng thẳng vẫn chạy), còn trút ra theo kiểu "xả giận" lại luyện cho bộ chẩn đoán một thói quen bật đèn dễ dàng hơn.</p>
+      <p><span class="premortem__truth">Điều đúng là:</span> cỗ máy có nhiều công đoạn, và có những công đoạn sớm — nơi can thiệp hiệu quả mà không cần kìm nén hay trút ra. Chương này chỉ cho bạn những công đoạn đó.</p>
+    </div>
+
+    <h2 id="ch4-exposition">Ba công đoạn của cỗ máy</h2>
+
+    <!-- Scaffold 1 -->
+    <section class="scaffold" id="ch4-exp-1">
+      <h3 class="scaffold__concept">Công đoạn 1 — Đánh giá: sự kiện không quyết định, ý nghĩa mới quyết định</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Nhà tâm lý học Richard Lazarus nêu luận điểm đơn giản mà sâu sắc: bạn không phản ứng với <strong>sự kiện</strong>, bạn phản ứng với <strong>ý nghĩa bạn gán cho sự kiện</strong>. Công đoạn gán ý nghĩa này gọi là <strong>đánh giá</strong> (appraisal) — gồm những câu hỏi não đặt gần như tức thời: Chuyện này có liên quan tôi không? Liên quan theo hướng tốt hay xấu? Tôi có khả năng đối phó không?</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Cùng một cơn mưa. Nếu bạn đang đi bộ về nhà không ô — "khó chịu" (valence âm, arousal vừa). Nếu bạn là nông dân đang khát nước cho ruộng — "mừng quá" (valence dương). Nếu bạn sắp thi chạy ngoài trời — "lo" (valence âm, arousal cao). Cơn mưa giống nhau; bộ đánh giá khác nhau; cảm xúc khác nhau. Đây chính là lý do cùng một sự kiện tạo ra những cảm xúc hoàn toàn khác nhau ở hai người.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu cảm xúc do đánh giá quyết định, vậy ai "đánh giá" nhanh hơn — ý thức của bạn hay bộ phận vô thức? Và điều đó có nghĩa gì?</summary>
+        <div class="scaffold__resolve">Nhanh hơn nhiều so với ý thức. Đánh giá chạy trong phần nghìn giây, dựa trên kinh nghiệm cũ và thiên kiến của bạn — trước khi bạn kịp "nghĩ". Điều đó có nghĩa: rất nhiều đánh giá là tự động và có thể <em>sai</em> (do quá khứ cũ, do mệt mỏi, do thành kiến). Nhưng đây cũng là tin vui: đánh giá có thể được làm chậm lại, xem xét lại, và sửa — đây là một trong những điểm can thiệp mạnh nhất của cỗ máy (ta sẽ gặp nó ở tên gọi "đánh giá lại" bên dưới).</div>
+      </details>
+    </section>
+
+    <!-- Scaffold 2 -->
+    <section class="scaffold" id="ch4-exp-2">
+      <h3 class="scaffold__concept">Công đoạn 2 — Vòng não–cơ thể: tín hiệu nội tạng nuôi cảm xúc</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Năm 1884, William James đảo ngược trật tự "bình thường": ông cho rằng <em>chúng ta buồn vì khóc, giận vì đấm</em> — tức cảm giác cảm xúc là <strong>não đọc phản hồi từ cơ thể</strong>, không phải cơ thể tuân theo cảm xúc. Phiên bản hiện đại gọi là <strong>interoception</strong> — khả năng não cảm nhận trạng thái bên trong cơ thể (nhịp tim, dạ dày, thở, căng cơ). Theo quan điểm này, đánh giá (Công đoạn 1) và tín hiệu cơ thể (Công đoạn 2) gặp nhau ở một điểm, và não dựng nhãn cảm xúc từ chỗ gặp nhau đó.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Thí nghiệm kinh điển của Schachter và Singer (1962): họ tiêm cho người tham gia một chất kích thích (adrenaline) làm tim đập nhanh, rồi đặt họ vào một hoàn cảnh — một người đồng hành giả vờ hưng phấn hoặc giả vờ giận dữ. Những người được tiêm chất kích thích nhưng <em>không biết</em> mình bị tiêm thường "bắt" cảm xúc từ hoàn cảnh: họ cảm thấy phấn khích trong phòng hưng phấn, giận dữ trong phòng kích động. Cùng một trạng thái cơ thể (tim đập nhanh), hai nhãn khác nhau — tùy hoàn cảnh não "đọc" vào.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Bạn vừa chạy lên 5 tầng cầu thang: tim đập dữ dội, thở gấp. Bạn có "lo lắng" không? Nếu ngay lúc đó điện thoại reo và là tin dữ, điều gì xảy ra?</summary>
+        <div class="scaffold__resolve">Sau khi chạy, bạn không lo lắng — vì bộ đánh giá biết rõ nguyên nhân (vận động). Nhưng nếu tin dữ ập đến ngay lúc tim đang đập thình thịch, cơ thể đã "dựng sẵn" một nền kích thích cao, và não dễ dán nhãn "hoảng loạn" lên đó — cảm xúc mạnh hơn hẳn nếu bạn nhận tin lúc nghỉ ngơi. Điều này giải thích vì sao mệt mỏi, đói, thiếu ngủ làm bạn "cảm xúc hơn": nền sinh lý đã ở mức cao, chỉ chờ một cái cớ để bật đèn.</div>
+      </details>
+    </section>
+
+    <!-- Scaffold 3 -->
+    <section class="scaffold" id="ch4-exp-3">
+      <h3 class="scaffold__concept">Công đoạn 3 — Điều chỉnh: năm điểm can thiệp của Gross</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Nhà nghiên cứu James Gross tổng hợp toàn bộ dòng đời của một cảm xúc thành <strong>mô hình quá trình</strong>: từ tình huống, đến cách bạn chú ý, đến cách bạn nghĩ về nó, đến phản ứng cuối cùng. Tại mỗi công đoạn, bạn có một điểm can thiệp: (1) <strong>chọn tình huống</strong> — tránh bớt thứ đã biết là gây cảm xúc phá hoại; (2) <strong>sửa đổi tình huống</strong> — thay đổi ngữ cảnh ngay tại chỗ; (3) <strong>điều hướng chú ý</strong> — đưa sự chú ý đi chỗ khác; (4) <strong>đánh giá lại</strong> (reappraisal) — thay đổi ý nghĩa bạn gán cho sự kiện; (5) <strong>điều chỉnh phản ứng</strong> — kìm nén hoặc thay đổi biểu lộ và hành vi sau khi cảm xúc đã bùng lên.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Bạn biết mình dễ nổi cáu khi đói. Áp dụng mô hình Gross: (1) chọn tình huống — không họp quan trọng lúc chiều muộn khi chưa ăn; (2) sửa đổi — mang theo đồ ăn nhẹ vào phòng họp; (3) chú ý — khi thấy bực, rời mắt khỏi màn hình 30 giây; (4) đánh giá lại — "sếp không phê bình cá nhân tôi, sếp đang sửa bản thảo gấp"; (5) phản ứng — nếu đã lỡ nóng, giữ giọng điềm tĩnh và xin lùi cuộc thảo luận. Để ý: các điểm (1)–(4) xảy ra <em>trước khi</em> cảm xúc bùng; điểm (5) là tuyến phòng thủ cuối cùng — và là tuyến yếu nhất.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao điểm can thiệp (5) — kìm nén phản ứng — lại là tuyến yếu nhất, dù nó là cái mọi người thường dùng nhất?</summary>
+        <div class="scaffold__resolve">Vì nó xảy ra <em>sau khi</em> gói cảm xúc đã chạy: tim đã đập nhanh, hormone đã tiết, thôi thúc đã dâng lên — bạn chỉ còn cách chặn phần nổi (biểu lộ, hành vi). Chặn như vậy tốn sức, làm tăng căng thẳng sinh lý, và không giải quyết được bộ đánh giá — nên lần sau đèn lại bật như cũ, thậm chí dễ hơn. Trong khi đó, đánh giá lại (4) tác động vào chính bộ chẩn đoán: nó không chỉ làm cảm xúc hiện tại nhẹ đi mà còn "cài lại" cách bạn đọc tình huống tương tự ở tương lai.</div>
+      </details>
+    </section>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">Trước</span>Chọn &amp; sửa tình huống · Điều hướng chú ý</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">Trong</span>Đánh giá lại ý nghĩa của sự kiện</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">Sau</span>Điều chỉnh phản ứng (kìm nén = chặn ở đây)</div>
+    </div>
+
+    <div class="feynman">Đừng đợi đèn đã bật mới lo tắt nó — hãy sửa cái bộ chẩn đoán đang quyết định bật đèn.</div>
+
+    <div class="checkpoint" data-checkpoint-id="cp4">
+      <span class="checkpoint__label">🛑 Dừng lại và tự kiểm tra</span>
+      <p class="checkpoint__question">Chọn một tình huống dễ làm bạn nổi nóng (hoặc lo lắng) trong tuần này. Viết ra ít nhất 3 điểm can thiệp từ mô hình Gross, sắp theo thứ tự "trước–trong–sau".</p>
+      <textarea placeholder="Viết câu trả lời của bạn bằng lời của chính mình trước khi so sánh…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Câu trả lời mẫu</span>
+        Ví dụ "dễ cáu với con vào buổi tối": Trước — (1) sắp xếp để không làm việc quá giờ, (2) ăn nhẹ trước khi về. Trong — (3) khi thấy bực, hít thở và nhìn con 10 giây trước khi nói, (4) tự nhủ "con không chống đối tôi, con đang mệt". Sau — (5) nếu đã lỡ nóng, ngồi xuống nói lời xin lỗi và lùi cuộc trò chuyện. Nếu bạn đủ 3 điểm trở lên ở đúng vị trí "trước–trong–sau", bạn đã hiểu cấu trúc cỗ máy.
+      </div>
+    </div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Đánh giá lại thắng kìm nén — bằng số liệu</summary>
+      <p>Trong các nghiên cứu về điều chỉnh cảm xúc, hai chiến lược thường được so sánh trực tiếp: <strong>đánh giá lại</strong> (đổi ý nghĩa) và <strong>kìm nén</strong> (chặn biểu lộ). Kết quả lặp đi lặp lại: đánh giá lại giảm cả trải nghiệm lẫn phản ứng sinh lý của cảm xúc tiêu cực, còn kìm nén chỉ giảm biểu lộ ra ngoài — trong khi trải nghiệm và tim mạch vẫn nguyên, thậm chí căng thẳng tăng. Về dài hạn, người hay dùng kìm nén báo cáo sức khỏe tâm thần kém hơn và các mối quan hệ khó khăn hơn. Lưu ý một điều quan trọng: "kìm nén" ở đây là <em>kìm nén biểu lộ</em> — chặn mặt, chặn hành vi — khác hoàn toàn với việc chậm lại, quan sát và đặt tên cảm xúc (một chiến lược <em>tốt</em> mà Chương 6 sẽ dạy). Đừng đánh đồng hai thứ đó.</p>
+    </details>
+
+    <h2 id="ch4-application">Ứng dụng: huấn luyện cỗ máy ở nơi làm việc — một thử nghiệm thật</h2>
+
+    <p>Mô hình Gross không chỉ là lý thuyết — nó đã được đưa vào những can thiệp thực tế, và ta có dữ liệu từ một thử nghiệm ngẫu nhiên có đối chứng gần đây. Năm 2025, một nhóm nghiên cứu (Đại học Warwick) công bố thử nghiệm <strong>SLEEP</strong> trên 159 nhân viên có vấn đề về mất ngủ và cảm xúc: một nhóm nhận chương trình kỹ thuật số kết hợp trị liệu nhận thức–hành vi cho giấc ngủ (CBT-I) <em>và</em> huấn luyện điều chỉnh cảm xúc — gồm các kỹ năng như thư giãn, chấp nhận, và đánh giá lại — được phân phối qua nền tảng web và bốn buổi tư vấn video tại nơi làm việc. Nhóm đối chứng chờ đợi.</p>
+
+    <p>Kết quả: sau 8 tuần, nhóm can thiệp cải thiện đáng kể tình trạng mất ngủ, trầm cảm và lo âu với hiệu ứng từ trung bình đến lớn — trong khi các kỹ năng điều chỉnh cảm xúc được đào tạo qua các buổi học ngắn, có cấu trúc, chứ không phải qua một liệu pháp dài hơi. Điều đáng chú ý với ta: hãy nhìn can thiệp này qua lăng kính mô hình Gross. Chương trình không hề dạy "hãy kìm nén" — nó dạy thư giãn (hạ nền sinh lý, đúng Công đoạn 2), chấp nhận (đổi quan hệ với suy nghĩ, đúng Công đoạn 1–4), và đánh giá lại. Nó can thiệp vào <em>sớm</em> trong dòng đời cảm xúc — đúng loại can thiệp mà dữ liệu cho thấy hiệu quả nhất.</p>
+
+    <p>Bài học mang về cho cá nhân: bạn không cần phòng khám để tập vận hành cỗ máy của mình. Ba công đoạn — đánh giá, vòng não–cơ thể, điều chỉnh — đều có những phiên bản tự làm được. Chương 6 sẽ cho bạn bộ dụng cụ đầy đủ.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật thẻ để xem đáp án">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Gợi nhớ chủ động — Câu hỏi</span>
+          <div class="flip-card__content">Kể 5 điểm can thiệp của mô hình Gross, và chỉ ra điểm nào can thiệp "trước", "trong", "sau" dòng đời cảm xúc.</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Đáp án</span>
+          <div class="flip-card__content">(1) Chọn tình huống, (2) Sửa đổi tình huống, (3) Điều hướng chú ý — "trước". (4) Đánh giá lại — "trong". (5) Điều chỉnh phản ứng (kìm nén) — "sau". Điểm can thiệp càng sớm càng hiệu quả và càng ít tốn sức.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="ch4-boundary">Ranh giới: khi cỗ máy kháng lệnh</h2>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+      <p><strong>"Cáu quá thì cứ xả ra cho đã, xả xong sẽ nhẹ."</strong> Nghe có vẻ hợp lý — nhưng các nghiên cứu về "xả giận" (ventilation) cho thấy nó <em>không</em> giải tỏa: nó luyện thói quen tấn công và thường làm cảm xúc mạnh hơn, kéo dài hơn. Lý do nằm ngay trong cỗ máy: mỗi lần bạn "xả", bộ chẩn đoán ghi nhận rằng cáu + bộc phát là một phản ứng đúng và quen thuộc — nên lần sau đèn bật dễ hơn. Một ngoại lệ quan trọng: nói ra cảm xúc với người biết lắng nghe <em>khác</em> với xả giận — cái sau là xả, cái trước là đặt tên và xử lý, và Chương 6 sẽ dạy cái trước.</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Trường hợp biên</span>
+      <p><strong>Đôi khi đã quá muộn để can thiệp sớm.</strong> Khi cảm xúc đã bùng (một cuộc cãi vã đang leo thang, một cú sốc vừa ập đến), các công đoạn "trước" không còn áp dụng được — bạn chỉ còn tuyến cuối cùng: điều chỉnh phản ứng. Và trong một số trạng thái (cơn hoảng loạn cấp, uất nghẹn sau mất mát lớn), thậm chí tuyến cuối cùng cũng nên được giao cho người khác giúp. Cỗ máy của bạn có giới hạn — và biết khi nào cần nhờ người khác là một kỹ năng điều chỉnh cảm xúc hợp lệ, không phải dấu hiệu yếu kém. Cũng cần nói rõ: các chiến lược này hỗ trợ sức khỏe tinh thần hằng ngày, không thay thế chăm sóc chuyên nghiệp khi cảm xúc gây suy giảm chức năng kéo dài.</p>
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán trước khi sang chương 5</span>
+      <p>Chương 4 đã cho bạn bộ điều khiển cỗ máy. Nhưng còn một câu hỏi trước khi ta xây tiếp: <strong>bộ điều khiển ấy dựa vào dữ liệu nào để ra quyết định?</strong> Hãy tự kiểm: một tình huống hôm nay làm bạn bật cảm xúc mạnh bất thường — bạn có nhớ lần đầu tiên cảm giác đó xuất hiện không? Chương 5 sẽ nói về thứ gắn kết hai thời điểm đó: <strong>cảm xúc và trí nhớ</strong>.</p>
+    </div>
+
+    <h2 id="ch4-synthesis">Tổng kết chương 4</h2>
+
+    <p>Cảm xúc là đầu ra của một cỗ máy ba công đoạn: đánh giá ý nghĩa (thứ quyết định cảm xúc nào), vòng não–cơ thể (nền sinh lý nuôi cảm xúc), và quá trình điều chỉnh (nơi ta có thể can thiệp). Điểm can thiệp càng sớm càng hiệu quả: đánh giá lại (đổi ý nghĩa) và chăm nền sinh lý (ngủ, ăn, thở) mạnh hơn hẳn kìm nén — chiến lược muộn nhất và yếu nhất. Thử nghiệm SLEEP 2025 ở nơi làm việc cho thấy những kỹ năng này có thể được huấn luyện có cấu trúc và tạo ra thay đổi đo được chỉ trong vài tuần.</p>
+
+    <blockquote>
+      <strong>Nếu chỉ nhớ một điều từ chương này:</strong> đừng chờ cảm xúc bùng rồi mới hành động — can thiệp vào cách bạn đọc sự kiện và nền tảng cơ thể của bạn, đó là nơi quyền điều khiển thật sự nằm.
+    </blockquote>
+
+    <p><em>Đi tiếp:</em> Giờ bạn đã biết cỗ máy chạy thế nào — nhưng chưa hỏi nó được "lập trình" bằng cái gì. Chương 5: <strong>cảm xúc và trí nhớ</strong> — vì sao ta nhớ rõ những gì xúc động, vì sao ký ức cũ nuôi cảm xúc hôm nay, và vì sao mỗi lần nhớ lại là một lần viết lại cuốn nhật ký.</p>
+<!-- =========================================================
+     CHƯƠNG 5 — Cảm xúc và trí nhớ
+     ========================================================= -->
+    <h2 id="ch5-baseline">Chương 5 · Cảm xúc và trí nhớ: hai chiều của cùng một bảng đồng hồ</h2>
+
+    <p><em>Chuyển tiếp từ chương 4:</em> Chương 4 đã mở nắp cỗ máy sinh ra cảm xúc: đánh giá, vòng não–cơ thể, và năm điểm can thiệp của Gross. Nhưng còn một chi tiết ta chưa hỏi: trước khi ra quyết định, cỗ máy ấy được "lập trình" bằng cái gì? Vì sao cùng một kiểu sự kiện, người này bật đèn lo lắng mà người kia thì không — và vì sao với chính bạn, một tình huống hôm nay có thể khơi dậy một cảm xúc đã cũ từ nhiều năm trước?</p>
+
+    <p><strong>Nền tảng.</strong> Cảm xúc và trí nhớ không phải hai hệ thống riêng biệt — chúng là <strong>hai chiều của cùng một bảng đồng hồ</strong>. Một mặt, cảm xúc quyết định điều gì được nhớ: những sự kiện gây xúc động được não ghi nhớ sâu hơn, sống động hơn, lâu hơn. Mặt kia, trí nhớ quyết định cảm xúc: mọi thứ bạn cảm thấy hôm nay đều được dựng lên từ nguyên liệu của quá khứ — kinh nghiệm đã lưu, bài học đã đóng dấu, những lần đèn từng bật. Hai mối quan hệ này đan vào nhau thành một vòng lặp, và hiểu được vòng lặp đó sẽ thay đổi cách bạn đọc cả những ký ức đau nhất của mình.</p>
+
+    <h2 id="ch5-bridge">Cầu nối: cuốn nhật ký hành trình của chiếc xe</h2>
+
+    <p>Quay lại Mô hình Bảng Đồng Hồ — giờ thêm một chi tiết nữa: chiếc xe có một <strong>cuốn nhật ký hành trình</strong> và một <strong>kho dữ liệu lịch sử</strong> trong bộ chẩn đoán. Mỗi chuyến đi đều được ghi lại: đoạn đường này từng trơn, lần trước lốp bám kém ở ngã tư này, cái cầu đó từng có gió giật. Khi bộ chẩn đoán gặp một tình huống, nó không chỉ đọc cảm biến hiện tại — nó đối chiếu với lịch sử. Chiếc xe phản ứng khác nhau ở cùng một khúc cua, tùy vào những gì nó từng gặp ở đó.</p>
+
+    <p>Đó chính xác là vai trò của trí nhớ trong cỗ máy cảm xúc: <strong>kho dữ liệu mà bộ đánh giá (Chương 4) dựa vào để quyết định bật đèn gì</strong>. Nhưng có một sự thật quan trọng và hơi ngược đời: cuốn nhật ký đó không phải một băng ghi hình trung thực. Nó là một cuốn sổ được <em>viết lại mỗi khi được đọc lại</em> — và những trang được ghi bằng cảm xúc mạnh thì được viết đậm nét nhất, dù đôi khi nét bút đậm ấy không khớp với những gì thật sự xảy ra.</p>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người bước qua cây cầu này với ý nghĩ…</span>
+      <p><span class="premortem__wrong">"Trí nhớ của tôi là một băng ghi hình — cảm xúc càng mạnh thì băng càng ghi chính xác."</span></p>
+      <p>Điều này sai vì các nghiên cứu về "trí nhớ đèn flash" (flashbulb memory) cho thấy: ký ức gắn cảm xúc mạnh thì sống động, chi tiết, và — quan trọng — khiến bạn <em>tự tin</em> rằng mình nhớ đúng. Nhưng độ chính xác thực tế của chúng giảm theo thời gian y như mọi ký ức khác. Sống động và chính xác là hai thứ khác nhau.</p>
+      <p><span class="premortem__truth">Điều đúng là:</span> trí nhớ là một quá trình dựng lại mỗi lần gọi nhớ — không phải phát lại. Hiểu điều này vừa giúp bạn nghi ngờ đúng chỗ những ký ức "quá rõ", vừa mở ra khả năng: một ký ức đau có thể được dựng lại, không phải để xóa, mà để giảm sức đốt của nó.</p>
+    </div>
+
+    <h2 id="ch5-exposition">Ba quy luật của vòng lặp cảm xúc–trí nhớ</h2>
+
+    <!-- Scaffold 1 -->
+    <section class="scaffold" id="ch5-exp-1">
+      <h3 class="scaffold__concept">Quy luật 1 — Cảm xúc ghi đậm ký ức</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Sự kiện gây cảm xúc mạnh được nhớ tốt hơn sự kiện trung tính — đây là một trong những phát hiện ổn định nhất của tâm lý học. Cơ chế: khi một sự kiện kích thích, hạch hạnh nhân (vùng xử lý cảm xúc) hoạt động cùng với hồi hải mã (vùng ghi ký ức) — và các hormone căng thẳng như cortisol và norepinephrine "đóng dấu" sự kiện đó để được ưu tiên củng cố, đặc biệt trong giấc ngủ. Các nhà nghiên cứu gọi đây là "tagging" — cảm xúc dán nhãn "quan trọng" lên khoảnh khắc ấy.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Mô hình "sleep to remember, sleep to forget" của Walker và đồng nghiệp: trong giấc ngủ, não củng cố <em>nội dung</em> của ký ức cảm xúc (giữ cho bạn nhớ sự kiện) đồng thời làm nhạt dần <em>cường độ cảm xúc</em> đi kèm (giảm sức đốt khi nhớ lại). Đây là lý do thường có câu: "ngủ đi rồi sáng mai sẽ khác" — không phải chuyện vô nghĩa. Và nó nối thẳng về thử nghiệm SLEEP ở Chương 4: cải thiện giấc ngủ không chỉ giúp điều chỉnh cảm xúc, mà còn giúp não xử lý các ký ức mang cảm xúc đúng cách.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu cảm xúc ghi đậm ký ức, vì sao có những khoảnh khắc cực kỳ xúc động mà bạn lại nhớ rất mơ hồ?</summary>
+        <div class="scaffold__resolve">Vì cường độ cảm xúc quá cao có thể <em>tràn ống</em> quá trình ghi nhớ: khi hormone căng thẳng dâng quá mức, hồi hải mã bị "quá tải" và chi tiết không được đóng gói kỹ — bạn nhớ <em>đã có</em> một khoảnh khắc kinh khủng, nhưng khung cảnh lại vỡ vụn. Điều này cũng lý giải vì sao nhân chứng sang chấn thường nhớ "cảm giác" rất rõ nhưng nhớ chi tiết hiện trường rất kém. Cảm xúc ghi đậm, nhưng quá mức thì lại làm nhoè — giống đánh dấu bằng bút quá đậm, mực sẽ lem ra ngoài dòng.</div>
+      </details>
+    </section>
+
+    <!-- Scaffold 2 -->
+    <section class="scaffold" id="ch5-exp-2">
+      <h3 class="scaffold__concept">Quy luật 2 — Ký ức đổ khuôn cảm xúc</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Chiều ngược lại: trí nhớ quyết định bạn cảm thấy gì. Theo cách nhìn của Barrett (Chương 2), cảm xúc được dựng lên từ nguyên liệu thô của cơ thể <em>cộng với kinh nghiệm đã lưu</em> — và kinh nghiệm đó chính là trí nhớ. Bộ đánh giá của Chương 4 không làm việc trên một khoảng trống: nó so sánh tình huống hiện tại với hàng nghìn lần tương tự đã lưu, rồi bật cái đèn "từng có hiệu quả nhất" trong lịch sử đó.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Một người từng bị phản bội trong tình bạn sẽ "đọc" một câu trả lời hơi ngắn của bạn thân thành dấu hiệu sắp rời xa — đèn lo lắng bật trước cả khi anh ta kịp nghĩ. Cùng một tin nhắn, người có lịch sử khác lại đọc thành "bạn ấy đang bận", không bật đèn gì. Không phải sự kiện khác nhau — <em>kho dữ liệu lịch sử</em> khác nhau. Đây cũng là lý do tâm trạng khuếch đại mọi thứ (Chương 1): tâm trạng là một loại "trí nhớ ngắn hạn" của nền cảm xúc, làm tăng khả năng bộ đánh giá tìm thấy trong quá khứ những bằng chứng phù hợp với tâm trạng hiện tại — hiện tượng gọi là <em>trí nhớ phù hợp tâm trạng</em> (mood-congruent memory): đang buồn thì dễ nhớ những chuyện buồn.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu ký ức đổ khuôn cảm xúc, thì ký ức sai có tạo ra cảm xúc sai không?</summary>
+        <div class="scaffold__resolve">Đúng — và đây là hệ quả nghiêm trọng. Một ký ức được dựng lại sai (thêm thắt, bóp méo, lẫn lộn giữa các lần) vẫn là "dữ liệu" mà bộ đánh giá dùng. Nếu bạn tin rằng mình từng bị chê trước đám đông — dù chi tiết đó không thật — thì lần bị chê tiếp theo vẫn bật đèn xấu hổ với cùng độ mạnh. Ký ức không cần đúng mới có quyền gây cảm xúc; nó chỉ cần <em>được tin là đúng</em>. Điều này đặt một trách nhiệm lên bạn: những ký ức "rõ như in" cũng nên được kiểm chứng trước khi để chúng ra lệnh cho cảm xúc hôm nay.</div>
+      </details>
+    </section>
+
+    <!-- Scaffold 3 -->
+    <section class="scaffold" id="ch5-exp-3">
+      <h3 class="scaffold__concept">Quy luật 3 — Mỗi lần nhớ lại là một lần dựng lại</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Quy luật quan trọng nhất — và gần đây nhất trong nghiên cứu: khi bạn gọi một ký ức lên, nó không được "phát lại" nguyên vẹn mà được <strong>dựng lại từ các mảnh</strong>, và trong khoảnh khắc dựng lại đó, nó trở nên "mềm" — có thể bị thêm bớt, sửa đổi, rồi được <strong>tái lưu trữ</strong> (reconsolidation) theo phiên bản mới. Một ký ức không phải một vật cố định trong kho; nó là một bản nhạc được chơi lại mỗi lần — và mỗi lần chơi, nhạc công có thể chơi khác đi một chút.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Một thí nghiệm gần đây minh hoạ cả hướng chữa trị lẫn vai trò của giấc ngủ: người tham gia gọi lại một ký ức đau, rồi được hướng dẫn <em>viết lại kịch bản</em> của nó theo hướng bớt đáng sợ (kỹ thuật gọi là imagery rescripting — gần với "đánh giá lại" của Chương 4). Sau đó, nhóm được ngủ trưa 90 phút cho thấy phản ứng tim mạch với ký ức đó giảm hẳn so với nhóm thức — bằng chứng đầu tiên rằng giấc ngủ giúp "tái lưu trữ" ký ức theo phiên bản đã được nới lỏng. Nói đơn giản: mỗi lần bạn nhớ lại một chuyện đau và xử lý nó bằng công cụ mới, bạn đang viết lại chính cuốn nhật ký.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Điều gì quyết định một ký ức được dựng lại theo hướng "lành" hay "độc"?</summary>
+        <div class="scaffold__resolve">Bộ công cụ bạn mang vào lúc nhớ lại. Nếu mỗi lần nhớ lại một chuyện xấu hổ, bạn chỉ tái diễn nguyên kịch bản cũ ("mình thật kém, mọi người đều cười"), phiên bản được tái lưu vẫn nguyên sức đốt. Nhưng nếu lần nhớ ấy đi kèm đặt tên chính xác (Chương 6) và đánh giá lại ("điều đó đã qua, và tôi đã học được X"), phiên bản tái lưu có thể nhẹ đi. Chính việc lặp lại cùng một cảm xúc cũ trong lúc nhớ lại cũng là một dạng "tập luyện" cho cỗ máy — nên chọn kỹ điều bạn mang theo khi gọi một ký ức lên.</div>
+      </details>
+    </section>
+
+    <div class="feynman">Trí nhớ không phải kho chứa — nó là xưởng dựng lại. Và mỗi lần bước vào xưởng, bạn có thể mang theo dụng cụ mới.</div>
+
+    <div class="checkpoint" data-checkpoint-id="cp5">
+      <span class="checkpoint__label">🛑 Dừng lại và tự kiểm tra</span>
+      <p class="checkpoint__question">Chọn một ký ức có cảm xúc mạnh (vui hoặc buồn). Trả lời ba câu: (1) Bạn nhớ rõ nội dung sự kiện hay nhớ rõ "cảm giác" của nó? (2) Bạn có chắc chắn những chi tiết bạn nhớ là chính xác không — dựa vào đâu để chắc? (3) Nếu ký ức này bị nhớ lại với một cảm xúc tiêu cực lặp đi lặp lại, bạn có thể thay đổi điều gì trong cách mình nhớ lại nó?</p>
+      <textarea placeholder="Viết câu trả lời của bạn bằng lời của chính mình trước khi so sánh…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Câu trả lời mẫu</span>
+        Mẫu cho một ký ức "bị từ chối công khai": (1) tôi nhớ cảm giác xấu hổ rõ hơn nhiều so với chính xác lời ai đó nói — phù hợp với quy luật 1; (2) tôi từng tin 100%, nhưng thật ra tôi đang dựng lại từ các mảnh và từ lời kể của người khác — quy luật 2 và 3; (3) lần tới khi nó trồi lên, tôi sẽ không phát lại nguyên kịch bản: tôi sẽ đặt tên ("xấu hổ, có lẫn chút giận") và hỏi "điều gì thật sự xảy ra so với điều tâm trí tôi thêm vào?" — rồi để nó tái lưu theo phiên bản đã gỡ bớt sức nổ.
+      </div>
+    </div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Trí nhớ đèn flash: sống động chứ không chính xác</summary>
+      <p>Thuật ngữ "trí nhớ đèn flash" (flashbulb memory) ra đời từ nghiên cứu của Brown và Kulik (1977) về cách mọi người nhớ khoảnh khắc nghe tin Kennedy bị ám sát — chi tiết đến mức tưởng như một tấm ảnh chụp đèn flash. Nhưng nghiên cứu sau đó lật ngược giả định "chụp ảnh trung thực": trong một nghiên cứu kinh điển tại Đại học Duke, ngay sau vụ 11/9, các sinh viên viết lại ký ức của mình về lúc nghe tin; 32 tuần sau, ký ức của họ thay đổi nhiều ngang với ký ức của một sự kiện thường ngày — <em>nhưng</em> mức độ sinh động, cảm giác "đang sống lại" và niềm tin "mình nhớ đúng" thì chỉ giảm cho sự kiện thường ngày, còn với ký ức đèn flash thì vẫn cao. Kết luận: trí nhớ đèn flash đặc biệt ở <em>hiện tượng học</em> (sống động, tự tin), không đặc biệt ở <em>độ chính xác</em>. Và lưu ý một chi tiết gắn với Chương 1: cường độ cảm xúc ban đầu dự báo <em>độ tự tin</em> — không dự báo độ nhất quán — và dự báo cả mức triệu chứng căng thẳng sau đó. Một ký ức càng "sáng đèn flash" càng nên được đối xử như một bản dựng lại đầy cảm xúc, không phải một đoạn phim chính thức.</p>
+    </details>
+
+    <h2 id="ch5-application">Ứng dụng: viết lại một ký ức đau bằng dụng cụ mới</h2>
+
+    <p>Ba quy luật trên không phải lý thuyết để ngâm cứu — chúng cho ta một quy trình thực tế mỗi khi một ký ức có cảm xúc tiêu cực cứ quay lại quấy rầy. Gọi là <strong>bài tập viết lại</strong>, gồm bốn bước, và mỗi bước tận dụng một mảnh kiến thức đã xây:</p>
+
+    <ul>
+      <li><strong>Bước 1 — Gọi lên một cách có chủ đích</strong> (tận dụng quy luật 3): chọn thời điểm bình tĩnh, có người tin cậy hoặc một cuốn sổ, và nhớ lại sự kiện một cách <em>có chủ ý</em> — không phải khi nó tự trồi lên giữa cơn sóng.</li>
+      <li><strong>Bước 2 — Tách nội dung khỏi cảm xúc</strong> (quy luật 1 và 2): viết ra hai cột — "điều thật sự xảy ra (tôi có thể kiểm chứng)" và "điều tâm trí tôi thêm vào (phán đoán, dự đoán, cảm giác)". Phần lớn sức đốt nằm ở cột hai.</li>
+      <li><strong>Bước 3 — Đặt tên và đánh giá lại</strong> (công cụ Chương 4 và 6): gọi đúng tên cảm xúc đang gắn với ký ức, rồi hỏi câu hỏi của bộ đánh giá: "Điều này có nghĩa gì với tôi — và ý nghĩa đó có còn đúng với tôi của hôm nay không, hay nó là di tích của con người tôi của năm ấy?"</li>
+      <li><strong>Bước 4 — Để nó tái lưu trong điều kiện tốt</strong> (quy luật 1 và thí nghiệm giấc ngủ): sau khi dựng lại phiên bản nhẹ hơn, đừng quên cho não thời gian — ngủ đủ, vì chính giấc ngủ là lúc phiên bản mới được "đóng dấu" vào kho. Nối về Chương 4: chăm giấc ngủ chính là một điểm can thiệp điều chỉnh cảm xúc.</li>
+    </ul>
+
+    <p>Điều đáng chú ý: bài tập này <em>không xóa ký ức</em> — nó đổi cách ký ức được dựng lại mỗi lần. Bạn không quên chuyện đó; bạn khiến nó ngừng điều khiển cảm xúc của bạn. Và với những ký ức thuộc phạm vi sang chấn (sẽ nói ở phần Ranh giới), quy trình này không phải để tự làm — nó cần sự hỗ trợ chuyên môn.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật thẻ để xem đáp án">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Gợi nhớ chủ động — Câu hỏi</span>
+          <div class="flip-card__content">Trí nhớ đèn flash đặc biệt ở điểm nào — độ chính xác hay điều gì khác? Và "sleep to remember, sleep to forget" nghĩa là gì?</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Đáp án</span>
+          <div class="flip-card__content">Trí nhớ đèn flash đặc biệt ở hiện tượng học: sống động, chi tiết, và khiến bạn tự tin rằng mình nhớ đúng — chứ không đặc biệt ở độ chính xác, vốn giảm theo thời gian như mọi ký ức. "Sleep to remember, sleep to forget": giấc ngủ củng cố nội dung ký ức cảm xúc (nhớ sự kiện) đồng thời làm nhạt cường độ cảm xúc đi kèm (bớt đau khi nhớ lại).</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="ch5-boundary">Ranh giới: khi vòng lặp trở nên độc hại</h2>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+      <p><strong>"Muốn quên thì phải đè nén ký ức xuống, hoặc xả hết ra cho bằng được."</strong> Cả hai đều phản tác dụng theo đúng các quy luật đã học. Đè nén ký ức (suppression) không làm ký ức biến mất — nó chỉ dồn sức đốt xuống nền, để cảm xúc bật mạnh hơn vào những lúc bất ngờ (một phiên bản của "kìm nén" trong Chương 4). Còn "xả hết" theo kiểu lặp đi lặp lại câu chuyện đau với đúng kịch bản cũ lại <em>tái lưu trữ phiên bản đau</em> mỗi lần — bạn đang tập cho cỗ máy bật đèn đau dễ hơn. Cách đúng: đặt tên, đánh giá lại, và cho phép phiên bản mới được tái lưu (bài tập viết lại ở trên).</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Trường hợp biên</span>
+      <p><strong>Ký ức xâm nhập (intrusive memories) và sang chấn không phải thứ để tự "viết lại" một mình.</strong> Trong rối loạn căng thẳng sau sang chấn (PTSD), ký ức không chỉ đau — chúng tái xâm nhập không kiểm soát, và việc "gọi lên có chủ đích" hay "đánh giá lại" giữa cơn bão có thể phản tác dụng, giống cảnh báo ở Chương 6 về việc tập kỹ năng giữa lúc khủng hoảng. Ngoài ra, tính mềm dẻo của trí nhớ có mặt tối: nhân chứng dễ bị gợi ý, ký ức có thể bị "dựng lại" sai trong điều tra và tòa án. Nếu bạn hay người thân có ký ức xâm nhập kéo dài làm suy giảm chức năng, hãy tìm chuyên gia — các liệu pháp có cấu trúc (như EMDR hay liệu pháp nhận thức tập trung sang chấn) vận hành đúng trên nguyên lý tái cấu trúc, nhưng có người hướng dẫn.</p>
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán trước khi sang chương 6</span>
+      <p>Chương 5 đã cho bạn biết cỗ máy có một kho dữ liệu lịch sử — và kho đó có thể được viết lại mỗi lần đọc lại. Trước khi đọc tiếp, hãy tự hỏi: <strong>nếu ký ức được dựng lại mỗi lần nhớ, thì kỹ năng "nhận diện cảm xúc của chính mình" có phụ thuộc gì vào kho dữ liệu đó không?</strong> Chương 6 sẽ cho bạn bộ dụng cụ đọc bảng đồng hồ — và bạn sẽ thấy nó ăn khớp với mọi thứ vừa học.</p>
+    </div>
+
+    <h2 id="ch5-synthesis">Tổng kết chương 5</h2>
+
+    <p>Cảm xúc và trí nhớ là một vòng lặp hai chiều: cảm xúc đóng dấu "quan trọng" lên sự kiện để nó được ghi đậm (nhất là trong giấc ngủ), ký ức là kho dữ liệu mà bộ đánh giá dựa vào để bật cảm xúc hôm nay, và mỗi lần nhớ lại là mỗi lần ký ức được dựng lại rồi tái lưu theo phiên bản mới. Trí nhớ đèn flash minh họa cảnh báo trung tâm của chương: sự sống động và niềm tin "mình nhớ đúng" không phải bằng chứng về độ chính xác. Và phần thưởng thực tế: vì ký ức được dựng lại mỗi lần, bạn có thể — bằng đặt tên, đánh giá lại và giấc ngủ đủ — khiến một ký ức đau ngừng điều khiển cảm xúc của mình.</p>
+
+    <blockquote>
+      <strong>Nếu chỉ nhớ một điều từ chương này:</strong> trí nhớ của bạn không phải băng ghi hình — nó là xưởng dựng lại; và dụng cụ bạn mang vào xưởng mỗi lần nhớ lại sẽ quyết định phiên bản được lưu lại.
+    </blockquote>
+
+    <p><em>Đi tiếp:</em> Giờ bạn đã biết cỗ máy chạy thế nào và nó "lập trình" từ kho dữ liệu nào — nhưng chưa có bộ dụng cụ để đọc. Chương 6 dạy điều đó: <strong>nhận diện cảm xúc của chính mình</strong> — sự tinh tế phân biệt, đặt tên, và đọc cơ thể.</p>
+<!-- =========================================================
+     CHƯƠNG 6 — Nhận diện cảm xúc của chính mình
+     ========================================================= -->
+    <h2 id="ch6-baseline">Chương 6 · Nhận diện cảm xúc của chính mình: kỹ năng đọc bảng đồng hồ</h2>
+
+    <p><em>Chuyển tiếp từ chương 5:</em> Chương 4 cho bạn bộ điều khiển cỗ máy, Chương 5 vừa cho bạn kho dữ liệu lịch sử của nó — nhưng mọi nút bấm đều vô dụng nếu bạn không biết hiện tại mình đang ở trạng thái nào. Bạn có thể đã từng trải qua: một ngày "không ổn", bực bội với mọi thứ, mà khi ai đó hỏi "bạn ổn chứ?", bạn chỉ nói được "bình thường". Đó không phải thiếu cảm xúc — đó là thiếu công cụ đọc.</p>
+
+    <p><strong>Nền tảng.</strong> Nhận diện cảm xúc của chính mình không phải tài năng bẩm sinh — nó là một <strong>kỹ năng</strong>, có thể tập luyện, và người ta khác nhau rất nhiều ở độ chính xác của nó. Một số người trải qua "cảm giác khó chịu" mơ hồ nhiều ngày; một số khác nói chính xác "tôi đang thất vọng vì kỳ vọng không được đáp ứng, và có chút cô đơn vì không ai hiểu". Hai người đó sống trong hai thế giới cảm xúc khác nhau — dù sự kiện giống nhau. Chương này dạy bạn đi từ thế giới thứ nhất sang thế giới thứ hai, qua ba kỹ năng: <strong>sự tinh tế phân biệt</strong>, <strong>đặt tên cảm xúc</strong>, và <strong>đọc cơ thể</strong>.</p>
+
+    <h2 id="ch6-bridge">Cầu nối: độ phân giải của bảng đồng hồ</h2>
+
+    <p>Quay lại Mô hình Bảng Đồng Hồ — giờ hãy nghĩ về một chi tiết bạn ít để ý: <strong>độ phân giải</strong> của bảng đồng hồ. Hai chiếc xe cùng loại: một chiếc có đồng hồ nhiệt độ với vạch chia đến từng độ, một chiếc chỉ có hai đèn "MÁT" và "QUÁ NÓNG". Cả hai chiếc đều "biết" khi xe quá nhiệt — nhưng chiếc có vạch chia biết được <em>còn bao lâu nữa thì nguy hiểm</em>, biết nhiệt đang lên chậm hay nhanh, biết cần hành động khẩn cấp hay chỉ cần quan sát. Cùng một bảng đồng hồ, nhưng một chiếc cung cấp thông tin hành động được; chiếc kia chỉ cung cấp "có vấn đề hoặc không".</p>
+
+    <p>Độ phân giải của "bảng đồng hồ cảm xúc" chính là điều chương này dạy bạn nâng cấp. Tên khoa học của nó: <strong>sự tinh tế trong phân biệt cảm xúc</strong> (emotional granularity) — khả năng phân biệt các trạng thái cảm xúc của mình một cách mịn và chính xác. Người có độ phân giải thấp thấy "tệ" và "không tệ". Người có độ phân giải cao thấy cả một dải sắc thái: buồn, thất vọng, cô đơn, mệt mỏi, lo âu, uất ức — mỗi cái một màu, mỗi cái một đáp án.</p>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi ta xây tiếp — nhiều người bước qua cây cầu này với ý nghĩ…</span>
+      <p><span class="premortem__wrong">"Tôi không phải người có cảm xúc" / "Tôi không cảm thấy gì" — như thể đó là một dạng tính cách, và người khác thì "giàu cảm xúc hơn".</span></p>
+      <p>Điều này sai vì ai cũng có cảm xúc — bạn chỉ có thể đang có <em>độ phân giải thấp</em>: cảm xúc chạy đầy đủ nhưng bạn không phân biệt, không đặt tên được, nên trải nghiệm ra vẻ "trống rỗng" hay "bình thường". Giống như chiếc xe chỉ có hai đèn — đừng kết luận xe không có nhiệt.</p>
+      <p><span class="premortem__truth">Điều đúng là:</span> cảm xúc luôn ở đó; vấn đề là công cụ đọc. Và công cụ đọc thì có thể rèn — chương này là phòng tập.</p>
+    </div>
+
+    <h2 id="ch6-exposition">Ba kỹ năng đọc bảng đồng hồ</h2>
+
+    <!-- Scaffold 1 -->
+    <section class="scaffold" id="ch6-exp-1">
+      <h3 class="scaffold__concept">Kỹ năng 1 — Nâng độ phân giải: phân biệt mịn</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p><strong>Sự tinh tế trong phân biệt cảm xúc</strong> là khả năng dùng các nhãn cảm xúc một cách phân biệt, thay vì gộp. Người có độ tinh tế thấp dùng vài từ lớn ("tệ", "ổn", "mệt"). Người có độ tinh tế cao dùng nhiều từ mịn và phân biệt được chúng trong chính trải nghiệm của mình. Quan trọng: đây không phải chuyện "giàu vốn từ" để khoe — đây là chuyện <em>độ chính xác của việc định vị</em>, và nó có hậu quả sinh lý đo được.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Hai người cùng "thấy tệ" vào Chủ nhật tối. Người A nói: "Chán thật, lại đến tuần làm việc." Người B dừng lại, quét: "À — tôi không 'chán' chung chung. Tôi <em>lo</em> vì cuộc họp thứ Hai, <em>uất ức</em> vì cuối tuần bị phá vì công việc, và hơi <em>cô đơn</em> vì không nói chuyện với ai về điều đó." B không "cảm xúc hơn" A — B định vị tốt hơn. Và vì định vị tốt, B biết làm gì: chuẩn bị cho cuộc họp (lo), nói ra điều uất ức (uất ức), gọi điện cho một người (cô đơn). A thì không có địa chỉ nào để hành động.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu bạn gộp "lo" và "uất ức" và "cô đơn" thành một cục "chán", thì bạn sẽ phản ứng với cục đó như thế nào — và vì sao nó thường thất bại?</summary>
+        <div class="scaffold__resolve">Bạn sẽ xử lý theo kiểu "xả tạm" — lướt điện thoại, ăn vặt, ngủ nướng — vì không biết cái gì cần xử lý. Đó là lý do cảm giác "chán chung chung" kéo dài nhiều ngày trong khi cảm giác "cô đơn" thì có đáp án (gọi điện) ngay. Gộp cảm xúc làm mất thông tin — và mất thông tin thì không biết hành động.</div>
+      </details>
+    </section>
+
+    <!-- Scaffold 2 -->
+    <section class="scaffold" id="ch6-exp-2">
+      <h3 class="scaffold__concept">Kỹ năng 2 — Đặt tên: "name it to tame it"</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Kỹ năng thứ hai là <strong>đặt tên cảm xúc</strong> (affect labeling): gọi đúng tên điều mình đang cảm thấy — trong đầu, hoặc thành lời. Điều đáng kinh ngạc về mặt khoa học: hành động đặt tên <em>tự thân</em> làm giảm cường độ của cảm xúc. Không phải vì bạn "phân tích" nó đi, mà vì việc gắn một nhãn chính xác giúp não chuyển từ trạng thái "báo động mơ hồ" sang trạng thái "đã hiểu — có thể xử lý".</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Nhà nghiên cứu Matthew Lieberman và đồng nghiệp đã chỉ ra trong các thí nghiệm hình ảnh não: khi người tham gia nhìn một khuôn mặt giận dữ và được yêu cầu <em>đặt tên</em> cảm xúc đó (thay vì chỉ nhìn), hoạt động ở hạch hạnh nhân (vùng gắn với báo động) giảm rõ, trong khi vùng kiểm soát ở vỏ não trước trán tăng. "Gọi tên con quái vật" làm con quái vật nhỏ lại — không phải phép ẩn dụ mà là một hiệu ứng đo được. Lưu ý công thức đúng: nhãn càng <em>chính xác</em> càng hiệu quả. Nói "tôi đang tức" khi thật ra là "tôi đang bối rối" không có tác dụng — vì nhãn sai không giải quyết gì.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu đặt tên giảm cảm xúc, thì "phân tích quá mức" (overthinking) sao không giảm — nó có phải cùng một thứ không?</summary>
+        <div class="scaffold__resolve">Không cùng thứ, và đây là ranh giới quan trọng. Đặt tên là <em>gắn nhãn và dừng</em>: "đây là cô đơn, và tôi biết nó là gì". Phân tích quá mức là <em>lặp lại và xoáy sâu</em>: "vì sao tôi cô đơn, có phải vì tôi kém, ngày xưa tôi đã…" — một vòng lặp không đặt tên (rumination). Nhãn kết thúc quá trình xác định; rumination kéo dài quá trình diễn giải. Một cái đóng, một cái mở — và Chương 4 đã cảnh báo: mở không kiểm soát là cách nuôi cỗ máy.</div>
+      </details>
+    </section>
+
+    <!-- Scaffold 3 -->
+    <section class="scaffold" id="ch6-exp-3">
+      <h3 class="scaffold__concept">Kỹ năng 3 — Đọc cơ thể: đường dẫn hai bước</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body">
+          <p>Kỹ năng thứ ba khai thác trực tiếp Công đoạn 2 của Chương 4: trước khi bạn biết mình "giận", cơ thể bạn đã giận rồi — tim, hàm, vai, dạ dày. Quy trình gồm hai bước: <strong>(1) mô tả cơ thể</strong> bằng ngôn ngữ vật lý thuần ("hàm tôi căng, vai tôi gồng, tim đập nhanh, bụng thắt"), rồi <strong>(2) gắn nhãn</strong> cho trạng thái đó ("à, đây là sự bực bội vì bị ngắt lời"). Bước 1 trước, bước 2 sau — đừng đảo ngược, vì nhảy thẳng tới nhãn mà không quét cơ thể là cách tái tạo cảm xúc bằng ý nghĩ.</p>
+        </div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p>Thực hành 90 giây: ngồi yên, quét từ đầu xuống chân — trán, hàm, cổ, vai, lồng ngực, bụng, bàn tay, chân. Ghi nhận mỗi nơi căng hay lỏng, ấm hay lạnh, <em>không phán xét</em>. Sau 90 giây, hỏi: nếu trạng thái này có tên, nó tên gì? Nhiều người bất ngờ phát hiện "mình vẫn đang giữ một nỗi bực từ sáng trong vai" mà ý thức đã quên. Đó là kho dữ liệu mà bạn chưa từng đọc — và nó ở ngay trong cơ thể bạn, miễn phí, luôn sẵn sàng.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao bước "mô tả cơ thể" phải đứng trước bước "gắn nhãn"? Điều gì xảy ra nếu bạn làm ngược?</summary>
+        <div class="scaffold__resolve">Nếu gắn nhãn trước (ví dụ tự phán "tôi đang tức"), bạn sẽ kích hoạt toàn bộ kịch bản đã học về "tức": bạn nhớ lần tức trước, bạn bắt đầu diễn giải, và cơ thể theo đó căng lên — bạn vừa tự bật đèn. Còn nếu quét cơ thể trước, bạn có dữ liệu khách quan ("vai gồng, tim nhanh") để não gắn nhãn một cách đúng đắn hơn. Thứ tự là một kỹ thuật, không phải chi tiết vụn vặt: dữ liệu trước, diễn giải sau.</div>
+      </details>
+    </section>
+
+    <div class="feynman">Đọc cảm xúc của mình giống đọc đồng hồ xe: nhìn vạch chia (tinh tế), đọc đúng con số (đặt tên), và đừng quên nhìn vào thùng xe (cơ thể).</div>
+
+    <div class="checkpoint" data-checkpoint-id="cp6">
+      <span class="checkpoint__label">🛑 Dừng lại và tự kiểm tra</span>
+      <p class="checkpoint__question">Ngay bây giờ, làm bài tập 90 giây: quét cơ thể từ đầu xuống chân, viết ra 3–4 cảm giác vật lý, rồi gắn cho tổng thể đó một nhãn cảm xúc chính xác nhất có thể.</p>
+      <textarea placeholder="Viết câu trả lời của bạn bằng lời của chính mình trước khi so sánh…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So sánh với câu trả lời mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Câu trả lời mẫu</span>
+        "Mắt tôi mệt, cổ tôi căng, ngực hơi nặng, chân lạnh. Tổng thể: hơi lo âu về công việc còn dang dở." Nếu bạn viết được nhãn tinh hơn "bình thường", bạn đã làm đúng hai bước. Hãy lặp lại bài này một lần/ngày trong một tuần — bạn sẽ thấy độ phân giải của mình tăng rõ rệt.
+      </div>
+    </div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Cơ thể quyết định nhiều hơn bạn tưởng</summary>
+      <p>Nhà thần kinh học Antonio Damasio nổi tiếng với khái niệm <strong>dấu hiệu cơ thể</strong> (somatic markers): cơ thể bạn lưu trữ "dấu hiệu" từ những quyết định trong quá khứ, và khi gặp tình huống tương tự, các dấu hiệu ấy — tim đập, bụng thắt — phát tín hiệu trước khi bạn ý thức. Damasio quan sát bệnh nhân tổn thương vùng não kết nối cơ thể–quyết định: trí thông minh của họ vẫn nguyên vẹn, nhưng họ <em>không quyết định được</em> — mất cảm giác cơ thể cũng mất khả năng chọn lựa. Hệ quả thực tế: việc luyện "đọc cơ thể" không chỉ giúp nhận diện cảm xúc — nó còn tăng chất lượng quyết định. Khi bạn "cảm thấy không ổn" nhưng không lý giải nổi, hãy tin cái cảm giác đó: nó là dữ liệu, đang báo cho bạn một điều gì đó.</p>
+    </details>
+
+    <h2 id="ch6-application">Ứng dụng: độ tinh tế bảo vệ bạn trước căng thẳng</h2>
+
+    <p>Ba kỹ năng trên không chỉ "hay để biết" — chúng có hệ quả sức khỏe đo được. Một nghiên cứu công bố năm 2025 với thanh thiếu niên đã chỉ ra một mối quan hệ đáng chú ý: ở những bạn có <strong>độ tinh tế phân biệt cảm xúc cao</strong> — tức phân biệt được các cảm xúc tiêu cực của mình một cách mịn — mối liên hệ giữa việc từng trải qua bạo lực và các vấn đề sức khỏe tâm thần sau đó <em>yếu đi rõ rệt</em>. Nói đơn giản: cùng chịu một tổn thương, những người đọc rõ cảm xúc của mình ("đây là sợ, đây là giận, đây là cô đơn") chống chịu tốt hơn những người chỉ thấy "tệ".</p>
+
+    <p>Hãy nhìn kết quả này qua lăng kính ba chương gần nhất. Chương 4 cho thấy can thiệp sớm trong dòng đời cảm xúc hiệu quả hơn; đặt tên chính xác chính là một can thiệp sớm như vậy — nó "tame" (thuần) cơn báo động trước khi nó leo thang. Chương 3 cho thấy bản đồ càng chi tiết càng định vị tốt; độ tinh tế chính là độ chi tiết của bản đồ cá nhân. Và Chương 2 cho thấy não dựng cảm xúc từ khái niệm; nhiều khái niệm tinh tế hơn nghĩa là nhiều "bức tranh" chính xác hơn thay vì một bức tranh vẽ nguệch ngoạc. Kỹ năng đọc bảng đồng hồ không phải thứ xa xỉ — nó là một dạng vắc-xin tinh thần.</p>
+
+    <p>Cách tập luyện hằng ngày, gói gọn: cuối mỗi ngày, dành hai phút viết ra một cảm xúc nổi bật trong ngày theo ba kỹ năng — <em>cơ thể đã báo gì</em> (đọc cơ thể), <em>tên đúng của nó là gì</em> (đặt tên), <em>nó khác gì với những "anh em" gần nó</em> (tinh tế). Một tuần kiên trì sẽ đủ để bạn cảm nhận sự khác biệt trong độ chính xác của chính mình.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật thẻ để xem đáp án">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Gợi nhớ chủ động — Câu hỏi</span>
+          <div class="flip-card__content">Ba kỹ năng đọc bảng đồng hồ là gì? Và vì sao "phân tích quá mức" không được tính là kỹ năng đặt tên?</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Đáp án</span>
+          <div class="flip-card__content">Ba kỹ năng: (1) sự tinh tế phân biệt — định vị mịn; (2) đặt tên cảm xúc — gắn nhãn rồi dừng; (3) đọc cơ thể — mô tả vật lý trước, nhãn sau. Phân tích quá mức là vòng lặp diễn giải không dừng (rumination) — nó nuôi cảm xúc thay vì đóng gói nó.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="ch6-boundary">Ranh giới: khi việc nhận diện đi sai đường</h2>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Hiểu lầm phổ biến</span>
+      <p><strong>"Đặt tên cảm xúc = diễn giải lý do = càng nghĩ càng rõ."</strong> Sai. Đặt tên dừng ở việc gắn nhãn; diễn giải lý do là một hoạt động khác và thường phản tác dụng khi cảm xúc đang mạnh — bạn bắt đầu "tại sao tôi thế này", lục lại ký ức, và mỗi lần lục lại lại tái kích hoạt cảm xúc. Nguyên tắc an toàn: <em>nhãn trước, lý do sau</em> — và khi cảm xúc còn đang bùng, chỉ dùng nhãn, dời việc "vì sao" sang lúc đã bình tĩnh.</p>
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Trường hợp biên</span>
+      <p><strong>Không phải ai cũng tiếp cận được kho dữ liệu cơ thể — và không phải lúc nào cũng nên.</strong> Người có đặc điểm <em>alexithymia</em> gặp khó khăn đặc trưng trong việc nhận diện và diễn đạt cảm xúc — họ không "chống đối" mà đơn giản là tín hiệu nội tâm khó đọc; với họ, bước "đọc cơ thể" cần được tập từ rất chậm, có thể cần hỗ trợ. Còn với người đang trong khủng hoảng cấp (mất mát lớn, cơn hoảng loạn, sang chấn), việc "quét cơ thể và gọi tên" có thể phản tác dụng nếu không có người hỗ trợ — lúc đó hãy nhờ chuyên gia, đừng tự "rèn kỹ năng" giữa cơn bão. Kỹ năng đọc đồng hồ hữu ích nhất khi xe đang chạy bình thường, không phải khi xe đang lao xuống dốc.</p>
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán trước khi sang chương cuối</span>
+      <p>Bạn đã đi qua sáu trạm: cảm xúc là gì, từ đâu mà có, có những loại nào, ai cai quản, trí nhớ liên quan ra sao, và cách nhận diện. Trước khi sang tổng kết, hãy thử trả lời không cần nhìn lại: <strong>nếu ai đó hỏi "điều quan trọng nhất bạn học được về cảm xúc", bạn sẽ trả lời gì?</strong> Viết ra một câu — Chương 7 sẽ đặt câu trả lời của bạn vào bức tranh toàn cảnh.</p>
+    </div>
+
+    <h2 id="ch6-synthesis">Tổng kết chương 6</h2>
+
+    <p>Nhận diện cảm xúc của chính mình là một kỹ năng có thể rèn, gồm ba động tác: phân biệt mịn các sắc thái (độ tinh tế), gắn nhãn rồi dừng (đặt tên), và đọc dữ liệu cơ thể trước khi diễn giải (đọc cơ thể). Ba động tác này tác động vào đúng những điểm mà Chương 4 xác định là điểm can thiệp mạnh nhất — sớm trong dòng đời cảm xúc — và nghiên cứu cho thấy chúng gắn với khả năng chống chịu thực tế. Độ phân giải bảng đồng hồ của bạn không phải số phận; nó là một con số có thể nâng lên bằng luyện tập hằng ngày.</p>
+
+    <blockquote>
+      <strong>Nếu chỉ nhớ một điều từ chương này:</strong> cái tên bạn đặt cho cảm xúc của mình là công cụ mạnh nhất bạn có — gọi đúng tên, và con báo động sẽ nhỏ lại.
+    </blockquote>
+
+    <p><em>Đi tiếp:</em> Đã đến lúc dừng đào sâu và nhìn lại toàn bộ con đường. Chương cuối cùng nối mọi sợi dây lại với nhau — và thử thách bạn bằng một bài toán còn mở.</p>
+<!-- =========================================================
+     CHƯƠNG 7 — Tổng kết & điểm nối
+     ========================================================= -->
+    <h2 id="connections">Chương 7 · Nối các điểm lại</h2>
+
+    <p><em>Chuyển tiếp từ chương 6:</em> Bạn đã đi qua sáu trạm: cảm xúc là gì, vì sao con người có cảm xúc, có những loại cảm xúc nào, điều gì cai quản cảm xúc, trí nhớ gắn với cảm xúc ra sao, và làm sao nhận diện cảm xúc của chính mình. Chương cuối này không thêm kiến thức mới — nó <strong>nối các điểm lại</strong>, đưa bạn lên tầng cao để thấy toàn bộ tấm bản đồ mà sáu chương vừa vẽ ra.</p>
+
+    <p>Hãy nhìn lại con đường qua lăng kính Mô hình Bảng Đồng Hồ — giờ là một chiếc xe đã lắp đầy đủ phụ tùng:</p>
+
+    <ul>
+      <li><strong>Chương 1</strong> xác định đèn là gì: một cảm xúc gồm bốn thành phần (trải nghiệm chủ quan, phản ứng sinh lý, xu hướng hành động, biểu lộ), và phân biệt nó với <span class="term-amp" data-note="tam-trang">tâm trạng</span>, <span class="term-amp" data-note="tinh-khi">tính khí</span> và nền <span class="term-amp" data-note="cam-xuc-nen">cảm xúc nền (affect)</span>.</li>
+      <li><strong>Chương 2</strong> truy tìm nguồn gốc bộ đèn: từ Darwin và Ekman ("mạch cứng" sinh học) đến Barrett ("cảm xúc được dựng lên" từ nguyên liệu thô + khái niệm + ngữ cảnh).</li>
+      <li><strong>Chương 3</strong> vẽ bản đồ các loại đèn: điểm rời rạc, mặt phẳng hai chiều (valence × arousal), và bản đồ phong phú với ít nhất 27 loại — độ chi tiết của bản đồ quyết định khả năng định vị của bạn.</li>
+      <li><strong>Chương 4</strong> mở nắp cỗ máy: <span class="term-amp" data-note="appraisal">đánh giá</span> quyết định bật đèn nào, vòng <span class="term-amp" data-note="interoception">não–cơ thể</span> quyết định đèn sáng mạnh cỡ nào, và mô hình Gross cho năm điểm can thiệp — càng sớm càng hiệu quả.</li>
+      <li><strong>Chương 5</strong> gắn cỗ máy với kho dữ liệu lịch sử của nó: cảm xúc ghi đậm ký ức, ký ức đổ khuôn cảm xúc, và mỗi lần nhớ lại là một lần ký ức được dựng lại — nên trí nhớ vừa là nguồn bằng chứng, vừa là thứ có thể được viết lại bằng dụng cụ mới.</li>
+      <li><strong>Chương 6</strong> dạy bạn đọc bảng đồng hồ: <span class="term-amp" data-note="granularity">sự tinh tế phân biệt</span>, đặt tên, và đọc cơ thể — ba kỹ năng gắn trực tiếp với khả năng chống chịu.</li>
+    </ul>
+
+    <p>Để ý điều gì lặp lại xuyên suốt: <strong>ngữ cảnh và khái niệm là nguyên liệu, cơ thể là bộ cảm biến, trí nhớ là kho dữ liệu, và sự tinh tế là ống kính.</strong> Darwin cho ta các nguyên liệu thô, Barrett cho ta câu chuyện "dựng lên", bản đồ hai chiều cho ta khung định vị, cỗ máy Gross cho ta đòn bẩy, kho trí nhớ cho ta dữ liệu, và kỹ năng nhận diện cho ta đôi mắt đọc. Sáu mảnh ghép xếp lại thành một bức tranh duy nhất: <em>cảm xúc không phải thứ xảy ra với bạn — nó là thứ bạn (và não bạn) tạo ra, trong từng khoảnh khắc, từ nguyên liệu có thật trong cơ thể, trong ký ức và trong thế giới.</em></p>
+
+    <div class="feynman">Nếu cảm xúc được dựng lên, thì kỹ năng đọc và điều chỉnh cảm xúc không phải món quà bẩm sinh — mà là tay nghề học được; và chính bài khảo cứu này là phòng tập.</div>
+
+    <h2 id="ch7-synthesis">Bức tranh toàn cảnh</h2>
+
+    <p>Quay lại Lan trong đêm thứ Tư. Bây giờ, với đủ sáu chương, ta có thể đọc lại cảnh đó như một kỹ thuật viên đọc bảng đồng hồ. Email hủy hợp đồng là sự kiện; <strong>đánh giá</strong> ("đây là một mất mát lớn, liên quan trực tiếp đến tôi") chạy trong phần nghìn giây; <strong>cơ thể</strong> phản ứng — tim đập nhanh, bụng thắt, lòng bàn tay ướt — cung cấp nền kích thích; <strong>bộ đèn</strong> bật: thất vọng, giận dữ, sợ hãi lẫn nhau (một vùng mờ trên bản đồ, Chương 3 dạy ta không phải chọn một tọa độ duy nhất); và <strong>xu hướng hành động</strong> dâng lên — muốn ném điện thoại. Toàn bộ quá trình, trước khi Lan "nghĩ" gì.</p>
+
+    <p>Nhưng đây là điểm khác biệt lớn nhất giữa Lan lúc mở đầu và Lan lúc này: cô ấy <em>không còn là khán giả của cỗ máy nữa</em>. Cô có thể dừng lại, quét cơ thể (hàm căng, vai gồng), đặt tên chính xác cho từng sắc thái ("thất vọng vì kỳ vọng, giận vì bất công, sợ vì tương lai"), và chọn điểm can thiệp — không phải để kìm nén, mà để quyết định xem cảm xúc nào đang báo một vấn đề cần hành động. Đó là kết cục của cả một hành trình: từ "cảm xúc là kẻ thù của lý trí" — một câu nói sai cả về khoa học lẫn thực tiễn — đến "cảm xúc là tín hiệu có thể đọc được, và bàn tay đọc tín hiệu nằm trong chính bạn".</p>
+
+    <blockquote>
+      <strong>Nếu chỉ nhớ một điều từ cả bài khảo cứu:</strong> cảm xúc không phải kẻ thù của lý trí — nó là bảng đồng hồ của bạn, và việc học đọc nó chính là học lái chiếc xe mang tên chính mình.
+    </blockquote>
+
+    <!-- Launch Pad — Extension Problem -->
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Đài phóng · một bước xa hơn</span>
+      <h3 class="launchpad__title">Bài toán mở: "AI đọc cảm xúc" có đọc được không?</h3>
+      <p class="launchpad__problem">Nhiều công ty đang bán "AI đọc cảm xúc": camera phân tích nét mặt để đo trạng thái cảm xúc của tài xế, khách hàng, học sinh, ứng viên — và ra quyết định dựa trên kết quả. Dựa trên những gì bạn đã học trong sáu chương, hãy chỉ ra <strong>ít nhất ba lý do</strong> khiến một hệ thống như vậy có thể <em>đọc sai một cách hệ thống</em> (không phải sai ngẫu nhiên, mà sai theo một hướng cố định). Sau đó đề xuất <strong>một thiết kế lại tối thiểu</strong> để giảm thiểu sai lầm đó. Gợi ý: ba lý do của bạn nên kéo từ ba chương khác nhau — đó là bài kiểm tra xem bạn đã nối được các điểm chưa.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — xoay vấn đề</span>
+          Chương 2: một biểu lộ không tương ứng 1–1 với một cảm xúc (cùng một cái cau mày có thể là giận, tập trung, đau, khó chịu). Hãy liệt kê bao nhiêu cảm xúc bạn gán cho cùng một khuôn mặt — rồi hỏi: thuật toán "học" từ những nhãn do con người gán, thì nó đang học gì thật sự?
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Chương 3 và 4: bản đồ cảm xúc phụ thuộc từ vựng và văn hóa của người gán nhãn; và cảm xúc do appraisal + ngữ cảnh quyết định, không phải do cơ mặt. Một camera không nhìn thấy ngữ cảnh — vậy nó đang đo cái gì, và bỏ sót cái gì?
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — thiết kế lại</span>
+          Thay vì xuất ra một nhãn duy nhất ("giận 80%"), hãy xuất ra nhiều khả năng kèm mức độ tin cậy, và yêu cầu hệ thống đưa thêm ngữ cảnh (lời nói, thời điểm, tiền đề) trước khi kết luận. Câu hỏi mở rộng: nếu bạn đọc được bài này, bạn có nghĩ một hệ thống "đọc cảm xúc" <em>về mặt đạo đức</em> nên được dùng để ra quyết định về con người không — vì sao?
+        </div>
+      </div>
+    </div>
+
+    <p><em>Đi tiếp:</em> Bài khảo cứu này đã xây xong nền móng: bản chất, nguồn gốc, bản đồ, cỗ máy và kỹ năng đọc cảm xúc. Trong các bài tiếp theo của loạt bài, ta sẽ đào sâu từng mảnh ghép — nỗi buồn và mất mát, tức giận và bất công, lo âu và sợ hãi, cùng những tranh luận còn mở giữa các trường phái. Phần cuối dưới đây gồm thuật ngữ, bài kiểm tra nhanh và nguồn tài liệu — hãy dùng chúng để kiểm tra xem bảng đồng hồ của bạn đã được đọc trơn tru chưa.</p>
+<!-- =========================================================
+     FOOTER — Glossary, Quiz, Sources, Marginalia, Controls, Script
+     ========================================================= -->
+
+    <!-- Glossary -->
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Cảm xúc</dt>
+        <dd>Phản ứng nhanh, có đối tượng cụ thể, gồm bốn thành phần: trải nghiệm chủ quan, phản ứng sinh lý, xu hướng hành động và biểu lộ. Trong Mô hình Bảng Đồng Hồ: một cái đèn báo cụ thể được bật lên.</dd>
+
+        <dt>Cảm xúc nền (affect)</dt>
+        <dd>Trạng thái nền của cơ thể–tâm trí được mô tả bằng hai trục: dễ chịu–khó chịu (valence) và kích thích cao–thấp (arousal). Không có đối tượng, luôn chạy ngầm. Trong mô hình xe: độ căng nền của toàn hệ thống, kể cả khi không có đèn nào bật.</dd>
+
+        <dt>Valence</dt>
+        <dd>Một trong hai trục của cảm xúc nền: trải nghiệm đang dễ chịu hay khó chịu. Lưu ý: "khó chịu" không bằng "xấu" — đau đớn thể xác cũng khó chịu mà lại là tín hiệu sống còn.</dd>
+
+        <dt>Arousal</dt>
+        <dd>Trục thứ hai của cảm xúc nền: mức kích thích sinh lý — tim đập nhanh, tỉnh táo, tràn đầy năng lượng (cao) hay uể oải, chậm chạp (thấp).</dd>
+
+        <dt>Tâm trạng</dt>
+        <dd>Trạng thái cảm giác lan tỏa, kéo dài hàng giờ đến hàng ngày, không gắn với một đối tượng cụ thể. Khuếch đại mọi cảm xúc bật lên trên nền của nó — như nền nhiệt khuếch đại chuyển động của kim đồng hồ.</dd>
+
+        <dt>Tính khí</dt>
+        <dd>Khuynh hướng sinh học ổn định, xuất hiện từ sớm, định hình "nhiệt độ cơ bản" của cảm xúc mỗi người. Khác với cảm xúc (thoáng qua) và tâm trạng (kéo dài), tính khí là cấu trúc lâu dài nhất.</dd>
+
+        <dt>Đánh giá (appraisal)</dt>
+        <dd>Công đoạn não gán ý nghĩa cho một sự kiện ("chuyện này liên quan gì đến tôi, tốt hay xấu, tôi đối phó được không") trước khi quyết định bật cảm xúc nào. Chạy trong phần nghìn giây, phần lớn ngoài ý thức. Trong mô hình xe: bộ chẩn đoán ECU đọc tín hiệu và so với bản đồ dữ liệu.</dd>
+
+        <dt>Interoception</dt>
+        <dd>Khả năng não cảm nhận trạng thái bên trong cơ thể: nhịp tim, dạ dày, nhịp thở, căng cơ. Là "nguyên liệu thô" mà não dùng để dựng nên cảm giác cảm xúc. Trong mô hình xe: các cảm biến nội bộ gửi tín hiệu về trung tâm.</dd>
+
+        <dt>Điều chỉnh cảm xúc (emotion regulation)</dt>
+        <dd>Tập hợp các quá trình chúng ta dùng để ảnh hưởng đến việc mình có cảm xúc gì, lúc nào, mạnh cỡ nào và thể hiện ra sao. Theo mô hình Gross gồm năm điểm can thiệp, từ sớm (chọn tình huống) đến muộn (điều chỉnh phản ứng).</dd>
+
+        <dt>Kìm nén</dt>
+        <dd>Chiến lược chặn biểu lộ và hành vi <em>sau khi</em> cảm xúc đã bùng — điểm can thiệp muộn nhất và yếu nhất: cảm xúc và căng thẳng sinh lý vẫn chạy, chỉ mất phần nổi ra ngoài. Khác với việc chậm lại và đặt tên cảm xúc.</dd>
+
+        <dt>Đánh giá lại (reappraisal)</dt>
+        <dd>Chiến lược đổi ý nghĩa bạn gán cho sự kiện ("đây không phải tấn công cá nhân, đây là người đang gấp"). Can thiệp vào chính bộ đánh giá nên giảm cả trải nghiệm lẫn phản ứng sinh lý — và "cài lại" cách đọc tình huống tương tự trong tương lai.</dd>
+
+        <dt>Sự tinh tế phân biệt cảm xúc (emotional granularity)</dt>
+        <dd>Khả năng phân biệt các trạng thái cảm xúc của mình một cách mịn và chính xác, thay vì gộp vào vài từ lớn như "tệ", "ổn". Gắn với khả năng chống chịu tốt hơn trước căng thẳng. Trong mô hình xe: độ phân giải của bảng đồng hồ.</dd>
+
+        <dt>Đặt tên cảm xúc (affect labeling)</dt>
+        <dd>Hành động gắn một nhãn chính xác cho cảm xúc đang trải qua — "name it to tame it": nhãn càng đúng, báo động càng giảm. Điều kiện: gắn nhãn rồi dừng, không diễn giải thành vòng lặp.</dd>
+
+        <dt>Trí nhớ cảm xúc (emotional memory)</dt>
+        <dd>Ký ức gắn với sự kiện gây cảm xúc; được não ưu tiên ghi nhớ sâu và lâu hơn ký ức trung tính, nhờ các hormone căng thẳng "đóng dấu" và quá trình củng cố trong giấc ngủ.</dd>
+
+        <dt>Trí nhớ đèn flash (flashbulb memory)</dt>
+        <dd>Ký ức cực sống động về khoảnh khắc nghe tin một sự kiện gây sốc. Đặc biệt ở hiện tượng học — sống động và tự tin — chứ không đặc biệt ở độ chính xác, vốn giảm theo thời gian như mọi ký ức.</dd>
+
+        <dt>Tái cấu trúc ký ức (reconsolidation)</dt>
+        <dd>Quá trình ký ức được dựng lại khi gọi nhớ rồi được lưu lại theo phiên bản mới. Mỗi lần nhớ lại là một cơ hội — và một rủi ro — để ký ức thay đổi; đây là nền tảng cho phép "viết lại" ký ức đau bằng đặt tên và đánh giá lại.</dd>
+      </dl>
+    </div>
+
+    <!-- Knowledge check -->
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra nhanh</h2>
+      <p class="quiz__intro">3 câu hỏi. Chọn đáp án đúng nhất cho mỗi câu rồi bấm <em>Kiểm tra đáp án</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Theo mô hình bốn thành phần, điều gì xảy ra khi các thành phần của một cảm xúc lệch nhịp với nhau — ví dụ cơ thể hoảng sợ nhưng nhận thức biết mình đang an toàn?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Cảm xúc biến mất hoàn toàn</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Cảm xúc trở nên mơ hồ, và não dùng ngữ cảnh, niềm tin để "đọc" — đây chính là nơi cách nhìn của Barrett nhảy vào</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Luôn dẫn đến một xu hướng hành động mạnh mẽ</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Cơ thể buộc phải ngừng phản ứng để theo nhận thức</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Khi các thành phần lệch nhịp, không có một "bản ghi" thống nhất để não đọc — nó lấp khoảng trống bằng ngữ cảnh, kinh nghiệm và khái niệm (Chương 2). Cùng một trạng thái tim đập nhanh có thể thành "phấn khích" hay "hoảng loạn" tùy bối cảnh.</div>
+      </fieldset>
+
+      <fieldset data-answer="1">
+        <legend>2. Vì sao việc "đọc cảm xúc qua nét mặt" không đáng tin như ta tưởng, theo cách nhìn của Barrett?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Vì các biểu lộ cơ bản hoàn toàn không tồn tại trên thế giới</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Vì cùng một biểu lộ có thể gắn với nhiều cảm xúc khác nhau — ngữ cảnh đóng vai trò quyết định</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Vì khuôn mặt không bao giờ biểu lộ cảm xúc</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Vì con người không có bất kỳ biểu lộ bẩm sinh nào</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Cùng một khuôn mặt cau có có thể là giận, tập trung, đau hay khó chịu — Barrett ước tính chỉ khoảng một phần ba số người cau có khi giận. Mặt chỉ là một đầu vào; não dựng cảm xúc từ ngữ cảnh và khái niệm.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>3. Điểm khác biệt quan trọng nhất giữa cảm xúc và tâm trạng là gì?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Tâm trạng luôn mạnh hơn cảm xúc</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Cảm xúc kéo dài nhiều ngày, còn tâm trạng chỉ kéo dài vài giây</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Cảm xúc có đối tượng cụ thể và thường ngắn; tâm trạng lan tỏa, kéo dài và không gắn với đối tượng rõ ràng</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Không có khác biệt — hai từ chỉ cùng một thứ</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> "Tức vì bị ngắt lời" là cảm xúc — có đối tượng, nhanh, mạnh. "Hôm nay chán nản" là tâm trạng — nền cảm giác lan tỏa, không đối tượng. Tâm trạng không thắng hơn cảm xúc, nhưng nó khuếch đại mọi cảm xúc bật trên nền của nó.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra đáp án</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <!-- Sources -->
+    <h2 id="sources">Nguồn tài liệu &amp; đọc thêm</h2>
+    <p>Mỗi cột mốc bằng chứng trong bài được neo vào một nguồn tra được dưới đây. Các con số nhạy cảm được làm mềm thành ngôn ngữ tương đối trong thân bài; chi tiết định lượng có trong nguồn.</p>
+    <ul>
+      <li><a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12404502/">PMC</a> — Nghiên cứu 2025 về sự tinh tế phân biệt cảm xúc và khả năng chống chịu (thanh thiếu niên, tiếp xúc bạo lực), dùng trong Chương 6.</li>
+      <li><a class="source" href="https://pubmed.ncbi.nlm.nih.gov/12930476/">PubMed</a> — Talarico, J. M., &amp; Rubin, D. C., 2003, "Confidence, Not Consistency, Characterizes Flashbulb Memories", <em>Psychological Science</em> (nghiên cứu 11/9 tại Đại học Duke), dùng trong Chương 5.</li>
+      <li><a class="source" href="https://www.frontiersin.org/journals/behavioral-neuroscience/articles/10.3389/fnbeh.2022.910317/full">Frontiers in Behavioral Neuroscience</a> — Tổng quan 2022 về giấc ngủ và trí nhớ cảm xúc, gồm thí nghiệm "viết lại hình ảnh" + ngủ trưa 90 phút (Azza và cộng sự, 2022) về tái cấu trúc ký ức, dùng trong Chương 5.</li>
+      <li><a class="source" href="https://link.springer.com/article/10.1007/s40675-024-00306-8">Current Sleep Medicine Reports</a> — Tổng quan 2024 về giấc ngủ và trí nhớ cảm xúc (giả thuyết "tagging", mô hình "sleep to remember, sleep to forget"), dùng trong Chương 5.</li>
+      <li><a class="source" href="https://wrap.warwick.ac.uk/id/eprint/189520/">Warwick Research Archive</a> — Thử nghiệm SLEEP: CBT-I kỹ thuật số + huấn luyện điều chỉnh cảm xúc tại nơi làm việc, <em>Psychological Medicine</em>, 2025 (DOI 10.1017/S0033291725000194), dùng trong Chương 4.</li>
+      <li><a class="source" href="https://www.scientificamerican.com/article/darwin-was-wrong-your-facial-expressions-do-not-reveal-your-emotions/">Scientific American</a> — Barrett, L. F., 2022, "Facial Expressions Do Not Reveal Emotions" (kèm tổng hợp tại <a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6640856/">PMC</a>), dùng trong Chương 2 và 6.</li>
+      <li><a class="source" href="https://darwin-online.org.uk/converted/published/1872_Expression_F1142/1872_Expression_F1142.html">Darwin Online</a> — Darwin, C., 1872, <em>The Expression of the Emotions in Man and Animals</em> (bản quét toàn văn; ghi chú lịch sử tại <a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2781895/">PMC</a>), dùng trong Chương 2.</li>
+      <li><a class="source" href="https://news.gallup.com/poll/695963/tracking-world-emotional-health.aspx">Gallup</a> — "Tracking the World's Emotional Health", 2025 (dữ liệu khảo sát 2024: lo âu 39%, căng thẳng 37%, đau đớn 32%, buồn 26%, tức giận 22%), dùng trong Chương 1.</li>
+    </ul>
+
+    <div class="footer">
+      <p>Phím tắt: <span class="kbd">J</span>/<span class="kbd">K</span> cuộn · <span class="kbd">F</span> chế độ tập trung · <span class="kbd">T</span> đổi giao diện · <span class="kbd">P</span> in ấn</p>
+    </div>
+
+  </main>
+
+  <!-- =========================================================
+       RIGHT — MARGINALIA (sidenotes)
+       ========================================================= -->
+  <aside class="marginalia" aria-label="Ghi chú lề">
+
+    <!-- Contextual Amplifier — hover any .term-amp[data-note] in the canvas to expand its note here. -->
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Thuật ngữ mở rộng</span>
+      <p class="amplifier__empty">Di chuột vào một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng định nghĩa tại đây.</p>
+    </div>
+
+    <!-- Amplifier notes pool — id must match the data-note on the corresponding .term-amp in the canvas. -->
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="tam-trang">
+        <span class="amplifier__term">Tâm trạng</span>
+        <p class="amplifier__body">Nền cảm giác lan tỏa kéo dài hàng giờ–hàng ngày, không gắn với đối tượng. Nó "nhuộm" cách bạn đọc mọi sự kiện: cùng một lời nhận xét, người đang vui đọc thành khen, người đang chán đọc thành chê. Tâm trạng không tạo ra cảm xúc, nhưng nó khuếch đại hoặc giảm bớt chúng — và bạn có thể dùng nó làm manh mối chẩn đoán: nếu một "cảm xúc" kéo dài cả ngày không đối tượng, rất có thể bạn đang ở trong một tâm trạng, không phải một cảm xúc.</p>
+      </div>
+      <div data-note-id="tinh-khi">
+        <span class="amplifier__term">Tính khí</span>
+        <p class="amplifier__body">Khuynh hướng sinh học ổn định xuất hiện từ rất sớm (trẻ sơ sinh đã khác nhau về mức dễ bị kích thích). Đừng nhầm: tính khí là "nhiệt độ cơ bản", còn cảm xúc là "các cơn sốt". Tính khí ít thay đổi nhưng không phải số phận — kỹ năng điều chỉnh cảm xúc (Chương 4–5) vận hành trên nền nhiệt độ đó và vẫn tạo ra khác biệt lớn.</p>
+      </div>
+      <div data-note-id="cam-xuc-nen">
+        <span class="amplifier__term">Cảm xúc nền (affect)</span>
+        <p class="amplifier__body">Trạng thái nền được mô tả bằng hai trục: valence (dễ chịu–khó chịu) và arousal (kích thích cao–thấp). Luôn chạy, ngay cả khi không có cảm xúc nào nổi bật. Nó là "nguyên liệu thô" mà não dựng nên cảm xúc cụ thể từ đó — và là nền tảng của bản đồ hai chiều trong Chương 3.</p>
+      </div>
+      <div data-note-id="appraisal">
+        <span class="amplifier__term">Đánh giá (appraisal)</span>
+        <p class="amplifier__body">Công đoạn não gán ý nghĩa cho sự kiện: liên quan đến tôi không, tốt hay xấu, đối phó được không. Đây là lý do cùng một sự kiện tạo ra những cảm xúc khác nhau ở những người khác nhau. Và đây cũng là nơi các kỹ thuật "đánh giá lại" (Chương 4) can thiệp: đổi ý nghĩa, đổi cảm xúc.</p>
+      </div>
+      <div data-note-id="interoception">
+        <span class="amplifier__term">Interoception</span>
+        <p class="amplifier__body">Khả năng não cảm nhận trạng thái bên trong cơ thể — nhịp tim, dạ dày, nhịp thở, căng cơ. Là "nguyên liệu thô" mà não dựng nên cảm giác cảm xúc từ đó: chương 4 giải thích vì sao cùng một trạng thái tim đập nhanh có thể thành phấn khích hay hoảng loạn tùy ngữ cảnh, và chương 5 dạy bạn đọc chính kho dữ liệu này.</p>
+      </div>
+      <div data-note-id="granularity">
+        <span class="amplifier__term">Sự tinh tế phân biệt cảm xúc</span>
+        <p class="amplifier__body">Khả năng phân biệt các sắc thái cảm xúc của mình thay vì gộp vào vài từ lớn. Nghiên cứu gợi ý người có độ tinh tế cao định vị chính xác hơn, hành động đúng hơn, và chống chịu tốt hơn trước căng thẳng. Đây là kỹ năng — có thể luyện bằng cách viết nhật ký cảm xúc chi tiết và trau dồi từ vựng cảm xúc (Chương 3, 5).</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Ghi chú lề 1</strong>
+      Darwin viết <em>The Expression of the Emotions in Man and Animals</em> chỉ trong khoảng bốn tháng (1871–72) — và là một trong những cuốn sách khoa học đầu tiên đưa ảnh chụp vào làm bằng chứng.
+    </div>
+    <div class="sidenote">
+      <strong>Ghi chú lề 2</strong>
+      Nghiên cứu thực địa của Ekman với người Fore ở New Guinea — một cộng đồng chưa tiếp xúc truyền thông phương Tây — vẫn nhận diện được các biểu lộ "cơ bản", từng là cột trụ cho luận điểm "cảm xúc là mạch cứng" (Chương 2).
+    </div>
+    <div class="sidenote">
+      <strong>Giai thoại khoa học</strong>
+      Năm 1884, William James viết: "Chúng ta buồn vì khóc, không khóc vì buồn" — luận điểm đảo ngược trật tự "cảm xúc → cơ thể" thành "cơ thể → cảm xúc", tiền thân của khái niệm interoception ngày nay (Chương 4).
+    </div>
+  </aside>
+
+</div>
+
+<!-- Floating controls -->
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật/tắt chế độ tập trung">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Đổi giao diện (T)" aria-label="Đổi giao diện sáng/tối">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</div>
+
+<script>
+/* ============================================================
+   PERSISTENCE — theme + reading position + quiz state
+   Uses localStorage. Opened directly in a browser, so localStorage is available.
+============================================================ */
+const STORAGE_KEY = 'edu-notes:' + (document.title || 'untitled');
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY + ':' + k)); }catch{ return null; } },
+  set(k,v){ try{ localStorage.setItem(STORAGE_KEY + ':' + k, JSON.stringify(v)); }catch{} },
+};
+
+/* ============================================================
+   THEME
+============================================================ */
+(function initTheme(){
+  const saved = store.get('theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  store.set('theme', next);
+});
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function initFocus(){
+  if(store.get('focus')) document.body.classList.add('focus-mode');
+})();
+document.getElementById('focusBtn').addEventListener('click', () => {
+  document.body.classList.toggle('focus-mode');
+  const on = document.body.classList.contains('focus-mode');
+  document.getElementById('focusBtn').setAttribute('data-active', on ? 'true' : 'false');
+  store.set('focus', on);
+});
+
+/* ============================================================
+   TABLE OF CONTENTS — auto-generate from h2/h3
+============================================================ */
+(function buildTOC(){
+  const canvas = document.getElementById('canvas');
+  const toc = document.getElementById('toc');
+  const headings = canvas.querySelectorAll('h2, h3');
+  headings.forEach(h => {
+    if(!h.id){
+      h.id = h.textContent.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g,'')
+        .trim().replace(/\s+/g,'-').slice(0,60);
+    }
+    const li = document.createElement('li');
+    if(h.tagName === 'H3') li.className = 'toc-l3';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+})();
+
+/* ============================================================
+   INTERSECTION OBSERVER — highlight current section
+============================================================ */
+(function initObserver(){
+  const links = document.querySelectorAll('.toc a');
+  const map = new Map();
+  links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = map.get(e.target.id);
+      if(!link) return;
+      if(e.isIntersecting){
+        document.querySelectorAll('.toc a.is-active').forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  document.querySelectorAll('#canvas h2, #canvas h3').forEach(h => observer.observe(h));
+})();
+
+/* ============================================================
+   PROGRESS BAR + reading position restore
+============================================================ */
+(function initProgress(){
+  const fill = document.getElementById('progressFill');
+  function update(){
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    fill.style.width = pct + '%';
+    store.set('scroll', scrolled);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  const saved = store.get('scroll');
+  if(typeof saved === 'number' && saved > 100){
+    setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 60);
+  }
+})();
+
+/* ============================================================
+   FLIP CARDS — click + keyboard support
+============================================================ */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+  card.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      card.classList.toggle('is-flipped');
+    }
+  });
+});
+
+/* ============================================================
+   QUIZ — auto grade + persist
+============================================================ */
+(function initQuiz(){
+  const quiz = document.getElementById('quiz');
+  if(!quiz) return;
+  const check = document.getElementById('quizCheck');
+  const reset = document.getElementById('quizReset');
+  const score = document.getElementById('quizScore');
+
+  const prior = store.get('quiz') || {};
+  Object.entries(prior).forEach(([name, val]) => {
+    const input = quiz.querySelector(`input[name="${name}"][value="${val}"]`);
+    if(input) input.checked = true;
+  });
+
+  quiz.addEventListener('change', () => {
+    const state = {};
+    quiz.querySelectorAll('input[type=radio]:checked').forEach(i => state[i.name] = i.value);
+    store.set('quiz', state);
+  });
+
+  check.addEventListener('click', () => {
+    let correct = 0, total = 0;
+    quiz.querySelectorAll('fieldset').forEach(fs => {
+      const answer = parseInt(fs.dataset.answer, 10);
+      const selected = fs.querySelector('input:checked');
+      total++;
+      fs.querySelectorAll('.quiz__option').forEach(o => {
+        o.classList.remove('correct-answer','incorrect-answer');
+      });
+      const correctOption = fs.querySelector(`input[value="${answer}"]`);
+      if(correctOption) correctOption.closest('.quiz__option').classList.add('correct-answer');
+      if(selected && parseInt(selected.value, 10) !== answer){
+        selected.closest('.quiz__option').classList.add('incorrect-answer');
+      }
+      if(selected && parseInt(selected.value, 10) === answer) correct++;
+    });
+    quiz.classList.add('is-graded');
+    const pct = Math.round((correct / total) * 100);
+    let msg = `${correct} / ${total} đúng (${pct}%)`;
+    if(pct === 100) msg += ' — 🎯 xuất sắc';
+    else if(pct >= 66) msg += ' — vững vàng';
+    else msg += ' — nên đọc lại phần Ranh giới một lượt';
+    score.textContent = msg;
+  });
+
+  reset.addEventListener('click', () => {
+    quiz.querySelectorAll('input[type=radio]').forEach(i => i.checked = false);
+    quiz.querySelectorAll('.quiz__option').forEach(o => o.classList.remove('correct-answer','incorrect-answer'));
+    quiz.classList.remove('is-graded');
+    score.textContent = '';
+    store.set('quiz', {});
+  });
+})();
+
+/* ============================================================
+   KEYBOARD SHORTCUTS
+============================================================ */
+document.addEventListener('keydown', e => {
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  switch(e.key.toLowerCase()){
+    case 'j': window.scrollBy({ top: 200, behavior: 'smooth' }); break;
+    case 'k': window.scrollBy({ top: -200, behavior: 'smooth' }); break;
+    case 'f': document.getElementById('focusBtn').click(); break;
+    case 't': document.getElementById('themeBtn').click(); break;
+    case 'p': window.print(); break;
+  }
+});
+
+/* ============================================================
+   PHASE ORBIT — light up phase nodes as reader scrolls;
+   clicking a node smooth-scrolls to that phase.
+============================================================ */
+(function initOrbit(){
+  const nodes = Array.from(document.querySelectorAll('.orbit__node'));
+  if(!nodes.length) return;
+  const reached = new Set(store.get('reached') || []);
+  nodes.forEach(n => {
+    if(reached.has(n.dataset.target)) n.setAttribute('data-reached','true');
+  });
+  nodes.forEach(n => {
+    n.addEventListener('click', () => {
+      const target = document.getElementById(n.dataset.target);
+      if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+  const targets = nodes.map(n => document.getElementById(n.dataset.target)).filter(Boolean);
+  if(!targets.length) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const node = nodes.find(n => n.dataset.target === e.target.id);
+      if(!node) return;
+      if(e.isIntersecting){
+        node.setAttribute('data-reached','true');
+        reached.add(e.target.id);
+        store.set('reached', Array.from(reached));
+        nodes.forEach(n => n.removeAttribute('data-active'));
+        node.setAttribute('data-active','true');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  targets.forEach(t => observer.observe(t));
+})();
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER — hover .term-amp[data-note] → fill #amplifier
+============================================================ */
+(function initAmplifier(){
+  const amp = document.getElementById('amplifier');
+  const pool = document.getElementById('ampNotes');
+  if(!amp || !pool) return;
+  const emptyHtml = amp.innerHTML;
+  let currentId = null;
+
+  function show(id){
+    if(id === currentId) return;
+    const note = pool.querySelector(`[data-note-id="${id}"]`);
+    if(!note) return;
+    currentId = id;
+    amp.innerHTML = '<span class="amplifier__label">Thuật ngữ mở rộng</span>' + note.innerHTML;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+    document.querySelectorAll(`.term-amp[data-note="${id}"]`).forEach(t => t.classList.add('is-active'));
+  }
+  function reset(){
+    currentId = null;
+    amp.innerHTML = emptyHtml;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+  }
+
+  document.querySelectorAll('.term-amp[data-note]').forEach(t => {
+    t.addEventListener('mouseenter', () => show(t.dataset.note));
+    t.addEventListener('focus', () => show(t.dataset.note));
+    t.setAttribute('tabindex','0');
+  });
+  const canvas = document.getElementById('canvas');
+  if(canvas){
+    canvas.addEventListener('mouseleave', reset);
+  }
+})();
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINTS — textarea persistence + Compare to Expert
+============================================================ */
+(function initCheckpoints(){
+  document.querySelectorAll('.checkpoint').forEach(cp => {
+    const id = cp.dataset.checkpointId;
+    const ta = cp.querySelector('textarea');
+    const savedLabel = cp.querySelector('[data-checkpoint-saved]');
+    const revealBtn = cp.querySelector('[data-checkpoint-reveal]');
+    if(!id || !ta) return;
+
+    const prior = store.get('cp:' + id);
+    if(prior){ ta.value = prior; if(savedLabel) savedLabel.textContent = 'Đã lưu'; }
+
+    let t;
+    ta.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        store.set('cp:' + id, ta.value);
+        if(savedLabel) savedLabel.textContent = 'Đã lưu';
+      }, 400);
+    });
+
+    if(revealBtn){
+      revealBtn.addEventListener('click', () => {
+        cp.classList.toggle('is-revealed');
+        revealBtn.textContent = cp.classList.contains('is-revealed')
+          ? 'Ẩn câu trả lời mẫu'
+          : 'So sánh với câu trả lời mẫu';
+      });
+    }
+  });
+})();
+
+/* ============================================================
+   LAUNCH PAD — progressive hint reveal
+============================================================ */
+(function initLaunchpad(){
+  const btn = document.getElementById('hintBtn');
+  if(!btn) return;
+  const hints = Array.from(document.querySelectorAll('.launchpad__hint'));
+  const total = hints.length;
+  let shown = 0;
+
+  const prior = parseInt(store.get('hints') || 0, 10);
+  for(let i=0; i<prior && i<total; i++){
+    hints[i].classList.add('is-visible');
+    shown = i + 1;
+  }
+  updateBtn();
+
+  btn.addEventListener('click', () => {
+    if(shown >= total) return;
+    hints[shown].classList.add('is-visible');
+    shown++;
+    store.set('hints', shown);
+    updateBtn();
+  });
+
+  function updateBtn(){
+    if(shown >= total){
+      btn.textContent = 'Đã mở hết gợi ý';
+      btn.disabled = true;
+    } else {
+      btn.textContent = `Mở gợi ý ${shown + 1} trong ${total}`;
+    }
+  }
+})();
+</script>
+</body>
+</html>
