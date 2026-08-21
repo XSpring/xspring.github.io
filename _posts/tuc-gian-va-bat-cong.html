@@ -1,0 +1,2824 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cảm xúc con người — Khảo cứu #4: Tức giận và bất công — ngọn lửa của lẽ phải</title>
+<meta name="description" content="Khảo cứu #4 trong loạt Cảm xúc con người: tức giận là ngọn lửa của lẽ phải. Mảnh ghép cơ thể (phản ứng chiến đấu, hạch hạnh nhân, 'giận mất khôn'), mảnh ghép tâm lý (phán đoán bất công + đổ lỗi, thiên kiến đọc ý xấu, lầm tưởng xả giận, nghiền ngẫm), chức năng của giận (tín hiệu dừng lại, cảm xúc đàm phán, hành động tập thể chống bất công), ranh giới (IED, tim mạch), và góc nhìn Đông–Tây (忍, 怒伤肝, Trung–Hòa) cùng bốn công cụ giữ ngọn lửa trong bếp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg:            #FDFBF7;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #2D3748;
+  --text-muted:    #718096;
+  --text-strong:   #1A202C;
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  /* Secondary accent — used for interactive elements (probes, hints, checkpoints)
+     so structural accents (teal) stay visually separate from "try this" accents (amber). */
+  --accent2:        #B7791F;
+  --accent2-strong: #975A16;
+  --accent2-soft:   #FEEBC8;
+  --border:        #E4DFD5;
+  --sidenote-bg:   #EDF2F7;
+  --code-bg:       #EDF2F7;
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #1A202C;
+  --bg-elevated:   #2D3748;
+  --bg-sunken:     #171923;
+  --text:          #E2E8F0;
+  --text-muted:    #A0AEC0;
+  --text-strong:   #F7FAFC;
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent2:        #F6AD55;
+  --accent2-strong: #FBD38D;
+  --accent2-soft:   #4A2E14;
+  --border:        #2D3748;
+  --sidenote-bg:   #2A2F3A;
+  --code-bg:       #2A2F3A;
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: var(--line);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   PROGRESS BAR (fixed top)
+============================================================ */
+.progress-bar{
+  position: fixed; top:0; left:0; right:0;
+  height: 3px;
+  background: transparent;
+  z-index: 100;
+}
+.progress-bar__fill{
+  height:100%;
+  width:0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+
+/* ============================================================
+   LAYOUT — 3 column grid
+============================================================ */
+.app{
+  display:grid;
+  grid-template-columns: minmax(220px, 20%) minmax(0, 1fr) minmax(240px, 20%);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 32px 128px;
+}
+
+.navigator{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding-right: 8px;
+}
+.navigator::-webkit-scrollbar{width:6px}
+.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+.canvas{
+  max-width: var(--measure);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.marginalia{
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Focus mode: collapse side panels */
+body.focus-mode .navigator,
+body.focus-mode .marginalia{
+  display:none;
+}
+body.focus-mode .app{
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+/* Mobile */
+@media (max-width: 960px){
+  .app{
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px 96px;
+  }
+  .navigator{
+    position: relative;
+    top: 0;
+    max-height: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .marginalia{
+    order: 3;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+}
+
+/* ============================================================
+   NAVIGATOR
+============================================================ */
+.navigator__meta{
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.navigator__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+.navigator__reading-time{
+  color: var(--text);
+  font-size: 13px;
+}
+
+.toc{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc li{margin: 2px 0}
+.toc a{
+  display: block;
+  padding: 6px 10px;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition);
+  line-height: 1.4;
+}
+.toc a:hover{
+  color: var(--text);
+  background: var(--sidenote-bg);
+}
+.toc a.is-active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--sidenote-bg);
+  font-weight: 500;
+}
+.toc .toc-l3{ padding-left: 20px; font-size: 13px }
+
+/* ============================================================
+   CANVAS (main reading area)
+============================================================ */
+.canvas h1{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin: 8px 0 16px;
+  letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--text-strong);
+  margin: 56px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+.canvas h2:first-of-type{ border-top: none; padding-top: 0 }
+.canvas h3{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-strong);
+  margin: 32px 0 12px;
+  scroll-margin-top: 24px;
+}
+.canvas p{ margin: 0 0 16px }
+.canvas strong{ color: var(--text-strong); font-weight: 700 }
+.canvas em{ font-style: italic }
+.canvas a{
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.canvas a:hover{ color: var(--accent-strong) }
+
+/* Source citation — subtle inline badge for linked evidence */
+.source{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--sidenote-bg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all var(--transition);
+}
+.source::before{ content: "↗ "; opacity: .6 }
+.source:hover{
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+/* Chart caption line — usually holds the data source */
+.bar-chart__caption{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+.bar-chart__caption a{ color: var(--text-muted); text-decoration: underline dotted }
+.bar-chart__caption a:hover{ color: var(--accent) }
+/* Provenance footer — printed when the note was generated without live web tools */
+.provenance-note{
+  margin: 32px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--sidenote-bg);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-left: 3px solid var(--text-muted);
+}
+
+.canvas ul, .canvas ol{
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.canvas li{ margin: 4px 0 }
+
+.canvas blockquote{
+  margin: 24px 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--sidenote-bg);
+  color: var(--text);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+}
+
+.canvas code{
+  font-family: var(--font-mono);
+  font-size: .9em;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.canvas pre{
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 24px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  position: relative;
+}
+.canvas pre code{ background: transparent; padding: 0 }
+
+/* Hook block (curiosity primer at the top) */
+.hook{
+  margin: 24px 0 48px;
+  padding: 24px 28px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.hook__label{
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Prerequisites and objectives blocks */
+.meta-block{
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.meta-block h4{
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.meta-block ul{ margin: 0; padding-left: 20px }
+.meta-block li{ margin: 4px 0; color: var(--text) }
+
+/* Callouts */
+.callout{
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--info);
+  background: var(--info-bg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+}
+.callout__label{
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.callout--tip{ border-left-color: var(--success); background: var(--success-bg) }
+.callout--tip .callout__label{ color: var(--success) }
+.callout--warn{ border-left-color: var(--warn); background: var(--warn-bg) }
+.callout--warn .callout__label{ color: var(--warn) }
+.callout--danger{ border-left-color: var(--danger); background: var(--danger-bg) }
+.callout--danger .callout__label{ color: var(--danger) }
+
+/* Feynman check */
+.feynman{
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+}
+.feynman::before{
+  content: "🧒 Explain in one sentence:";
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Tooltips on vocabulary */
+.term{
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+  position: relative;
+}
+.term:hover::after{
+  content: attr(data-def);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-strong);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-style: normal;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  z-index: 10;
+  box-shadow: var(--shadow);
+  line-height: 1.4;
+}
+
+/* Marginalia sidenotes */
+.sidenote{
+  margin: 24px 0;
+  padding: 12px 14px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.sidenote strong{ color: var(--text); display: block; margin-bottom: 4px; font-weight: 600 }
+
+/* ============================================================
+   FLIP CARD (active recall)
+============================================================ */
+.flip-card{
+  perspective: 1000px;
+  height: 180px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+.flip-card__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg) }
+
+.flip-card__face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__front{
+  background: var(--bg-elevated);
+}
+.flip-card__back{
+  background: var(--accent);
+  color: white;
+  transform: rotateY(180deg);
+}
+.flip-card__label{
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.flip-card__back .flip-card__label{ color: rgba(255,255,255,.85) }
+.flip-card__content{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PROGRESSIVE DISCLOSURE (details/summary)
+============================================================ */
+.deep-dive{
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+.deep-dive > summary{
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  transition: background var(--transition);
+}
+.deep-dive > summary::-webkit-details-marker{ display: none }
+.deep-dive > summary::before{
+  content: "▶";
+  color: var(--accent);
+  font-size: 10px;
+  transition: transform var(--transition);
+}
+.deep-dive[open] > summary::before{ transform: rotate(90deg) }
+.deep-dive > summary:hover{ background: var(--sidenote-bg) }
+.deep-dive__label{
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  margin-right: auto;
+}
+.deep-dive > *:not(summary){
+  padding: 0 18px 16px;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideDown{
+  from{ opacity: 0; transform: translateY(-8px) }
+  to  { opacity: 1; transform: translateY(0) }
+}
+
+/* ============================================================
+   CSS-ONLY BAR CHART
+============================================================ */
+.bar-chart{
+  margin: 32px 0;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.bar-chart__title{
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 16px;
+}
+.bar-row{
+  display: grid;
+  grid-template-columns: 140px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.bar-label{ color: var(--text) }
+.bar-track{
+  background: var(--sidenote-bg);
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill{
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  border-radius: 4px;
+  transition: width 400ms cubic-bezier(.4,0,.2,1);
+}
+.bar-row:hover .bar-fill{ filter: brightness(1.15) }
+.bar-value{ color: var(--text-muted); font-weight: 600; text-align: right }
+
+@media (max-width: 640px){
+  .bar-row{ grid-template-columns: 100px 1fr 40px; font-size: 13px }
+}
+
+/* ============================================================
+   CONCEPT FLOW (3-step)
+============================================================ */
+.concept-flow{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 32px 0;
+}
+.concept-flow__step{
+  padding: 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.concept-flow__step:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.concept-flow__num{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.concept-flow__arrow{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 20px;
+  user-select: none;
+}
+@media (max-width: 640px){
+  .concept-flow{ grid-template-columns: 1fr; }
+  .concept-flow__arrow{ transform: rotate(90deg); justify-self: center }
+}
+
+/* ============================================================
+   GLOSSARY
+============================================================ */
+.glossary{ margin: 32px 0 }
+.glossary dl{ margin: 0 }
+.glossary dt{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: 16px;
+  font-size: 15px;
+}
+.glossary dd{
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 15px;
+  padding-left: 0;
+}
+
+/* ============================================================
+   QUIZ
+============================================================ */
+.quiz{
+  margin: 56px 0 24px;
+  padding: 32px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.quiz h2{
+  font-family: var(--font-sans);
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.quiz__intro{
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.quiz fieldset{
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.quiz legend{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.quiz__option{
+  display: block;
+  padding: 12px 16px;
+  margin: 6px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  transition: all var(--transition);
+  position: relative;
+  padding-left: 44px;
+}
+.quiz__option::before{
+  content: "";
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  transition: all var(--transition);
+}
+.quiz__option:hover{ border-color: var(--accent); background: var(--sidenote-bg) }
+.quiz__option input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.quiz__option:has(input:checked){
+  border-color: var(--accent);
+  background: var(--sidenote-bg);
+}
+.quiz__option:has(input:checked)::before{
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg-elevated);
+}
+.quiz__option.correct-answer{
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--text-strong);
+}
+.quiz__option.correct-answer::before{
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 3px var(--success-bg);
+}
+.quiz__option.incorrect-answer{
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+.quiz__option.incorrect-answer::before{
+  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: inset 0 0 0 3px var(--danger-bg);
+}
+
+.quiz__explanation{
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__explanation{ display: block }
+
+.quiz__actions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.btn{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--transition);
+}
+.btn:hover{ background: var(--accent-strong); border-color: var(--accent-strong) }
+.btn--ghost{ background: transparent; color: var(--accent) }
+.btn--ghost:hover{ background: var(--sidenote-bg); color: var(--accent-strong) }
+
+.quiz__score{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__score{ display: block }
+
+/* ============================================================
+   FLOATING CONTROLS
+============================================================ */
+.controls{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+}
+.control-btn{
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  padding: 0;
+}
+.control-btn:hover{
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.control-btn svg{ width: 18px; height: 18px }
+.control-btn[data-active="true"]{ background: var(--accent); color: white }
+
+/* ============================================================
+   PRINT
+============================================================ */
+@media print{
+  .navigator, .marginalia, .controls, .progress-bar, .quiz__actions{ display: none !important }
+  .app{ grid-template-columns: 1fr; max-width: none; padding: 0 }
+  body{ background: white; color: black; font-size: 12pt }
+  .canvas h1, .canvas h2, .canvas h3{ page-break-after: avoid }
+  .flip-card{ height: auto }
+  .flip-card__inner{ transform: none !important; height: auto }
+  .flip-card__face{ position: static; padding: 8px 0; box-shadow: none; border: none }
+  .flip-card__back{ display: block; background: white; color: black }
+  .deep-dive[open] > *:not(summary){ animation: none }
+}
+
+/* ============================================================
+   PHASE ORBIT (6-node progress in left navigator)
+============================================================ */
+.orbit{
+  margin: 0 0 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.orbit__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+.orbit__track{
+  position: relative;
+  padding-left: 22px;
+}
+.orbit__track::before{
+  content: "";
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.orbit__node{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--transition);
+  user-select: none;
+}
+.orbit__node::before{
+  content: "";
+  position: absolute;
+  left: -22px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  transition: all var(--transition);
+  box-sizing: border-box;
+}
+.orbit__node[data-reached="true"]::before{
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.orbit__node[data-active="true"]{
+  color: var(--text-strong);
+  font-weight: 600;
+}
+.orbit__node[data-active="true"]::before{
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.orbit__node:hover{ color: var(--text) }
+
+/* ============================================================
+   MISCONCEPTION PRE-MORTEM (State 2 tail)
+============================================================ */
+.premortem{
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--accent2-soft);
+  border-left: 4px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text);
+}
+.premortem__label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 8px;
+}
+.premortem__wrong{ text-decoration: line-through; color: var(--text-muted) }
+.premortem__truth{ font-weight: 600; color: var(--text-strong) }
+
+/* ============================================================
+   SCAFFOLD CARD (S/I/P/R micro-loop, State 3)
+============================================================ */
+.scaffold{
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.scaffold__concept{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scaffold__concept::before{
+  content: "◆";
+  color: var(--accent);
+  font-size: 12px;
+}
+.scaffold__row{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px 16px;
+  margin: 12px 0;
+  align-items: start;
+}
+.scaffold__row-label{
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 4px;
+}
+.scaffold__row-body{ font-size: 15px; line-height: 1.65 }
+.scaffold__row-body p:last-child{ margin-bottom: 0 }
+
+/* Probe/Resolve details — nested within the scaffold card */
+.scaffold__probe{
+  margin: 8px 0 0;
+  border: 1px dashed var(--accent2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  overflow: hidden;
+}
+.scaffold__probe > summary{
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent2-strong);
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  user-select: none;
+  transition: background var(--transition);
+}
+.scaffold__probe > summary::-webkit-details-marker{ display: none }
+.scaffold__probe > summary::before{
+  content: "🤔 Probe";
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent2-strong);
+}
+.scaffold__probe[open] > summary::after{
+  content: "";
+  position: absolute;
+}
+.scaffold__probe > summary:hover{ background: var(--accent2-soft) }
+.scaffold__resolve{
+  padding: 12px 14px 14px 14px;
+  background: var(--accent2-soft);
+  border-top: 1px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.scaffold__resolve::before{
+  content: "💡 Resolve";
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINT (textarea + reveal)
+============================================================ */
+.checkpoint{
+  margin: 32px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+}
+.checkpoint__label{
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.checkpoint__question{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.checkpoint textarea{
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--transition);
+  box-sizing: border-box;
+}
+.checkpoint textarea:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.checkpoint__actions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.checkpoint__expert{
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  display: none;
+}
+.checkpoint.is-revealed .checkpoint__expert{ display: block; animation: slideDown 300ms cubic-bezier(.4,0,.2,1) }
+.checkpoint__expert-label{
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.checkpoint__saved{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   LAUNCH PAD (Extension Problem, State 6)
+============================================================ */
+.launchpad{
+  margin: 48px 0 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.launchpad::before{
+  content: "🚀";
+  position: absolute;
+  top: -16px; right: -8px;
+  font-size: 96px;
+  opacity: .06;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+.launchpad__label{
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--accent2);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.launchpad__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+.launchpad__problem{
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.launchpad__hints{
+  border-top: 1px dashed var(--border);
+  padding-top: 20px;
+  font-family: var(--font-sans);
+}
+.launchpad__hints-label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: block;
+}
+.launchpad__hint{
+  margin: 10px 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-left: 3px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  display: none;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.launchpad__hint.is-visible{ display: block }
+.launchpad__hint-label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 4px;
+  letter-spacing: .08em;
+}
+.launchpad__reveal{
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all var(--transition);
+}
+.launchpad__reveal:hover{
+  background: var(--accent2);
+  color: white;
+}
+.launchpad__reveal:disabled{
+  opacity: .4;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER (right-panel hover-to-elaborate)
+============================================================ */
+/* Terms in the canvas that are wired to amplifier notes */
+.canvas .term-amp{
+  border-bottom: 1px dashed var(--accent2);
+  cursor: help;
+  transition: background var(--transition);
+}
+.canvas .term-amp:hover,
+.canvas .term-amp.is-active{
+  background: var(--accent2-soft);
+  border-bottom-color: var(--accent2-strong);
+}
+/* The sticky slot at the top of the marginalia column */
+.amplifier{
+  position: sticky;
+  top: 24px;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: var(--accent2-soft);
+  border: 1px solid var(--accent2);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  min-height: 96px;
+  transition: opacity var(--transition);
+}
+.amplifier__label{
+  display: block;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 6px;
+}
+.amplifier__term{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+  display: block;
+  font-size: 14px;
+}
+.amplifier__body{ margin: 0 }
+.amplifier__empty{ color: var(--text-muted); font-style: italic }
+/* Hidden data pool — right-panel notes stored here, activated by JS */
+.amp-notes{ display: none }
+
+/* ============================================================
+   MISC
+============================================================ */
+.footer{
+  max-width: var(--measure);
+  margin: 64px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-align: center;
+}
+.kbd{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<div class="app">
+
+  <!-- =========================================================
+       LEFT — NAVIGATOR (sticky ToC)
+       ========================================================= -->
+  <aside class="navigator" aria-label="Table of contents">
+    <div class="navigator__meta">
+      <p class="navigator__title">Reading time</p>
+      <p class="navigator__reading-time" id="readingTime">~ 40 min</p>
+    </div>
+
+    <!-- Phase Orbit — 6 phase nodes that light up as the reader scrolls past each section.
+         Each node targets a section id in the canvas: #baseline, #bridge, #exposition, #application, #boundary, #synthesis. -->
+    <div class="orbit" aria-label="Learning phases">
+      <p class="orbit__title">Learning path</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Anchor</div>
+        <div class="orbit__node" data-target="bridge">2 · Bridge</div>
+        <div class="orbit__node" data-target="exposition">3 · Construct</div>
+        <div class="orbit__node" data-target="application">4 · Apply</div>
+        <div class="orbit__node" data-target="boundary">5 · Boundary</div>
+        <div class="orbit__node" data-target="synthesis">6 · Fade</div>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="toc" id="toc">
+        <!-- Auto-populated by JS from h2/h3 in .canvas -->
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- =========================================================
+       MIDDLE — CANVAS (main content)
+       ========================================================= -->
+  <main class="canvas" id="canvas">
+
+    <h1>Cảm xúc con người — Khảo cứu #4: Tức giận và bất công — ngọn lửa của lẽ phải</h1>
+<!-- HOOK -->
+    <div class="hook">
+      <span class="hook__label">🎣 The hook</span>
+      <p>Bạn đang xếp hàng ở một quầy thanh toán. Một người chen ngang, còn cười khẩy vào mặt bạn. Có một luồng nhiệt dâng lên từ ngực lên cổ, tay bạn nắm lại, và trong đầu vang lên một câu: <em>"Thế này là không công bằng."</em> Không ai dạy bạn câu đó — não bạn tự soạn ra trong một phần giây. Tức giận là thứ cảm xúc bị mang tiếng xấu nhất: người ta gọi nó là "máu nóng", "kẻ phá hoại quan hệ", "kẻ thù của lý trí". Nhưng vì sao tiến hóa lại giữ lại một thứ nguy hiểm đến thế ở mọi con người? Câu trả lời, như bài này sẽ mở ra, là tức giận <em>không phải lỗi của bộ não</em>: nó là một trong những mảnh ghép được thiết kế tinh vi nhất của cảm xúc — <em>ngọn lửa của lẽ phải</em>, thứ năng lượng đã được trau chuốt hàng triệu năm để bảo vệ ranh giới, sửa sai, và khiến thế giới bớt bất công đi một chút.</p>
+    </div>
+
+    <!-- PREREQUISITES + OBJECTIVES -->
+    <div class="meta-block">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>Loạt <em>Khảo cứu</em> này chia cảm xúc thành các thành phần (trải nghiệm chủ quan, cơ thể, xu hướng hành động, biểu hiện) — đã trình bày ở <a href="cam-xuc-khao-cuu.html" target="_blank" rel="noopener">Khảo cứu #1</a>.</li>
+        <li>Ở <a href="noi-buon-va-mat-mat.html" target="_blank" rel="noopener">Khảo cứu #3</a>, chúng ta thấy nỗi buồn là cảm xúc của mất mát. Bài này nhìn vào người anh em của nó: cảm xúc của bất công.</li>
+        <li>Bạn đã từng tức giận — đó là điều kiện tiên quyết quan trọng nhất.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>By the end you will be able to…</h4>
+      <ul>
+        <li><strong>Giải thích</strong> vì sao tức giận là cảm xúc của bất công, và phân biệt nó với gây hấn (hành vi) và thù hằn (thái độ kéo dài).</li>
+        <li><strong>Mô tả</strong> mảnh ghép cơ thể của cơn giận: phản ứng chiến đấu, adrenaline, "nóng", và vì sao nó "làm mù" lý trí tạm thời.</li>
+        <li><strong>Áp dụng</strong> công thức phán đoán (đổ lỗi + bất công) để đọc hiểu bất kỳ cơn giận nào — của mình và của người khác.</li>
+        <li><strong>Đánh giá</strong> chức năng tiến hóa của tức giận: cảm xúc đàm phán, ngọn lửa của hành động tập thể chống bất công.</li>
+        <li><strong>Phân biệt</strong> giận lành, gây hấn bệnh lý, và rối loạn bùng nổ từng cơn (IED) theo DSM-5, qua lăng kính Đông–Tây (怒伤肝, nhẫn, Trung–Hòa).</li>
+      </ul>
+    </div> <h2 id="baseline">Anchor · Tức giận là cảm xúc của bất công</h2>
+<p>Chân lý nền tảng của cả bài này gọn trong một câu: <strong>tức giận là cảm xúc được kích hoạt khi ta tin rằng có điều gì đó <em>bất công</em> đang xảy ra — một quyền bị xâm phạm, một ranh giới bị vượt qua, một luật lệ ngầm bị phá vỡ — và ta <em>đổ lỗi</em> cho ai đó (hoặc cái gì đó) về chuyện ấy.</strong> Bạn đã biết tức giận là gì theo cách sâu nhất có thể — bạn đã từng giận. Điều bạn chưa biết là cái "luồng nhiệt dâng từ ngực lên cổ" ấy thực ra là một hệ thống gồm nhiều lớp: có lớp cơ thể, lớp tâm lý, lớp chức năng, và mỗi lớp là một mảnh ghép đã được chọn lọc qua hàng chục vạn năm. Trong chương này, ta gắn mảnh ghép nền: cái "báo động" bên trong bạn khi trật tự của thế giới vừa bị xáo trộn.</p>
+
+<h2 id="bridge">Bridge · Mô hình Ngọn lửa</h2>
+<p>Hãy tưởng tượng tức giận như <strong>một ngọn lửa</strong>. Cơn giận không tự sinh ra từ hư không — nó cần <strong>nhiên liệu</strong> để bùng lên, và thứ nhiên liệu đặc trưng nhất của loài người chính là <em>bất công</em>: oán ức, bị xử tệ, bị phản bội, bị coi thường. Ngọn lửa ấy cần <strong>ôxy</strong> để cháy — thứ ôxy ở đây là <em>không gian được bày tỏ và lắng nghe</em>: khi ai đó lắng nghe cơn giận của bạn, lửa cháy sáng nhưng có kiểm soát; khi bị bịt kín, lửa nghẹt thở và biến thành thứ nguy hiểm hơn nhiều.</p>
+<ul>
+  <li><strong>Lửa trong bếp</strong> — cơn giận lành: năng lượng tập trung, bảo vệ ranh giới, sửa sai, nấu chín một vấn đề. (Tâm lý học gọi là <em>giận có chức năng</em>.)</li>
+  <li><strong>Đám cháy</strong> — cơn giận mất kiểm soát: bạo lực, trả thù, đốt cả nhà lẫn mình. (Gọi là <em>gây hấn</em>.)</li>
+  <li><strong>Lửa bị bịt kín</strong> — kìm nén giận: không cháy bề mặt, nhưng âm ỉ, nổ muộn, và làm hại cơ thể.</li>
+</ul>
+<p>Gọi đây là <strong>Mô hình Ngọn lửa</strong>. Ba đặc tính của nó:</p>
+<ul>
+  <li><strong>Lửa mang năng lượng, không mang "tội"</strong> — ngọn lửa giận là năng lượng thật, đã được tiến hóa giữ lại vì nó có ích. Vấn đề không nằm ở việc "có lửa hay không", mà ở chỗ <em>lửa ấy đang ở trong bếp, đang đốt nhà, hay đang bị bịt kín</em>.</li>
+  <li><strong>Nhiên liệu quyết định độ cháy</strong> — cùng một ngọn lửa, nhiên liệu bất công càng nặng (càng bị xử tệ, càng oan ức) thì càng bùng to. Bớt nhiên liệu là bớt lửa — đây là chìa khóa mà chương 6 sẽ dùng.</li>
+  <li><strong>Ôxy quyết định "cháy ra sao"</strong> — được lắng nghe (ôxy), lửa cháy sáng có ích; bị im lặng cấm đoán, lửa bị bịt kín và nổ muộn. Kỹ năng lớn nhất của người trưởng thành là <em>mở cửa cho lửa có ôxy mà không để nhà cháy</em>.</li>
+</ul>
+<p>Mô hình này không phải của tôi — nó là cách dễ hình dung để đọc lại hơn nửa thế kỷ nghiên cứu về tức giận, từ khảo sát cơn giận đời thường của James Averill <a class="source" href="https://link.springer.com/book/10.1007/978-1-4612-5743-1" target="_blank" rel="noopener">Averill, 1982</a> đến các thí nghiệm phòng lab về xả giận của Brad Bushman <a class="source" href="https://www.sciencedirect.com/science/article/abs/pii/S0092656602003360" target="_blank" rel="noopener">Bushman, 2002</a>. Tên gọi và bản đồ tương ứng sẽ được dùng xuyên suốt bài, kể cả trong bảng thuật ngữ cuối bài.</p>
+
+<!-- Flow diagram anchoring the bridge -->
+<div class="concept-flow">
+  <div class="concept-flow__step"><span class="concept-flow__num">01</span>Nhiên liệu — bất công, oán ức, bị xử tệ</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">02</span>Ngọn lửa — cơn giận bùng lên, mang năng lượng</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">03</span>Lửa trong bếp · đám cháy · lửa bị bịt kín</div>
+</div>
+
+<!-- Misconception Pre-mortem -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+  <p><span class="premortem__wrong">"Người giận là người mất lý trí — kìm nén giận mới là người tốt."</span></p>
+  <p>Điều này sai vì <em>tức giận là cảm xúc mang thông tin: nó báo hiệu bất công và thúc đẩy sửa sai; và kìm nén kéo dài (bịt kín lửa) không làm giận biến mất — nó chuyển thành đau cơ thể, cáu gắt, và những cơn nổ muộn</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> giận làm "hẹp lý trí" <em>tạm thời</em> — nhưng đó là hệ quả của phản ứng cơ thể (chương 2), không phải bản chất của cảm xúc. Người trưởng thành không phải người không bao giờ giận, mà người <strong>để lửa cháy trong bếp</strong>: giận đúng, giận có ý thức, dùng năng lượng ấy để sửa sai thay vì đốt phá.</p>
+</div>
+
+<h2 id="exposition">Construct · Từng mảnh ghép của tức giận</h2>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch1-scaffold-1">
+  <h3 class="scaffold__concept">Ba từ hay bị trộn: tức giận, gây hấn, thù hằn</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trước tiên hãy tách ba thứ mà ngôn ngữ đời thường gộp chung. <strong class="term-amp" data-note="amp-injustice" tabindex="0">Tức giận</strong> là một <em>cảm xúc</em> — trải nghiệm chủ quan (nóng, bực), phản ứng cơ thể, và xu hướng hành động. <strong>Gây hấn</strong> là một <em>hành vi</em> — làm tổn thương ai đó có chủ ý. <strong>Thù hằn</strong> là một <em>thái độ kéo dài</em> — thế giới quan "người ta chống lại tôi" nuôi dưỡng giận mãn tính. Điểm mấu chốt từ khảo sát của Averill: <em>không phải cơn giận nào cũng dẫn đến gây hấn</em> — phần lớn cơn giận đời thường kết thúc bằng lời nói và sửa đổi, không bằng bạo lực <a class="source" href="https://link.springer.com/book/10.1007/978-1-4612-5743-1" target="_blank" rel="noopener">Averill, 1982</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bạn bị đồng nghiệp chiếm công — <em>tức giận</em> bùng lên. Bạn lên tiếng nói rõ ràng, đòi lại phần việc: giận nhưng không gây hấn. Bạn đập bàn, ném tài liệu, chửi vào mặt: giận <em>và</em> gây hấn. Suốt ba tuần sau bạn âm thầm tẩy chay, luôn nghĩ "công ty này chống lại mình": <em>thù hằn</em>. Ba tình huống cùng một cảm xúc khởi đầu — nhưng ba kết cục hoàn toàn khác nhau. Giữ cho cả ba tách biệt là bước đầu tiên của việc hiểu giận.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu giận không phải lúc nào cũng thành gây hấn, vì sao người ta cứ gắn chúng với nhau?</summary>
+    <div class="scaffold__resolve"><p>Vì giận là <em>xu hướng hành động</em> — nó "chuẩn bị" cơ thể để đối đầu — nhưng xu hướng không phải định mệnh. Giận chuẩn bị cho bạn hai lựa chọn: gây hấn (đốt phá) hoặc đòi lại công bằng (sửa sai). Người ta nhớ những vụ giận đi kèm bạo lực vì chúng gây hậu quả to — còn những cơn giận lành đã sửa được sai thì im lặng trôi qua. Đây là lý do thống kê "giận → bạo lực" bị phóng đại: ta chỉ nghe tin những đám cháy, không nghe tin những bữa ăn được nấu.</p></div>
+  </details>
+</section>
+<div class="feynman">Giận là ngọn lửa — còn gây hấn là đám cháy. Có lửa không có nghĩa là phải cháy nhà.</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch1-scaffold-2">
+  <h3 class="scaffold__concept">Giận cần hai nguyên liệu: bất công + đổ lỗi</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Các nhà nghiên cứu cảm xúc (Frijda, Lazarus, Scherer) thống nhất: cơn giận bật lên khi phán đoán hai điều cùng lúc — <em>(1) sự kiện là <strong>bất công</strong></em> (vi phạm chuẩn mực, xâm phạm quyền, phá vỡ kỳ vọng về công bằng) <em>và (2) ai đó <strong>đáng trách</strong></em> (có chủ ý, có thể ngăn được nhưng không ngăn). Đây chính là câu trả lời cho "vì sao chen ngang làm bạn giận mà mưa to thì không": mưa không đáng trách, người chen ngang thì đáng <a class="source" href="https://www.researchgate.net/publication/324653085_Sadness_the_Architect_of_Cognitive_Change" target="_blank" rel="noopener">Frijda et al., 1989</a> <a class="source" href="https://onlinelibrary.wiley.com/doi/10.1207/s15327558ijbm0101_3" target="_blank" rel="noopener">Lazarus, 1991</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Hai tình huống cùng gây khó chịu: (a) máy bay trễ 3 tiếng vì bão — bạn bực nhưng hiếm khi <em>nổi giận</em> với mây; (b) máy bay trễ 3 tiếng vì hãng bán chỗ quá tải, lơ là giờ giấc — bạn giận dữ, đòi bồi thường, viết review. Sự kiện có vẻ giống nhau, nhưng phán đoán bên trong khác nhau: bão "không đáng trách" (không ai cố ý), hãng bay "đáng trách" (có chủ ý, đáng lẽ ngăn được). <em>Cùng một sự kiện, khác phán đoán, khác cảm xúc.</em></p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao cùng bị chen ngang, người này giận dữ còn người kia chỉ nhún vai?</summary>
+    <div class="scaffold__resolve"><p>Vì phán đoán là cá nhân hóa. Người nhún vai đang đọc sự kiện khác: "người đó vội thật", "ngày nào cũng có chuyện này", "mình đứng sau thêm 30 giây thôi". Người giận dữ đang đọc: "nó coi thường mình", "ai cũng như thế thì còn gì công bằng". Cùng một nhiên liệu (bị chen ngang) nhưng lượng ôxy của cách diễn giải khác nhau — và điều này có nghĩa <em>bạn có thể thay đổi kích thước ngọn lửa bằng cách đổi cách đọc sự kiện</em>. Chương 3 và chương 6 sẽ mở rộng điểm này.</p></div>
+  </details>
+</section>
+<div class="feynman">Giận không bắt đầu bằng "có chuyện xấu xảy ra", mà bằng "có điều bất công và có người đáng trách".</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch1-scaffold-3">
+  <h3 class="scaffold__concept">Giận không phải hiếm — nó là khách quen của đời sống</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Dù có tiếng xấu, tức giận là cảm xúc rất phổ biến trong đời thường. Một nghiên cứu dùng kinh nghiệm lấy mẫu (experience sampling) cho thấy mọi người trải nghiệm giận khoảng <strong>6% thời gian</strong> — ít hơn hẳn bực bội (26%), buồn (21%), nhưng vẫn là vị khách quen, trung bình khoảng <strong>6 cơn giận trong 2 tuần</strong> <a class="source" href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2018.00123/full" target="_blank" rel="noopener">Frontiers in Psychology, 2018</a>. Một khảo sát quốc gia Mỹ còn cho thấy hơn một phần ba dân số "giận ai đó" ít nhất một ngày trong tuần <a class="source" href="https://sda.berkeley.edu/sdaweb/docs/gss24rel1/DOC/hcbk0263.htm" target="_blank" rel="noopener">General Social Survey, 1996</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Đừng lấy mình làm "người xấu tính" vì hay giận. Hãy nhìn con số: giận chiếm 6% thời gian — nghĩa là trong một ngày 16 tiếng thức, bạn giận chừng một tiếng, còn lại là các cảm xúc khác. Điều đáng nói không phải là "bạn có giận không" mà là <em>bạn đang làm gì với ngọn lửa đó</em>. Cũng nghiên cứu ấy cho thấy nguồn giận phổ biến nhất là <em>hành vi của người khác</em> — đúng như công thức "bất công + đổ lỗi": con người là nguồn bất công số một của con người <a class="source" href="https://doi.org/10.1111/jopy.12214" target="_blank" rel="noopener">Kashdan et al., J. of Personality 2015</a>.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu giận là "khách quen", vì sao người ta nghĩ giận là bất thường, là dấu hiệu xấu của bản thân?</summary>
+    <div class="scaffold__resolve"><p>Vì ta được dạy giận là "mất kiểm soát" và nhầm giận với gây hấn. Nhưng dữ liệu cho thấy giận là phản ứng định kỳ của hệ thần kinh — như cơn đói, cơn buồn ngủ. Vấn đề sức khỏe tâm thần không phải "có giận" mà là giận <em>quá dữ, quá lâu, hoặc kìm nén hoàn toàn</em> (chương 5). Coi giận là dấu hiệu xấu của bản thân giống như coi cơn đói là dấu hiệu yếu đuối — bạn sẽ bắt đầu "cấm" một chức năng sinh học bình thường.</p></div>
+  </details>
+</section>
+<div class="feynman">Giận không phải sự cố của đời sống — nó là một chức năng định kỳ, như đói và ngủ.</div>
+
+<!-- Bar chart: how common anger is -->
+<div class="bar-chart">
+  <div class="bar-chart__title">Thời gian trải nghiệm các cảm xúc trong đời thường — phần trăm các lần đo</div>
+  <div class="bar-row">
+    <div class="bar-label">Hạnh phúc</div>
+    <div class="bar-track"><div class="bar-fill" style="width:67.95%"></div></div>
+    <div class="bar-value">67,95%</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Bực bội</div>
+    <div class="bar-track"><div class="bar-fill" style="width:25.95%"></div></div>
+    <div class="bar-value">25,95%</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Buồn</div>
+    <div class="bar-track"><div class="bar-fill" style="width:21.5%"></div></div>
+    <div class="bar-value">21,5%</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Tức giận</div>
+    <div class="bar-track"><div class="bar-fill" style="width:6.19%"></div></div>
+    <div class="bar-value">6,19%</div>
+  </div>
+  <p class="bar-chart__caption">Tổng hợp từ <a class="source" href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2018.00123/full" target="_blank" rel="noopener">Frontiers in Psychology, 2018</a> (experience sampling; tổng &gt;100% vì các cảm xúc đồng xuất hiện). Đọc hình: tức giận không chiếm nhiều thời gian như tiếng tăm của nó — nhưng khi nó xuất hiện, nó kéo theo sức nặng lớn vì gắn với phán đoán bất công.</p>
+</div>
+
+<!-- Checkpoint 1 -->
+<div class="checkpoint" data-checkpoint-id="cp-tuc-gian-1">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Hãy nhớ lại một cơn giận gần đây của bạn (hoặc của người bạn quen). Dùng công thức "bất công + đổ lỗi", hãy xác định: (1) điều gì khiến bạn <em>cảm thấy bất công</em>, và (2) bạn <em>đổ lỗi cho ai</em> (hoặc cái gì)?</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>Gợi ý khung: (1) Mảnh "bất công" thường là một kỳ vọng bị vi phạm — "đáng lẽ tôi được…", "đáng lẽ chuyện này phải khác". (2) Mảnh "đổ lỗi" là chủ thể bạn gán trách nhiệm — người cụ thể, tổ chức, hoặc chính mình. Nếu bạn chỉ tìm được (1) mà không tìm được (2) — tức giận không có đối tượng — thường cảm xúc sẽ lơ lửng, khó xử lý, và dễ chuyển thành bực dọc chung. Viết ra hai mảnh này là bước đầu tiên của "dọn nhiên liệu": biết lửa đang cháy bằng gì.</p>
+  </div>
+</div>
+
+<h2 id="application">Apply · Đọc một cơn giận bằng công thức</h2>
+<p>Áp dụng công thức lên một kịch bản rất đời thường: <strong>sáng thứ hai, bạn đang tắc đường, một chiếc xe lách vào làn dành riêng cho xe buýt rồi chen vào đúng chỗ của bạn.</strong> Cơn giận bùng lên trong một phần giây. Đọc lại bằng công thức:</p>
+<ul>
+  <li><strong>Phán đoán bất công</strong>: "Mình xếp hàng đàng hoàng, nó không có quyền." Kỳ vọng về công bằng bị vi phạm — và mọi người đều mang kỳ vọng ấy, đó là lý do cả hàng xe cùng bức xúc.</li>
+  <li><strong>Đổ lỗi</strong>: "Nó cố ý, đáng lẽ nó biết." Người lái xe có chủ ý, có thể ngăn được — đủ tiêu chuẩn để não gán trách nhiệm.</li>
+  <li><strong>Ngọn lửa</strong>: nhiệt dâng, tay siết vô lăng, còi xe bấm lên. Đây là lúc Mô hình Ngọn lửa hỏi bạn: bạn muốn ngọn lửa này ở đâu? Trong bếp (thở sâu, tự nhủ "không đáng để mất bình tĩnh", tiếp tục lái an toàn), hay thành đám cháy (đuổi theo, chửi, tạo tình huống nguy hiểm)?</li>
+</ul>
+<p>Cùng một sự kiện, người này chỉ bực bội, người kia "bốc hỏa" — và chương 3 sẽ chỉ ra thứ làm ngọn lửa to lên một cách bí mật: <em>cách ta kể lại sự kiện trong đầu</em>.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Một người bạn kể: "Tôi vừa giận phát điên vì chiếc máy in hỏng đúng lúc phải nộp báo cáo." Dùng công thức "bất công + đổ lỗi", bạn sẽ hỏi câu gì để hiểu cơn giận ấy?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">Bạn nên tách hai mảnh: "Điều gì khiến bạn thấy <em>bất công</em> — đáng lẽ chuyện gì phải khác?" (ví dụ: đáng lẽ IT phải sửa từ tuần trước) và "Bạn đổ lỗi cho ai — máy in, IT, hay chính mình?" Lưu ý: máy in "hỏng" thường chỉ là kích hoạt bề mặt; mảnh bất công thật thường nằm ở chỗ "đáng lẽ phải khác" — đúng nơi ngọn lửa được tiếp nhiên liệu.</div>
+    </div>
+  </div>
+</div>
+
+<h2 id="boundary">Boundary · Tức giận không phải là…</h2>
+<p>Trước khi đi sâu vào từng mảnh ghép, hãy xác định ranh giới để không nhầm lẫn về sau.</p>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Giận là mất kiểm soát — người giận là người yếu."</strong> Sai. Giận là phản ứng sinh học chuẩn (chương 2), và việc <em>có</em> cơn giận không phải "mất kiểm soát" — kiểm soát nằm ở việc bạn xử lý nó ra sao. Người "yếu" không phải người giận, mà người <em>để giận điều khiển hành vi</em> (đám cháy) hoặc <em>kìm nén hoàn toàn</em> (lửa bịt kín — nguy cơ nổ muộn). Coi giận là "yếu đuối" còn khiến bạn giấu nó — và giấu lửa là cách nhanh nhất để có đám cháy.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Giận không phải lúc nào cũng "có lý".</strong> Công thức "bất công + đổ lỗi" mô tả cách giận <em>khởi động</em> — không bảo đảm phán đoán của bạn đúng. Có hai kiểu lỗi phổ biến: <em>đọc ý xấu sai</em> (ai đó vô tình nhưng ta tin là cố ý — chương 3 gọi là thiên kiến đọc ý xấu) và <em>quy lỗi sai đối tượng</em> (giận sếp nhưng về nhà cáu con). Ngọn lửa có thể cháy vì nhiên liệu giả. Điều này không làm cơn giận "sai" về sinh lý — nhưng nhắc ta rằng giận cần được <em>kiểm chứng</em> trước khi tin tưởng.</p>
+</div>
+
+<!-- Metacognitive prompt -->
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Predict</span>
+  <p>Trước khi sang chương 2, hãy đoán: vì sao cơn giận lại đi kèm cảm giác "nóng" đến thế — mặt đỏ, tim đập, nắm tay? Và thứ cảm giác "đúng đắn" kèm theo giận ("mình hoàn toàn có lý!") được tạo ra bằng cơ chế nào trong cơ thể? Viết một dự đoán trước khi đọc tiếp.</p>
+</div>
+
+<h2 id="synthesis">Fade · Tổng kết chương 1</h2>
+<p>Tức giận là cảm xúc của <strong>bất công</strong>: nó bật lên khi ta phán đoán có điều bất công đang xảy ra và có ai đó đáng trách. Nó khác gây hấn (hành vi) và thù hằn (thái độ). Nó không phải hiếm — nó chiếm khoảng 6% thời gian đời thường, và vấn đề không phải "có giận hay không" mà là <em>ngọn lửa đang ở đâu</em>: trong bếp (có ích), đốt nhà (gây hấn), hay bị bịt kín (kìm nén). Mảnh ghép nền này giải thích vì sao người chen ngang làm bạn nóng mặt: não bạn đã soạn bản cáo trạng "bất công + đáng trách" trong một phần giây. Chương 2 sẽ nhìn xuống lớp dưới cùng: cơ thể — vì sao giận "nóng", và thứ nhiệt ấy làm gì với lý trí.</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của chương này:</strong> giận không phải kẻ thù của lý trí — nó là ngọn lửa báo hiệu bất công; câu hỏi lớn không phải "có nên giận không" mà là "để lửa này cháy ở đâu".
+</blockquote> <h2>Chương 2 · Mảnh ghép cơ thể — vì sao giận thì "nóng"</h2>
+<p>Hãy quay lại giây phút chiếc xe chen ngang ở chương 1. Trong phần nghìn giây trước khi bạn <em>kịp nghĩ</em>, cơ thể bạn đã hành động: tim đập nhanh, hơi thở gấp, mặt nóng bừng, tay siết chặt. Cảm giác "nóng" ấy không phải ẩn dụ — nó là dữ liệu sinh lý thật, và nó là mảnh ghép thứ hai của cơn giận. Chương này trả lời ba câu: vì sao cơ thể "bốc hỏa", bộ não nào đứng sau ngọn lửa, và vì sao thứ nhiệt ấy có thể "làm mù" lý trí tạm thời.</p>
+
+<h3>Chỗ neo chương 2: ngọn lửa có một cái lò đốt bên trong</h3>
+<p>Mô hình Ngọn lửa giúp ta nhìn cơ thể theo cách mới: <strong>mỗi người mang một cái lò đốt sinh học</strong> — một hệ thống thần kinh và nội tiết có nhiệm vụ bơm năng lượng vào ngọn lửa giận. Lò đốt ấy được bật tự động khi bộ não ghi nhận "bất công + đáng trách", và nó chạy bằng hai loại nhiên liệu chính: <em>adrenaline</em> (tức thời, tạo "cú nổ đầu") và <em>cortisol</em> (kéo dài, giữ lửa âm ỉ). Hiểu cái lò đốt này sẽ thay đổi cách bạn đọc chính mình khi giận: bạn sẽ không còn hỏi "mình có phải người xấu không" mà hỏi "lò đốt của mình vừa bật vì phán đoán gì".</p>
+
+<!-- Pre-mortem ch2 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this chapter thinking…</span>
+  <p><span class="premortem__wrong">"Giận là 'máu nóng' — đợi máu nguội đi là hết; hoặc: giận mạnh chứng tỏ người ta yếu đuối, thiếu kỷ luật."</span></p>
+  <p>Điều này sai vì <em>cơn "nóng" chỉ là lớp đầu của ngọn lửa: phản ứng cơ thể bật tắt trong vài phút, nhưng phần lý trí đọc lại sự kiện và phần tâm lý nuôi dưỡng phán đoán thì kéo dài lâu hơn nhiều</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> "nóng" là phản ứng chuẩn của hệ thần kinh — ai cũng có lò đốt này; nó không phải dấu hiệu yếu đuối mà là <strong>hệ thống cảnh báo đã được tiến hóa giữ lại</strong>. Vấn đề không phải "có lò đốt hay không" mà là <em>bạn có biết lò đốt đang cháy để không lái xe, không nhắn tin, không quyết định khi đang "nóng"</em>.</p>
+</div>
+
+<h3>Construct · Bên trong cái lò đốt</h3>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch2-scaffold-1">
+  <h3 class="scaffold__concept">Bàn đạp ga: hạch hạnh nhân và "phản ứng chiến đấu"</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trung tâm cảnh báo của não — <strong class="term-amp" data-note="amp-fight" tabindex="0">hạch hạnh nhân (amygdala)</strong> — rà soát thông tin đến mọi lúc. Khi nó phát hiện tín hiệu đe dọa hoặc bất công, nó bấm nút gửi tín hiệu đến vùng dưới đồi (hypothalamus), vùng này kích hoạt tuyến thượng thận tiết <strong>adrenaline</strong> vào máu. Kết quả là cụm thay đổi mà ta gọi chung là <strong>phản ứng chiến đấu-hay-chạy (fight-or-flight)</strong>: tim tăng nhịp, mạch máu co lại (mặt đỏ, tay nắm), đồng tử giãn, đường huyết tăng để bơm năng lượng cho cơ bắp <a class="source" href="https://www.ncbi.nlm.nih.gov/books/NBK537123/" target="_blank" rel="noopener">NCBI Bookshelf, Physiology of Stress</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bạn đang ngồi trước màn hình bình thường; một email "vô lý" ập đến. Chưa đọc hết, bạn đã thấy tim đập mạnh, nhiệt dâng. Đó là hạch hạnh nhân đã xử lý trước khi vỏ não kịp phân tích — giống như lò đốt được bật trước khi bạn kịp đọc thành phần nhiên liệu. Cảm giác "nóng" chính là máu dồn về mặt và cơ: cơ thể đang chuẩn bị cho "trận chiến" — dù trận chiến ấy chỉ là một cuộc tranh cãi email.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao người ta lại giận khi bị "chọc" dù biết là vô nghĩa — ví dụ bị đùa quá lố?</summary>
+    <div class="scaffold__resolve"><p>Vì phản ứng "bất công + đáng trách" không cần qua vỏ não phê duyệt. Hạch hạnh nhân xử lý theo đường nhanh (thalamus → amygdala), ước lượng "có xâm phạm" trong mili giây, rồi bật lò đốt trước khi vỏ não (đường chậm) kịp nói "đây chỉ là trò đùa". Đây là lý do cảm giác "nóng" bao giờ cũng <em>đến trước</em> lý trí. Biết điều này giúp ta không hoảng với chính cơn giận: nó chạy trước, nhưng không nhất thiết phải lái xe sau.</p></div>
+  </details>
+</section>
+<div class="feynman">Cơn "nóng" là bàn đạp ga của cơ thể — bị đạp tự động trước khi lý trí kịp ngồi vào ghế lái.</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch2-scaffold-2">
+  <h3 class="scaffold__concept">"Nóng" là dữ liệu thật: mặt đỏ, giọng cao, nhiệt da tăng</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>"Nóng" không chỉ là ẩn dụ ngôn ngữ — nó là thay đổi sinh lý đo được: nhiệt da mặt tăng (mạch máu giãn), hoạt động cơ vùng mặt tăng (đặc biệt cơ cau mày <em>corrugator supercilii</em>), và giọng nói thay đổi cao độ. Các nghiên cứu dùng đo nhiệt mặt và điện cơ đồ (EMG) xác nhận: cơn giận đi kèm "mặt nóng" và "cau mày" là phản ứng không tự chủ, xuất hiện trong giây đầu tiên <a class="source" href="https://pubmed.ncbi.nlm.nih.gov/2663029/" target="_blank" rel="noopener">Ekman et al., 1983</a> <a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3986524/" target="_blank" rel="noopener">Kreibig, 2010</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Trong một cuộc họp, một lời chê bai "đánh trúng" khiến bạn nghe chính giọng mình cao hơn và lời nói nhanh hơn — đó không phải bạn "đang diễn", đó là hệ thống thanh âm đang được lò đốt điều khiển. Người đối diện — dù không biết gì về EMG — vẫn <em>đọc được</em> cơn giận qua mặt đỏ, cau mày, giọng cao trong nửa giây, và theo nghiên cứu cảm xúc xã hội, điều này thay đổi cách họ đáp lại bạn (chương 4 sẽ nói về sức mạnh đàm phán của tín hiệu giận này).</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu mặt nóng và giọng cao là tự động, liệu có cách nào "dập lửa" ngay từ lớp cơ thể không?</summary>
+    <div class="scaffold__resolve"><p>Có, nhưng không phải bằng cách cấm cảm giác. Nghiên cứu cho thấy thở chậm (hít sâu 4–6 nhịp/phút) kích hoạt hệ phó giao cảm, làm tim chậm lại và "nhiệt" lắng xuống — đây là kỹ thuật <em>hạ nhiệt</em> cơ thể mà chương 6 sẽ thực hành. Điểm mấu chốt: bạn không chọn được việc "nóng" xuất hiện, nhưng bạn có thể chọn can thiệp ngay tại lớp cơ thể thay vì để lò đốt tự điều hành cuộc đối thoại.</p></div>
+  </details>
+</section>
+<div class="feynman">Mặt đỏ, cau mày, giọng cao — đó là cách lò đốt gửi thông điệp ra ngoài trước cả khi bạn kịp nghĩ.</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch2-scaffold-3">
+  <h3 class="scaffold__concept">Vì sao giận "làm mù" lý trí: vỏ não trước trán bị chiếm quyền</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Câu "giận mất khôn" có cơ sở thần kinh. Khi hạch hạnh nhân hoạt động mạnh, nó tạm thời "gạt sang một bên" vùng <strong>vỏ não trước trán (prefrontal cortex)</strong> — vùng chịu trách nhiệm lý luận, lập kế hoạch, kiềm chế. Trong "cơn bốc hỏa", mạch não ưu tiên con đường phản ứng nhanh, và khả năng nhìn xa, cân nhắc hậu quả bị giảm — hiện tượng được mô tả trong mô hình "hạch hạnh nhân bắt cóc" (amygdala hijack) <a class="source" href="https://www.inc.com/justin-bariso/understanding-and-mastering-amygdala-hijacking-uses-the-brain-to-improve-emotional-intelligence.html" target="_blank" rel="noopener">Goleman, mô hình amygdala hijack</a> <a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9521892/" target="_blank" rel="noopener">Tổng quan thần kinh học cảm xúc, 2022</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Giây phút bạn nhận tin "bị phản bội", bạn thấy "phải" đáp trả ngay, không thể nghĩ đến hậu quả. Một người bạn "giận mất khôn" nhắn tin bộc phát, rồi 20 phút sau (khi lửa lắng) hối hận. Cơ chế: thời điểm "nóng", mạch não chỉ nhìn thấy một lựa chọn (đáp trả); sau khi adrenaline giảm, vỏ não trước trán trở lại, và các lựa chọn khác hiện ra — "đáng lẽ mình nên đợi". Sự kiện không đổi, nhưng "tầm nhìn" của não đổi.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Có phải giận luôn "làm mù" lý trí — hay tùy cường độ và bối cảnh?</summary>
+    <div class="scaffold__resolve"><p>Tùy cường độ. Giận nhẹ–trung bình thực ra có thể <em>tăng cường</em> sự chú ý vào thông tin liên quan (giận vì sai sót giúp bạn soát lỗi kỹ hơn). Giận dữ dội (cơn "bốc hỏa") mới gây mù tạm thời. Đây là lý do người trưởng thành không cần xóa giận — cần <em>điều hòa cường độ</em> để lửa đủ cháy (có ích) mà không thành đám cháy (mất khôn). Chương 3 và 6 sẽ chỉ cách điều hòa ấy.</p></div>
+  </details>
+</section>
+<div class="feynman">"Giận mất khôn" không phải câu người xưa răn đe suông — nó mô tả đúng việc lò đốt tạm chiếm quyền điều khiển vỏ não.</div>
+
+<!-- Checkpoint 2 -->
+<div class="checkpoint" data-checkpoint-id="cp-tuc-gian-2">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Nhớ lại một lần bạn "bốc hỏa". Liệt kê ít nhất ba dấu hiệu cơ thể bạn trải nghiệm khi ngọn lửa bùng (ví dụ: tim đập nhanh, mặt nóng, tay nắm chặt…). Với mỗi dấu hiệu, hãy nối nó với một chức năng sinh học: cơ thể đang "chuẩn bị gì" cho cơn giận ấy?</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>Gợi ý khung: (1) Tim đập nhanh → bơm máu và ôxy cho cơ bắp. (2) Mặt nóng/đỏ → mạch máu giãn, lưu lượng máu tăng. (3) Tay nắm chặt / răng nghiến → cơ bắp căng sẵn cho hành động. (4) Hơi thở gấp → nạp ôxy. (5) Đồng tử giãn → tăng thu nhận thị giác. (6) Cau mày / giọng cao → tín hiệu xã hội "tôi đang bị xâm phạm". Điểm then chốt: mọi dấu hiệu đều là "chuẩn bị cho trận chiến" — không dấu hiệu nào là "lỗi của bạn". Khi nhận ra toàn bộ cụm này đang bật, bạn biết mình đang ở trong cơn bốc hỏa, và quyết định "không hành động ngay" trở nên dễ dàng hơn nhiều.</p>
+  </div>
+</div>
+
+<h3>Apply · Đọc cơn giận của người khác qua lớp cơ thể</h3>
+<p>Cùng kiến thức cơ thể, giờ bạn có thể "đọc" cơn giận của người đối diện trước khi lời nói bắt đầu — đây là kỹ năng sống còn trong mọi mối quan hệ.</p>
+<ul>
+  <li><strong>Dấu hiệu đang lên</strong>: mặt đỏ, giọng cao hơn, lời nhanh hơn, tay nắm chặt. Đừng "chọc" vào lúc này bằng lý lẽ dài dòng — lò đốt của họ đang bật, vỏ não họ tạm vắng mặt.</li>
+  <li><strong>Dấu hiệu nguội dần</strong>: vai thả lỏng, giọng trầm lại, hơi thở chậm, tay mở ra. Đây là cửa sổ tốt nhất để nói chuyện thật.</li>
+  <li><strong>Đừng đối chất với lửa</strong>: "bạn bình tĩnh lại đi!" thường làm ngọn lửa to hơn, vì nó gửi thông điệp "cảm xúc của bạn sai". Thay vào đó, phản hồi lớp cơ thể bằng cách hạ nhiệt cuộc trò chuyện: nói chậm, giọng thấp, thừa nhận "tôi thấy chuyện này quan trọng với bạn".</li>
+</ul>
+<p>Đây là "kỹ năng vô hình" của người điều hòa giỏi: họ không thắng tranh luận bằng lý lẽ lúc nóng, mà bằng cách biết <em>khi nào cơn nóng của đối phương tắt</em> để mở lời đúng lúc.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Đồng nghiệp đang đỏ mặt, giọng cao, nói liên tục về việc "bị cướp công". Bạn phát hiện mình cũng đang nóng dần lên, muốn phản bác. Kể tên hai thứ: (1) điều đang xảy ra trong cơ thể <em>của bạn</em>, và (2) điều bạn nên làm thay vì phản bác ngay.</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">(1) Đồng cảm sinh lý (mirroring) khiến lò đốt của bạn cũng bật: tim nhanh, "nóng", muốn đáp trả — đây là phản ứng cơ thể, không phải lỗi của bạn. (2) Thay vì phản bác ngay (lửa chạm lửa), hãy hạ nhiệt: thở sâu, hạ giọng, nói "Tôi nghe rồi — chuyện này rõ ràng quan trọng với bạn", rồi đề nghị "để mình xem lại thông tin, 30 phút nữa mình nói tiếp". Bạn đang mua thời gian cho vỏ não của cả hai người quay lại bàn lái.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Boundary · Cơ thể của giận — những điều dễ nhầm</h3>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Giận là 'máu nóng' — đợi máu nguội là hết; hết nóng là hết giận."</strong> Chưa đúng. Cơn "nóng" (adrenaline) tắt sau vài phút, nhưng <em>giận không chỉ là cơ thể</em>: phần phán đoán, kể chuyện trong đầu (chương 3), và phán quyết "chuyện này không công bằng" có thể kéo dài hàng giờ, hàng ngày. Chính vì vậy "đợi nguội" rồi nói chuyện vẫn cần kỹ năng tâm lý — không phải cứ nguội là xong. Cơ thể là mảnh ghép thứ hai, không phải toàn bộ bức tranh.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Khi "nóng" dai dẳng thành tín hiệu sức khỏe.</strong> Nếu cơn giận kéo dài, thường xuyên, và đi kèm tim đập nhanh lúc nghỉ, huyết áp cao, mất ngủ — đó không còn là "phản ứng bình thường" mà là gánh nặng lên hệ tim mạch. Nghiên cứu tổng hợp cho thấy giận và thù hằn mạn tính làm tăng nguy cơ bệnh mạch vành (chương 5 sẽ trình bày con số cụ thể). Nếu "nóng" trở thành trạng thái thường trực, đây là lý do nên gặp chuyên gia — giống như đau ngực kéo dài, không phải chuyện "cố gắng chịu đựng".</p>
+</div>
+
+<!-- Metacognitive prompt -->
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Predict</span>
+  <p>Cơ thể là lớp dưới cùng. Chương tiếp theo nhìn lên lớp tâm lý. Hãy đoán: nếu giận cần "bất công + đổ lỗi", và cơ thể chỉ bật sau khi phán đoán được hình thành — vậy điều gì quyết định <em>ai đó đọc sự kiện là bất công</em>? Và vì sao người ta tin rằng "xả giận" (đấm bao cát, hét to) sẽ làm giận nguôi — điều đó có đúng không?</p>
+</div>
+
+<h3>Fade · Tổng kết chương 2</h3>
+<p>Giận "nóng" không phải ẩn dụ: nó là cụm phản ứng sinh học do hạch hạnh nhân khởi động — adrenaline bơm vào máu, tim nhanh, mặt đỏ, tay nắm, giọng cao — toàn bộ nhằm chuẩn bị cho "trận chiến" mà não tin là sắp xảy ra. Cái lò đốt này bật trước khi lý trí kịp lên tiếng, và ở cường độ cao nó tạm "gạt" vỏ não trước trán — đó là cơ sở của câu "giận mất khôn". Điều quan trọng: đây là hệ thống chuẩn của mọi người, không phải lỗi của bạn. Nhận diện sớm "mình đang bốc hỏa" là kỹ năng điều khiển ngọn lửa đầu tiên — và nó mở đường cho chương 3, nơi ta gặp thứ nhiên liệu thật sự làm lửa to: cách ta <em>kể chuyện</em> trong đầu.</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của chương này:</strong> "nóng" là bàn đạp ga của cơ thể, được đạp tự động trước khi lý trí kịp ngồi vào ghế — nên quyết định quan trọng nhất lúc nóng là <em>không quyết định gì ngay lập tức</em>.
+</blockquote> <h2>Chương 3 · Mảnh ghép tâm lý — "kẻ kể chuyện" bên trong cơn giận</h2>
+<p>Chương 2 kể rằng cơn "nóng" đến trước lý trí. Nhưng nếu chỉ có cơ thể, giận sẽ là một phản xạ đơn giản như giật mình. Thực tế thì không: giận kéo dài, giận lặp đi lặp lại, giận "không nguôi". Thứ giữ ngọn lửa cháy lâu hơn cả adrenaline chính là <strong>câu chuyện bạn kể cho chính mình</strong> — cách bạn đọc sự kiện, đổ lỗi, và lặp đi lặp lại nó trong đầu. Chương này là trái tim tâm lý học của cơn giận, và nó cũng chứa một trong những lầm tưởng ngoan cố nhất của con người: chuyện "xả giận cho bớt giận".</p>
+
+<h3>Chỗ neo chương 3: nhiên liệu thật của ngọn lửa là câu chuyện</h3>
+<p>Quay lại Mô hình Ngọn lửa: chương 2 là cái <em>lò đốt</em> (cơ thể), chương này là <em>nhiên liệu</em> (tâm lý). Nhiên liệu ấy không phải "sự kiện" — vì cùng một sự kiện, người này giận, người kia không. Nhiên liệu là <strong>bản diễn giải</strong>: phán đoán "bất công", quy trách nhiệm "đáng lẽ ngăn được", và — quan trọng nhất — <em>câu chuyện được kể lại nhiều lần trong đầu</em>. Muốn dập lửa, bạn không cần cấm cơ thể; bạn cần biết mình đang tiếp nhiên liệu bằng câu chuyện gì.</p>
+
+<!-- Pre-mortem ch3 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this chapter thinking…</span>
+  <p><span class="premortem__wrong">"Giận dồn nén thì phải xả ra — đập bao cát, hét to, đấm gối sẽ giúp giải tỏa, và kể đi kể lại chuyện bị hại nhiều lần sẽ giúp mình nguôi ngoai."</span></p>
+  <p>Điều này sai vì <em>nghiên cứu thực nghiệm cho thấy "xả giận" bằng đập phá hoặc hét to làm tăng giận và tăng gây hấn, không giảm; và "kể đi kể lại chuyện bị hại" (nghiền ngẫm) giữ ngọn lửa cháy lâu hơn, không nguôi</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> giận nguôi không phải nhờ "xả ra" mà nhờ <strong>thay đổi cách đọc sự kiện và chuyển hướng năng lượng</strong>. Người làm giỏi nhất trong thí nghiệm nổi tiếng của Bushman không phải người đập bao cát — mà là người <em>ngồi yên và nghĩ về điều khác</em> (chúng ta sẽ xem con số ngay sau đây).</p>
+</div>
+
+<h3>Construct · Ba cơ chế tâm lý làm ngọn lửa cháy</h3>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch3-scaffold-1">
+  <h3 class="scaffold__concept">Thiên kiến đọc ý xấu: não nghiêng về "nó cố ý!"</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Vì giận cần mảnh "đáng trách", bộ não rất nhạy với ý định của người khác — và nó có một thiên kiến: khi mơ hồ, nó nghiêng về việc <em>đọc ý xấu</em>. Tâm lý học gọi đây là <strong class="term-amp" data-note="amp-hostile-bias" tabindex="0">thiên kiến quy kết thù địch (hostile attribution bias)</strong> — xu hướng giải thích hành vi mơ hồ của người khác là có chủ đích gây hại. Một tổng hợp 41 nghiên cứu trên 6.000 trẻ em và thanh thiếu niên cho thấy thiên kiến này gắn chặt với gây hấn <a class="source" href="https://srcd.onlinelibrary.wiley.com/doi/10.1111/1467-8624.00450" target="_blank" rel="noopener">Orobio de Castro et al., 2002</a>, và xu hướng tương tự cũng được tìm thấy ở người lớn trong các tổng hợp gần đây <a class="source" href="https://pubmed.ncbi.nlm.nih.gov/31280171/" target="_blank" rel="noopener">Verhoef et al., 2019</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một người lướt qua bạn và <em>không chào</em>. Cách đọc A: "Nó lơ mình, coi thường mình" → ngọn lửa bùng (đổ lỗi). Cách đọc B: "Chắc nó đang bận nghĩ chuyện gì đó" → lửa không có nhiên liệu. Thiên kiến không bắt bạn phải chọn B — nó chỉ cảnh báo rằng <em>khi đang tức, não bạn gần như tự động chọn A</em>, kể cả khi chưa có bằng chứng. Nhận ra thiên kiến này là bước đầu của "đọc lại bản cáo trạng" trước khi kết án.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao tiến hóa lại giữ lại một thiên kiến dễ gây giận như vậy?</summary>
+    <div class="scaffold__resolve"><p>Vì sai lầm hai chiều có giá khác nhau. Nhầm "nó vô ý" thành "nó cố ý" khiến bạn giận nhầm (tốn năng lượng, có thể gây mất quan hệ). Nhưng nhầm "nó cố ý hại" thành "nó vô ý" trong môi trường có kẻ thù thật là <em>nguy hiểm sinh tồn</em>. Về tiến hóa, "đề phòng quá mức" an toàn hơn "tin tưởng quá mức" — nên não nghiêng về đọc ý xấu khi mơ hồ. Giá phải trả của thiên kiến này trong đời sống hiện đại là các cơn giận nhầm — nhưng bạn có thể dùng lý trí để kiểm chứng (chương 6) thay vì để thiên kiến tự kết án.</p></div>
+  </details>
+</section>
+<div class="feynman">Khi mơ hồ, não tự phát "bản cáo trạng" — thiên kiến đọc ý xấu giúp ta sống sót thời săn bắn, nhưng gây giận nhầm thời hiện đại.</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch3-scaffold-2">
+  <h3 class="scaffold__concept">Lầm tưởng xả giận: đập bao cát không làm giận nguôi — nó làm giận thêm</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Niềm tin "xả giận cho bớt giận" có gốc rễ từ ý tưởng thủy lực của Freud: giận là áp suất bên trong, xả ra thì hạ — tâm lý học gọi là <strong class="term-amp" data-note="amp-catharsis" tabindex="0">lầm tưởng xả giận (catharsis myth)</strong>. Nhưng thực nghiệm đã bác bỏ. Trong thí nghiệm kinh điển, người tham gia bị chọc tức rồi chia ba nhóm: đập bao cát <em>nghĩ về người chọc tức</em>, đập bao cát <em>nghĩ về tập luyện thể thao</em>, và nhóm đối chứng ngồi yên. Kết quả: nhóm "đập + nghĩ về người chọc" giận <em>nhất</em> và gây hấn <em>nhất</em>; nhóm ngồi yên giận <em>ít nhất</em>. Tác giả kết luận: xả giận kiểu này không "thanh lọc" mà <em>nuôi dưỡng</em> — nó luyện tập cơn giận <a class="source" href="https://www.apa.org/pubs/journals/releases/psp-82-1-68.pdf" target="_blank" rel="noopener">Bushman, 2002</a> <a class="source" href="https://www.researchgate.net/publication/31078254_Does_Venting_Anger_Feed_or_Extinguish_the_Flame" target="_blank" rel="noopener">Bushman, Baumeister &amp; Stack, 1999</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bạn tức đồng nghiệp, đến phòng gym đấm bao cát "cho xả". Trong lúc đấm, đầu bạn lặp lại kịch bản: "nó làm thế, thật là…" — mỗi cú đấm là một lần luyện tập cơn giận. Về nhà, cơn giận vẫn còn nguyên, thậm chí dữ hơn. Trong khi đó, nếu bạn đứng dậy đi bộ 10 phút và <em>nghĩ về việc khác</em> (thư giãn, kế hoạch ngày mai), ngọn lửa có cơ hội tắt vì không còn được tiếp nhiên liệu. Lưu ý: ý tưởng "phòng xả giận" vẫn được nhiều nơi xây (một khảo sát tại Trung Quốc cho thấy khoảng 48% phòng tư vấn có thiết bị xả giận), nhưng các nghiên cứu ở chính nước đó cũng kết luận xả giận bằng đập phá làm <em>tăng</em> gây hấn <a class="source" href="https://psycnet.apa.org/record/2019-75633-001" target="_blank" rel="noopener">心理科学进展, 2020; 28(1):22</a>.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nhưng tại sao nhiều người <em>cảm thấy</em> đập bao cát "nhẹ nhõm" hơn?</summary>
+    <div class="scaffold__resolve"><p>Vì vận động mạnh tiết endorphin và giảm căng cơ thể — đó là hiệu ứng "tập thể dục", không phải hiệu ứng "xả giận". Sự nhầm lẫn nằm ở chỗ: bạn <em>thấy khỏe hơn</em>, nhưng đừng nhầm với việc <em>giận ít đi</em>. Trong thí nghiệm, người ta đo <em>cả</em> tâm trạng và hành vi gây hấn: vận động cải thiện tâm trạng nhưng không giảm gây hấn. Nếu muốn vận động, hãy tập vì sức khỏe — và trong lúc tập, <em>đừng kể lại kịch bản bị hại</em> trong đầu; tập mà não vẫn nhai chuyện cũ thì giống nhóm "đập + nghĩ về kẻ chọc", lửa vẫn cháy.</p></div>
+  </details>
+</section>
+<div class="feynman">Đập bao cát không dập lửa — nó là cách bạn tự bơm nhiên liệu và luyện tập cơn giận.</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch3-scaffold-3">
+  <h3 class="scaffold__concept">Nghiền ngẫm: kể đi kể lại chuyện bị hại là kéo dài cơn giận</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p><strong class="term-amp" data-note="amp-rumination" tabindex="0">Nghiền ngẫm (rumination)</strong> là việc liên tục nghĩ về cơn giận, nguyên nhân và hậu quả của nó — "nhai lại" kịch bản trong đầu. Khác với xả giận bằng hành động, nghiền ngẫm là "xả giận bằng suy nghĩ" — và cũng có tác dụng giữ lửa. Nghiên cứu chỉ ra nghiền ngẫm làm tăng giận và kéo dài nó: người nghiền ngẫm giận lâu hơn và hành vi gây hấn hơn người xao nhãng. Đây là cơ chế đưa giận từ "cơn" thành "trạng thái" — và là cầu nối sang thù hằn mạn tính <a class="source" href="https://onlinelibrary.wiley.com/doi/10.1111/j.1467-6494.2007.00443.x" target="_blank" rel="noopener">Bushman et al., 2005</a> <a class="source" href="https://www.sciencedirect.com/science/article/abs/pii/S0165032718300555" target="_blank" rel="noopener">Tổng quan nghiền ngẫm giận, JAD 2018</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bị chê bai trong họp. Buổi chiều, não bạn lặp lại kịch bản: "nó nói thế trước mặt mọi người… đáng lẽ mình nên đáp thế này… mọi người nghĩ gì về mình?" — mỗi vòng lặp là một lần bơm nhiên liệu. Kết quả: cơn giận lẽ ra tắt sau 20 phút kéo dài cả buổi, cả tuần. Đây cũng là lý do "kể lại chuyện bị hại nhiều lần" — trừ khi người nghe giúp bạn <em>đổi cách đọc</em> — thường giữ lửa chứ không dập. Nghiền ngẫm là "máy nhai nhiên liệu": nó không làm gì với sự kiện, nhưng nó quyết định cơn giận sống bao lâu.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Phân biệt giữa "nghiền ngẫm" và "suy ngẫm xử lý vấn đề" ở điểm nào?</summary>
+    <div class="scaffold__resolve"><p>Nghiền ngẫm nhai lại <em>cảm xúc và nguyên nhân</em> ("sao nó dám", "mình đau quá") mà không đi đến kế hoạch. Xử lý vấn đề thì hướng ra hành động ("mình sẽ nói với ai, vào lúc nào, yêu cầu gì"). Ranh giới nằm ở câu hỏi não bạn đang hỏi: "Vì sao lại thế / mình đau thế nào" (nghiền ngẫm) hay "Mình sẽ làm gì tiếp theo" (xử lý). Học cách tự hỏi câu thứ hai là công cụ chương 6 — và đây chính là ranh giới giữa người bị giận điều khiển và người điều khiển giận.</p></div>
+  </details>
+</section>
+<div class="feynman">Nghiền ngẫm là máy nhai nhiên liệu: cơn giận sống bao lâu không phải do sự kiện, mà do bạn kể lại nó bao nhiêu lần.</div>
+
+<!-- Checkpoint 3 -->
+<div class="checkpoint" data-checkpoint-id="cp-tuc-gian-3">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Trong lần giận gần nhất, bạn đã làm điều nào trong ba điều sau (kể cả nhiều lựa chọn): (a) đọc ý xấu của đối phương khi chưa có bằng chứng; (b) "xả giận" bằng cách kể/đập/hét; (c) nghiền ngẫm kịch bản trong đầu nhiều giờ. Với lựa chọn bạn nhận ra, hãy thử nghĩ: cơ chế đó đã tiếp nhiên liệu cho ngọn lửa <em>bằng cách nào</em>?</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>Gợi ý: (a) đọc ý xấu tiếp nhiên liệu bằng cách <em>xác nhận mảnh "đáng trách"</em> — biến mơ hồ thành "cố ý", khiến giận có căn cứ trong mắt bạn; (b) "xả giận" tiếp nhiên liệu bằng cách <em>luyện tập cơn giận</em> — mỗi cú đấm/câu hét là một lần não ghi nhận "mình đang bị hại, phản kháng là đúng"; (c) nghiền ngẫm tiếp nhiên liệu bằng cách <em>giữ kịch bản hoạt động</em> — mỗi vòng lặp bơm thêm adrenaline dù sự kiện đã qua. Điểm chung của ba cơ chế: tất cả đều "nhai" sự kiện cũ thay vì xử lý nó. Nhận diện được mình đang nhai là bước đầu tiên để ngừng nhai — chương 6 sẽ cho bạn công cụ thay thế.</p>
+  </div>
+</div>
+
+<h3>Apply · Nhận diện "máy nhai nhiên liệu" của chính mình</h3>
+<p>Mỗi người có một cơ chế ưa thích riêng để giữ lửa — biết cái của mình là nửa trận thắng.</p>
+<ul>
+  <li><strong>Nhà đọc ý xấu</strong>: hay bắt đầu bằng "nó cố ý", "nó coi thường mình". Nghi ngờ bản diễn giải của chính mình khi chưa có bằng chứng; thử viết ra hai cách đọc khác cho cùng hành vi.</li>
+  <li><strong>Nhà xả giận</strong>: hay đập bàn, hét, nói xấu, "phun trào" ngay. Nhớ Bushman: phun trào là luyện tập cơn giận. Chuyển năng lượng bằng vận động <em>không kèm kể lại kịch bản</em> — hoặc tốt hơn, dùng kỹ thuật hạ nhiệt ở chương 6.</li>
+  <li><strong>Nhà nghiền ngẫm</strong>: kịch bản quay vòng trong đầu hàng giờ, hàng đêm. Đây là kiểu nguy hiểm nhất cho sức khỏe tâm lý vì nó kéo dài vô tận. Khi phát hiện mình đang hỏi "vì sao/đau thế nào", hãy buộc chuyển câu hỏi sang "mình sẽ làm gì tiếp theo" — hoặc làm gì đó chiếm não (đi bộ, viết nhật ký kế hoạch).</li>
+</ul>
+<p>Cùng một cơn giận, ba "máy nhai" khác nhau — nhưng cùng một công tắc tắt: <em>thay đổi câu chuyện được kể trong đầu</em>. Đó chính là điều chương 6 sẽ xây thành kỹ năng.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Bạn tức giận vì bạn cùng phòng "xả giận" bằng cách đập cửa sau khi mất việc. Dùng kết quả Bushman 2002, hãy dự đoán: sau khi đập cửa, bạn cùng phòng sẽ bình tĩnh hơn hay dữ hơn? Giải thích bằng cơ chế.</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">Dự đoán đúng theo dữ liệu: bạn cùng phòng sẽ <em>dữ hơn</em>, không bình tĩnh hơn. Cơ chế: hành động đập/phun trào là "luyện tập cơn giận" — mỗi lần thực hiện, não ghi nhận "mình đang bị hại, phản kháng là đúng" và duy trì kích thích, thay vì để phản ứng sinh học tự lắng xuống. Trong thí nghiệm, nhóm đập bao cát + nghĩ về kẻ chọc là nhóm giận và gây hấn nhất; nhóm ngồi yên là nhóm giận ít nhất. Đừng khuyên bạn "xả cho đỡ" — hãy khuyên bạn thở, đi bộ, và đừng kể lại chuyện trong đầu.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Boundary · Những ranh giới quan trọng của "xả giận" và "nghiền ngẫm"</h3>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Chia sẻ cơn giận với bạn bè là tốt — nói ra cho nhẹ."</strong> Nửa đúng, nửa nguy hiểm. Nói ra giúp nhẹ <em>nếu</em> người nghe giúp bạn đổi cách đọc (góc nhìn khác, kế hoạch hành động). Nhưng nói ra để "xả" — kể đi kể lại kịch bản mà không đổi cách đọc — là nghiền ngẫm bằng lời, giữ lửa cháy. Trước khi kể, hãy nói rõ với người nghe: "Mình không cần bạn đồng tình, mình cần bạn giúp mình nhìn lại." Nhờ vậy cuộc trò chuyện trở thành công cụ dập lửa thay vì máy nhai nhiên liệu.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Khi "không xả" cũng sai.</strong> Có một nhóm người không xả giận cũng không nghiền ngẫm — họ <em>kìm nén hoàn toàn</em>, tự nhủ "mình không nên giận", nhưng cơ thể vẫn ghi nhận. Kìm nén kiểu này liên quan đến các vấn đề sức khỏe (căng thẳng mãn, tim mạch) và làm tăng "nổ muộn" vô cớ. Vậy bức tranh đầy đủ là: không phải "xả" hay "không xả" — mà là <em>có xử lý được câu chuyện hay không</em>. Chương 6 sẽ đưa ra con đường thứ ba: đánh giá lại, hạ nhiệt, và nói chuyện có kế hoạch — thay vì cả phun trào lẫn kìm nén.</p>
+</div>
+
+<!-- Metacognitive prompt -->
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Predict</span>
+  <p>Ba chương đã đi qua: giận là cảm xúc của bất công (1), nó chạy trên cơ thể (2), và nó được nuôi bởi câu chuyện trong đầu (3). Giờ đến câu hỏi gai góc nhất: nếu giận "nguy hiểm" đến thế, vì sao nó không bị tiến hóa loại bỏ? Hãy đoán trước khi đọc chương 4: giận có <em>chức năng</em> gì cho cá nhân và cho xã hội — nó giúp con người đạt được điều gì mà không cảm xúc nào khác làm được?</p>
+</div>
+
+<h3>Fade · Tổng kết chương 3</h3>
+<p>Ngọn lửa giận không được tiếp nhiên liệu bởi sự kiện, mà bởi câu chuyện trong đầu. Ba cơ chế chính: <em>thiên kiến đọc ý xấu</em> (biến mơ hồ thành "cố ý" — nuôi mảnh đáng trách), <em>lầm tưởng xả giận</em> (đập phá/hét to làm tăng giận và gây hấn — thí nghiệm Bushman 2002), và <em>nghiền ngẫm</em> (kể đi kể lại kịch bản bị hại — máy nhai nhiên liệu giữ lửa cháy hàng giờ). Kìm nén hoàn toàn cũng không phải lối thoát. Bức tranh đầy đủ: giận không nguôi nhờ "xả", mà nguôi nhờ <em>đổi cách đọc sự kiện</em>. Chương 4 mở ra vì sao cả hệ thống này đáng giữ: chức năng của tức giận.</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của chương này:</strong> giận không bị "xả ra" — nó bị <em>kể lại</em>; đập bao cát và nhai kịch bản là hai cách giữ lửa cháy, không phải hai cách dập lửa.
+</blockquote> <h2>Chương 4 · Mảnh ghép chức năng — giận là để làm gì?</h2>
+<p>Ba chương đã vẽ ngọn lửa giận từ nền tảng: cảm xúc của bất công (chương 1), chạy trên cơ thể (chương 2), được nuôi bởi câu chuyện trong đầu (chương 3). Giờ đến câu hỏi khiến nhiều người ngạc nhiên nhất: nếu giận "nguy hiểm" như ta vẫn tin — vì sao tiến hóa không loại bỏ nó? Câu trả lời: vì tức giận <em>có chức năng</em>. Không cảm xúc nào khác làm được việc của nó: nó là tín hiệu xã hội bảo vệ ranh giới, là "cảm xúc đàm phán" giúp đòi lại quyền lợi, và — ở quy mô lớn — là ngọn lửa của hành động tập thể chống bất công. Chương này lật ngược định kiến: giận không phải "kẻ thù của đời sống xã hội", mà là một trong những công cụ bảo vệ công bằng thô sơ và hiệu quả nhất của con người.</p>
+
+<h3>Chỗ neo chương 4: ngọn lửa trong bếp — lửa có ích</h3>
+<p>Quay lại Mô hình Ngọn lửa: chương 4 không nói về đám cháy (gây hấn) hay lửa bị bịt kín (kìm nén) — mà về <strong>ngọn lửa trong bếp</strong>: năng lượng được giữ có kiểm soát, có mục đích. Lửa trong bếp nấu chín thức ăn; giận trong bếp "nấu chín" các mối quan hệ và công lý. Nó làm được ba việc mà không cảm xúc nào khác làm trọn: <em>gửi tín hiệu "dừng lại"</em> khi ranh giới bị xâm phạm, <em>tạo sức ép đàm phán</em> để đòi lại quyền, và <em>tập hợp người</em> đứng lên chống bất công.</p>
+
+<!-- Pre-mortem ch4 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this chapter thinking…</span>
+  <p><span class="premortem__wrong">"Giận là cảm xúc vô dụng, chỉ gây họa — người văn minh, người tốt thì không nên giận; giận chỉ làm hỏng mọi chuyện."</span></p>
+  <p>Điều này sai vì <em>giận là cảm xúc có chức năng thích nghi: nó bảo vệ ranh giới, tạo sức ép trong đàm phán, và là năng lượng của hành động tập thể chống bất công — loại bỏ giận là tước đi công cụ bảo vệ công bằng cơ bản của con người</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> giận <em>vô kỷ luật</em> (đám cháy) mới gây họa. Còn giận có kiểm soát là <strong>động cơ sửa sai mạnh nhất</strong>: những cải cách lớn của nhân loại — từ chống phân biệt đối xử đến đòi quyền lợi người lao động — đều được thắp bằng ngọn lửa giận tập thể có kỷ luật, không phải bằng sự bình thản.</p>
+</div>
+
+<h3>Construct · Ba chức năng của cơn giận</h3>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch4-scaffold-1">
+  <h3 class="scaffold__concept">Tín hiệu dừng lại: giận bảo vệ ranh giới và quyền</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Khảo sát kinh điển của Averill về cơn giận đời thường cho thấy: mọi người giận <em>thường xuyên</em> (trung bình vài lần/tuần), và chức năng phổ biến nhất là <strong>gửi tín hiệu cho người khác dừng lại</strong> — thay đổi hành vi xâm phạm. Trong phần lớn trường hợp, cơn giận đời thường <em>không</em> dẫn đến bạo lực: nó dẫn đến đối thoại, thay đổi hành vi, và thường là <em>kết quả tích cực</em>. Averill nhấn mạnh: giận là một cảm xúc xã hội, "bạn đồng hành" của công lý — nó không phải là kẻ thù của đời sống cộng đồng <a class="source" href="https://link.springer.com/book/10.1007/978-1-4612-5743-1" target="_blank" rel="noopener">Averill, 1982</a> <a class="source" href="https://journals.sagepub.com/doi/10.1177/0022022183143006" target="_blank" rel="noopener">Averill, 1983</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bạn cùng phòng liên tục để bát đĩa bẩn của mình trong bếp chung. Nếu bạn im lặng, hành vi tiếp diễn và sự bực bội tích tụ. Một cơn giận — nói lên bằng giọng nghiêm nhưng không hằn học: "Mình không thích bát của bạn để lại như vậy; mong bạn rửa xong trong ngày" — là tín hiệu dừng lại rõ ràng. Phần lớn người ta đáp lại bằng cách thay đổi hành vi, không phải gây chiến. Đây là "giận trong bếp": nó bảo vệ ranh giới, và mối quan hệ thậm chí tốt hơn vì ranh giới đã được nói rõ thay vì bị nuốt vào.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vậy giận là "công cụ kỷ luật xã hội" — nhưng tại sao người ta lại thấy ngại giận đến thế?</summary>
+    <div class="scaffold__resolve"><p>Vì người ta nhầm giận với gây hấn (đám cháy). Nhưng dữ liệu của Averill tách rõ: tín hiệu dừng lại (giận có kiểm soát) là chuẩn mực, còn bạo lực là ngoại lệ. Ngại giận xuất phát từ việc ta được dạy "giận = mất kiểm soát = xấu" — nhưng đó là nhầm cái lò với đám cháy. Nếu không có tín hiệu dừng lại, các ranh giới lần lượt bị xâm phạm và sự bực bội âm ỉ tích tụ thành thứ còn tệ hơn: nổ muộn vô cớ. Giận có kỷ luật chính là cách văn minh để <em>ngăn</em> đám cháy từ trước.</p></div>
+  </details>
+</section>
+<div class="feynman">Giận có kiểm soát là tín hiệu "dừng lại" — thứ văn minh nhất để bảo vệ ranh giới trước khi chúng bị phá vỡ.</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch4-scaffold-2">
+  <h3 class="scaffold__concept">Cảm xúc đàm phán: người giận được nhượng bộ hơn</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Giận còn là một <strong class="term-amp" data-note="amp-negotiation" tabindex="0">công cụ đàm phán</strong> — nó làm thay đổi hành vi của người đối diện theo hướng có lợi cho bạn. Trong thí nghiệm nổi tiếng, đối thủ "bày tỏ giận" trong đàm phán khiến người kia <em>nhượng bộ nhiều hơn</em> so với đối thủ bình thản. Quan trọng hơn: hiệu ứng này chỉ mạnh khi người nhận giận <em>có động lực xử lý thông tin</em> — nói cách khác, giận hoạt động như một tín hiệu "chuyện này nghiêm trọng, bạn cần để ý" <a class="source" href="https://psycnet.apa.org/record/2004-18292-003" target="_blank" rel="noopener">van Kleef et al., 2004</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bạn đang thương lượng với một nhà cung cấp vì lô hàng trễ hạn gây thiệt hại. Nếu bạn nói bình thản "lần sau mong đúng hạn", nhà cung cấp có thể "vâng vâng" rồi tiếp tục trễ. Khi bạn thể hiện sự bất bình rõ ràng — không hét, nhưng nghiêm khắc về thiệt hại thực tế — người ta <em>nghiêng về nhượng bộ</em>: họ đọc tín hiệu "khách hàng này thật sự có vấn đề, cần giữ". Giận ở đây là thông tin về mức độ nghiêm trọng — nó làm cho yêu cầu của bạn có trọng lượng hơn. (Lưu ý: chỉ nên dùng ở cường độ vừa, "giận chiến thuật" cố ý có thể phản tác dụng — xem Boundary.)</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao đối phương lại nhượng bộ khi bạn giận — thay vì phản kháng lại?</summary>
+    <div class="scaffold__resolve"><p>Vì giận truyền hai tín hiệu: (1) <em>chuyện này nghiêm trọng</em> — người giận đang mất mát hoặc bị xâm phạm thật; (2) <em>giới hạn của bạn đã chạm</em> — tiếp tục xâm phạm sẽ có chi phí (đổ vỡ, tranh chấp, mất hợp đồng). Khi người đối diện có động lực giữ mối quan hệ/đạt thỏa thuận, họ điều chỉnh hành vi để tránh chi phí đó. Đây chính là cơ chế "tín hiệu dừng lại" ở quy mô thương lượng. Đổi lại, giận chỉ có giá trị thông tin khi nó <em>đúng lúc, đúng mức, đúng mục tiêu</em> — phun trào vô cớ làm mất giá trị tín hiệu (chương 5).</p></div>
+  </details>
+</section>
+<div class="feynman">Giận là tín hiệu "chuyện này nghiêm trọng" — trong đàm phán, người giận đúng lúc thường được nhượng bộ nhiều hơn.</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch4-scaffold-3">
+  <h3 class="scaffold__concept">Ngọn lửa tập thể: giận nhóm là năng lượng của hành động chống bất công</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Ở quy mô lớn, tức giận trước bất công là động cơ của <strong class="term-amp" data-note="amp-group-anger" tabindex="0">hành động tập thể</strong> — biểu tình, kiện tụng, cải cách. Một tổng hợp phân tích 182 hiệu ứng nghiên cứu cho thấy: khi một nhóm bị đối xử bất công, <em>giận tập thể (group-based anger)</em> là yếu tố dự báo mạnh cho việc tham gia hành động tập thể — mạnh hơn cả lợi ích cá nhân trong nhiều trường hợp. Cảm giác "chúng ta bị hại, chúng ta phải đứng lên" biến giận cá nhân thành động lực xã hội <a class="source" href="https://psycnet.apa.org/record/2008-06385-003" target="_blank" rel="noopener">van Zomeren et al., 2008</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một khu phố bị một dự án xả thải đe dọa. Người dân bực bội riêng lẻ thì chỉ than thở. Nhưng khi nhận ra "chúng tôi <em>cùng bị hại</em>", giận tập thể dấy lên: họ họp, viết kiến nghị, ra đường biểu tình, gây sức ép. Đây chính là giận trong bếp ở quy mô cộng đồng: năng lượng được tổ chức, hướng vào mục tiêu sửa sai. Nhiều phong trào xã hội lớn trong lịch sử — từ đòi quyền bầu cử đến bảo vệ môi trường — là "ngọn lửa tập thể" thắp bằng giận trước bất công, không phải bằng sự ngoan ngoãn.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Phân biệt giữa "giận tập thể lành" và "đám cháy tập thể" (bạo loạn, bạo lực đám đông)?</summary>
+    <div class="scaffold__resolve"><p>Hai thứ cùng một ngọn lửa nhưng khác kỷ luật. Giận tập thể lành được tổ chức: có mục tiêu rõ, phương tiện hòa bình (kiến nghị, biểu tình có kiểm soát, đối thoại), và hướng vào sửa sai hệ thống. Đám cháy tập thể vô kỷ luật: phá hoại, bạo lực đám đông, làm mất uy tín của chính nguyên nhân. Ranh giới nằm ở câu hỏi "ngọn lửa này đang nấu chín công lý (có kết quả sửa sai) hay đang đốt nhà (gây hại thêm)?" — và đây là lý do người lãnh đạo giỏi của phong trào thường là người <em>giữ được lửa trong bếp</em> cho cả tập thể.</p></div>
+  </details>
+</section>
+<div class="feynman">Bất công nhóm + giận tập thể = năng lượng của hành động tập thể — ngọn lửa đã thắp nên mọi cuộc cải cách lớn.</div>
+
+<!-- Checkpoint 4 -->
+<div class="checkpoint" data-checkpoint-id="cp-tuc-gian-4">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Hãy nghĩ về một điều bạn từng giận <em>một cách đúng đắn</em> (giận vì bất công, không phải vì tự ái) và kết quả cuối cùng của nó. Dùng ba chức năng trên (tín hiệu dừng lại / đàm phán / tập thể), hãy xác định: cơn giận đó đã <em>phục vụ chức năng nào</em> — và điều gì làm nó thành công (giữ trong bếp) hay thất bại (thành đám cháy)?</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>Gợi ý khung: (1) Xác định chức năng — ví dụ: cơn giận vì bị cắt quyền lợi là "đàm phán/tín hiệu dừng lại"; cơn giận vì khu vực bị xả thải là "tập thể". (2) Điều làm nó thành công: bạn giữ ngọn lửa trong bếp — nói rõ vấn đề, yêu cầu cụ thể, không công kích cá nhân, giữ mối quan hệ. (3) Điều làm nó thành đám cháy: phun trào, đổ lỗi sai, nghiền ngẫm, hoặc kìm nén rồi nổ muộn. Điểm quan trọng để nhớ: <em>chức năng của giận phụ thuộc vào cách bạn xử lý, không phải vào việc bạn có giận hay không</em>. Cùng một sự kiện bất công, giận có kỷ luật thì sửa được sai; giận vô kỷ luật thì chỉ thêm hại.</p>
+  </div>
+</div>
+
+<h3>Apply · "Phỏng vấn chức năng" một cơn giận</h3>
+<p>Khi giận dâng lên, hãy tự hỏi ba câu "chức năng" trước khi hành động — chúng giúp bạn quyết định giữ ngọn lửa trong bếp:</p>
+<ul>
+  <li><strong>"Cơn giận này đang cố bảo vệ điều gì?"</strong> — một ranh giới (thời gian, tôn trọng, tài sản), một quyền lợi, hay một nguyên tắc? Xác định được đối tượng cần bảo vệ giúp bạn chuyển từ "phản ứng" sang "mục tiêu".</li>
+  <li><strong>"Thông điệp tôi cần gửi là gì?"</strong> — giận là thông tin: "chuyện này nghiêm trọng", "ranh giới đây", "cần thay đổi". Gói thông điệp ấy thành câu nói rõ ràng (kỹ thuật ở chương 6), thay vì phun ra nguyên liệu thô.</li>
+  <li><strong>"Ai là đối tượng đúng?"</strong> — giận chỉ có chức năng khi nhắm đúng nguồn bất công. Giận sếp nhưng cáu con là lửa bị chuyển hướng — vô chức năng, gây hại thêm (đây là "không dời giận" — một điểm Đông–Tây sẽ gặp ở chương 5).</li>
+</ul>
+<p>Ba câu này biến cơn giận từ "cảm xúc hỗn loạn" thành "bản tin cần gửi". Bản tin có người nhận, có nội dung, có cách gửi — đó chính là ngọn lửa trong bếp.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Có người nói: "Văn minh là biết kìm giận — người giỏi nhất là người không bao giờ để lộ giận." Dùng chương này, hãy phản bác ngắn gọn bằng một trong ba chức năng của giận.</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">Phản bác mẫu: "Nếu không bao giờ để lộ giận, bạn mất đi tín hiệu dừng lại — người khác sẽ tiếp tục xâm phạm ranh giới của bạn mà không hề biết. Nghiên cứu của Averill cho thấy giận đời thường chủ yếu dẫn đến đối thoại và thay đổi hành vi; nghiên cứu của van Kleef cho thấy người bày tỏ giận đúng lúc được nhượng bộ nhiều hơn. Văn minh không phải là xóa giận mà là <em>giữ nó trong bếp</em>: giận đúng, đúng mức, đúng đối tượng — thứ gây họa là đám cháy, không phải ngọn lửa trong bếp."</div>
+    </div>
+  </div>
+</div>
+
+<h3>Boundary · Khi "chức năng" bị lạm dụng</h3>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Vậy cứ giận thật to là tốt — giận càng nhiều càng khỏe, càng được việc."</strong> Sai. Chức năng có giới hạn về <em>cường độ</em> và <em>tần suất</em>. Giận nhẹ–trung bình, đúng lúc, đúng đối tượng là có ích. Nhưng giận phun trào thường xuyên làm mất giá trị tín hiệu ("anh ấy lúc nào cũng vậy, không quan trọng"), làm hỏng quan hệ, và gây hại sức khỏe (chương 5). "Giận chiến thuật" cố ý diễn cũng phản tác dụng khi người đối diện phát hiện. Chức năng của giận giống chức năng của gia vị: một chút làm món ăn ngon, đổ cả lọ thì hỏng món. Người giỏi nhất không phải người giận to nhất — mà người <em>giận đúng lượng cần thiết</em>.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Khi giận "có lý" được dùng để ngụy biện gây hấn.</strong> Cần tách: giận có chức năng (bảo vệ quyền) ≠ giận là cái cớ (cho phép mình gây hấn). Ranh giới nằm ở mục tiêu: <em>sửa sai</em> hay <em>trừng phạt</em>. "Tôi giận nên tôi có quyền nói nặng, phá đồ, trả đũa" là lạm dụng chức năng — đây là giận được dùng làm áo giáp cho đám cháy. Dấu hiệu nhận biết: nếu mục tiêu của bạn là làm người kia "phải trả giá" (thay vì thay đổi hành vi), bạn đang ở phía trừng phạt, không phải sửa sai. Kỹ năng chương 6 — nói rõ nhu cầu, yêu cầu cụ thể — giúp giữ bạn ở phía sửa sai.</p>
+</div>
+
+<!-- Metacognitive prompt -->
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Predict</span>
+  <p>Chương 4 đã nói giận "có chức năng". Nhưng chương 2 đã nhắc giận kéo dài có thể gây hại tim mạch. Vậy ranh giới nằm ở đâu — khi nào giận là <em>lành</em>, khi nào là <em>bệnh</em>, và văn hóa (Đông–Tây) đặt đường biên khác nhau thế nào? Trước khi đọc chương 5, hãy đoán: ở văn hóa nào người ta "được phép" giận nhiều hơn, và điều đó có nghĩa gì cho sức khỏe và xã hội?</p>
+</div>
+
+<h3>Fade · Tổng kết chương 4</h3>
+<p>Tức giận không chỉ là "cảm xúc xấu" — nó là công cụ bảo vệ công bằng: <em>tín hiệu dừng lại</em> khi ranh giới bị xâm phạm (Averill), <em>cảm xúc đàm phán</em> làm người đối diện nhượng bộ hơn (van Kleef), và <em>ngọn lửa tập thể</em> thắp nên hành động chống bất công (van Zomeren). Chức năng ấy chỉ giữ được khi ngọn lửa ở trong bếp — đúng lúc, đúng mức, đúng đối tượng, hướng vào sửa sai thay vì trừng phạt. Câu "văn minh là không giận" là hiểu lầm: văn minh là <em>giận có kỷ luật</em>. Chương 5 giờ đặt ranh giới y tế và văn hóa: khi nào giận là lành, khi nào là bệnh — và vì sao người Đông và người Tây giận "khác nhau".</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của chương này:</strong> giận không phải kẻ thù của công bằng — nó là ngọn lửa bảo vệ công bằng; câu hỏi luôn là giữ lửa trong bếp hay để thành đám cháy.
+</blockquote> <h2>Chương 5 · Ranh giới — khi nào giận là lành, khi nào là bệnh, và văn hóa kẻ đường biên</h2>
+<p>Bốn chương đã xây dựng một bức tranh cân bằng: giận là cảm xúc của bất công, có chức năng thích nghi. Nhưng câu hỏi gai góc nhất vẫn chưa trả lời: vậy khi nào giận là <em>lành</em>, khi nào là <em>bệnh</em>? Chương này vẽ ba đường ranh giới. Đường thứ nhất về y học: giận lành, gây hấn, và rối loạn bùng nổ từng cơn (IED). Đường thứ hai về sức khỏe: giận và thù hằn mạn tính làm gì với tim mạch. Đường thứ ba về văn hóa: vì sao người Đông và người Tây "giận khác nhau" — và lời nhắn của Đông–Tây về cách sống chung với lửa.</p>
+
+<h3>Chỗ neo chương 5: ba kim đồng hồ và một cái khuôn văn hóa</h3>
+<p>Để biết một ngọn lửa là "bếp" hay "đám cháy", hãy nhìn ba cái kim đồng hồ: <strong>kim tần suất</strong> (giận bao lâu một lần?), <strong>kim cường độ</strong> (giận dữ đến mức nào, có mất kiểm soát không?), <strong>kim thời lượng</strong> (một cơn giận / một trạng thái thù hằn kéo dài bao lâu?). Mỗi kim vượt ngưỡng là ngọn lửa rời khỏi bếp. Và có một yếu tố thứ tư che phủ cả ba: <strong>cái khuôn văn hóa</strong> — mỗi nền văn hóa quy định "giận bao nhiêu là được phép", và cái khuôn ấy thay đổi cách giận được trải nghiệm và bày tỏ, cũng như hậu quả sức khỏe của nó.</p>
+
+<!-- Pre-mortem ch5 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this chapter thinking…</span>
+  <p><span class="premortem__wrong">"Giận là lành, giận là bệnh — chọn một. Và: người Đông nhịn giận là văn minh, người Tây bộc lộ giận là thiếu kiểm soát."</span></p>
+  <p>Điều này sai vì <em>ranh giới giữa lành và bệnh không phải "có giận hay không" mà là ba kim đồng hồ: tần suất, cường độ, thời lượng — và cả hai thái cực (phun trào mạn tính lẫn kìm nén hoàn toàn) đều có hại</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> mỗi nền văn hóa là một cái khuôn khác nhau — không có "cách giận đúng" tuyệt đối. Nhưng dữ liệu cho thấy: <strong>cả phun trào mạn tính (Tây hóa mất kiểm soát) lẫn kìm nén thù hằn âm ỉ đều gắn với chi phí sức khỏe</strong>; con đường lành không nằm ở văn hóa nào cả, mà nằm ở <em>điều hòa có ý thức</em> — chương 6.</p>
+</div>
+
+<h3>Construct · Ba đường ranh giới</h3>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch5-scaffold-1">
+  <h3 class="scaffold__concept">Đường y học: giận lành, gây hấn, và rối loạn bùng nổ từng cơn (IED)</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trong tâm thần học (DSM-5), có một chẩn đoán dành riêng cho những cơn giận mất kiểm soát: <strong class="term-amp" data-note="amp-IED" tabindex="0">Rối loạn bùng nổ từng cơn (Intermittent Explosive Disorder — IED)</strong>. Tiêu chuẩn: bùng nổ bằng lời và/hoặc hành vi gây hại cho tài sản, động vật, người — <em>không tương xứng với sự việc</em>, không có chủ đích, lặp đi lặp lại, và ảnh hưởng nghiêm trọng đến cuộc sống. Điểm khác biệt với giận lành: <em>IED là những "đám cháy" tái diễn, không tương xứng, mất kiểm soát</em> — còn giận lành là tín hiệu dừng lại có tỷ lệ thuận với sự việc. Đáng chú ý: IED phổ biến hơn người ta nghĩ — ước tính ~7% người trưởng thành Mỹ có chẩn đoán trọn đời (theo DSM-IV), ~4% theo tiêu chuẩn DSM-5, và phần lớn người có IED <em>không bao giờ được điều trị</em> <a class="source" href="https://pubmed.ncbi.nlm.nih.gov/16754915/" target="_blank" rel="noopener">Kessler et al., 2006</a> <a class="source" href="https://www.medlink.com/articles/intermittent-explosive-disorder" target="_blank" rel="noopener">MedLink, DSM-5 IED overview</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Ba tình huống để nhìn rõ ranh giới. (a) Bị chen ngang, bạn nói gay gắt "Bạn có thấy mình vừa chen không?" — giận lành, tỷ lệ thuận. (b) Bị chen ngang, bạn chửi bới, đập vật gần đó — bùng nổ quá mức, ranh giới mỏng manh đã bị vượt. (c) Bạn thường xuyên mất kiểm soát — đập đồ, la hét, có khi gây tổn thương người — vì những chuyện nhỏ nhặt, và điều này lặp lại nhiều lần: đây là dạng IED đáng được chẩn đoán và điều trị. Ranh giới không nằm ở "có bùng hay không" mà ở <em>tương xứng + tần suất + khả năng kiểm soát</em>.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao phần lớn người IED không được điều trị — và điều đó quan trọng thế nào?</summary>
+    <div class="scaffold__resolve"><p>Vì họ — và người quanh họ — coi những cơn bùng nổ là "tính khí nóng", "bản chất", hoặc "do chọc tức mà ra", không phải là vấn đề y tế điều trị được. Dữ liệu Kessler cho thấy đa số người IED chưa từng tìm hỗ trợ, dù rối loạn này gây tổn hại lớn (quan hệ đổ vỡ, mất việc, nguy cơ pháp lý). Quan trọng: <em>IED có thể điều trị</em> (liệu pháp nhận thức-hành vi, rèn kiểm soát xung động). Đưa cơn bùng nổ tái diễn về đúng chỗ "đây là vấn đề sức khỏe, không phải bản tính" là bước đầu tiên của việc chữa trị — và là lý do bài này dành hẳn một chỗ cho IED.</p></div>
+  </details>
+</section>
+<div class="feynman">Giận lành tỷ lệ thuận với sự việc; IED là những đám cháy tái diễn, không tương xứng, mất kiểm soát — và có thể điều trị được.</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch5-scaffold-2">
+  <h3 class="scaffold__concept">Đường sức khỏe: giận mạn tính và trái tim</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Giận một lần thì cơ thể hồi phục — nhưng giận và thù hằn <em>mạn tính</em> để lại chi phí thật trên tim mạch. Một phân tích tổng hợp lớn (meta-analysis) trên các nghiên cứu dài hạn cho thấy: giận và thù hằn làm tăng nguy cơ bệnh mạch vành — cụ thể, ở người khỏe mạnh nguy cơ tăng ~19%, ở người đã có bệnh tim nguy cơ tăng ~24%. Cơ chế: mỗi cơn giận bùng là một đợt adrenaline, huyết áp, viêm — lặp đi lặp lại, nó góp phần vào tổn thương mạch máu <a class="source" href="https://pubmed.ncbi.nlm.nih.gov/19171844/" target="_blank" rel="noopener">Chida &amp; Steptoe, 2009</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Hai người bị chen ngang như nhau. Người A giận xong, thở dài, bỏ qua — tim trở lại bình thường sau vài phút. Người B giận rồi <em>giữ suốt buổi</em>: nhai kịch bản, nghĩ về sếp bất công, nói lại với vợ chuyện cũ — mỗi lần nhai là một đợt huyết áp dâng. Lặp lại 5 năm: người B trả giá nhiều hơn trên tim mạch. Bài học sức khỏe không phải "đừng giận" (bất khả thi) mà là <em>đừng để giận thành trạng thái kéo dài</em> — chính thời lượng (kim đồng hồ thứ ba) mới là yếu tố gây hại, và nó nối thẳng về cơ chế nghiền ngẫm ở chương 3.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vậy "kìm nén giận" có đỡ hơn cho tim không — nếu phun trào mạn tính thì hại, chắc nhịn thì khỏe?</summary>
+    <div class="scaffold__resolve"><p>Không — đây là cạm bẫy. Nghiên cứu cho thấy cả hai thái cực đều có chi phí: phun trào mạn tính gắn với nguy cơ tim mạch tăng, nhưng <em>kìm nén hoàn toàn kèm giữ thù hằn âm ỉ</em> cũng gắn với căng thẳng mãn tính và các vấn đề sức khỏe. Điểm mấu chốt không nằm ở "bộc lộ hay kìm", mà ở việc <em>bạn có xử lý được ngọn lửa về mặt tâm lý không</em>: giận nguôi thật sự (đánh giá lại, giải quyết, buông bỏ) mới là thứ tốt cho tim — không phải giận bị giấu đi. Chương 6 sẽ đưa ra con đường "bộc lộ có kế hoạch + đánh giá lại" thay cho hai cực đoan này.</p></div>
+  </details>
+</section>
+<div class="feynman">Giận mạn tính gắn với tim mạch — nhưng lối thoát không phải "kìm nén" mà là "xử lý": giận nguôi thật, không phải giận bị giấu.</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch5-scaffold-3">
+  <h3 class="scaffold__concept">Đường văn hóa: nhẫn của người Đông, "express yourself" của người Tây</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Văn hóa đúc khuôn cách giận. Văn hóa Đông Á đặt giá trị lên <strong>nhẫn (忍)</strong> và hòa khí: 《中庸》 dạy "喜、怒、哀、乐之未发，谓之中；发而皆中节，谓之和" — cảm xúc chưa bộc lộ là "trung", bộc lộ mà <em>đúng mức</em> là "hòa". Văn hóa chữa lành Trung Hoa còn nhìn giận qua lăng kính cơ thể: 《黄帝内经》 ghi <em>"怒伤肝"</em> — giận làm tổn thương can, và "怒则气上" — giận làm khí bốc lên <a class="source" href="https://ctext.org/huangdi-neijing/su-wen" target="_blank" rel="noopener">《黄帝内经·素问》</a> <a class="source" href="https://ctext.org/zhong-yong" target="_blank" rel="noopener">《中庸》</a>. Ngược lại, văn hóa phương Tây hiện đại đề cao việc <em>bộc lộ cảm xúc</em> ("express yourself", "get it off your chest") — và nghiên cứu đối chiếu cho thấy người Mỹ dung túng giận hơn, người Nhật lên án giận hơn <a class="source" href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2016.00426/full" target="_blank" rel="noopener">Frontiers in Psychology, 2016</a> <a class="source" href="https://psycnet.apa.org/record/1998-10798-005" target="_blank" rel="noopener">Phân tích khái niệm "nhẫn" trong văn hóa Trung Hoa, 1998</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Hai nhân viên cùng bị xử bất công. Người ở văn hóa "nhẫn": giữ vẻ ngoài bình thản, không nói ra, có khi đè nén sâu — được khen "biết điều"; nhưng thù hằn âm ỉ có thể chuyển thành căng thẳng kéo dài hoặc nổ muộn. Người ở văn hóa "express": lên tiếng ngay, bày tỏ bức xúc rõ ràng — được khen "thẳng thắn"; nhưng nếu không kiểm soát cường độ, dễ thành phun trào mạn tính. Điểm mấu chốt của chương: <em>cả hai cái khuôn đều có điểm chết</em>. Văn hóa Đông đúng ở chỗ giận cần "trung – hòa" (đúng mức), nhưng sai nếu biến nhẫn thành kìm nén hoàn toàn; văn hóa Tây đúng ở chỗ giận cần được bày tỏ, nhưng sai nếu biến bày tỏ thành xả giận vô kiểm soát.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vậy "cách giận đúng" là của Đông hay của Tây?</summary>
+    <div class="scaffold__resolve"><p>Không của ai cả — vì cả hai đều mô tả một nửa. Bài học kết hợp từ Đông–Tây: <em>giận cần được bày tỏ (Tây đúng) nhưng đúng mức, đúng lúc, không làm tổn thương (Đông đúng)</em>. Khái niệm "发而皆中节" của Khổng – Mạnh — bộc lộ mà đúng mức — thực ra rất hợp với nghiên cứu hiện đại: điều hòa cường độ, đối tượng, thời điểm. "Nhẫn" chữa lành là đừng để giận điều khiển hành vi; "nhẫn" bệnh lý là đè nén đến nổ. Và "怒伤肝" của Đông Y có một điểm gặp gỡ thú vị với Chida &amp; Steptoe: giận mạn tính gắn với tổn thương cơ thể — chỉ là người xưa đặt tên khác. Kết luận: con đường lành là <em>trung hòa</em> — giận đúng mức, bày tỏ có kế hoạch — nằm giữa hai cái khuôn, không nằm trong cái khuôn nào.</p></div>
+  </details>
+</section>
+<div class="feynman">Đông dạy "đúng mức", Tây dạy "bày tỏ" — con đường lành là trung hòa cả hai: bày tỏ giận một cách đúng mức.</div>
+
+<!-- Checkpoint 5 -->
+<div class="checkpoint" data-checkpoint-id="cp-tuc-gian-5">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Lấy một "cơn giận" gần đây của bạn (hoặc của người quen). Đặt nó lên ba kim đồng hồ: (1) tần suất — giận như vậy bao lâu một lần? (2) cường độ — có tương xứng với sự việc không, có mất kiểm soát không? (3) thời lượng — cơn giận kéo dài bao lâu? Với mỗi kim, đánh giá: ngọn lửa này đang ở "trong bếp" hay "rời bếp"?</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>Gợi ý khung: (1) Tần suất — vài lần/tháng thì bình thường; vài lần/ngày kèm bùng nổ là tín hiệu cần lưu ý. (2) Cường độ — giận gay gắt nhưng không bùng nổ, tỷ lệ thuận với sự việc = trong bếp; bùng nổ không tương xứng, đập đồ, la hét = đã ra khỏi bếp (cân nhắc ngưỡng IED nếu tái diễn). (3) Thời lượng — vài phút đến vài giờ rồi nguôi thật = trong bếp; kéo dài nhiều ngày, âm ỉ, nhai lại kịch bản = trạng thái thù hằn, gắn với chi phí tim mạch. Điểm mấu chốt: không cần "cấm giận", chỉ cần để ý kim nào đang vượt ngưỡng — vì mỗi kim vượt ngưỡng là một cách khác nhau để ngọn lửa rời khỏi bếp.</p>
+  </div>
+</div>
+
+<h3>Apply · Đọc ranh giới của chính mình và của người thân</h3>
+<p>Áp dụng ba kim đồng hồ vào đời thường — cả cho bản thân lẫn cho người bạn quan tâm:</p>
+<ul>
+  <li><strong>Tự kiểm định hàng tuần</strong>: cuối tuần, hỏi một câu — "Tuần này mình có cơn giận nào kéo dài quá một ngày không?" Nếu có, đó là kim thời lượng đang vượt; hãy dùng kỹ thuật chương 6 để xử lý trước khi nó thành thù hằn.</li>
+  <li><strong>Đọc người thân</strong>: nếu một người gần bạn thường xuyên bùng nổ không tương xứng (kim cường độ + tần suất vượt), đừng gọi họ "tính nóng" — hãy khuyến khích họ tìm hiểu về IED và điều trị. Đây là cách "yêu" đúng: không bao biện đám cháy, cũng không kết tội người có đám cháy.</li>
+  <li><strong>Đối thoại Đông–Tây trong gia đình</strong>: nhiều gia đình Việt có hai thế hệ khuôn mẫu khác nhau — cha mẹ dạy "phải nhịn, phải hòa", con cái lớn lên theo "phải nói ra". Nhận ra cả hai đều có điểm chết sẽ giúp bạn không lấy "văn hóa" làm lý do để kìm nén (Đông) hay phun trào (Tây), mà tìm điểm "trung – hòa": bày tỏ đúng mức.</li>
+</ul>
+<p>Ba kim đồng hồ biến cuộc nói chuyện về giận từ "đúng sai văn hóa" thành "quan sát được, đo được" — và điều đó mở đường cho chương cuối: kỹ năng điều hòa ngọn lửa.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Một người bạn kể: "Tôi vừa ném điện thoại xuống sàn vì nhân viên hỗ trợ khách hàng trả lời câu hỏi sai lần thứ ba." Đặt sự kiện lên ba kim đồng hồ, hãy nhận định: đây là giận lành, bùng nổ nhất thời, hay dấu hiệu cần theo dõi? Và ở góc Đông–Tây, bạn sẽ khuyên gì?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">Nhận định: ném điện thoại là <em>bùng nổ không tương xứng</em> (câu hỏi sai → đập đồ) — kim cường độ đã vượt. Đây chưa đủ là IED (cần tần suất + ảnh hưởng nghiêm trọng), nhưng là tín hiệu đỏ đáng theo dõi nếu lặp lại. Khuyên bạn (góc Đông–Tây): đừng lên án "mất kiểm soát" (Tây phán xét) cũng đừng bảo "nhịn đi" (Đông kìm nén) — mà dạy bạn kỹ năng chương 6: nhận diện kim đồng hồ đang vượt trước khi bùng, dùng kỹ thuật hạ nhiệt, và bày tỏ bức xúc bằng lời (đúng mức) thay vì hành động. Nếu cơn bùng nổ lặp lại nhiều lần, khuyến khích tìm hiểu về IED — đó là vấn đề sức khỏe điều trị được, không phải bản tính.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Boundary · Giận lành và IED — những điều dễ nhầm</h3>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Bùng nổ là do bị chọc quá tay — chọc ai cũng nổ."</strong> Sai lệch nguy hiểm. Trong IED, cơn bùng nổ <em>không tương xứng</em> với sự việc và tái diễn, dù sự việc chỉ là phiền toái nhỏ. Đúng là ai cũng có ngưỡng — nhưng người không rối loạn có "cầu chì" cân bằng (giận tỷ lệ thuận, kiểm soát được, nguôi được). Bao biện "do bị chọc" giữ người bệnh không đi điều trị — giống việc đổ lỗi cho người bị đau tim "do ăn no mà chạy". Nếu bùng nổ tái diễn, không tương xứng, làm tổn hại quan hệ — đó là lý do chính đáng để tìm trợ giúp chuyên môn, không phải lý do để tự bao biện.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Giận có thể che giấu các vấn đề khác — và ngược lại.</strong> Giận bùng nổ đôi khi là "mặt nạ" của trầm cảm, lo âu, tổn thương, hoặc lạm dụng chất. Và "thù hằn âm ỉ" đôi khi bị nhầm là "bình tĩnh văn hóa" trong khi thực ra là kìm nén độc hại. Vì vậy khi đánh giá, đừng chỉ nhìn cơn giận: nhìn cả <em>bối cảnh sức khỏe, giấc ngủ, chất kích thích, và lịch sử tổn thương</em>. Một cơn giận bùng nổ mới xuất hiện ở một người trước đây điềm tĩnh là dấu hiệu đỏ cần thăm khám, không phải "đột nhiên nóng tính".</p>
+</div>
+
+<!-- Metacognitive prompt -->
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Predict</span>
+  <p>Chương cuối: nếu giận là ngọn lửa có chức năng, và vấn đề là giữ nó trong bếp — vậy kỹ năng cụ thể là gì? Hãy đoán ba kỹ năng bạn nghĩ sẽ xuất hiện (gợi ý: một cái liên quan đến cơ thể, một cái liên quan đến cách kể chuyện, một cái liên quan đến cách nói với người khác). Viết ra trước khi đọc chương 6.</p>
+</div>
+
+<h3>Fade · Tổng kết chương 5</h3>
+<p>Giận lành hay bệnh không nằm ở "có giận hay không" mà ở ba kim đồng hồ: tần suất, cường độ, thời lượng. Vượt ngưỡng cường độ + tần suất, giận thành những cơn bùng nổ không tương xứng — có thể là IED, một rối loạn phổ biến hơn ta nghĩ (~4–7% người trưởng thành) và quan trọng là <em>điều trị được</em>. Vượt ngưỡng thời lượng, giận thành thù hằn mạn tính — gắn với nguy cơ tim mạch tăng ~19–24% (Chida &amp; Steptoe). Và trên tất cả, cái khuôn văn hóa: Đông dạy "đúng mức" (忍, 怒伤肝, 发而皆中节), Tây dạy "bày tỏ" — mỗi bên một nửa chân lý, và con đường lành là trung hòa cả hai. Chương cuối cùng chuyển từ lý thuyết sang tay nghề: kỹ năng giữ ngọn lửa trong bếp.</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của chương này:</strong> giận không lành cũng không bệnh — nó trở thành bệnh khi kim đồng hồ vượt ngưỡng (tần suất, cường độ, thời lượng); và không văn hóa nào nắm giữ "cách giận đúng" — cả Đông lẫn Tây đều có điểm chết.
+</blockquote> <h2>Chương 6 · Sống chung với ngọn lửa — kỹ năng giữ lửa trong bếp</h2>
+<p>Năm chương đã dựng xong lý thuyết: giận là ngọn lửa của lẽ phải — nó báo hiệu bất công (chương 1), chạy trên cơ thể (2), bị nuôi bởi câu chuyện trong đầu (3), có chức năng bảo vệ công bằng (4), và trở thành bệnh khi kim đồng hồ vượt ngưỡng (5). Chương cuối này là phần <em>tay nghề</em>: kỹ năng cụ thể để giữ ngọn lửa trong bếp. Không phải "đừng giận" (bất khả thi, và cũng không nên) — mà là <em>giận đúng cách</em>: nhận diện sớm, hạ nhiệt cơ thể, đổi cách kể chuyện, nói ra có kế hoạch, và dùng công lý thay vì trả thù. Bạn sẽ rời bài này với một bộ kỹ năng thực hành được ngay.</p>
+
+<h3>Chỗ neo chương 6: từ người bị lửa điều khiển thành người giữ lửa</h3>
+<p>Mô hình Ngọn lửa suốt bài đã dạy một điều: ngọn lửa không phải kẻ thù — <em>kẻ thù là sự bất lực trước nó</em>. Người bị lửa điều khiển phản ứng (bùng phát hoặc kìm nén). Người giữ lửa <em>hành động có ý thức</em>: họ nhận diện ngọn lửa đang cháy, quyết định để nó ở đâu, và dùng năng lượng của nó để sửa sai. Chương này trao cho bạn bốn công cụ của "người giữ lửa": <em>nhận diện, hạ nhiệt, đổi kể chuyện, nói có kế hoạch</em> — và một nguyên tắc cuối cùng: công lý không cần trả thù.</p>
+
+<!-- Pre-mortem ch6 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this chapter thinking…</span>
+  <p><span class="premortem__wrong">"Kiểm soát giận là đè nén, kìm nén, nuốt xuống — hoặc: mạnh miệng là phải trả đũa cho đủ 'công bằng'."</span></p>
+  <p>Điều này sai vì <em>kiểm soát giận không phải kìm nén (chương 3 đã chỉ kìm nén gây hại); và "công bằng" qua trả thù là đám cháy đền đám cháy, không phải sửa sai</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> kiểm soát giận là <strong>điều hòa có ý thức</strong> — nhận diện ngọn lửa, hạ nhiệt cơ thể, đổi cách đọc, và <em>bày tỏ bằng lời có kế hoạch</em> để sửa sai. Và công lý đích thực là "sửa được cái sai" — không phải "làm người kia đau như mình đã đau".</p>
+</div>
+
+<h3>Construct · Bốn công cụ của người giữ lửa</h3>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch6-scaffold-1">
+  <h3 class="scaffold__concept">Công cụ 1 — Nhận diện sớm: biết "lò đốt" đang bật</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Kỹ năng số một là <strong>nhận diện cơn giận trong giây đầu tiên</strong> — trước khi nó chiếm quyền điều khiển. Nhờ chương 2, bạn đã biết các dấu hiệu: tim nhanh, mặt nóng, tay nắm, giọng cao. Nhận diện sớm tạo ra "khoảng trống" giữa phản ứng và hành động — chính khoảng trống ấy là nơi bạn giành lại quyền điều khiển. Trong tâm lý học, đây là nền tảng của liệu pháp nhận thức: bạn không thể điều hòa thứ bạn không thấy <a class="source" href="https://www.health.harvard.edu/mind-and-mood/strategies-for-managing-anger" target="_blank" rel="noopener">Harvard Health, Managing Anger</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Email "vô lý" vừa ập đến. Người không có kỹ năng: đọc nửa chừng, đã trả lời gay gắt rồi hối hận. Người có kỹ năng: cảm nhận tim đập nhanh hơn, <em>tự nhủ trong đầu</em>: "Lò đốt của mình vừa bật." — và chỉ riêng việc gọi tên nó đã tạo khoảng trống. Cái khoảng trống này cho phép bước tiếp theo (hạ nhiệt) thay vì phản ứng tự động. Đó là lý do "nhận diện" được xếp là công cụ đầu tiên: không có nó, các công cụ khác không có chỗ chen vào.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Gọi tên cảm xúc thật sự giúp ích gì — hay chỉ là "mẹo tâm lý"?</summary>
+    <div class="scaffold__resolve"><p>Có cơ sở thần kinh. Hiện tượng "gọi tên để thuần hóa" (affect labeling) được nghiên cứu rộng: khi bạn gọi tên cảm xúc, hoạt động ở hạch hạnh nhân giảm xuống và vỏ não trước trán (lý trí) hoạt động mạnh hơn. Nói đơn giản: đặt tên cho ngọn lửa ("đây là giận") giúp đưa nó từ hệ thống phản ứng nhanh sang hệ thống xử lý có ý thức. Đây không phải phép màu — là một cơ chế đo được. Kỹ năng này còn được dùng trong điều trị IED và các rối loạn giận, như một bước nền của liệu pháp nhận thức-hành vi.</p></div>
+  </details>
+</section>
+<div class="feynman">Gọi tên ngọn lửa là bước đầu của việc điều khiển nó: "lò đốt đang bật" — chừng đó đã tạo đủ khoảng trống để bạn quyết định thay vì phản ứng.</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch6-scaffold-2">
+  <h3 class="scaffold__concept">Công cụ 2 — Hạ nhiệt cơ thể: thở chậm, tách khỏi nguồn, "time-out"</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Nhờ chương 2, ta biết "nóng" là phản ứng sinh học bật trước lý trí. Công cụ thứ hai can thiệp ngay tại lớp này: <strong>hạ nhiệt</strong>. Ba cách có bằng chứng: <em>(1) thở chậm và sâu</em> (4–6 nhịp/phút) kích hoạt hệ phó giao cảm, làm tim chậm lại; <em>(2) tách khỏi nguồn kích thích</em> (bỏ chỗ đó, đi bộ, không trả lời ngay); <em>(3) "time-out" có kế hoạch</em> — rời cuộc trò chuyện 20 phút đến vài giờ để cơn nóng lắng, rồi quay lại nói tiếp. Các hướng dẫn y tế công cộng về quản lý giận đều đặt thở sâu và tách khỏi nguồn là kỹ năng đầu bảng <a class="source" href="https://www.health.harvard.edu/mind-and-mood/strategies-for-managing-anger" target="_blank" rel="noopener">Harvard Health</a> <a class="source" href="https://www.mayoclinic.org/zh-hans/healthy-lifestyle/adult-health/in-depth/anger-management/art-20046886" target="_blank" rel="noopener">Mayo Clinic (tiếng Trung), Quản lý giận</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Cuộc họp đang nóng: sếp vừa có lời "đánh trúng". Thay vì đáp trả ngay (lửa chạm lửa), bạn nói: "Cho mình vài phút suy nghĩ — mình quay lại chuyện này sau." Bạn rời phòng, hít thở 5 phút. Khi quay lại, "nóng" đã hạ, vỏ não trước trán đã về, và bạn có thể nói bằng lý trí. Đây không phải trốn tránh — là <em>mua thời gian cho lý trí</em>. Lưu ý: "time-out" phải kèm cam kết quay lại nói tiếp — nếu chỉ bỏ đi không quay lại, nó thành né tránh, và giận vẫn âm ỉ (chương 3).</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Thở chậm có thật sự "hạ nhiệt" giận hay chỉ giúp bình tĩnh để giận tiếp?</summary>
+    <div class="scaffold__resolve"><p>Thở chậm kích hoạt hệ phó giao cảm — hệ thống "phanh" của cơ thể — làm giảm nhịp tim, huyết áp, và các dấu hiệu căng thẳng khác. Nó không xóa giận (giận còn thông tin để xử lý) nhưng nó <em>hạ cường độ cơ thể</em>, đưa bạn khỏi vùng "phản ứng" sang vùng "có thể suy nghĩ". Điểm mấu chốt: hạ nhiệt tạo điều kiện cho các công cụ nhận thức (đổi kể chuyện, nói có kế hoạch) hoạt động. Nếu chỉ thở mà không đổi cách đọc sự kiện, giận có thể quay lại — nên thở là công cụ đệm, không phải lời giải cuối. Lời giải cuối nằm ở công cụ 3 và 4.</p></div>
+  </details>
+</section>
+<div class="feynman">"Nóng" là phản ứng bật trước lý trí — thở chậm và tách khỏi nguồn là cách mua thời gian để lý trí quay lại bàn lái.</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch6-scaffold-3">
+  <h3 class="scaffold__concept">Công cụ 3 — Đổi kể chuyện: đánh giá lại sự kiện</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Nhờ chương 3, ta biết ngọn lửa được nuôi bởi câu chuyện trong đầu. Công cụ thứ ba tấn công đúng nơi đó: <strong>đánh giá lại (cognitive reappraisal)</strong> — chủ động đọc sự kiện theo cách khác. Ba câu hỏi mạnh: <em>"Có bằng chứng gì cho việc 'nó cố ý'?"</em> (kiểm chứng thiên kiến đọc ý xấu); <em>"Có cách đọc nào khác không?"</em> (sự kiện có thể vô ý, có hoàn cảnh); <em>"Một tuần, một tháng sau, chuyện này còn quan trọng không?"</em> (đặt lại tỷ lệ). Đánh giá lại là kỹ năng được nghiên cứu kỹ nhất trong điều hòa cảm xúc và là thành phần chính của liệu pháp nhận thức-hành vi <a class="source" href="https://psycnet.apa.org/record/2017-18318-001" target="_blank" rel="noopener">Tổng quan reappraisal, 2017</a> <a class="source" href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC10074557/" target="_blank" rel="noopener">Reappraisal và giận, 2023</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Người không nhận tin nhắn suốt 3 giờ. Cách đọc A (tự động): "Nó coi thường mình, không tôn trọng mình" — lửa bùng. Đổi kể chuyện: "Có thể nó đang họp, đang lái xe, đang có việc khẩn." Hỏi thêm: "Mình có bằng chứng nào cho việc 'cố ý lơ' không?" — thường là không. Kết quả: cùng sự kiện, ngọn lửa không có nhiên liệu. Quan trọng: đánh giá lại <em>không phải tự lừa mình "không sao đâu"</em> khi thật sự có bất công — nó là kiểm chứng câu chuyện trước khi tin nó. Nếu có bằng chứng thật, công cụ 3 chuyển sang công cụ 4: bày tỏ có kế hoạch.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Đánh giá lại và "kìm nén" khác nhau thế nào — nghe có vẻ cũng là đè cảm xúc xuống?</summary>
+    <div class="scaffold__resolve"><p>Hoàn toàn khác về cơ chế. Kìm nén: giữ cảm xúc nhưng <em>che giấu biểu hiện</em> — cơ thể vẫn căng, giận vẫn âm ỉ (chương 3, 5). Đánh giá lại: <em>thay đổi ý nghĩa của sự kiện</em> trước khi cảm xúc kịp định hình — nó làm giảm chính cảm xúc, không phải che giấu nó. Nghiên cứu so sánh cho thấy: người dùng đánh giá lại thường có sức khỏe tâm lý và quan hệ tốt hơn người dùng kìm nén. Khác biệt gọn: kìm nén là "tắt tiếng báo động nhưng để lửa cháy", đánh giá lại là "kiểm tra xem có thật là cháy không". Nếu có cháy thật — thì không đánh giá lại để xóa, mà bày tỏ để sửa (công cụ 4).</p></div>
+  </details>
+</section>
+<div class="feynman">Giận không được nuôi bởi sự kiện mà bởi câu chuyện — đổi câu chuyện (có căn cứ) là tước nhiên liệu của ngọn lửa.</div>
+
+<!-- Scaffold 4 -->
+<section class="scaffold" id="ch6-scaffold-4">
+  <h3 class="scaffold__concept">Công cụ 4 — Nói có kế hoạch: câu "tôi" và công lý không trả thù</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Khi bất công là thật (có bằng chứng), ngọn lửa cần được dùng đúng chỗ: <strong>bày tỏ có kế hoạch</strong> để sửa sai. Công cụ ngôn ngữ mạnh nhất là <em>câu "tôi" (I-statements)</em> — cấu trúc: "Khi [sự việc], tôi cảm thấy [cảm xúc], vì [lý do]; tôi mong [yêu cầu cụ thể]." Thay vì "Anh không bao giờ…", hãy nói "Khi họp bị lỡ hẹn, tôi cảm thấy không được tôn trọng, vì tôi đã sắp xếp cả buổi; tôi mong lần sau báo trước." Câu "tôi" tránh công kích cá nhân — giữ ngọn lửa trong bếp thay vì ném vào mặt đối phương. Các hướng dẫn y tế cả phương Tây lẫn Trung Hoa đều đặt câu "tôi" là kỹ thuật giao tiếp giận trung tâm <a class="source" href="https://www.mayoclinic.org/zh-hans/healthy-lifestyle/adult-health/in-depth/anger-management/art-20046886" target="_blank" rel="noopener">Mayo Clinic (tiếng Trung)</a> <a class="source" href="https://www.health.harvard.edu/mind-and-mood/strategies-for-managing-anger" target="_blank" rel="noopener">Harvard Health</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bạn bị cướp công trong một dự án. Cách bùng nổ: "Anh ăn cắp ý tưởng của tôi, đồ vô liêm sỉ!" — đám cháy: đối phương phòng thủ, mọi thứ hỏng, giận tăng. Cách công cụ 4: sau khi hạ nhiệt và đánh giá lại (có bằng chứng thật), nói: "Khi phần công việc của tôi được trình bày mà không ghi tên tôi, tôi cảm thấy bị bỏ qua, vì tôi đã làm phần lớn nội dung. Tôi mong tên tôi được ghi trong báo cáo chính thức." — câu "tôi" nêu sự việc, cảm xúc, và yêu cầu cụ thể. Kết quả: cơ hội sửa sai cao hơn, và bạn giữ được phẩm giá của mình <em>mà không đốt cầu</em>. Đây chính là "công lý không trả thù": mục tiêu là sửa cái sai, không phải làm người kia đau.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu nói câu "tôi" mà đối phương vẫn không sửa — vậy giận có còn tác dụng không, và mình làm gì tiếp?</summary>
+    <div class="scaffold__resolve"><p>Câu "tôi" không bảo đảm kết quả — nó bảo đảm <em>phương cách</em>. Nếu sau khi bày tỏ rõ ràng mà hành vi không đổi, bạn nâng mức: lặp lại với người có trách nhiệm hơn, lập hồ sơ bằng chứng, đưa lên kênh chính thức (chính là "giận tập thể có kỷ luật" của chương 4). Quan trọng: giận đã hoàn thành chức năng của nó (tín hiệu dừng lại + yêu cầu thay đổi) dù kết quả chưa như ý. Và nhớ ba kim đồng hồ chương 5: sau khi đã bày tỏ và xử lý đúng cách, nếu sự việc không đổi, hãy học cách <em>buông bỏ</em> thay vì để thù hằn kéo dài — vì kim thời lượng vượt ngưỡng là cái gây hại nhất cho chính bạn.</p></div>
+  </details>
+</section>
+<div class="feynman">Câu "tôi" biến cơn giận thành bản tin có người nhận: nêu sự việc, cảm xúc, yêu cầu — sửa sai thay vì trả thù.</div>
+
+<!-- Checkpoint 6 -->
+<div class="checkpoint" data-checkpoint-id="cp-tuc-gian-6">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Quay lại cơn giận bạn đã viết ở Checkpoint 1 (hoặc chọn một tình huống mới). Giờ hãy xây dựng một <em>câu "tôi"</em> hoàn chỉnh cho nó theo khuôn: "Khi [sự việc], tôi cảm thấy [cảm xúc], vì [lý do]; tôi mong [yêu cầu cụ thể]." Viết ra nguyên văn câu bạn sẽ nói.</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>Ví dụ với kịch bản "bị chen ngang" ở chương 1: "Khi bạn chen vào quầy trước mặt tôi, tôi cảm thấy không được tôn trọng, vì mọi người đã xếp hàng theo thứ tự; tôi mong bạn đi xuống cuối hàng." Lưu ý ba điểm: (1) sự việc nêu <em>cụ thể, không công kích nhân cách</em> ("bạn chen" — không phải "bạn vô ý thức"); (2) cảm xúc nêu bằng "tôi" — không nêu phán xét về người kia; (3) yêu cầu <em>khả thi và cụ thể</em> ("xuống cuối hàng") — không phải mơ hồ ("làm ơn tôn trọng"). Câu "tôi" chuẩn giúp bạn giữ ngọn lửa trong bếp: nó gửi tín hiệu dừng lại (chương 4) mà không đốt cầu.</p>
+  </div>
+</div>
+
+<h3>Apply · Bản đồ kết nối toàn bài</h3>
+<p>Toàn bộ bài học của sáu chương gói gọn thành một chuỗi hành động "người giữ lửa" — hãy đọc như một quy trình khi giận dâng lên:</p>
+
+<!-- Flow diagram anchoring the whole synthesis -->
+<div class="concept-flow">
+  <div class="concept-flow__step"><span class="concept-flow__num">01</span>Nhận diện: "lò đốt đang bật" — gọi tên cơn giận</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">02</span>Hạ nhiệt: thở chậm, tách khỏi nguồn, time-out</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">03</span>Đổi kể chuyện: kiểm chứng "cố ý?", tìm cách đọc khác</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">04</span>Có bất công thật? → câu "tôi" — bày tỏ có kế hoạch</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">05</span>Chưa đổi? → nâng cấp kênh / lập hồ sơ / buông bỏ đúng lúc</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">06</span>Sửa được sai → nhận biết chức năng đã hoàn thành, nhẹ đi</div>
+</div>
+
+<p>Hãy in chuỗi 6 bước này vào một nơi bạn nhìn thấy khi giận — đó là "bảng hướng dẫn phòng cháy" cho chính bạn. Không cần thực hiện hoàn hảo ngay; bất kỳ bước nào bạn bắt được kịp đều đã là thắng lợi so với việc phản ứng tự động.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Bạn vừa bị đổ lỗi oan trong một cuộc họp và cảm thấy "máu nóng dồn lên mặt". Kể tên bốn công cụ của người giữ lửa theo đúng thứ tự, và với mỗi công cụ, nêu <em>một</em> hành động cụ thể bạn sẽ làm ngay trong tình huống này.</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">(1) Nhận diện: tự nhủ "lò đốt của mình đang bật — mình đang giận" (gọi tên). (2) Hạ nhiệt: xin vài phút — "Cho mình suy nghĩ chút, mình quay lại chuyện này", rời chỗ, thở chậm. (3) Đổi kể chuyện: hỏi "Mình có bằng chứng gì cho việc 'cố ý đổ lỗi'? Có cách đọc khác không?" (có thể họ thiếu thông tin). (4) Nói có kế hoạch: nếu bất công là thật, dùng câu "tôi" — "Khi phần việc của tôi bị quy là lỗi của tôi, tôi cảm thấy bị đánh giá sai, vì tôi đã làm đúng phần được giao; tôi mong chúng ta xem lại bằng chứng trước khi kết luận." Điểm mấu chốt: hành động đúng thứ tự — đừng bỏ qua hạ nhiệt để lao vào nói ngay khi vẫn đang nóng.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Boundary · Khi nào tự xử lý, khi nào cần chuyên gia</h3>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Chỉ cần tự kỷ luật là hết giận — mạnh mẽ là tự xử lý một mình."</strong> Sai và nguy hiểm. Bốn công cụ trên hiệu quả với giận <em>thông thường</em> — nhưng nếu bạn nhận ra các kim đồng hồ đã vượt ngưỡng (bùng nổ thường xuyên, không tương xứng, hoặc thù hằn kéo dài nhiều năm), đó là lúc <em>kỹ năng tự lực không đủ</em> — giống như tập thể dục không đủ cho bệnh tim. Tìm đến chuyên gia tâm lý không phải yếu đuối — là thông minh. Nhớ chương 5: IED có thể điều trị được, và phần lớn người mắc không bao giờ được điều trị vì tự bao biện "mình chỉ nóng tính". Đừng để sự "mạnh mẽ" giữ bạn khỏi chỗ chữa được.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Khẩn cấp — khi giận chuyển thành nguy hiểm.</strong> Nếu bạn (hoặc người thân) từng: nghĩ đến làm hại người khác hoặc chính mình; có hành vi bạo lực lặp lại; hoặc cơn giận kèm mất nhận thức, tê liệt, đau ngực — đừng tự xử lý bằng bài viết này. Hãy tìm hỗ trợ khẩn cấp (đường dây nóng, cơ sở y tế, người tin cậy). Bài viết là kiến thức điều hòa cảm xúc, không thay thế chẩn đoán và điều trị. Nếu bạn đang giúp người có nguy cơ bạo lực, ưu tiên an toàn cho cả hai người trước khi bàn về kỹ thuật.</p>
+</div>
+
+<!-- Launchpad -->
+<div class="launchpad">
+  <span class="launchpad__label">🚀 Launchpad — your next step after this note</span>
+  <p class="launchpad__question">Làm thế nào để dùng ngọn lửa tức giận <em>sửa sai</em> mà không <em>đốt cháy</em> mọi thứ — ở cả ba tầng: bản thân (kỹ năng), gia đình và bạn bè (đối thoại), và cộng đồng (hành động tập thể chống bất công)?</p>
+  <button type="button" class="btn btn--ghost" id="hintBtn">Xem gợi ý bước tiếp theo</button>
+  <div class="launchpad__hint" data-hint="1">Luyện công cụ 1 + 2 trong 7 ngày: mỗi lần nhận ra "lò đốt đang bật", chỉ cần gọi tên và thở chậm 10 nhịp — không cần làm gì thêm. Đếm xem một tuần bạn bắt được bao nhiêu cơn giận kịp thời. Bắt được càng nhiều, khoảng trống giữa phản ứng và hành động càng lớn.</div>
+  <div class="launchpad__hint" data-hint="2">Tập công cụ 4 với một tình huống nhỏ an toàn trong tuần tới: chọn một điều đang làm bạn bực (không phải chuyện lớn nhất), viết câu "tôi", và nói nó với đúng người liên quan. Đo lường thành công không phải bằng "đối phương đổi hay không" mà bằng việc bạn đã giữ ngọn lửa trong bếp.</div>
+  <div class="launchpad__hint" data-hint="3">Đọc rộng hơn với một trong các nguồn ở cuối bài: cuốn "Anger and Aggression" của Averill (cách giận đời thường vận hành), hoặc tổng quan của Harvard Health về quản lý giận. Chọn <em>một</em> nguồn, không cần đọc hết — chỉ cần mang về một kỹ thuật mới áp dụng được.</div>
+</div>
+
+<h3>Fade · Tổng kết cả bài</h3>
+<p>Sáu chương đã đi trọn đường: tức giận là cảm xúc của bất công (1) — một ngọn lửa chạy trên cơ thể (2), được nuôi bởi câu chuyện trong đầu (3), nhưng mang chức năng bảo vệ công bằng (4), và trở thành bệnh chỉ khi kim đồng hồ vượt ngưỡng (5). Người trưởng thành không phải người không có lửa — mà là người <em>giữ lửa trong bếp</em>: nhận diện, hạ nhiệt, đổi kể chuyện, nói có kế hoạch. Bạn đã đi qua sáu chương, sáu checkpoint, và giờ mang theo bốn công cụ thực hành cùng một chuỗi 6 bước. Điều cuối cùng đáng nhớ: giận không phải kẻ thù cần dập tắt — nó là ngọn lửa cần được dùng; và lần tới khi "máu nóng dồn lên mặt", hãy coi đó là lời mời vào bếp, không phải lời tuyên chiến.</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của cả bài này:</strong> giận là ngọn lửa của lẽ phải — bạn không cần dập tắt nó, bạn chỉ cần giữ nó trong bếp và dùng nó để nấu chín công lý.
+</blockquote> <!-- Glossary -->
+    <h2 id="glossary">Glossary</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Tức giận (anger)</dt>
+        <dd>Cảm xúc được kích hoạt khi ta phán đoán có điều bất công đang xảy ra và có ai đó đáng trách — gồm trải nghiệm chủ quan, phản ứng cơ thể, xu hướng hành động và tín hiệu xã hội.</dd>
+        <dt>Gây hấn (aggression)</dt>
+        <dd>Hành vi có chủ đích làm tổn thương người/động vật/tài sản — khác với tức giận (cảm xúc). Giận có thể tồn tại mà không gây hấn.</dd>
+        <dt>Thù hằn (hostility)</dt>
+        <dd>Thái độ kéo dài: thế giới quan "người ta chống lại tôi" nuôi dưỡng giận mãn tính — khác với cơn giận nhất thời ở thời lượng.</dd>
+        <dt>Mô hình Ngọn lửa</dt>
+        <dd>Cầu nối của bài: giận là ngọn lửa — nhiên liệu là bất công, ôxy là không gian được bày tỏ. Ba trạng thái: lửa trong bếp (giận lành), đám cháy (gây hấn), lửa bị bịt kín (kìm nén).</dd>
+        <dt>Phán đoán bất công + đổ lỗi</dt>
+        <dd>Công thức khởi động cơn giận: (1) sự kiện vi phạm chuẩn mực công bằng, (2) gán trách nhiệm cho người/cái có chủ đích hoặc đáng lẽ ngăn được.</dd>
+        <dt>Hạch hạnh nhân (amygdala)</dt>
+        <dd>Trung tâm cảnh báo của não; phát hiện đe dọa/bất công và bật phản ứng trước khi vỏ não kịp phân tích — "bàn đạp ga" của cơn giận.</dd>
+        <dt>Phản ứng chiến đấu-hay-chạy (fight-or-flight)</dt>
+        <dd>Cụm thay đổi sinh lý khi adrenaline tiết ra: tim nhanh, mặt đỏ, tay nắm, đồng tử giãn — cơ thể chuẩn bị cho "trận chiến".</dd>
+        <dt>Amygdala hijack</dt>
+        <dd>"Hạch hạnh nhân bắt cóc": khi giận dữ dội, mạch não tạm gạt vỏ não trước trán (lý trí) sang bên — cơ sở của câu "giận mất khôn".</dd>
+        <dt>Thiên kiến quy kết thù địch (hostile attribution bias)</dt>
+        <dd>Xu hướng đọc ý xấu của người khác khi hành vi mơ hồ — nuôi mảnh "đáng trách", làm cơn giận bùng nhầm.</dd>
+        <dt>Lầm tưởng xả giận (catharsis myth)</dt>
+        <dd>Niềm tin "xả giận cho bớt" (đập phá, hét to, kể đi kể lại) — bị thí nghiệm Bushman (2002) bác bỏ: nó luyện tập cơn giận chứ không dập.</dd>
+        <dt>Nghiền ngẫm (rumination)</dt>
+        <dd>"Máy nhai nhiên liệu": liên tục nghĩ về cơn giận, nguyên nhân, hậu quả — giữ lửa cháy hàng giờ và là cầu nối sang thù hằn mạn tính.</dd>
+        <dt>Đánh giá lại (cognitive reappraisal)</dt>
+        <dd>Chủ động đọc sự kiện theo cách khác có căn cứ — kiểm chứng "cố ý?", tìm cách đọc thay thế — kỹ thuật điều hòa giận được nghiên cứu nhiều nhất.</dd>
+        <dt>Chức năng của giận</dt>
+        <dd>Ba việc giận làm được: tín hiệu dừng lại (bảo vệ ranh giới — Averill), cảm xúc đàm phán (người giận được nhượng bộ hơn — van Kleef), ngọn lửa tập thể chống bất công (van Zomeren).</dd>
+        <dt>Câu "tôi" (I-statements)</dt>
+        <dd>Khuôn giao tiếp: "Khi [sự việc], tôi cảm thấy [cảm xúc], vì [lý do]; tôi mong [yêu cầu]" — bày tỏ giận mà không công kích người nghe.</dd>
+        <dt>Rối loạn bùng nổ từng cơn (IED)</dt>
+        <dd>Chẩn đoán DSM-5: bùng nổ lời/hành vi gây hại không tương xứng với sự việc, tái diễn, mất kiểm soát. Gặp ở ~4–7% người trưởng thành và có thể điều trị.</dd>
+        <dt>Nhẫn (忍)</dt>
+        <dd>Giá trị Đông Á về kìm nhịn vì hòa khí. Lành khi là "đừng để giận điều khiển hành vi"; bệnh lý khi là đè nén hoàn toàn dẫn đến nổ muộn và thù hằn âm ỉ.</dd>
+        <dt>Trung – Hòa (中庸)</dt>
+        <dd>《中庸》: "喜、怒、哀、乐之未发，谓之中；发而皆中节，谓之和" — cảm xúc chưa bộc lộ là "trung", bộc lộ đúng mức là "hòa". Con đường vàng giữa kìm nén và phun trào.</dd>
+        <dt>怒伤肝 (giận làm tổn thương can)</dt>
+        <dd>Quan niệm Đông Y trong 《黄帝内经》: giận làm tổn thương can, "怒则气上" — giận khiến khí bốc lên. Điểm gặp gỡ với nghiên cứu tim mạch hiện đại (Chida &amp; Steptoe): giận mạn tính gắn với tổn thương cơ thể.</dd>
+      </dl>
+    </div>
+
+    <!-- =====================================================
+         KNOWLEDGE CHECK (auto-graded quiz)
+         ===================================================== -->
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Knowledge check</h2>
+      <p class="quiz__intro">3 questions. Pick the best answer for each and click <em>Check answers</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Trong thí nghiệm của Bushman (2002), nhóm nào sau khi bị chọc tức giận ít nhất và gây hấn ít nhất?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Nhóm đập bao cát và nghĩ về người đã chọc tức mình</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Nhóm ngồi yên, không làm gì và không nghĩ về người chọc tức</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Nhóm đập bao cát và nghĩ về tập luyện thể thao</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Nhóm hét to cho "xả nỗi bực" rồi uống nước đá</label>
+        <div class="quiz__explanation"><strong>Why:</strong> "Xả giận" bằng đập phá/hét to không dập lửa mà <em>luyện tập</em> cơn giận: nhóm đập bao cát + nghĩ về kẻ chọc giận và gây hấn nhất; nhóm ngồi yên giận ít nhất. Đây là bằng chứng chống lại lầm tưởng xả giận.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>2. "Tức giận là cảm xúc của bất công" — công thức khởi động cơn giận gồm hai mảnh nào?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Đau đớn + bị thương tích</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Sợ hãi + cần chạy trốn</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Phán đoán bất công + phán đoán có người đáng trách</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Mất mát + không thể đảo ngược</label>
+        <div class="quiz__explanation"><strong>Why:</strong> Giận bật lên khi (1) sự kiện vi phạm chuẩn mực công bằng và (2) ta gán trách nhiệm cho người/cái "đáng trách" (có chủ đích, đáng lẽ ngăn được). Mất mát + không thể đảo ngược là công thức của nỗi buồn; sợ hãi là của mối đe dọa phía trước.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>3. Khi nào giận chuyển từ "bình thường" sang tín hiệu cần chú ý theo ba kim đồng hồ của bài?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Khi tần suất, cường độ hoặc thời lượng vượt ngưỡng: bùng nổ thường xuyên, không tương xứng với sự việc, hoặc thù hằn kéo dài nhiều ngày</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Chỉ khi người đó tức giận trong hơn 1 phút</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Chỉ khi giận chuyển thành đập đồ hoặc la hét một lần</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Không bao giờ — giận lúc nào cũng là bình thường</label>
+        <div class="quiz__explanation"><strong>Why:</strong> Giận lành tỷ lệ thuận với sự việc, nguôi được trong vài giờ. Vượt ngưỡng gồm: tần suất (bùng lặp lại thường xuyên), cường độ (không tương xứng, mất kiểm soát — ngưỡng IED), thời lượng (thù hằn kéo dài — chi phí tim mạch). Một lần đập đồ chưa đủ chẩn đoán, nhưng là cờ đỏ nếu tái diễn.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Check answers</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Reset</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <!-- Sources section -->
+    <h2 id="sources">Sources &amp; further reading</h2>
+    <p><a class="source" href="https://link.springer.com/book/10.1007/978-1-4612-5743-1" target="_blank" rel="noopener">Averill</a> — 1982, "Anger and Aggression: An Essay on Emotion" (Springer).</p>
+    <p><a class="source" href="https://journals.sagepub.com/doi/10.1177/0022022183143006" target="_blank" rel="noopener">J. of Cross-Cultural Psychology</a> — Averill, 1983, "Studies on anger and aggression."</p>
+    <p><a class="source" href="https://www.apa.org/pubs/journals/releases/psp-82-1-68.pdf" target="_blank" rel="noopener">JPSP</a> — Bushman, 2002, "Does venting anger feed or extinguish the flame? (PSPB02)."</p>
+    <p><a class="source" href="https://www.researchgate.net/publication/31078254_Does_Venting_Anger_Feed_or_Extinguish_the_Flame" target="_blank" rel="noopener">Personality and Social Psychology Bulletin</a> — Bushman, Baumeister &amp; Stack, 1999, venting studies.</p>
+    <p><a class="source" href="https://onlinelibrary.wiley.com/doi/10.1111/j.1467-6494.2007.00443.x" target="_blank" rel="noopener">J. of Personality</a> — Bushman et al., 2005, "Chewing on it can help you swallow: rumination and anger."</p>
+    <p><a class="source" href="https://psycnet.apa.org/record/2008-06385-003" target="_blank" rel="noopener">Psychological Bulletin</a> — van Zomeren et al., 2008, "Collective action meta-analysis (SIMCA, 182 effects)."</p>
+    <p><a class="source" href="https://psycnet.apa.org/record/2004-18292-003" target="_blank" rel="noopener">JPSP</a> — van Kleef et al., 2004, "The interpersonal effects of anger and happiness in negotiations."</p>
+    <p><a class="source" href="https://srcd.onlinelibrary.wiley.com/doi/10.1111/1467-8624.00450" target="_blank" rel="noopener">Child Development</a> — Orobio de Castro et al., 2002, "Hostile attribution bias and aggression (41 studies)."</p>
+    <p><a class="source" href="https://pubmed.ncbi.nlm.nih.gov/31280171/" target="_blank" rel="noopener">Clinical Psychology Review</a> — Verhoef et al., 2019, "Hostile attribution bias in adults (111 studies)."</p>
+    <p><a class="source" href="https://pubmed.ncbi.nlm.nih.gov/16754915/" target="_blank" rel="noopener">J. Clinical Psychiatry</a> — Kessler et al., 2006, "Prevalence of IED (NCS-R, DSM-IV 7,3%)."</p>
+    <p><a class="source" href="https://www.medlink.com/articles/intermittent-explosive-disorder" target="_blank" rel="noopener">MedLink</a> — 2024, "Intermittent Explosive Disorder, DSM-5 overview."</p>
+    <p><a class="source" href="https://pubmed.ncbi.nlm.nih.gov/19171844/" target="_blank" rel="noopener">JACC</a> — Chida &amp; Steptoe, 2009, "Anger, hostility and coronary heart disease (meta-analysis)."</p>
+    <p><a class="source" href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2018.00123/full" target="_blank" rel="noopener">Frontiers in Psychology</a> — 2018, "Everyday emotions: anger ~6,19% of measurement occasions, ~5,98 times/2 weeks."</p>
+    <p><a class="source" href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2016.00426/full" target="_blank" rel="noopener">Frontiers in Psychology</a> — 2016, "Cross-cultural anger evaluation: USA more permissive, Japan more condemning."</p>
+    <p><a class="source" href="https://sda.berkeley.edu/sdaweb/docs/gss24rel1/DOC/hcbk0263.htm" target="_blank" rel="noopener">General Social Survey</a> — 1996, "How many days in past week did you feel angry?"</p>
+    <p><a class="source" href="https://www.health.harvard.edu/mind-and-mood/strategies-for-managing-anger" target="_blank" rel="noopener">Harvard Health</a> — "Strategies for managing anger" (recognition, breathing, reappraisal).</p>
+    <p><a class="source" href="https://www.mayoclinic.org/zh-hans/healthy-lifestyle/adult-health/in-depth/anger-management/art-20046886" target="_blank" rel="noopener">Mayo Clinic (tiếng Trung)</a> — "愤怒管理：10个控制愤怒的技巧" (gồm câu "tôi" 我陈述).</p>
+    <p><a class="source" href="https://ctext.org/huangdi-neijing/su-wen" target="_blank" rel="noopener">《黄帝内经·素问》</a> — "怒伤肝" (giận tổn thương can), "怒则气上" (giận khiến khí bốc lên).</p>
+    <p><a class="source" href="https://ctext.org/zhong-yong" target="_blank" rel="noopener">《中庸》</a> — "喜怒哀乐之未发，谓之中；发而皆中节，谓之和" (trung – hòa).</p>
+    <p><a class="source" href="https://psycnet.apa.org/record/1998-10798-005" target="_blank" rel="noopener">Phân tích khái niệm "nhẫn" (忍)</a> — 1998, "中国人之忍 — nhẫn trong văn hóa Trung Hoa: 克制、坚心、容受、退让."</p>
+    <p><a class="source" href="https://psycnet.apa.org/record/2019-75633-001" target="_blank" rel="noopener">《心理科学进展》</a> — 2020, "心理宣泄究竟是有益还是有害?" (xả giận có lợi hay hại — đồng thuận Bushman; ~48% phòng tư vấn Trung Quốc có thiết bị xả giận).</p>
+
+    <div class="footer">
+      <p>Keyboard: <span class="kbd">J</span>/<span class="kbd">K</span> scroll · <span class="kbd">F</span> focus mode · <span class="kbd">T</span> theme · <span class="kbd">P</span> print</p>
+    </div>
+
+  </main>
+
+  <!-- =========================================================
+       RIGHT — MARGINALIA (sidenotes)
+       ========================================================= -->
+  <aside class="marginalia" aria-label="Sidenotes">
+
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Term amplifier</span>
+      <p class="amplifier__empty">Hover a <span style="border-bottom:1px dashed var(--accent2)">dashed</span> term in the main text to expand it here.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="amp-injustice">
+        <span class="amplifier__term">Tức giận — cảm xúc của bất công</span>
+        <p class="amplifier__body">Giận là một trong những cảm xúc "của bất công" theo các nhà nghiên cứu cảm xúc (Frijda, Lazarus, Scherer): nó bật lên khi phán đoán hai điều — sự kiện vi phạm chuẩn mực công bằng (injustice) và có người đáng trách (blame). Công thức này giải thích vì sao cùng một sự việc, người này giận người kia không: phán đoán là cá nhân hóa. Giận là "còi báo động công bằng" của loài người.</p>
+      </div>
+      <div data-note-id="amp-fight">
+        <span class="amplifier__term">Hạch hạnh nhân &amp; phản ứng chiến đấu</span>
+        <p class="amplifier__body">Amygdala là "trung tâm cảnh báo" rà soát thông tin liên tục; khi phát hiện đe dọa/bất công nó bật vùng dưới đồi → tuyến thượng thận → adrenaline. Cụm thay đổi (tim nhanh, mặt đỏ, tay nắm, đồng tử giãn) là phản ứng chiến đấu-hay-chạy — cơ thể chuẩn bị cho "trận chiến" trước khi lý trí kịp lên tiếng. Đó là lý do "nóng" luôn đến trước lý trí.</p>
+      </div>
+      <div data-note-id="amp-hostile-bias">
+        <span class="amplifier__term">Thiên kiến quy kết thù địch</span>
+        <p class="amplifier__body">Xu hướng đọc hành vi mơ hồ của người khác là "có chủ đích gây hại" (hostile attribution bias). Tổng hợp 41 nghiên cứu/6.000 trẻ em (Orobio de Castro, 2002) và tổng hợp người lớn (Verhoef, 2019) cho thấy nó gắn chặt với gây hấn. Về tiến hóa, "đề phòng quá mức" an toàn hơn "tin tưởng quá mức" — nên não nghiêng về đọc ý xấu khi mơ hồ, và ta phải dùng lý trí để kiểm chứng bản cáo trạng.</p>
+      </div>
+      <div data-note-id="amp-catharsis">
+        <span class="amplifier__term">Lầm tưởng xả giận</span>
+        <p class="amplifier__body">Niềm tin "xả giận cho bớt" có gốc từ mô hình thủy lực của Freud–Breuer, nhưng thí nghiệm Bushman (2002) bác bỏ: nhóm đập bao cát nghĩ về kẻ chọc giận nhất và gây hấn nhất; nhóm ngồi yên giận ít nhất. Các nghiên cứu Trung Quốc (《心理科学进展》2020) đồng thuận và lưu ý ~48% phòng tư vấn nước này vẫn trang bị "phòng xả giận" dựa trên niềm tin đã bị bác bỏ.</p>
+      </div>
+      <div data-note-id="amp-rumination">
+        <span class="amplifier__term">Nghiền ngẫm giận</span>
+        <p class="amplifier__body">"Nhai lại" kịch bản bị hại trong đầu: mỗi vòng lặp bơm thêm adrenaline dù sự kiện đã qua — biến giận từ "cơn" thành "trạng thái". Nghiên cứu (Bushman 2005; tổng quan JAD 2018) cho thấy nghiền ngẫm tăng giận, tăng gây hấn, và là cầu nối sang thù hằn mạn tính. Phân biệt với "xử lý vấn đề": nghiền ngẫm hỏi "vì sao/đau thế nào", xử lý hỏi "mình sẽ làm gì tiếp".</p>
+      </div>
+      <div data-note-id="amp-negotiation">
+        <span class="amplifier__term">Cảm xúc đàm phán</span>
+        <p class="amplifier__body">Giận là tín hiệu "chuyện này nghiêm trọng" trong giao tiếp xã hội. Thí nghiệm van Kleef (JPSP 2004): đối thủ bày tỏ giận khiến người kia nhượng bộ nhiều hơn — nhất là khi người nhận có động lực xử lý thông tin. Giận đúng lúc, đúng mức, đúng đối tượng là công cụ đàm phán mạnh; giận phun trào thường xuyên làm mất giá trị tín hiệu và phản tác dụng.</p>
+      </div>
+      <div data-note-id="amp-group-anger">
+        <span class="amplifier__term">Giận tập thể &amp; hành động chống bất công</span>
+        <p class="amplifier__body">Meta-analysis của van Zomeren (2008, 182 effects) cho thấy "giận nhóm" trước bất công là yếu tố dự báo mạnh của hành động tập thể — biểu tình, kiện tụng, cải cách. Giận tập thể lành có kỷ luật (mục tiêu rõ, phương tiện hòa bình) khác với đám cháy tập thể (bạo loạn, bạo lực đám đông). Nhiều cải cách lớn của nhân loại được thắp bằng ngọn lửa giận tập thể có kiểm soát.</p>
+      </div>
+      <div data-note-id="amp-IED">
+        <span class="amplifier__term">Rối loạn bùng nổ từng cơn (IED)</span>
+        <p class="amplifier__body">Chẩn đoán DSM-5: bùng nổ lời/hành vi gây hại không tương xứng với sự việc, tái diễn, mất kiểm soát, gây suy giảm chức năng. Ước tính ~7% người trưởng thành Mỹ (DSM-IV), ~4% (DSM-5); Nhật ~2,1%; toàn cầu ~0,8%. Điểm quan trọng: phần lớn người IED không điều trị (Kessler 2006) dù rối loạn này điều trị được — không phải "tính khí nóng" không thay đổi được.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Sidenote 1</strong>
+      "怒伤肝" (giận làm tổn thương can) trong 《黄帝内经》 và nghiên cứu tim mạch hiện đại (Chida &amp; Steptoe 2009) là hai ngôn ngữ của cùng một quan sát: giận mạn tính để lại chi phí trên cơ thể. Đông Y nói "khí uất", Tây Y nói "adrenaline mạn tính + viêm" — cả hai cùng cảnh báo kim "thời lượng" của cơn giận vượt ngưỡng là thứ trả giá đắt nhất.
+    </div>
+    <div class="sidenote">
+      <strong>Sidenote 2</strong>
+      Khổng Tử dạy "不迁怒，不贰过" (không dời giận, không tái phạm lỗi) — đừng giận sếp rồi về trút lên vợ con. Tâm lý học hiện đại gọi đó là "đối tượng đúng của giận": giận chỉ có chức năng khi nhắm đúng nguồn bất công. Và "是可忍，孰不可忍" (điều này mà nhẫn được thì còn gì không nhẫn được?) cho thấy người xưa hiểu giận có ranh giới: có những bất công không nên nhịn.
+    </div>
+    <div class="sidenote">
+      <strong>Historical trivia</strong>
+      Ý tưởng "xả giận tốt cho sức khỏe" bắt nguồn từ mô hình thủy lực của Freud–Breuer (giận là áp suất, xả ra thì hạ) — nhưng nghiên cứu thực nghiệm từ những năm 1960–2002 (Bushman) đã lật đổ nó: bộ não không hoạt động như xi-lanh thủy lực, và "xả giận" thực chất là luyện tập cơn giận. Đáng chú ý, một nền văn hóa vốn nhấn mạnh nhẫn (Trung Quốc) vẫn xây ~48% phòng tư vấn có thiết bị xả giận theo mô hình đã bị bác bỏ — chứng tỏ niềm tin thủy lực sống dai hơn bằng chứng.
+    </div>
+  </aside>
+
+</div>
+
+<!-- Floating controls -->
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Focus mode (F)" aria-label="Toggle focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Theme (T)" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</div>
+<script>
+/* ============================================================
+   PERSISTENCE — theme + reading position + quiz state
+   Uses localStorage. This file is saved to disk and opened
+   directly in a browser, so localStorage is available.
+============================================================ */
+const STORAGE_KEY = 'edu-notes:' + (document.title || 'untitled');
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY + ':' + k)); }catch{ return null; } },
+  set(k,v){ try{ localStorage.setItem(STORAGE_KEY + ':' + k, JSON.stringify(v)); }catch{} },
+};
+
+/* ============================================================
+   THEME
+============================================================ */
+(function initTheme(){
+  const saved = store.get('theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  store.set('theme', next);
+});
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function initFocus(){
+  if(store.get('focus')) document.body.classList.add('focus-mode');
+})();
+document.getElementById('focusBtn').addEventListener('click', () => {
+  document.body.classList.toggle('focus-mode');
+  const on = document.body.classList.contains('focus-mode');
+  document.getElementById('focusBtn').setAttribute('data-active', on ? 'true' : 'false');
+  store.set('focus', on);
+});
+
+/* ============================================================
+   TABLE OF CONTENTS — auto-generate from h2/h3
+============================================================ */
+(function buildTOC(){
+  const canvas = document.getElementById('canvas');
+  const toc = document.getElementById('toc');
+  const headings = canvas.querySelectorAll('h2, h3');
+  headings.forEach(h => {
+    if(!h.id){
+      h.id = h.textContent.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g,'')
+        .trim().replace(/\s+/g,'-').slice(0,60);
+    }
+    const li = document.createElement('li');
+    if(h.tagName === 'H3') li.className = 'toc-l3';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+})();
+
+/* ============================================================
+   INTERSECTION OBSERVER — highlight current section
+============================================================ */
+(function initObserver(){
+  const links = document.querySelectorAll('.toc a');
+  const map = new Map();
+  links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = map.get(e.target.id);
+      if(!link) return;
+      if(e.isIntersecting){
+        document.querySelectorAll('.toc a.is-active').forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  document.querySelectorAll('#canvas h2, #canvas h3').forEach(h => observer.observe(h));
+})();
+
+/* ============================================================
+   PROGRESS BAR + reading position restore
+============================================================ */
+(function initProgress(){
+  const fill = document.getElementById('progressFill');
+  function update(){
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    fill.style.width = pct + '%';
+    store.set('scroll', scrolled);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  // Restore prior position after a beat so layout settles
+  const saved = store.get('scroll');
+  if(typeof saved === 'number' && saved > 100){
+    setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 60);
+  }
+})();
+
+/* ============================================================
+   FLIP CARDS — click + keyboard support
+============================================================ */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+  card.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      card.classList.toggle('is-flipped');
+    }
+  });
+});
+
+/* ============================================================
+   QUIZ — auto grade + persist
+============================================================ */
+(function initQuiz(){
+  const quiz = document.getElementById('quiz');
+  if(!quiz) return;
+  const check = document.getElementById('quizCheck');
+  const reset = document.getElementById('quizReset');
+  const score = document.getElementById('quizScore');
+
+  // Restore prior answers
+  const prior = store.get('quiz') || {};
+  Object.entries(prior).forEach(([name, val]) => {
+    const input = quiz.querySelector(`input[name="${name}"][value="${val}"]`);
+    if(input) input.checked = true;
+  });
+
+  quiz.addEventListener('change', () => {
+    const state = {};
+    quiz.querySelectorAll('input[type=radio]:checked').forEach(i => state[i.name] = i.value);
+    store.set('quiz', state);
+  });
+
+  check.addEventListener('click', () => {
+    let correct = 0, total = 0;
+    quiz.querySelectorAll('fieldset').forEach(fs => {
+      const answer = parseInt(fs.dataset.answer, 10);
+      const selected = fs.querySelector('input:checked');
+      total++;
+      // Reset styling on all options first
+      fs.querySelectorAll('.quiz__option').forEach(o => {
+        o.classList.remove('correct-answer','incorrect-answer');
+      });
+      // Mark the correct one green
+      const correctOption = fs.querySelector(`input[value="${answer}"]`);
+      if(correctOption) correctOption.closest('.quiz__option').classList.add('correct-answer');
+      // If the user picked wrong, mark theirs red
+      if(selected && parseInt(selected.value, 10) !== answer){
+        selected.closest('.quiz__option').classList.add('incorrect-answer');
+      }
+      if(selected && parseInt(selected.value, 10) === answer) correct++;
+    });
+    quiz.classList.add('is-graded');
+    const pct = Math.round((correct / total) * 100);
+    let msg = `${correct} / ${total} correct (${pct}%)`;
+    if(pct === 100) msg += ' — 🎯 nailed it';
+    else if(pct >= 66) msg += ' — solid';
+    else msg += ' — worth another pass through the boundaries section';
+    score.textContent = msg;
+  });
+
+  reset.addEventListener('click', () => {
+    quiz.querySelectorAll('input[type=radio]').forEach(i => i.checked = false);
+    quiz.querySelectorAll('.quiz__option').forEach(o => o.classList.remove('correct-answer','incorrect-answer'));
+    quiz.classList.remove('is-graded');
+    score.textContent = '';
+    store.set('quiz', {});
+  });
+})();
+
+/* ============================================================
+   KEYBOARD SHORTCUTS
+============================================================ */
+document.addEventListener('keydown', e => {
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  switch(e.key.toLowerCase()){
+    case 'j': window.scrollBy({ top: 200, behavior: 'smooth' }); break;
+    case 'k': window.scrollBy({ top: -200, behavior: 'smooth' }); break;
+    case 'f': document.getElementById('focusBtn').click(); break;
+    case 't': document.getElementById('themeBtn').click(); break;
+    case 'p': window.print(); break;
+  }
+});
+
+/* ============================================================
+   PHASE ORBIT — light up phase nodes as reader scrolls;
+   clicking a node smooth-scrolls to that phase.
+============================================================ */
+(function initOrbit(){
+  const nodes = Array.from(document.querySelectorAll('.orbit__node'));
+  if(!nodes.length) return;
+  const reached = new Set(store.get('reached') || []);
+  // Restore already-reached state
+  nodes.forEach(n => {
+    if(reached.has(n.dataset.target)) n.setAttribute('data-reached','true');
+  });
+  // Click to jump
+  nodes.forEach(n => {
+    n.addEventListener('click', () => {
+      const target = document.getElementById(n.dataset.target);
+      if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+  // Observe each phase heading; mark reached + active on entry
+  const targets = nodes.map(n => document.getElementById(n.dataset.target)).filter(Boolean);
+  if(!targets.length) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const node = nodes.find(n => n.dataset.target === e.target.id);
+      if(!node) return;
+      if(e.isIntersecting){
+        node.setAttribute('data-reached','true');
+        reached.add(e.target.id);
+        store.set('reached', Array.from(reached));
+        nodes.forEach(n => n.removeAttribute('data-active'));
+        node.setAttribute('data-active','true');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  targets.forEach(t => observer.observe(t));
+})();
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER — hover .term-amp[data-note] → fill #amplifier
+============================================================ */
+(function initAmplifier(){
+  const amp = document.getElementById('amplifier');
+  const pool = document.getElementById('ampNotes');
+  if(!amp || !pool) return;
+  const emptyHtml = amp.innerHTML;
+  let currentId = null;
+
+  function show(id){
+    if(id === currentId) return;
+    const note = pool.querySelector(`[data-note-id="${id}"]`);
+    if(!note) return;
+    currentId = id;
+    amp.innerHTML = '<span class="amplifier__label">Term amplifier</span>' + note.innerHTML;
+    // Mark the corresponding term active
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+    document.querySelectorAll(`.term-amp[data-note="${id}"]`).forEach(t => t.classList.add('is-active'));
+  }
+  function reset(){
+    currentId = null;
+    amp.innerHTML = emptyHtml;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+  }
+
+  document.querySelectorAll('.term-amp[data-note]').forEach(t => {
+    t.addEventListener('mouseenter', () => show(t.dataset.note));
+    t.addEventListener('focus', () => show(t.dataset.note));
+    t.setAttribute('tabindex','0');
+  });
+  const canvas = document.getElementById('canvas');
+  if(canvas){
+    canvas.addEventListener('mouseleave', reset);
+  }
+})();
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINTS — textarea persistence + Compare to Expert
+============================================================ */
+(function initCheckpoints(){
+  document.querySelectorAll('.checkpoint').forEach(cp => {
+    const id = cp.dataset.checkpointId;
+    const ta = cp.querySelector('textarea');
+    const savedLabel = cp.querySelector('[data-checkpoint-saved]');
+    const revealBtn = cp.querySelector('[data-checkpoint-reveal]');
+    if(!id || !ta) return;
+
+    // Restore prior answer
+    const prior = store.get('cp:' + id);
+    if(prior){ ta.value = prior; if(savedLabel) savedLabel.textContent = 'Saved'; }
+
+    // Persist as user types (debounced)
+    let t;
+    ta.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        store.set('cp:' + id, ta.value);
+        if(savedLabel) savedLabel.textContent = 'Saved';
+      }, 400);
+    });
+
+    if(revealBtn){
+      revealBtn.addEventListener('click', () => {
+        cp.classList.toggle('is-revealed');
+        revealBtn.textContent = cp.classList.contains('is-revealed')
+          ? 'Hide expert answer'
+          : 'Compare to expert answer';
+      });
+    }
+  });
+})();
+
+/* ============================================================
+   LAUNCH PAD — progressive hint reveal
+============================================================ */
+(function initLaunchpad(){
+  const btn = document.getElementById('hintBtn');
+  if(!btn) return;
+  const hints = Array.from(document.querySelectorAll('.launchpad__hint'));
+  const total = hints.length;
+  let shown = 0;
+
+  // Restore prior state
+  const prior = parseInt(store.get('hints') || 0, 10);
+  for(let i=0; i<prior && i<total; i++){
+    hints[i].classList.add('is-visible');
+    shown = i + 1;
+  }
+  updateBtn();
+
+  btn.addEventListener('click', () => {
+    if(shown >= total) return;
+    hints[shown].classList.add('is-visible');
+    shown++;
+    store.set('hints', shown);
+    updateBtn();
+  });
+
+  function updateBtn(){
+    if(shown >= total){
+      btn.textContent = 'All hints revealed';
+      btn.disabled = true;
+    } else {
+      btn.textContent = `Reveal hint ${shown + 1} of ${total}`;
+    }
+  }
+})();
+</script>
+</body>
+</html>
