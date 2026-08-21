@@ -1,0 +1,2830 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cảm xúc con người — Khảo cứu #3: Nỗi buồn và mất mát — cơ chế của trái tim vỡ</title>
+<meta name="description" content="Khảo cứu #3 trong loạt Cảm xúc con người: mảnh ghép cơ thể (nước mắt, đau xã hội, chemosignal), mảnh ghép tâm lý (mô hình lưỡng xử lý, kể chuyện), chức năng thích nghi của nỗi buồn, và ranh giới giữa nỗi buồn lành — trầm cảm — rối loạn đau buồn kéo dài (DSM-5-TR 2022).">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg:            #FDFBF7;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #2D3748;
+  --text-muted:    #718096;
+  --text-strong:   #1A202C;
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  /* Secondary accent — used for interactive elements (probes, hints, checkpoints)
+     so structural accents (teal) stay visually separate from "try this" accents (amber). */
+  --accent2:        #B7791F;
+  --accent2-strong: #975A16;
+  --accent2-soft:   #FEEBC8;
+  --border:        #E4DFD5;
+  --sidenote-bg:   #EDF2F7;
+  --code-bg:       #EDF2F7;
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #1A202C;
+  --bg-elevated:   #2D3748;
+  --bg-sunken:     #171923;
+  --text:          #E2E8F0;
+  --text-muted:    #A0AEC0;
+  --text-strong:   #F7FAFC;
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent2:        #F6AD55;
+  --accent2-strong: #FBD38D;
+  --accent2-soft:   #4A2E14;
+  --border:        #2D3748;
+  --sidenote-bg:   #2A2F3A;
+  --code-bg:       #2A2F3A;
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: var(--line);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   PROGRESS BAR (fixed top)
+============================================================ */
+.progress-bar{
+  position: fixed; top:0; left:0; right:0;
+  height: 3px;
+  background: transparent;
+  z-index: 100;
+}
+.progress-bar__fill{
+  height:100%;
+  width:0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+
+/* ============================================================
+   LAYOUT — 3 column grid
+============================================================ */
+.app{
+  display:grid;
+  grid-template-columns: minmax(220px, 20%) minmax(0, 1fr) minmax(240px, 20%);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 32px 128px;
+}
+
+.navigator{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding-right: 8px;
+}
+.navigator::-webkit-scrollbar{width:6px}
+.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+.canvas{
+  max-width: var(--measure);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.marginalia{
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Focus mode: collapse side panels */
+body.focus-mode .navigator,
+body.focus-mode .marginalia{
+  display:none;
+}
+body.focus-mode .app{
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+/* Mobile */
+@media (max-width: 960px){
+  .app{
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px 96px;
+  }
+  .navigator{
+    position: relative;
+    top: 0;
+    max-height: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .marginalia{
+    order: 3;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+}
+
+/* ============================================================
+   NAVIGATOR
+============================================================ */
+.navigator__meta{
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.navigator__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+.navigator__reading-time{
+  color: var(--text);
+  font-size: 13px;
+}
+
+.toc{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc li{margin: 2px 0}
+.toc a{
+  display: block;
+  padding: 6px 10px;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition);
+  line-height: 1.4;
+}
+.toc a:hover{
+  color: var(--text);
+  background: var(--sidenote-bg);
+}
+.toc a.is-active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--sidenote-bg);
+  font-weight: 500;
+}
+.toc .toc-l3{ padding-left: 20px; font-size: 13px }
+
+/* ============================================================
+   CANVAS (main reading area)
+============================================================ */
+.canvas h1{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin: 8px 0 16px;
+  letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--text-strong);
+  margin: 56px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+.canvas h2:first-of-type{ border-top: none; padding-top: 0 }
+.canvas h3{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-strong);
+  margin: 32px 0 12px;
+  scroll-margin-top: 24px;
+}
+.canvas p{ margin: 0 0 16px }
+.canvas strong{ color: var(--text-strong); font-weight: 700 }
+.canvas em{ font-style: italic }
+.canvas a{
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.canvas a:hover{ color: var(--accent-strong) }
+
+/* Source citation — subtle inline badge for linked evidence */
+.source{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--sidenote-bg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all var(--transition);
+}
+.source::before{ content: "↗ "; opacity: .6 }
+.source:hover{
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+/* Chart caption line — usually holds the data source */
+.bar-chart__caption{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+.bar-chart__caption a{ color: var(--text-muted); text-decoration: underline dotted }
+.bar-chart__caption a:hover{ color: var(--accent) }
+/* Provenance footer — printed when the note was generated without live web tools */
+.provenance-note{
+  margin: 32px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--sidenote-bg);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-left: 3px solid var(--text-muted);
+}
+
+.canvas ul, .canvas ol{
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.canvas li{ margin: 4px 0 }
+
+.canvas blockquote{
+  margin: 24px 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--sidenote-bg);
+  color: var(--text);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+}
+
+.canvas code{
+  font-family: var(--font-mono);
+  font-size: .9em;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.canvas pre{
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 24px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  position: relative;
+}
+.canvas pre code{ background: transparent; padding: 0 }
+
+/* Hook block (curiosity primer at the top) */
+.hook{
+  margin: 24px 0 48px;
+  padding: 24px 28px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.hook__label{
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Prerequisites and objectives blocks */
+.meta-block{
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.meta-block h4{
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.meta-block ul{ margin: 0; padding-left: 20px }
+.meta-block li{ margin: 4px 0; color: var(--text) }
+
+/* Callouts */
+.callout{
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--info);
+  background: var(--info-bg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+}
+.callout__label{
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.callout--tip{ border-left-color: var(--success); background: var(--success-bg) }
+.callout--tip .callout__label{ color: var(--success) }
+.callout--warn{ border-left-color: var(--warn); background: var(--warn-bg) }
+.callout--warn .callout__label{ color: var(--warn) }
+.callout--danger{ border-left-color: var(--danger); background: var(--danger-bg) }
+.callout--danger .callout__label{ color: var(--danger) }
+
+/* Feynman check */
+.feynman{
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+}
+.feynman::before{
+  content: "🧒 Explain in one sentence:";
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Tooltips on vocabulary */
+.term{
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+  position: relative;
+}
+.term:hover::after{
+  content: attr(data-def);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-strong);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-style: normal;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  z-index: 10;
+  box-shadow: var(--shadow);
+  line-height: 1.4;
+}
+
+/* Marginalia sidenotes */
+.sidenote{
+  margin: 24px 0;
+  padding: 12px 14px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.sidenote strong{ color: var(--text); display: block; margin-bottom: 4px; font-weight: 600 }
+
+/* ============================================================
+   FLIP CARD (active recall)
+============================================================ */
+.flip-card{
+  perspective: 1000px;
+  height: 180px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+.flip-card__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg) }
+
+.flip-card__face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__front{
+  background: var(--bg-elevated);
+}
+.flip-card__back{
+  background: var(--accent);
+  color: white;
+  transform: rotateY(180deg);
+}
+.flip-card__label{
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.flip-card__back .flip-card__label{ color: rgba(255,255,255,.85) }
+.flip-card__content{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PROGRESSIVE DISCLOSURE (details/summary)
+============================================================ */
+.deep-dive{
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+.deep-dive > summary{
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  transition: background var(--transition);
+}
+.deep-dive > summary::-webkit-details-marker{ display: none }
+.deep-dive > summary::before{
+  content: "▶";
+  color: var(--accent);
+  font-size: 10px;
+  transition: transform var(--transition);
+}
+.deep-dive[open] > summary::before{ transform: rotate(90deg) }
+.deep-dive > summary:hover{ background: var(--sidenote-bg) }
+.deep-dive__label{
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  margin-right: auto;
+}
+.deep-dive > *:not(summary){
+  padding: 0 18px 16px;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideDown{
+  from{ opacity: 0; transform: translateY(-8px) }
+  to  { opacity: 1; transform: translateY(0) }
+}
+
+/* ============================================================
+   CSS-ONLY BAR CHART
+============================================================ */
+.bar-chart{
+  margin: 32px 0;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.bar-chart__title{
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 16px;
+}
+.bar-row{
+  display: grid;
+  grid-template-columns: 140px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.bar-label{ color: var(--text) }
+.bar-track{
+  background: var(--sidenote-bg);
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill{
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  border-radius: 4px;
+  transition: width 400ms cubic-bezier(.4,0,.2,1);
+}
+.bar-row:hover .bar-fill{ filter: brightness(1.15) }
+.bar-value{ color: var(--text-muted); font-weight: 600; text-align: right }
+
+@media (max-width: 640px){
+  .bar-row{ grid-template-columns: 100px 1fr 40px; font-size: 13px }
+}
+
+/* ============================================================
+   CONCEPT FLOW (3-step)
+============================================================ */
+.concept-flow{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 32px 0;
+}
+.concept-flow__step{
+  padding: 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.concept-flow__step:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.concept-flow__num{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.concept-flow__arrow{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 20px;
+  user-select: none;
+}
+@media (max-width: 640px){
+  .concept-flow{ grid-template-columns: 1fr; }
+  .concept-flow__arrow{ transform: rotate(90deg); justify-self: center }
+}
+
+/* ============================================================
+   GLOSSARY
+============================================================ */
+.glossary{ margin: 32px 0 }
+.glossary dl{ margin: 0 }
+.glossary dt{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: 16px;
+  font-size: 15px;
+}
+.glossary dd{
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 15px;
+  padding-left: 0;
+}
+
+/* ============================================================
+   QUIZ
+============================================================ */
+.quiz{
+  margin: 56px 0 24px;
+  padding: 32px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.quiz h2{
+  font-family: var(--font-sans);
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.quiz__intro{
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.quiz fieldset{
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.quiz legend{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.quiz__option{
+  display: block;
+  padding: 12px 16px;
+  margin: 6px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  transition: all var(--transition);
+  position: relative;
+  padding-left: 44px;
+}
+.quiz__option::before{
+  content: "";
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  transition: all var(--transition);
+}
+.quiz__option:hover{ border-color: var(--accent); background: var(--sidenote-bg) }
+.quiz__option input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.quiz__option:has(input:checked){
+  border-color: var(--accent);
+  background: var(--sidenote-bg);
+}
+.quiz__option:has(input:checked)::before{
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg-elevated);
+}
+.quiz__option.correct-answer{
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--text-strong);
+}
+.quiz__option.correct-answer::before{
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 3px var(--success-bg);
+}
+.quiz__option.incorrect-answer{
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+.quiz__option.incorrect-answer::before{
+  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: inset 0 0 0 3px var(--danger-bg);
+}
+
+.quiz__explanation{
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__explanation{ display: block }
+
+.quiz__actions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.btn{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--transition);
+}
+.btn:hover{ background: var(--accent-strong); border-color: var(--accent-strong) }
+.btn--ghost{ background: transparent; color: var(--accent) }
+.btn--ghost:hover{ background: var(--sidenote-bg); color: var(--accent-strong) }
+
+.quiz__score{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__score{ display: block }
+
+/* ============================================================
+   FLOATING CONTROLS
+============================================================ */
+.controls{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+}
+.control-btn{
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  padding: 0;
+}
+.control-btn:hover{
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.control-btn svg{ width: 18px; height: 18px }
+.control-btn[data-active="true"]{ background: var(--accent); color: white }
+
+/* ============================================================
+   PRINT
+============================================================ */
+@media print{
+  .navigator, .marginalia, .controls, .progress-bar, .quiz__actions{ display: none !important }
+  .app{ grid-template-columns: 1fr; max-width: none; padding: 0 }
+  body{ background: white; color: black; font-size: 12pt }
+  .canvas h1, .canvas h2, .canvas h3{ page-break-after: avoid }
+  .flip-card{ height: auto }
+  .flip-card__inner{ transform: none !important; height: auto }
+  .flip-card__face{ position: static; padding: 8px 0; box-shadow: none; border: none }
+  .flip-card__back{ display: block; background: white; color: black }
+  .deep-dive[open] > *:not(summary){ animation: none }
+}
+
+/* ============================================================
+   PHASE ORBIT (6-node progress in left navigator)
+============================================================ */
+.orbit{
+  margin: 0 0 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.orbit__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+.orbit__track{
+  position: relative;
+  padding-left: 22px;
+}
+.orbit__track::before{
+  content: "";
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.orbit__node{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--transition);
+  user-select: none;
+}
+.orbit__node::before{
+  content: "";
+  position: absolute;
+  left: -22px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  transition: all var(--transition);
+  box-sizing: border-box;
+}
+.orbit__node[data-reached="true"]::before{
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.orbit__node[data-active="true"]{
+  color: var(--text-strong);
+  font-weight: 600;
+}
+.orbit__node[data-active="true"]::before{
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.orbit__node:hover{ color: var(--text) }
+
+/* ============================================================
+   MISCONCEPTION PRE-MORTEM (State 2 tail)
+============================================================ */
+.premortem{
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--accent2-soft);
+  border-left: 4px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text);
+}
+.premortem__label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 8px;
+}
+.premortem__wrong{ text-decoration: line-through; color: var(--text-muted) }
+.premortem__truth{ font-weight: 600; color: var(--text-strong) }
+
+/* ============================================================
+   SCAFFOLD CARD (S/I/P/R micro-loop, State 3)
+============================================================ */
+.scaffold{
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.scaffold__concept{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scaffold__concept::before{
+  content: "◆";
+  color: var(--accent);
+  font-size: 12px;
+}
+.scaffold__row{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px 16px;
+  margin: 12px 0;
+  align-items: start;
+}
+.scaffold__row-label{
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 4px;
+}
+.scaffold__row-body{ font-size: 15px; line-height: 1.65 }
+.scaffold__row-body p:last-child{ margin-bottom: 0 }
+
+/* Probe/Resolve details — nested within the scaffold card */
+.scaffold__probe{
+  margin: 8px 0 0;
+  border: 1px dashed var(--accent2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  overflow: hidden;
+}
+.scaffold__probe > summary{
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent2-strong);
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  user-select: none;
+  transition: background var(--transition);
+}
+.scaffold__probe > summary::-webkit-details-marker{ display: none }
+.scaffold__probe > summary::before{
+  content: "🤔 Probe";
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent2-strong);
+}
+.scaffold__probe[open] > summary::after{
+  content: "";
+  position: absolute;
+}
+.scaffold__probe > summary:hover{ background: var(--accent2-soft) }
+.scaffold__resolve{
+  padding: 12px 14px 14px 14px;
+  background: var(--accent2-soft);
+  border-top: 1px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.scaffold__resolve::before{
+  content: "💡 Resolve";
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINT (textarea + reveal)
+============================================================ */
+.checkpoint{
+  margin: 32px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+}
+.checkpoint__label{
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.checkpoint__question{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.checkpoint textarea{
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--transition);
+  box-sizing: border-box;
+}
+.checkpoint textarea:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.checkpoint__actions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.checkpoint__expert{
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  display: none;
+}
+.checkpoint.is-revealed .checkpoint__expert{ display: block; animation: slideDown 300ms cubic-bezier(.4,0,.2,1) }
+.checkpoint__expert-label{
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.checkpoint__saved{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   LAUNCH PAD (Extension Problem, State 6)
+============================================================ */
+.launchpad{
+  margin: 48px 0 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.launchpad::before{
+  content: "🚀";
+  position: absolute;
+  top: -16px; right: -8px;
+  font-size: 96px;
+  opacity: .06;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+.launchpad__label{
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--accent2);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.launchpad__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+.launchpad__problem{
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.launchpad__hints{
+  border-top: 1px dashed var(--border);
+  padding-top: 20px;
+  font-family: var(--font-sans);
+}
+.launchpad__hints-label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: block;
+}
+.launchpad__hint{
+  margin: 10px 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-left: 3px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  display: none;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.launchpad__hint.is-visible{ display: block }
+.launchpad__hint-label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 4px;
+  letter-spacing: .08em;
+}
+.launchpad__reveal{
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all var(--transition);
+}
+.launchpad__reveal:hover{
+  background: var(--accent2);
+  color: white;
+}
+.launchpad__reveal:disabled{
+  opacity: .4;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER (right-panel hover-to-elaborate)
+============================================================ */
+/* Terms in the canvas that are wired to amplifier notes */
+.canvas .term-amp{
+  border-bottom: 1px dashed var(--accent2);
+  cursor: help;
+  transition: background var(--transition);
+}
+.canvas .term-amp:hover,
+.canvas .term-amp.is-active{
+  background: var(--accent2-soft);
+  border-bottom-color: var(--accent2-strong);
+}
+/* The sticky slot at the top of the marginalia column */
+.amplifier{
+  position: sticky;
+  top: 24px;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: var(--accent2-soft);
+  border: 1px solid var(--accent2);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  min-height: 96px;
+  transition: opacity var(--transition);
+}
+.amplifier__label{
+  display: block;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 6px;
+}
+.amplifier__term{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+  display: block;
+  font-size: 14px;
+}
+.amplifier__body{ margin: 0 }
+.amplifier__empty{ color: var(--text-muted); font-style: italic }
+/* Hidden data pool — right-panel notes stored here, activated by JS */
+.amp-notes{ display: none }
+
+/* ============================================================
+   MISC
+============================================================ */
+.footer{
+  max-width: var(--measure);
+  margin: 64px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-align: center;
+}
+.kbd{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+</style>
+</head>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<div class="app">
+
+  <!-- =========================================================
+       LEFT — NAVIGATOR (sticky ToC)
+       ========================================================= -->
+  <aside class="navigator" aria-label="Table of contents">
+    <div class="navigator__meta">
+      <p class="navigator__title">Reading time</p>
+      <p class="navigator__reading-time" id="readingTime">~ 40 min</p>
+    </div>
+
+    <!-- Phase Orbit — 6 phase nodes that light up as the reader scrolls past each section.
+         Each node targets a section id in the canvas: #baseline, #bridge, #exposition, #application, #boundary, #synthesis. -->
+    <div class="orbit" aria-label="Learning phases">
+      <p class="orbit__title">Learning path</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Anchor</div>
+        <div class="orbit__node" data-target="bridge">2 · Bridge</div>
+        <div class="orbit__node" data-target="exposition">3 · Construct</div>
+        <div class="orbit__node" data-target="application">4 · Apply</div>
+        <div class="orbit__node" data-target="boundary">5 · Boundary</div>
+        <div class="orbit__node" data-target="synthesis">6 · Fade</div>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="toc" id="toc">
+        <!-- Auto-populated by JS from h2/h3 in .canvas -->
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- =========================================================
+       MIDDLE — CANVAS (main content)
+       ========================================================= -->
+  <main class="canvas" id="canvas">
+
+    <h1>Cảm xúc con người — Khảo cứu #3: Nỗi buồn và mất mát — cơ chế của trái tim vỡ</h1>
+<!-- HOOK -->
+    <div class="hook">
+      <span class="hook__label">🎣 The hook</span>
+      <p>Một buổi sáng, bạn mở tủ lạnh và thấy nửa hộp sữa còn nguyên — thứ bạn mua cho một người không còn ở đây nữa. Bạn khóc. Người ngoài nhìn vào thấy một vật vô hại; bạn nhìn vào và thấy cả một thế giới bị xẻ làm hai: trước mất mát, và sau mất mát. Vì sao một chút kỷ vật lại có sức mạnh ấy? Vì sao nỗi buồn — thứ đau đớn đến mức ta tránh bằng mọi giá — lại tồn tại trong mọi nền văn hóa, mọi thời đại? Câu trả lời, như bài này sẽ mở ra, là nỗi buồn không phải lỗi lầm của bộ não: nó là <em>một trong những mảnh ghép được thiết kế tinh vi nhất</em> của cảm xúc con người — cơ chế của trái tim vỡ, và cũng là cơ chế giúp trái tim ấy lành lại theo cách của riêng nó.</p>
+    </div>
+
+    <!-- PREREQUISITES + OBJECTIVES -->
+    <div class="meta-block">
+      <h4>Prerequisites</h4>
+      <ul>
+        <li>Loạt <em>Khảo cứu</em> này chia cảm xúc thành các thành phần (trải nghiệm chủ quan, cơ thể, xu hướng hành động, biểu hiện) — đã trình bày ở <a href="cam-xuc-khao-cuu.html" target="_blank" rel="noopener">Khảo cứu #1</a>.</li>
+        <li>Ở <a href="cam-xuc-va-man-hinh.html" target="_blank" rel="noopener">Khảo cứu #2</a>, chúng ta thấy nỗi buồn bị màn hình khai thác và mã hóa. Bài này nhìn vào nỗi buồn thuần chất.</li>
+        <li>Bạn đã từng buồn — đó là điều kiện tiên quyết quan trọng nhất.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>By the end you will be able to…</h4>
+      <ul>
+        <li><strong>Giải thích</strong> vì sao nỗi buồn là cảm xúc của mất mát không thể đảo ngược, và phân biệt nó với sợ hãi, tức giận, lo âu.</li>
+        <li><strong>Mô tả</strong> mảnh ghép cơ thể của nỗi buồn: nước mắt, tín hiệu xã hội, và sự trùng lặp giữa "đau lòng" và đau thể chất trong não.</li>
+        <li><strong>Áp dụng</strong> mô hình lưỡng xử lý (dao động giữa đối diện mất mát và tái dựng đời sống) để đọc hiểu bất kỳ trải nghiệm đau buồn nào.</li>
+        <li><strong>Phân biệt</strong> nỗi buồn lành mạnh, trầm cảm, và rối loạn đau buồn kéo dài theo tiêu chuẩn DSM-5-TR 2022.</li>
+        <li><strong>Đánh giá</strong> chức năng tiến hóa của nỗi buồn và dùng nó để thiết kế cách "ở cùng" nỗi buồn của chính mình và người khác.</li>
+      </ul>
+    </div>
+<h2 id="baseline">Anchor · Nỗi buồn là cảm xúc của mất mát</h2>
+<p>Chân lý nền tảng của cả bài này gọn trong một câu: <strong>nỗi buồn là cảm xúc được kích hoạt khi ta nhận ra một mất mát — mất một người, một mục tiêu, một khả năng, một phiên bản của chính mình — mà ta <em>không thể đảo ngược</em>.</strong> Bạn đã biết nỗi buồn là gì theo cách sâu nhất có thể — bạn đã từng buồn. Điều bạn chưa biết là cái "cảm giác rõ như ấn vào ngực" ấy thực ra là một hệ thống gồm nhiều lớp: có lớp cơ thể, lớp tâm lý, lớp chức năng, và mỗi lớp là một mảnh ghép đã được chọn lọc qua hàng chục vạn năm. Trong chương này, ta gắn mảnh ghép nền: cái "báo động" bên trong bạn khi thế giới vừa đổi khác.</p>
+
+<h2 id="bridge">Bridge · Mô hình Bờ biển</h2>
+<p>Hãy tưởng tượng đau buồn như <strong>bị quăng xuống biển</strong>. Khi mất đi một người, một thứ, bạn không còn đứng trên bờ nữa — bạn đang chìm trong con nước lạnh: cái đau, nỗi nhớ, sự ngỡ ngàng. Để sống sót, bạn làm hai việc liên tục thay phiên nhau:</p>
+<ul>
+  <li><strong>Bơi giữa biển</strong> — đối diện với cơn sóng: khóc, nhớ lại, hiểu chuyện gì đã xảy ra, xử lý nỗi đau. (Tâm lý học gọi là <em>định hướng mất mát</em>.)</li>
+  <li><strong>Nghỉ trên bờ</strong> — tạm thời rời khỏi biển: đi làm, ăn cơm, cười với bạn bè, thu xếp giấy tờ, học cách sống trong một vai trò mới. (Gọi là <em>định hướng tái dựng</em>.)</li>
+</ul>
+<p>Gọi đây là <strong>Mô hình Bờ biển</strong>. Ba đặc tính của nó:</p>
+<ul>
+  <li><strong>Sóng không bao giờ ngừng</strong> — thủy triều luôn quay lại, đặc biệt vào những mốc kỷ niệm, ngày giỗ, một bài hát. Điều này là bình thường, không phải dấu hiệu "chưa khỏi".</li>
+  <li><strong>Chìa khóa là nhịp bơi–nghỉ</strong> — người khỏe mạnh về tâm lý không phải người không bao giờ xuống nước, mà người <em>qua lại</em> giữa biển và bờ. Bị kẹt vĩnh viễn dưới biển (chết đuối trong đau buồn) hay bị kẹt vĩnh viễn trên bờ (phủ nhận, chạy trốn) đều là nguy hiểm.</li>
+  <li><strong>"Lành" không phải là biển biến mất, mà là bờ ngày càng rộng</strong> — theo thời gian, những ngày trên bờ dài ra, những lần xuống nước ngắn bớt và bớt sâu. Biển vẫn ở đó; bạn chỉ quen sống cạnh nó.</li>
+</ul>
+<p>Mô hình này không phải của tôi — nó là chuyển thể dễ hình dung của <strong>mô hình lưỡng xử lý (dual-process model)</strong> do hai nhà tâm lý học Margaret Stroebe và Henk Schut đề xuất năm 1999 <a class="source" href="https://doi.org/10.1080/074811899201046" target="_blank" rel="noopener">Stroebe &amp; Schut, 1999</a>. Tên gọi và bản đồ tương ứng sẽ được dùng xuyên suốt bài, kể cả trong bảng thuật ngữ cuối bài.</p>
+
+<!-- Flow diagram anchoring the bridge -->
+<div class="concept-flow">
+  <div class="concept-flow__step"><span class="concept-flow__num">01</span>Sóng dâng — mất mát quăng ta xuống biển</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">02</span>Nhịp bơi ↔ nghỉ — đối diện rồi tái dựng</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">03</span>Bờ rộng dần — sống chung với biển, không xóa biển</div>
+</div>
+
+<!-- Misconception Pre-mortem -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+  <p><span class="premortem__wrong">"Đau buồn phải trải qua năm giai đoạn: phủ nhận → tức giận → mặc cả → trầm cảm → chấp nhận, theo đúng thứ tự, mới coi là lành."</span></p>
+  <p>Điều này sai vì <em>mô hình 5 giai đoạn (Kübler-Ross) vốn được xây từ các cuộc trò chuyện với người đang hấp hối — không phải từ người ở lại — và không có bằng chứng khoa học về trình tự cố định; nó là một câu chuyện kể hay, không phải bản đồ đau buồn</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> đau buồn là <strong>dao động</strong> — người ta khóc, rồi cười, rồi lại khóc; cảm xúc xếp lộn xộn, lặp lại, không theo bất kỳ lịch trình nào. Cách nhìn theo "sóng và bờ" phản ánh đúng trải nghiệm thực tế hơn nhiều so với cách nhìn theo "thang máy 5 tầng".</p>
+</div>
+
+<h2 id="exposition">Construct · Từng mảnh ghép của nỗi buồn</h2>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch1-scaffold-1">
+  <h3 class="scaffold__concept">Mất mát không thể đảo ngược là còi báo động</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p><strong>Nỗi buồn</strong> bùng lên khi bộ não kết luận: <em>điều quan trọng với tôi đã biến mất và tôi không thể lấy lại nó</em>. Khác với sợ hãi (hướng về mối đe dọa <em>phía trước</em>) hay tức giận (hướng về chướng ngại <em>đang chặn</em>), nỗi buồn nhìn về phía <em>đã mất</em>. Mất mát càng quan trọng, nỗi buồn càng sâu và càng dai <a class="source" href="https://www.researchgate.net/publication/324653085_Sadness_the_Architect_of_Cognitive_Change" target="_blank" rel="noopener">Lench et al., 2016</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bị <strong>trượt một học bổng</strong>: bạn buồn — không phải vì một thứ đang đe dọa (đó là lo âu), mà vì một khả năng đã chết. Mất chú chó nuôi mười năm: buồn dữ dội hơn mất một chiếc xe, vì mất mát không đo bằng giá trị vật chất mà bằng độ sâu của gắn kết. Trong phim <em>Inside Out</em>, nhân vật Joy hiểu ra rằng bản thân Sadness không phải kẻ phá hoại mà là người ra hiệu: "đã mất rồi, cần được đối diện". Đó chính là định nghĩa này.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Điều gì xảy ra nếu một mất mát có thể đảo ngược? Bạn có thấy buồn không?</summary>
+    <div class="scaffold__resolve"><p>Bạn sẽ thấy lo âu, tức giận, hy vọng — nhưng ít <em>buồn</em>. Người yêu bỏ đi mà vẫn có thể quay lại khiến ta đau khổ, giận dữ, chờ đợi. Chỉ khi ta kết luận "không còn đường quay lại" thì nỗi buồn mới thực sự bật lên. Đây là lý do người ta thường khóc <em>sau</em> khi thôi hy vọng, không phải trong lúc hy vọng.</p></div>
+  </details>
+</section>
+<div class="feynman">Nỗi buồn là tiếng chuông báo: "Cái quý giá với em đã mất và không thể lấy lại."</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch1-scaffold-2">
+  <h3 class="scaffold__concept">Thế giới giả định bị xẻ làm hai</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trong đầu mỗi người có một <strong class="term-amp" data-note="amp-assumptive" tabindex="0">thế giới giả định</strong> — bản đồ tin rằng thế giới vận hành ra sao: người thân còn ở đây, ngày mai vẫn như hôm nay, người tốt được đền đáp. Mất mát lớn <em>đánh sập bản đồ đó</em>; ta buồn không chỉ vì nhớ người, mà vì thế giới đột nhiên không còn khớp với bản đồ. Khái niệm này được công bố rộng rãi bởi nhà nghiên cứu mất mát Colin Murray Parkes và nay là ngôn ngữ chuẩn của ngành <a class="source" href="https://www.163.com/dy/article/FKNM76QE0542LLHE.html" target="_blank" rel="noopener">Tổng quan "thế giới giả định", 2020</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Bài viết gốc của Parkes có một câu mà người Trung Quốc nhắc đi nhắc lại mỗi dịp tang: <em>"Đời người được chia làm hai — trước mất mát và sau mất mát."</em> Nửa hộp sữa trong tủ lạnh khiến ta khóc không phải vì sữa, mà vì nó là bằng chứng rằng bản đồ cũ — "sẽ có người uống nó" — đã hết hiệu lực.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao tin "người tốt được đền đáp" bị tổn thương nặng khi mất người tốt vì tai nạn?</summary>
+    <div class="scaffold__resolve"><p>Vì nỗi buồn lúc này gánh hai lớp: mất <em>người</em> và mất <em>độ tin cậy của bản đồ</em>. Đó là lý do những mất mát "vô nghĩa" (tai nạn, đột tử, trẻ em mất cha mẹ) đau hơn hẳn — không chỉ một mất mát, mà cả một hệ niềm tin về sự an toàn của thế giới sụp đổ theo.</p></div>
+  </details>
+</section>
+<div class="feynman">Nỗi buồn lớn còn xây lại bản đồ trong đầu: "Em tưởng thế giới thế này, giờ em biết thế giới không thế nữa."</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch1-scaffold-3">
+  <h3 class="scaffold__concept">Hai pha: phản kháng và cam chịu</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Quan sát từ thuyết gắn bó (Bowlby) và người học trò Parkes: sau mất mát, ta đi qua <strong>pha phản kháng</strong> (tìm kiếm, không tin, "anh ấy sắp về") rồi <strong>pha cam chịu</strong> (nhận ra vô vọng, rút lui khỏi thứ đã mất để tiết kiệm năng lượng). Cả hai pha đều là một phần của phản ứng bình thường, không phải "cá tính yếu" <a class="source" href="https://epaper.gmw.cn/wzb/html/2024-08/10/nw.D110000wzb_20240810_3-06.htm" target="_blank" rel="noopener">Bản tin khoa học 2024</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một phụ nữ vừa mất chồng kể rằng tuần đầu cô <em>gọi điện thoại cho số của anh ta</em> để nghe tiếng đổ chuông. Nghe "vô nghĩa" — nhưng trong rừng nguyên thủy, nếu đứa con ba tuổi lạc mất, người cha mẹ <em>không được phép</em> tin nó đã chết: cứ tìm, cứ kêu, vì xác suất nhỏ nhưng còn tồn tại. Não chúng ta kế thừa chương trình đó: phản kháng là để không bỏ cuộc quá sớm, cam chịu là để không phí sức quá lâu.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu cam chịu là cơ chế "tiết kiệm năng lượng", vì sao ta vẫn nhớ người đã mất suốt nhiều năm?</summary>
+    <div class="scaffold__resolve"><p>Vì bộ não không "gỡ cài đặt" người thân — nó chuyển bản đồ từ "có mặt" sang "đã đi". Các nghiên cứu quét não cho thấy vùng thưởng (nucleus accumbens) vẫn sáng lên khi ta kể về người đã mất như đang gặp lại họ: hệ thưởng không buông — nó đổi cách thưởng, từ hiện diện sang ký ức <a class="source" href="https://www.163.com/dy/article/FKNM76QE0542LLHE.html" target="_blank" rel="noopener">Tổng quan não bộ và nỗi buồn, 2020</a>. "Cam chịu" nghĩa là ta ngừng tìm kiếm họ ở ngoài kia, chứ không phải xóa họ khỏi lòng.</p></div>
+  </details>
+</section>
+<div class="feynman">Sau mất mát, đầu tiên em phản kháng để chắc chắn không bỏ lỡ; sau đó em cam chịu để không phí sức vào chuyện không thể.</div>
+
+<!-- Checkpoint 1 -->
+<div class="checkpoint" data-checkpoint-id="cp-noi-buon-1">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Trước khi sang mảnh ghép cơ thể: dùng Mô hình Bờ biển, hãy gọi tên một "cơn sóng" gần đây của bạn (hoặc của người bạn quen) và phân loại nó thuộc pha phản kháng hay pha cam chịu.</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>Gợi ý cách phân loại: "sóng" là một khoảnh khắc nỗi buồn trỗi dậy — thường là do một tín hiệu kỷ niệm (ngày giỗ, bài hát, nửa hộp sữa). Pha phản kháng thường đi kèm một hành động tìm kiếm: lục lại ảnh, gọi vào số cũ, "không tin". Pha cam chịu đi kèm sự buông xuôi và rút lui: nằm im, bỏ cuộc, "chấp nhận". Người lành mạnh xen kẽ cả hai, giống như bơi và nghỉ — nếu bạn chỉ thấy một pha kéo dài tuần này qua tuần khác, đó là tín hiệu đáng chú ý (ta sẽ gặp lại ở chương 5).</p>
+  </div>
+</div>
+
+<h2 id="application">Apply · Mất mát ở quy mô hàng triệu</h2>
+<p>Áp dụng Mô hình Bờ biển lên một sự kiện thực, có ngày tháng: <strong>đại dịch COVID-19</strong>. Người ta nói về vaccine, về số ca tử vong — nhưng có một con số mà chính <em>The Lancet</em> phải nêu bật: từ tháng 3-2020 đến tháng 4-2021, ít nhất <strong>1,5 triệu trẻ em</strong> trên thế giới mất cha, mẹ hoặc người chăm sóc chính vì COVID <a class="source" href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext" target="_blank" rel="noopener">Hillis et al., Lancet 2021</a>. Cập nhật đến tháng 10-2021, con số lên <strong>5,2 triệu</strong> — trong đó 76,5% mất cha <a class="source" href="https://pubmed.ncbi.nlm.nih.gov/35219404/" target="_blank" rel="noopener">Unwin et al., Lancet Child Adolesc Health 2022</a>.</p>
+<p>Mỗi con số ấy là một đứa trẻ bị quăng xuống biển trước khi kịp học bơi. Một nghiên cứu của Cambridge ước tính <strong>mỗi ca tử vong ảnh hưởng sâu đến khoảng 9 người</strong> <a class="source" href="https://www.huxiu.com/article/4204728.html" target="_blank" rel="noopener">Số liệu ảnh hưởng đau buồn, 2025</a> — vậy thế giới hậu COVID có thể đếm bằng chục triệu người đang thực hiện nhịp bơi–nghỉ của riêng mình. Điều khiến nỗi buồn đại dịch đặc biệt khó là <em>nhiều người chết mà không được tiễn đưa</em>: thiếu nghi lễ tang — tức thiếu cả "bờ" đầu tiên để bấu vào. Đau buồn bị kẹt ở biển vì không có cầu phao xã hội.</p>
+<p>Hãy dùng Mô hình Bờ biển để đọc một trường hợp cụ thể: một đứa trẻ 10 tuổi mất cha vì COVID. Pha phản kháng — "bố đi làm chưa về". Bản đồ giả định vỡ — "thế giới an toàn" mất đi. Nhịp bơi–nghỉ — có ngày khóc sưng mắt, có ngày chơi quên hết. Nếu người lớn quanh nó nói "phải mạnh mẽ lên, đừng khóc nữa", họ đang giữ nó mãi trên bờ — chặn nhịp bơi. Nếu người lớn để mặc nó đắm chìm, họ đang để nó chết đuối. Cả hai thái cực đều sai. Điều đúng là <em>đồng hành</em>: ở cạnh khi nó xuống nước, cùng nó trở lên bờ.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Vì sao việc <em>không được dự đám tang</em> khiến nỗi buồn đại dịch trở nên khó xử lý hơn, theo Mô hình Bờ biển?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">Tang lễ là một "bờ" tập thể: nó cho phép cộng đồng cùng xuống nước (khóc, kể, chia buồn) rồi cùng lên bờ (ăn uống, trở lại đời sống) theo một nhịp chuẩn. Không có nghi lễ, người đau buồn bị bỏ lại một mình dưới nước, không có thời khắc chính thức để bắt đầu tái dựng — nhịp bơi–nghỉ trục trặc ngay từ bước đầu.</div>
+    </div>
+  </div>
+</div>
+
+<h2 id="boundary">Boundary · Nỗi buồn không phải là…</h2>
+<p>Trước khi đi sâu vào từng mảnh ghép, hãy xác định ranh giới để không nhầm lẫn về sau.</p>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Nỗi buồn là yếu đuối / khóc là không nên."</strong> Sai. Nỗi buồn là phản ứng sinh học chuẩn của mọi người, và nước mắt có chức năng tín hiệu xã hội (chương 2). Chuẩn mực "đàn ông không khóc" hay "nén đau thương" là quy tắc văn hóa — không phải luật sinh học. Kìm nén nước mắt thường xuyên không làm nỗi buồn biến mất, chỉ làm nó đổi kênh: sang đau cơ thể, cáu gắt, kiệt sức.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Nỗi buồn không tỉ lệ thuận với kích thước vật chất của mất mát.</strong> Mất một con chó nuôi 12 năm có thể đau hơn mất một người xa cách về tình cảm. Một đứa trẻ 7 tuổi khóc nức nở vì mất con mèo — người lớn bảo "thôi mua con khác" là <em>bỏ qua</em> đúng cơ chế: với đứa trẻ, con mèo là một gắn kết trọn vẹn, và bản đồ của nó vừa bị xẻ đôi. Đừng đo mất mát bằng thước đo của bạn.</p>
+</div>
+
+<!-- Metacognitive prompt -->
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Predict</span>
+  <p>Trước khi sang chương 2, hãy đoán: nước mắt cảm xúc — thứ duy nhất mà loài người (không loài nào khác) sản xuất — khác gì so với nước mắt do cắt hành tây? Và vì sao nước mắt lại có thể là một "mảnh ghép" của nỗi buồn thay vì chỉ là hệ quả? Hãy viết một dự đoán trước khi đọc tiếp.</p>
+</div>
+
+<h2 id="synthesis">Fade · Tổng kết chương 1</h2>
+<p>Nỗi buồn là cảm xúc của <strong>mất mát không thể đảo ngược</strong>. Khi một thứ quý giá biến mất, bộ não báo động, bản đồ thế giới trong đầu bị xẻ làm hai, và ta bước vào hai pha — phản kháng rồi cam chịu — theo nhịp bơi–nghỉ giữa biển và bờ. Mảnh ghép nền này giải thích vì sao nửa hộp sữa lại làm bạn khóc: nó là bằng chứng hữu hình rằng thế giới đã đổi. Chương 2 sẽ nhìn xuống lớp dưới cùng: cơ thể — nước mắt, giọng trầm, và vì sao "đau lòng" không phải là ẩn dụ.</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của chương này:</strong> đau buồn lành mạnh không phải là xóa biển, mà là học cách bơi rồi nghỉ, để bờ ngày càng rộng.
+</blockquote>
+<h2>Chương 2 · Mảnh ghép cơ thể: nước mắt và tín hiệu</h2>
+
+<p>Chương 1 để ta đứng trên boong nhìn biển. Giờ hãy nhúng tay xuống nước. Nỗi buồn không chỉ là "cảm giác trong đầu" — nó có một mảnh ghép cơ thể đặc biệt đến mức loài người là <em>loài duy nhất</em> sở hữu nó: <strong>nước mắt cảm xúc</strong>. Chương này đặt tên cho từng lớp: ba loại nước mắt, nước mắt như một bức thư, và mạch não khiến "đau lòng" gần như đau ruột.</p>
+
+<h3>Chỗ neo chương 2: Nước mắt là bức thư không chữ</h3>
+<p>Hãy nghĩ về nước mắt như một <strong>bức thư bạn gửi đi mà không biết chữ</strong>: mực của nó không nằm ở chữ, mà ở thứ người nhận đọc được từ giọt nước. Người gửi — bạn, đang chìm trong nỗi buồn. Người nhận — cộng đồng quanh bạn. Và điều kỳ lạ nhất: bức thư ấy hoạt động ngay cả khi người nhận <em>không nhìn thấy</em> bạn khóc — vì một phần "mực" của nó là hóa chất bay hơi từ giọt nước mắt. Nếu Mô hình Bờ biển dạy ta nhịp bơi–nghỉ, thì nước mắt là cái phao mà bạn ném ra để người khác thấy bạn đang ở dưới nước.</p>
+
+<!-- Pre-mortem chương 2 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+  <p><span class="premortem__wrong">"Khóc là cách để cơ thể thải độc, khóc ra là khỏe, cứ khóc nhiều là tốt."</span></p>
+  <p>Điều này sai vì <em>bằng chứng cho thấy khóc không tự động cải thiện tâm trạng — lợi ích phụ thuộc vào hoàn cảnh xã hội và cách người xung quanh phản ứng</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> khóc là <strong>tín hiệu</strong> — một cách kêu gọi sự hỗ trợ. Khóc trở nên "có lợi" khi nhận được sự đỡ đần, thấu hiểu; và trở nên vô ích hoặc có hại khi bị chế giễu, xấu hổ, hoặc bị ép phải khóc.</p>
+</div>
+
+<h3>Construct · Ba lớp của nước mắt</h3>
+
+<section class="scaffold" id="ch2-scaffold-1">
+  <h3 class="scaffold__concept">Ba loại nước mắt, ba công việc khác nhau</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Cơ thể sản xuất <strong>ba loại nước mắt</strong>: <strong>nước mắt nền</strong> (bôi trơn mắt suốt ngày), <strong>nước mắt phản xạ</strong> (rửa trôi bụi, hơi cay của hành tây), và <strong>nước mắt cảm xúc</strong> — chỉ xuất hiện khi tâm lý trào dâng, và là điểm độc nhất của loài người <a class="source" href="https://www.bbc.com/zhongwen/articles/cly9k7qdd4vo/simp" target="_blank" rel="noopener">BBC Science, 2026</a>. Nước mắt cảm xúc <em>khác thành phần hóa học</em>: chứa nhiều protein hơn nước mắt phản xạ, trong đó có các phân tử gắn với căng thẳng và giảm đau tự nhiên <a class="source" href="http://health.people.cn/n1/2023/1212/c14739-40136839.html" target="_blank" rel="noopener">Phân tích nước mắt, Nhân Dân, 2023</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Người phụ nữ thắng giải Nobel rơi nước mắt vì "không thể tin nổi" — và cũng là giọt nước mắt <em>cảm xúc</em>. Đứa trẻ bị cắt hành tây chảy nước mắt <em>phản xạ</em> — không hề buồn. Giọt nước mắt hạnh phúc của mẹ trong đám cưới con gái: vẫn là nước mắt cảm xúc. Điểm chung của ba tình huống đầu: tâm trí tràn ngập cảm giác quá lớn so với mức giữ được. Vingerhoets gọi khóc là <em>"dấu chấm than"</em> của cảm xúc <a class="source" href="https://www.bbc.com/zhongwen/articles/cly9k7qdd4vo/simp" target="_blank" rel="noopener">BBC Science, 2026</a>.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao khóc vì xúc động (bản nhạc hay, cảnh đẹp) lại giống khóc vì mất mát đến vậy?</summary>
+    <div class="scaffold__resolve"><p>Vì não không phân biệt "nỗi buồn gây ra nước mắt" với "nỗi xúc động gây ra nước mắt" — cả hai đều là tràn ngập. Nhà khoa học Nhật Bản Arita Hideto chỉ ra rằng khóc vì xúc động kích hoạt vùng "cộng cảm" ở não trước, rồi kích thích thần kinh oxytocin và chuyển cơ thể sang chế độ thư giãn (phó giao cảm), nhịp tim chậm lại <a class="source" href="https://health.udn.com/health/story/8137/9174631" target="_blank" rel="noopener">Cơ chế khóc thư giãn, 2025</a>. Nghĩa là giọt nước mắt "đẹp" và giọt nước mắt "mất mát" dùng chung một con đường dừng lại.</p></div>
+  </details>
+</section>
+<div class="feynman">Nước mắt có ba loại: để mắt ướt, để rửa bụi, và để nói điều lời không nói được — loại thứ ba chỉ loài người có.</div>
+
+<section class="scaffold" id="ch2-scaffold-2">
+  <h3 class="scaffold__concept">Nước mắt là tín hiệu xã hội (và cả hóa chất)</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Nước mắt cảm xúc có chức năng <strong>tín hiệu</strong>: nó khiến người nhìn thấy cảm thấy cần giúp đỡ, giảm thái độ hung hăng, tăng lòng tin <a class="source" href="https://www.bbc.com/zhongwen/articles/cly9k7qdd4vo/simp" target="_blank" rel="noopener">BBC Science, 2026</a>. Đặc biệt hơn, năm 2011 nhóm nghiên cứu tại Viện Weizmann (Israel) phát hiện <strong>nước mắt cảm xúc chứa <span class="term-amp" data-note="amp-chemosignal" tabindex="0">chemosignal</span></strong> — một tín hiệu hóa học không mùi: nam giới ngửi nước mắt của phụ nữ (lấy khi họ xem phim buồn) có mức testosterone giảm, hưng phấn tình dục giảm, và hoạt động não vùng khoái cảm giảm <a class="source" href="https://www.science.org/doi/10.1126/science.1198331" target="_blank" rel="noopener">Gelstein et al., Science 2011</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Trong một thí nghiệm của nhóm Weizmann, người đàn ông chỉ <em>ngửi</em> giọt nước mắt trên một miếng gạc dưới mũi — không nhìn thấy ai khóc — vẫn bị giảm hưng phấn và testosterone so với ngửi nước muối <a class="source" href="https://www.nytimes.com/2011/01/07/science/07tears.html" target="_blank" rel="noopener">NYT, 2011</a>. Tác giả gọi nước mắt là "một dạng ngôn ngữ hóa học". Bản chất thích nghi có thể là: khi người thân khóc, người ở gần được "dịu lại", bớt hung hăng, dễ ở lại chăm sóc hơn.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu nước mắt là tín hiệu cầu giúp, vì sao khóc ở chỗ không ai thấy vẫn xảy ra?</summary>
+    <div class="scaffold__resolve"><p>Vì con đường tín hiệu đã in sâu từ hàng triệu năm — bộ não khóc vì <em>có người ở gần</em> còn là mặc định của xã hội loài người. Nhưng cũng có bằng chứng: khóc một mình <em>vẫn</em> có thể có lợi nếu nó dẫn đến hiểu mới về chuyện của mình; còn khóc trong tình huống bị xấu hổ, bị chế giễu thì lợi ích biến mất <a class="source" href="https://www.sciencedirect.com/science/article/abs/pii/S0092656611000778" target="_blank" rel="noopener">Bylsma et al., 2011</a>. Tín hiệu cần "người nhận tốt" mới phát huy.</p></div>
+  </details>
+</section>
+<div class="feynman">Khóc là bức thư không chữ: nó nói với người quanh em "em cần ai đó" — thậm chí bằng hóa chất trong nước mắt.</div>
+
+<section class="scaffold" id="ch2-scaffold-3">
+  <h3 class="scaffold__concept">Đau xã hội dùng chung đường với đau thể chất</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Năm 2003, nhóm nghiên cứu UCLA cho 13 sinh viên chơi trò ném bóng với hai "người chơi" máy tính, rồi để máy <em>loại họ khỏi cuộc chơi</em> giữa chừng. Kết quả fMRI: vùng <strong>vỏ não đai trước (dorsal ACC)</strong> — vùng nổi tiếng với vai trò trong trải nghiệm đau thể chất — hoạt động mạnh hơn khi bị loại, và mức hoạt động tỉ lệ thuận với mức "đau lòng" họ tự báo <a class="source" href="https://www.science.org/doi/10.1126/science.1089134" target="_blank" rel="noopener">Eisenberger et al., Science 2003</a>. Nghiên cứu này nổi tiếng đến mức mở ra cả một lĩnh vực gọi là <strong class="term-amp" data-note="amp-socialpain" tabindex="0">đau xã hội</strong>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Câu nói của nhóm tác giả: <em>"Đó là lý do vì sao mất đi người mình yêu thương lại 'đau' đến thế"</em> <a class="source" href="https://www.science.org/doi/10.1126/science.1089134" target="_blank" rel="noopener">Eisenberger et al., 2003</a>. "Trái tim vỡ", "hurt feelings", "đau lòng" — không phải ẩn dụ mà là mô tả gần chữ: hệ thần kinh xử lý mất mát xã hội bằng mạch của nỗi đau thể xác, vì về mặt tiến hóa, bị tách khỏi nhóm nguy hiểm chết người như bị thương.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu đau xã hội dùng chung đường với đau thể chất, thuốc giảm đau có làm "đau lòng" dịu bớt không?</summary>
+    <div class="scaffold__resolve"><p>Thực nghiệm cho thấy có — paracetamol uống vài tuần làm giảm cảm giác "tổn thương xã hội" trong các thí nghiệm loại khỏi cuộc chơi <a class="source" href="https://www.researchgate.net/publication/9056800_Does_Rejection_Hurt_An_fMRI_Study_of_Social_Exclusion" target="_blank" rel="noopener">Tổng quan đau xã hội</a>. Đây là bằng chứng mạnh nhất cho thấy "đau lòng" không phải trò chơi chữ. Tất nhiên, ta không chữa mất mát bằng paracetamol — nhưng hiểu rằng nỗi buồn "đau thật" giúp ta đối xử với người đau buồn như với người bị thương: không giảng đạo, mà băng bó và ở cạnh.</p></div>
+  </details>
+</section>
+<div class="feynman">Khi em mất ai đó, não em đau y như lúc bị thương — "đau lòng" là đau thật, không phải nói cho hay.</div>
+
+<section class="scaffold" id="ch2-scaffold-4">
+  <h3 class="scaffold__concept">Khóc có lợi — nhưng có điều kiện</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trong một nhật ký theo dõi 1004 cơn khóc thực tế, chỉ <strong>khoảng 1/3 số cơn khóc đi kèm cải thiện tâm trạng</strong>; phần còn lại tâm trạng không đổi hoặc tệ hơn <a class="source" href="https://www.sciencedirect.com/science/article/abs/pii/S0092656611000778" target="_blank" rel="noopener">Bylsma et al., 2011</a>. Các khảo sát hồi tưởng lạc quan hơn (60–70% báo có lợi), và thí nghiệm phòng lab thì trái ngược nhau. Chìa khóa nằm ở <em>điều kiện</em>: khóc có lợi khi có người đỡ, khi cơn khóc dẫn đến hiểu mới hoặc giải quyết được chuyện, khi không bị xấu hổ; khóc có hại khi bị chế giễu, khi phải chứng kiến nỗi đau người khác, khi đang trầm cảm <a class="source" href="https://www.jstor.org/stable/20183331" target="_blank" rel="noopener">Rottenberg et al., 2008</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một người khóc ở nhà vì vừa nhận tin buồn, và bạn bè gọi điện <em>hỏi han, không giảng giải</em>: khả năng cao sau đó họ thấy nhẹ hơn. Người khác khóc giữa công sở và bị đồng nghiệp nhìn với ánh mắt phán xét, ai đó còn bảo "sao kỹ quá": cơn khóc ấy không nhẹ mà nặng thêm. Khóc cũng có khía cạnh sinh lý tích cực: trước khóc tim thường tăng nhịp (giao cảm — "báo động"), trong và sau khóc tim chuyển sang nhịp thư giãn (phó giao cảm) <a class="source" href="https://www.bbc.com/zhongwen/articles/cly9k7qdd4vo/simp" target="_blank" rel="noopener">BBC Science, 2026</a>.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao cùng một người, cùng một cơn buồn, khóc ở phòng riêng lại "không nhẹ" bằng khóc cạnh một người bạn thấu hiểu?</summary>
+    <div class="scaffold__resolve"><p>Vì chức năng của khóc là tín hiệu xã hội — nó "cần" người nhận. Khi có người đỡ đần, chuỗi tín hiệu hoàn tất: khóc → được đáp lại → thấy đỡ. Khóc một mình vẫn có thể giúp ta "dừng lại" và suy ngẫm, nhưng thiếu mảnh xã hội. Điều này giải thích câu khuyên của các nhà trị liệu: đừng bảo người đau buồn "vào phòng khóc một mình cho khỏe" — hãy ngồi cạnh họ.</p></div>
+  </details>
+</section>
+<div class="feynman">Khóc giống như ném phao: nó chỉ cứu được em nếu có người nhặt lấy.</div>
+
+<!-- Checkpoint 2 -->
+<div class="checkpoint" data-checkpoint-id="cp-noi-buon-2">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Một người bạn vừa mất người thân và khóc trước mặt bạn. Theo các mảnh ghép cơ thể vừa học, điều <em>hữu ích nhất</em> bạn có thể làm ngay lúc đó là gì — và điều <em>tệ nhất</em> là gì?</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>Hữu ích nhất: ở cạnh — ngồi gần, không giảng đạo, không ép khóc cũng không chặn khóc; những câu cụ thể kiểu "mình ngồi đây được không?", "mình đi mua đồ ăn cho cậu nhé?" thay vì chung chung. Tệ nhất: "nén đau thương", "mạnh mẽ lên", "thời gian sẽ chữa lành" — vì chúng chặn tín hiệu cầu giúp và làm người đau buồn thấy mình đang khóc "sai cách".</p>
+  </div>
+</div>
+
+<h3>Apply · Người cha trong tang lễ</h3>
+<p>Áp dụng bốn mảnh ghép vào một kịch bản rất Việt Nam: <strong>người đàn ông 45 tuổi vừa mất mẹ, đứng trong tang lễ mà không rơi một giọt nước mắt</strong>. Mọi người khen "bác ấy mạnh mẽ". Nhưng ba tháng sau anh bắt đầu đau dạ dày, mất ngủ, cáu gắt vô cớ, rồi một đêm tỉnh dậy khóc như trẻ con.</p>
+<p>Đọc lại bằng chương 2: anh đã chặn ba lớp tín hiệu. Lớp 1 — <em>nước mắt cảm xúc</em>: bị chuẩn mực "đàn ông không khóc" kìm lại, giọt nước mắt không thành tín hiệu cầu giúp; người thân không nhận được "bức thư". Lớp 2 — <em>tín hiệu hóa học</em>: không có nhịp khóc–dịu, mạch giao cảm cứ "báo động" dai dẳng, căng thẳng tích tụ thành đau cơ thể. Lớp 3 — <em>đau xã hội</em>: vùng đau thể chất vẫn kêu, nhưng không ai biết để băng bó, nên nó chuyển thành triệu chứng cơ thể thật. Lớp 4 — <em>điều kiện khóc</em>: khi anh rốt cuộc khóc thì lại khóc một mình lúc 2 giờ sáng — đúng loại khóc ít lợi nhất.</p>
+<p>Giải pháp không phải "bắt bác ấy khóc" — mà là <em>tạo người nhận</em>: anh em họ hàng ngồi cạnh kể chuyện về mẹ anh; câu hỏi cụ thể ("ngày xưa mẹ nấu món gì bác thích nhất?") cho phép nước mắt xuất hiện đúng lúc, đúng chỗ, có người đón. Đó là cách một cộng đồng "nhận thư".</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Nối từng mảnh ghép cơ thể với một bằng chứng: (a) nước mắt cảm xúc → ?, (b) chemosignal → ?, (c) đau xã hội → ?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">(a) chỉ loài người có, thành phần giàu protein (Frey; BBC 2026); (b) Gelstein 2011 — ngửi nước mắt giảm testosterone &amp; hưng phấn nam giới; (c) Eisenberger 2003 — dorsal ACC phản ứng như đau thể chất khi bị xã hội loại trừ.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Boundary · Ranh giới của mảnh ghép cơ thể</h3>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Khóc nhiều = trầm cảm; không khóc = mạnh mẽ."</strong> Cả hai đều sai. Trầm cảm không bắt buộc đi kèm khóc nhiều — thậm chí nghiên cứu cho thấy người trầm cảm có thể khóc <em>ít</em> hơn vì phản ứng cảm xúc bị "mờ đi" <a class="source" href="https://web.stanford.edu/group/mood/gotlib_pdfs/rottenberg_wilhelm_gotlib_2002.pdf" target="_blank" rel="noopener">Rottenberg et al., 2002</a>. Và "không khóc" nhiều khi không phải mạnh mẽ mà là <em>cắt tín hiệu</em> — nguy cơ chuyển đau buồn sang cơ thể.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Nước mắt không phải thuốc chữa.</strong> Với người đang trầm cảm, khóc có thể không giải tỏa gì; với người đang trong cơn hoảng loạn sau tổn thương bạo lực, khóc nhiều mà không có hỗ trợ chuyên môn có thể không giúp xử lý sang chấn. Dấu hiệu cần trợ giúp chuyên môn (không phải chỉ bạn bè): khóc liên tục không kiểm soát kèm mất ngủ, mất hứng thú, ý nghĩ tự tổn — ta sẽ gặp lại ranh giới này ở chương 5.</p>
+</div>
+
+<h3>Fade · Tổng kết chương 2</h3>
+<p>Mảnh ghép cơ thể của nỗi buồn là một hệ thống tín hiệu: ba loại nước mắt, trong đó nước mắt cảm xúc là tài sản riêng của loài người; chemosignal khiến người ở gần dịu lại; và mạch đau xã hội mượn đường đau thể chất — nên "đau lòng" đau thật. Khóc có lợi có điều kiện, và điều kiện quan trọng nhất là <em>có người nhận</em>. Đừng chặn nước mắt của mình, đừng chặn nước mắt của người khác.</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của chương này:</strong> nước mắt là bức thư không chữ — hãy đọc nó, đừng xé nó.
+</blockquote>
+<h2>Chương 3 · Mảnh ghép tâm lý: bơi, nghỉ, và câu chữ</h2>
+
+<p>Cơ thể đã nhúng tay xuống nước. Giờ là mảnh ghép khiến Mô hình Bờ biển thành công cụ thực thụ: <strong>tâm lý học của việc xử lý mất mát</strong>. Vì sao có người sau mất mát hồi phục chỉ sau vài tháng, người khác vẫn chìm đắm năm năm? Vì sao câu hỏi "bạn có khỏe không" khiến người đau buồn ngậm ngùi, còn "ngày xưa mẹ nấu món gì bạn thích nhất?" lại chạm được vào lòng?</p>
+
+<h3>Chỗ neo chương 3: Việc xử lý mất mát</h3>
+<p>Từ những năm 1940, các nhà tâm lý học gọi đau buồn là <strong>một công việc phải làm</strong> — tiếng Anh gọi là <em>grief work</em>: xử lý mất mát. Chữ "work" nghe nặng nề, nhưng nó mang một sự thật đối trọng với câu "thời gian sẽ chữa lành". Thời gian không tự chữa gì cả — <em>cách ta dùng thời gian</em> mới là thứ chữa lành. Chương này trình bày cơ chế của "cách dùng thời gian" đó: nhịp bơi–nghỉ, cái giá của việc kể lại, và một lời cảnh báo về thang máy 5 tầng.</p>
+
+<!-- Pre-mortem chương 3 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+  <p><span class="premortem__wrong">"Muốn hết buồn thì phải 'nói ra hết', tâm sự càng nhiều càng nhanh khỏi — đau buồn là thứ phải gắng sức 'làm việc' càng nhanh càng tốt."</span></p>
+  <p>Điều này sai vì <em>ép bản thân phải đối diện toàn bộ nỗi đau cùng lúc có thể làm tình hình tệ hơn; và phần lớn người ta không cần "grief work" cưỡng bức để lành</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> đau buồn lành nhờ <strong>dao động tự nhiên</strong> — đối diện rồi nghỉ, nghỉ rồi đối diện — không phải một cơn "dọn dẹp cảm xúc" duy nhất. Kể chuyện có ích, nhưng theo liều lượng và thời điểm của chính người kể, không phải theo yêu cầu của người ngoài.</p>
+</div>
+
+<h3>Construct · Bốn mảnh ghép tâm lý</h3>
+
+<section class="scaffold" id="ch3-scaffold-1">
+  <h3 class="scaffold__concept"><span class="term-amp" data-note="amp-dpm" tabindex="0">Mô hình lưỡng xử lý</span>: bơi và nghỉ đều cần</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Stroebe và Schut (1999) đề xuất rằng người đau buồn khỏe mạnh <strong>dao động giữa hai định hướng</strong>: <em>định hướng mất mát</em> (khóc, nhớ, tìm ý nghĩa của cái chết) và <em>định hướng tái dựng</em> (lo giấy tờ, đi làm, nuôi con, học vai trò mới). Điểm mấu chốt: <strong>cả hai đều cần thiết và phải luân phiên</strong>. Ở mãi một định hướng mất mát → chìm đắm; ở mãi một định hướng tái dựng → chối bỏ. Hai tác giả gọi nghịch lý này là "liều lượng" (dosage): đau buồn như thuốc, đúng liều thì lành, quá liều thì ngộ độc <a class="source" href="https://doi.org/10.1080/074811899201046" target="_blank" rel="noopener">Stroebe &amp; Schut, 1999</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một góa phụ 60 tuổi: buổi sáng cô khóc và dọn lại bàn thờ (định hướng mất mát), buổi chiều cô nhận cuộc gọi từ con trai và đi chợ nấu ăn (định hướng tái dựng). Người đọc chuyện cô không nên thấy "cô ấy thất thường" — đó chính là công thức lành. Ngược lại, người góa phụ khác suốt ba năm chỉ lau dọn bàn thờ, không nhận lời đi cà phê với bạn già, thấy vui là "có tội": cô ấy kẹt ở sóng, cần sự giúp đỡ để "lên bờ".</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Người khuyên "cứ bận rộn là hết buồn" đang đề xuất bỏ phần nào của nhịp dao động?</summary>
+    <div class="scaffold__resolve"><p>Họ đang kẹt ta mãi ở định hướng tái dựng — "bận rộn" mà không bao giờ đối diện thì nỗi buồn không biến mất, chỉ chìm xuống và trồi lên ở dạng khác (đau cơ thể, cáu gắt, mất ngủ). Đau buồn lành cần cả hai phía: bận rộn là chân phải, đối diện là chân trái — bước đều mới đi được.</p></div>
+  </details>
+</section>
+<div class="feynman">Đau buồn lành không phải chọn "bơi" hay chọn "nghỉ", mà là nhịp: bơi, rồi nghỉ, rồi lại bơi.</div>
+
+<section class="scaffold" id="ch3-scaffold-2">
+  <h3 class="scaffold__concept">Thang máy 5 tầng: một câu chuyện đẹp, không phải bản đồ</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Mô hình "5 giai đoạn" của Elisabeth Kübler-Ross (phủ nhận → tức giận → mặc cả → trầm cảm → chấp nhận) thực ra được Kübler-Ross xây dựng từ các cuộc phỏng vấn với <strong>bệnh nhân đang hấp hối</strong>, xuất bản năm 1969, và bản thân bà không hề mô tả nó như trình tự bắt buộc cho người ở lại <a class="source" href="https://theconversation.com/denial-denial-of-the-five-stages-of-grief-95965" target="_blank" rel="noopener">Haslam, The Conversation 2018</a>. Dữ liệu từ thang đo đau buồn McGill cho thấy các cảm xúc "giai đoạn" <em>không xếp theo trình tự</em> <a class="source" href="https://www.researchgate.net/publication/232545868_The_stages_of_grief_are_they_what_we_think_they_are" target="_blank" rel="noopener">McGill OSS, 2022</a>, và nghiên cứu trên người góa cho thấy "chấp nhận" có mặt ngay từ những ngày đầu, trong khi "phủ nhận" cực hiếm <a class="source" href="https://jamanetwork.com/journals/jama/fullarticle/207846" target="_blank" rel="noopener">Maciejewski et al., JAMA 2007</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một người vừa nhận tin mẹ mất. Theo thang máy 5 tầng, ngày đầu phải là "phủ nhận" — nhưng dữ liệu JAMA cho thấy ngay ngày đầu "chấp nhận" đã là cảm xúc được báo cáo nhiều nhất <a class="source" href="https://jamanetwork.com/journals/jama/fullarticle/207846" target="_blank" rel="noopener">Maciejewski et al., 2007</a>. Hôm nay cô ấy vừa khóc vừa gọi điện thu xếp tang lễ: cùng lúc đối diện <em>và</em> tái dựng. Nếu ai đó bảo "cô còn chưa tới giai đoạn chấp nhận, hôm nay chỉ nên phủ nhận thôi" — câu nói ấy vô nghĩa với thực tế.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao mô hình 5 giai đoạn vẫn được nhắc đến khắp nơi nếu nó không đúng với người đau buồn?</summary>
+    <div class="scaffold__resolve"><p>Vì nó đẹp và gọn: con người thích một biểu đồ có thứ tự để trấn an "ta đang ở tầng nào". Nhưng đẹp không phải đúng. Điều hại nhất của thang máy: nó khiến người đau buồn tự kiểm tra "mình tụt về tầng giận dữ à?" và người ngoài áp đặt kỳ vọng theo trình tự. Mô hình lưỡng xử lý (sóng–bờ) không tạo ra các "tầng" nên không gây căng thẳng như vậy.</p></div>
+  </details>
+</section>
+<div class="feynman">Đau buồn không đi thang máy — nó đi theo thủy triều: lên, xuống, trở lại, rút ra.</div>
+
+<section class="scaffold" id="ch3-scaffold-3">
+  <h3 class="scaffold__concept">Kể lại: câu chữ là cây cầu ra khỏi nước</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trong một phân tích gộp của Frattaroli, <strong>viết về sự kiện đau buồn</strong> (15–20 phút mỗi lần, vài ngày liền) cho thấy hiệu quả trung bình nhỏ nhưng có ý nghĩa thống kê đối với sức khỏe thể chất và tâm lý (r ≈ 0,075) <a class="source" href="https://psycnet.apa.org/record/2006-03973-002" target="_blank" rel="noopener">Frattaroli, Psych Bull 2006</a>. Cơ chế không phải "xả được hết" mà là <em>kể lại giúp chuyện thành câu chuyện</em>: ta đặt mất mát vào trật tự thời gian, gán ý nghĩa, rút ra điều gì đã học — đó chính là bước "lên bờ" tâm lý.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Nhà nghiên cứu đau buồn Trung Quốc Lưu Tân Hiến đề xuất cách giúp người mất mát không phải là nói "tôi hiểu bạn" mà là <em>đặt những câu hỏi về ký ức ấm áp</em>: "Ngày xưa mẹ bạn hay nấu món gì?", "Kỷ niệm nào với ông bạn làm bạn thấy mình may mắn?" — những câu hỏi ấy cho phép người đau buồn <em>đi vào biển theo liều lượng tự chọn</em>, kể chuyện, và được lắng nghe <a class="source" href="https://www.bjnews.com.cn/detail/1751352471141006.html" target="_blank" rel="noopener">Phỏng vấn Lưu Tân Hiến, Tân Kinh Báo 2026</a>.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao "tôi hiểu bạn" lại là câu có hại cho người đau buồn, theo nhà nghiên cứu Lưu Tân Hiến?</summary>
+    <div class="scaffold__resolve"><p>Vì "tôi hiểu bạn" vô tình tạo ra <strong>"bức tường thủy tinh"</strong>: không ai thực sự hiểu nỗi đau riêng của ai, và câu đó khiến người đau buồn thấy nỗi đau mình bị cô lập, không ai với tới. Câu chạm được là câu mở: "Bạn muốn kể về mẹ bạn không?" hoặc hành động cụ thể: "Mình mang cơm đến nhé?" <a class="source" href="https://www.bjnews.com.cn/detail/1751352471141006.html" target="_blank" rel="noopener">Tân Kinh Báo 2026</a>.</p></div>
+  </details>
+</section>
+<div class="feynman">Đừng nói "tôi hiểu bạn" — hãy hỏi "bạn muốn kể về họ không?", rồi lắng nghe.</div>
+
+<section class="scaffold" id="ch3-scaffold-4">
+  <h3 class="scaffold__concept">"Một đời ẩm ướt": cái nhìn dài hạn của người Trung Quốc</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Năm 2025, cuốn sách <em>与哀伤共处 (Dữ ai thương cộng xử)</em> của học giả Lý Vân Diệu dựa trên 106 cuộc phỏng vấn sâu về mất người thân thu hút hàng triệu người đọc, với câu văn nổi tiếng: <strong>"Cái chết của người thân không phải một trận mưa rào — mà là một đời ẩm ướt."</strong> <a class="source" href="https://www.huxiu.com/article/4204728.html" target="_blank" rel="noopener">Hổ Sủy, 2025</a> Dữ liệu định lượng ủng hộ: mỗi ca tử vong ảnh hưởng sâu đến khoảng 9 người <a class="source" href="https://www.huxiu.com/article/4204728.html" target="_blank" rel="noopener">Cambridge, 2020</a>, và người trẻ mất cha mẹ có tỉ lệ dao động 3,4–11% với thời gian thích nghi trung bình khoảng hai năm <a class="source" href="https://www.yicai.com/news/102591858.html" target="_blank" rel="noopener">Đệ Nhất Tài Kinh, 2025</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>"Một đời ẩm ướt" là tuyên ngôn đối lập với "hết buồn rồi thôi": người mất cha mẹ lúc 25 tuổi không "hết" ở tuổi 30 — họ có thể hạnh phúc, nhưng trong hạnh phúc vẫn có nước mưa bất chợt rơi khi gặp mùi món ăn của mẹ. Điều này không mâu thuẫn với Mô hình Bờ biển — nó là lời nhắc rằng <em>bờ rộng hơn không nghĩa là biển cạn</em>. Và đây là điểm người Việt dễ thấm nhất: câu "nén đau thương" hay "người mất người sống phải biết tự an ủi" chính là cùng một áp lực mà Lưu Tân Hiến phê phán.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu "một đời ẩm ướt" là bình thường, thì dấu hiệu nào cho thấy cần can thiệp (không chỉ chờ đợi)?</summary>
+    <div class="scaffold__resolve"><p>Ẩm ướt là <em>không phải lúc nào cũng mưa</em>: có những ngày nắng dài ra. Cần can thiệp khi cơn mưa <em>không ngừng và không nhạt</em> — đau buồn sau 12 tháng (người lớn) vẫn đau như ngày đầu, kèm suy giảm chức năng sống (bỏ việc, không giao tiếp, mất ngủ kéo dài): đó là ranh giới của rối loạn đau buồn kéo dài — ta xét ở chương 5.</p></div>
+  </details>
+</section>
+<div class="feynman">Mất người thân không phải một cơn mưa rào; nó là một đời ẩm ướt — và sống tốt nghĩa là biết mưa khi nào tạnh để ra ngoài.</div>
+
+<!-- Checkpoint 3 -->
+<div class="checkpoint" data-checkpoint-id="cp-noi-buon-3">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Một người bạn thân vừa mất cha. Bạn đã gọi điện và nói "không sao đâu, mọi chuyện sẽ ổn, thời gian chữa lành mọi thứ". Nhìn lại bằng mảnh ghép tâm lý: câu nói đó mắc điều gì, và bạn sẽ nói gì thay thế trong lần gọi kế tiếp?</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>"Không sao đâu" và "thời gian chữa lành" là lời trấn an rỗng — nó chặn đối diện (định hướng mất mát) và áp đặt kỳ vọng người kia phải sớm ổn. Thay thế: "Anh không biết nói gì hơn ngoài việc em có thể khóc thoải mái khi gọi cho anh" — câu mở cho phép kể chuyện; rồi hỏi về cha người bạn: "Bố em là người như thế nào?" hoặc hành động cụ thể: "Thứ bảy anh qua đưa hai mẹ con em đi ăn nhé?". Hãy để người kia tự chọn liều lượng đối diện.</p>
+  </div>
+</div>
+
+<h3>Apply · Hai cách "ở cùng" người đau buồn</h3>
+<p>Bối cảnh: đồng nghiệp của bạn vừa mất mẹ, nghỉ làm hai tuần, quay lại công ty với khuôn mặt dửng dưng.</p>
+<p><strong>Cách A</strong> (được xã hội khuyến khích): ai cũng tránh nhắc. Khi bạn chạm mặt, bạn cúi đầu rồi đi nhanh; trong cuộc họp bạn không gọi tên cô ấy. Kết quả: cô ấy bị kẹt trong "bức tường thủy tinh" — thế giới làm như không có gì mất, nên nỗi buồn của cô không có nơi để kể, nhịp bơi–nghỉ thiếu hẳn nửa nhịp "đối diện có người đồng hành".</p>
+<p><strong>Cách B</strong> (theo mảnh ghép tâm lý): khi bạn gặp cô ấy, bạn nói: "Nghe tin chị mất mẹ, em rất tiếc. Em không biết phải nói gì cho đúng, nhưng nếu chị muốn uống cà phê và kể về mẹ chị, em sẵn sàng." Tuần sau bạn tự nhiên hỏi: "Mẹ chị thích món gì?" — câu hỏi cho phép cô ấy chọn: kể (đối diện) hoặc cười nhẹ rồi lảng (nghỉ). Bạn không ép, chỉ mở cửa. Đó chính là giúp người khác thực hiện nhịp dao động.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Nối khái niệm với nguồn: (1) lưỡng xử lý → ?, (2) "5 giai đoạn" → ?, (3) "một đời ẩm ướt" → ?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">(1) Stroebe &amp; Schut, Death Studies 1999; (2) Kübler-Ross 1969 — xây từ bệnh nhân hấp hối, không phải người ở lại; (3) Lý Vân Diệu, 与哀伤共处 2025.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Boundary · Ranh giới của mảnh ghép tâm lý</h3>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Không kể chuyện là ấm ức, phải bắt buộc kể ra hết."</strong> Người đau buồn có thể <em>chưa sẵn sàng</em> đối diện; ép kể là bắt họ xuống nước trước khi họ muốn — phản tác dụng. Kể chuyện có ích theo liều lượng tự chọn. Vai trò của người ngoài là mở cửa, không phải đẩy họ xuống biển.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Những người không cần "grief work" vẫn lành.</strong> Nghiên cứu theo dõi người góa cho thấy một tỉ lệ đáng kể hồi phục <em>mà không trải qua đau buồn rõ rệt ngay từ đầu</em> — quỹ đạo "kiên cường" (resilience). Họ không chối bỏ, không trì hoãn; họ đơn giản không rơi xuống mức đau buồn trầm trọng <a class="source" href="https://pubmed.ncbi.nlm.nih.gov/12199140/" target="_blank" rel="noopener">Bonanno et al., JPSP 2002</a>. Đừng vì "cô ấy không khóc" mà kết luận cô ấy đang giả tạo hoặc đang nén — đánh giá bằng chức năng sống (ăn, ngủ, làm việc, giao tiếp), không bằng số giọt nước mắt.</p>
+</div>
+
+<!-- Metacognitive prompt -->
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Predict</span>
+  <p>Trước khi sang chương 4, hãy đoán: nếu nỗi buồn đau đớn đến vậy, vì sao tiến hóa lại <em>giữ lại</em> nó trong bộ gen của chúng ta? Một cảm xúc "xấu" mà mọi loài có đều phải có một công việc gì đó. Hãy viết một giả thuyết trước khi đọc tiếp.</p>
+</div>
+
+<h3>Fade · Tổng kết chương 3</h3>
+<p>Mảnh ghép tâm lý dạy ta ba điều. Một: đau buồn là <strong>dao động</strong> giữa đối diện và tái dựng — cả hai đều cần. Hai: "5 giai đoạn" là câu chuyện đẹp nhưng không phải bản đồ — đừng để nó áp đặt kỳ vọng. Ba: <strong>câu chữ và việc kể lại</strong> là cây cầu ra khỏi nước, nhưng chỉ khi người đau buồn tự chọn bước lên. Và quan trọng với người giúp đỡ: hãy là người lắng nghe mở cửa, đừng là người đẩy người khác xuống biển.</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của chương này:</strong> thời gian không chữa lành — cách ta dùng thời gian mới là thứ chữa lành.
+</blockquote>
+<h2>Chương 4 · Mảnh ghép chức năng: nỗi buồn để làm gì?</h2>
+
+<p>Đến đây ta đã thấy nỗi buồn <em>có cơ thể</em> và <em>có cơ chế tâm lý</em>. Nhưng câu hỏi lớn nhất chưa trả lời: vì sao tiến hóa giữ lại một cảm xúc đau đớn đến vậy? Nếu cảm xúc là sản phẩm của chọn lọc tự nhiên, nỗi buồn phải trả một hóa đơn lợi ích nào đó. Chương này nhìn vào <strong>mảnh ghép chức năng</strong> — công việc mà nỗi buồn làm cho loài người, từ chỗ "dừng lại để nhìn lại" cho đến chỗ gắn chúng ta lại với nhau.</p>
+
+<h3>Chỗ neo chương 4: Nỗi buồn là phanh tay của tâm trí</h3>
+<p>Hãy nghĩ nỗi buồn như <strong>phanh tay</strong>. Khi chạy quá nhanh trên đường đời — lao vào công việc, vun vén đủ thứ, chạy theo mục tiêu — cơ thể cần một cơ chế buộc ta <em>dừng lại</em>. Nỗi buồn hạ tốc độ, làm ta ít hành động, ít nói, ít quyết định vội. Nghe như "vô dụng"? Không — <em>sau khi mất mát, quyết định vội là quyết định dở</em>. Một người vừa mất con không nên lập tức bán nhà hay đổi nghề. Phanh tay cho ta thời gian nhìn lại bản đồ. Nếu Mô hình Bờ biển dạy nhịp bơi–nghỉ, thì mảnh ghép chức năng giải thích vì sao cơ thể lại <em>bắt buộc</em> ta phải nghỉ: không nghỉ thì không nhìn được đường.</p>
+
+<!-- Pre-mortem chương 4 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+  <p><span class="premortem__wrong">"Nỗi buồn là cảm xúc tiêu cực, vô dụng — người hiện đại nên loại bỏ nó để sống 'tích cực'."</span></p>
+  <p>Điều này sai vì <em>mọi cảm xúc chủ đạo đều được chọn lọc tự nhiên giữ lại vì một công việc; nỗi buồn không phải "bug" của não mà là một "feature"</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> nỗi buồn có <strong>chức năng thích nghi</strong>: nó thay đổi cách ta xử lý thông tin (nhớ chi tiết hơn, bớt thiên kiến), làm chậm hành vi bốc đồng, và phát tín hiệu cầu kết nối xã hội — ba công việc không thể thiếu sau một mất mát.</p>
+</div>
+
+<h3>Construct · Ba công việc của nỗi buồn</h3>
+
+<section class="scaffold" id="ch4-scaffold-1">
+  <h3 class="scaffold__concept">Công việc 1: Dừng lại và xử lý chi tiết</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Hàng loạt thí nghiệm về "hiệu ứng tâm trạng buồn" của Joseph Forgas cho thấy: khi buồn, con người <strong>nhớ chi tiết hơn, ít bị thiên kiến, và suy luận chính xác hơn</strong> — cái ông gọi là <em>xử lý thích ứng (accommodative processing)</em>: bộ não tạm nghi ngờ bản đồ cũ và kiểm tra từng chi tiết <a class="source" href="https://www.annualreviews.org/doi/10.1146/annurev-psych-113011-143822" target="_blank" rel="noopener">Forgas, Annu Rev Psychol 2013</a>. Trong các thí nghiệm, người ở tâm trạng buồn ít tin tin đồn hơn, ít bị ảnh hưởng bởi khuôn mặt đẹp trong phán đoán, và nhớ đúng chuỗi sự kiện hơn.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một người vừa mất mẹ nhận một cuộc gọi mời chào "đầu tư sinh lời" từ một "người quen cũ". Ở tâm trạng bình thường, anh có thể gật đầu cho qua; ở tâm trạng buồn, não anh tự động kiểm tra từng con số, từng dấu hiệu — và từ chối. Đây không phải sự trùng hợp: đó là nỗi buồn làm công việc <em>bảo vệ</em>. Và người vừa mất người thân <em>cần</em> kiểu cảnh giác ấy: chính là lúc dễ bị kẻ xấu lợi dụng nhất.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu nỗi buồn giúp xử lý chi tiết hơn, vì sao người đau buồn lại hay "đần ra", quên hết mọi thứ?</summary>
+    <div class="scaffold__resolve"><p>Vì có hai tầng: tầng xử lý <em>chi tiết</em> (nhận biết, phán đoán, ký ức — tốt hơn khi buồn) và tầng <em>chú ý</em> (năng lượng để tập trung — cạn kiệt vì mất ngủ, vì não dành nguồn lực cho nỗi đau). Người đau buồn "quên" không phải vì não hỏng, mà vì băng thông bị chiếm. Đó là lý do họ cần sự giúp đỡ cụ thể trong các việc thủ tục: không phải vì họ yếu, mà vì phanh tay đang kéo hết sức.</p></div>
+  </details>
+</section>
+<div class="feynman">Nỗi buồn bật chế độ "rà soát": khi buồn, em nhìn kỹ hơn, nhớ rõ hơn, và ít bị lừa hơn.</div>
+
+<section class="scaffold" id="ch4-scaffold-2">
+  <h3 class="scaffold__concept">Công việc 2: Kêu gọi kết nối, củng cố mối dây</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trong mọi nền văn hóa, người buồn <strong>được đối xử khác</strong>: giọng nói dịu đi, hành vi bao bọc tăng lên, nhóm xích lại gần hơn. Đây là chức năng xã hội của nỗi buồn — nó <em>tăng độ gắn kết nhóm</em> và thông báo "có người cần được che chở" <a class="source" href="https://www.researchgate.net/publication/324653085_Sadness_the_Architect_of_Cognitive_Change" target="_blank" rel="noopener">Lench et al., 2016</a>. Nước mắt (chương 2) chính là công cụ của công việc này: giọt nước mắt khiến người nhìn muốn giúp, giảm hung hăng — nhóm quây lại, mối dây bền hơn.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Trong một gia đình Việt, khi một thành viên mất, cả dòng họ tự động quây về: nấu ăn, lo giấy tờ, giữ trẻ con, kể chuyện về người đã mất. Đó không phải nghi thức suông — đó là mạch máu của chức năng kết nối. Tang lễ trong đại dịch (không được tổ chức) cắt đứt chính mạch máu này, làm nỗi buồn "kẹt" vì nhóm không có dịp xích lại. Chức năng 2 giải thích vì sao nghi lễ lại quan trọng đến vậy với người sống.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao khóc ở đám tang "được phép" hơn khóc ở chỗ làm, dù cùng một nỗi buồn?</summary>
+    <div class="scaffold__resolve"><p>Vì chức năng kết nối cần một <em>kịch bản</em>: đám tang là kịch bản đã thống nhất — ai cũng biết vai của mình (người khóc, người an ủi, người lo việc). Chỗ làm không có kịch bản ấy, nên nước mắt trở thành tín hiệu "lạc chỗ", dễ bị đọc sai. Nỗi buồn không đổi — kịch bản xã hội đổi. Điều này cũng giải thích vì sao nhiều công ty hiện đại bắt đầu có "chính sách tang chế" linh hoạt: họ đang tạo kịch bản để chức năng 2 hoạt động.</p></div>
+  </details>
+</section>
+<div class="feynman">Nỗi buồn là tiếng gọi nhóm xích lại: "có một người đang cần được che chở."</div>
+
+<section class="scaffold" id="ch4-scaffold-3">
+  <h3 class="scaffold__concept">Công việc 3: Cập nhật bản đồ, tìm ý nghĩa mới</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Nhìn lại mảnh ghép "thế giới giả định" (chương 1): mất mát phá bản đồ cũ. Công việc cuối của nỗi buồn là <strong>bắt buộc ta xây bản đồ mới</strong> — một thế giới không có người ấy mà vẫn có ý nghĩa. Nghiên cứu về <em>tìm kiếm ý nghĩa</em> (meaning-making) cho thấy những người tìm được câu trả lời "vì sao và để làm gì" hồi phục tốt hơn những người để trống câu hỏi <a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037%2F0022-3514.90.5.824" target="_blank" rel="noopener">Park, Curr Direct Psychol Sci 2010</a>. "Vì sao" ở đây không phải câu trả lời vũ trụ, mà là một câu chuyện cá nhân ta gắn được cho mất mát.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Những cha mẹ "失独" (mất con duy nhất) ở Trung Quốc — nghiên cứu cho thấy khoảng 92% báo mất đi ý nghĩa sống <a class="source" href="https://www.sciscan.cn/article/3505276.html" target="_blank" rel="noopener">SCISCAN, 2025</a>. Nhưng cùng dữ liệu đó, các chương trình can thiệp giúp họ xây lại ý nghĩa — nhóm hỗ trợ lẫn nhau, kể chuyện, làm việc thiện mang tên người đã mất — làm giảm đáng kể triệu chứng đau buồn kéo dài <a class="source" href="https://www.sciscan.cn/article/3505276.html" target="_blank" rel="noopener">Can thiệp nhóm, 2025</a>. Con số "92%" nghe tuyệt vọng, nhưng nó đang nói về <em>bản đồ cũ</em>; công việc 3 là xây bản đồ mới — không phải quên người đã mất, mà tìm chỗ cho họ trong cuộc đời mới.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nỗi buồn đang làm công việc "tìm ý nghĩa" — vậy người ngoài có thể giúp bằng cách nào, không phải giảng đạo?</summary>
+    <div class="scaffold__resolve"><p>Bằng cách <em>tạo không gian kể chuyện</em>. Khi ta hỏi "Ngày xưa bố bạn là người thế nào?", ta đang mời người đau buồn kể lại — và mỗi câu chuyện kể ra là một viên gạch xây lại bản đồ. Người giúp giỏi không phải người đưa câu trả lời ("bố bạn đã về với ông bà"), mà người đặt câu hỏi mở và chịu khó lắng nghe: "Điều gì ở bố bạn mà bạn muốn giữ lại trong đời mình?"</p></div>
+  </details>
+</section>
+<div class="feynman">Nỗi buồn ép em xây lại bản đồ thế giới — và câu chuyện em kể về người đã mất chính là viên gạch đầu tiên.</div>
+
+<!-- Checkpoint 4 -->
+<div class="checkpoint" data-checkpoint-id="cp-noi-buon-4">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Hãy kể một tình huống gần đây bạn thấy buồn (có thể không liên quan mất người). Dùng ba công việc của nỗi buồn, xác định nỗi buồn đó đang "làm gì" cho bạn lúc bấy giờ.</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>Gợi ý khung phân tích: (1) Nó làm bạn chậm lại và cân nhắc kỹ hơn điều gì? (2) Nó khiến bạn tìm đến/được người khác tìm đến để kết nối không? (3) Nó buộc bạn nhìn lại một giả định cũ ("tôi đã sai ở đâu?", "thế giới không như tôi nghĩ")? Ngay cả nỗi buồn "nhỏ" (mất một mục tiêu, một kỳ vọng) cũng thực hiện đủ ba vai trò này — chỉ với cường độ nhỏ hơn.</p>
+  </div>
+</div>
+
+<h3>Apply · Đọc một nỗi buồn "vô cớ" bằng ba công việc</h3>
+<p>Buổi tối, bạn xem một bộ phim buồn và thấy nước mắt rơi dù "chỉ là phim". Có phải bạn "yếu đuối" không? Đọc bằng mảnh ghép chức năng:</p>
+<ul>
+  <li><strong>Công việc 1</strong>: phim buồn đưa bạn vào tâm trạng xử lý chi tiết — bạn nhận ra một chi tiết trong đời mình mà bình thường bỏ qua ("mình cũng đang tránh cuộc gọi cho mẹ").</li>
+  <li><strong>Công việc 2</strong>: xem phim cùng bạn bè, giọt nước mắt khiến nhóm xích lại, mở đầu cho một cuộc trò chuyện thật.</li>
+  <li><strong>Công việc 3</strong>: câu chuyện phim gợi bạn nghĩ về mất mát của chính mình — bản đồ cũ được kiểm tra lại trong khung an toàn của một câu chuyện hư cấu.</li>
+</ul>
+<p>Vậy nước mắt ở rạp phim không phải "phản ứng phụ vô nghĩa" — đó là ba công việc đang chạy song song trong khung an toàn. Đây cũng là lý do người ta xem phim buồn để <em>được buồn</em>: não đang tận dụng "phòng tập an toàn" để luyện kỹ năng xử lý mất mát.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Kể tên ba công việc của nỗi buồn và mỗi công việc một ví dụ thực tế.</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">(1) Dừng lại &amp; xử lý chi tiết — ít bị lừa, nhớ rõ hơn (Forgas). (2) Kêu gọi kết nối — gia đình quây về trong tang lễ. (3) Cập nhật bản đồ &amp; tìm ý nghĩa — cha mẹ 失独 xây ý nghĩa mới qua nhóm hỗ trợ.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Boundary · Ranh giới của mảnh ghép chức năng</h3>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Vì nỗi buồn có chức năng, nên cứ buồn mãi cũng tốt / nên kéo dài nỗi buồn."</strong> Không. Chức năng có <em>điểm lợi cận biên</em>: nỗi buồn giúp ích trong giai đoạn ngắn sau mất mát (xử lý, kết nối, tái lập bản đồ); kéo dài ngoài mức cần thiết là lãng phí năng lượng và chuyển thành đau buồn bệnh lý. Phanh tay là để dừng xe — giữ phanh mãi thì xe không bao giờ đi tiếp.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Một số người không cần "tìm ý nghĩa" vẫn khỏe.</strong> Nhóm tác giả Bonanno tìm thấy những người hồi phục "kiên cường" mà không báo cáo đau buồn trầm trọng hay việc tìm kiếm ý nghĩa tích cực <a class="source" href="https://pubmed.ncbi.nlm.nih.gov/12199140/" target="_blank" rel="noopener">Bonanno et al., 2002</a>. "Tìm ý nghĩa" là <em>một</em> con đường lành, không phải con đường duy nhất. Đừng bắt mọi người đau buồn phải "rút ra bài học" — với người không cần, câu hỏi ấy gượng ép. Tôn trọng quỹ đạo riêng của mỗi người.</p>
+</div>
+
+<!-- Metacognitive prompt -->
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Predict</span>
+  <p>Trước khi sang chương 5, hãy đoán: nếu nỗi buồn có chức năng, thì đâu là ranh giới giữa nỗi buồn "làm việc đúng" và nỗi buồn "hỏng"? Khi nào ta cần giúp đỡ chuyên môn, và vì sao không phải ai cũng cần? Viết dự đoán trước khi đọc.</p>
+</div>
+
+<h3>Fade · Tổng kết chương 4</h3>
+<p>Nỗi buồn không phải cảm xúc "vô dụng" mà là một công cụ ba trong một: <strong>dừng lại và xử lý kỹ hơn</strong>, <strong>kêu gọi nhóm xích lại</strong>, và <strong>ép ta xây lại bản đồ ý nghĩa</strong>. Hiểu được điều này đổi cách ta đối xử với nỗi buồn của mình: thay vì xấu hổ hay xua đuổi, ta có thể ngồi xuống xem nỗi buồn đang cố làm gì — và cho phép nó làm xong.</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của chương này:</strong> nỗi buồn là phanh tay — nó dừng xe để em nhìn lại bản đồ, gọi người giúp, và tìm đường mới.
+</blockquote>
+<h2>Chương 5 · Ranh giới: nỗi buồn lành, trầm cảm, và đau buồn kéo dài</h2>
+
+<p>Ba chương trước xây nỗi buồn như một cỗ máy có chức năng. Nhưng cỗ máy nào cũng có lúc hỏng. Chương này đặt câu hỏi ranh giới: <strong>nỗi buồn "đúng liều" ở đâu, và khi nào nó vượt mức thành vấn đề sức khỏe</strong>? Ta sẽ phân biệt ba trạng thái hay bị trộn lẫn — nỗi buồn lành, trầm cảm, và rối loạn đau buồn kéo dài (PGD) — rồi trả lời câu hỏi thực dụng nhất: khi nào cần tìm giúp đỡ chuyên môn?</p>
+
+<h3>Chỗ neo chương 5: Đồng hồ đo của Mô hình Bờ biển</h3>
+<p>Nếu đau buồn lành là nhịp bơi–nghỉ, thì ranh giới cần một <strong>đồng hồ đo ba kim</strong>: <em>thời gian</em> (đã bao lâu?), <em>cường độ</em> (còn đau như ngày đầu không?), và <em>chức năng</em> (còn ăn ngủ làm việc giao tiếp được không?). Nỗi buồn lành: biển dâng rồi rút theo con nước. Trầm cảm: kim "chức năng" tụt sâu bất kể có mất mát gần đây hay không. Đau buồn kéo dài: kim "thời gian" quá 12 tháng mà kim "cường độ" vẫn đứng yên ở mức đỉnh. Cầm ba cây kim ấy, ta đọc được bất kỳ trải nghiệm nào.</p>
+
+<!-- Pre-mortem chương 5 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+  <p><span class="premortem__wrong">"Đau buồn mà lâu là bệnh; ai buồn hơn một tháng là trầm cảm."</span></p>
+  <p>Điều này sai vì <em>đau buồn bình thường có thể kéo dài rất lâu (nhiều tháng, nhiều năm) mà không phải bệnh; và trầm cảm không bắt buộc đi kèm mất mát</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> ranh giới bệnh nằm ở <strong>cường độ kẹt + suy giảm chức năng + thời gian vượt mức</strong>, chứ không phải "buồn bao lâu". Và có một chẩn đoán riêng cho đau buồn vượt mức: rối loạn đau buồn kéo dài (DSM-5-TR, 2022).</p>
+</div>
+
+<h3>Construct · Ba trạng thái, ba bức tranh</h3>
+
+<section class="scaffold" id="ch5-scaffold-1">
+  <h3 class="scaffold__concept">Nỗi buồn lành: sóng dâng và rút</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Nỗi buồn lành mạnh sau mất mát có bốn đặc tính: (1) <strong>dao động</strong> — có lúc khóc lúc vui, (2) <strong>nhạt dần</strong> — sau nhiều tháng, con sóng nhỏ và thưa hơn, (3) <strong>cho phép tái dựng</strong> — vẫn sống tiếp, làm việc, yêu thương được, (4) <strong>ký ức vui dần trở lại</strong> — người đã mất không còn là mũi dao mà dần thành chỗ dựa tinh thần. Dữ liệu quỹ đạo cho thấy khoảng <strong>2/3 người mất người thân</strong> theo con đường "kiên cường" (hồi phục nhanh, đau buồn nhẹ ngay từ đầu) hoặc "hồi phục" (đau buồn đáng kể rồi trở về sau một thời gian) <a class="source" href="https://www.annualreviews.org/content/journals/10.1146/annurev-clinpsy-050718-095653" target="_blank" rel="noopener">Galatzer-Levy &amp; Bonanno, 2018</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một người mẹ mất chồng: tháng đầu khóc mỗi tối, tháng thứ ba có ngày không khóc, tháng thứ sáu cười cùng con cái mà không thấy "có tội", năm đầu đã có thể đi xem phim. Có ngày giỗ chồng cô vẫn lặng lẽ khóc — nhưng đó là "sóng quay lại theo con nước", không phải "kẹt dưới biển". Cô không cần chuyên gia; cô cần gia đình ở cạnh.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Một người mất mẹ 3 năm, ngày giỗ vẫn khóc — đây có phải "chưa hết buồn" không?</summary>
+    <div class="scaffold__resolve"><p>Không. "Sóng theo con nước" nghĩa là nỗi buồn quay lại theo mốc kỷ niệm — điều này là bình thường, thậm chí lành mạnh (chức năng kết nối, chương 4). Điểm phân biệt: cơn sóng đó <em>rút đi</em> sau đó, và không cản trở đời sống hằng ngày. Người khỏe mạnh vẫn có thể khóc vào ngày giỗ và cười ngày hôm sau — đó chính là nhịp bơi–nghỉ.</p></div>
+  </details>
+</section>
+<div class="feynman">Nỗi buồn lành là con sóng có thủy triều: dâng rồi rút, ngày càng thưa — không phải cơn mưa không bao giờ tạnh.</div>
+
+<section class="scaffold" id="ch5-scaffold-2">
+  <h3 class="scaffold__concept">Trầm cảm: chìm ở mọi biển</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trầm cảm (major depressive disorder) là một trạng thái toàn diện: <strong>mất hứng thú, khí sắc trầm suốt ngày, rối loạn ngủ và ăn, mệt mỏi, mất tập trung, cảm giác vô dụng</strong>, kéo dài ít nhất hai tuần và không phụ thuộc vào việc có mất mát hay không. Khác biệt then chốt với đau buồn: ở trầm cảm, nỗi đau không "đi về đâu" — <em>không có mảnh ghép tìm ý nghĩa</em> hoạt động; người trầm cảm khó khóc hơn nhiều khi trong cơn <a class="source" href="https://web.stanford.edu/group/mood/gotlib_pdfs/rottenberg_wilhelm_gotlib_2002.pdf" target="_blank" rel="noopener">Rottenberg et al., 2002</a> — tín hiệu cầu giúp bị tắt, thay vì bật.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một người trẻ mất việc (không mất người thân) bắt đầu thấy "mọi thứ vô nghĩa", ngủ 12 tiếng vẫn mệt, không muốn gặp ai, tự trách bản thân dai dẳng: đây là bức tranh trầm cảm — dù không hề có mất mát người thân. Ngược lại, người mất mẹ mà vẫn ăn được, vẫn khóc được, vẫn nhận lời đi ăn với bạn — dù rất buồn — không phải trầm cảm. Sự khác biệt nằm ở chỗ <em>chức năng còn chạy hay đã tắt</em>.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Vì sao người trầm cảm lại có thể khóc <em>ít</em> hơn người đau buồn?</summary>
+    <div class="scaffold__resolve"><p>Vì khóc là tín hiệu — và tín hiệu cần năng lượng hướng ra ngoài. Trầm cảm "khóa" phản ứng cảm xúc: nghiên cứu cho thấy người trầm cảm có phản ứng cảm xúc mờ (blunted) với cả điều tốt lẫn điều xấu <a class="source" href="https://web.stanford.edu/group/mood/gotlib_pdfs/rottenberg_wilhelm_gotlib_2002.pdf" target="_blank" rel="noopener">Rottenberg et al., 2002</a>. Vậy đừng đánh giá bằng "có khóc không" — hãy đánh giá bằng chức năng: ăn, ngủ, làm việc, quan tâm đến tương lai.</p></div>
+  </details>
+</section>
+<div class="feynman">Trầm cảm không phải "buồn lâu" — nó là cỗ máy cảm xúc tắt nguồn, khác hẳn một cỗ máy đang chạy chậm.</div>
+
+<section class="scaffold" id="ch5-scaffold-3">
+  <h3 class="scaffold__concept"><span class="term-amp" data-note="amp-pgd" tabindex="0">Đau buồn kéo dài (PGD)</span>: kẹt dưới biển</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Năm 2022, DSM-5-TR lần đầu đưa vào chẩn đoán riêng: <strong>rối loạn đau buồn kéo dài (Prolonged Grief Disorder)</strong>, mã F43.81 <a class="source" href="https://www.psychiatry.org/psychiatrists/practice/dsm" target="_blank" rel="noopener">APA, DSM-5-TR 2022</a>. Tiêu chí lõi: sau <strong>ít nhất 12 tháng</strong> mất người thân (trẻ em: 6 tháng), người đó vẫn <em>nhớ nhung khắc khoải hằng ngày</em>, bị ám ảnh bởi người đã mất, đau đớn không nguôi, kèm suy giảm chức năng rõ rệt (không làm việc, không giao tiếp, không tái dựng được đời sống). Ước tính gặp ở khoảng <strong>3–5% người đau buồn</strong>, tùy tiêu chuẩn chẩn đoán <a class="source" href="https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2022.1007356/full" target="_blank" rel="noopener">Frontiers Psychiatry, 2022</a> <a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11074153/" target="_blank" rel="noopener">PMC 2024</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Gia đình bệnh nhân MH370 — chuyến bay mất tích năm 2014 — đã trở thành ví dụ được giới chuyên môn Trung Quốc dùng: hơn 10 năm sau, nhiều người vẫn không tin người thân đã mất, vẫn chờ tin, vẫn từ chối nhận tiền bồi thường như "sẽ phản bội người đang chờ được tìm thấy" <a class="source" href="https://www.thepaper.cn/newsDetail_forward_30252547" target="_blank" rel="noopener">Bằng Chấn, 2025</a>. Không có xác nhận cái chết, không có nghi lễ, không có bản đồ mới — nỗi buồn không có điểm tựa để bắt đầu "tái dựng". Đây là trường hợp cực đoan, nhưng nó minh họa chuẩn PGD: sự kẹt kéo dài trong "định hướng mất mát" khiếm khuyết chức năng sống.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>PGD khác "nhớ người đã mất" như thế nào? Người bình thường cũng nhớ mỗi ngày mà.</summary>
+    <div class="scaffold__resolve"><p>Người bình thường nhớ trong <em>dao động</em> — vẫn còn các mảnh đời khác: công việc, bạn bè, hy vọng. Người PGD nhớ theo cách <em>độc chiếm</em>: nỗi nhớ là trạng thái mặc định, mọi sự kiện đều bị quy về người đã mất, và các mảnh đời khác co lại tới mức không còn chỗ. Đồng hồ ba kim chỉ rõ: thời gian &gt; 12 tháng, cường độ không giảm, chức năng suy sụp.</p></div>
+  </details>
+</section>
+<div class="feynman">Đau buồn kéo dài không phải "nhớ lâu" — nó là kẹt dưới biển đến mức quên mất có bờ.</div>
+
+<!-- Bar chart: grief trajectories -->
+<div class="bar-chart">
+  <div class="bar-chart__title">Bốn quỹ đạo đau buồn sau mất người thân — phần trăm người trưởng thành</div>
+  <div class="bar-row">
+    <div class="bar-label">Kiên cường</div>
+    <div class="bar-track"><div class="bar-fill" style="width:65.7%"></div></div>
+    <div class="bar-value">~65,7%</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Hồi phục</div>
+    <div class="bar-track"><div class="bar-fill" style="width:20.8%"></div></div>
+    <div class="bar-value">~20,8%</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Mãn tính</div>
+    <div class="bar-track"><div class="bar-fill" style="width:10.6%"></div></div>
+    <div class="bar-value">~10,6%</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Trì hoãn</div>
+    <div class="bar-track"><div class="bar-fill" style="width:8.9%"></div></div>
+    <div class="bar-value">~8,9%</div>
+  </div>
+  <p class="bar-chart__caption">Tổng hợp từ <a class="source" href="https://pubmed.ncbi.nlm.nih.gov/12199140/" target="_blank" rel="noopener">Bonanno et al., JPSP 2002</a> và <a class="source" href="https://www.annualreviews.org/content/journals/10.1146/annurev-clinpsy-050718-095653" target="_blank" rel="noopener">Galatzer-Levy &amp; Bonanno, Annu Rev Clin Psychol 2018</a>. Đọc hình: gần 2/3 không rơi vào đau buồn trầm trọng ngay từ đầu; khoảng 1/5 rơi sâu rồi hồi phục; nhóm "mãn tính" (~10%) — nguy cơ tiến triển thành PGD — cần phát hiện và giúp đỡ chủ động.</p>
+</div>
+
+<!-- Checkpoint 5 -->
+<div class="checkpoint" data-checkpoint-id="cp-noi-buon-5">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Dùng "đồng hồ ba kim" (thời gian, cường độ, chức năng), hãy xếp loại ba tình huống: (a) khóc mỗi ngày sau 3 tháng nhưng vẫn đi làm; (b) sau 14 tháng vẫn không thể quay lại công việc, không gặp ai, nhớ nhung chiếm cả ngày; (c) buồn chán mất ngủ 3 tuần vì thất nghiệp, không liên quan mất người.</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>(a) Nỗi buồn lành — chức năng còn chạy, đau buồn còn trong phạm vi bình thường dù cường độ cao. (b) Nghi ngờ rối loạn đau buồn kéo dài (PGD): quá 12 tháng, cường độ không giảm, chức năng suy sụp — cần gặp chuyên gia sức khỏe tâm thần. (c) Bức tranh trầm cảm (mất hứng thú, không kèm mất người) — cần đánh giá trầm cảm, không phải chờ "hết đau buồn". Lưu ý: đây chỉ là phân loại sơ bộ để minh họa; chẩn đoán chính thức do chuyên gia thực hiện.</p>
+  </div>
+</div>
+
+<h3>Apply · Nghịch lý né tránh: càng tránh càng dai</h3>
+<p>Áp dụng ranh giới vào một cơ chế tâm lý tinh tế: <strong class="term-amp" data-note="amp-avoidance" tabindex="0">né tránh cảm xúc (experiential avoidance)</strong> — chủ động kìm nén, đổi chủ đề, "quên đi", không bao giờ cho phép mình buồn. Nghiên cứu lâm sàng cho thấy né tránh là yếu tố nguy cơ khiến đau buồn bình thường chuyển thành kéo dài <a class="source" href="https://psycnet.apa.org/record/2014-53322-001" target="_blank" rel="noopener">Nghiên cứu né tránh &amp; đau buồn, 2014</a>. Cơ chế: cảm xúc bị kìm thường không "đi qua" — nó trì hoãn công việc xử lý (chương 3) và tích tụ thành năng lượng đau kéo dài.</p>
+<p><strong>Thử nghiệm tư duy:</strong> một người mất vợ, cấm bản thân nhắc đến vợ, vứt hết ảnh, trả lời "tôi ổn" mỗi lần được hỏi. Theo đồng hồ ba kim, cường độ đau của anh ta có vẻ thấp — nhưng đó là <em>cường độ bị đè nén</em>, không phải giảm. Sau một năm, anh ta sụp đổ vì một cơn sóng không thể kìm. Trái lại, người cho phép mình buồn, khóc, kể chuyện — sẽ có kim cường độ <em>thật sự</em> giảm theo thời gian. Ranh giới của chương này không phải "đừng buồn" mà là "đừng cấm mình buồn — và đừng để nỗi buồn chiếm trọn đời mình".</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Vì sao "kìm nén nỗi buồn" có thể khiến nỗi buồn kéo dài hơn — không phải ngắn hơn?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">Vì xử lý mất mát cần nhịp dao động (đối diện + tái dựng). Né tránh cắt mất pha "đối diện" — nỗi buồn không được "làm xong" công việc tìm ý nghĩa, nên cứ quay lại như năng lượng chưa giải phóng. Kết quả: đau buồn kéo dài theo thời gian thay vì tan dần (nghịch lý: cho phép nỗi buồn tồn tại là điều kiện để nó rời đi).</div>
+    </div>
+  </div>
+</div>
+
+<h3>Boundary · Ranh giới văn hóa: "nén đau thương" không phải quy luật vũ trụ</h3>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Người Việt/người Á Đông vốn nhẫn nhịn, kìm cảm xúc là bình thường nên không sao."</strong> Nghiên cứu cho thấy <em>cách bày tỏ đau buồn khác nhau giữa văn hóa, nhưng nhu cầu xử lý mất mát thì giống nhau</em>. Chuẩn mực "节哀顺变" (tiết ai thuận biến — hãy nén đau thương để thuận theo biến cố) được nhà nghiên cứu Lưu Tân Hiến phê phán trực tiếp: nó gieo áp lực "không được buồn lâu" vào người đang cần nhất sự cho phép buồn <a class="source" href="https://www.bjnews.com.cn/detail/1751352471141006.html" target="_blank" rel="noopener">Tân Kinh Báo 2026</a>. Văn hóa có thể quy định <em>khi nào, ở đâu, với ai</em> ta khóc — nhưng không thể quy định nỗi buồn tồn tại hay không.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Trẻ em đau buồn khác người lớn.</strong> Trẻ thường đau buồn "theo đợt" — khóc dữ dội rồi lại đòi chơi, vì não trẻ chưa xử lý được mất mát liên tục. Điều này dễ bị người lớn đọc nhầm là "trẻ con không biết buồn" hoặc "vô tâm". Thực tế: trẻ cần sự cho phép, ngôn ngữ phù hợp tuổi, và nghi lễ riêng — không phải câu "con phải mạnh mẽ để mẹ yên lòng". Quỹ đạo mãn tính của trẻ em (mất cha mẹ) đặc biệt cần phát hiện sớm, nhất là nhóm 5,2 triệu trẻ mất cha/mẹ vì COVID <a class="source" href="https://pubmed.ncbi.nlm.nih.gov/35219404/" target="_blank" rel="noopener">Unwin et al., 2022</a>.</p>
+</div>
+
+<!-- Metacognitive prompt -->
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Predict</span>
+  <p>Trước chương cuối, hãy tự kiểm: dùng đồng hồ ba kim, hãy nghĩ về một nỗi buồn của chính bạn (hay của người bạn biết) — nó thuộc vùng nào? Bạn đang cần nhịp bơi–nghỉ, cần bờ xã hội, hay cần giúp đỡ chuyên môn?</p>
+</div>
+
+<h3>Fade · Tổng kết chương 5</h3>
+<p>Ranh giới giữa nỗi buồn lành và bệnh lý nằm ở <strong>đồng hồ ba kim</strong>: thời gian, cường độ, chức năng. Nỗi buồn lành dao động và nhạt dần; trầm cảm tắt nguồn cảm xúc khắp nơi; PGD (DSM-5-TR 2022) là sự kẹt quá 12 tháng khiến đời sống suy sụp — gặp ở khoảng 3–5% người đau buồn. Và nghịch lý quan trọng nhất của toàn bài: <strong>cho phép nỗi buồn tồn tại là điều kiện để nó rời đi</strong>.</p>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của chương này:</strong> đừng đo nỗi buồn bằng thời gian — hãy đo bằng việc nó có còn cho phép em sống tiếp không.
+</blockquote>
+<h2>Chương 6 · Sống chung với mất mát: từ mảnh ghép đến lối sống</h2>
+
+<p>Năm chương trước đã tách nỗi buồn ra từng mảnh ghép. Chương cuối này đặt chúng lại với nhau thành một lối sống: làm sao <strong>sống chung với mất mát</strong> — của mình và của người. Đây là chương "cầm lái": mọi hiểu biết trước đó sẽ trở thành bốn công cụ thực dụng, một bản đồ kết nối, và một câu trả lời cho câu hỏi cuối cùng: vì sao trái tim vỡ lại có thể lành theo cách của riêng nó.</p>
+
+<h3>Chỗ neo chương 6: Bờ không xóa biển, biển không phủ bờ</h3>
+<p>Tổng kết toàn bài trong một câu hình ảnh: <strong>đau buồn lành mạnh không phải là xóa biển, mà là học cách để bờ rộng ra cạnh một biển vẫn còn đó</strong>. Mọi mảnh ghép trước giờ chỉ là bản vẽ của câu đó: cơ thể (nước mắt là tín hiệu), tâm lý (dao động là nhịp), chức năng (nỗi buồn là phanh tay), ranh giới (đồng hồ ba kim). Giờ ta thực hành. Nếu chương 1 đặt câu hỏi "vì sao ta buồn?", chương 6 trả lời câu hỏi "rồi làm gì tiếp?"</p>
+
+<!-- Pre-mortem chương 6 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+  <p><span class="premortem__wrong">"Mục tiêu sau mất mát là 'quên đi' — khi nào không còn nhớ là khi ấy đã lành."</span></p>
+  <p>Điều này sai vì <em>lành không phải quên; và nghiên cứu về kỷ vật tiếp nối (continuing bonds) cho thấy giữ mối dây với người đã mất là phần lành mạnh của hồi phục</em>.</p>
+  <p><span class="premortem__truth">Điều thực sự đúng:</span> mục tiêu là <strong>đổi chất của mối dây</strong>: từ "có mặt" (hiện diện thân xác) sang "tiếp nối" (hiện diện trong ký ức, giá trị, câu chuyện). Bạn không quên mẹ — bạn học cách mang mẹ theo theo một cách mới không còn đau buốt.</p>
+</div>
+
+<h3>Construct · Bốn công cụ để bờ rộng ra</h3>
+
+<section class="scaffold" id="ch6-scaffold-1">
+  <h3 class="scaffold__concept">Công cụ 1: Nhịp "bơi–nghỉ" có chủ ý</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Thay vì để đau buồn tự dâng hạ ngẫu nhiên, người thực hành có thể <strong>lập lịch đối diện</strong>: dành một khoảng thời gian cố định trong ngày để "xuống nước" (viết nhật ký, xem ảnh, ngồi trước di ảnh), rồi chủ động "lên bờ" (làm việc, gặp người, đi bộ). Đây là kỹ thuật "đau buồn theo lịch" trong trị liệu nhận thức–hành vi <a class="source" href="https://scholar.uestc.edu.cn/article?d=98657" target="_blank" rel="noopener">Ứng dụng mô hình lưỡng xử lý, 2016</a>. Lịch trình cho phép não an toàn: biết "giờ buồn" có giới hạn nên không ngại xuống nước; biết có "giờ sống" nên tái dựng không bị tội.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Một người mất vợ đặt đồng hồ 8 giờ tối: 20 phút ngồi xem ảnh, khóc nếu muốn, viết ba dòng nhật ký — sau đó tắt đèn, đóng sổ, sang giờ đọc sách. Tuần đầu khóc cả 20 phút; tháng thứ ba chỉ còn vài giọt. Anh không "kìm" — anh sắp lịch. Điều này khác với "quên": nó là kiểm soát <em>cường độ</em> theo kiểu tự chọn liều lượng, đúng tinh thần dao động của Stroebe &amp; Schut.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Lập lịch buồn có phải là "kìm nén cảm xúc" không — vốn là thứ chương 5 cảnh báo?</summary>
+    <div class="scaffold__resolve"><p>Không. Kìm nén là <em>cấm</em> cảm xúc xuất hiện; lịch buồn là <em>chỉ định thời gian cho phép</em> cảm xúc xuất hiện. Khác biệt nằm ở thái độ: "giờ này mình không buồn" (trì hoãn có chủ đích, không cấm) vs "mình không được buồn" (cấm). Não phân biệt được hai lệnh này: lịch trình tạo khung an toàn, kìm nén tạo áp lực tích tụ.</p></div>
+  </details>
+</section>
+<div class="feynman">Đừng để nỗi buồn tự chọn giờ của nó — hãy chủ động cho nó một giờ, để phần còn lại của ngày thuộc về đời sống.</div>
+
+<section class="scaffold" id="ch6-scaffold-2">
+  <h3 class="scaffold__concept">Công cụ 2: Kể chuyện bằng kỷ vật tiếp nối</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Trái ngược với "quên đi", nghiên cứu hiện đại về <strong class="term-amp" data-note="amp-bonds" tabindex="0">kỷ vật tiếp nối (continuing bonds)</strong> cho thấy những hoạt động <em>giữ mối dây có ý thức</em> — viết thư cho người đã mất, làm món ăn họ thích, giữ nghi lễ ngày giỗ, làm việc thiện mang tên họ — hỗ trợ hồi phục chứ không cản trở <a class="source" href="https://psycnet.apa.org/record/1996-07007-001" target="_blank" rel="noopener">Klass, Silverman &amp; Nickman, 1996</a>. Đây là chuyển dịch lớn của ngành: từ "cắt dây" (giải quyết xong) sang "đổi chất dây" (tiếp nối).</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Người mẹ mất con duy nhất ở Trung Quốc tham gia nhóm "những người bạn cùng cảnh ngộ", kể chuyện về con, và cùng nhau làm từ thiện tại chính bệnh viện nơi con từng điều trị. Nghiên cứu đánh giá cho thấy nhóm này giúp giảm đáng kể triệu chứng đau buồn kéo dài so với không can thiệp <a class="source" href="https://www.sciscan.cn/article/3505276.html" target="_blank" rel="noopener">Can thiệp nhóm, 2025</a>. Người con không "ở lại trong quá khứ" — họ trở thành động lực trong hiện tại. Đó là mối dây đã đổi chất.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Làm sao phân biệt "kỷ vật tiếp nối lành mạnh" với "kẹt trong quá khứ" (PGD)?</summary>
+    <div class="scaffold__resolve"><p>Bằng đồng hồ ba kim (chương 5): kỷ vật tiếp nối <em>cho phép sống tiếp</em> — người vẫn làm việc, vẫn cười, vẫn có các mối quan hệ mới; mối dây là một phần của đời sống, không phải toàn bộ. Kẹt trong quá khứ <em>ngăn sống tiếp</em> — mọi thứ bị quy về người đã mất, chức năng suy sụp. Cùng hành động (xem ảnh mỗi tối) nhưng một bên là nguồn an ủi, một bên là nhà tù.</p></div>
+  </details>
+</section>
+<div class="feynman">Không ai yêu cầu em quên. Em chỉ cần đổi cách yêu: từ hiện diện thành tiếp nối.</div>
+
+<section class="scaffold" id="ch6-scaffold-3">
+  <h3 class="scaffold__concept">Công cụ 3: Ngôn ngữ mở cửa — câu hỏi thay cho lời trấn an</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">State</div>
+    <div class="scaffold__row-body"><p>Dành cho cả người đau buồn lẫn người bên cạnh: <strong>ngôn ngữ có sức mạnh mở hoặc đóng cửa</strong>. Lời trấn an rỗng ("mọi chuyện sẽ ổn", "thời gian chữa lành", "nén đau thương") đóng cửa. Câu hỏi mở ("bạn muốn kể về họ không?", "món gì làm bạn nhớ họ nhất?") mở cửa. Nhà nghiên cứu Lưu Tân Hiến nhấn mạnh: ở giai đoạn cấp tính, <strong>hành động cụ thể còn giá trị hơn lời nói</strong> — nấu cơm, giữ trẻ, lo giấy tờ <a class="source" href="https://www.bjnews.com.cn/detail/1751352471141006.html" target="_blank" rel="noopener">Tân Kinh Báo 2026</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Illustrate</div>
+    <div class="scaffold__row-body"><p>Khi bạn của bạn vừa mất mẹ, câu nói có giá trị nhất không phải "chia buồn cùng bạn" mà là: "Thứ bảy này mình qua nhé, mình nấu bữa cơm giúp bạn cho đỡ đau tay chân." Người đau buồn không cần triết lý — họ cần <em>ai đó đứng ở cửa biển giơ tay ra</em>. Và với người đau buồn: hãy học nói nhu cầu thật, thay vì "tôi ổn" — "mình vẫn chưa ổn, nhưng mình rất vui vì bạn ở đây" là một câu mở cửa cho chính mình.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>Nếu người đau buồn lặp đi lặp lại câu chuyện, có nên "đổi chủ đề cho đỡ buồn" không?</summary>
+    <div class="scaffold__resolve"><p>Đừng vội đổi chủ đề. Kể lại nhiều lần là cách não <em>xử lý</em> (chương 3): mỗi lần kể, câu chuyện được sắp xếp lại, ý nghĩa dần lắng. Nếu người kể muốn tiếp tục, hãy lắng nghe; chỉ khéo léo đề nghị "đi ra ngoài hít thở một lát" khi họ có dấu hiệu kiệt sức. Đổi chủ đề quá sớm giống như ngắt mạch của một quá trình đang chạy.</p></div>
+  </details>
+</section>
+<div class="feynman">Trước người đau buồn, hãy ít nói lời trấn an, nhiều hành động cụ thể, và luôn sẵn một câu hỏi mở.</div>
+
+<!-- Checkpoint 6 -->
+<div class="checkpoint" data-checkpoint-id="cp-noi-buon-6">
+  <span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+  <p class="checkpoint__question">Thiết kế "bờ" của riêng bạn: chọn một mất mát (hoặc nỗi buồn) cụ thể, và viết ra ba việc bạn sẽ làm tuần này — một việc thuộc nhịp đối diện, một việc thuộc tái dựng, một việc thuộc kỷ vật tiếp nối.</p>
+  <textarea placeholder="Viết câu trả lời bằng lời của bạn trước khi so với đáp án…"></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Expert answer</span>
+    <p>Ví dụ khung: Đối diện — dành 20 phút tối thứ Ba viết nhật ký về người đó (lịch buồn có chủ ý). Tái dựng — đặt lịch cà phê với một người bạn, tập lại thói quen thể dục (bận rộn có ý nghĩa, không phải trốn tránh). Kỷ vật tiếp nối — nấu món người đó thích và mời gia đình cùng ăn, hoặc viết một lá thư ngắn không gửi. Ba việc này chính là nhịp bơi–nghỉ + đổi chất mối dây trong một tuần.</p>
+  </div>
+</div>
+
+<h3>Apply · Bản đồ kết nối toàn bài</h3>
+<p>Ghép mọi mảnh ghép vào một tấm bản đồ duy nhất. Đây là bản đồ bạn có thể vẽ lại từ trí nhớ — và là bản đồ để trả lời "nỗi buồn là gì" cho bất kỳ ai.</p>
+
+<div class="concept-flow">
+  <div class="concept-flow__step"><span class="concept-flow__num">1</span><strong>Mất mát không thể đảo ngược</strong> → nỗi buồn bật lên (còi báo động)</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">2</span><strong>Thế giới giả định vỡ</strong> → bản đồ cũ hết hiệu lực ("trước/sau mất mát")</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">3</span><strong>Cơ thể báo tín hiệu</strong> → nước mắt + đau xã hội + chemosignal (kêu cứu)</div>
+</div>
+
+<div class="concept-flow">
+  <div class="concept-flow__step"><span class="concept-flow__num">4</span><strong>Tâm lý dao động</strong> → bơi (đối diện) ↔ nghỉ (tái dựng) = Mô hình Bờ biển</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">5</span><strong>Chức năng chạy</strong> → xử lý chi tiết + kết nối nhóm + xây bản đồ mới</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">6</span><strong>Ranh giới giữ nhịp</strong> → đồng hồ ba kim: lành khi dao động, bệnh khi kẹt (PGD) hay tắt (trầm cảm)</div>
+</div>
+
+<div class="concept-flow">
+  <div class="concept-flow__step"><span class="concept-flow__num">7</span><strong>Bờ rộng dần</strong> → lịch buồn + kỷ vật tiếp nối + ngôn ngữ mở cửa</div>
+</div>
+
+<p>Đọc bản đồ từ trên xuống: mất mát (1) phá bản đồ (2), cơ thể gào tín hiệu (3), tâm lý bắt nhịp dao động (4), chức năng chạy (5), ranh giới canh giữ (6), và cuối cùng — bờ rộng ra (7). Bất kỳ mắt xích nào bị bỏ trống (không cho khóc, bắt quên, cấm tìm ý nghĩa) đều làm cả dòng chảy nghẽn lại.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+    <div class="flip-card__face flip-card__front">
+      <span class="flip-card__label">Active recall — Question</span>
+      <div class="flip-card__content">Nhắm mắt vẽ lại bản đồ 7 bước của nỗi buồn. Nếu thiếu bước 4 (dao động), điều gì xảy ra cho toàn dòng chảy?</div>
+    </div>
+    <div class="flip-card__face flip-card__back">
+      <span class="flip-card__label">Answer</span>
+      <div class="flip-card__content">Bước 4 là nhịp trung tâm. Nếu thiếu: người kẹt mãi ở sóng (chìm đắm — chặn bước 5, dễ trượt sang PGD ở bước 6) hoặc kẹt mãi trên bờ (phủ nhận — tín hiệu bước 3 bị chặn, đau chuyển thành cơ thể). Bước 4 chính là "trái tim bơm" của cả hệ thống.</div>
+    </div>
+  </div>
+</div>
+
+<h3>Boundary · Ranh giới của "công cụ tự giúp"</h3>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Common misconception</span>
+  <p><strong>"Đọc được bài này là đủ, tự áp dụng là khỏi."</strong> Bốn công cụ là khởi đầu tốt cho nỗi buồn bình thường, nhưng <em>chúng không thay thế trị liệu chuyên nghiệp</em> khi kim "cường độ" không giảm và kim "chức năng" tụt. Người có nguy cơ PGD (khoảng 3–5%) cần nhà trị liệu được đào tạo về đau buồn — không phải vì họ yếu, mà vì cỗ máy cần thợ chuyên dụng.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Edge case</span>
+  <p><strong>Dấu hiệu khẩn cấp cần hành động ngay (không phải đợi 12 tháng):</strong> ý nghĩ tự tổn thương hoặc tự sát; không ăn uống được và sụt cân nhanh; mất ngủ hoàn toàn nhiều đêm; mất khả năng chăm sóc bản thân hoặc con cái; rượu/ma túy dùng để tê liệt nỗi đau. Gặp ngay chuyên gia sức khỏe tâm thần hoặc gọi đường dây hỗ trợ khủng hoảng. Bản đồ 7 bước là bản đồ — không phải cấm đường đến bác sĩ.</p>
+</div>
+
+<h3>Fade · Tổng kết toàn bài: cơ chế của trái tim vỡ</h3>
+<p>Toàn bộ khảo cứu này có thể cô lại trong một câu: <strong>nỗi buồn là cơ chế giúp trái tim vỡ tự lành — miễn là ta để nó làm việc</strong>. Nó báo mất mát (chương 1), gào tín hiệu bằng nước mắt (chương 2), dạy ta dao động giữa đối diện và tái dựng (chương 3), dừng xe để nhìn lại bản đồ (chương 4), và có ranh giới rõ ràng giữa lành và bệnh (chương 5). Khi ta ghép đủ các mảnh, thứ còn lại không phải một nỗi buồn vĩnh viễn — mà là một bờ rộng hơn bên cạnh một biển đã quen.</p>
+<p>Và đây là điều đẹp nhất mà khoa học về cảm xúc tìm thấy ở nỗi buồn: <strong>cái khiến trái tim vỡ ra cũng chính là thứ gắn nó lại</strong> — sự gắn bó sâu sắc. Nỗi buồn là cái giá của tình yêu, và cũng là lời xác nhận rằng tình yêu ấy là thật.</p>
+
+<!-- Final launch pad -->
+<div class="launchpad">
+  <span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+  <h3 class="launchpad__title">Cho phép nỗi buồn tồn tại — để nó rời đi</h3>
+  <p class="launchpad__problem">Nghịch lý của toàn bài: <em>cho phép nỗi buồn tồn tại là điều kiện để nó rời đi</em>. Nhưng làm sao biết mình đang "cho phép nỗi buồn tồn tại" một cách lành mạnh — chứ không phải đang nuôi dưỡng nó, hoặc đang dùng nó để tránh sống?</p>
+  <div class="launchpad__hints">
+    <span class="launchpad__hints-label">Stuck? Reveal a hint at a time.</span>
+    <button type="button" class="launchpad__reveal" id="hintBtn">Reveal hint 1 of 3</button>
+    <div class="launchpad__hint" data-hint="1">
+      <span class="launchpad__hint-label">Hint 1 — reframe</span>
+      Đừng hỏi "mình có đang buồn quá không?" — hãy hỏi "nỗi buồn của mình có đang ngăn mình sống tiếp không?" Đó là đổi từ đo <em>cảm xúc</em> sang đo <em>chức năng</em>.
+    </div>
+    <div class="launchpad__hint" data-hint="2">
+      <span class="launchpad__hint-label">Hint 2 — key concept</span>
+      Dùng đồng hồ ba kim (chương 5): thời gian, cường độ, chức năng. Cho phép đúng cách nghĩa là cường độ <em>nhạt dần theo thời gian</em> và chức năng <em>mở rộng dần</em>.
+    </div>
+    <div class="launchpad__hint" data-hint="3">
+      <span class="launchpad__hint-label">Hint 3 — setup</span>
+      Một bài kiểm thực dụng: trong 6 tháng qua, đời sống của bạn có thêm được gì không — mối quan hệ mới, sở thích mới, việc làm tốt hơn? Nếu câu trả lời là "có", bạn đang cho phép đúng. Nếu "không" và nỗi buồn đứng yên ở mức đỉnh, đó là tín hiệu để tìm bờ: bạn bè, gia đình, hoặc chuyên gia.
+    </div>
+  </div>
+</div>
+
+<blockquote>
+  <strong>Nhớ nếu chỉ nhớ một điều của toàn bài:</strong> biển không cần phải cạn để bờ rộng ra — và trái tim vỡ không cần phải quên để được lành.
+</blockquote>
+<!-- Glossary -->
+    <h2 id="glossary">Glossary</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Nỗi buồn</dt>
+        <dd>Cảm xúc được kích hoạt khi nhận ra một mất lược quan trọng và không thể đảo ngược — gồm trải nghiệm chủ quan, phản ứng cơ thể, xu hướng hành động và tín hiệu xã hội.</dd>
+        <dt>Mất mát không thể đảo ngược</dt>
+        <dd>Điều kiện kích hoạt nỗi buồn: không phải mối đe dọa phía trước (sợ hãi), không phải chướng ngại đang chặn (tức giận), mà là thứ đã biến mất và không thể lấy lại.</dd>
+        <dt>Thế giới giả định (assumptive world)</dt>
+        <dd>Bản đồ niềm tin ngầm trong đầu về cách thế giới vận hành; mất mát lớn đánh sập bản đồ này, khiến ta buồn vì cả người lẫn vì thế giới không còn khớp với bản đồ.</dd>
+        <dt>Mô hình lưỡng xử lý (dual-process model)</dt>
+        <dd>Mô hình của Stroebe &amp; Schut (1999): đau buồn lành là sự dao động giữa định hướng mất mát và định hướng tái dựng — hai quá trình đều cần, phải luân phiên.</dd>
+        <dt>Dao động (oscillation)</dt>
+        <dd>Nhịp qua lại giữa "đối diện nỗi đau" và "tạm nghỉ để tái dựng đời sống" — trái tim của việc xử lý mất mát theo mô hình lưỡng xử lý.</dd>
+        <dt>Định hướng mất lược</dt>
+        <dd>Pha của quá trình đau buồn khi ta khóc, nhớ lại, tìm ý nghĩa của cái chết — tương ứng với "bơi giữa biển" trong Mô hình Bờ biển.</dd>
+        <dt>Định hướng tái dựng</dt>
+        <dd>Pha khi ta lo giấy tờ, đi làm, nuôi con, học vai trò mới — tương ứng với "nghỉ trên bờ"; không phải trốn tránh mà là một nửa bắt buộc của nhịp dao động.</dd>
+        <dt>Đau xã hội (social pain)</dt>
+        <dd>Trải nghiệm "đau lòng" khi bị loại trừ hoặc mất gắn kết xã hội; vùng não xử lý (dorsal ACC) trùng với vùng xử lý đau thể chất — vì sao "đau lòng" là đau thật.</dd>
+        <dt>Chemosignal</dt>
+        <dd>Tín hiệu hóa học không mùi trong nước mắt cảm xúc; khi ngửi, làm giảm testosterone và hưng phấn ở người nhận (Gelstein, 2011) — một "ngôn ngữ hóa học" giữa người với người.</dd>
+        <dt>Nước mắt cảm xúc</dt>
+        <dd>Loại nước mắt chỉ loài người có, xuất hiện khi cảm xúc trào dâng; giàu protein hơn nước mắt nền/phản xạ và đóng vai trò tín hiệu xã hội kêu gọi hỗ trợ.</dd>
+        <dt>Né tránh cảm xúc (experiential avoidance)</dt>
+        <dd>Chủ động kìm nén, đổi chủ đề, "quên đi" để tránh đau — yếu tố nguy cơ khiến đau buồn bình thường chuyển thành kéo dài, vì nỗi buồn không được xử lý.</dd>
+        <dt>Rối loạn đau buồn kéo dài (PGD)</dt>
+        <dd>Chẩn đoán mới trong DSM-5-TR (2022, mã F43.81): sau ít nhất 12 tháng (trẻ em: 6 tháng) vẫn nhớ nhung khắc khoải hằng ngày, đau không nguôi, kèm suy giảm chức năng. Gặp ở ~3–5% người đau buồn.</dd>
+        <dt>Trầm cảm (major depression)</dt>
+        <dd>Trạng thái toàn diện: mất hứng thú, khí sắc trầm, rối loạn ngủ/ăn, mệt mỏi, kéo dài ≥2 tuần, không phụ thuộc có mất lược hay không — khác đau buồn ở chỗ "cỗ máy cảm xúc tắt nguồn".</dd>
+        <dt>Quỹ đạo kiên cường (resilience trajectory)</dt>
+        <dd>Một trong bốn quỹ đạo đau buồn: ~65% người không rơi vào đau buồn trầm trọng ngay từ đầu; các quỹ đạo còn lại gồm hồi phục (~21%), mãn tính (~11%), trì hoãn (~9%).</dd>
+        <dt>Kỷ vật tiếp nối (continuing bonds)</dt>
+        <dd>Cách nhìn hiện đại về hồi phục: không "cắt dây" với người đã mất mà "đổi chất dây" — giữ mối dây qua ký ức, giá trị, câu chuyện, nghi lễ, theo cách không còn đau buốt.</dd>
+        <dt>Xử lý thích ứng (accommodative processing)</dt>
+        <dd>Hiệu ứng của tâm trạng buồn được Forgas mô tả: nhớ chi tiết hơn, bớt thiên kiến, phán đoán chính xác hơn — nỗi buồn làm "phanh tay" để ta rà soát lại bản đồ.</dd>
+        <dt>Grief work</dt>
+        <dd>Khái niệm cổ điển (từ những năm 1940) coi đau buồn là một "công việc phải làm"; phiên bản hiện đại nhấn mạnh dao động và liều lượng thay vì ép đối diện toàn bộ.</dd>
+      </dl>
+    </div>
+
+    <!-- =====================================================
+         KNOWLEDGE CHECK (auto-graded quiz)
+         ===================================================== -->
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Knowledge check</h2>
+      <p class="quiz__intro">3 questions. Pick the best answer for each and click <em>Check answers</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Theo mô hình lưỡng xử lý (Stroebe &amp; Schut, 1999), đau buồn lành mạnh được mô tả đúng nhất bằng cách nào?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Trải qua 5 giai đoạn theo đúng thứ tự: phủ nhận → tức giận → mặc cả → trầm cảm → chấp nhận</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Dao động giữa đối diện mất mát và tái dựng đời sống, luân phiên giữa "bơi" và "nghỉ"</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Tập trung hoàn toàn vào bận rộn để nỗi buồn tự biến mất</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Kể lại câu chuyện càng nhiều càng tốt, càng nhanh càng lành</label>
+        <div class="quiz__explanation"><strong>Why:</strong> Lưỡng xử lý nhấn mạnh dao động giữa định hướng mất mát và định hướng tái dựng — ở mãi một cực nào cũng có hại. "5 giai đoạn" là mô tả xây từ bệnh nhân hấp hối, không phải trình tự cho người ở lại.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>2. Nhóm nghiên cứu nào minh họa "chức năng thích nghi" của nỗi buồn?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Forgas: khi buồn, con người xử lý chi tiết hơn, nhớ rõ hơn, ít bị thiên kiến hơn</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Eisenberger: khi buồn, mọi quyết định trở nên nhanh và táo bạo hơn</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Gelstein: nước mắt cảm xúc có tác dụng xoa dịu chính người khóc</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Frattaroli: khóc nhiều nhất định làm cơ thể thải độc và khỏe hơn</label>
+        <div class="quiz__explanation"><strong>Why:</strong> Forgas tìm thấy "xử lý thích ứng" — nỗi buồn bật chế độ rà soát chi tiết (phanh tay). Eisenberger nghiên cứu đau xã hội; Gelstein nghiên cứu tác động của nước mắt lên người nhận; khóc không tự động "thải độc" cải thiện tâm trạng.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>3. Khi nào đau buồn được coi là rối loạn đau buồn kéo dài (PGD) theo DSM-5-TR 2022?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Ngay khi người mất vẫn còn khóc mỗi ngày sau 1 tháng</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Khi người mất ngừng khóc hoàn toàn và không nhắc đến người đã khuất</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Sau ít nhất 12 tháng, nhớ nhung khắc khoải hằng ngày, đau không nguôi, kèm suy giảm chức năng sống rõ rệt</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Khi người mất có ý định tìm lại các đồ vật của người đã khuất để tưởng nhớ</label>
+        <div class="quiz__explanation"><strong>Why:</strong> PGD cần cả ba kim: thời gian &gt; 12 tháng (trẻ em 6 tháng), cường độ không giảm, chức năng suy sụp — không phải "khóc bao lâu" hay "có nhớ hay không". Gặp ở ~3–5% người đau buồn.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Check answers</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Reset</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <!-- Sources section -->
+    <h2 id="sources">Sources &amp; further reading</h2>
+    <p><a class="source" href="https://www.psychiatry.org/psychiatrists/practice/dsm" target="_blank" rel="noopener">APA</a> — American Psychiatric Association, 2022, "DSM-5-TR: Prolonged Grief Disorder (F43.81)".</p>
+    <p><a class="source" href="https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2022.1007356/full" target="_blank" rel="noopener">Frontiers Psychiatry</a> — 2022, "Prevalence of prolonged grief disorder (3,4%)."</p>
+    <p><a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11074153/" target="_blank" rel="noopener">PMC</a> — 2024, "PGD prevalence DSM-5-TR 4,7% / ICD-11 5,4% / ICD-11-6M 6,8%."</p>
+    <p><a class="source" href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(21)01253-8/fulltext" target="_blank" rel="noopener">The Lancet</a> — Hillis et al., 2021, "COVID-19 associated orphanhood ≥1,5 triệu trẻ trong 14 tháng đầu."</p>
+    <p><a class="source" href="https://pubmed.ncbi.nlm.nih.gov/35219404/" target="_blank" rel="noopener">Lancet Child &amp; Adolescent Health</a> — Unwin et al., 2022, "5,2 triệu trẻ mất cha/mẹ/caregiver vì COVID tính đến 10/2021 (76,5% mất cha)."</p>
+    <p><a class="source" href="https://www.science.org/doi/10.1126/science.1089134" target="_blank" rel="noopener">Science</a> — Eisenberger et al., 2003, "Does rejection hurt? An fMRI study of social exclusion (dACC)."</p>
+    <p><a class="source" href="https://www.science.org/doi/10.1126/science.1198331" target="_blank" rel="noopener">Science</a> — Gelstein et al., 2011, "Human tears contain a chemosignal."</p>
+    <p><a class="source" href="https://doi.org/10.1080/074811899201046" target="_blank" rel="noopener">Death Studies</a> — Stroebe &amp; Schut, 1999, "The dual process model of coping with bereavement."</p>
+    <p><a class="source" href="https://theconversation.com/denial-denial-of-the-five-stages-of-grief-95965" target="_blank" rel="noopener">The Conversation</a> — Haslam, 2018, "Denial, denial: the five stages of grief, examined."</p>
+    <p><a class="source" href="https://jamanetwork.com/journals/jama/fullarticle/207846" target="_blank" rel="noopener">JAMA</a> — Maciejewski et al., 2007, "An empirical examination of the stage theory of grief."</p>
+    <p><a class="source" href="https://pubmed.ncbi.nlm.nih.gov/12199140/" target="_blank" rel="noopener">JPSP</a> — Bonanno et al., 2002, "Resilience to loss and chronic grief."</p>
+    <p><a class="source" href="https://www.annualreviews.org/content/journals/10.1146/annurev-clinpsy-050718-095653" target="_blank" rel="noopener">Annu Rev Clin Psychol</a> — Galatzer-Levy &amp; Bonanno, 2018, "Grief trajectories: resilience, recovery, chronic, delayed."</p>
+    <p><a class="source" href="https://www.annualreviews.org/doi/10.1146/annurev-psych-113011-143822" target="_blank" rel="noopener">Annu Rev Psychol</a> — Forgas, 2013, "Sad mood and accommodative processing."</p>
+    <p><a class="source" href="https://www.sciencedirect.com/science/article/abs/pii/S0092656611000778" target="_blank" rel="noopener">Journal of Research in Personality</a> — Bylsma et al., 2011, "Crying and mood: 1004 episodes (only ~1/3 improved)."</p>
+    <p><a class="source" href="https://psycnet.apa.org/record/2006-03973-002" target="_blank" rel="noopener">Psychological Bulletin</a> — Frattaroli, 2006, "Experimental disclosure meta-analysis (r ≈ 0,075)."</p>
+    <p><a class="source" href="https://web.stanford.edu/group/mood/gotlib_pdfs/rottenberg_wilhelm_gotlib_2002.pdf" target="_blank" rel="noopener">J Abnorm Psychol</a> — Rottenberg, Wilhelm &amp; Gotlib, 2002, "Emotional reactivity in depression (blunted responses)."</p>
+    <p><a class="source" href="https://www.bbc.com/zhongwen/articles/cly9k7qdd4vo/simp" target="_blank" rel="noopener">BBC 中文</a> — 2026, "Khoa học về nước mắt: ba loại nước mắt, Vingerhoets 'dấu chấm than', Bylsma giao cảm→phó giao cảm."</p>
+    <p><a class="source" href="https://www.bjnews.com.cn/detail/1751352471141006.html" target="_blank" rel="noopener">Tân Kinh Báo (新京报)</a> — 2026, "Phỏng vấn Lưu Tân Hiến: '哀伤是爱的代价', bức tường thủy tinh, phê phán 节哀顺变."</p>
+    <p><a class="source" href="https://www.huxiu.com/article/4204728.html" target="_blank" rel="noopener">Hổ Sủy (虎嗅)</a> — 2025, "Lý Vân Diệu《与哀伤共处》— 'cái chết không phải mưa rào, mà một đời ẩm ướt'; 9 người/ca tử vong (Cambridge 2020)."</p>
+    <p><a class="source" href="https://www.yicai.com/news/102591858.html" target="_blank" rel="noopener">Đệ Nhất Tài Kinh (第一财经)</a> — 2025, "Người trẻ mất cha mẹ: 3,4–11%, thích nghi trung bình ~2 năm."</p>
+    <p><a class="source" href="https://www.thepaper.cn/newsDetail_forward_30252547" target="_blank" rel="noopener">Bằng Chấn (澎湃)</a> — 2025, "PGD và gia đình MH370: đau buồn không có nghi thức kết thúc."</p>
+    <p><a class="source" href="https://www.163.com/dy/article/FKNM76QE0542LLHE.html" target="_blank" rel="noopener">Võng Dịch (网易)</a> — 2020, "Thế giới giả định, 'đời chia hai', Bowlby–Parkes phản kháng/cam chịu, nucleus accumbens."</p>
+    <p><a class="source" href="https://www.sciscan.cn/article/3505276.html" target="_blank" rel="noopener">SCISCAN</a> — 2025, "Cha mẹ 失独: ~92% mất ý nghĩa (Thẩm Trường Nguyệt, 2016); can thiệp nhóm 18 người giảm PGD."</p>
+    <p><a class="source" href="https://scholar.uestc.edu.cn/article?d=98657" target="_blank" rel="noopener">ĐH Khoa học Kỹ thuật Điện tử Trung Quốc</a> — 2016, "Ứng dụng mô hình lưỡng xử lý &amp; 4 nhiệm vụ Worden trong tư vấn đau buồn."</p>
+    <p><a class="source" href="http://health.people.cn/n1/2023/1212/c14739-40136839.html" target="_blank" rel="noopener">Nhân Dân nhật báo (人民网)</a> — 2023, "Nước mắt cảm xúc giàu protein (Frey) — phân tích sinh hóa."</p>
+    <p><a class="source" href="https://health.udn.com/health/story/8137/9174631" target="_blank" rel="noopener">UDN</a> — 2025, "有田秀穂 'khóc cuối tuần': oxytocin, phó giao cảm (khoa học phổ biến)."</p>
+
+    <div class="footer">
+      <p>Keyboard: <span class="kbd">J</span>/<span class="kbd">K</span> scroll · <span class="kbd">F</span> focus mode · <span class="kbd">T</span> theme · <span class="kbd">P</span> print</p>
+    </div>
+
+  </main>
+
+  <!-- =========================================================
+       RIGHT — MARGINALIA (sidenotes)
+       ========================================================= -->
+  <aside class="marginalia" aria-label="Sidenotes">
+
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Term amplifier</span>
+      <p class="amplifier__empty">Hover a <span style="border-bottom:1px dashed var(--accent2)">dashed</span> term in the main text to expand it here.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="amp-assumptive">
+        <span class="amplifier__term">Thế giới giả định</span>
+        <p class="amplifier__body">Khái niệm của Parkes: mỗi người mang một bản đồ niềm tin ngầm — người thân còn ở đây, thế giới an toàn, ngày mai giống hôm nay. Mất mát lớn đánh sập bản đồ; nỗi buồn không chỉ là nhớ người, mà là thế giới đột ngột hết khớp với bản đồ. Đó là lý do câu "đời chia làm hai — trước và sau mất lược" lại chạm đến vậy.</p>
+      </div>
+      <div data-note-id="amp-socialpain">
+        <span class="amplifier__term">Đau xã hội</span>
+        <p class="amplifier__body">Nghiên cứu Eisenberger (Science 2003): bị loại khỏi một trò chơi ném bóng kích hoạt vỏ não đai trước (dorsal ACC) — vùng quen thuộc với đau thể chất. Vì về mặt tiến hóa, bị tách khỏi nhóm nguy hiểm như bị thương, não "mượn" mạch đau để cảnh báo. "Đau lòng", "hurt feelings" không phải ẩn dụ — chúng là mô tả gần chữ.</p>
+      </div>
+      <div data-note-id="amp-chemosignal">
+        <span class="amplifier__term">Chemosignal</span>
+        <p class="amplifier__body">Tín hiệu hóa học không mùi phát ra từ nước mắt cảm xúc. Gelstein và cộng sự (Science 2011): nam giới ngửi nước mắt phụ nữ (thu khi họ khóc vì phim buồn) có testosterone và hưng phấn giảm, hoạt động não vùng khoái cảm giảm — như một "ngôn ngữ hóa học" làm dịu người ở gần, tăng khả năng được chăm sóc.</p>
+      </div>
+      <div data-note-id="amp-dpm">
+        <span class="amplifier__term">Mô hình lưỡng xử lý</span>
+        <p class="amplifier__body">Stroebe &amp; Schut (1999): đau buồn lành là dao động giữa định hướng mất mát (khóc, nhớ, tìm ý nghĩa) và định hướng tái dựng (làm việc, nuôi con, vai trò mới). Cả hai đều cần và phải luân phiên; tác giả gọi nghịch lý này là "liều lượng" — đau buồn như thuốc, đúng liều thì lành, quá liều thì ngộ độc.</p>
+      </div>
+      <div data-note-id="amp-pgd">
+        <span class="amplifier__term">Đau buồn kéo dài (PGD)</span>
+        <p class="amplifier__body">Chẩn đoán mới của DSM-5-TR (2022, F43.81): sau ≥12 tháng (trẻ em 6 tháng) vẫn nhớ nhung khắc khoải hằng ngày, đau không nguôi, kèm suy giảm chức năng rõ rệt. Gặp ở ~3–5% người đau buồn. Phân biệt với "nhớ lâu": PGD độc chiếm mọi mảnh đời còn lại — không giống người bình thường nhớ trong dao động, vẫn sống tiếp được.</p>
+      </div>
+      <div data-note-id="amp-bonds">
+        <span class="amplifier__term">Kỷ vật tiếp nối</span>
+        <p class="amplifier__body">Hướng tiếp cận hiện đại (Klass, Silverman &amp; Nickman, 1996): hồi phục không phải "cắt dây" với người đã mất mà "đổi chất dây" — từ hiện diện thân xác sang hiện diện trong ký ức, giá trị, nghi lễ. Viết thư, làm món họ thích, giữ ngày giỗ: những hoạt động này hỗ trợ hồi phục chứ không cản trở.</p>
+      </div>
+      <div data-note-id="amp-avoidance">
+        <span class="amplifier__term">Né tránh cảm xúc</span>
+        <p class="amplifier__body">Chủ động kìm nén, đổi chủ đề, "quên đi", "tôi ổn" — mỗi lần tránh, nỗi buồn không được xử lý và tích tụ thành đau kéo dài. Nghịch lý của bài này: cho phép nỗi buồn tồn tại là điều kiện để nó rời đi; kìm nén làm nó ở lại lâu hơn.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Sidenote 1</strong>
+      "节哀顺变" (tiết ai thuận biến — hãy nén đau thương để thuận theo biến cố) là câu chia buồn quen thuộc của người Trung Quốc, gần với "nén đau thương" của người Việt. Nhà nghiên cứu Lưu Tân Hiến phê phán trực tiếp: nó gieo áp lực "không được buồn lâu" vào người đang cần nhất sự cho phép được buồn. Văn hóa quy định khi nào, ở đâu, với ai ta khóc — nhưng không thể quy định nỗi buồn tồn tại hay không.
+    </div>
+    <div class="sidenote">
+      <strong>Sidenote 2</strong>
+      Đại dịch COVID để lại một di sản đau buồn khổng lồ: ≥1,5 triệu trẻ em mất cha/mẹ/caregiver trong 14 tháng đầu (Hillis, Lancet 2021), lên 5,2 triệu tính đến 10/2021 (Unwin, 2022). Mỗi ca tử vong ảnh hưởng sâu đến ~9 người (Cambridge, 2020). Nhiều người chết không được tiễn đưa — thiếu nghi lễ nghĩa là thiếu cả "bờ" đầu tiên để bấu vào.
+    </div>
+    <div class="sidenote">
+      <strong>Historical trivia</strong>
+      Câu "thời gian chữa lành mọi vết thương" xuất hiện trong văn hóa dân gian nhiều nền văn hóa, nhưng khoa học từ những năm 1940 (khái niệm "grief work") đảo ngược: thời gian không tự chữa — <em>cách ta dùng thời gian</em> mới chữa. Và mô hình "5 giai đoạn" của Kübler-Ross (1969) vốn được xây từ bệnh nhân hấp hối, không phải từ người ở lại — nó là câu chuyện kể hay, không phải bản đồ đau buồn.
+    </div>
+  </aside>
+
+</div>
+
+<!-- Floating controls -->
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Focus mode (F)" aria-label="Toggle focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Theme (T)" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</div>
+<script>
+/* ============================================================
+   PERSISTENCE — theme + reading position + quiz state
+   Uses localStorage. This file is saved to disk and opened
+   directly in a browser, so localStorage is available.
+============================================================ */
+const STORAGE_KEY = 'edu-notes:' + (document.title || 'untitled');
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY + ':' + k)); }catch{ return null; } },
+  set(k,v){ try{ localStorage.setItem(STORAGE_KEY + ':' + k, JSON.stringify(v)); }catch{} },
+};
+
+/* ============================================================
+   THEME
+============================================================ */
+(function initTheme(){
+  const saved = store.get('theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  store.set('theme', next);
+});
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function initFocus(){
+  if(store.get('focus')) document.body.classList.add('focus-mode');
+})();
+document.getElementById('focusBtn').addEventListener('click', () => {
+  document.body.classList.toggle('focus-mode');
+  const on = document.body.classList.contains('focus-mode');
+  document.getElementById('focusBtn').setAttribute('data-active', on ? 'true' : 'false');
+  store.set('focus', on);
+});
+
+/* ============================================================
+   TABLE OF CONTENTS — auto-generate from h2/h3
+============================================================ */
+(function buildTOC(){
+  const canvas = document.getElementById('canvas');
+  const toc = document.getElementById('toc');
+  const headings = canvas.querySelectorAll('h2, h3');
+  headings.forEach(h => {
+    if(!h.id){
+      h.id = h.textContent.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g,'')
+        .trim().replace(/\s+/g,'-').slice(0,60);
+    }
+    const li = document.createElement('li');
+    if(h.tagName === 'H3') li.className = 'toc-l3';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+})();
+
+/* ============================================================
+   INTERSECTION OBSERVER — highlight current section
+============================================================ */
+(function initObserver(){
+  const links = document.querySelectorAll('.toc a');
+  const map = new Map();
+  links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = map.get(e.target.id);
+      if(!link) return;
+      if(e.isIntersecting){
+        document.querySelectorAll('.toc a.is-active').forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  document.querySelectorAll('#canvas h2, #canvas h3').forEach(h => observer.observe(h));
+})();
+
+/* ============================================================
+   PROGRESS BAR + reading position restore
+============================================================ */
+(function initProgress(){
+  const fill = document.getElementById('progressFill');
+  function update(){
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    fill.style.width = pct + '%';
+    store.set('scroll', scrolled);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  // Restore prior position after a beat so layout settles
+  const saved = store.get('scroll');
+  if(typeof saved === 'number' && saved > 100){
+    setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 60);
+  }
+})();
+
+/* ============================================================
+   FLIP CARDS — click + keyboard support
+============================================================ */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+  card.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      card.classList.toggle('is-flipped');
+    }
+  });
+});
+
+/* ============================================================
+   QUIZ — auto grade + persist
+============================================================ */
+(function initQuiz(){
+  const quiz = document.getElementById('quiz');
+  if(!quiz) return;
+  const check = document.getElementById('quizCheck');
+  const reset = document.getElementById('quizReset');
+  const score = document.getElementById('quizScore');
+
+  // Restore prior answers
+  const prior = store.get('quiz') || {};
+  Object.entries(prior).forEach(([name, val]) => {
+    const input = quiz.querySelector(`input[name="${name}"][value="${val}"]`);
+    if(input) input.checked = true;
+  });
+
+  quiz.addEventListener('change', () => {
+    const state = {};
+    quiz.querySelectorAll('input[type=radio]:checked').forEach(i => state[i.name] = i.value);
+    store.set('quiz', state);
+  });
+
+  check.addEventListener('click', () => {
+    let correct = 0, total = 0;
+    quiz.querySelectorAll('fieldset').forEach(fs => {
+      const answer = parseInt(fs.dataset.answer, 10);
+      const selected = fs.querySelector('input:checked');
+      total++;
+      // Reset styling on all options first
+      fs.querySelectorAll('.quiz__option').forEach(o => {
+        o.classList.remove('correct-answer','incorrect-answer');
+      });
+      // Mark the correct one green
+      const correctOption = fs.querySelector(`input[value="${answer}"]`);
+      if(correctOption) correctOption.closest('.quiz__option').classList.add('correct-answer');
+      // If the user picked wrong, mark theirs red
+      if(selected && parseInt(selected.value, 10) !== answer){
+        selected.closest('.quiz__option').classList.add('incorrect-answer');
+      }
+      if(selected && parseInt(selected.value, 10) === answer) correct++;
+    });
+    quiz.classList.add('is-graded');
+    const pct = Math.round((correct / total) * 100);
+    let msg = `${correct} / ${total} correct (${pct}%)`;
+    if(pct === 100) msg += ' — 🎯 nailed it';
+    else if(pct >= 66) msg += ' — solid';
+    else msg += ' — worth another pass through the boundaries section';
+    score.textContent = msg;
+  });
+
+  reset.addEventListener('click', () => {
+    quiz.querySelectorAll('input[type=radio]').forEach(i => i.checked = false);
+    quiz.querySelectorAll('.quiz__option').forEach(o => o.classList.remove('correct-answer','incorrect-answer'));
+    quiz.classList.remove('is-graded');
+    score.textContent = '';
+    store.set('quiz', {});
+  });
+})();
+
+/* ============================================================
+   KEYBOARD SHORTCUTS
+============================================================ */
+document.addEventListener('keydown', e => {
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  switch(e.key.toLowerCase()){
+    case 'j': window.scrollBy({ top: 200, behavior: 'smooth' }); break;
+    case 'k': window.scrollBy({ top: -200, behavior: 'smooth' }); break;
+    case 'f': document.getElementById('focusBtn').click(); break;
+    case 't': document.getElementById('themeBtn').click(); break;
+    case 'p': window.print(); break;
+  }
+});
+
+/* ============================================================
+   PHASE ORBIT — light up phase nodes as reader scrolls;
+   clicking a node smooth-scrolls to that phase.
+============================================================ */
+(function initOrbit(){
+  const nodes = Array.from(document.querySelectorAll('.orbit__node'));
+  if(!nodes.length) return;
+  const reached = new Set(store.get('reached') || []);
+  // Restore already-reached state
+  nodes.forEach(n => {
+    if(reached.has(n.dataset.target)) n.setAttribute('data-reached','true');
+  });
+  // Click to jump
+  nodes.forEach(n => {
+    n.addEventListener('click', () => {
+      const target = document.getElementById(n.dataset.target);
+      if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+  // Observe each phase heading; mark reached + active on entry
+  const targets = nodes.map(n => document.getElementById(n.dataset.target)).filter(Boolean);
+  if(!targets.length) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const node = nodes.find(n => n.dataset.target === e.target.id);
+      if(!node) return;
+      if(e.isIntersecting){
+        node.setAttribute('data-reached','true');
+        reached.add(e.target.id);
+        store.set('reached', Array.from(reached));
+        nodes.forEach(n => n.removeAttribute('data-active'));
+        node.setAttribute('data-active','true');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  targets.forEach(t => observer.observe(t));
+})();
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER — hover .term-amp[data-note] → fill #amplifier
+============================================================ */
+(function initAmplifier(){
+  const amp = document.getElementById('amplifier');
+  const pool = document.getElementById('ampNotes');
+  if(!amp || !pool) return;
+  const emptyHtml = amp.innerHTML;
+  let currentId = null;
+
+  function show(id){
+    if(id === currentId) return;
+    const note = pool.querySelector(`[data-note-id="${id}"]`);
+    if(!note) return;
+    currentId = id;
+    amp.innerHTML = '<span class="amplifier__label">Term amplifier</span>' + note.innerHTML;
+    // Mark the corresponding term active
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+    document.querySelectorAll(`.term-amp[data-note="${id}"]`).forEach(t => t.classList.add('is-active'));
+  }
+  function reset(){
+    currentId = null;
+    amp.innerHTML = emptyHtml;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+  }
+
+  document.querySelectorAll('.term-amp[data-note]').forEach(t => {
+    t.addEventListener('mouseenter', () => show(t.dataset.note));
+    t.addEventListener('focus', () => show(t.dataset.note));
+    t.setAttribute('tabindex','0');
+  });
+  const canvas = document.getElementById('canvas');
+  if(canvas){
+    canvas.addEventListener('mouseleave', reset);
+  }
+})();
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINTS — textarea persistence + Compare to Expert
+============================================================ */
+(function initCheckpoints(){
+  document.querySelectorAll('.checkpoint').forEach(cp => {
+    const id = cp.dataset.checkpointId;
+    const ta = cp.querySelector('textarea');
+    const savedLabel = cp.querySelector('[data-checkpoint-saved]');
+    const revealBtn = cp.querySelector('[data-checkpoint-reveal]');
+    if(!id || !ta) return;
+
+    // Restore prior answer
+    const prior = store.get('cp:' + id);
+    if(prior){ ta.value = prior; if(savedLabel) savedLabel.textContent = 'Saved'; }
+
+    // Persist as user types (debounced)
+    let t;
+    ta.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        store.set('cp:' + id, ta.value);
+        if(savedLabel) savedLabel.textContent = 'Saved';
+      }, 400);
+    });
+
+    if(revealBtn){
+      revealBtn.addEventListener('click', () => {
+        cp.classList.toggle('is-revealed');
+        revealBtn.textContent = cp.classList.contains('is-revealed')
+          ? 'Hide expert answer'
+          : 'Compare to expert answer';
+      });
+    }
+  });
+})();
+
+/* ============================================================
+   LAUNCH PAD — progressive hint reveal
+============================================================ */
+(function initLaunchpad(){
+  const btn = document.getElementById('hintBtn');
+  if(!btn) return;
+  const hints = Array.from(document.querySelectorAll('.launchpad__hint'));
+  const total = hints.length;
+  let shown = 0;
+
+  // Restore prior state
+  const prior = parseInt(store.get('hints') || 0, 10);
+  for(let i=0; i<prior && i<total; i++){
+    hints[i].classList.add('is-visible');
+    shown = i + 1;
+  }
+  updateBtn();
+
+  btn.addEventListener('click', () => {
+    if(shown >= total) return;
+    hints[shown].classList.add('is-visible');
+    shown++;
+    store.set('hints', shown);
+    updateBtn();
+  });
+
+  function updateBtn(){
+    if(shown >= total){
+      btn.textContent = 'All hints revealed';
+      btn.disabled = true;
+    } else {
+      btn.textContent = `Reveal hint ${shown + 1} of ${total}`;
+    }
+  }
+})();
+</script>
+</body>
+</html>
