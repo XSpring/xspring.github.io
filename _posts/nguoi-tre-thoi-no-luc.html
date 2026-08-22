@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thời Ngừng Nỗ Lực — Một bài luận hiển hiện học</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FDFBF7; --fg:#292524;
+  --crisis:#9F1239;
+  --reveal:#0369A1;
+  --muted:#78716C;
+  --correct:#166534;
+  --vector-bridge:#D97706;
+  --sense-tactile:#92400E;
+  --sense-auditory:#1D4ED8;
+  --sense-visual:#4ADE80;
+  --sense-olfactory:#A855F7;
+  --sense-thermal:#DC2626;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Lora',Georgia,serif;
+  color:var(--fg);
+  background-color:var(--bg);
+  transition:background-color .6s ease;
+  line-height:1.8;
+}
+body.bg-bracket{background-color:#E5E7EB;}
+body.bg-hook{background-color:#FDFBF7;}
+body.bg-crisis{background-color:#F4EDE4;}
+body.bg-reveal{background-color:#F0F5FA;}
+body.bg-vision{background-color:#FDFBF7;}
+body.bg-essence{background-color:#1E1B4B;}
+
+/* ---------- Layout ---------- */
+.frame{
+  display:grid;
+  grid-template-columns:60px minmax(0,720px) 300px;
+  justify-content:center;
+  gap:40px;
+  padding:0 16px;
+}
+
+/* ---------- Compass rail ---------- */
+.compass{
+  position:sticky;top:0;height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;
+}
+.compass a{
+  text-decoration:none;font-size:17px;line-height:1;
+  filter:grayscale(1);opacity:.35;
+  transition:all .25s ease;display:block;
+  padding:4px;border-radius:6px;
+}
+.compass a:hover{opacity:.75;}
+.compass a.active{filter:none;opacity:1;transform:scale(1.28);}
+.compass a.active[data-for="crisis"]{background:rgba(159,18,57,.12);}
+.compass a.active[data-for="reveal"],.compass a.active[data-for="witness"]{background:rgba(3,105,161,.14);}
+
+/* ---------- Editorial stage ---------- */
+#stage{max-width:65ch;padding:72px 0 120px;}
+section.act{padding:48px 0;}
+
+/* Drop cap */
+.dropcap::first-letter{
+  float:left;font-size:4.4em;line-height:.82;
+  padding-right:.09em;font-weight:600;color:var(--crisis);
+  font-family:'Lora',serif;
+}
+
+p{margin-bottom:1.35em;}
+blockquote{
+  border-left:3px solid var(--crisis);
+  padding:.35em 0 .35em 1.4em;margin:1.8em 0;
+  font-style:italic;color:#44403C;
+}
+h2{
+  font-size:1.05rem;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:1.6em;font-weight:600;
+}
+.act-hook h2,.act-crisis h2{color:var(--crisis);font-family:'Inter',sans-serif;}
+.act-reveal h2,.act-witness h2,.act-vision h2{color:var(--reveal);font-family:'Inter',sans-serif;}
+h3{
+  font-family:'Inter',sans-serif;font-size:1.02rem;
+  margin:2.4em 0 .9em;color:#0F172A;font-weight:600;
+}
+h3 .num{color:var(--reveal);margin-right:.5em;}
+
+/* ---------- Sensory spans ---------- */
+.sensory{cursor:help;}
+.sensory-tactile{text-shadow:0 0 .6px var(--sense-tactile);border-bottom:1px dotted var(--sense-tactile);}
+.sensory-auditory{text-shadow:0 0 .6px var(--sense-auditory);border-bottom:1px dotted var(--sense-auditory);}
+.sensory-visual{text-shadow:0 0 .6px var(--sense-visual);border-bottom:1px dotted var(--sense-visual);}
+.sensory-olfactory{text-shadow:0 0 .6px var(--sense-olfactory);border-bottom:1px dotted var(--sense-olfactory);}
+.sensory-thermal{text-shadow:0 0 .6px var(--sense-thermal);border-bottom:1px dotted var(--sense-thermal);}
+
+/* ---------- X-Ray ---------- */
+.xray-btn{
+  position:sticky;top:14px;z-index:40;float:right;
+  font-family:'Inter',sans-serif;font-size:.68rem;letter-spacing:.08em;
+  background:#fff;border:1px solid #D6D3D1;border-radius:999px;
+  padding:7px 14px;color:var(--reveal);cursor:pointer;
+  box-shadow:0 1px 4px rgba(0,0,0,.06);
+}
+body.xray-on .xray-btn{background:var(--reveal);color:#fff;border-color:var(--reveal);}
+.xray{border-bottom:none;transition:background .25s;}
+body.xray-on .xray{
+  background:rgba(3,105,161,.10);
+  border-bottom:1px dashed var(--reveal);
+  cursor:help;position:relative;
+}
+body.xray-on .xray:hover::after{
+  content:attr(data-arch);
+  position:absolute;left:50%;bottom:130%;transform:translateX(-50%);
+  background:#0F172A;color:#E0F2FE;font-family:'Inter',sans-serif;
+  font-size:.72rem;line-height:1.5;white-space:nowrap;
+  padding:6px 10px;border-radius:6px;z-index:50;
+  box-shadow:0 4px 14px rgba(0,0,0,.25);
+}
+
+/* ---------- Epoché ---------- */
+.epoche-btn{
+  font-family:'Inter',sans-serif;font-size:.68rem;letter-spacing:.08em;
+  background:transparent;border:1px dashed #A8A29E;border-radius:999px;
+  padding:7px 14px;color:var(--muted);cursor:pointer;margin-top:8px;
+}
+.epoche-btn:hover{color:var(--fg);border-color:#57534E;}
+.bracket-case{
+  display:none;
+  border:1.5px dashed #9CA3AF;border-radius:12px;
+  background:rgba(255,255,255,.55);backdrop-filter:blur(4px);
+  padding:32px;margin:20px 0 8px;
+  font-family:'Inter',sans-serif;font-size:.88rem;line-height:1.85;color:#374151;
+}
+.bracket-case .tag{
+  font-size:.66rem;letter-spacing:.16em;color:#6B7280;
+  display:block;margin-bottom:1em;
+}
+body.epoche-open .bracket-case{display:block;}
+body.epoche-open #hook,body.epoche-open #crisis{opacity:.15;pointer-events:none;}
+#hook,#crisis{transition:opacity .5s ease;}
+body.epoche-open .epoche-open-label{display:inline;}
+.epoche-open-label{display:none;font-family:'Inter',sans-serif;font-size:.68rem;color:#6B7280;}
+
+/* ---------- Epiphanic pivot ---------- */
+.pivot{
+  border:none;height:56px;margin:64px 0;
+  background:linear-gradient(to right,transparent,var(--crisis) 30%,var(--reveal) 70%,transparent);
+  opacity:.55;
+}
+.reveal-body{font-family:'Inter',sans-serif;font-size:.95rem;line-height:1.95;}
+.reveal-body p{color:#1E293B;}
+
+/* ---------- Hero pipeline ---------- */
+.pipeline{
+  display:flex;align-items:stretch;gap:0;
+  margin:2.6em 0;flex-wrap:wrap;
+}
+.pipe-step{
+  flex:1 1 160px;min-width:150px;
+  border:1px solid #BAE6FD;border-radius:10px;
+  background:#F8FAFC;padding:16px 14px;
+  position:relative;
+}
+.pipe-step + .pipe-step{margin-left:34px;}
+.pipe-step + .pipe-step::before{
+  content:"→";
+  position:absolute;left:-27px;top:50%;transform:translateY(-50%);
+  color:var(--reveal);font-weight:600;font-size:1.1rem;
+}
+.pipe-step .pt{
+  font-size:.66rem;letter-spacing:.14em;color:var(--reveal);
+  display:block;margin-bottom:6px;font-weight:600;
+}
+.pipe-step .pd{font-size:.82rem;color:#334155;line-height:1.6;}
+.pipe-final{
+  margin-top:14px;text-align:center;
+  font-family:'Inter',sans-serif;font-weight:600;color:#0F172A;font-size:.92rem;
+  letter-spacing:.04em;
+}
+
+/* ---------- Witness ---------- */
+.vector-band{
+  height:3px;width:100%;margin:70px 0 0;
+  background:linear-gradient(to right,transparent,var(--vector-bridge),transparent);
+}
+.vector-mark{
+  display:block;text-align:center;margin-top:14px;
+  font-size:.72rem;letter-spacing:.18em;color:var(--vector-bridge);
+  font-family:'Inter',sans-serif;
+}
+
+/* ---------- Vision ---------- */
+.stat-strip{
+  display:flex;gap:14px;flex-wrap:wrap;margin:2em 0;
+}
+.stat{
+  flex:1 1 150px;border-left:3px solid var(--reveal);
+  padding:4px 0 4px 14px;
+}
+.stat b{display:block;font-size:1.35rem;color:#0F172A;font-weight:600;line-height:1.3;}
+.stat span{font-size:.74rem;color:var(--muted);line-height:1.5;display:block;margin-top:4px;}
+.src{font-size:.72rem;color:var(--muted);font-style:normal;}
+
+/* ---------- Essence gate ---------- */
+#essence{
+  color:#C7D2FE;
+  opacity:0;filter:blur(10px);
+  transition:opacity .8s ease,filter .8s ease;
+}
+#essence.shown{opacity:1;filter:blur(0);}
+#essence .tag{
+  font-family:'Inter',sans-serif;font-size:.68rem;letter-spacing:.22em;
+  display:block;margin-bottom:1.6em;color:#818CF8;
+}
+#essence p{font-size:1.18rem;line-height:2;color:#C7D2FE;font-style:italic;}
+
+/* ---------- Mapper ---------- */
+.mapper{
+  position:sticky;top:0;height:100vh;overflow:hidden;
+  padding-top:72px;
+}
+.mapper-card{
+  font-family:'Inter',sans-serif;font-size:.76rem;line-height:1.75;
+  color:var(--muted);
+  border-top:1px solid #E7E5E4;padding:14px 0 18px;
+}
+.mapper-card .mk{
+  font-size:.62rem;letter-spacing:.14em;color:#A8A29E;display:block;margin-bottom:5px;
+}
+.mapper-card strong{color:#57534E;font-weight:600;}
+.sense-note{
+  margin-top:18px;padding:14px;border-radius:10px;
+  background:#FEF3C7;border:1px solid #FDE68A;
+  font-family:'Inter',sans-serif;font-size:.74rem;line-height:1.7;color:#92400E;
+  min-height:64px;transition:all .3s ease;
+}
+.sense-note .sn-tag{font-size:.6rem;letter-spacing:.16em;display:block;margin-bottom:4px;color:#B45309;}
+
+/* ---------- Tooltip ---------- */
+#tip{
+  position:fixed;z-index:99;pointer-events:none;display:none;
+  max-width:240px;background:#1C1917;color:#FAFAF9;
+  font-family:'Inter',sans-serif;font-size:.72rem;line-height:1.6;
+  padding:8px 11px;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.3);
+}
+
+/* ---------- Quiz ---------- */
+#quiz{
+  margin-top:90px;border-top:2px solid #292524;padding-top:44px;
+  font-family:'Inter',sans-serif;
+}
+#quiz h2{color:#292524;font-size:1rem;}
+.q{margin:26px 0;}
+.q .qt{font-weight:600;font-size:.88rem;color:#1E293B;margin-bottom:10px;display:block;}
+.q label{
+  display:block;font-size:.83rem;padding:9px 13px;margin:6px 0;
+  border:1px solid #E7E5E4;border-radius:8px;cursor:pointer;
+  transition:all .2s;color:#44403C;
+}
+.q label:hover{border-color:#A8A29E;}
+.q input{margin-right:9px;}
+.q label.ok{background:#F0FDF4;border-color:var(--correct);color:var(--correct);}
+.q label.no{outline:2px solid var(--crisis);}
+.q .why{
+  display:none;font-size:.78rem;color:var(--correct);
+  background:#F0FDF4;border-radius:8px;padding:11px 14px;margin-top:8px;line-height:1.7;
+}
+.score{font-family:'Inter',sans-serif;font-weight:600;color:#292524;margin-top:26px;font-size:.9rem;}
+
+footer{
+  margin-top:80px;padding-top:26px;border-top:1px solid #D6D3D1;
+  font-family:'Inter',sans-serif;font-size:.72rem;color:var(--muted);line-height:1.9;
+}
+
+@media(max-width:1199px){
+  .frame{grid-template-columns:60px minmax(0,720px);}
+  .mapper{
+    grid-column:2;position:static;height:auto;
+    display:flex;gap:14px;overflow-x:auto;padding:20px 0;
+  }
+  .mapper-card{min-width:230px;border:1px solid #E7E5E4;border-radius:10px;padding:14px;border-top:3px solid #A8A29E;}
+}
+@media(max-width:899px){
+  .frame{grid-template-columns:minmax(0,1fr);padding:0 18px;}
+  .compass{
+    position:sticky;top:0;height:auto;z-index:60;
+    flex-direction:row;justify-content:center;
+    background:rgba(253,251,247,.92);backdrop-filter:blur(6px);
+    padding:10px 0;gap:18px;border-bottom:1px solid #E7E5E4;
+  }
+  #stage{padding-top:30px;}
+  .dropcap::first-letter{font-size:3.2em;}
+  .pipeline{flex-direction:column;}
+  .pipe-step + .pipe-step{margin-left:0;margin-top:34px;}
+  .pipe-step + .pipe-step::before{left:50%;top:-27px;transform:translateX(-50%) rotate(90deg);}
+}
+</style>
+</head>
+<body>
+
+<div class="frame">
+
+<nav class="compass" aria-label="Bản đồ tự sự">
+  <a href="#bracket" data-for="bracket" title="The Bracket">🧊</a>
+  <a href="#hook" data-for="hook" title="The Hook">🌱</a>
+  <a href="#crisis" data-for="crisis" title="The Crisis">🌧️</a>
+  <a href="#reveal" data-for="reveal" title="The Reveal">💡</a>
+  <a href="#witness" data-for="witness" title="The Witness">🤝</a>
+  <a href="#vision" data-for="vision" title="The Vision">🌍</a>
+  <a href="#essence" data-for="essence" title="The Essence">✨</a>
+</nav>
+
+<main id="stage">
+
+<button class="xray-btn" onclick="toggleXray()">[ REVEAL ARCHITECTURE ]</button>
+
+<!-- ═══════════ STATE 0 · THE BRACKET ═══════════ -->
+<section id="bracket" class="act act-bracket">
+  <div class="bracket-case">
+    <span class="tag">🧊 BRACKETED · THE ABSTRACT CONSTRUCT</span>
+    Trong ngôn ngữ kinh tế học tiêu dùng, hành vi của thế hệ trẻ đô thị được mô tả như một bài toán tối ưu hóa dưới ràng buộc: khi giá trị hiện tại của các tài sản vòng đời — nhà ở, hôn nhân, sinh sản — vượt xa dòng thu nhập chiết khấu kỳ vọng của cá nhân, thì việc rút lui khỏi các "thị trường" đó là lựa chọn hợp lý (rational choice), chứ không phải biểu hiện của sự trì hoãn, bất mãn nhất thời hay suy thoái đạo đức. Hiện tượng này được quan sát đồng loạt tại nhiều nền kinh tế châu Á thập niên 2020 và mang tên riêng trong từng nền văn hóa.
+    <span style="display:block;margin-top:1em;"><button class="epoche-btn" onclick="toggleEpoche(false)">[ QUAY LẠI THẾ GIỚI ĐANG SỐNG ]</button></span>
+  </div>
+</section>
+
+<!-- ═══════════ STATE 1 · THE HOOK ═══════════ -->
+<section id="hook" class="act act-hook">
+<h2>🌱 Mở đầu · Phòng trọ tầng ba</h2>
+<button class="epoche-btn" onclick="toggleEpoche(true)">[ XEM ĐỊNH NGHĨA TRỪU TƯỢNG ]</button>
+
+<p class="dropcap">Trên tầng ba của dãy nhà ở Bình Thạnh, <span class="xray" data-arch="Nhân vật đại diện: lao động văn phòng lương trung vị đô thị, tuổi 29, năm 2026">Linh ngồi xuống mép giường trước khi cởi giày</span>. Không phải vì mệt. Nếu không ngồi xuống thế này, cô sẽ đứng mãi trong đầu mình thêm một giờ nữa. Ngoài cửa sổ, <span class="sensory sensory-auditory" data-sense="Thính giác · tiếng xe máy là nhịp thở của thành phố, không bao giờ rút">xe máy rít lên rồi tan đi, lớp này đè lớp kia</span>. <span class="sensory sensory-olfactory" data-sense="Khứu giác · mùi mưa trên bê tông: hơi nước, bụi, kim loại">Mùi mưa chiều còn vương trên áo</span> — thứ ẩm của bê tông ngấm nước, của phở ga nguội dưới chân cầu thang.</p>
+
+<p>Điện thoại rung. <span class="sensory sensory-tactile" data-sense="Xúc giác · cơn rung nhỏ trong túi quần, vật chất hóa một kỳ vọng">Tin nhắn của mẹ</span>, gửi lúc tám giờ tối: <em>"Hôm nay con bác Hoa hỏi chuyện con đó. Ba mươi tuổi rồi con ơi."</em> Linh đọc xong, đặt máy úp xuống đùi. Cô không buồn, cũng không cáu. Cô chỉ thấy rõ, lần đầu tiên rõ đến <span class="sensory sensory-thermal" data-sense="Nhiệt giác · cái lạnh của sự nhìn thấu">lạnh người</span>, rằng câu hỏi đó thuộc về một cuộc đời khác, một cuộc đời cô đã tính toán và biết chắc mình không đủ tiền để sống.</p>
+
+<p><span class="sensory sensory-visual" data-sense="Thị giác · đèn tắt dần từng ô: ngày kết thúc mà không hỏi ý ai">Bên ngoài, đèn quán cà phê dưới nhà tắt dần từng ô.</span> Linh mở app kiểm tra số dư. Con số vẫn nằm yên đó, <span class="xray" data-arch="Tiết kiệm cá nhân so với giá tài sản đô thị — khoảng cách đo bằng bậc thang lương">nhỏ hơn con số của căn hộ hai phòng ngủ cách chỗ làm bảy cây số</span> đúng một bậc thang lương. Sau bảy năm leo, cô chưa chạm tới nấc đầu tiên.</p>
+
+</section>
+
+<!-- ═══════════ STATE 2 · THE CRISIS ═══════════ -->
+<section id="crisis" class="act act-crisis">
+<h2>🌧️ Khủng hoảng · Những phép trừ</h2>
+
+<p>Thứ Hai, Linh nhận bảng lương mới. Tăng bốn phần trăm. Cùng buổi trưa, chủ nhà nhắn: tiền phòng tăng ba trăm nghìn từ tháng sau. Linh lấy máy tính ra cộng. Tiền lương tăng thêm cả năm chưa đủ trả ba tháng tiền thuê mới.</p>
+
+<p>Cô bắt đầu làm thêm giờ. Không phải vì tham — vì ca ngày đã hết cho tiền thuê, tiền ăn, tiền gửi về quê cho ba mẹ. Ca tối mới là phần dành cho cái tương lai mà người ta bảo cô phải có. Nhưng mỗi tối về lúc mười một giờ, dạ dày cô đau âm ỉ. Bác sĩ nói viêm, kêu bớt thức khuya. Linh cười. Bớt thức khuya nghĩa là bớt lương.</p>
+
+<p>Bạn thân của Linh cưới năm ngoái. Trước đám cưới hai tháng, hai vợ chồng cãi nhau lần đầu về tiền đặt cọc tiệc. Sau đám cưới tám tháng, họ ly hôn. Lý do ghi trên giấy: bất hòa. Lý do thật, người bạn kể với Linh trong một đêm uống bia: hai người về chung một nhà rồi phát hiện rằng hai cái lương gộp lại vẫn không đủ mua được điều gì gọi là <em>của riêng mình</em>. Cãi nhau không phải vì hết yêu. Cãi nhau vì mỗi lần mở ví ra, tình yêu bị soi vào một con số.</p>
+
+<p>Con của chị Hằng — đồng nghiệp bàn bên — sinh năm nay, bốn tuổi vào 2030. Chị tính cho Linh nghe: sữa, thuốc vắc-xin, học trước tuổi nhập học, học sau giờ học. Một tháng ngang bằng nửa lương của Linh. "Em cứ thử nghĩ," chị Hằng nói, "em sinh con, rồi đi làm mười hai tiếng một ngày để nuôi con. Con lớn lên nhìn mặt em qua màn hình điện thoại. Rồi con hỏi sao nó hay giận người khác. Em trả lời thế nào?"</p>
+
+<p>Và căn hộ. Linh không mơ biệt thự. Cô chỉ xem tin đăng của căn hai phòng ngủ cũ, cách chỗ làm bảy cây số, tường loang nước. Giá bán bằng hơn hai mươi năm lương của cô — nếu cô không ăn, không thuê nhà, không ốm. Ngân hàng cho vay tối đa bốn mươi năm. Linh làm phép cộng và thấy mình sẽ hoàn tất trả nợ ở tuổi bảy mươi.</p>
+
+<blockquote>Đêm ấy Linh không khóc. Cô ngồi xuống mép giường, chưa cởi giày, và viết vào sổ tay một dòng: <strong><em>Không phải em không muốn. Em đã tính.</em></strong></blockquote>
+
+</section>
+
+<!-- ═══════════ STATE 3 · THE REVEAL ═══════════ -->
+<hr class="pivot">
+<section id="reveal" class="act act-reveal">
+<h2>💡 THE REVEAL · Phép tính nằm ở đâu</h2>
+
+<div class="reveal-body">
+
+<p>Sổ tay của Linh không chứa một lời than. Nó chứa năm phép tính. Và mỗi phép tính đều có tên trong sách kinh tế.</p>
+
+<h3><span class="num">01</span>Hai đường cong không bao giờ gặp nhau</h3>
+<p>Lương của một người lao động tăng theo năng suất cá nhân — vài phần trăm mỗi năm, nếu may mắn. Giá nhà đất tăng theo một cơ chế khác hẳn: dòng vốn đầu tư, tín dụng, quỹ đất và kỳ vọng. Theo báo cáo thị trường của Savills Việt Nam công bố năm 2023, giá căn hộ trung bình ở dự án mới tại TP.HCM vào khoảng 5,5–6 tỷ đồng, trong khi thu nhập bình quân của một hộ gia đình thành phố chỉ quanh 15 triệu đồng/tháng — chênh lệch khoảng 30 lần. Cuối 2025, mặt bằng giá căn hộ mới vẫn ở vùng 80–120 triệu đồng/m².<span class="src"> (Savills Việt Nam 2023; The Investor, 10/2025)</span> Đó là lý do bốn phần trăm tăng lương của Linh biến mất ngay tại buổi trưa chủ nhà nhắn tin: cô đang chạy trên một đường cong, còn giá nhà chạy trên đường cong khác, dốc hơn, và hai đường này không cắt nhau ở đoạn đời nào của một người chỉ có lương.</p>
+
+<h3><span class="num">02</span>Tỷ lệ giá nhà trên thu nhập — chiếc thước không biết nói dối</h3>
+<p>Kinh tế học nhà ở có một chỉ số đơn giản: <strong>tỷ lệ giá nhà trên thu nhập</strong> (<em>price-to-income ratio</em> — giá một căn nhà chia cho thu nhập hằng năm của hộ gia đình). Chuẩn quốc tế về "nhà ở khả chi" đặt ngưỡng quanh 3 lần thu nhập năm; vượt ngưỡng này, thị trường được coi là đã hỏng với người mua thuần lương. Ở TP.HCM, con số cùng loại được các đơn vị nghiên cứu đưa vào vùng 20–30 lần. Nghĩa là khoảng cách giữa Linh và căn hộ tường loang nước không phải khoảng cách kỷ luật tiết kiệm — nó lớn hơn ngưỡng hỏng của thị trường khoảng một cấp độ lượng tử. Khoản vay bốn mươi năm không thu hẹp khoảng cách; nó chỉ kéo dài thời gian chịu nó đến tuổi bảy mươi.</p>
+
+<h3><span class="num">03</span>Chi phí cố định của hôn nhân</h3>
+<p>Một đám cưới không phải một ngày lễ; về kế toán, nó là một khoản đầu tư ban đầu lớn đặt trước khi cuộc sống chung kịp tạo ra bất kỳ dòng thu nào. Khi thu nhập của hai người chỉ vừa đủ hai cuộc sống đơn lẻ, khoản cố định đó trở thành khoản nút — mọi biến cố nhỏ, từ tiền cọc tiệc đến tiền thuê nhà chung, chảy qua điểm nút đó. Nghiên cứu xã hội học ở nhiều nước xếp căng thẳng tài chính vào nhóm nguyên nhân ly hôn hàng đầu.<span class="src"> (tổng hợp định tính)</span> Câu chuyện của người bạn thân Linh không phải ngoại lệ cảm tính; nó là mẫu hình có thống kê. Kết hôn dưới ngưỡng an toàn tài chính không nhân đôi sức mạnh — nó nhân đôi độ nhạy với cú sốc.</p>
+
+<h3><span class="num">04</span>Bài toán kép: tiền và giờ</h3>
+<p>Nuôi một đứa con ở Việt Nam đến 18–22 tuổi, theo các ước tính phổ biến, tốn từ khoảng 700 triệu đến hơn 2,5 tỷ đồng, tùy phương pháp và mức sống; mức thường được dẫn chiếu vào khoảng 15 triệu đồng/tháng.<span class="src"> (VnExpress 2021; các nghiên cứu tài chính cá nhân 2025–2026)</span> Nhưng tiền chỉ là nửa bài toán. Nửa còn lại là giờ: thời gian chăm con phải rút ra từ chính quỹ giờ lao động tạo ra tiền đó. Rút ít quá, con lớn lên nhìn cha mẹ qua màn hình. Rút nhiều quá, tiền không đủ. Đây là ràng buộc kép — chọn một phía là mất phía kia. Điều chị Hằng mô tả không phải lời than mẹ trực; nó là dạng đồ thị của bài toán vô nghiệm khi chỉ có một lương.</p>
+
+<h3><span class="num">05</span>Giả định sụp đổ cuối cùng</h3>
+<p>Còn lại giả định lớn nhất mà Linh được dạy từ nhỏ: nỗ lực bù được khoảng cách. Giả định này đúng khi khoảng cách do cá nhân tạo ra — thiếu kỹ năng, thiếu cố gắng. Nó sai khi khoảng cách thuộc về kết cấu: lãi suất, dòng vốn, quy hoạch đất, tốc độ giá tài sản. Thêm ca tối vào một khoảng cách kết cấu chỉ đổi được một thứ: sức khỏe. Viêm dạ dày của Linh là hóa đơn của một giao dịch mà bên bán không bao giờ giao hàng.</p>
+
+<div class="pipeline">
+  <div class="pipe-step"><span class="pt">PHÉP TÍNH 1 · NHÀ</span><span class="pd">Giá căn hộ ≈ 30× thu nhập, so với ngưỡng khả chi ≈ 3×</span></div>
+  <div class="pipe-step"><span class="pt">PHÉP TÍNH 2 · CON</span><span class="pd">≈ 15 triệu đồng/tháng, rút cả tiền lẫn giờ chăm sóc</span></div>
+  <div class="pipe-step"><span class="pt">PHÉP TÍNH 3 · GIỜ</span><span class="pd">Ca tối đổi sức khỏe lấy tiền không đủ đổi kết cấu</span></div>
+</div>
+<p class="pipe-final">⇒ Rút lui khỏi ba thị trường này là quyết định hợp lý, không phải cơn giận.</p>
+
+</div>
+</section>
+
+<!-- ═══════════ STATE 3.5 · THE WITNESS ═══════════ -->
+<div class="vector-band"></div>
+<span class="vector-mark">🌉 EMPATHIC BRIDGE · CẦU ĐỒNG CẢM</span>
+<section id="witness" class="act act-witness">
+<h2>🤝 Người chứng kiến</h2>
+
+<div class="reveal-body">
+<p>Tháng sau, phòng kế toán nhận người mới: Mai, 24 tuổi, ngồi bàn đối diện. Một buổi trưa, Mai hỏi Linh nhỏ xíu, kiểu hỏi để được tha thứ trước: "Chị ơi, em bị mẹ giục rồi. Em cứ cảm giác mình đang trốn trách nhiệm."</p>
+<p>Linh không giảng giải. Cô chỉ kể lại dòng chữ trong sổ tay, và nói đúng một câu: "Chị từng tưởng mình đang trốn. Sau này chị mới thấy chị đang tính. Trốn thì chạy khỏi cái gì đó. Tính thì nhìn thẳng vào nó."</p>
+<p>Mai im lặng một lát, rồi gật. Hai người chưa cần nói thêm. Cầu đã dựng giữa hai bàn làm việc: một thế hệ nhìn thấy mình trong thế hệ kế tiếp, và lần đầu tiên, không ai phải xin lỗi vì đã nghĩ cho chính mình.</p>
+</div>
+</section>
+
+<!-- ═══════════ STATE 4 · THE VISION ═══════════ -->
+<section id="vision" class="act act-vision">
+<h2>🌍 Tầm nhìn · Một hiện tượng mang ba cái tên</h2>
+
+<div class="reveal-body">
+
+<p>Một hiện tượng chỉ xảy ra ở một nơi có thể đổ lỗi cho văn hóa đó. Nhưng hiện tượng này có tên riêng ở ba nền văn hóa:</p>
+
+<ul style="margin:0 0 1.6em 1.3em;font-size:.93rem;">
+<li><strong><em>tang ping</em></strong> (<em>躺平</em>, "nằm duỗi" — phong trào trên mạng xã hội Trung Quốc từ 2021, tuyên bố ngừng cạnh tranh vượt mức cần thiết);</li>
+<li><strong>thế hệ <em>satori</em></strong> (Nhật Bản — "thế hệ giác ngộ", sinh sau 1990, ham muốn thấp, ít mua nhà, ít kết hôn);</li>
+<li><strong>thế hệ <em>N-po</em></strong> (Hàn Quốc — <em>N 포세대</em>, thế hệ đã từ bỏ "N" điều: hẹn hò, kết hôn, sinh con, mua nhà, tình bạn, hy vọng).</li>
+</ul>
+
+<p>Ba ngôn ngữ, ba nền chính trị, ba lịch sử — cùng một phép tính. Khi một hành vi tái diễn độc lập với văn hóa, nó không còn là thái độ sống; nó là dữ liệu.</p>
+
+<div class="stat-strip">
+  <div class="stat"><b>≈ 30×</b><span>giá căn hộ mới TP.HCM so với thu nhập hộ gia đình (Savills, 2023)</span></div>
+  <div class="stat"><b>≈ 3×</b><span>ngưỡng "nhà ở khả chi" quốc tế tính theo thu nhập năm (chuẩn UN-Habitat)</span></div>
+  <div class="stat"><b>6,9×</b><span>chi phí nuôi con đến 18 tuổi so với GDP bình quân đầu người tại Trung Quốc (Viện YuWa, Bắc Kinh, 2023–2024)</span></div>
+  <div class="stat"><b>1,92</b><span>con/phụ nữ — tỷ lệ sinh Việt Nam 2025, dưới mức thay thế 2,1</span></div>
+</div>
+
+<p>Con số cuối cùng là phần trả lời của dân số học. Một xã hội không thể kêu gọi thế hệ trẻ kết hôn và sinh con bằng khẩu hiệu, cùng lúc giữ nguyên ba biến số của phép tính: giá nhà, chi phí nuôi dạy, số giờ lao động cần thiết để tồn tại. Muốn đảo chiều kết quả, phải đảo chiều các biến — không phải đảo chiều lời trách móc.</p>
+
+<p>Với cá nhân, hệ quả còn quan trọng hơn: nếu phép tính đúng, thì việc dừng lại không phải thất bại đạo đức. Bạn của Linh, chị Hằng, Mai, và bạn — những ai đang cầm sổ tay của riêng mình — không nợ ai một cuộc hôn nhân, một căn hộ hay một đứa trẻ được sinh ra trong cảnh thiếu hụt có hệ thống.</p>
+
+</div>
+</section>
+
+<!-- ═══════════ STATE 4.5 · THE ESSENCE ═══════════ -->
+<section id="essence" class="act act-essence">
+<span class="tag">✨ THE EIDOS · PHÉP GIẢM NHẬN BIẾT</span>
+<p>Khi giá của một căn nhà, một đám cưới, một đứa trẻ vượt quá thu nhập của cả một đời lao động, bước ra khỏi thị trường là quyết định hợp lý cuối cùng còn lại. Người trẻ đã hoàn tất phép tính — và đặt bút xuống.</p>
+</section>
+
+<!-- ═══════════ COMPREHENSION CHECK ═══════════ -->
+<section id="quiz">
+<h2>🧭 Kiểm tra hiểu bản đồ · Nỗi đau ↔ Cơ chế</h2>
+<div class="score" id="score">0 / 4 đã ghép đúng</div>
+
+<div class="q" data-answer="b" id="q1">
+  <span class="qt">1. Bảng lương +4% biến mất ngay tại tin nhắn của chủ nhà. Cơ chế nào giải thích?</span>
+  <label><input type="radio" name="q1" value="a">Chi phí cố định của hôn nhân</label>
+  <label><input type="radio" name="q1" value="b">Khoảng cách tốc độ: lương tăng theo năng suất cá nhân, giá tài sản tăng theo dòng vốn và tín dụng</label>
+  <label><input type="radio" name="q1" value="c">Bài toán kép tiền–giờ</label>
+  <div class="why">Đúng vậy. Hai đường cong tăng trưởng khác bản chất nên không cắt nhau ở bất kỳ điểm nào của một đời chỉ có lương.</div>
+</div>
+
+<div class="q" data-answer="c" id="q2">
+  <span class="qt">2. Căn hộ tường loang nước đắt bằng hơn 20 năm lương. Chỉ số nào định lượng điều này?</span>
+  <label><input type="radio" name="q2" value="a">Tăng trưởng danh nghiệp</label>
+  <label><input type="radio" name="q2" value="b">Chi phí cố định của hôn nhân</label>
+  <label><input type="radio" name="q2" value="c">Tỷ lệ giá nhà trên thu nhập (price-to-income ratio)</label>
+  <div class="why">Chuẩn khả chi quốc tế là ~3 lần thu nhập năm; TP.HCM ở vùng 20–30 lần — ngoài phạm vi kỷ luật tiết kiệm có thể sửa.</div>
+</div>
+
+<div class="q" data-answer="a" id="q3">
+  <span class="qt">3. Hai vợ chồng đều có lương vẫn ly hôn sau tám tháng. Cơ chế nào giải thích?</span>
+  <label><input type="radio" name="q3" value="a">Chi phí cố định của hôn nhân trở thành điểm nút khi thu nhập chỉ vừa đủ sinh tồn</label>
+  <label><input type="radio" name="q3" value="b">Tỷ lệ giá nhà trên thu nhập</label>
+  <label><input type="radio" name="q3" value="c">Giả định "nỗ lực bù khoảng cách"</label>
+  <div class="why">Khi mọi biến cố nhỏ chảy qua một điểm nút tài chính, độ nhạy với cú sốc bị nhân đôi — căng thẳng tài chính nằm trong nhóm nguyên nhân ly hôn hàng đầu.</div>
+</div>
+
+<div class="q" data-answer="c" id="q4">
+  <span class="qt">4. Con chị Hằng nhìn mẹ qua màn hình điện thoại. Đây là mặt nào của ràng buộc kép?</span>
+  <label><input type="radio" name="q4" value="a">Mặt tiền: chi phí nuôi con ≈ 15 triệu/tháng</label>
+  <label><input type="radio" name="q4" value="b">Mặt lưng: lãi suất vay 40 năm</label>
+  <label><input type="radio" name="q4" value="c">Mặt giờ: thời gian chăm con phải rút từ chính quỹ giờ lao động tạo ra tiền</label>
+  <div class="why">Ràng buộc kép: chọn tiền thì mất giờ chăm sóc; chọn giờ thì mất thu nhập. Với một lương, bài toán vô nghiệm.</div>
+</div>
+
+</section>
+
+<footer>
+Phenomenological note · "Thời Ngừng Nỗ Lực" — TP.HCM, 2026.<br>
+Số liệu dẫn chiếu: Savills Việt Nam (2023); The Investor (10/2025); VnExpress (2021); Viện YuWa, Bắc Kinh (2023–2024); tổng hợp tài chính cá nhân Việt Nam (2025–2026); Tổng cục Thống kê / ước tính tỷ suất sinh 2025. Các con số mang tính minh họa cho lập luận, không phải tư vấn tài chính.
+</footer>
+
+</main><!-- /stage -->
+
+<!-- ═══════════ CONCEPT MAPPER ═══════════ -->
+<aside class="mapper">
+  <div class="mapper-card"><span class="mk">🌱 HOOK · DỊCH THUẬT KỸ THUẬT</span>Linh cảm nhận sự bất khả thi <strong>trước khi</strong> biết đến bất kỳ con số nào. Hiển hiện học gọi đây là kinh nghiệm tiền phản ánh: cơ thể tính nhanh hơn lý trí.</div>
+  <div class="mapper-card"><span class="mk">🌧️ CRISIS · DỊCH THUẬT KỸ THUẬT</span>+4% lương danh nghiệp − lạm phát chi phí sinh hoạt ≈ tăng lương thực tế gần bằng không. Tiền thuê tăng nhanh hơn lương = thu nhập khả dụng bị bào mòn từ phía chi phí cố định.</div>
+  <div class="mapper-card"><span class="mk">💡 REVEAL · BẢN ĐỒ 1:1</span>Bốn phần trăm → khoảng cách tốc độ. Căn hộ 20 năm lương → price-to-income ratio. Ly hôn sau 8 tháng → chi phí cố định của hôn nhân. Con nhìn mẹ qua màn hình → ràng buộc kép tiền–giờ. Viêm dạ dày → sụp đổ giả định nỗ lực.</div>
+  <div class="mapper-card"><span class="mk">🌍 VISION · DỊCH THUẬT KỸ THUẬT</span>tang ping / satori / N-po = ba nhãn văn hóa của cùng một đáp ứng hệ thống. Tỷ lệ sinh giảm là biến phụ thuộc; giá nhà, chi phí nuôi dạy, giờ lao động là các biến độc lập.</div>
+  <div class="sense-note" id="senseNote"><span class="sn-tag">TRI GIÁC · MODALITY LOG</span>Rê chuột qua các từ được gạch chấm màu trong truyện để xem chúng thuộc giác quan nào — và vì sao câu chuyện cần chúng.</div>
+</aside>
+
+</div><!-- /frame -->
+
+<div id="tip"></div>
+
+<script>
+// ---- X-Ray toggle ----
+function toggleXray(){
+  const b=document.body;
+  b.classList.toggle('xray-on');
+  document.querySelector('.xray-btn').textContent =
+    b.classList.contains('xray-on') ? '[ HIDE ARCHITECTURE ]' : '[ REVEAL ARCHITECTURE ]';
+}
+// ---- Epoché toggle ----
+function toggleEpoche(open){
+  document.body.classList.toggle('epoche-open',open);
+}
+// ---- Sensory tooltips + mapper log ----
+const tip=document.getElementById('tip');
+const senseLog=document.getElementById('senseNote');
+document.querySelectorAll('.sensory').forEach(el=>{
+  el.addEventListener('mouseenter',e=>{
+    tip.textContent=el.dataset.sense;
+    tip.style.display='block';
+  });
+  el.addEventListener('mousemove',e=>{
+    tip.style.left=Math.min(e.clientX+14,innerWidth-260)+'px';
+    tip.style.top=(e.clientY+16)+'px';
+  });
+  el.addEventListener('mouseleave',()=>{tip.style.display='none';});
+  el.addEventListener('click',()=>{
+    const mod=el.dataset.sense.split('·')[0].trim();
+    senseLog.innerHTML='<span class="sn-tag">TRI GIÁC · '+mod.toUpperCase()+'</span>'+el.dataset.sense.split('·')[1].trim();
+  });
+});
+// ---- IntersectionObserver: compass + backgrounds + essence gate ----
+const acts=[
+  {id:'bracket',cls:'bg-bracket'},
+  {id:'hook',cls:'bg-hook'},
+  {id:'crisis',cls:'bg-crisis'},
+  {id:'reveal',cls:'bg-reveal'},
+  {id:'witness',cls:'bg-reveal'},
+  {id:'vision',cls:'bg-vision'},
+  {id:'essence',cls:'bg-essence'},
+  {id:'quiz',cls:'bg-vision'}
+];
+const links={};
+document.querySelectorAll('.compass a').forEach(a=>links[a.dataset.for]=a);
+let pastVision=false;
+const order=['bracket','hook','crisis','reveal','witness','vision','essence','quiz'];
+function updateAct(){
+  let cur='bracket';
+  for(const id of order){
+    if(document.getElementById(id).getBoundingClientRect().top<=innerHeight*0.45)cur=id;
+  }
+  const act=acts.find(a=>a.id===cur);
+  if(act){
+    document.body.classList.remove(...acts.map(a=>a.cls));
+    document.body.classList.add(act.cls);
+    Object.values(links).forEach(l=>l.classList.remove('active'));
+    if(links[cur])links[cur].classList.add('active');
+  }
+  if(document.getElementById('vision').getBoundingClientRect().bottom<innerHeight*0.45)pastVision=true;
+  if(pastVision&&document.getElementById('essence').getBoundingClientRect().top<innerHeight){
+    document.getElementById('essence').classList.add('shown');
+  }
+}
+window.addEventListener('scroll',updateAct,{passive:true});
+window.addEventListener('resize',updateAct);
+updateAct();
+// ---- Quiz ----
+let correct=0,total=4;
+document.querySelectorAll('.q').forEach(q=>{
+  q.querySelectorAll('input').forEach(inp=>{
+    inp.addEventListener('change',()=>{
+      q.querySelectorAll('label').forEach(l=>l.classList.remove('ok','no'));
+      if(inp.value===q.dataset.answer){
+        inp.closest('label').classList.add('ok');
+        if(!q.dataset.done){q.dataset.done='1';correct++;}
+        q.querySelector('.why').style.display='block';
+      }else{
+        inp.closest('label').classList.add('no');
+        q.querySelector('.why').style.display='none';
+      }
+      document.getElementById('score').textContent=correct+' / '+total+' đã ghép đúng';
+    });
+  });
+});
+</script>
+</body>
+</html>
