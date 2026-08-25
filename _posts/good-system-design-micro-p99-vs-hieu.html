@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micro Prism — p99 vs Hiểu</title>
+<meta name="generator" content="Prism Notes micro">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0C10;--line:#27272A;--text:#C5C6C7;--bright:#FAFAFA;--tech:#06B6D4;--psy:#A78BFA;--gold:#FBBF24;--econ:#10B981;--phil:#D946EF}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.7}
+a{color:var(--tech)} .mono{font-family:"JetBrains Mono",monospace;font-size:12px;color:#9CA3AF}
+.wrap{max-width:78ch;margin:0 auto;padding:28px 20px 60px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;background:#0B1220;margin:16px 0}
+.h2{font-size:22px;color:var(--bright);margin:28px 0 8px}
+.verdict{border-left:4px solid var(--accent);background:rgba(255,255,255,.04);padding:12px;border-radius:0 8px 8px 0;margin:10px 0}
+.decision{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:14px 0}
+.decision .row{display:grid;grid-template-columns:36px 1fr;padding:12px 14px;border-bottom:1px solid var(--line)}
+.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;border:1px solid var(--line);background:#0B1220}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:10px 0}
+th{color:#8A8FA0;text-align:left;padding:8px;border-bottom:1px solid var(--line)}
+td{padding:8px;border-bottom:1px solid #1C2433}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="mono">Micro Prism · Drill-down từ <a href="good-system-design-p01-prism.html">P01 v2 — Good System Design</a> · High · Strategic Audit · Va chạm: ⚙️ Technical ⇄ 🧠 Psychological</div>
+<h1 style="color:var(--bright);font-size:30px;margin:8px 0">p99 vs Hiểu:<br>Khi tối ưu đuôi làm vỡ mô hình tâm trí</h1>
+<p class="mono">Nguồn: Sean Goedecke p95/p99, Redis p99, TutorialQ, OptyxStack metrics→traces→logs, Cindy Sridharan, Ousterhout/美团 降低复杂性, Honeycomb Observability 2.0</p>
+
+<div class="card">
+<strong style="color:var(--bright)">Context.</strong> Sean dặn: đừng chỉ nhìn mean, hãy nhìn p95/p99 — vì 1–2 request rất chậm thường rơi vào user lớn nhất. Nhưng chính nỗ lực hạ p99 lại tạo ra sự không thể hiểu được. p99 là queuing story (waiting tăng phi tuyến khi gần bão hòa), cache tạo phân phối hai đỉnh (hit vs miss), retry khuếch đại đuôi. Hai lens đo hai thứ đối lập trên cùng một request: Technical đo <em>thời gian chờ</em>, Psychological đo <em>thời gian để hiểu tại sao phải chờ</em>.
+</div>
+
+<h2 class="h2" style="color:var(--tech)">⚙️ Technical — Đuôi mới là sự thật</h2>
+<p>Độ trễ không phải một số mà là phân phối. L1 0.5ns, memory 100ns, SSD 150µs, HDD 10ms — và trên hết là <em>waiting</em> trong queue/pool. Khi p99 từ 400ms vọt lên 2s sau deploy trong khi p50 vẫn 120ms, Technical không nhìn CPU mà nhìn DB pool wait, queue depth, fan-out. Mỗi cách hạ p99 — cache, replica, hedged request (hedge sau 5ms, overhead 2–5%), pooling — đều là cách <em>giấu waiting</em> khỏi hot path.</p>
+<table>
+<tr><th>Nguồn đuôi</th><th>Chữ ký</th><th>Cách fix</th></tr>
+<tr><td>Cache miss không đều</td><td>p99 tách khỏi mean, hit/miss hai đỉnh</td><td>Tách hit/miss thành hai phân phối</td></tr>
+<tr><td>Queue/pool saturation</td><td>p99 vọt phi tuyến khi gần max</td><td>Metrics pool wait, tăng pool / shed load</td></tr>
+<tr><td>Retry storm</td><td>Vô hình ở p50, nổ ở p99</td><td>Gắn retry-count, cap retry</td></tr>
+<tr><td>Fan-out</td><td>End-to-end p99 = dependency chậm nhất</td><td>Decompose trace, hedge</td></tr>
+</table>
+<div class="verdict" style="--accent:var(--tech)"><strong>The Verdict —</strong> <em>Đuôi phân phối mới là trải nghiệm người dùng; hãy đo p99 theo route, tách hit/miss, gắn retry-count, và giấu waiting khỏi hot path.</em></div>
+
+<h2 class="h2" style="color:var(--psy)">🧠 Psychological — Mọi waiting bị giấu phải được đặt tên</h2>
+<p>Psychological đo onboarding days, WTFs/min, MTTD. Nó ghét cache vô hình (stale không biết khi nào stale) và retry vô hình (3 lần 2s = 6s chờ nhưng log ghi 2s). Nó đòi mọi thứ Technical giấu đi phải hiện trong trace/log với nhãn rõ ràng: <code>x-prism-cache-hit</code>, <code>x-prism-retry-count</code>, <code>x-prism-latency-ms</code>.</p>
+<div class="verdict" style="--accent:var(--psy)"><strong>The Verdict —</strong> <em>Mọi waiting bị giấu để hạ p99 đều phải được đặt tên, đo, và tắt được — nếu không, bạn không có hệ thống nhanh, bạn có hệ thống không thể chẩn đoán.</em></div>
+<div class="mono">Evidence: Sean (log unhappy path, killswitch), Cindy (wide events), Ousterhout complexity = cp×tp, Honeycomb Observability 2.0 (nhiều source of truth rời rạc → không trả lời được p99 cho enterprise).</div>
+
+<h2 class="h2">🌊 Interference</h2>
+<div class="grid2">
+<div class="card"><span class="pill" style="border-color:rgba(239,68,68,.4)">⚙️ ⇄ 🧠 Destructive</span><p><strong>Ẩn vs phơi.</strong> Technical giấu waiting sau cache/replica/hedge để hạ p99; Psychological phơi chính waiting đó trong trace/log. Hệ tối ưu p99 bằng cache ẩn là hệ khó hiểu nhất lúc 3h sáng. <strong>Không thể dung hòa — phải chọn bên chịu đau, rồi bù bằng kỷ luật hiển lộ.</strong></p></div>
+<div class="card"><span class="pill" style="border-color:rgba(239,68,68,.4)">⚙️ ⇄ 💭</span><p>Mỗi hedge/cache/replica là concept thừa trong mắt thẩm mỹ nhưng là công cụ hạ đuôi trong mắt kỹ thuật.</p></div>
+</div>
+
+<h2 class="h2">🧭 Navigation — Khi nào giấu, khi nào phơi</h2>
+<div class="decision">
+<div class="row"><strong>⚙️</strong><span><strong>Dùng Technical làm chủ khi</strong> săn bending point: “Ở tải nào p99 tách khỏi p50? Pool nào saturate trước?”</span></div>
+<div class="row"><strong>🧠</strong><span><strong>Chuyển ngay sang Psychological khi</strong> thêm bất kỳ cơ chế giấu waiting nào — nếu hidden path không có metric/log/killswitch, bạn vừa tạo Unknown Unknown.</span></div>
+<div class="row"><strong>✕</strong><span><strong>Không để ⚙️ chi phối khi</strong> hidden path chưa có tên — cache không có hit/miss metric là nợ chẩn đoán.</span></div>
+<div class="row"><strong>✕</strong><span><strong>Không để 🧠 chi phối khi</strong> chưa tách hit/miss và retry-count — log mọi thứ mà không tách phân phối chỉ tạo noise.</span></div>
+<div class="row"><strong>↔</strong><span><strong>Giữ cả hai khi</strong> thiết kế SLO: SLI “% &lt;300ms” + error budget + wide events — vừa đo đuôi vừa cho phép chẩn đoán đuôi.</span></div>
+</div>
+
+<div class="card" style="border-color:rgba(251,191,36,.3)"><strong style="color:var(--gold)">Workflow (OptyxStack):</strong> <strong>Metrics → Traces → Logs.</strong> Metrics tìm bending point (pool wait spike ở 3k RPS), Traces theo slow path (p99 vs p50, dominant span, waiting vs working), Logs xác nhận (trace_id, cold path, invalidation).</div>
+
+<h2 class="h2">🔬 Evidence — “p99 vọt sau deploy 1.42.0”</h2>
+<p>p50 120ms, p99 400ms→2s. Scope: chỉ EU + /checkout. Pool wait tăng, trace p99: <code>FraudService → DB</code> chiếm 70%, nhiều retry 800ms timeout. Root cause: dependency mới tăng DB traffic ở EU → pool saturate → queueing + retry amplify tail. Mean không kể chuyện này. p99 kể.</p>
+<div class="card"><strong style="color:var(--bright)">Transferable pattern.</strong> <em>p99 là tín hiệu sớm nhất của bão hòa. Mọi ms giấu được khỏi p99 đều phải trả bằng một tín hiệu hiển lộ trong trace/log — nếu không, bạn đã đổi đuôi lấy mù.</em></div>
+
+<div class="mono" style="margin-top:18px;border-top:1px solid var(--line);padding-top:10px">
+<a href="good-system-design-p01-prism.html">← Quay lại P01 v2</a> · Micro trước: <a href="good-system-design-micro-fail-open-vs-fail-closed.html">Fail Open vs Fail Closed</a>
+</div>
+</div>
+</body>
+</html>

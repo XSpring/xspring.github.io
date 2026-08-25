@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micro Prism — Fail Open vs Fail Closed</title>
+<meta name="generator" content="Prism Notes micro">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0C10;--panel:#111114;--line:#27272A;--text:#C5C6C7;--bright:#FAFAFA;--tech:#06B6D4;--econ:#10B981;--sec:#F59E0B;--psy:#A78BFA;--gold:#FBBF24}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.7}
+a{color:var(--tech)} .mono{font-family:"JetBrains Mono",monospace;font-size:12px;color:#9CA3AF}
+.wrap{max-width:78ch;margin:0 auto;padding:28px 20px 60px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;background:#0B1220;margin:16px 0}
+.h2{font-size:22px;color:var(--bright);margin:28px 0 8px}
+.h3{font-size:16px;color:var(--bright);margin:16px 0 6px}
+.verdict{border-left:4px solid var(--accent);background:rgba(255,255,255,.04);padding:12px;border-radius:0 8px 8px 0;margin:10px 0}
+.decision{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:14px 0}
+.decision .row{display:grid;grid-template-columns:36px 1fr;padding:12px 14px;border-bottom:1px solid var(--line)}
+.decision .row:last-child{border:none}
+.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;border:1px solid var(--line);background:#0B1220}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="mono">Micro Prism · Drill-down từ <a href="good-system-design-p01-prism.html">P01 — Good System Design</a> · High · Strategic Audit</div>
+<h1 style="color:var(--bright);font-size:30px;margin:8px 0">Fail Open vs Fail Closed:<br>Khi gác cổng tự nó hỏng</h1>
+<p class="mono">Va chạm: ⚙️ Technical ⇄ 🔐 Security ⇄ 💰 Economic (với 🧠 Psychological làm nền) · Nguồn: Sean Goedecke, System Design School, Authzed, 阿里 Sentinel/Resilience4j, 美团 OCTO/RASP, arXiv 2412.05617</p>
+
+<div class="card">
+<strong style="color:var(--bright)">Context.</strong> Sean đặt câu hỏi tưởng nhỏ: “Khi Redis của rate limiter chết, bạn fail open hay fail closed?” — câu trả lời chia đôi mọi team giỏi. Rate limiter guard capacity → fail open để tránh biến sự cố limiter thành outage toàn API. Auth guard identity → fail closed vì cho sai người vào tệ hơn chặn nhầm người đúng. Giữa hai cực có middle path: local in-memory limiter thô để bound blast radius. Va chạm này là High vì không có vị trí thứ ba tránh cả hai chi phí.
+</div>
+
+<h2 class="h2" style="color:var(--tech)">⚙️ Technical — Blast radius và bound</h2>
+<p>Rate limiter là datastore chia sẻ (Redis + Lua). Khi store chết, fail open thì blast radius là “cửa sổ không giới hạn vài giây” — backend có headroom thì sống; fail closed thì blast radius là “toàn bộ API” — chắc chắn outage.</p>
+<div class="verdict" style="--accent:var(--tech)"><strong>The Verdict —</strong> <em>Với guard về capacity, hãy fail open có bound (coarse local limiter) và làm degraded mode hiển lộ — vì chi phí lapse ngắn nhỏ hơn chi phí outage toàn phần.</em></div>
+<div class="mono">Evidence: System Design School (“short unlimited window is survivable”), Sentinel sliding window 2×500ms, Stripe “panic mode”, Resilience4j token bucket.</div>
+
+<h2 class="h2" style="color:var(--sec)">🔐 Security — Containment có thể kiểm chứng</h2>
+<p>Auth/payment guard correctness — fail open là breach, không phải outage. Một login page từ chối mọi người trong một giờ là bad hour; cho mọi người vào là breach. Mọi degraded mode phải có attestation và audit log.</p>
+<div class="verdict" style="--accent:var(--sec)"><strong>The Verdict —</strong> <em>Với guard về identity/money/correctness, hãy fail closed và làm cho sự từ chối đó có thể truy vết — vì chi phí breach lớn hơn outage có thể giải thích được.</em></div>
+<div class="mono">Evidence: Authzed (“fail-closed ensures access is denied”), System Design Handbook threat→mitigation→verification, 美团 RASP, arXiv Security Observability.</div>
+
+<h2 class="h2" style="color:var(--econ)">💰 Economic — Cost of lapse vs cost of deny</h2>
+<p>Không có default phổ quát. Rate limiter fail open: chi phí là abuse ngắn; fail closed: chi phí là deny toàn bộ revenue. Auth fail open: chi phí là breach — pháp lý + niềm tin — thường lớn hơn mọi outage.</p>
+<div class="verdict" style="--accent:var(--econ)"><strong>The Verdict —</strong> <em>Hãy chọn default bằng cách so sánh chi phí lapse với chi phí deny cho từng guard.</em></div>
+
+<h2 class="h2" style="color:var(--psy)">🧠 Psychological — Degraded mode phải hiển lộ</h2>
+<p>Guard chạy fail open âm thầm là hệ thống nói dối. Degraded mode phải có metric, log, killswitch và runbook — nếu không, bạn không có degraded mode, bạn có bug.</p>
+<div class="verdict" style="--accent:var(--psy)"><strong>The Verdict —</strong> <em>Mọi default khi guard hỏng đều phải hiển lộ như một trạng thái có thể quan sát, có runbook và có killswitch.</em></div>
+
+<h2 class="h2">🌊 Interference</h2>
+<div class="grid2">
+<div class="card"><span class="pill" style="border-color:rgba(245,158,11,.4)">🔐 × 🧠 Constructive</span><p class="mono">Cả hai đòi hỏi observable degrade + audit completeness — hiếm hoi cùng thắng.</p></div>
+<div class="card"><span class="pill" style="border-color:rgba(239,68,68,.4)">⚙️ ⇄ 🔐 Destructive</span><p>Availability vs containment. Cùng từ “guard” nhưng hai loại guard khác nhau — nhầm là breach hoặc outage. <strong>Phải phân loại guard trước khi chọn default.</strong></p></div>
+<div class="card"><span class="pill" style="border-color:rgba(239,68,68,.4)">💰 ⇄ 🔐 Destructive</span><p>Cost of lapse vs cost of breach. Với auth/payment, “rẻ hơn” không có nghĩa “được phép”.</p></div>
+<div class="card"><span class="pill" style="border-color:rgba(239,68,68,.4)">⚙️ ⇄ 💰 Destructive</span><p>Bound vs TCO. Local fallback thô trong memory rẻ hơn nhiều so với outage/breach — nhưng phải tính vào TCO từ đầu.</p></div>
+</div>
+
+<h2 class="h2">🧭 Navigation — Cây quyết định</h2>
+<div class="decision">
+<div class="row"><strong>1</strong><span><strong>Guard bảo vệ cái gì?</strong> — capacity/performance (rate limit, bulkhead) → Nhánh A. identity/money/correctness (auth, payment, policy) → Nhánh B.</span></div>
+<div class="row"><strong>A</strong><span><strong style="color:var(--tech)">Fail open có bound.</strong> Mỗi gateway giữ coarse local limiter (token bucket trong memory). Khi store trung tâm chết, dùng local, log <code>degraded: local limiter active</code>, metric <code>rate_limiter_degraded=1</code>. Đừng fail closed — bạn sẽ biến sự cố Redis thành outage toàn API.</span></div>
+<div class="row"><strong>B</strong><span><strong style="color:var(--sec)">Fail closed có thể truy vết.</strong> Trả lỗi “auth temporarily unavailable”, log/audit đầy đủ, retry có kiểm soát. Đừng fail open — bạn sẽ biến outage thành breach.</span></div>
+<div class="row"><strong>∀</strong><span>Làm degraded mode <strong>observable</strong> (metric+log+trace), có <strong>killswitch</strong> và <strong>runbook</strong> ghi rõ chi phí lapse vs deny.</span></div>
+<div class="row"><strong>✓</strong><span>Đặt alert cho <code>degraded duration</code>, <code>deny rate</code>, <code>audit completeness</code>, <code>time-to-containment</code>. Nếu không đo được, bạn chưa có guard.</span></div>
+</div>
+<div class="card" style="border-color:rgba(251,191,36,.3)"><strong style="color:var(--gold)">Transferable pattern.</strong> <em>Mọi gating dependency đều cần một default cho chính sự cố của nó. Guard về capacity thì fail open có bound; guard về correctness thì fail closed có thể truy vết. Degraded mode không bao giờ được chạy âm thầm.</em></div>
+
+<div class="mono" style="margin-top:18px;border-top:1px solid var(--line);padding-top:10px">
+<a href="good-system-design-p01-prism.html">← Quay lại P01</a> · Micro Prism · Fail Open vs Fail Closed · Parent Verdicts được trace trong P01.
+</div>
+</div>
+</body>
+</html>

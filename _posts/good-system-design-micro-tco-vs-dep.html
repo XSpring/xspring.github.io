@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micro Prism — TCO vs Đẹp</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0C10;--line:#27272A;--text:#C5C6C7;--bright:#FAFAFA;--econ:#10B981;--phil:#D946EF;--gold:#FBBF24}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.7}
+a{color:var(--phil)} .mono{font-family:"JetBrains Mono",monospace;font-size:12px;color:#9CA3AF}
+.wrap{max-width:78ch;margin:0 auto;padding:28px 20px 60px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;background:#0B1220;margin:16px 0}
+.h2{font-size:22px;color:var(--bright);margin:28px 0 8px}
+.verdict{border-left:4px solid var(--accent);background:rgba(255,255,255,.04);padding:12px;border-radius:0 8px 8px 0;margin:10px 0}
+.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;border:1px solid var(--line);background:#0B1220}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="mono">Micro Prism · Drill-down từ <a href="good-system-design-p01-prism.html">P01 v2</a> · High · 💰 Economic ⇄ 💭 Philosophical — TCO vs Đẹp</div>
+<h1 style="color:var(--bright);font-size:30px;margin:8px 0">TCO vs Đẹp:<br>Khi rẻ hôm nay thành nợ hình thức ngày mai</h1>
+<p class="mono">Nguồn: Sean, Ousterhout/美团, Brooks, Conway/Fowler, Dan Luu, ByteDance/Alibaba SCMP/IDC, Ian Duncan, Backendhance, McKinley</p>
+
+<div class="card">
+<strong style="color:var(--bright)">Context.</strong> Sean: “boring wins” — hệ tốt trông underwhelming. Nhưng thị trường thưởng người ra mắt trước. Economic đo TCO (infra+headcount+chi phí thay đổi); Philosophical đo accidental complexity & reversibility. Tesler’s Law: complexity không xóa được, chỉ dịch chuyển — Economic dịch sang tương lai (nợ), Philosophical đòi trả trước.
+</div>
+
+<h2 class="h2" style="color:var(--econ)">💰 Economic — Rẻ nhất để sở hữu</h2>
+<p>Architecture là org chart trá hình. Microservices khi org còn silo → distributed monolith, thuế coordination. Abstraction “linh hoạt” (keys/values, value JSON) rẻ ngắn hạn nhưng đẩy complexity vào app code. ByteDance hạ 99% giá token để chiếm 49,2% share — thắng adoption, đốt margin; Alibaba giữ integrated fortress — thắng TCO dài hạn.</p>
+<div class="verdict" style="--accent:var(--econ)"><strong>The Verdict —</strong> <em>Thiết kế rẻ nhất để sở hữu trọn vòng đời thường không phải thiết kế rẻ nhất để build trong quý này.</em></div>
+<div class="mono">Novelty Budget (McKinley): mỗi team ~3 innovation tokens — tiêu keo kiệt.</div>
+
+<h2 class="h2" style="color:var(--phil)">💭 Philosophical — Đẹp là khả năng rút lại</h2>
+<p>Phân biệt essential (vốn có của bài toán) vs accidental (do ta tạo). Deep module, information hiding, complexity down-shifting. Dành 10–15% thời gian cho thiết kế, design twice. Mỗi quyết định lớn phải có thể rút lại mà không để lại sẹo.</p>
+<div class="verdict" style="--accent:var(--phil)"><strong>The Verdict —</strong> <em>Thiết kế đẹp là thiết kế gom essential, xóa accidental, tiêu novelty budget keo kiệt để mọi quyết định đều có thể rút lại.</em></div>
+
+<h2 class="h2">🌊 Interference</h2>
+<div class="grid2">
+<div class="card"><span class="pill" style="border-color:rgba(239,68,68,.4)">💰 ⇄ 💭 Destructive</span><p><strong>Rẻ hôm nay vs đẹp ngày mai.</strong> Economic chấp nhận nợ accidental để ship; Philosophical đòi trả ngay. Không có vị trí thứ ba — chỉ có lựa chọn <em>khi nào trả</em>.</p></div>
+<div class="card"><span class="pill" style="border-color:rgba(34,197,94,.4)">💭 × ⚙️ Constructive</span><p>Boring chung — ít state = ít nợ hình thức.</p></div>
+</div>
+
+<h2 class="h2">🧭 Navigation</h2>
+<div class="card">
+<ul>
+<li><strong>Dùng 💰 khi</strong> chọn giữa hai phương án Technical tương đương về p99.</li>
+<li><strong>Chuyển ngay sang 💭 khi</strong> chuẩn bị thêm abstraction “linh hoạt” hay service mới — hỏi reversibility?</li>
+<li><strong>Không để 💰 chi phối khi</strong> quyết định tạo accidental không thể đảo ngược (shared DB, hybrid zombie).</li>
+<li><strong>Không để 💭 chi phối khi</strong> cần ship để học từ thị trường — ship vertical slice mỏng trước.</li>
+</ul>
+<div style="margin-top:10px;padding:10px;border:1px dashed var(--line);border-radius:8px" class="mono">
+<strong style="color:var(--gold)">Novelty Budget:</strong> Mỗi team ~3 tokens. Hết token thì phần còn lại phải boring và battle-tested.<br>
+<strong style="color:var(--gold)">Câu hỏi soi nợ:</strong> “Với những gì tôi biết hôm nay, tôi sẽ thiết kế thế nào? Tôi sẽ bỏ gì?”
+</div>
+</div>
+
+<div class="card"><strong style="color:var(--gold)">Transferable pattern.</strong> <em>Mọi complexity không thể xóa, chỉ dịch chuyển. Economic dịch sang tương lai (nợ), Philosophical đòi trả trước. Thiết kế tốt chọn lúc trả một cách có ý thức và giữ nợ ở dạng có thể đảo ngược.</em></div>
+
+<div class="card" style="background:rgba(217,70,239,.06)"><strong>Ví dụ 50.000€ cho một feature:</strong> Ước 4 tuần để “gửi offer qua email” nhưng vì hệ đã chia nhiều service+queue+DB, thực tế 2 tháng ×2 dev (~80 ngày ×700€). Feature đơn giản thành đắt vì accidental từ product vision “vô hạn integration” mà sau 2 năm chỉ dùng 1.</div>
+
+<div class="mono" style="margin-top:18px;border-top:1px solid var(--line);padding-top:10px">
+<a href="good-system-design-p01-prism.html">← Quay lại P01 v2</a> · Micros: <a href="good-system-design-micro-fail-open-vs-fail-closed.html">Fail Open</a> · <a href="good-system-design-micro-p99-vs-hieu.html">p99 vs Hiểu</a> · <a href="good-system-design-micro-an-toan-vs-toi-gian.html">An toàn vs Tối giản →</a>
+</div>
+</div>
+</body>
+</html>

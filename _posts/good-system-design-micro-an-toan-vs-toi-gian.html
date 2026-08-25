@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micro Prism — An toàn vs Tối giản</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0C10;--line:#27272A;--text:#C5C6C7;--bright:#FAFAFA;--psy:#A78BFA;--phil:#D946EF;--sec:#F59E0B;--gold:#FBBF24}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.7}
+a{color:var(--psy)} .mono{font-family:"JetBrains Mono",monospace;font-size:12px;color:#9CA3AF}
+.wrap{max-width:78ch;margin:0 auto;padding:28px 20px 60px}
+.card{border:1px solid var(--line);border-radius:12px;padding:16px;background:#0B1220;margin:16px 0}
+.h2{font-size:22px;color:var(--bright);margin:28px 0 8px}
+.verdict{border-left:4px solid var(--accent);background:rgba(255,255,255,.04);padding:12px;border-radius:0 8px 8px 0;margin:10px 0}
+.pill{display:inline-block;padding:4px 8px;border-radius:999px;font-size:11px;border:1px solid var(--line);background:#0B1220}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:700px){.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="mono">Micro Prism · Drill-down từ <a href="good-system-design-p01-prism.html">P01 v2</a> · High · 🧠 Psychological ⇄ 💭 Philosophical — An toàn vs Tối giản</div>
+<h1 style="color:var(--bright);font-size:30px;margin:8px 0">An toàn vs Tối giản:<br>Khi mỗi killswitch là một concept thừa</h1>
+<p class="mono">Nguồn: Sean killswitches, Ousterhout/美团, Cindy Sridharan, Summer of Protocols (Toyota Andon), Ian Duncan</p>
+
+<div class="card">
+<strong style="color:var(--bright)">Context.</strong> Sean: mọi automation đều cần killswitch bằng feature flag. Philosophical: đó là một concept thừa, một nhánh, một accidental complexity. Psychological đo an toàn bằng phút để tắt lúc 3h sáng; Philosophical đo vẻ đẹp bằng số concept thừa. Cùng một dòng <code>if feature_enabled?</code>, hai định nghĩa “tốt” ngược nhau.
+</div>
+
+<h2 class="h2" style="color:var(--psy)">🧠 Psychological — An toàn là khả năng tắt trong phút</h2>
+<p>Đòi hỏi log aggressive ở unhappy path, killswitch cho mọi automation, p95/p99 thay vì mean. Một flag tắt được trong phút quan trọng hơn deploy trong giờ. Ghét schema JSON linh hoạt quá mức và alert chỉ nhìn mean.</p>
+<div class="verdict" style="--accent:var(--psy)"><strong>The Verdict —</strong> <em>Hệ thống an toàn là hệ thống mà mọi automation đều có killswitch đặt tên, mọi nhánh lỗi đều có log, và mọi degraded mode đều tắt được trong phút — dù tăng số concept.</em></div>
+<div class="mono">Evidence: Sean killswitches (“every single piece of automation”), Toyota Andon — mọi công nhân có quyền kéo killswitch, distributed trust.</div>
+
+<h2 class="h2" style="color:var(--phil)">💭 Philosophical — Tối giản là ít concept</h2>
+<p>Đo số concept thừa và accidental complexity. Mỗi killswitch là một “nếu” mới, mỗi flag là một configuration state. Thích deep module, information hiding, complexity down-shifting. “日拱一卒” — mỗi ngày một tấc, 10–15% thời gian cho thiết kế.</p>
+<div class="verdict" style="--accent:var(--phil)"><strong>The Verdict —</strong> <em>Hệ thống tối giản là hệ thống có ít concept nhất mà vẫn chứa được essential complexity — và mọi concept thêm vào đều phải trả bằng một concept cũ được xóa.</em></div>
+
+<h2 class="h2" style="color:var(--sec)">🔐 Security — Đồng minh của Psychological</h2>
+<p>Không có audit log và killswitch thì không có containment. Nhưng mỗi flag cũng là một principal mới cần được gác bằng policy engine — nếu không, flag là bề mặt tấn công.</p>
+<div class="verdict" style="--accent:var(--sec)"><strong>The Verdict —</strong> <em>Killswitch và audit log là điều kiện tồn tại của containment — nhưng mỗi killswitch cũng là một principal mới cần được gác.</em></div>
+
+<h2 class="h2">🌊 Interference</h2>
+<div class="grid2">
+<div class="card"><span class="pill" style="border-color:rgba(239,68,68,.4)">🧠 ⇄ 💭 Destructive</span><p><strong>Thêm vs bớt.</strong> Mỗi killswitch/log/flag tăng an toàn nhưng tăng accidental. Không có hệ vừa có mọi killswitch vừa có ít concept nhất — phải chọn ngưỡng.</p></div>
+<div class="card"><span class="pill" style="border-color:rgba(34,197,94,.4)">🧠 × 🔐 Constructive</span><p>Audit chung — cùng đòi hỏi degraded mode hiển lộ và killswitch có audit — hiếm hoi cùng thắng khi làm đúng.</p></div>
+</div>
+
+<h2 class="h2">🧭 Navigation — Ngưỡng, không phải nguyên tắc tuyệt đối</h2>
+<div class="card">
+<strong>Khi nào thêm (dùng 🧠 làm chủ):</strong>
+<ul>
+<li>Automation có thể chạy quá tần suất / tốn tài nguyên / ảnh hưởng tiền/dữ liệu → thêm killswitch đặt tên rõ ràng, có runbook, có audit.</li>
+<li>Nhánh lỗi ảnh hưởng user-facing decision (422, billing) → log điều kiện trúng.</li>
+</ul>
+<strong>Khi nào bớt (dùng 💭 làm chủ):</strong>
+<ul>
+<li>Flag chỉ để “linh hoạt tương lai” mà không có nhu cầu hiện tại → xóa.</li>
+<li>5 flag gộp được thành 1 mà không mất khả năng tắt từng phần → gộp.</li>
+</ul>
+<div style="margin-top:10px;padding:10px;border:1px dashed var(--line);border-radius:8px" class="mono">
+<strong>Kỷ luật chung:</strong><br>
+1. <strong>Đếm flag</strong> như đếm service — nếu chỉ tăng không giảm, bạn đang nợ.<br>
+2. <strong>Deep module cho flag:</strong> Giấu sau <code>Policy.shouldRun(job)</code> thay vì rải <code>if feature_enabled?</code>.<br>
+3. <strong>Down-shifting:</strong> Đẩy complexity xuống tầng thấp (Thrift retry trong lib).<br>
+4. <strong>Killswitch cho killswitch:</strong> Flag system phải có audit/policy của chính nó.
+</div>
+</div>
+
+<div class="card" style="border-color:rgba(251,191,36,.3)"><strong style="color:var(--gold)">Transferable pattern.</strong> <em>Mỗi killswitch là một concept thừa phải trả lãi. Hệ an toàn không phải hệ có nhiều killswitch nhất, mà là hệ có số killswitch đủ để tắt trong phút và ít nhất để vẫn hiểu được.</em></div>
+
+<div class="card" style="background:rgba(167,139,250,.06)"><strong>Toyota Andon vs rừng flag:</strong> Toyota cho mọi công nhân quyền kéo Andon cord — distributed killswitch, trust cao, feedback low-volume high-impact. Ngược lại, rừng flag không ai nhớ flag nào làm gì → mỗi flag là Unknown Unknown. Killswitch chỉ an toàn khi được đặt tên, đếm, và gác.</div>
+
+<div class="mono" style="margin-top:18px;border-top:1px solid var(--line);padding-top:10px">
+<a href="good-system-design-p01-prism.html">← Quay lại P01 v2</a> · Micros: <a href="good-system-design-micro-fail-open-vs-fail-closed.html">Fail Open</a> · <a href="good-system-design-micro-p99-vs-hieu.html">p99 vs Hiểu</a> · <a href="good-system-design-micro-tco-vs-dep.html">TCO vs Đẹp</a>
+</div>
+</div>
+</body>
+</html>

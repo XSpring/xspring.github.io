@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prism Notes — Good System Design P05: Killswitches, Retries & Failing Gracefully</title>
+<meta name="generator" content="Prism Notes">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0C10;--line:#27272A;--text:#C5C6C7;--bright:#FAFAFA;--muted:#8A8FA0;--gold:#FBBF24;--tech:#06B6D4;--econ:#10B981;--psy:#A78BFA;--phil:#D946EF;--sec:#F59E0B;--tech-rgb:6,182,212;--econ-rgb:16,185,129;--psy-rgb:167,139,250;--phil-rgb:217,70,239;--sec-rgb:245,158,11}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.7}
+a{color:var(--tech)} .mono{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted)}
+.wrap{display:grid;grid-template-columns:18% 55% 27%;min-height:100vh}
+.left{position:sticky;top:0;height:100vh;overflow:auto;background:#0e141c;border-right:1px solid var(--line);padding:16px}
+.right{position:sticky;top:0;height:100vh;overflow:auto;background:#0e141c;border-left:1px solid var(--line);padding:16px}
+.mid{padding:24px;max-width:78ch;margin:0 auto}
+.phase{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+.phase .row{display:flex;gap:8px;align-items:center;font-size:11px;color:var(--muted)}
+.phase .dot{width:9px;height:9px;border-radius:50%;background:#2A3441;border:1px solid #3A4555}
+.phase .row.active{color:var(--bright)} .phase .row.active .dot{background:var(--bright)}
+.toggle{border:1px solid var(--line);border-radius:10px;padding:8px;background:#0B1220;margin-bottom:8px}
+.swatch{width:10px;height:10px;border-radius:50%;display:inline-block}
+.switch{appearance:none;width:34px;height:18px;background:#2A3441;border-radius:999px;position:relative;cursor:pointer}
+.switch:checked{background:#3A4555} .switch::after{content:"";position:absolute;left:2px;top:2px;width:14px;height:14px;background:white;border-radius:50%;transition:.2s}
+.switch:checked::after{transform:translateX(16px)}
+.btn{width:100%;padding:7px;border-radius:8px;border:1px solid var(--line);background:#121925;color:var(--text);cursor:pointer;font-size:11px}
+.monolith{background:linear-gradient(180deg,#1F2833,#16202e);border:1px solid #2A3441;border-radius:14px;padding:28px;text-align:center}
+.assumption{border-bottom:1px solid #6B7280} .assumption.shattered{text-decoration:line-through;text-decoration-color:#EF4444;text-decoration-thickness:2px}
+.shatter-msg{opacity:0;transition:.5s} .shatter-msg.show{opacity:1}
+.ray{font-size:10px;padding:5px 7px;border-radius:999px;border:1px solid var(--line);background:#0B1220}
+.cal{width:100%;border-collapse:collapse;font-size:11px} .cal th{color:var(--muted);text-align:left;padding:6px;border-bottom:1px solid var(--line)} .cal td{padding:6px;border-bottom:1px solid #1C2433}
+.refraction{border-left:3px solid var(--accent);background:linear-gradient(180deg,rgba(var(--accent-rgb),.08),transparent);border-radius:0 12px 12px 0;padding:14px;margin:14px 0}
+.refraction[data-lens="technical"]{--accent:var(--tech);--accent-rgb:var(--tech-rgb)}
+.refraction[data-lens="economic"]{--accent:var(--econ);--accent-rgb:var(--econ-rgb)}
+.refraction[data-lens="psychological"]{--accent:var(--psy);--accent-rgb:var(--psy-rgb)}
+.refraction[data-lens="philosophical"]{--accent:var(--phil);--accent-rgb:var(--phil-rgb)}
+.refraction[data-lens="security"]{--accent:var(--sec);--accent-rgb:var(--sec-rgb)}
+.verdict{border-left:4px solid var(--accent);background:rgba(var(--accent-rgb),.06);padding:10px;border-radius:0 8px 8px 0;margin:8px 0}
+.blind{border:1.5px dashed #71717A;background:rgba(9,9,11,.6);border-radius:10px;padding:10px;margin:8px 0;font-style:italic;color:#A1A1AA}
+.pill{display:inline-block;padding:3px 7px;border-radius:999px;font-size:10px;border:1px solid var(--line);background:#0B1220}
+.pill.des{border-color:rgba(239,68,68,.35)} .pill.cons{border-color:rgba(34,197,94,.35)}
+.matrix{display:grid;grid-template-columns:80px repeat(5,1fr);gap:5px;font-size:10px;margin:10px 0}
+.matrix .hd{color:var(--bright);background:#0B1220;border:1px solid var(--line);border-radius:7px;padding:6px;text-align:center}
+.matrix .cell{background:#0B1220;border:1px solid var(--line);border-radius:7px;padding:6px;text-align:center;min-height:36px;display:flex;align-items:center;justify-content:center}
+.hidden-lens{opacity:.15;filter:grayscale(.6)}
+.trace{outline:2px solid var(--gold);outline-offset:3px}
+.quiz{border:1px solid var(--line);border-radius:10px;padding:12px;background:#0B1220;margin:8px 0}
+@media(max-width:1000px){.wrap{grid-template-columns:1fr} .left,.right{position:relative;height:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<aside class="left">
+<div class="mono">PRISM NAVIGATOR · P05</div>
+<div style="font-weight:700;color:var(--bright);font-size:13px">Killswitch & Fail</div>
+<div class="phase" id="phaseTracker">
+<div class="row" data-state="s1"><span class="dot"></span>1. Hypostatization</div>
+<div class="row" data-state="s2"><span class="dot"></span>2. Calibration</div>
+<div class="row" data-state="s3"><span class="dot"></span>3. Refraction</div>
+<div class="row" data-state="s4"><span class="dot"></span>4. Interference</div>
+<div class="row" data-state="s5"><span class="dot"></span>5. Parallax</div>
+<div class="row" data-state="s6"><span class="dot"></span>6. Simulator</div>
+</div>
+<div class="mono" style="margin:6px 0">LENSES</div>
+<div class="toggle"><div style="display:flex;justify-content:space-between;align-items:center"><span><span class="swatch" style="background:var(--tech)"></span> <strong style="color:var(--tech)">Technical</strong></span><input type="checkbox" class="switch" data-lens="technical" checked></div><div class="mono">killswitch, backoff</div></div>
+<div class="toggle"><div style="display:flex;justify-content:space-between;align-items:center"><span><span class="swatch" style="background:var(--econ)"></span> <strong style="color:var(--econ)">Economic</strong></span><input type="checkbox" class="switch" data-lens="economic" checked></div><div class="mono">TCO retry storm</div></div>
+<div class="toggle"><div style="display:flex;justify-content:space-between;align-items:center"><span><span class="swatch" style="background:var(--psy)"></span> <strong style="color:var(--psy)">Psychological</strong></span><input type="checkbox" class="switch" data-lens="psychological" checked></div><div class="mono">observability failure</div></div>
+<div class="toggle"><div style="display:flex;justify-content:space-between;align-items:center"><span><span class="swatch" style="background:var(--phil)"></span> <strong style="color:var(--phil)">Philosophical</strong></span><input type="checkbox" class="switch" data-lens="philosophical" checked></div><div class="mono">boring, reversibility</div></div>
+<div class="toggle" style="border-color:rgba(245,158,11,.35)"><div style="display:flex;justify-content:space-between;align-items:center"><span><span class="swatch" style="background:var(--sec)"></span> <strong style="color:var(--sec)">Security</strong></span><input type="checkbox" class="switch" data-lens="security" checked></div><div class="mono">idempotency, audit</div></div>
+<button class="btn" id="showAll">Show all lenses</button>
+<div class="mono" style="margin-top:8px"><a href="good-system-design-p04-push-pull-hot-path-observability.html">← P04</a> · <a href="good-system-design-atlas.html">Atlas</a></div>
+</aside>
+
+<main class="mid">
+<div class="mono">Prism Notes · P05 Killswitches, Retries & Failing Gracefully · High · Strategic Audit · Practitioner</div>
+<h1 style="color:var(--bright);font-size:28px;margin:6px 0">P05: Killswitches, Retries & Failing Gracefully — Tắt nhanh, thử lại có kỷ luật, và chọn hướng hỏng an toàn</h1>
+<p class="mono">Hạt nhân: Sean §§ Killswitches, Retries, Failing Gracefully (06/2025) + “Every service should have a killswitch” · Đối chiếu: Azure Retry Storm, Google SRE, Sentinel/Resilience4j, 阿里/腾讯 熔断限流</p>
+
+<section id="s1" data-state="s1">
+<div class="monolith" id="monolith">
+<div style="font-weight:700;color:var(--bright);font-size:18px">Hệ thống tốt là hệ thống tự hồi phục — cứ retry là sẽ qua, và hỏng thế nào cũng như nhau</div>
+<div style="margin-top:8px;font-size:12px"><span class="assumption" id="assumption">Giả định: Retry là thuốc chữa bách bệnh; hỏng theo hướng nào cũng như nhau.</span></div>
+<div class="mono shatter-msg" id="shatterMsg" style="margin-top:10px;color:var(--bright)">Không có góc nhìn khách quan. Chỉ có các khúc xạ.</div>
+<div style="display:flex;gap:6px;justify-content:center;margin-top:10px;flex-wrap:wrap"><span class="ray" style="color:var(--tech)">⚙️ Tech</span><span class="ray" style="color:var(--econ)">💰 Econ</span><span class="ray" style="color:var(--psy)">🧠 Psy</span><span class="ray" style="color:var(--phil)">💭 Phil</span><span class="ray" style="color:var(--sec)">🔐 Sec</span></div>
+</div>
+<p>Sean: killswitch nhanh hơn deploy hàng giờ; retry không phải magic bullet — cần circuit breaker và idempotency key; phải quyết định fail open vs fail closed tuỳ feature.</p>
+</section>
+
+<section id="s2" data-state="s2">
+<h2 style="color:var(--bright)">🔬 Prism Calibration</h2>
+<table class="cal">
+<tr><th>Lens</th><th>Prime Directive</th><th>Metric</th><th>Vocab</th></tr>
+<tr style="background:rgba(6,182,212,.07)"><td><strong style="color:var(--tech)">⚙️ Tech</strong></td><td>cô lập lỗi</td><td>retry amplification, circuit state</td><td>killswitch, backoff, jitter, circuit breaker, idempotency, fail open/closed</td></tr>
+<tr style="background:rgba(16,185,129,.07)"><td><strong style="color:var(--econ)">💰 Econ</strong></td><td>TCO khi hỏng</td><td>cost retry storm, MTTR</td><td>retry budget, TCO, Sentinel</td></tr>
+<tr style="background:rgba(167,139,250,.07)"><td><strong style="color:var(--psy)">🧠 Psy</strong></td><td>mental model khớp</td><td>MTTD, time-to-kill</td><td>observability, dead letter, runbook</td></tr>
+<tr style="background:rgba(217,70,239,.07)"><td><strong style="color:var(--phil)">💭 Phil</strong></td><td>reversibility</td><td>số concept thừa</td><td>essential/accidental, boring</td></tr>
+<tr style="background:rgba(245,158,11,.07)"><td><strong style="color:var(--sec)">🔐 Sec</strong></td><td>audit completeness</td><td>blast radius replay</td><td>principal, scoped idempotency, retention</td></tr>
+</table>
+<div class="mono" style="margin-top:6px">High · Strategic Audit · Kế thừa P01 v2</div>
+</section>
+
+<section id="s3" data-state="s3">
+<h2 style="color:var(--bright)">💠 The Refraction Deck</h2>
+
+<article class="refraction" data-lens="technical" id="lens-technical">
+<h2 style="color:var(--tech)">⚙️ Technical Refraction</h2>
+<p style="font-style:italic;color:#9CA3AF">Hệ thống là một tập dependency có thể hỏng. Nhiệm vụ là làm cho hỏng có kỷ luật.</p>
+<p>Mọi automation cần killswitch — feature flag <code>return if feature_enabled?(killswitch)</code> nhanh hơn deploy hàng giờ. Retry mù quáng tạo retry storm — mỗi retry thêm tải, tải thêm làm chậm, chậm thêm trigger retry. Vì thế: exponential backoff, jitter, cap (Google SRE: 3 attempts, 10% retry budget), circuit breaker CLOSED→OPEN→HALF_OPEN, và idempotency key (UUID lưu ở receiver để deduplicate).</p>
+<blockquote class="verdict" id="verdict-technical"><strong>The Verdict —</strong> <em>Hệ thống có kỷ luật khi hỏng là hệ thống mà mọi automation đều tắt được trong phút, mọi retry đều có bound/backoff/jitter/idempotency, và mọi guard đều có default fail open/closed được đặt tên trước.</em></blockquote>
+<div class="blind">🙈 <strong>BLIND SPOT.</strong> <em>Không thấy con người, tiền, và vẻ đẹp. Sẵn sàng thêm killswitch/circuit breaker cho mọi thứ dù TCO tăng.</em></div>
+</article>
+
+<article class="refraction" data-lens="economic" id="lens-economic">
+<h2 style="color:var(--econ)">💰 Economic Refraction</h2>
+<p style="font-style:italic;color:#9CA3AF">Hệ thống là một khoản TCO. Mỗi hàng rào khi hỏng là một khoản thuê — và retry storm là khoản thuê đắt nhất.</p>
+<p>Retry storm làm cho “coming up” khó hơn “going down”: DB chết rồi tất cả refresh + retry + queue drain cùng đổ vào. Circuit breaker rẻ hơn retry vô hạn. Idempotency rẻ hơn double charge. Killswitch rẻ hơn deploy trong incident — nhưng mỗi killswitch cũng là một concept phải maintain.</p>
+<blockquote class="verdict" id="verdict-economic"><strong>The Verdict —</strong> <em>Hàng rào rẻ nhất khi hỏng là hàng rào ngăn được amplification đắt nhất — và TCO phải bao gồm cả người trực.</em></blockquote>
+<div class="blind">🙈 <strong>BLIND SPOT.</strong> <em>Không thấy đúng-sai kỹ thuật. Sẵn sàng chấp nhận eventual consistency nếu TCO rẻ hơn.</em></div>
+</article>
+
+<article class="refraction" data-lens="psychological" id="lens-psychological">
+<h2 style="color:var(--psy)">🧠 Psychological Refraction</h2>
+<p style="font-style:italic;color:#9CA3AF">Hệ thống là một mô hình tâm trí. Khi hỏng, mô hình vỡ nhanh nhất.</p>
+<p>Mọi killswitch phải được đặt tên và đếm; mọi circuit breaker phải có metric state và transition log; mọi retry phải có attempt count và dead letter queue; mọi idempotency key phải được generate before reserve và persist. Killswitch không được chạy thường xuyên thì silently break.</p>
+<blockquote class="verdict" id="verdict-psychological"><strong>The Verdict —</strong> <em>Mọi hàng rào khi hỏng đều phải có tín hiệu hiển lộ (killswitch state, retry count, circuit state, dead letter) và hợp đồng với người trực.</em></blockquote>
+<div class="blind">🙈 <strong>BLIND SPOT.</strong> <em>Không thấy chi phí. Sẵn sàng thêm metric/log cho mọi hàng rào dù TCO tăng.</em></div>
+</article>
+
+<article class="refraction" data-lens="philosophical" id="lens-philosophical">
+<h2 style="color:var(--phil)">💭 Philosophical Refraction</h2>
+<p style="font-style:italic;color:#9CA3AF">Hệ thống là một tuyên ngôn về cách thế giới nên được sắp xếp.</p>
+<p>Ghét “thêm hàng rào cho mọi thứ” — mỗi killswitch/circuit breaker là một concept mới, một accidental complexity. Thích boring và novelty budget keo kiệt — chỉ thêm hàng rào cho hot path, và mọi hàng rào đều có thể rút lại.</p>
+<blockquote class="verdict" id="verdict-philosophical"><strong>The Verdict —</strong> <em>Nhịp khi hỏng tốt là nhịp mà chỉ phần nóng được trả giá bằng hàng rào — và mọi hàng rào thêm vào đều có thể rút lại.</em></blockquote>
+<div class="blind">🙈 <strong>BLIND SPOT.</strong> <em>Không thấy thị trường. Sẵn sàng trì hoãn ship để giữ nhịp “đẹp”.</em></div>
+</article>
+
+<article class="refraction" data-lens="security" id="lens-security">
+<h2 style="color:var(--sec)">🔐 Security Refraction</h2>
+<p style="font-style:italic;color:#9CA3AF">Hệ thống là một tập ranh giới. Khi hỏng, retry/replay là nơi đầu tiên bị lạm dụng.</p>
+<p>Retry là replay — và replay là attack surface. Retry không có idempotency là double charge. Killswitch không có policy thì bất kỳ ai bật flag là tắt hệ thống. Đòi hỏi scoped idempotency với retention khớp retry cap, và audit completeness.</p>
+<blockquote class="verdict" id="verdict-security"><strong>The Verdict —</strong> <em>Mọi hàng rào khi hỏng đều là một bản sao của tài sản đang di chuyển — và chỉ an toàn khi có scoped idempotency, retention khớp retry cap, và audit được đo.</em></blockquote>
+<div class="blind">🙈 <strong>BLIND SPOT.</strong> <em>Không thấy chi phí và tốc độ. Sẵn sàng thêm policy/audit cho mọi hàng rào dù p99 tăng.</em></div>
+</article>
+</section>
+
+<section id="s4" data-state="s4">
+<h2 style="color:var(--bright)">🌊 Interference Pattern</h2>
+<div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">
+<span class="pill cons">+ boring chung</span><span class="pill cons">+ ghét state ẩn</span><span class="pill cons">+ audit chung</span>
+<span class="pill des">⚔ p99 vs hiểu</span><span class="pill des">⚔ surface vs isolation</span>
+</div>
+<div class="matrix">
+<div></div><div class="hd" style="color:var(--tech)">⚙️</div><div class="hd" style="color:var(--econ)">💰</div><div class="hd" style="color:var(--psy)">🧠</div><div class="hd" style="color:var(--phil)">💭</div><div class="hd" style="color:var(--sec)">🔐</div>
+<div class="hd">⚙️</div><div class="cell diag">—</div><div class="cell"><span class="pill des">scale vs TCO</span></div><div class="cell"><span class="pill des">p99 vs hiểu</span></div><div class="cell"><span class="pill cons">boring chung</span></div><div class="cell"><span class="pill des">surface vs isolation</span></div>
+<div class="hd">💰</div><div class="cell">scale vs TCO</div><div class="cell diag">—</div><div class="cell"><span class="pill cons">ghét state ẩn</span></div><div class="cell"><span class="pill des">TCO vs đẹp</span></div><div class="cell"><span class="pill des">TCO vs guard</span></div>
+<div class="hd">🧠</div><div class="cell">p99 vs hiểu</div><div class="cell">ghét state ẩn</div><div class="cell diag">—</div><div class="cell"><span class="pill des">an toàn vs đơn giản</span></div><div class="cell"><span class="pill cons">audit chung</span></div>
+<div class="hd">💭</div><div class="cell">boring chung</div><div class="cell">TCO vs đẹp</div><div class="cell">an toàn vs đơn giản</div><div class="cell diag">—</div><div class="cell"><span class="pill des">guard vs ship</span></div>
+<div class="hd">🔐</div><div class="cell">surface vs isolation</div><div class="cell">TCO vs guard</div><div class="cell">audit chung</div><div class="cell">guard vs ship</div><div class="cell diag">—</div>
+</div>
+<h3>✨ Constructive</h3>
+<ul><li><strong>⚙️×💭 — Boring chung cho hàng rào:</strong> cùng ghét thêm hàng rào cho mọi thứ.</li><li><strong>💰×🧠 — Ghét state ẩn (bản hỏng):</strong> cùng gắn cờ retry không có attempt count.</li><li><strong>🔐×🧠 — Audit chung:</strong> killswitch state/retry count/circuit state hiển lộ → vừa chẩn đoán vừa truy vết.</li></ul>
+<h3>⚔️ Destructive</h3>
+<ul><li><strong>⚙️⇄🧠 — p99 vs hiểu (bản hỏng):</strong> hàng rào cứu p99 nhưng làm “đã tắt” thành “đã tắt chưa?”.</li><li><strong>⚙️⇄🔐 — Surface vs isolation:</strong> killswitch/circuit breaker để cô lập lỗi lại mở thêm principal.</li></ul>
+</section>
+
+<section id="s5" data-state="s5">
+<h2 style="color:var(--bright)">🧭 Parallax View</h2>
+<blockquote style="border-left:3px solid var(--bright);background:#111114;padding:10px;border-radius:0 8px 8px 0">Killswitches, retries, và failing gracefully là ba mặt của cùng một câu hỏi: khi hỏng, hệ thống nên làm gì để ít đau hơn. Hệ thống có kỷ luật khi hỏng trông như “không có gì xảy ra, chỉ chậm hơn một chút, và có thể hỏi tại sao”.</blockquote>
+<ul>
+<li><span style="color:var(--tech)">●</span> <strong>Dùng ⚙️ làm chủ khi</strong> quyết định killswitch, backoff/jitter/cap, circuit breaker/idempotency.</li>
+<li><span style="color:var(--psy)">●</span> <strong>Chuyển ngay sang 🧠 khi</strong> thêm hàng rào khi hỏng mới — nếu không kể được “đang ở state nào”, bạn tạo Unknown Unknown.</li>
+<li><span style="color:var(--sec)">●</span> <strong>Chuyển ngay sang 🔐 khi</strong> hàng rào chứa PII/money/token hay có thể trigger bởi external.</li>
+<li><span style="color:var(--psy)">●</span> <strong>Giữ 🧠 và 🔐 cùng lúc khi</strong> thiết kế observability cho hỏng — killswitch state/retry count/circuit state vừa chẩn đoán vừa audit.</li>
+</ul>
+<p style="font-style:italic;color:var(--muted)">Góc nhìn này tự nó cũng là phối cảnh. Không chọn 🌱 Ecological hay 🏛️ Historical là quyết định của tác giả.</p>
+</section>
+
+<section id="s6" data-state="s6">
+<h2 style="color:var(--bright)">💠 Trade-Off Simulator</h2>
+<div class="quiz" id="q1"><strong>Scenario 1 — Retry không có backoff/jitter/cap và không có idempotency.</strong> Va chạm chính? <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0"><label><input type="checkbox" value="technical"> ⚙️</label><label><input type="checkbox" value="security"> 🔐</label></div><button class="btn" onclick="checkQ('q1',['technical','security'])" style="width:auto;padding:6px 10px">Kiểm tra</button><div class="mono" id="q1-res"></div></div>
+<div class="quiz" id="q2"><strong>Scenario 2 — Killswitch không có policy — ai bật flag là tắt hệ thống.</strong> Va chạm chính? <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0"><label><input type="checkbox" value="security"> 🔐</label><label><input type="checkbox" value="technical"> ⚙️</label></div><button class="btn" onclick="checkQ('q2',['security','technical'])" style="width:auto;padding:6px 10px">Kiểm tra</button><div class="mono" id="q2-res"></div></div>
+<div class="quiz" id="q3"><strong>Scenario 3 — Fail closed cho rate limiter và fail open cho auth để “giữ availability”.</strong> Va chạm chính? <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0"><label><input type="checkbox" value="technical"> ⚙️</label><label><input type="checkbox" value="security"> 🔐</label></div><button class="btn" onclick="checkQ('q3',['technical','security'])" style="width:auto;padding:6px 10px">Kiểm tra</button><div class="mono" id="q3-res"></div></div>
+<div class="quiz" id="q4"><strong>Scenario 4 — Không có circuit breaker — mọi request chờ timeout dài, thread pool cạn.</strong> Va chạm chính? <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0"><label><input type="checkbox" value="technical"> ⚙️</label><label><input type="checkbox" value="economic"> 💰</label></div><button class="btn" onclick="checkQ('q4',['technical','economic'])" style="width:auto;padding:6px 10px">Kiểm tra</button><div class="mono" id="q4-res"></div></div>
+</section>
+
+<div class="mono" style="margin-top:12px;border-top:1px solid var(--line);padding-top:8px">
+P05 Killswitches, Retries & Failing Gracefully · High · Strategic Audit · <a href="good-system-design-p04-push-pull-hot-path-observability.html">← P04</a> · <a href="good-system-design-p03-slow-fast-queue-event-cache.html">P03</a> · <a href="good-system-design-atlas.html">Atlas</a>
+</div>
+</main>
+
+<aside class="right">
+<div class="mono">INTERFERENCE MONITOR · P05</div>
+<div class="mono" style="margin:6px 0">Killswitch & Fail · 5 lenses · 3/7</div>
+<div style="border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--card);margin-bottom:8px"><div style="height:4px;border-radius:999px;background:linear-gradient(90deg,var(--tech),var(--phil));margin-bottom:6px"></div><strong>⚙️×💭 boring chung</strong><div class="mono">Cùng ghét thêm hàng rào cho mọi thứ</div></div>
+<div style="border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--card);margin-bottom:8px"><div style="height:4px;border-radius:999px;background:linear-gradient(90deg,var(--econ),var(--psy));margin-bottom:6px"></div><strong>💰×🧠 ghét state ẩn</strong><div class="mono">Cùng gắn cờ retry không có count</div></div>
+<div style="border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--card);margin-bottom:8px"><div style="height:4px;border-radius:999px;background:linear-gradient(90deg,var(--sec),var(--psy));margin-bottom:6px"></div><strong>🔐×🧠 audit chung</strong><div class="mono">killswitch state hiển lộ</div></div>
+<div class="mono" style="margin-top:8px;padding:8px;border:1px dashed var(--line);border-radius:8px">Hover pill để trace về Verdict (viền vàng).</div>
+</aside>
+</div>
+<script>
+const assumption=document.getElementById('assumption');
+const shatterMsg=document.getElementById('shatterMsg');
+const monolith=document.getElementById('monolith');
+let shattered=false;
+const obs=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting&&!shattered){shattered=true;assumption.classList.add('shattered');setTimeout(()=>shatterMsg.classList.add('show'),350)}})},{threshold:0.3});
+obs.observe(monolith);
+const rows=document.querySelectorAll('#phaseTracker .row');
+const secs=document.querySelectorAll('section[id]');
+const po=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const id=e.target.id;rows.forEach(r=>r.classList.remove('active'));const a=document.querySelector(`#phaseTracker [data-state="${id}"]`);if(a)a.classList.add('active')}})},{threshold:0.3});
+secs.forEach(s=>po.observe(s));
+document.querySelectorAll('.switch').forEach(t=>{
+ t.addEventListener('change',e=>{const l=e.target.dataset.lens;const b=document.getElementById('lens-'+l);if(e.target.checked)b.classList.remove('hidden-lens');else b.classList.add('hidden-lens')});
+ t.addEventListener('dblclick',e=>{e.preventDefault();const l=e.target.dataset.lens;const all=[...document.querySelectorAll('.switch')].every(x=>x.checked);if(all){document.querySelectorAll('.switch').forEach(x=>{x.checked=(x.dataset.lens===l);const b=document.getElementById('lens-'+x.dataset.lens);if(x.checked)b.classList.remove('hidden-lens');else b.classList.add('hidden-lens')})}else{document.querySelectorAll('.switch').forEach(x=>{x.checked=true;document.getElementById('lens-'+x.dataset.lens).classList.remove('hidden-lens')})}});
+});
+document.getElementById('showAll').addEventListener('click',()=>{document.querySelectorAll('.switch').forEach(x=>{x.checked=true;document.getElementById('lens-'+x.dataset.lens).classList.remove('hidden-lens')})});
+function trace(a,b,on){const va=document.getElementById('verdict-'+a),vb=document.getElementById('verdict-'+b);if(on){if(va)va.classList.add('trace');if(vb)vb.classList.add('trace')}else{if(va)va.classList.remove('trace');if(vb)vb.classList.remove('trace')}}
+document.querySelectorAll('[data-lens-a]').forEach(el=>{el.addEventListener('mouseenter',()=>trace(el.dataset.lensA,el.dataset.lensB,true));el.addEventListener('mouseleave',()=>trace(el.dataset.lensA,el.dataset.lensB,false))});
+function checkQ(id,c){const box=document.getElementById(id),res=document.getElementById(id+'-res'),chk=[...box.querySelectorAll('input:checked')].map(i=>i.value).sort(),exp=c.slice().sort(),ok=JSON.stringify(chk)===JSON.stringify(exp);if(ok){res.style.color='#22C55E';res.textContent='✓ Đúng';trace(c[0],c[1],true);setTimeout(()=>trace(c[0],c[1],false),2000)}else{res.style.color='#EF4444';res.textContent='Chưa đúng. Đáp án: '+c.join(' + ')}}
+</script>
+</body>
+</html>

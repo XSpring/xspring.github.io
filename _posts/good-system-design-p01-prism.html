@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prism Notes — Good System Design: Điều gì khiến hệ thống “tốt”? (v2 +Security)</title>
+<meta name="generator" content="Prism Notes skill">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0C10;--panel:#1F2833;--card:#111114;--text:#C5C6C7;--bright:#FAFAFA;--line:#27272A;--gold:#FBBF24;
+  --tech:#06B6D4;--econ:#10B981;--psy:#A78BFA;--phil:#D946EF;--sec:#F59E0B;
+  --tech-rgb:6,182,212;--econ-rgb:16,185,129;--psy-rgb:167,139,250;--phil-rgb:217,70,239;--sec-rgb:245,158,11;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,-apple-system,Segoe UI,sans-serif;font-size:16px;line-height:1.7}
+a{color:var(--tech)}a:hover{color:var(--bright)}
+h1{font-size:32px;color:var(--bright);line-height:1.25;margin:0 0 8px}
+h2{font-size:24px;margin:32px 0 12px;color:var(--bright)}h3{font-size:18px;color:var(--bright);margin:20px 0 8px}
+p{margin:10px 0}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:13px;color:#9CA3AF}
+.grid{display:grid;grid-template-columns:18% 55% 27%;gap:0;min-height:100vh}
+.left{position:sticky;top:0;height:100vh;overflow:auto;background:#0e141c;border-right:1px solid var(--line);padding:18px 14px}
+.right{position:sticky;top:0;height:100vh;overflow:auto;background:#0e141c;border-left:1px solid var(--line);padding:18px 14px}
+.mid{padding:28px 28px 60px;max-width:78ch;margin:0 auto}
+.phase{display:flex;flex-direction:column;gap:8px;margin:12px 0 18px}
+.phase .row{display:flex;align-items:center;gap:8px;font-size:12px;color:#8A8FA0}
+.phase .dot{width:9px;height:9px;border-radius:50%;background:#2A3441;border:1px solid #3A4555}
+.phase .row.active{color:var(--bright)}.phase .row.active .dot{background:var(--bright);border-color:var(--bright);box-shadow:0 0 8px rgba(250,250,250,.6)}
+.toggle{border:1px solid var(--line);border-radius:10px;padding:10px;background:#0B1220;margin-bottom:10px}
+.toggle-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.swatch{width:12px;height:12px;border-radius:50%;display:inline-block}
+.switch{appearance:none;width:36px;height:20px;background:#2A3441;border-radius:999px;position:relative;cursor:pointer;transition:.2s}
+.switch:checked{background:#3A4555}
+.switch::after{content:"";position:absolute;left:2px;top:2px;width:16px;height:16px;background:white;border-radius:50%;transition:.2s}
+.switch:checked::after{transform:translateX(16px)}
+.btn{width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:#121925;color:var(--text);cursor:pointer;font-size:12px}
+.btn:hover{border-color:#3A4555;color:var(--bright)}
+.monolith{position:relative;background:linear-gradient(180deg,#1F2833 0%, #16202e 100%);border:1px solid #2A3441;border-radius:16px;padding:34px 28px;text-align:center;overflow:hidden}
+.monolith .label{letter-spacing:.14em;font-size:11px;color:#8A8FA0;margin-top:10px}
+.assumption{border-bottom:1px solid #6B7280;transition:.4s}
+.assumption.shattered{text-decoration:line-through;text-decoration-thickness:2px;text-decoration-color:#EF4444}
+.shatter-msg{opacity:0;transform:translateY(6px);transition:.6s;color:var(--bright);font-weight:500;margin-top:16px}
+.shatter-msg.show{opacity:1;transform:none}
+.prism-rays{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.ray{font-size:11px;padding:6px 8px;border-radius:999px;border:1px solid var(--line);background:#0B1220}
+.cal-table{width:100%;border-collapse:collapse;font-size:12px}
+.cal-table th{font-size:11px;letter-spacing:.06em;color:#8A8FA0;text-align:left;padding:8px;border-bottom:1px solid var(--line)}
+.cal-table td{padding:8px;border-bottom:1px solid #1C2433;vertical-align:top}
+.cal-table tr.tech{background:rgba(6,182,212,.08)} .cal-table tr.econ{background:rgba(16,185,129,.08)} .cal-table tr.psy{background:rgba(167,139,250,.08)} .cal-table tr.phil{background:rgba(217,70,239,.08)} .cal-table tr.sec{background:rgba(245,158,11,.08)}
+.refraction{border-left:3px solid var(--accent);background:linear-gradient(180deg, rgba(var(--accent-rgb),.08), transparent 60%);border-radius:0 12px 12px 0;padding:16px 18px;margin:18px 0;box-shadow:-8px 0 40px -12px rgba(var(--accent-rgb),.4)}
+.refraction[data-lens="technical"]{--accent:var(--tech);--accent-rgb:var(--tech-rgb)}
+.refraction[data-lens="economic"]{--accent:var(--econ);--accent-rgb:var(--econ-rgb)}
+.refraction[data-lens="psychological"]{--accent:var(--psy);--accent-rgb:var(--psy-rgb)}
+.refraction[data-lens="philosophical"]{--accent:var(--phil);--accent-rgb:var(--phil-rgb)}
+.refraction[data-lens="security"]{--accent:var(--sec);--accent-rgb:var(--sec-rgb)}
+.refraction h2{color:var(--accent);margin-top:4px}
+.verdict{border-left:4px solid var(--accent);background:rgba(var(--accent-rgb),.06);padding:12px 14px;border-radius:0 8px 8px 0;margin:12px 0}
+.verdict strong{color:var(--bright)}
+.blind{border:1.5px dashed #71717A;background:rgba(9,9,11,.6);backdrop-filter:blur(2px);border-radius:10px;padding:12px 14px;margin:12px 0;font-style:italic;color:#A1A1AA}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;font-size:11px;border:1px solid var(--line);background:#0B1220;cursor:pointer}
+.pill.cons{border-color:rgba(34,197,94,.4)} .pill.des{border-color:rgba(239,68,68,.4)}
+.wave{position:relative;height:440px;background:radial-gradient(600px 300px at 50% 50%, #121925 0%, transparent 70%);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:14px 0}
+.circle{position:absolute;border-radius:50%;mix-blend-mode:screen;opacity:.35;border:1px solid rgba(255,255,255,.06);display:flex;align-items:center;justify-content:center;color:var(--bright);font-weight:700;font-size:11px;letter-spacing:.04em}
+.circle.t{left:12%;top:6%;width:200px;height:200px;background:var(--tech)}
+.circle.e{left:38%;top:8%;width:210px;height:210px;background:var(--econ)}
+.circle.p{left:18%;top:42%;width:200px;height:200px;background:var(--psy)}
+.circle.h{left:50%;top:38%;width:200px;height:200px;background:var(--phil)}
+.circle.s{left:28%;top:22%;width:210px;height:210px;background:var(--sec)}
+.wave-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:#0B1220;border:1px solid var(--line);padding:6px 10px;border-radius:999px;font-size:10px;white-space:nowrap}
+.matrix{display:grid;grid-template-columns:110px repeat(5,1fr);gap:6px;font-size:11px;margin:12px 0}
+.matrix .hd{color:var(--bright);font-weight:700;padding:8px;background:#0B1220;border:1px solid var(--line);border-radius:8px;text-align:center}
+.matrix .cell{padding:6px;border:1px solid var(--line);background:#0B1220;border-radius:8px;text-align:center;min-height:44px;display:flex;align-items:center;justify-content:center}
+.matrix .cell.diag{color:#6B7280}
+.quiz{border:1px solid var(--line);border-radius:12px;padding:14px;background:#0B1220;margin:10px 0}
+.quiz label{display:flex;gap:8px;align-items:center;font-size:13px;margin:6px 0}
+.trace{outline:2px solid var(--gold);outline-offset:4px;box-shadow:0 0 18px rgba(251,191,36,.4)}
+.card{border:1px solid var(--line);border-radius:10px;padding:10px;background:#0B1220;margin-bottom:8px;font-size:12px}
+.card .bar{height:4px;border-radius:999px;margin-bottom:6px}
+.hidden-lens{opacity:.15;filter:grayscale(.6)}
+@media(max-width:1200px){.grid{grid-template-columns:200px 1fr 280px}}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr}
+  .left,.right{position:relative;height:auto}
+  .wave{height:360px}
+  .circle{width:150px!important;height:150px!important}
+  .matrix{grid-template-columns:80px repeat(5,1fr);font-size:10px}
+}
+@media print{
+  .left,.right{display:none} .grid{display:block} body{background:white;color:#111} .mid{max-width:100%}
+}
+</style>
+</head>
+<body>
+<div class="grid">
+<aside class="left" aria-label="Prism Navigator">
+  <div style="font-size:11px;letter-spacing:.12em;color:#8A8FA0">PRISM NAVIGATOR v2</div>
+  <div style="font-weight:700;color:var(--bright);font-size:14px;margin:2px 0 10px">Good System Design</div>
+  <div class="phase" id="phaseTracker">
+    <div class="row" data-state="s1"><span class="dot"></span> 1. Hypostatization</div>
+    <div class="row" data-state="s2"><span class="dot"></span> 2. Prism Calibration</div>
+    <div class="row" data-state="s3"><span class="dot"></span> 3. Lens Refraction</div>
+    <div class="row" data-state="s4"><span class="dot"></span> 4. Interference Pattern</div>
+    <div class="row" data-state="s5"><span class="dot"></span> 5. Parallax View</div>
+    <div class="row" data-state="s6"><span class="dot"></span> 6. Trade-Off Simulator</div>
+  </div>
+  <div style="font-size:11px;letter-spacing:.08em;color:#8A8FA0;margin:6px 0">LENS TOGGLES — double-click solo</div>
+  <div class="toggle"><div class="toggle-head"><span><span class="swatch" style="background:var(--tech)"></span> <strong style="color:var(--tech)">Technical</strong></span><input type="checkbox" class="switch" data-lens="technical" checked></div><div class="mono" style="margin-top:6px">Cô lập lỗi</div></div>
+  <div class="toggle"><div class="toggle-head"><span><span class="swatch" style="background:var(--econ)"></span> <strong style="color:var(--econ)">Economic</strong></span><input type="checkbox" class="switch" data-lens="economic" checked></div><div class="mono" style="margin-top:6px">TCO & org</div></div>
+  <div class="toggle"><div class="toggle-head"><span><span class="swatch" style="background:var(--psy)"></span> <strong style="color:var(--psy)">Psychological</strong></span><input type="checkbox" class="switch" data-lens="psychological" checked></div><div class="mono" style="margin-top:6px">Mental model</div></div>
+  <div class="toggle"><div class="toggle-head"><span><span class="swatch" style="background:var(--phil)"></span> <strong style="color:var(--phil)">Philosophical</strong></span><input type="checkbox" class="switch" data-lens="philosophical" checked></div><div class="mono" style="margin-top:6px">Boring & reversibility</div></div>
+  <div class="toggle" style="border-color:rgba(245,158,11,.4)"><div class="toggle-head"><span><span class="swatch" style="background:var(--sec)"></span> <strong style="color:var(--sec)">Security</strong></span><input type="checkbox" class="switch" data-lens="security" checked></div><div class="mono" style="margin-top:6px">Least privilege & containment</div></div>
+  <button class="btn" id="showAll">Show all lenses</button>
+  <div class="mono" style="margin-top:10px">Micro drill-down: <a href="good-system-design-micro-fail-open-vs-fail-closed.html" style="color:var(--sec)">Fail Open vs Fail Closed →</a></div>
+</aside>
+
+<main class="mid">
+  <div class="mono">Prism Notes · P01 v2 (5 lenses) · High · Strategic Audit · Practitioner</div>
+  <h1>Good System Design: Điều gì khiến một hệ thống được gọi là “tốt”?</h1>
+  <p style="color:#9CA3AF">Từ Sean Goedecke (06/2025) tới DDIA, Dan Luu, Cindy Sridharan, Fowler/Conway, 美团/阿里/字节 và security engineering — 5 lăng kính đối chọi. Drill-down va chạm: <a href="good-system-design-micro-fail-open-vs-fail-closed.html" style="color:var(--sec)">Fail Open vs Fail Closed</a>.</p>
+
+  <section id="s1" data-state="s1">
+    <div class="monolith" id="monolith">
+      <div style="font-size:20px;font-weight:700;color:var(--bright)">Hệ thống “tốt” = hệ thống scale, phân tán, dùng nhiều pattern tinh vi</div>
+      <div style="margin-top:8px;color:#C5C6C7">queues · CQRS · consensus · event-driven</div>
+      <div class="label">THE DEFAULT PARADIGM</div>
+      <div style="margin-top:10px;font-size:13px;color:#A1A1AA"><span class="assumption" id="assumption">Giả định: khả năng chịu tải ở quy mô lớn là thước đo khách quan của chất lượng thiết kế.</span></div>
+      <div class="shatter-msg" id="shatterMsg">Không có góc nhìn khách quan. Chỉ có các khúc xạ.</div>
+      <div class="prism-rays"><span class="ray" style="border-color:rgba(6,182,212,.4);color:var(--tech)">⚙️ Technical</span><span class="ray" style="border-color:rgba(16,185,129,.4);color:var(--econ)">💰 Economic</span><span class="ray" style="border-color:rgba(167,139,250,.4);color:var(--psy)">🧠 Psy</span><span class="ray" style="border-color:rgba(217,70,239,.4);color:var(--phil)">💭 Phil</span><span class="ray" style="border-color:rgba(245,158,11,.4);color:var(--sec)">🔐 Security</span></div>
+    </div>
+    <p>Sean: thiết kế tốt trông <em>nhàm chán</em> — “nothing going wrong for a long time”. Thêm Security làm lộ giả định ẩn: “hệ thống chỉ hỏng, không bị tấn công”.</p>
+  </section>
+
+  <section id="s2" data-state="s2">
+    <h2>🔬 Prism Calibration</h2>
+    <table class="cal-table">
+      <thead><tr><th>Lens</th><th>Prime Directive</th><th>Primary Metric</th><th>Native Vocabulary</th></tr></thead>
+      <tbody>
+        <tr class="tech"><td><strong style="color:var(--tech)">⚙️ Technical</strong></td><td>Tính quyết định & cô lập lỗi</td><td>p99, blast radius</td><td>state, stateless, replica, backpressure, idempotency, circuit breaker</td></tr>
+        <tr class="econ"><td><strong style="color:var(--econ)">💰 Economic</strong></td><td>Tối ưu TCO & org</td><td>cost/request, headcount</td><td>TCO, Conway, org chart, token, subsidy</td></tr>
+        <tr class="psy"><td><strong style="color:var(--psy)">🧠 Psy</strong></td><td>Độ khớp mental model</td><td>MTTD, onboarding</td><td>mental model, observability, killswitch, on-call</td></tr>
+        <tr class="phil"><td><strong style="color:var(--phil)">💭 Phil</strong></td><td>Giản dị & reversibility</td><td>số concept thừa</td><td>essential/accidental complexity, boring, self-effacing</td></tr>
+        <tr class="sec"><td><strong style="color:var(--sec)">🔐 Security</strong></td><td>Least privilege & containment</td><td>blast radius, audit completeness</td><td>threat model, principal, least privilege, fail-closed, revocation, zero trust</td></tr>
+      </tbody>
+    </table>
+    <div class="mono" style="margin-top:8px">Intensity: High · Synthesis: Strategic Audit · Audience: Practitioner · Lenses: 5 (v2 +Security) · Micro: <a href="good-system-design-micro-fail-open-vs-fail-closed.html">Fail Open vs Fail Closed</a></div>
+  </section>
+
+  <section id="s3" data-state="s3">
+    <h2>💠 The Refraction Deck</h2>
+
+    <article class="refraction" data-lens="technical" id="lens-technical">
+      <h2>⚙️ Technical Refraction</h2>
+      <p style="font-style:italic;color:#9CA3AF">Hệ thống là tập máy trạng thái tranh nhau tài nguyên. Nhiệm vụ là giam trạng thái và cách ly lỗi.</p>
+      <p>Dịch vụ stateless crash rồi hồi sinh trong container mà không để sẹo. Dịch vụ stateful thì không. Vì thế: một writer duy nhất cho mỗi bảng, đọc qua replica khi chịu được lag, tách slow path ra background job.</p>
+      <h3>Central Mechanism — State confinement + failure isolation</h3>
+      <p>Giam trạng thái vào ít component nhất, bao quanh bằng index khớp query, replica đọc, queue bền, cache có chủ đích.</p>
+      <h3>Failure Modes</h3>
+      <ul>
+        <li>Năm service cùng ghi một bảng — bad state không truy vết.</li>
+        <li>Thundering herd vào write node.</li>
+        <li>N+1 query do ORM.</li>
+        <li>Cache không invalidation.</li>
+        <li>Thiếu idempotency & circuit breaker.</li>
+      </ul>
+      <blockquote class="verdict" id="verdict-technical"><strong>The Verdict —</strong> <em>Thiết kế tốt là thiết kế giam trạng thái vào ít nơi nhất, bảo vệ hot path, và dùng component nhàm chán đúng chỗ.</em></blockquote>
+      <div class="blind">🙈 <strong>BLIND SPOT.</strong> <em>Không thấy con người, tiền, và kẻ tấn công. Đo p99 nhưng không đo ngày để hiểu hệ thống hay headcount trực.</em></div>
+    </article>
+
+    <article class="refraction" data-lens="economic" id="lens-economic">
+      <h2>💰 Economic Refraction</h2>
+      <p style="font-style:italic;color:#9CA3AF">Hệ thống là khoản phân bổ vốn dưới ràng buộc tổ chức.</p>
+      <p>Diagram kiến trúc là org chart trá hình. Functional silo → distributed monolith. Cross-functional → module rời. Tiền lớn nằm ở headcount và thuế bảo trì.</p>
+      <h3>Central Mechanism — Conway's Law + TCO</h3>
+      <p>Muốn kiến trúc mục tiêu, đổi tổ chức trước. TCO tính infra + on-call + chi phí thay đổi.</p>
+      <h3>Failure Modes</h3>
+      <ul><li>Resume-driven over-engineering</li><li>Chia microservice sớm</li><li>Subsidy trap (ByteDance 99% cut)</li><li>Headcount trap</li></ul>
+      <blockquote class="verdict" id="verdict-economic"><strong>The Verdict —</strong> <em>Thiết kế tốt là thiết kế mà tổ chức hiện có có thể sở hữu trọn vòng đời với TCO thấp nhất.</em></blockquote>
+      <div class="blind">🙈 <strong>BLIND SPOT.</strong> <em>Không thấy ranh giới an toàn. Sẵn sàng chấp nhận stale hay bypass review nếu TCO rẻ hơn.</em></div>
+    </article>
+
+    <article class="refraction" data-lens="psychological" id="lens-psychological">
+      <h2>🧠 Psychological Refraction</h2>
+      <p style="font-style:italic;color:#9CA3AF">Hệ thống là mô hình tâm trí chia sẻ lúc 3 giờ sáng.</p>
+      <p>Cognitive load là ngân sách hữu hạn. Khi mental model vỡ, người ta đoán. Đòi hỏi log ở unhappy path, p95/p99, killswitch ở mọi automation.</p>
+      <h3>Central Mechanism — Mental model fidelity + operability budget</h3>
+      <p>Độ khớp giữa mô hình trong đầu người vận hành và hành vi thực.</p>
+      <h3>Failure Modes</h3>
+      <ul><li>Schema JSON quá linh hoạt</li><li>Cache vô hình</li><li>Thiếu log nhánh lỗi</li><li>Thiếu killswitch</li><li>Chỉ nhìn mean</li></ul>
+      <blockquote class="verdict" id="verdict-psychological"><strong>The Verdict —</strong> <em>Thiết kế tốt là thiết kế giữ mental model khớp thực tế và cho phép tắt/chẩn đoán/khôi phục trong phút.</em></blockquote>
+      <div class="blind">🙈 <strong>BLIND SPOT.</strong> <em>Không thấy kẻ thù. Sẵn sàng phơi thêm log để dễ hiểu — chính thứ rò PII nếu không được gác.</em></div>
+    </article>
+
+    <article class="refraction" data-lens="philosophical" id="lens-philosophical">
+      <h2>💭 Philosophical Refraction</h2>
+      <p style="font-style:italic;color:#9CA3AF">Hệ thống là tuyên ngôn về cách thế giới nên được sắp xếp.</p>
+      <p>Ousterhout: essential vs accidental complexity. Thiết kế tốt gom essential, triệt accidental. Thích boring, đo reversibility.</p>
+      <h3>Central Mechanism — Essential vs Accidental + Reversibility</h3>
+      <p>Giữ phức tạp không thể tránh, xóa phức tạp do vụng.</p>
+      <h3>Failure Modes</h3>
+      <ul><li>Clever trick thay boring</li><li>Bắt đầu bằng hệ thống phức tạp</li><li>Abstraction keys/values đẩy complexity vào app</li><li>Premature optimization</li></ul>
+      <blockquote class="verdict" id="verdict-philosophical"><strong>The Verdict —</strong> <em>Thiết kế tốt là thiết kế nhàm chán có chủ ý, gom essential và xóa accidental để có thể tiến hóa.</em></blockquote>
+      <div class="blind">🙈 <strong>BLIND SPOT.</strong> <em>Không thấy thị trường và kẻ tấn công. Sẵn sàng trì hoãn ship để giữ vẻ đẹp.</em></div>
+    </article>
+
+    <article class="refraction" data-lens="security" id="lens-security">
+      <h2>🔐 Security Refraction</h2>
+      <p style="font-style:italic;color:#9CA3AF">Hệ thống là tập ranh giới và năng lực được ủy quyền qua ranh giới. Thiết kế tốt là thiết kế mỗi lần vượt ranh giới đều phải chứng minh danh tính, bị giới hạn đặc quyền, và để lại chứng cứ.</p>
+      <p>Security không hỏi “nhanh không” mà hỏi “ai làm gì, bằng chứng nào, và khi lớp bảo vệ hỏng thì mặc định mở hay đóng”. Rate limiter guard capacity → fail open có bound. Auth guard identity → fail closed. Giữa hai cực có local limiter thô. Mọi degraded mode phải hiển lộ.</p>
+      <h3>Central Mechanism — Threat model → boundary → fail-closed/fail-open default</h3>
+      <p>Tài sản → entry point → threat → mitigation → tín hiệu kiểm chứng. Chọn default bằng cách cân chi phí lapse vs deny.</p>
+      <h3>Failure Modes</h3>
+      <ul><li>Fail open nhầm cho auth/payment → breach</li><li>Fail closed nhầm cho rate limiter → outage toàn API</li><li>Thiếu local fallback → blast radius không bound</li><li>Degraded mode vô hình</li><li>Policy engine single point of bypass</li></ul>
+      <h3>Native Evidence</h3>
+      <ul><li>Authzed & System Design School: rate limit → fail open, auth → fail closed, middle path = coarse local limiter</li><li>阿里 Sentinel/Resilience4j 熔断限流降级: CLOSED→OPEN→HALF_OPEN, 限流/熔断/降级 phân biệt</li><li>美团 OCTO/RASP: boundary enforcement ở quy mô TQ</li><li>Cindy + arXiv 2412.05617: audit completeness là metric bảo mật</li></ul>
+      <blockquote class="verdict" id="verdict-security"><strong>The Verdict —</strong> <em>Thiết kế tốt là thiết kế mà mỗi gác cổng đều có mặc định khi tự nó hỏng — fail open cho capacity, fail closed cho identity/money/correctness, và mọi degraded mode đều observable.</em></blockquote>
+      <div class="blind">🙈 <strong>BLIND SPOT.</strong> <em>Không thấy chi phí, tốc độ ship, hay tải nhận thức. Sẵn sàng thêm policy/audit/review dù p99 tăng và onboarding kéo dài.</em></div>
+    </article>
+  </section>
+
+  <section id="s4" data-state="s4">
+    <h2>🌊 Interference Pattern</h2>
+    <div class="wave" id="wave">
+      <div class="circle t">⚙️ TECH</div>
+      <div class="circle e">💰 ECON</div>
+      <div class="circle p">🧠 PSY</div>
+      <div class="circle h">💭 PHIL</div>
+      <div class="circle s">🔐 SEC</div>
+      <span class="wave-label pill cons" data-lens-a="technical" data-lens-b="philosophical" style="top:26%;left:42%">+ boring chung</span>
+      <span class="wave-label pill cons" data-lens-a="economic" data-lens-b="psychological" style="top:62%;left:32%">+ ghét state ẩn</span>
+      <span class="wave-label pill cons" data-lens-a="security" data-lens-b="psychological" style="top:52%;left:58%">+ audit chung</span>
+      <span class="wave-label pill des" data-lens-a="technical" data-lens-b="security" style="top:38%;left:62%">⚔ surface vs isolation</span>
+    </div>
+    <h3>✨ Constructive</h3>
+    <ul>
+      <li><strong>⚙️ × 💭 — Boring chung.</strong> Ít state = ít bad state; ít accidental = ít nợ hình thức.</li>
+      <li><strong>💰 × 🧠 — Ghét state ẩn.</strong> Cùng gắn cờ cache vô kỷ luật.</li>
+      <li><strong>🔐 × 🧠 — Audit chung.</strong> Cùng đòi hỏi degraded mode hiển lộ — hiếm hoi cùng thắng. <a href="good-system-design-micro-fail-open-vs-fail-closed.html" style="color:var(--sec)">→ drill-down</a></li>
+    </ul>
+    <h3>⚔️ Destructive</h3>
+    <ul>
+      <li><strong>⚙️ ⇄ 🔐 — Surface vs isolation.</strong> Mỗi replica/queue mới để cô lập lỗi lại mở thêm principal/bề mặt tấn công. <a href="good-system-design-micro-fail-open-vs-fail-closed.html" style="color:var(--sec)">→ chi tiết fail open/closed</a></li>
+      <li><strong>💰 ⇄ 🔐 — TCO vs guard.</strong> Cắt policy/audit rẻ hôm nay, trả breach ngày mai.</li>
+      <li><strong>🔐 ⇄ 💭 — Guard vs ship.</strong> Không thể vừa an toàn tuyệt đối vừa tối giản tuyệt đối.</li>
+      <li><strong>⚙️ ⇄ 🧠 — p99 vs hiểu.</strong> Ẩn để nhanh vs phơi để hiểu.</li>
+      <li><strong>💰 ⇄ 💭 — TCO vs đẹp.</strong> Ship nhanh vs reversibility.</li>
+    </ul>
+    <h3>🎯 Friction Matrix (5×5)</h3>
+    <div class="matrix">
+      <div></div><div class="hd" style="color:var(--tech)">⚙️ Tech</div><div class="hd" style="color:var(--econ)">💰 Econ</div><div class="hd" style="color:var(--psy)">🧠 Psy</div><div class="hd" style="color:var(--phil)">💭 Phil</div><div class="hd" style="color:var(--sec)">🔐 Sec</div>
+      <div class="hd">⚙️</div><div class="cell diag">—</div><div class="cell pill des" data-lens-a="technical" data-lens-b="economic">scale vs TCO</div><div class="cell pill des" data-lens-a="technical" data-lens-b="psychological">p99 vs hiểu</div><div class="cell pill cons" data-lens-a="technical" data-lens-b="philosophical">boring chung</div><div class="cell pill des" data-lens-a="technical" data-lens-b="security">surface vs isolation</div>
+      <div class="hd">💰</div><div class="cell">scale vs TCO</div><div class="cell diag">—</div><div class="cell pill cons" data-lens-a="economic" data-lens-b="psychological">ghét state ẩn</div><div class="cell pill des" data-lens-a="economic" data-lens-b="philosophical">TCO vs đẹp</div><div class="cell pill des" data-lens-a="economic" data-lens-b="security">TCO vs guard</div>
+      <div class="hd">🧠</div><div class="cell">p99 vs hiểu</div><div class="cell">ghét state ẩn</div><div class="cell diag">—</div><div class="cell pill des" data-lens-a="psychological" data-lens-b="philosophical">an toàn vs đơn giản</div><div class="cell pill cons" data-lens-a="psychological" data-lens-b="security">audit chung</div>
+      <div class="hd">💭</div><div class="cell">boring chung</div><div class="cell">TCO vs đẹp</div><div class="cell">an toàn vs đơn giản</div><div class="cell diag">—</div><div class="cell pill des" data-lens-a="philosophical" data-lens-b="security">guard vs ship</div>
+      <div class="hd">🔐</div><div class="cell">surface vs isolation</div><div class="cell">TCO vs guard</div><div class="cell">audit chung</div><div class="cell">guard vs ship</div><div class="cell diag">—</div>
+    </div>
+  </section>
+
+  <section id="s5" data-state="s5">
+    <h2>🧭 Parallax View</h2>
+    <blockquote style="border-left:3px solid #FAFAFA;background:#111114;padding:14px;border-radius:0 8px 8px 0;color:var(--bright)">Good System Design là ngũ giác căng giữa 5 lực: cô lập lỗi, chi phí tổ chức, khả năng hiểu, trách nhiệm hình thức, và containment có thể kiểm chứng. Thêm Security làm lộ giả định ẩn: “hệ thống chỉ hỏng, không bị tấn công”.</blockquote>
+    <h3>The 360 Navigator</h3>
+    <ul>
+      <li><span style="color:var(--tech)">●</span> <strong>Dùng ⚙️ khi</strong> quyết định ranh giới state, index, hot path, retry/circuit breaker.</li>
+      <li><span style="color:var(--psy)">●</span> <strong>Chuyển ngay sang 🧠 khi</strong> thêm automation/queue/cache — nếu không kể lại trong 5 phút, bạn tạo bad state.</li>
+      <li><span style="color:var(--sec)">●</span> <strong>Chuyển ngay sang 🔐 khi</strong> thêm gác cổng (rate limit/auth/payment) — phải quyết fail open/closed. <a href="good-system-design-micro-fail-open-vs-fail-closed.html" style="color:var(--sec)">→ cây quyết định</a></li>
+      <li><span style="color:var(--econ)">●</span> <strong>Không để 💰 chi phối khi</strong> failure là mất dữ liệu/rò PII/escalation.</li>
+      <li><span style="color:var(--sec)">●</span> <strong>Không để 🔐 chi phối khi</strong> guard là capacity (rate limit) — fail closed sẽ biến sự cố Redis thành outage toàn API.</li>
+      <li><span style="color:var(--psy)">●</span> <strong>Giữ 🧠 và 🔐 cùng lúc khi</strong> thiết kế logging/audit — vừa chẩn đoán vừa truy vết, nhưng không rò PII.</li>
+      <li><span style="color:var(--tech)">●</span> <strong>Giữ ⚙️ và 🔐 cùng lúc khi</strong> quyết định số replica/queue — đặt ngưỡng blast radius trước khi thêm component.</li>
+    </ul>
+    <hr style="border-color:var(--line);margin:18px 0">
+    <p style="font-style:italic;color:#9CA3AF">Góc nhìn 360 độ này tự nó cũng là phối cảnh. Chọn 5 lens này — mà không chọn 🌱 Ecological hay 🏛️ Historical — là quyết định của tác giả. High + Strategic Audit tạo ra artifact này; cấu hình khác sẽ cho artifact khác.</p>
+  </section>
+
+  <section id="s6" data-state="s6">
+    <h2>💠 Trade-Off Simulator</h2>
+    <div class="quiz" id="q1">
+      <strong>Scenario 1 — 12 queue mới.</strong> Tách mọi slow path ra queue riêng.
+      <label><input type="checkbox" value="technical"> ⚙️</label><label><input type="checkbox" value="economic"> 💰</label><label><input type="checkbox" value="security"> 🔐</label>
+      <button class="btn" onclick="checkQ('q1',['technical','economic'])" style="margin-top:8px;width:auto;padding:6px 14px">Kiểm tra</button>
+      <div class="mono" id="q1-res" style="margin-top:8px"></div>
+    </div>
+    <div class="quiz" id="q4">
+      <strong>Scenario 4 — Redis rate limiter chết, team fail closed toàn bộ request.</strong> Va chạm chính?
+      <label><input type="checkbox" value="technical"> ⚙️</label><label><input type="checkbox" value="security"> 🔐</label><label><input type="checkbox" value="economic"> 💰</label>
+      <button class="btn" onclick="checkQ('q4',['technical','security'])" style="margin-top:8px;width:auto;padding:6px 14px">Kiểm tra</button>
+      <div class="mono" id="q4-res" style="margin-top:8px"></div>
+      <div class="mono">Chi tiết đầy đủ: <a href="good-system-design-micro-fail-open-vs-fail-closed.html">Micro — Fail Open vs Fail Closed</a></div>
+    </div>
+  </section>
+
+  <div class="mono" style="margin-top:18px;border-top:1px solid var(--line);padding-top:10px">
+    P01 v2 (5 lenses) · High · Strategic Audit · <a href="good-system-design-micro-fail-open-vs-fail-closed.html">Micro drill-down</a> · Nguồn: Sean, DDIA, Dan Luu, Cindy, Fowler/Conway, 美团/阿里 Sentinel/RASP, SCMP/IDC.
+  </div>
+</main>
+
+<aside class="right" aria-label="Interference Monitor">
+  <div style="font-size:11px;letter-spacing:.12em;color:#8A8FA0">INTERFERENCE MONITOR v2</div>
+  <div class="mono" style="margin:6px 0 10px">5 lenses · 3 constructive · 7 destructive · <a href="good-system-design-micro-fail-open-vs-fail-closed.html" style="color:var(--sec)">Drill-down →</a></div>
+  <div class="card"><div class="bar" style="background:linear-gradient(90deg,var(--tech),var(--phil))"></div><strong>⚙️ × 💭 boring chung</strong><div class="mono">Constructive</div></div>
+  <div class="card"><div class="bar" style="background:linear-gradient(90deg,var(--econ),var(--psy))"></div><strong>💰 × 🧠 ghét state ẩn</strong><div class="mono">Constructive</div></div>
+  <div class="card" style="border-color:rgba(245,158,11,.4)"><div class="bar" style="background:linear-gradient(90deg,var(--sec),var(--psy))"></div><strong>🔐 × 🧠 audit chung</strong><div class="mono">Constructive — mới</div></div>
+  <div class="card"><div class="bar" style="background:linear-gradient(90deg,var(--tech),var(--sec))"></div><strong style="color:#EF4444">⚙️ ⇄ 🔐 surface vs isolation</strong><div class="mono">Destructive — mới, drill-down →</div></div>
+  <div class="card"><div class="bar" style="background:linear-gradient(90deg,var(--econ),var(--sec))"></div><strong style="color:#EF4444">💰 ⇄ 🔐 TCO vs guard</strong><div class="mono">Destructive — mới</div></div>
+  <div style="margin-top:10px;padding:8px;border:1px dashed var(--line);border-radius:8px" class="mono">
+    <strong style="color:var(--bright)">Legend</strong><br><span style="color:#22C55E">+ constructive</span> · <span style="color:#EF4444">⚔ destructive</span><br>Hover pill để trace về Verdict (viền vàng).
+  </div>
+</aside>
+</div>
+
+<script>
+const assumption=document.getElementById('assumption');
+const shatterMsg=document.getElementById('shatterMsg');
+const monolith=document.getElementById('monolith');
+let shattered=false;
+const obs=new IntersectionObserver((es)=>{
+  es.forEach(e=>{ if(e.isIntersecting && !shattered){ shattered=true; assumption.classList.add('shattered'); setTimeout(()=>shatterMsg.classList.add('show'),400); } })
+},{threshold:0.3});
+obs.observe(monolith);
+const phaseRows=document.querySelectorAll('#phaseTracker .row');
+const sections=document.querySelectorAll('section[id]');
+const po=new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ const id=e.target.id; phaseRows.forEach(r=>r.classList.remove('active')); const a=document.querySelector(`#phaseTracker [data-state="${id}"]`); if(a) a.classList.add('active'); } }) },{threshold:0.35, rootMargin:'-20% 0px -40% 0px'});
+sections.forEach(s=>po.observe(s));
+const toggles=document.querySelectorAll('.switch');
+toggles.forEach(t=>{
+  t.addEventListener('change',e=>{
+    const lens=e.target.dataset.lens; const b=document.getElementById('lens-'+lens);
+    if(e.target.checked) b.classList.remove('hidden-lens'); else b.classList.add('hidden-lens');
+  });
+  t.addEventListener('dblclick',e=>{
+    e.preventDefault(); const lens=e.target.dataset.lens; const allOn=[...toggles].every(x=>x.checked);
+    if(allOn){ toggles.forEach(x=>{ x.checked=(x.dataset.lens===lens); const b=document.getElementById('lens-'+x.dataset.lens); if(x.checked) b.classList.remove('hidden-lens'); else b.classList.add('hidden-lens'); }); }
+    else { toggles.forEach(x=>{ x.checked=true; document.getElementById('lens-'+x.dataset.lens).classList.remove('hidden-lens'); }); }
+  });
+});
+document.getElementById('showAll').addEventListener('click',()=>{ toggles.forEach(x=>{ x.checked=true; document.getElementById('lens-'+x.dataset.lens).classList.remove('hidden-lens')}); });
+function trace(a,b,on){ const va=document.getElementById('verdict-'+a); const vb=document.getElementById('verdict-'+b); if(on){ if(va)va.classList.add('trace'); if(vb)vb.classList.add('trace'); } else { if(va)va.classList.remove('trace'); if(vb)vb.classList.remove('trace'); } }
+document.querySelectorAll('[data-lens-a][data-lens-b]').forEach(el=>{
+  el.addEventListener('mouseenter',()=>trace(el.dataset.lensA,el.dataset.lensB,true));
+  el.addEventListener('mouseleave',()=>trace(el.dataset.lensA,el.dataset.lensB,false));
+});
+function checkQ(id,c){ const box=document.getElementById(id); const res=document.getElementById(id+'-res'); const chk=[...box.querySelectorAll('input:checked')].map(i=>i.value).sort(); const exp=c.slice().sort(); const ok=JSON.stringify(chk)===JSON.stringify(exp); if(ok){ res.style.color='#22C55E'; res.textContent='✓ Đúng'; trace(c[0],c[1],true); setTimeout(()=>trace(c[0],c[1],false),2200);} else { res.style.color='#EF4444'; res.textContent='Chưa đúng. Đáp án: '+c.join(' + ');} }
+</script>
+</body>
+</html>

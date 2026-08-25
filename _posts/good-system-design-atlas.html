@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas — Good System Design: Toàn loạt (P01–P06 + 4 Micros)</title>
+<meta name="generator" content="Prism Atlas v2">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0B0C10;--panel:#111114;--card:#0B1220;--line:#27272A;--text:#C5C6C7;--bright:#FAFAFA;--muted:#8A8FA0;--gold:#FBBF24;
+--tech:#06B6D4;--econ:#10B981;--psy:#A78BFA;--phil:#D946EF;--sec:#F59E0B}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,sans-serif;line-height:1.7}
+a{color:var(--tech);text-decoration:none}a:hover{color:var(--bright);text-decoration:underline}
+.mono{font-family:"JetBrains Mono",monospace;font-size:12px;color:var(--muted)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 18px}
+.hero{padding:30px 0 16px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#0e141c 0%, transparent 100%)}
+.hero h1{font-size:32px;color:var(--bright);margin:0;line-height:1.2}
+.hero p{max-width:72ch;color:#9CA3AF}
+.stats{display:flex;gap:10px;flex-wrap:wrap;margin:14px 0}
+.stat{border:1px solid var(--line);background:var(--card);border-radius:10px;padding:10px 12px;min-width:105px}
+.stat .n{font-size:18px;font-weight:700;color:var(--bright)}
+.tabs{position:sticky;top:0;z-index:10;background:rgba(11,12,16,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);display:flex;gap:6px;overflow:auto;padding:8px 0}
+.tab{white-space:nowrap;padding:7px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--text);cursor:pointer;font-size:11px;font-weight:500}
+.tab.active{color:var(--bright);border-color:#3A4555;background:#121925}
+.view{display:none;padding:20px 0 36px}
+.view.active{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.grid6{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+@media(max-width:900px){.grid2,.grid3,.grid6{grid-template-columns:1fr}}
+.card{border:1px solid var(--line);border-radius:14px;padding:14px;background:var(--card)}
+.card.amp{border-color:rgba(6,182,212,.22);background:linear-gradient(180deg,rgba(6,182,212,.06),var(--card))}
+.card.hi{border-color:rgba(251,191,36,.22)}
+.verdict{border-left:4px solid var(--accent);background:rgba(255,255,255,.04);padding:10px 12px;border-radius:0 8px 8px 0;margin:8px 0;font-style:italic}
+.kpi{display:flex;align-items:center;gap:8px;font-size:12px}
+.dot{width:9px;height:9px;border-radius:50%}
+.matrix{width:100%;border-collapse:collapse;font-size:11px}
+.matrix th{color:var(--muted);padding:6px;border-bottom:1px solid var(--line);text-align:center}
+.matrix td{padding:6px;border:1px solid #1C2433;text-align:center;background:var(--card)}
+.pill{display:inline-block;padding:3px 8px;border-radius:999px;font-size:10px;border:1px solid var(--line);background:#0B1220}
+.pill.des{border-color:rgba(239,68,68,.35)} .pill.cons{border-color:rgba(34,197,94,.35)}
+.nav-table{width:100%;border-collapse:collapse;font-size:12px}
+.nav-table th{color:var(--muted);text-align:left;padding:8px;border-bottom:1px solid var(--line)}
+.nav-table td{padding:9px 8px;border-bottom:1px solid #1C2433;vertical-align:top}
+.nav-table tr:hover{background:rgba(255,255,255,.02)}
+.tag{display:inline-block;padding:2px 7px;border-radius:999px;font-size:10px;border:1px solid var(--line);background:#121925}
+.tag.p{border-color:rgba(6,182,212,.35);color:var(--tech)}
+.tag.m{border-color:rgba(245,158,11,.35);color:var(--sec)}
+.tag.a{border-color:rgba(251,191,36,.35);color:var(--gold)}
+.toc{columns:2;gap:16px;font-size:12px}
+.toc a{display:block;padding:3px 0}
+.warn{border:1px dashed rgba(251,191,36,.35);border-radius:10px;padding:10px;background:rgba(251,191,36,.05);font-size:12px}
+</style>
+</head>
+<body>
+<div class="hero"><div class="wrap">
+<div class="mono">Prism Atlas v2 · Good System Design · P01–P06 (6 chapters) + 4 micros → 1 atlas · High · Strategic Audit · 5 lenses: ⚙️ 💰 🧠 💭 🔐</div>
+<h1>Good System Design — Atlas: Toàn loạt</h1>
+<p>Từ la bàn P01 tới P06 phi kỹ thuật, gộp 4 micros drill-down thành một bản đồ duy nhất. Mỗi va chạm là một mặt cắt không thể dung hòa của “hệ thống tốt”. Atlas này không đưa ra “đáp án đúng” — nó cho bạn la bàn để biết <em>khi nào dùng lens nào</em>, và <em>đường dẫn nhanh tới từng file HTML</em> để đi sâu.</p>
+<div class="stats">
+<div class="stat"><div class="n">5</div><div class="mono">lenses<br>⚙️ 💰 🧠 💭 🔐</div></div>
+<div class="stat"><div class="n">6</div><div class="mono">chapters<br>P01–P06</div></div>
+<div class="stat"><div class="n">4</div><div class="mono">micros<br>drill-down</div></div>
+<div class="stat"><div class="n">22</div><div class="mono">files<br>12 HTML + 10 MD</div></div>
+<div class="stat"><div class="n">High</div><div class="mono">Antagonistic<br>Strategic Audit</div></div>
+</div>
+<div class="mono">Cập nhật: P02–P06 được thêm sau Atlas v1 — Atlas v2 này đã đồng bộ và đính kèm điều hướng nhanh tới từng HTML.</div>
+</div></div>
+
+<div class="wrap">
+<div class="tabs" id="tabs">
+<button class="tab active" data-view="overview">◎ Tổng quan</button>
+<button class="tab" data-view="nav">⚡ Điều hướng nhanh</button>
+<button class="tab" data-view="series">📚 Loạt bài P01–P06</button>
+<button class="tab" data-view="micros">🔬 4 Micros</button>
+<button class="tab" data-view="matrix">🗺️ Ma trận 5×5</button>
+<button class="tab" data-view="compass">🧭 La bàn</button>
+</div>
+
+<!-- OVERVIEW -->
+<section class="view active" id="view-overview">
+<h2 style="color:var(--bright)">◎ Tổng quan — Hình ngũ giác của “hệ thống tốt”</h2>
+<p>“Good system design” chưa bao giờ là một đỉnh để leo. Nó là một hình ngũ giác căng giữa 5 lực: <span style="color:var(--tech)">cô lập lỗi</span>, <span style="color:var(--econ)">TCO & org</span>, <span style="color:var(--psy)">khả năng hiểu</span>, <span style="color:var(--phil)">vẻ đẹp / reversibility</span>, và <span style="color:var(--sec)">containment</span>. P06 thêm lực thứ 6 vô hình: <strong>org chart</strong>. Kéo mạnh một đỉnh, các đỉnh còn lại biến dạng — và mỗi P trong loạt bài là một lần soi cùng ngũ giác đó dưới ánh sáng khác nhau.</p>
+<div class="grid2">
+<div class="card amp">
+<strong style="color:var(--bright)">Đọc Atlas thế nào</strong>
+<p class="mono">Mỗi ô trong ma trận 5×5 là một va chạm. 4 micros là 4 lần zoom vào 4 ô đó. 6 chapters P01–P06 là 6 lần soi cùng ma trận dưới các chủ đề khác nhau (State, Nhịp, Hot Path, Khi hỏng, Phi kỹ thuật). Không có ô nào giải được ô nào — “boring chung” không cứu được “surface vs isolation”.</p>
+<div class="kpi"><span class="dot" style="background:var(--tech)"></span> ⚙️ Technical — giam state, bảo vệ hot path, p99</div>
+<div class="kpi"><span class="dot" style="background:var(--econ)"></span> 💰 Economic — TCO, headcount, incentive, novelty budget</div>
+<div class="kpi"><span class="dot" style="background:var(--psy)"></span> 🧠 Psychological — mental model khớp thực tế, MTTD, WTFs/min</div>
+<div class="kpi"><span class="dot" style="background:var(--phil)"></span> 💭 Philosophical — ít concept, reversibility, boring as virtue</div>
+<div class="kpi"><span class="dot" style="background:var(--sec)"></span> 🔐 Security — least privilege, blast radius, audit completeness</div>
+</div>
+<div class="card hi">
+<strong style="color:var(--gold)">Cập nhật Atlas v2</strong>
+<p class="mono"><strong>Atlas v1</strong> chỉ có P01 + 4 micros (10 files). Sau đó đã thêm <strong>P02 State & Data</strong>, <strong>P03 Slow/Fast/Queue/Event/Cache</strong>, <strong>P04 Push/Pull/Hot Path</strong>, <strong>P05 Killswitch/Retry</strong>, <strong>P06 Phi kỹ thuật</strong> — tổng <strong>22 files</strong>. Atlas v2 này đồng bộ toàn bộ và đính kèm <strong>bảng điều hướng nhanh</strong> với link trực tiếp tới từng HTML để bạn mở ngay.</p>
+<div class="mono" style="margin-top:8px">Tab <strong>⚡ Điều hướng nhanh</strong> → bảng 22 files với đường dẫn HTML.<br>Tab <strong>📚 Loạt bài</strong> → tóm tắt 6 chapters.<br>Tab <strong>🔬 4 Micros</strong> → drill-down chi tiết.</div>
+</div>
+</div>
+</section>
+
+<!-- NAV -->
+<section class="view" id="view-nav">
+<h2 style="color:var(--bright)">⚡ Điều hướng nhanh — Mở thẳng HTML</h2>
+<p class="mono">Tất cả files nằm trong <code>C:\Users\84847\Documents\Workspace\experiments\deepseek\</code> — click để mở HTML (self-contained, mở thẳng từ filesystem, không cần server). MD tương ứng ở cùng thư mục.</p>
+
+<table class="nav-table">
+<thead><tr><th>#</th><th>Loại</th><th>File HTML (click để mở)</th><th>Nội dung</th><th>MD</th></tr></thead>
+<tbody>
+<tr><td><strong>P01</strong></td><td><span class="tag p">PRISM</span></td><td><a href="good-system-design-p01-prism.html"><code>good-system-design-p01-prism.html</code></a></td><td>La bàn 5 lens, đập default “scale = giỏi”, 3 constructive + 7 destructive</td><td><a href="good-system-design-p01-prism.md">.md</a></td></tr>
+<tr><td><strong>P02</strong></td><td><span class="tag p">CHAPTER</span></td><td><a href="good-system-design-p02-state-data.html"><code>good-system-design-p02-state-data.html</code></a></td><td>State & Data — giam state, index cardinality, replica lag</td><td><a href="good-system-design-p02-state-data.md">.md</a></td></tr>
+<tr><td><strong>P03</strong></td><td><span class="tag p">CHAPTER</span></td><td><a href="good-system-design-p03-slow-fast-queue-event-cache.html"><code>good-system-design-p03-slow-fast-queue-event-cache.html</code></a></td><td>Slow vs Fast / Queue / Event / Cache — tách đường nóng, chọn async đúng</td><td><a href="good-system-design-p03-slow-fast-queue-event-cache.md">.md</a></td></tr>
+<tr><td><strong>P04</strong></td><td><span class="tag p">CHAPTER</span></td><td><a href="good-system-design-p04-push-pull-hot-path-observability.html"><code>good-system-design-p04-push-pull-hot-path-observability.html</code></a></td><td>Push/Pull & Hot Paths & Observability — fan-out, hot path, wide events</td><td><a href="good-system-design-p04-push-pull-hot-path-observability.md">.md</a></td></tr>
+<tr><td><strong>P05</strong></td><td><span class="tag p">CHAPTER</span></td><td><a href="good-system-design-p05-killswitch-retry-fail-gracefully.html"><code>good-system-design-p05-killswitch-retry-fail-gracefully.html</code></a></td><td>Killswitches, Retries & Failing Gracefully — backoff/jitter/circuit/idempotency</td><td><a href="good-system-design-p05-killswitch-retry-fail-gracefully.md">.md</a></td></tr>
+<tr><td><strong>P06</strong></td><td><span class="tag p">CHAPTER</span></td><td><a href="good-system-design-p06-phi-ky-thuat-conway-kinh-te-tham-my.html"><code>good-system-design-p06-phi-ky-thuat-conway-kinh-te-tham-my.html</code></a></td><td>Phi kỹ thuật — Conway, Kinh tế & Thẩm mỹ của Boring (khép loạt)</td><td><a href="good-system-design-p06-phi-ky-thuat-conway-kinh-te-tham-my.md">.md</a></td></tr>
+<tr><td colspan="5" style="background:#0e141c;color:var(--muted);font-size:11px;padding:6px 8px">— 4 MICROS DRILL-DOWN —</td></tr>
+<tr><td>M1</td><td><span class="tag m">MICRO</span></td><td><a href="good-system-design-micro-fail-open-vs-fail-closed.html"><code>good-system-design-micro-fail-open-vs-fail-closed.html</code></a></td><td>Fail Open vs Fail Closed — khi gác cổng tự nó hỏng (⚙️⇄🔐⇄💰)</td><td><a href="good-system-design-micro-fail-open-vs-fail-closed.md">.md</a></td></tr>
+<tr><td>M2</td><td><span class="tag m">MICRO</span></td><td><a href="good-system-design-micro-p99-vs-hieu.html"><code>good-system-design-micro-p99-vs-hieu.html</code></a></td><td>p99 vs Hiểu — ẩn để nhanh vs phơi để hiểu (⚙️⇄🧠)</td><td><a href="good-system-design-micro-p99-vs-hieu.md">.md</a></td></tr>
+<tr><td>M3</td><td><span class="tag m">MICRO</span></td><td><a href="good-system-design-micro-tco-vs-dep.html"><code>good-system-design-micro-tco-vs-dep.html</code></a></td><td>TCO vs Đẹp — rẻ hôm nay vs nợ hình thức (💰⇄💭)</td><td><a href="good-system-design-micro-tco-vs-dep.md">.md</a></td></tr>
+<tr><td>M4</td><td><span class="tag m">MICRO</span></td><td><a href="good-system-design-micro-an-toan-vs-toi-gian.html"><code>good-system-design-micro-an-toan-vs-toi-gian.html</code></a></td><td>An toàn vs Tối giản — mỗi killswitch là một concept thừa (🧠⇄💭)</td><td><a href="good-system-design-micro-an-toan-vs-toi-gian.md">.md</a></td></tr>
+<tr><td colspan="5" style="background:#0e141c;color:var(--muted);font-size:11px;padding:6px 8px">— ATLAS —</td></tr>
+<tr><td><strong>Atlas</strong></td><td><span class="tag a">ATLAS</span></td><td><a href="good-system-design-atlas.html"><code>good-system-design-atlas.html</code></a> <span class="mono">(bạn đang ở đây)</span></td><td>Tổng hợp toàn loạt — ma trận 5×5, la bàn, 3 quy tắc vàng</td><td><a href="good-system-design-atlas.md">.md</a></td></tr>
+</tbody>
+</table>
+
+<div class="warn" style="margin-top:12px">
+<strong style="color:var(--gold)">Mẹo điều hướng:</strong> Tất cả HTML là <strong>self-contained</strong> — mở thẳng từ filesystem (double-click), không cần server. Mỗi file có điều hướng nội bộ (tabs, phase tracker, lens solo) và link chéo: P01↔P02↔…↔P06, Atlas↔Micros. Để in, dùng <code>Ctrl+P</code> — print stylesheet đã tối ưu.
+</div>
+
+<div class="grid2" style="margin-top:12px">
+<div class="card">
+<strong style="color:var(--bright)">Lộ trình đọc đề xuất</strong>
+<p class="mono"><strong>Ngắn (30 phút):</strong> Atlas Tổng quan + La bàn → P01 la bàn → 1 micro bạn đau nhất (thường là M1 Fail Open hoặc M2 p99).<br><strong>Đủ (2 giờ):</strong> P01 → P02 → P04 → P06 — 4 chương đủ để có bản đồ phi kỹ thuật.<br><strong>Đầy đủ (half-day):</strong> P01 → P02 → P03 → P04 → P05 → P06 → 4 micros → Atlas Tổng hợp.</p>
+</div>
+<div class="card">
+<strong style="color:var(--bright)">Cập nhật so với Atlas v1</strong>
+<p class="mono"><strong>Thêm:</strong> P02, P03, P04, P05, P06 (10 files mới, 5 chapters).<br><strong>Đồng bộ:</strong> stats 10 → 22 files, hero + tabs + bảng điều hướng được viết lại.<br><strong>Giữ nguyên:</strong> P01 v2 + 4 micros không đổi nội dung — chỉ thêm link chéo tới P02–P06.</p>
+</div>
+</div>
+</section>
+
+<!-- SERIES -->
+<section class="view" id="view-series">
+<h2 style="color:var(--bright)">📚 Loạt bài P01–P06 — Tóm tắt & đường dẫn</h2>
+<div class="grid6">
+<div class="card" style="border-left:3px solid var(--tech)">
+<div class="mono">P01 · PRISM</div><strong style="color:var(--tech)">La bàn 5 lens</strong>
+<p class="mono">Đập default “scale = giỏi”. Dựng 5 lens: Technical, Economic, Psychological, Philosophical, Security. High, Strategic Audit. 3 constructive + 7 destructive.</p>
+<a class="pill" href="good-system-design-p01-prism.html">Mở HTML →</a> <a class="pill" href="good-system-design-p01-prism.md">MD</a>
+</div>
+<div class="card" style="border-left:3px solid var(--tech)">
+<div class="mono">P02 · CHAPTER</div><strong style="color:var(--tech)">State & Data</strong>
+<p class="mono">Giam state vào ít writer, index high-cardinality trước, đọc replica với lag đặt tên. Meituan Squirrel/Cellar, DBProxy, Google replica lag.</p>
+<a class="pill" href="good-system-design-p02-state-data.html">Mở HTML →</a> <a class="pill" href="good-system-design-p02-state-data.md">MD</a>
+</div>
+<div class="card" style="border-left:3px solid var(--econ)">
+<div class="mono">P03 · CHAPTER</div><strong style="color:var(--econ)">Slow/Fast/Queue/Event/Cache</strong>
+<p class="mono">Tách fast khỏi slow ở “minimum useful work”. Redis Streams/BullMQ vs Kafka, S3 persistent cache, TTL/invalidation/MAXLEN.</p>
+<a class="pill" href="good-system-design-p03-slow-fast-queue-event-cache.html">Mở HTML →</a> <a class="pill" href="good-system-design-p03-slow-fast-queue-event-cache.md">MD</a>
+</div>
+<div class="card" style="border-left:3px solid var(--psy)">
+<div class="mono">P04 · CHAPTER</div><strong style="color:var(--psy)">Push/Pull & Hot Path</strong>
+<p class="mono">Fan-out ratio + read:write → hybrid push/pull. “Scale what is hot” — display vs decision path. Wide events, unhappy path log.</p>
+<a class="pill" href="good-system-design-p04-push-pull-hot-path-observability.html">Mở HTML →</a> <a class="pill" href="good-system-design-p04-push-pull-hot-path-observability.md">MD</a>
+</div>
+<div class="card" style="border-left:3px solid var(--sec)">
+<div class="mono">P05 · CHAPTER</div><strong style="color:var(--sec)">Killswitch & Fail</strong>
+<p class="mono">Killswitch nhanh hơn deploy, backoff/jitter/cap, circuit CLOSED→OPEN→HALF_OPEN, idempotency, fail open/closed per guard.</p>
+<a class="pill" href="good-system-design-p05-killswitch-retry-fail-gracefully.html">Mở HTML →</a> <a class="pill" href="good-system-design-p05-killswitch-retry-fail-gracefully.md">MD</a>
+</div>
+<div class="card" style="border-left:3px solid var(--phil)">
+<div class="mono">P06 · CHAPTER · KHÉP LOẠT</div><strong style="color:var(--phil)">Phi kỹ thuật — Conway & Boring</strong>
+<p class="mono">Org chart là architecture. Incentive đẩy vào nợ. “Boring wins” — underwhelming là thành tựu. Khép loạt P01→P06.</p>
+<a class="pill" href="good-system-design-p06-phi-ky-thuat-conway-kinh-te-tham-my.html">Mở HTML →</a> <a class="pill" href="good-system-design-p06-phi-ky-thuat-conway-kinh-te-tham-my.md">MD</a>
+</div>
+</div>
+<div class="warn" style="margin-top:12px">
+<strong>Lưu ý chuỗi:</strong> Mỗi P là một lần soi cùng la bàn 5 lens dưới chủ đề khác nhau — không phải 6 bài rời rạc. Đọc P01 trước, rồi nhảy tới P bạn đang đau nhất (thường là P02 cho state, P04 cho hot path, P05 cho khi hỏng).
+</div>
+</section>
+
+<!-- MICROS -->
+<section class="view" id="view-micros">
+<h2 style="color:var(--bright)">🔬 4 Micros — Drill-down va chạm High</h2>
+<p class="mono">Mỗi micro là một lần zoom vào một ô của ma trận 5×5 — nơi hai lens va nhau không thể dung hòa. Mở HTML để xem verdict, blind spot, và cây quyết định đầy đủ.</p>
+<div class="grid2">
+<div class="card" style="border-left:3px solid var(--sec)">
+<div class="mono">M1 · ⚙️⇄🔐⇄💰</div><strong style="color:var(--sec)">Fail Open vs Fail Closed</strong>
+<p class="mono">Khi gác cổng tự nó hỏng — guard về capacity thì fail open có bound, guard về correctness thì fail closed có thể truy vết. Degraded mode không bao giờ chạy âm thầm.</p>
+<div class="mono">File: <a href="good-system-design-micro-fail-open-vs-fail-closed.html"><code>micro-fail-open-vs-fail-closed.html</code></a></div>
+<a class="pill" href="good-system-design-micro-fail-open-vs-fail-closed.html">Mở HTML →</a> <a class="pill" href="good-system-design-micro-fail-open-vs-fail-closed.md">MD</a>
+</div>
+<div class="card" style="border-left:3px solid var(--tech)">
+<div class="mono">M2 · ⚙️⇄🧠</div><strong style="color:var(--tech)">p99 vs Hiểu</strong>
+<p class="mono">Ẩn waiting để hạ p99 vs phơi waiting để giữ mental model. Mọi ms giấu được phải trả bằng một tín hiệu hiển lộ trong trace/log.</p>
+<div class="mono">File: <a href="good-system-design-micro-p99-vs-hieu.html"><code>micro-p99-vs-hieu.html</code></a></div>
+<a class="pill" href="good-system-design-micro-p99-vs-hieu.html">Mở HTML →</a> <a class="pill" href="good-system-design-micro-p99-vs-hieu.md">MD</a>
+</div>
+<div class="card" style="border-left:3px solid var(--econ)">
+<div class="mono">M3 · 💰⇄💭</div><strong style="color:var(--phil)">TCO vs Đẹp</strong>
+<p class="mono">Rẻ hôm nay vs nợ hình thức. Complexity không xóa được, chỉ dịch chuyển — chọn lúc trả và giữ nợ ở dạng có thể đảo ngược.</p>
+<div class="mono">File: <a href="good-system-design-micro-tco-vs-dep.html"><code>micro-tco-vs-dep.html</code></a></div>
+<a class="pill" href="good-system-design-micro-tco-vs-dep.html">Mở HTML →</a> <a class="pill" href="good-system-design-micro-tco-vs-dep.md">MD</a>
+</div>
+<div class="card" style="border-left:3px solid var(--psy)">
+<div class="mono">M4 · 🧠⇄💭</div><strong style="color:var(--psy)">An toàn vs Tối giản</strong>
+<p class="mono">Mỗi killswitch là một concept thừa phải trả lãi. Hệ an toàn không phải hệ có nhiều killswitch nhất, mà là hệ có số killswitch đủ để tắt trong phút và ít nhất để vẫn hiểu được.</p>
+<div class="mono">File: <a href="good-system-design-micro-an-toan-vs-toi-gian.html"><code>micro-an-toan-vs-toi-gian.html</code></a></div>
+<a class="pill" href="good-system-design-micro-an-toan-vs-toi-gian.html">Mở HTML →</a> <a class="pill" href="good-system-design-micro-an-toan-vs-toi-gian.md">MD</a>
+</div>
+</div>
+</section>
+
+<!-- MATRIX -->
+<section class="view" id="view-matrix">
+<h2 style="color:var(--bright)">🗺️ Ma trận va chạm 5×5 — Toàn loạt</h2>
+<p class="mono">Ma trận này là xương sống của toàn loạt — mỗi P soi cùng ma trận dưới ánh sáng khác nhau. Click pill để trace (trong các P) về Verdict.</p>
+<table class="matrix" style="font-size:11px">
+<tr><th></th><th style="color:var(--tech)">⚙️ Tech</th><th style="color:var(--econ)">💰 Econ</th><th style="color:var(--psy)">🧠 Psy</th><th style="color:var(--phil)">💭 Phil</th><th style="color:var(--sec)">🔐 Sec</th></tr>
+<tr><th>⚙️</th><td style="color:#6B7280">—</td><td><span class="pill des">scale vs TCO</span></td><td><span class="pill des">p99 vs hiểu</span></td><td><span class="pill cons">boring chung</span></td><td><span class="pill des">surface vs isolation</span></td></tr>
+<tr><th>💰</th><td><span class="pill des">scale vs TCO</span></td><td style="color:#6B7280">—</td><td><span class="pill cons">ghét state ẩn</span></td><td><span class="pill des">TCO vs đẹp</span></td><td><span class="pill des">TCO vs guard</span></td></tr>
+<tr><th>🧠</th><td><span class="pill des">p99 vs hiểu</span></td><td><span class="pill cons">ghét state ẩn</span></td><td style="color:#6B7280">—</td><td><span class="pill des">an toàn vs tối giản</span></td><td><span class="pill cons">audit chung</span></td></tr>
+<tr><th>💭</th><td><span class="pill cons">boring chung</span></td><td><span class="pill des">TCO vs đẹp</span></td><td><span class="pill des">an toàn vs tối giản</span></td><td style="color:#6B7280">—</td><td><span class="pill des">guard vs ship</span></td></tr>
+<tr><th>🔐</th><td><span class="pill des">surface vs isolation</span></td><td><span class="pill des">TCO vs guard</span></td><td><span class="pill cons">audit chung</span></td><td><span class="pill des">guard vs ship</span></td><td style="color:#6B7280">—</td></tr>
+</table>
+<div class="grid2" style="margin-top:12px">
+<div class="card">
+<strong style="color:#22C55E">+ Constructive (3) — nơi hiếm hoi cùng thắng</strong>
+<ul class="mono" style="margin:6px 0 0 16px">
+<li><strong>⚙️×💭 boring chung</strong> — cùng ghét async/state thừa, cùng đòi ít concept</li>
+<li><strong>💰×🧠 ghét state ẩn</strong> — cùng gắn cờ 5 writer, cache vô hình</li>
+<li><strong>🔐×🧠 audit chung</strong> — cùng đòi hỏi degraded mode hiển lộ, audit completeness</li>
+</ul>
+</div>
+<div class="card">
+<strong style="color:#EF4444">⚔ Destructive (7) — không thể dung hòa</strong>
+<ul class="mono" style="margin:6px 0 0 16px">
+<li>⚙️⇄🧠 p99 vs hiểu</li><li>⚙️⇄💰 scale vs TCO</li><li>⚙️⇄🔐 surface vs isolation</li><li>💰⇄💭 TCO vs đẹp</li><li>💰⇄🔐 TCO vs guard</li><li>🧠⇄💭 an toàn vs tối giản</li><li>🔐⇄💭 guard vs ship</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- COMPASS -->
+<section class="view" id="view-compass">
+<h2 style="color:var(--bright)">🧭 La bàn — Khi nào dùng lens nào (rút từ 4 micros)</h2>
+<p class="mono">La bàn này là tổng hợp của 4 micros — không phải ý kiến, mà là quy tắc chuyển lens có điều kiện.</p>
+<div class="card hi">
+<ul style="margin:6px 0">
+<li><span style="color:var(--tech)">●</span> <strong>Dùng ⚙️ làm chủ khi</strong> quyết định ranh giới state, index, hot path, retry/circuit — vì chỉ nó đo được p99 dưới tải thực.</li>
+<li><span style="color:var(--sec)">●</span> <strong>Chuyển ngay sang 🔐 khi</strong> thêm gác cổng (rate limit/auth/payment) — phải quyết fail open/closed <em>trước khi</em> code. <a href="good-system-design-micro-fail-open-vs-fail-closed.html" class="mono">→ M1</a></li>
+<li><span style="color:var(--psy)">●</span> <strong>Chuyển ngay sang 🧠 khi</strong> thêm automation/queue/cache/hedge — nếu không kể lại được trong 5 phút, bạn vừa tạo Unknown Unknown. <a href="good-system-design-micro-p99-vs-hieu.html" class="mono">→ M2</a></li>
+<li><span style="color:var(--econ)">●</span> <strong>Không để 💰 chi phối khi</strong> failure là mất dữ liệu/rò PII — rẻ hôm nay không bù được breach.</li>
+<li><span style="color:var(--phil)">●</span> <strong>Không để 💭 chi phối khi</strong> cần ship để học từ thị trường — vẻ đẹp không trả lương. <a href="good-system-design-micro-tco-vs-dep.html" class="mono">→ M3</a></li>
+<li><span style="color:var(--sec)">●</span> <strong>Không để 🔐 chi phối khi</strong> guard là capacity (rate limit) — fail closed sẽ biến sự cố Redis thành outage toàn API.</li>
+<li><span style="color:var(--psy)">●</span> <strong>Giữ 🧠 và 🔐 cùng lúc khi</strong> thiết kế logging/audit — vừa chẩn đoán vừa truy vết, nhưng không rò PII.</li>
+<li><span style="color:var(--tech)">●</span> <strong>Giữ ⚙️ và 🔐 cùng lúc khi</strong> quyết định số replica/queue — đặt ngưỡng blast radius trước khi thêm component.</li>
+<li><span style="color:var(--econ)">●</span> <strong>Giữ 💰 và 💭 cùng lúc khi</strong> quyết định abstraction/service mới — hỏi reversibility và novelty budget.</li>
+<li><span style="color:var(--psy)">●</span> <strong>Giữ 🧠 và 💭 cùng lúc khi</strong> quyết định số flag/killswitch — ngưỡng, không phải nguyên tắc tuyệt đối. <a href="good-system-design-micro-an-toan-vs-toi-gian.html" class="mono">→ M4</a></li>
+</ul>
+</div>
+<div class="grid2">
+<div class="card">
+<strong style="color:var(--bright)">3 quy tắc vàng</strong>
+<ol class="mono" style="margin:6px 0 0 16px">
+<li><strong>Mọi ms giấu được phải trả bằng một tín hiệu hiển lộ.</strong> (M2)</li>
+<li><strong>Mọi guard đều cần default khi tự nó hỏng.</strong> (M1)</li>
+<li><strong>Mọi concept thêm vào phải trả bằng một concept cũ được xóa.</strong> (M3, M4)</li>
+</ol>
+</div>
+<div class="card">
+<strong style="color:var(--bright)">Final Humility</strong>
+<p class="mono" style="font-style:italic">Atlas này tự nó cũng là một phối cảnh. Chọn 5 lens này — mà không chọn 🌱 Ecological hay 🏛️ Historical — là quyết định của tác giả. High + Strategic Audit tạo ra giọng văn này; cấu hình khác sẽ cho atlas khác. Viên kim cương còn nhiều mặt chưa chiếu sáng.</p>
+<div class="mono">Toàn loạt: <a href="good-system-design-p01-prism.html">P01</a> → <a href="good-system-design-p02-state-data.html">P02</a> → <a href="good-system-design-p03-slow-fast-queue-event-cache.html">P03</a> → <a href="good-system-design-p04-push-pull-hot-path-observability.html">P04</a> → <a href="good-system-design-p05-killswitch-retry-fail-gracefully.html">P05</a> → <a href="good-system-design-p06-phi-ky-thuat-conway-kinh-te-tham-my.html">P06</a></div>
+</div>
+</div>
+</section>
+
+</div>
+
+<script>
+function switchView(id){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+id)?.classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector(`.tab[data-view="${id}"]`)?.classList.add('active');
+  history.replaceState(null,'','#'+id);
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>switchView(t.dataset.view)));
+const hash=location.hash.replace('#','');
+if(hash && document.getElementById('view-'+hash)) switchView(hash);
+</script>
+</body>
+</html>
