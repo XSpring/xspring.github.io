@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 3: Why It's Unbreakable — Finite Fields &amp; the Proof</title>
+<meta name="description" content="The counting argument that makes Shamir information-theoretically secure, why prime-field wrap-around matters, and where that guarantee ends.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --font-serif:'Merriweather', Georgia, serif;
+  --font-sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --bg:#FDFBF7; --bg-elevated:#FFFFFF; --bg-sunken:#F5F1EA;
+  --text:#2D3748; --text-muted:#718096; --text-strong:#1A202C;
+  --accent:#319795; --accent-strong:#285E61;
+  --accent2:#B7791F; --accent2-strong:#975A16; --accent2-soft:#FEEBC8;
+  --border:#E4DFD5; --sidenote-bg:#EDF2F7; --code-bg:#EDF2F7;
+  --success:#38A169; --success-bg:#C6F6D5; --danger:#C53030; --danger-bg:#FED7D7;
+  --warn:#B7791F; --warn-bg:#FEEBC8; --info:#2B6CB0; --info-bg:#BEE3F8;
+  --radius:10px; --radius-sm:6px; --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow:0 4px 12px rgba(0,0,0,.08);
+  --measure:65ch; --line:1.7; --transition:200ms cubic-bezier(.4,0,.2,1);
+}
+html[data-theme="dark"]{
+  --bg:#1A202C; --bg-elevated:#2D3748; --bg-sunken:#171923;
+  --text:#E2E8F0; --text-muted:#A0AEC0; --text-strong:#F7FAFC;
+  --accent:#4FD1C5; --accent-strong:#81E6D9; --accent2:#F6AD55; --accent2-strong:#FBD38D; --accent2-soft:#4A2E14;
+  --border:#2D3748; --sidenote-bg:#2A2F3A; --code-bg:#2A2F3A;
+  --success:#68D391; --success-bg:#22543D; --danger:#FC8181; --danger-bg:#63171B;
+  --warn:#F6AD55; --warn-bg:#7B341E; --info:#63B3ED; --info-bg:#2A4365;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 4px 12px rgba(0,0,0,.4);
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}
+.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px}
+.navigator::-webkit-scrollbar{width:6px}.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}
+body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px}
+.navigator__reading-time{color:var(--text);font-size:13px}
+.toc{list-style:none;padding:0;margin:0}.toc li{margin:2px 0}
+.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg)}
+.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500}
+.toc .toc-l3{padding-left:20px;font-size:13px}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.4rem;line-height:1.2;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.6rem;line-height:1.3;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px}
+.canvas h2:first-of-type{border-top:none;padding-top:0}
+.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.2rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong);font-weight:700}.canvas em{font-style:italic}
+.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}.canvas a:hover{color:var(--accent-strong)}
+.source{font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-muted);margin-left:4px;padding:1px 6px;border-radius:4px;background:var(--sidenote-bg);text-decoration:none;border:1px solid transparent;white-space:nowrap;vertical-align:baseline;transition:all var(--transition)}
+.source::before{content:"↗ ";opacity:.6}.source:hover{color:var(--accent);border-color:var(--accent);background:transparent}
+.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-top:12px;font-style:italic}
+.bar-chart__caption a{color:var(--text-muted);text-decoration:underline dotted}.bar-chart__caption a:hover{color:var(--accent)}
+.canvas ul,.canvas ol{margin:0 0 16px;padding-left:24px}.canvas li{margin:4px 0}
+.canvas blockquote{margin:24px 0;padding:12px 20px;border-left:3px solid var(--accent);background:var(--sidenote-bg);color:var(--text);border-radius:0 var(--radius) var(--radius) 0;font-style:italic}
+.canvas code{font-family:var(--font-mono);font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:var(--radius-sm)}
+.canvas pre{font-family:var(--font-mono);background:var(--code-bg);padding:16px 20px;border-radius:var(--radius);overflow-x:auto;margin:24px 0;font-size:14px;line-height:1.5;position:relative}
+.canvas pre code{background:transparent;padding:0}
+.tldr{margin:16px 0 24px;padding:14px 20px;background:var(--accent2-soft);border-left:4px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--text-strong)}
+.tldr strong{color:var(--accent2-strong);letter-spacing:.02em}
+.hook{margin:24px 0 48px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.1rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+.meta-block ul{margin:0;padding-left:20px}.meta-block li{margin:4px 0;color:var(--text)}
+.callout{margin:24px 0;padding:16px 20px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--tip .callout__label{color:var(--success)}
+.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--warn .callout__label{color:var(--warn)}
+.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}.callout--danger .callout__label{color:var(--danger)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text);background:transparent}
+.feynman::before{content:"🧒 Explain in one sentence:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted)}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.flip-card{perspective:1000px;height:180px;margin:24px 0;cursor:pointer}
+.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip-card:hover .flip-card__inner,.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}
+.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:20px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:white;transform:rotateY(180deg)}
+.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.flip-card__content{font-family:var(--font-sans);font-size:15px;line-height:1.5}
+.deep-dive{margin:24px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);overflow:hidden}
+.deep-dive>summary{padding:14px 18px;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);list-style:none;display:flex;align-items:center;gap:10px;user-select:none;transition:background var(--transition)}
+.deep-dive>summary::-webkit-details-marker{display:none}
+.deep-dive>summary::before{content:"▶";color:var(--accent);font-size:10px;transition:transform var(--transition)}
+.deep-dive[open]>summary::before{transform:rotate(90deg)}
+.deep-dive>summary:hover{background:var(--sidenote-bg)}
+.deep-dive__label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-right:auto}
+.deep-dive>*:not(summary){padding:0 18px 16px;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:160px 1fr 48px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:14px}
+.bar-label{color:var(--text)}
+.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong));border-radius:4px;transition:width 400ms cubic-bezier(.4,0,.2,1)}
+.bar-row:hover .bar-fill{filter:brightness(1.15)}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+@media(max-width:640px){.bar-row{grid-template-columns:110px 1fr 40px;font-size:13px}}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:32px 0}
+.concept-flow__step{padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px;min-height:90px;display:flex;flex-direction:column;justify-content:center;transition:transform var(--transition),box-shadow var(--transition)}
+.concept-flow__step:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px}
+.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;user-select:none}
+@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}}
+.glossary{margin:32px 0}.glossary dl{margin:0}.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px}
+.glossary dd{margin:4px 0 0;color:var(--text);font-size:15px;padding-left:0}
+.quiz{margin:56px 0 24px;padding:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.quiz h2{font-family:var(--font-sans);border-top:none;padding-top:0;margin-top:0;margin-bottom:8px}
+.quiz__intro{color:var(--text-muted);font-family:var(--font-sans);font-size:14px;margin-bottom:24px}
+.quiz fieldset{border:none;padding:0;margin:0 0 28px}
+.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px;font-size:16px}
+.quiz__option{display:block;padding:12px 16px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;transition:all var(--transition);position:relative;padding-left:44px}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%;transition:all var(--transition)}
+.quiz__option:hover{border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option input{position:absolute;opacity:0;pointer-events:none}
+.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option:has(input:checked)::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg-elevated)}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success);color:var(--text-strong)}
+.quiz__option.correct-answer::before{border-color:var(--success);background:var(--success);box-shadow:inset 0 0 0 3px var(--success-bg)}
+.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}
+.quiz__option.incorrect-answer::before{border-color:var(--danger);background:var(--danger);box-shadow:inset 0 0 0 3px var(--danger-bg)}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__explanation{display:block}
+.quiz__actions{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:white;cursor:pointer;font-size:14px;transition:all var(--transition)}
+.btn:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+.btn--ghost{background:transparent;color:var(--accent)}
+.btn--ghost:hover{background:var(--sidenote-bg);color:var(--accent-strong)}
+.quiz__score{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);margin:0;padding:12px 16px;background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all var(--transition);font-family:var(--font-sans);font-size:18px;padding:0}
+.control-btn:hover{color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.control-btn svg{width:18px;height:18px}.control-btn[data-active="true"]{background:var(--accent);color:white}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.progress-bar,.navigator,.marginalia,.orbit,.checkpoint__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border)}
+.orbit__title{font-family:var(--font-sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px}
+.orbit__track{position:relative;padding-left:22px}
+.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.orbit__node{position:relative;display:flex;align-items:center;margin:8px 0;color:var(--text-muted);font-family:var(--font-sans);font-size:12px;cursor:pointer;transition:color var(--transition);user-select:none}
+.orbit__node::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border);transition:all var(--transition);box-sizing:border-box}
+.orbit__node[data-reached="true"]::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%, transparent)}
+.orbit__node[data-active="true"]{color:var(--text-strong);font-weight:600}
+.orbit__node[data-active="true"]::before{transform:scale(1.15);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%, transparent)}
+.orbit__node:hover{color:var(--text)}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px;color:var(--text)}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0;align-items:start}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}
+.scaffold__row-body{font-size:15px;line-height:1.65}.scaffold__row-body p:last-child{margin-bottom:0}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm);background:transparent;overflow:hidden}
+.scaffold__probe>summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none;display:flex;gap:10px;align-items:baseline;user-select:none;transition:background var(--transition)}
+.scaffold__probe>summary::-webkit-details-marker{display:none}
+.scaffold__probe>summary::before{content:"🤔 Probe";flex-shrink:0;padding:2px 8px;border-radius:3px;background:var(--accent2-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2-strong)}
+.scaffold__probe[open]>summary::after{content:"";position:absolute}
+.scaffold__probe>summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px 14px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px;line-height:1.6;color:var(--text);animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.scaffold__resolve::before{content:"💡 Resolve";display:inline-block;padding:2px 8px;border-radius:3px;background:var(--accent2);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:8px;vertical-align:middle}
+.checkpoint{margin:32px 0;padding:20px 24px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}
+.checkpoint__label{display:block;font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.checkpoint__question{font-family:var(--font-sans);font-size:15px;color:var(--text-strong);margin:0 0 12px;line-height:1.5}
+.checkpoint textarea{width:100%;min-height:90px;padding:12px 14px;font-family:var(--font-serif);font-size:15px;line-height:1.5;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);resize:vertical;transition:border-color var(--transition);box-sizing:border-box}
+.checkpoint textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%, transparent)}
+.checkpoint__actions{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.checkpoint__expert{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:var(--radius-sm);border-left:3px solid var(--accent);font-family:var(--font-sans);font-size:14px;line-height:1.55;display:none}
+.checkpoint.is-revealed .checkpoint__expert{display:block;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.checkpoint__expert-label{display:block;font-weight:700;color:var(--accent);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.checkpoint__saved{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.launchpad{margin:48px 0 24px;padding:28px 32px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.launchpad::before{content:"🚀";position:absolute;top:-16px;right:-8px;font-size:96px;opacity:.06;transform:rotate(-15deg);pointer-events:none}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:white;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.3rem;color:var(--text-strong);margin:0 0 12px;line-height:1.3}
+.launchpad__problem{font-size:16px;line-height:1.7;color:var(--text);margin:0 0 24px}
+.launchpad__hints{border-top:1px dashed var(--border);padding-top:20px;font-family:var(--font-sans)}
+.launchpad__hints-label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:block}
+.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;color:var(--text);display:none;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.launchpad__hint.is-visible{display:block}
+.launchpad__hint-label{display:block;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:4px;letter-spacing:.08em}
+.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px;transition:all var(--transition)}
+.launchpad__reveal:hover{background:var(--accent2);color:white}
+.launchpad__reveal:disabled{opacity:.4;cursor:not-allowed;background:transparent;color:var(--text-muted);border-color:var(--border)}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.progress-bar,.navigator,.marginalia,.orbit,.checkpoint__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}}
+</style>
+</head>
+<body>
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+<aside class="navigator" aria-label="Table of contents">
+<div class="navigator__meta"><p style="margin:0 0 10px"><a href="secret-sharing-index.html" style="font-size:13px;text-decoration:none;border:1px solid var(--border);padding:6px 10px;border-radius:6px;display:inline-block;background:var(--bg-elevated)">← Series index</a></p><p class="navigator__title">Reading time</p><p class="navigator__reading-time" id="readingTime">~ 20 min</p></div>
+<div class="orbit" aria-label="Learning phases"><p class="orbit__title">Learning path</p><div class="orbit__track">
+<div class="orbit__node" data-target="baseline">1 · Anchor</div>
+<div class="orbit__node" data-target="bridge">2 · Bridge</div>
+<div class="orbit__node" data-target="exposition">3 · Construct</div>
+<div class="orbit__node" data-target="application">4 · Apply</div>
+<div class="orbit__node" data-target="boundary">5 · Boundary</div>
+<div class="orbit__node" data-target="synthesis">6 · Fade</div>
+</div></div>
+<nav><ul class="toc" id="toc"></ul></nav>
+</aside>
+<main class="canvas" id="canvas">
+<h1>Chapter 3: Why It's Unbreakable</h1>
+<div class="tldr" role="note" aria-label="TL;DR"><strong>TL;DR.</strong> Mod-prime wrap-around makes t−1 shares match every possible secret exactly once — uniform and unsqueezable, even with infinite compute.</div>
+<div class="hook">
+<span class="hook__label">🎣 The hook</span>
+Chapter 2 showed you *how* a line hides 53. Now the suspicious question: could a supercomputer stare at one share (1, 73) mod 101 and say "53 is a bit more likely than 12"? If yes, the whole scheme is decoration. If no, what math guarantees it?
+</div>
+<div class="meta-block"><h4>Prerequisites</h4><ul>
+<li>Chapters 1–2: additive vs Shamir sharing, the line example S=53, p=101, f(x)=53+20x</li>
+<li>Comfort with "equally likely" reasoning — counting possibilities, not formulas</li>
+<li>Willingness to think about "all computers in the world" as still not enough</li>
+</ul></div>
+<div class="meta-block"><h4>By the end you will be able to…</h4><ul>
+<li>Explain why arithmetic modulo a prime gives each non-zero number an inverse</li>
+<li>Run the counting proof that t−1 Shamir shares leave every secret equally likely</li>
+<li>Contrast information-theoretic security with computational security (RSA, AES)</li>
+<li>Identify why composite moduli, small fields, and integer arithmetic break the guarantee</li>
+</ul></div>
+
+<h2 id="baseline">The foundational truth</h2>
+<p>The guarantee we need is stronger than "hard to guess." It is: even knowing t−1 shares, every possible secret remains exactly as likely as before you saw them.</p>
+<p>Mathematicians call this <strong>information-theoretic security</strong> (security against any amount of computation, even infinite). It is different from the "no one has found a fast way yet" security that protects RSA or AES.</p>
+<p>You already use the distinction. A sealed envelope hides the letter perfectly until opened — no amount of staring guesses it. A locked safe hides the combination only until someone tries every number. Shamir aims for the envelope, not the safe.</p>
+<p>The tool that creates the envelope is the <strong>finite field</strong> (clock arithmetic where you can add, multiply, and *divide* and stay inside the clock). Without division, shares would cluster and leak size — with it, they spread uniformly.</p>
+
+<h2 id="bridge">A familiar bridge — the clock dial</h2>
+<p>Use one image for the whole chapter. Call it the <strong>Clock Dial Model</strong>.</p>
+<p>Take a clock with a prime number of hours — say 101 hours numbered 0…100. At midnight (0) is the flagpole height from Chapter 2. Every arithmetic step wraps around the dial. On a 101-hour clock, 100+5 = 4 (wrap), and crucially, for any non-zero hour h, there is exactly one hour h⁻¹ with h·h⁻¹ = 1 (the inverse hour).</p>
+<ul>
+<li><strong>Prime modulus p</strong> → hours on the dial (p must be prime to give every hour an inverse)</li>
+<li><strong>Share</strong> → a position on the dial read at a stake number</li>
+<li><strong>t−1 shares</strong> → knowing a few positions still leaves midnight equally likely to be any hour</li>
+</ul>
+<p>The clock is why Chapter 2 insisted on mod p. Without the clock, numbers grow and betray whether the secret was large.</p>
+<div class="concept-flow">
+<div class="concept-flow__step"><span class="concept-flow__num">01</span>Prime clock<br>p = 17, 101, 257…</div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">02</span>Every hour<br>has an inverse</div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">03</span>Shares spread<br>uniformly around</div>
+</div>
+<div class="premortem">
+<span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+<p><span class="premortem__wrong">"If t−1 shares look random, that's good enough — 'close to random' is the same as secure"</span></p>
+<p>This is wrong because "close to random" still leaks bias an attacker can amplify over many attempts — perfect security requires exact uniformity, not approximation.</p>
+<p><span class="premortem__truth">What's actually true:</span> Shamir guarantees exact uniformity: for any t−1 shares and any candidate secret, there are equally many random polynomials consistent with that guess — precisely p^{t-1−(t−1)} = 1 per guess, uniformly.</p>
+</div>
+
+<h2 id="exposition">Building the model, one piece at a time</h2>
+<p>We build the field, then the counting proof, then the contrast with computational schemes.</p>
+
+<section class="scaffold" id="exposition-1">
+<h3 class="scaffold__concept">Finite fields — why primes, not just any modulus</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p><strong>Finite field GF(p)</strong> (Galois field of prime p) is the set {0,…,p−1} with addition and multiplication mod p, where every non-zero element has a <strong>multiplicative inverse</strong> (a partner hour that multiplies to 1).</p><p>This inverse is what lets Lagrange interpolation divide by (xj−xm) mod p. If p were composite (say 6), element 2 would have no inverse mod 6 — you could not divide by 2, and some share sets would be unsolvable or leak.</p></div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>List inverses mod 7 (prime): 1⁻¹=1, 2⁻¹=4 (2·4=8≡1), 3⁻¹=5, 4⁻¹=2, 5⁻¹=3, 6⁻¹=6 — every non-zero hour finds its partner. Mod 6 (composite): 2·3=0 mod6 — zero divisors appear, so 2 has no inverse. Try solving slope (y₂−y₁)/(x₂−x₁) mod 6 when x₂−x₁=2 — impossible.</p>
+<pre><code>p=7 prime:  extended Euclid gives 3⁻¹=5 because 3·5=15≡1
+p=6 composite: gcd(2,6)=2 ≠1  →  no inverse, division fails</code></pre>
+<p>Production choice: for byte strings, we use GF(2⁸) — polynomials over bits with a different wrap-around — so every 8-bit chunk has an inverse. For number secrets, a large prime like p = 257 or p &gt; 2²⁵⁶ works.</p>
+</div></div>
+<details class="scaffold__probe"><summary>If addition and multiplication mod p are just "wrap-around," why isn't p=100 fine? 100 has wrap-around too.</summary><div class="scaffold__resolve">Wrap-around alone gives a ring, not a field. With p=100, factor sharing breaks: 2 and 50 multiply to 0 mod 100, so neither has an inverse — you cannot divide by 2 with certainty. Lagrange needs to divide by every (xj−xm). Non-zero differences must be invertible, so p must be prime (or a prime-power field like GF(2⁸)).</div></details>
+</section>
+<div class="feynman">A prime clock is special: every non-zero hour can undo its own multiplication — that's what lets the hill math divide cleanly.</div>
+
+<div class="checkpoint" data-checkpoint-id="cp3a">
+<span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+<p class="checkpoint__question">If p must be prime for division, why can't we just use ordinary fractions (real numbers) and skip primes entirely?</p>
+<textarea placeholder="Think about integer-size leakage from Chapter 2…"></textarea>
+<div class="checkpoint__actions"><button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button><span class="checkpoint__saved" data-checkpoint-saved></span></div>
+<div class="checkpoint__expert"><span class="checkpoint__expert-label">Expert answer</span>Real numbers have inverses, but they betray size. A share y = S + a₁·x with integer a₁ grows with S — the share value leaks whether S was large. Mod-prime wraps everything uniformly to 0…p−1, so a share of 73 is equally likely from S=53 or S=12 with different random slopes. The field gives uniformity, not just solvability.</div>
+</div>
+
+<section class="scaffold" id="exposition-2">
+<h3 class="scaffold__concept">The counting proof — one polynomial per guess</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p><strong>Proof sketch:</strong> Fix any t−1 shares at distinct x₁…x_{t−1} with values y₁…y_{t−1}, and any candidate secret S' (value at x=0). There is exactly one polynomial of degree &lt; t through the t points (0,S'),(x₁,y₁),…,(x_{t−1},y_{t−1}). So the adversary's view is consistent with every S' equally.</p><p>Why equally likely? The dealer chose the t−1 non-constant coefficients a₁…a_{t−1} uniformly at random. Each S' corresponds bijectively to one coefficient vector that would produce the observed shares. All p^{t−1} coefficient vectors were equally likely, so all p candidate secrets inherit equal probability.</p></div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>Concrete with Chapter 2's line (t=2). Adversary sees (1,73), p=101. For each S' ∈ 0…100:</p>
+<pre><code>Line through (0,S') and (1,73): slope = 73 − S' mod 101
+S'=53 → slope 20  (our real line 53+20x)
+S'=12 → slope 61
+S'=0  → slope 73
+… 100 distinct slopes, one per S'</code></pre>
+<p>Only one slope equals the dealer's random draw. Since the slope was uniform, the posterior probability of each S' after seeing (1,73) stays 1/101 — exactly the prior. No update, no leakage.</p>
+<p>Parabola case (t=3) with shares (1,2),(2,0) from Chapter 2, p=17: for each S' there is exactly one parabola through (0,S'),(1,2),(2,0). Three points pin one parabola; the remaining free coefficient counts cancel. So 17 candidates stay uniform with probability 1/17.</p>
+<pre><code># Count: p^(t−1) total polynomials = 17²=289
+# Consistent with 2 shares + a fixed S': p^(t−1−2)=17⁰=1 per S'
+# Uniform across p=17 values of S'</code></pre>
+</div></div>
+<details class="scaffold__probe"><summary>Does "uniform for every guess" mean that two candidate secrets could still have different numbers of matching coefficient vectors if p were composite?</summary><div class="scaffold__resolve">Yes — and that is the failure mode. With composite modulus, not every denominator is invertible, so some S' have zero matching polynomials while others have many — probabilities become non-uniform and shares leak. Primality makes the count exactly one per S', guaranteeing perfect balance.</div></details>
+</section>
+<div class="feynman">One stolen stake leaves the flagpole height perfectly hidden — every possible height needs exactly one hill that fits the stake, each equally likely.</div>
+
+<section class="scaffold" id="exposition-3">
+<h3 class="scaffold__concept">Information-theoretic vs. computational security</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p><strong>Information-theoretic</strong> (Shamir, XOR additive) means security holds even if the attacker is unbounded — tries every guess with infinite time. The proof is counting, not hardness. <strong>Computational security</strong> (RSA, discrete log, AES) means security holds only if the attacker is limited to feasible computation — "no one knows a fast algorithm yet."</p><p>Shamir belongs to the first camp because t−1 shares contain literally zero Shannon information about S (entropy unchanged). AES with a 128-bit key has at most 128 bits of uncertainty, but in principle brute force would reveal it given enough universes of time.</p></div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>Analogy: envelope vs. combination lock. The envelope (Shamir) hides the message information-theoretically — no amount of squeezing the paper reveals the ink inside. The lock (RSA) hides it computationally — the combination is well-hidden but still a finite search.</p>
+<p>Concrete numbers: IBM's 2024 breach data showed credential-based breaches taking ~292 days to contain. If a secret were additively or Shamir-shared with t=3, stealing 2 shares would give the attacker still 0 bits of advantage — contain time becomes irrelevant for that secret. Replace it with an AES key on one server and the same theft gives the whole key.</p>
+</div></div>
+<details class="scaffold__probe"><summary>If information-theoretic is strictly stronger, why does anyone use RSA/AES instead of just secret-sharing everything?</summary><div class="scaffold__resolve">Because perfect sharing has costs: shares must be as large as the secret (ideal bound), you need interaction to use the secret without rebuilding it, and someone must store multiple shares. AES/RSA give compact, locally usable keys under a computational assumption we tolerate. PETs compose both — share the AES key with Shamir, then compute over shares.</div></details>
+</section>
+
+<details class="deep-dive"><summary><span class="deep-dive__label">🔴 Deep dive</span> Entropy view — "zero information" made precise</summary>
+<p>Let S be uniform over GF(p) (entropy H(S)=log₂ p bits). Let V be the adversary's view of t−1 shares. Shamir's counting shows the joint distribution satisfies H(S|V)=H(S) — conditional entropy equals prior entropy. Mutual information I(S;V)=H(S)−H(S|V)=0. That zero is exact, not "small." The one-line intuition: the mapping from random coefficients to share values, conditioned on fixing t−1 shares, is a bijection to field elements, so uniformity of coefficients transfers to uniformity over S.</p>
+<pre><code># Formal: dealer draws a₁…a_{t−1} uniform in GF(p)
+# f(x)=S+a₁x+… mod p, shares yᵢ=f(xᵢ)
+# For fixed V, the map S' ↦ (a₁,…,a_{t−1}) is bijective → uniform</code></pre>
+</details>
+
+<h2 id="application">In the wild — where each guarantee matters</h2>
+<p>Choose the guarantee that matches the threat. The 1979 papers framed it as robustness: use (k,n) so the system "can function securely even when misfortunes destroy half the pieces and breaches expose all but one of the remaining pieces" <a href="https://doi.org/10.1145/359168.359176" target="_blank" rel="noopener">Shamir 1979</a>.</p>
+<p>When the adversary is a single compromised server with months of dwell time — the 292-day credential-breach lifecycle in <a href="https://www.ibm.com/think/insights/whats-new-2024-cost-of-a-data-breach-report" target="_blank" rel="noopener">IBM 2024</a> — computational keys on that server fall. Information-theoretic shares with t=3 and distribution across three independent stores do not: any two stolen shares still leak zero bits, so dwell time does not compound into advantage. That is why HashiCorp Vault's default Shamir seal is 5 shares threshold 3 <a href="https://developer.hashicorp.com/vault/docs/concepts/seal" target="_blank" rel="noopener">Vault Seal</a>: the cluster can lose two shares and still unseal, and an attacker with two shares still needs a third independent compromise.</p>
+<p>Conversely, when the bottleneck is performance or reuse (encrypting gigabytes, signing millions of messages), computational primitives win — you Shamir-share the root key once, then derive AES session keys computationally for speed.</p>
+<div class="bar-chart">
+<div class="bar-chart__title">What t−1 shares reveal — entropy remaining for p=101 (max log₂101≈6.66 bits)</div>
+<div class="bar-row"><div class="bar-label">Additive (2,2) → 1 share</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">6.66</div></div>
+<div class="bar-row"><div class="bar-label">Shamir (2,3) → 1 share</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">6.66</div></div>
+<div class="bar-row"><div class="bar-label">Shamir (3,5) → 2 shares</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">6.66</div></div>
+<div class="bar-row"><div class="bar-label">Naive cut (2 digits)</div><div class="bar-track"><div class="bar-fill" style="width:32%"></div></div><div class="bar-value">2.1</div></div>
+<p class="bar-chart__caption">First three bars stay at full entropy — perfect hiding. Cutting the secret leaks most of it. The value is prior = posterior for perfect schemes; only the flawed scheme drops. Illustrative for p=101 demo prime.</p>
+</div>
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer"><div class="flip-card__inner"><div class="flip-card__face flip-card__front"><span class="flip-card__label">Active recall — Question</span><div class="flip-card__content">You see 1 share of a (3,5) Shamir sharing over p=101. Do you know more about the secret than someone who saw nothing?</div></div><div class="flip-card__face flip-card__back"><span class="flip-card__label">Answer</span><div class="flip-card__content">No. Both have 6.66 bits of uncertainty (101 equally likely values). Your share is uniform noise conditioned on nothing — same distribution as ignorance.</div></div></div></div>
+
+<h2 id="boundary">Where it breaks</h2>
+<p>The proof assumes its conditions. Break them and the uniform count collapses.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Common misconception</span><strong>"Bigger p always means more secure."</strong> People raise p to 2²⁵⁶ and think threshold security improves. For information-theoretic hiding, security is already perfect for any p &gt; secret — bigger p only enlarges the secret space and brute-force of the whole field (which was already infeasible to enumerate). The gain from 101 to 257 is not "more uniformity" but resistance to guessing the entire secret when its domain is itself huge.</div>
+<div class="callout callout--danger"><span class="callout__label">🚫 Edge case</span><strong>Three fatal shortcuts:</strong> (1) Using integers without a modulus — shares leak magnitude. (2) Using composite p (e.g., 100) — some S' have zero matching polynomials, breaking uniformity. (3) Allowing share x=0 — that is the secret. <strong>Also:</strong> reusing the same random coefficients for two different secrets — the relation between shares leaks the relation between secrets.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Predict</span>Before Chapter 4: the dealer who generated the hill knows every share. If that dealer is bribed after distribution, the whole proof is still true but useless. What extra mechanism would let couriers verify their stakes without trusting the dealer?</div>
+
+<h2 id="connections">How this connects</h2>
+<p>This chapter proved why Chapters 1–2 are not "hard to break" but "nothing to learn." Next we remove remaining real-world trusts:</p>
+<ul>
+<li><strong>Chapter 4 — Hardening</strong> catches lying shares and refreshes hills without moving the flagpole (verifiable &amp; proactive secret sharing).</li>
+<li><strong>Chapter 5 — Threshold Cryptography</strong> uses the field math to sign and decrypt *without* ever rebuilding the secret at one place.</li>
+<li><strong>Chapters 6–7 — From Shares to PETs</strong> compose perfect sharing (this chapter) with computational primitives for multi-party computation and private aggregation.</li>
+</ul>
+
+<h2 id="synthesis">The whole picture</h2>
+<p>The hook asked whether a supercomputer could squeeze a hint from one share of 73. The counting answer is no: over a prime clock, for each of the 101 possible flagpole heights there is exactly one hill through the stolen stake at that height, each from an equally likely random draw. One stake leaves 101 equally likely secrets — same as guessing blind.</p>
+<p>The clock is doing the work. Division exists for every non-zero hour, so Lagrange coefficients exist, so the bijection between guesses and coefficient vectors is perfect, so entropy is untouched. Without the clock — integers or composite moduli — the bijection breaks and leakage appears.</p>
+<p>This is the strongest guarantee cryptography offers, and the most limited: it hides perfectly, but it needs a trusted dealer, honest shares, and fresh randomness. The next chapter removes those trusts.</p>
+<blockquote><strong>If you remember only one thing:</strong> With prime-field arithmetic, t−1 shares match every secret exactly once — so they teach nothing, even to an infinite adversary.</blockquote>
+
+<div class="launchpad">
+<span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+<h3 class="launchpad__title">Count the bijection</h3>
+<p class="launchpad__problem">Formalize the proof for the line case: Fix prime p=17, t=2, adversary sees (1,2). Enumerate all 17 possible secrets S' ∈ 0…16 and compute slope = 2 − S' mod 17 for each. Show the 17 slopes are all distinct and cover 0…16. Then generalize: for t=3 with shares (1,2),(2,0) (p=17), argue that for each S' there is exactly one pair (a₁,a₂) producing those shares, by solving the linear system. Why does this bijection fail when p=6 (composite) — give an S' with zero solutions?</p>
+<div class="launchpad__hints"><span class="launchpad__hints-label">Stuck? Reveal a hint at a time.</span><button type="button" class="launchpad__reveal" id="hintBtn">Reveal hint 1</button>
+<div class="launchpad__hint" data-hint="1"><span class="launchpad__hint-label">Hint 1 — reframe</span>For t=2, the map S' ↦ slope = y₁ − S' mod p is a permutation of 0…p−1 (subtracting S' simply rotates the clock). So distinct S' give distinct slopes, all equally likely.</div>
+<div class="launchpad__hint" data-hint="2"><span class="launchpad__hint-label">Hint 2 — key concept</span>For t=3, fix S', x₁=1,x₂=2 with y₁=2,y₂=0: system [1 1; 2 4]·[a₁;a₂]=[y₁−S'; y₂−S'] mod 17 has determinant 2 ≠0 mod 17 → unique solution per S'. Determinant invertibility needs prime field.</div>
+<div class="launchpad__hint" data-hint="3"><span class="launchpad__hint-label">Hint 3 — setup</span>Mod 6, determinant 2 shares factor with modulus (gcd(2,6)=2) — not invertible. Choose S' so RHS parity mismatches: no solution. Hence some secrets have zero preimages, others have two — uniformity fails.</div>
+</div>
+</div>
+
+<h2 id="glossary">Glossary</h2>
+<div class="glossary"><dl>
+<dt>Finite field GF(p) / Clock Dial</dt><dd>Numbers 0…p−1 with wrap-around where every non-zero has an inverse (needs p prime). <em>In the Hill Model: the periodic hill terrain.</em></dd>
+<dt>Multiplicative inverse (a⁻¹ mod p)</dt><dd>Partner with a·a⁻¹ ≡ 1 mod p; enables division in Lagrange. <em>In the Dial Model: the undo-hour.</em></dd>
+<dt>Information-theoretic security</dt><dd>Zero information leakage even to unbounded attacker; posterior equals prior. <em>In the Hill Model: any flagpole height still needs exactly one hill through the stolen stakes.</em></dd>
+<dt>Computational security</dt><dd>Security assumes bounded attacker — breaking would take infeasible time (RSA, AES). <em>In the Hill Model: a lock that resists picking, not an envelope that hides.</em></dd>
+<dt>Entropy H(S), conditional H(S|V)</dt><dd>Bits of uncertainty; perfect hiding means H(S|V)=H(S). <em>In the Hill Model: stolen stakes do not shrink the set of plausible flagpole heights.</em></dd>
+</dl></div>
+
+<section class="quiz" id="quiz">
+<h2 id="knowledge-check">Knowledge check</h2>
+<p class="quiz__intro">3 questions. Pick the best answer for each and click <em>Check answers</em>.</p>
+<fieldset data-answer="2">
+<legend>1. With Shamir (3,5), p=101, you intercept 2 shares. What is true?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> You can narrow to 2 candidates — one parabola remains impossible.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Each share leaks a few bits, so 2 shares leak more than 1 but not all.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> All 101 secrets remain equally likely — zero bits leaked.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> You have learned the parabola's slope but not its intercept.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct is uniform. With t=3, 2 shares need one more point to pin the parabola — each S' supplies it, all equally likely. Option A confuses integer intuition where some secrets look far.</div>
+</fieldset>
+<fieldset data-answer="1">
+<legend>2. Why must Shamir use prime (or GF(2⁸)) arithmetic rather than plain integers?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Primes make polynomials larger, so shares are harder to store.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Primes give every non-zero element an inverse, so every Lagrange denominator divides cleanly and shares spread uniformly without leaking magnitude.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Primes are required by law for cryptographic standards.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Integer division is slower than modular multiplication.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct is inverses + uniformity. Without them, division fails and integer share sizes leak whether the secret was large.</div>
+</fieldset>
+<fieldset data-answer="0">
+<legend>3. Which scheme has which security type?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Shamir / XOR additive: information-theoretic; RSA / AES: computational.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> All are information-theoretic if the modulus is large enough.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Shamir is computational because it uses polynomials; only one-time pad is information-theoretic.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Additive sharing is computational, Shamir is information-theoretic.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct is the first row. Both sharing schemes hide perfectly via counting; RSA/AES assume hardness. Large moduli alone do not convert one type to the other.</div>
+</fieldset>
+<div class="quiz__actions"><button type="button" class="btn" id="checkQuiz">Check answers</button><button type="button" class="btn btn--ghost" id="resetQuiz">Reset</button><p class="quiz__score" id="quizScore"></p></div>
+</section>
+
+<div class="footer"><p style="margin:0 0 12px"><a href="chapter-2-shamirs-secret-sharing.html">← 2 Shamirs Secret Sharing</a> · <a href="secret-sharing-index.html">Series Index</a> · <a href="chapter-4-hardening-the-scheme.html">Next: 4 Hardening The Scheme →</a></p>
+<p>Chapter 3 of <em>Secret Sharing &amp; Privacy-Enhancing Technologies</em> — Mechanism-first series. Previous: <a href="chapter-2-shamirs-secret-sharing.html">Chapter 2</a>. Next: Chapter 4 — Hardening the Scheme.</p>
+<p style="margin-top:8px;font-size:12px">Sources: Shamir, A. (1979). How to Share a Secret. Comm. ACM 22(11). <a href="https://doi.org/10.1145/359168.359176">doi</a> · Shannon, C.E. (1949). Communication Theory of Secrecy Systems — entropy framing for I(S;V)=0. · IBM / Ponemon (2024). Cost of a Data Breach Report. <a href="https://www.ibm.com/think/insights/whats-new-2024-cost-of-a-data-breach-report">report</a>.</p>
+</div>
+</main>
+<aside class="marginalia" aria-label="Notes and elaborations">
+<div class="amplifier" id="amplifier"><span class="amplifier__label">Hover to elaborate</span><p class="amplifier__empty">Hover over a <span style="border-bottom:1px dashed var(--accent2)">dashed term</span> in the text to see its deeper note here.</p></div>
+<div class="sidenote"><strong>Ideal bound.</strong> Shares must be at least as large as the secret for perfect hiding — Shamir and XOR meet the bound exactly, so you cannot do smaller without leaking.</div>
+<div class="sidenote"><strong>GF(2⁸) vs prime.</strong> Bytes use GF(2⁸) where addition is XOR and every byte has an inverse via a different table. Same proof, non-prime field.</div>
+</aside>
+</div>
+<div class="controls" aria-label="Page controls">
+<button type="button" class="control-btn" id="themeBtn" title="Toggle dark/light" aria-label="Toggle theme">◐</button>
+<button type="button" class="control-btn" id="focusBtn" title="Focus mode" aria-label="Toggle focus mode">◧</button>
+</div>
+<script>
+(function(){
+var fill=document.getElementById('progressFill');
+function onScroll(){
+var h=document.documentElement;
+var max=h.scrollHeight - h.clientHeight;
+var pct=max>0? (h.scrollTop/max)*100:0;
+if(fill) fill.style.width=pct+'%';
+var nodes=[].slice.call(document.querySelectorAll('.orbit__node'));
+var secs=['baseline','bridge','exposition','application','boundary','synthesis'].map(function(id){return document.getElementById(id)}).filter(Boolean);
+var cur=0; for(var i=0;i<secs.length;i++){ if(secs[i].getBoundingClientRect().top < 120) cur=i; }
+nodes.forEach(function(n,i){
+n.setAttribute('data-reached', i<=cur ? 'true':'false');
+n.setAttribute('data-active', i===cur ? 'true':'false');
+});
+}
+document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+var toc=document.getElementById('toc');
+if(toc){
+var heads=[].slice.call(document.querySelectorAll('.canvas h2, .canvas h3'));
+heads.forEach(function(h){
+var li=document.createElement('li');
+var a=document.createElement('a');
+a.href='#'+h.id; a.textContent=h.textContent;
+if(h.tagName==='H3') a.className='toc-l3';
+a.addEventListener('click', function(e){ e.preventDefault(); h.scrollIntoView({behavior:'smooth', block:'start'}); history.replaceState(null,'','#'+h.id);});
+li.appendChild(a); toc.appendChild(li);
+});
+var links=[].slice.call(toc.querySelectorAll('a'));
+function markToc(){
+var curId=null; for(var i=heads.length-1;i>=0;i--){ if(heads[i].getBoundingClientRect().top < 80){ curId=heads[i].id; break; } }
+links.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href')==='#'+curId);});
+}
+document.addEventListener('scroll', markToc, {passive:true}); markToc();
+}
+var tBtn=document.getElementById('themeBtn');
+if(tBtn){ tBtn.addEventListener('click', function(){ var h=document.documentElement; var cur=h.getAttribute('data-theme'); var nxt=cur==='dark'?'light':'dark'; h.setAttribute('data-theme',nxt); try{localStorage.setItem('c3-theme',nxt);}catch(e){} }); try{var s=localStorage.getItem('c3-theme'); if(s) document.documentElement.setAttribute('data-theme',s);}catch(e){} }
+var fBtn=document.getElementById('focusBtn');
+if(fBtn){ fBtn.addEventListener('click', function(){ document.body.classList.toggle('focus-mode'); var a=document.body.classList.contains('focus-mode')?'true':'false'; fBtn.setAttribute('data-active',a);});}
+document.querySelectorAll('.flip-card').forEach(function(c){ c.addEventListener('click', function(){ c.classList.toggle('is-flipped');}); c.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); c.classList.toggle('is-flipped');}});});
+document.querySelectorAll('[data-checkpoint-reveal]').forEach(function(b){
+b.addEventListener('click', function(){
+var cp=b.closest('.checkpoint'); if(!cp) return;
+cp.classList.toggle('is-revealed');
+b.textContent = cp.classList.contains('is-revealed') ? 'Hide expert answer' : 'Compare to expert answer';
+try{var ta=cp.querySelector('textarea'); if(ta) localStorage.setItem('c3-cp-'+cp.getAttribute('data-checkpoint-id'), ta.value);}catch(e){}
+});
+});
+document.querySelectorAll('.checkpoint textarea').forEach(function(ta){
+var cp=ta.closest('.checkpoint'); if(!cp) return;
+var id=cp.getAttribute('data-checkpoint-id');
+try{var v=localStorage.getItem('c3-cp-'+id); if(v) ta.value=v;}catch(e){}
+ta.addEventListener('input', function(){ try{localStorage.setItem('c3-cp-'+id, ta.value);}catch(e){}});
+});
+var hintBtn=document.getElementById('hintBtn');
+if(hintBtn){
+var idx=0; var hints=[].slice.call(document.querySelectorAll('.launchpad__hint'));
+hintBtn.addEventListener('click', function(){
+if(idx < hints.length){ hints[idx].classList.add('is-visible'); idx++; hintBtn.textContent = idx < hints.length ? 'Reveal hint '+(idx+1) : 'All hints revealed'; if(idx>=hints.length) hintBtn.disabled=true; }
+});
+}
+function grade(){
+var fss=[].slice.call(document.querySelectorAll('.quiz fieldset'));
+var total=fss.length, score=0;
+fss.forEach(function(fs){
+var ans=parseInt(fs.getAttribute('data-answer'),10);
+var sel=fs.querySelector('input:checked');
+var opts=[].slice.call(fs.querySelectorAll('.quiz__option'));
+opts.forEach(function(o){ o.classList.remove('correct-answer','incorrect-answer');});
+if(sel){
+var idx=parseInt(sel.value,10);
+if(idx===ans){ score++; opts[idx].classList.add('correct-answer');}
+else { opts[idx].classList.add('incorrect-answer'); opts[ans].classList.add('correct-answer');}
+} else { opts[ans].classList.add('correct-answer');}
+});
+var quiz=document.getElementById('quiz');
+if(quiz) quiz.classList.add('is-graded');
+var sc=document.getElementById('quizScore');
+if(sc) sc.textContent='Score: '+score+' / '+total + (score===total ? ' — you own the proof.' : score>=2 ? ' — solid. One more count through?' : ' — re-read the counting scaffold; the bijection is the core.');
+}
+var cb=document.getElementById('checkQuiz'); if(cb) cb.addEventListener('click', grade);
+var rb=document.getElementById('resetQuiz'); if(rb) rb.addEventListener('click', function(){
+document.querySelectorAll('.quiz fieldset input:checked').forEach(function(i){ i.checked=false;});
+document.querySelectorAll('.quiz__option').forEach(function(o){ o.classList.remove('correct-answer','incorrect-answer');});
+var quiz=document.getElementById('quiz'); if(quiz) quiz.classList.remove('is-graded');
+var sc=document.getElementById('quizScore'); if(sc) sc.textContent='';
+});
+})();</script>
+</body>
+</html>

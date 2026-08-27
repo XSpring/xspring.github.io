@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 6: From Shares to Computation — MPC</title>
+<meta name="description" content="How additive and Shamir shares let parties compute sums — and, with one interaction, products — without revealing inputs.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --font-serif:'Merriweather', Georgia, serif;
+  --font-sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --bg:#FDFBF7; --bg-elevated:#FFFFFF; --bg-sunken:#F5F1EA;
+  --text:#2D3748; --text-muted:#718096; --text-strong:#1A202C;
+  --accent:#319795; --accent-strong:#285E61;
+  --accent2:#B7791F; --accent2-strong:#975A16; --accent2-soft:#FEEBC8;
+  --border:#E4DFD5; --sidenote-bg:#EDF2F7; --code-bg:#EDF2F7;
+  --success:#38A169; --success-bg:#C6F6D5; --danger:#C53030; --danger-bg:#FED7D7;
+  --warn:#B7791F; --warn-bg:#FEEBC8; --info:#2B6CB0; --info-bg:#BEE3F8;
+  --radius:10px; --radius-sm:6px; --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow:0 4px 12px rgba(0,0,0,.08);
+  --measure:65ch; --line:1.7; --transition:200ms cubic-bezier(.4,0,.2,1);
+}
+html[data-theme="dark"]{
+  --bg:#1A202C; --bg-elevated:#2D3748; --bg-sunken:#171923;
+  --text:#E2E8F0; --text-muted:#A0AEC0; --text-strong:#F7FAFC;
+  --accent:#4FD1C5; --accent-strong:#81E6D9; --accent2:#F6AD55; --accent2-strong:#FBD38D; --accent2-soft:#4A2E14;
+  --border:#2D3748; --sidenote-bg:#2A2F3A; --code-bg:#2A2F3A;
+  --success:#68D391; --success-bg:#22543D; --danger:#FC8181; --danger-bg:#63171B;
+  --warn:#F6AD55; --warn-bg:#7B341E; --info:#63B3ED; --info-bg:#2A4365;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 4px 12px rgba(0,0,0,.4);
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}
+.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px}
+.navigator::-webkit-scrollbar{width:6px}.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}
+body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px}
+.navigator__reading-time{color:var(--text);font-size:13px}
+.toc{list-style:none;padding:0;margin:0}.toc li{margin:2px 0}
+.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg)}
+.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500}
+.toc .toc-l3{padding-left:20px;font-size:13px}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.4rem;line-height:1.2;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.6rem;line-height:1.3;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px}
+.canvas h2:first-of-type{border-top:none;padding-top:0}
+.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.2rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong);font-weight:700}.canvas em{font-style:italic}
+.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}.canvas a:hover{color:var(--accent-strong)}
+.source{font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-muted);margin-left:4px;padding:1px 6px;border-radius:4px;background:var(--sidenote-bg);text-decoration:none;border:1px solid transparent;white-space:nowrap;vertical-align:baseline;transition:all var(--transition)}
+.source::before{content:"↗ ";opacity:.6}.source:hover{color:var(--accent);border-color:var(--accent);background:transparent}
+.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-top:12px;font-style:italic}
+.canvas ul,.canvas ol{margin:0 0 16px;padding-left:24px}.canvas li{margin:4px 0}
+.canvas blockquote{margin:24px 0;padding:12px 20px;border-left:3px solid var(--accent);background:var(--sidenote-bg);color:var(--text);border-radius:0 var(--radius) var(--radius) 0;font-style:italic}
+.canvas code{font-family:var(--font-mono);font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:var(--radius-sm)}
+.canvas pre{font-family:var(--font-mono);background:var(--code-bg);padding:16px 20px;border-radius:var(--radius);overflow-x:auto;margin:24px 0;font-size:14px;line-height:1.5;position:relative}
+.canvas pre code{background:transparent;padding:0}
+.tldr{margin:16px 0 24px;padding:14px 20px;background:var(--accent2-soft);border-left:4px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--text-strong)}
+.tldr strong{color:var(--accent2-strong);letter-spacing:.02em}
+.hook{margin:24px 0 48px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.1rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+.meta-block ul{margin:0;padding-left:20px}.meta-block li{margin:4px 0;color:var(--text)}
+.callout{margin:24px 0;padding:16px 20px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--tip .callout__label{color:var(--success)}
+.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--warn .callout__label{color:var(--warn)}
+.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}.callout--danger .callout__label{color:var(--danger)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text);background:transparent}
+.feynman::before{content:"🧒 Explain in one sentence:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted)}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.flip-card{perspective:1000px;height:180px;margin:24px 0;cursor:pointer}
+.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip-card:hover .flip-card__inner,.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}
+.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:20px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:white;transform:rotateY(180deg)}
+.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.flip-card__content{font-family:var(--font-sans);font-size:15px;line-height:1.5}
+.deep-dive{margin:24px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);overflow:hidden}
+.deep-dive>summary{padding:14px 18px;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);list-style:none;display:flex;align-items:center;gap:10px;user-select:none;transition:background var(--transition)}
+.deep-dive>summary::-webkit-details-marker{display:none}
+.deep-dive>summary::before{content:"▶";color:var(--accent);font-size:10px;transition:transform var(--transition)}
+.deep-dive[open]>summary::before{transform:rotate(90deg)}
+.deep-dive>summary:hover{background:var(--sidenote-bg)}
+.deep-dive__label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-right:auto}
+.deep-dive>*:not(summary){padding:0 18px 16px;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:170px 1fr 48px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:14px}
+.bar-label{color:var(--text)}
+.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong));border-radius:4px;transition:width 400ms cubic-bezier(.4,0,.2,1)}
+.bar-row:hover .bar-fill{filter:brightness(1.15)}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+@media(max-width:640px){.bar-row{grid-template-columns:110px 1fr 40px;font-size:13px}}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:32px 0}
+.concept-flow__step{padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px;min-height:90px;display:flex;flex-direction:column;justify-content:center;transition:transform var(--transition),box-shadow var(--transition)}
+.concept-flow__step:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px}
+.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;user-select:none}
+@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}}
+.glossary{margin:32px 0}.glossary dl{margin:0}.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px}
+.glossary dd{margin:4px 0 0;color:var(--text);font-size:15px;padding-left:0}
+.quiz{margin:56px 0 24px;padding:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.quiz h2{font-family:var(--font-sans);border-top:none;padding-top:0;margin-top:0;margin-bottom:8px}
+.quiz__intro{color:var(--text-muted);font-family:var(--font-sans);font-size:14px;margin-bottom:24px}
+.quiz fieldset{border:none;padding:0;margin:0 0 28px}
+.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px;font-size:16px}
+.quiz__option{display:block;padding:12px 16px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;transition:all var(--transition);position:relative;padding-left:44px}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%;transition:all var(--transition)}
+.quiz__option:hover{border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option input{position:absolute;opacity:0;pointer-events:none}
+.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option:has(input:checked)::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg-elevated)}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success);color:var(--text-strong)}
+.quiz__option.correct-answer::before{border-color:var(--success);background:var(--success);box-shadow:inset 0 0 0 3px var(--success-bg)}
+.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}
+.quiz__option.incorrect-answer::before{border-color:var(--danger);background:var(--danger);box-shadow:inset 0 0 0 3px var(--danger-bg)}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__explanation{display:block}
+.quiz__actions{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:white;cursor:pointer;font-size:14px;transition:all var(--transition)}
+.btn:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+.btn--ghost{background:transparent;color:var(--accent)}
+.btn--ghost:hover{background:var(--sidenote-bg);color:var(--accent-strong)}
+.quiz__score{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);margin:0;padding:12px 16px;background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all var(--transition);font-family:var(--font-sans);font-size:18px;padding:0}
+.control-btn:hover{color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.control-btn svg{width:18px;height:18px}.control-btn[data-active="true"]{background:var(--accent);color:white}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.progress-bar,.navigator,.marginalia,.orbit,.checkpoint__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border)}
+.orbit__title{font-family:var(--font-sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px}
+.orbit__track{position:relative;padding-left:22px}
+.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.orbit__node{position:relative;display:flex;align-items:center;margin:8px 0;color:var(--text-muted);font-family:var(--font-sans);font-size:12px;cursor:pointer;transition:color var(--transition);user-select:none}
+.orbit__node::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border);transition:all var(--transition);box-sizing:border-box}
+.orbit__node[data-reached="true"]::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%, transparent)}
+.orbit__node[data-active="true"]{color:var(--text-strong);font-weight:600}
+.orbit__node[data-active="true"]::before{transform:scale(1.15);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%, transparent)}
+.orbit__node:hover{color:var(--text)}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px;color:var(--text)}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0;align-items:start}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}
+.scaffold__row-body{font-size:15px;line-height:1.65}.scaffold__row-body p:last-child{margin-bottom:0}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm);background:transparent;overflow:hidden}
+.scaffold__probe>summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none;display:flex;gap:10px;align-items:baseline;user-select:none;transition:background var(--transition)}
+.scaffold__probe>summary::-webkit-details-marker{display:none}
+.scaffold__probe>summary::before{content:"🤔 Probe";flex-shrink:0;padding:2px 8px;border-radius:3px;background:var(--accent2-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2-strong)}
+.scaffold__probe[open]>summary::after{content:"";position:absolute}
+.scaffold__probe>summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px 14px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px;line-height:1.6;color:var(--text);animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.scaffold__resolve::before{content:"💡 Resolve";display:inline-block;padding:2px 8px;border-radius:3px;background:var(--accent2);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:8px;vertical-align:middle}
+.checkpoint{margin:32px 0;padding:20px 24px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}
+.checkpoint__label{display:block;font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.checkpoint__question{font-family:var(--font-sans);font-size:15px;color:var(--text-strong);margin:0 0 12px;line-height:1.5}
+.checkpoint textarea{width:100%;min-height:90px;padding:12px 14px;font-family:var(--font-serif);font-size:15px;line-height:1.5;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);resize:vertical;transition:border-color var(--transition);box-sizing:border-box}
+.checkpoint textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%, transparent)}
+.checkpoint__actions{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.checkpoint__expert{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:var(--radius-sm);border-left:3px solid var(--accent);font-family:var(--font-sans);font-size:14px;line-height:1.55;display:none}
+.checkpoint.is-revealed .checkpoint__expert{display:block;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.checkpoint__expert-label{display:block;font-weight:700;color:var(--accent);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.checkpoint__saved{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.launchpad{margin:48px 0 24px;padding:28px 32px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.launchpad::before{content:"🚀";position:absolute;top:-16px;right:-8px;font-size:96px;opacity:.06;transform:rotate(-15deg);pointer-events:none}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:white;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.3rem;color:var(--text-strong);margin:0 0 12px;line-height:1.3}
+.launchpad__problem{font-size:16px;line-height:1.7;color:var(--text);margin:0 0 24px}
+.launchpad__hints{border-top:1px dashed var(--border);padding-top:20px;font-family:var(--font-sans)}
+.launchpad__hints-label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:block}
+.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;color:var(--text);display:none;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.launchpad__hint.is-visible{display:block}
+.launchpad__hint-label{display:block;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:4px;letter-spacing:.08em}
+.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px;transition:all var(--transition)}
+.launchpad__reveal:hover{background:var(--accent2);color:white}
+.launchpad__reveal:disabled{opacity:.4;cursor:not-allowed;background:transparent;color:var(--text-muted);border-color:var(--border)}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.progress-bar,.navigator,.marginalia,.orbit,.checkpoint__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}}
+</style>
+</head>
+<body>
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+<aside class="navigator" aria-label="Table of contents">
+<div class="navigator__meta"><p style="margin:0 0 10px"><a href="secret-sharing-index.html" style="font-size:13px;text-decoration:none;border:1px solid var(--border);padding:6px 10px;border-radius:6px;display:inline-block;background:var(--bg-elevated)">← Series index</a></p><p class="navigator__title">Reading time</p><p class="navigator__reading-time" id="readingTime">~ 24 min</p></div>
+<div class="orbit" aria-label="Learning phases"><p class="orbit__title">Learning path</p><div class="orbit__track">
+<div class="orbit__node" data-target="baseline">1 · Anchor</div>
+<div class="orbit__node" data-target="bridge">2 · Bridge</div>
+<div class="orbit__node" data-target="exposition">3 · Construct</div>
+<div class="orbit__node" data-target="application">4 · Apply</div>
+<div class="orbit__node" data-target="boundary">5 · Boundary</div>
+<div class="orbit__node" data-target="synthesis">6 · Fade</div>
+</div></div>
+<nav><ul class="toc" id="toc"></ul></nav>
+</aside>
+<main class="canvas" id="canvas">
+<h1>Chapter 6: From Shares to Computation</h1>
+<div class="tldr" role="note" aria-label="TL;DR"><strong>TL;DR.</strong> Add shares locally; multiply needs one interaction (Beaver triple or degree-reduction) — enough to compute anything.</div>
+<div class="hook">
+<span class="hook__label">🎣 The hook</span>
+Three hospitals want the average recovery time for a treatment. No hospital will reveal its patients' times, and no central server should see them either. Can they learn the average — and *only* the average — with the same hill-and-stakes math that hid the vault key?
+</div>
+<div class="meta-block"><h4>Prerequisites</h4><ul>
+<li>Chapters 1–5: Shamir and additive sharing, Lagrange, threshold signatures' "combine partials" pattern</li>
+<li>Intuition that addition is local on shares, multiplication is not — no algebra beyond mod p</li>
+</ul></div>
+<div class="meta-block"><h4>By the end you will be able to…</h4><ul>
+<li>Add two shared secrets locally and argue why the result stays hidden</li>
+<li>Show why multiplying shared secrets raises the polynomial degree and how re-sharing fixes it</li>
+<li>Use a Beaver triple to turn a multiplication into local work plus one opening</li>
+<li>Identify which real PET problems are "addition-only" (aggregation) vs need full MPC</li>
+</ul></div>
+
+<h2 id="baseline">The foundational truth</h2>
+<p>Secret sharing is not just storage — it is a computing substrate.</p>
+<p>Shares compose under linear operations for free: add two shared values locally and you hold a share of the sum, with no communication. Multiplication breaks that — the product polynomial has double the degree, needing twice as many points to pin, and you must interact to re-share it.</p>
+<p>That split — free addition, costly multiplication — is the whole price list of multi-party computation (MPC). Everything fancier follows.</p>
+
+<h2 id="bridge">A familiar bridge — secret ballot tally</h2>
+<p>Keep the Hill Model, but switch the secret from a vault key to a ballot count. Call it the <strong>Ballot Box Model</strong>.</p>
+<ul>
+<li><strong>Input secret</strong> → Alice's salary 30, Bob's 50, Carol's 40 — each is a hill with its own flagpole.</li>
+<li><strong>Share</strong> → each person's hill is sliced into stakes and dealt to three tally servers.</li>
+<li><strong>Compute</strong> → servers locally add their stakes (each server sums what it holds), then jointly open only the summed hill's flagpole — the average — never the individual flagpoles.</li>
+</ul>
+<p>Addition is each server stacking papers locally. Multiplication is servers needing to trade notes to correct the hill's bow — that trade is the cost.</p>
+<div class="concept-flow">
+<div class="concept-flow__step"><span class="concept-flow__num">01</span>Share each<br>input among servers</div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">02</span>Servers compute<br>on shares (add locally)</div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">03</span>Open only<br>the output flagpole</div>
+</div>
+<div class="premortem">
+<span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+<p><span class="premortem__wrong">"MPC means encrypting inputs and sending them to a trusted server who computes the answer"</span></p>
+<p>This is wrong because it restores the single point of failure — whoever holds the decryption key sees everything, violating input privacy.</p>
+<p><span class="premortem__truth">What's actually true:</span> Inputs stay shared across servers at all times — the computation runs *on* the shares, and only the final result is opened, so no server ever sees a raw input.</p>
+</div>
+
+<h2 id="exposition">Building the model, one piece at a time</h2>
+
+<section class="scaffold" id="exposition-1">
+<h3 class="scaffold__concept">Free addition — stacking shares locally</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p><strong>Homomorphism:</strong> Shamir and additive shares are both linear. If secret <code>x</code> is shared as <code>f_x(i)</code> and <code>y</code> as <code>f_y(i)</code> (same threshold, same x's), then <code>f_x(i)+f_y(i) mod p</code> is a valid share of <code>x+y mod p</code>. No server talks to another — each adds its two stake heights locally.</p><p>The same holds for additive sharing: <code>(shares of x) + (shares of y)</code> locally sum to shares of <code>x+y</code>. And multiplying a shared secret by a public constant is also local: <code>c·f(i)</code> is a share of <code>c·x</code>.</p></div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>Hospitals A,B,C have salaries 30,50,40. Choose prime p=101, threshold t=2, lines:</p>
+<pre><code>A: fA(x)=30+11x → shares (1,41),(2,52),(3,63)
+B: fB(x)=50+ 7x → shares (1,57),(2,64),(3,71)
+C: fC(x)=40+ 3x → shares (1,43),(2,46),(3,49)
+
+Server 1 holds 41,57,43 → local sum 41+57+43=141 mod101=40
+Server 2 holds 52,64,46 → sum 162 mod101=61
+Server 3 holds 63,71,49 → sum 183 mod101=82
+
+Combined sum secret should be 120 mod101=19? Wait 30+50+40=120 mod101=19
+Check servers' sums are shares of 19:
+Line for sum: f(x)=19+21x (11+7+3=21) → f1=40 ✓ f2=61 ✓ f3=82 ✓
+
+Open: any 2 servers rebuild 19 → 120 → average 40. No server saw 30,50,40.</code></pre>
+<p>Three local additions per server, zero messages. That is why "addition-only" PETs (federated sum, private telemetry) are cheap — they use this path only.</p>
+<pre><code># Pseudocode: local addition
+share_sum[i] = (share_A[i] + share_B[i]) % p
+# No communication — same for c*share: (c * share_A[i]) % p</code></pre>
+</div></div>
+<details class="scaffold__probe"><summary>Can servers locally subtract as well — say, to compute variance Σ(x−mean)² — without revealing x or mean?</summary><div class="scaffold__resolve">Subtraction is just addition with a negative constant, so yes — each server computes share_of_x minus share_of_mean locally, still no communication. The square needs multiplication, which costs — next scaffold.</div></details>
+</section>
+<div class="feynman">Adding shared numbers is like each tally clerk adding their own pile of ballots without talking — the piles still encode the true total.</div>
+
+<div class="checkpoint" data-checkpoint-id="cp6a">
+<span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+<p class="checkpoint__question">If addition is free, why can't we compute the sum of squares Σx² the same way by squaring each share locally?</p>
+<textarea placeholder="Think about polynomial degree — sharing a product squares the degree…"></textarea>
+<div class="checkpoint__actions"><button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button><span class="checkpoint__saved" data-checkpoint-saved></span></div>
+<div class="checkpoint__expert"><span class="checkpoint__expert-label">Expert answer</span>Squaring a share f(i)² gives a point on h(x)=f(x)², degree 2(t−1). Where f needed t points, h needs 2t−1 — the quorum size grew. Without re-sharing to degree t−1, you lose the threshold property. Need interaction to reduce degree.</div>
+</div>
+
+<section class="scaffold" id="exposition-2">
+<h3 class="scaffold__concept">Costly multiplication — degree growth and Beaver's shortcut</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p><strong>The problem:</strong> Multiply two shared secrets <code>x=f(i), y=g(i)</code>. Local product <code>h(i)=f(i)·g(i)</code> lies on polynomial <code>h(x)=f(x)·g(x)</code> of degree <code>2(t−1)</code> — needs <code>2t−1</code> shares to rebuild, not <code>t</code>. Left as-is, repeated multiplications blow up the threshold until every party is needed.</p><p><strong>Fix 1 — re-sharing / degree reduction:</strong> servers reshare their local products via resharing, then combine to a degree-(t−1) sharing of the product — one round of interaction (BGW protocol).</p><p><strong>Fix 2 — Beaver triples:</strong> Pre-share random triple <code>(a,b,c)</code> with <code>c=a·b</code>. To multiply shared <code>x,y</code>, open <code>d=x−a</code> and <code>e=y−b</code> (public masks), then each holder computes locally <code>c + d·b + e·a + d·e</code> — a share of <code>x·y</code>. One opening (two public values) replaces resharing.</p></div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>Smallest demo: t=2 lines degree 1 over p=101, secrets x=3 (<code>f=3+2x</code>), y=5 (<code>g=5+4x</code>):</p>
+<pre><code>f(1)=5, f(2)=7, f(3)=9
+g(1)=9, g(2)=13, g(3)=17
+Local products h(i)=f(i)·g(i): 45,91,153 mod101=45,91,52
+h(x)=f·g degree 2: 15+22x+8x² mod101 → h(1)=45 ✓ h(2)=91 ✓
+
+Needs 3 points to open 15 (which is 3·5). Threshold grew from 2 to 3.</code></pre>
+<p>Beaver trick: pre-shared triple (<code>a=10,b=20,c=200 mod101=98</code> actually 10·20=200 mod101=98). Parties hold shares of a,b,c. To multiply x,y:</p>
+<pre><code># Each party i computes d_i = share_x[i] − share_a[i], e_i = share_y[i] − share_b[i]
+# Open d = reconstruct(d_i), e = reconstruct(e_i)  // public, but masked
+# Each party computes share_xy[i] = share_c[i] + d·share_b[i] + e·share_a[i] + (i==0?d·e:0)
+# Result is degree-(t−1) sharing of x·y — one opening, no degree blow-up
+d = x−a = 3−10=−7 mod101=94,  e=5−20=−15 mod101=86  → public
+Share: 98 +94·share_b +86·share_a + 94·86 (to one party)  → reconstructs to 15 ✓</code></pre>
+<p>The masks <code>d,e</code> leak nothing about <code>x,y</code> because <code>a,b</code> are uniform random — one-time pads in the field.</p>
+</div></div>
+<details class="scaffold__probe"><summary>Could we skip Beaver and just locally multiply, then refresh as in Chapter 4's zero-hill trick?</summary><div class="scaffold__resolve">No — the hill from squaring is higher-degree, not just a different slope at same degree. Adding a zero-hill (constant 0) does not lower degree; it just re-randomizes the same shape family. Degree reduction needs resharing or Beaver — you must actively move from degree 2(t−1) back to t−1.</div></details>
+</section>
+<div class="feynman">Multiplying shared numbers bends the hill higher — you must jointly iron it back flat before it outgrows the quorum.</div>
+
+<details class="deep-dive"><summary><span class="deep-dive__label">🔴 Deep dive</span> BGW vs SPDZ — honest majority vs dishonest majority</summary>
+<p>BGW (Ben-Or–Goldwasser–Wigderson, 1988) uses Shamir plus degree reduction and assumes honest majority (t ≤ n/2 for VSS-reinforced multiplication, t ≤ n/3 for perfect security without broadcast). SPDZ-style protocols keep additive sharing but pre-produce Beaver triples using somewhat homomorphic encryption under <em>no</em> honest majority (even n−1 cheaters tolerated) — triples are authenticated with MACs so a cheater who lies is caught. Trade: BGW is information-theoretic with t<n/2; SPDZ is computational but tolerates any t<n. Modern MPC (MP-SPDZ stack) blends both.</p>
+</details>
+
+<h2 id="application">In the wild</h2>
+<p>Two deployment shapes cover most real uses.</p>
+<p><strong>Addition-only — secure aggregation.</strong> Google's cross-device federated learning aggregates model updates from phones with additive masking (variant: SecAgg, 2017) — each phone masks its vector with pairwise random pads shared with other phones, the server sees only the sum. No multiplication is needed in the cryptographic layer; the sum is decoded and the model updates. Same for telemetry: Mozilla's Prio splits each measurement into additive shares to two servers, who sum shares locally and open only the aggregate histogram.</p>
+<p><strong>Full MPC — private set intersection, joint credit scoring.</strong> When the function needs multiplication (comparisons, divisions), parties run Beaver-based MPC. Example: three hospitals from the hook compute average *and* variance privately — sum uses local addition, variance needs squares (multiplication) → one Beaver opening per squaring. Libraries like MP-SPDZ and SCALE-MAMBA automate Beaver generation in an offline phase, so online cost is one opening per multiply.</p>
+<div class="bar-chart">
+<div class="bar-chart__title">Cost per operation in MPC (messages / party)</div>
+<div class="bar-row"><div class="bar-label">Add / subtract</div><div class="bar-track"><div class="bar-fill" style="width:10%"></div></div><div class="bar-value">0</div></div>
+<div class="bar-row"><div class="bar-label">Multiply (Beaver)</div><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div><div class="bar-value">1</div></div>
+<div class="bar-row"><div class="bar-label">Compare / sort</div><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><div class="bar-value">8+</div></div>
+<div class="bar-row"><div class="bar-label">Reconstruct (open)</div><div class="bar-track"><div class="bar-fill" style="width:52%"></div></div><div class="bar-value">1</div></div>
+<p class="bar-chart__caption">Schematic. Addition is local; multiplication needs one opening; comparisons (bit decomposition, oblivious transfer) cost many. Most "PET" aggregation problems stay in the cheap left column by design.</p>
+</div>
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer"><div class="flip-card__inner"><div class="flip-card__face flip-card__front"><span class="flip-card__label">Active recall — Question</span><div class="flip-card__content">Servers hold Shamir shares of x and y (t=2). They locally add shares to get a sharing of x+y, but locally multiply to get h(i)=f(i)g(i). Why is the second not a share of x·y at the same threshold?</div></div><div class="flip-card__face flip-card__back"><span class="flip-card__label">Answer</span><div class="flip-card__content">h(x)=f(x)g(x) is degree 2, needs 3 points — threshold grew from 2 to 3. Must re-share/Beaver to reduce back to degree 1.</div></div></div></div>
+
+<h2 id="boundary">Where it breaks</h2>
+<p>Degree is one limit. Semi-honest vs malicious behavior is the other.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Common misconception</span><strong>"MPC guarantees correct output even if parties cheat."</strong> Basic BGW/SPDZ with additive shares as described is only semi-honest — a cheater who lies about a share can corrupt the result without being caught. Malicious security adds MACs on shares (SPDZ tags) or VSS commitments per multiplication so deviation is detected and the cheater identified.</div>
+<div class="callout callout--danger"><span class="callout__label">🚫 Edge case</span><strong>Two silent breaks:</strong> (1) Not enough honest parties for BGW — with Shamir and t>n/2, degree reduction cannot be made information-theoretic; you must switch to SPDZ-style computational security. (2) Opening d,e in Beaver leaks nothing about x,y only if a,b were fresh and random — reusing a triple across two multiplies leaks the relation between inputs.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Predict</span>Before the final chapter: hospitals can MPC the average, but the average itself may leak about one hospital's data (e.g., if you know two inputs). What extra layer would hide *function output* leakage, not just input leakage?</div>
+
+<h2 id="connections">How this connects</h2>
+<ul>
+<li><strong>Chapters 1–3</strong> gave perfect hiding at rest.</li>
+<li><strong>Chapters 4–5</strong> made it usable without a single holder.</li>
+<li><strong>This chapter</strong> made it computable — addition free, multiplication cheap with one opening.</li>
+<li><strong>Chapter 7 — PET Landscape</strong> places MPC among four complementary privacy tools and asks when to use which.</li>
+</ul>
+
+<h2 id="synthesis">The whole picture</h2>
+<p>The hospitals never revealed their patients' times. Each hospital's number was split into hills dealt to tally servers; servers locally stacked their stakes for the sum and opened only the average — three local additions, zero messages about the inputs.</p>
+<p>When the function needs multiplication — variance, ranking, pricing — local products bend the hill too high. Re-sharing or a Beaver triple (random a·b=c as a mask) brings it back flat with one opening. That single price — one round per multiply — is the bridge from hiding a vault key to computing any function on hidden inputs.</p>
+<p>The ballot box was never opened — only the tally was.</p>
+<blockquote><strong>If you remember only one thing:</strong> Shared addition is local; shared multiplication needs one interaction — that one cost powers general MPC.</blockquote>
+
+<div class="launchpad">
+<span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+<h3 class="launchpad__title">Private average with one cheater</h3>
+<p class="launchpad__problem">Three hospitals run the additive sum demo from this chapter with servers S1,S2,S3 (Shamir t=2). So far all were semi-honest. Now S3 is malicious and, during the sum protocol, adds 10 to its local share sum before opening — shifting the reconstructed total by 10·Li(0). (a) Show the math of the shift using Lagrange coefficients for the opening set {S1,S2} vs {S1,S3}. (b) Propose a one-line fix using Chapter 4's Feldman commitments applied to the *sum sharing* that would catch S3 before opening, and name its cost.</p>
+<div class="launchpad__hints"><span class="launchpad__hints-label">Stuck? Reveal a hint at a time.</span><button type="button" class="launchpad__reveal" id="hintBtn">Reveal hint 1</button>
+<div class="launchpad__hint" data-hint="1"><span class="launchpad__hint-label">Hint 1 — reframe</span>Opening with {S1,S2} uses weights (2/(2−1)=2 for S1? compute properly) — the shift from S3 only appears when S3 is in the chosen quorum. But an honest combiner could pick any t — the cheater's power is quorum-dependent without verification.</div>
+<div class="launchpad__hint" data-hint="2"><span class="launchpad__hint-label">Hint 2 — key concept</span>Add a post-addition VSS: each server commits to its sum share's polynomial (or uses distributed commitments summed homomorphically). Before opening, verifiers check g^{share_sum_i} vs summed commitments — Feldman per-server proof.</div>
+<div class="launchpad__hint" data-hint="3"><span class="launchpad__hint-label">Hint 3 — setup</span>Cost: one exponentiation per verifier plus commitments that grew with degree — exactly Chapter 4's trade: computational hardness for cheater detection. In SPDZ style, this is the MAC check.</div>
+</div>
+</div>
+
+<h2 id="glossary">Glossary</h2>
+<div class="glossary"><dl>
+<dt>Multi-party computation (MPC)</dt><dd>Joint evaluation of a function where inputs stay shared and only the output is opened. <em>In the Ballot Model: tally servers compute the total without opening ballots.</em></dd>
+<dt>Homomorphism (linear)</dt><dd>Adding shares locally yields a share of the sum — no interaction. <em>Clerks adding their own piles.</em></dd>
+<dt>Degree growth</dt><dd>Local multiplication makes degree 2(t−1); quorum grows to 2t−1 until re-shared. <em>Hill that outgrows the number of stakes.</em></dd>
+<dt>Beaver triple (a,b,c=a·b)</dt><dd>Pre-shared random multiplication to turn one multiply into one opening of masked values. <em>Random decoy hill whose zero-knowledge sanding brings the real hill flat.</em></dd>
+<dt>BGW / SPDZ</dt><dd>Two MPC families: BGW = honest-majority, information-theoretic; SPDZ = dishonest-majority, computational with MACs. <em>Different dishonesty tolerances.</em></dd>
+</dl></div>
+
+<section class="quiz" id="quiz">
+<h2 id="knowledge-check">Knowledge check</h2>
+<p class="quiz__intro">3 questions. Pick the best answer for each and click <em>Check answers</em>.</p>
+<fieldset data-answer="2">
+<legend>1. Two secrets x,y are Shamir-shared (t=2). What is true locally per server?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Both x+y and x·y can be obtained by local addition/multiplication with no extra messages.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Multiplication is local but addition needs interaction to re-share.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> x+y is local (add shares); x·y needs one interaction (Beaver or re-share) because degree grows.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Neither — all operations on shares need a round of broadcast.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct is free addition, costly multiplication. Local multiplication raises degree to 2t−2, so threshold breaks without resharing.</div>
+</fieldset>
+<fieldset data-answer="0">
+<legend>2. Beaver triple (a,b,c) with c=a·b: how does it make x·y cheap?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Open d=x−a and e=y−b (masked, leak-free), then locally compute c+d·b+e·a+d·e as share of x·y — one opening.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> It encrypts x and y so the server can multiply ciphertexts.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> It splits d and e into further shares, requiring three openings.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> It proves that a·b=c without revealing a,b — zero-knowledge only.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct is the one-opening reconstruction. a,b are one-time pads for x,y, so d,e are uniform.</div>
+</fieldset>
+<fieldset data-answer="1">
+<legend>3. Why is secure aggregation (sum of many clients) done with addition-only MPC, not full MPC?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Addition needs more rounds than multiplication, so it is avoided for speed.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> The aggregate sum needs only free local addition plus one opening — no Beaver triples, no comparisons, minimal communication.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Full MPC cannot handle more than 10 clients.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Addition-only MPC leaks the inputs, so it is avoided for privacy-sensitive settings.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct: sum is the cheap case — why federated learning and telemetry use SecAgg/Prio — while comparison/sorting pushes into the expensive column.</div>
+</fieldset>
+<div class="quiz__actions"><button type="button" class="btn" id="checkQuiz">Check answers</button><button type="button" class="btn btn--ghost" id="resetQuiz">Reset</button><p class="quiz__score" id="quizScore"></p></div>
+</section>
+
+<div class="footer"><p style="margin:0 0 12px"><a href="chapter-5-threshold-cryptography.html">← 5 Threshold Cryptography</a> · <a href="secret-sharing-index.html">Series Index</a> · <a href="chapter-7-pet-landscape.html">Next: 7 Pet Landscape →</a></p>
+<p>Chapter 6 of <em>Secret Sharing &amp; Privacy-Enhancing Technologies</em> — Mechanism-first series. Previous: <a href="chapter-5-threshold-cryptography.html">Chapter 5</a>. Next: <a href="chapter-7-pet-landscape.html">Chapter 7 — PET Landscape (global synthesis)</a>.</p>
+<p style="margin-top:8px;font-size:12px">Sources: Shamir 1979; BGW (1988); Beaver (1991) — Beaver triples; Bonawitz et al. (2017) — SecAgg; Corrigan-Gibbs &amp; Boneh (2017) — Prio.</p>
+</div>
+</main>
+<aside class="marginalia" aria-label="Notes and elaborations">
+<div class="amplifier" id="amplifier"><span class="amplifier__label">Hover to elaborate</span><p class="amplifier__empty">Hover over a <span style="border-bottom:1px dashed var(--accent2)">dashed term</span> in the text to see its deeper note here.</p></div>
+<div class="sidenote"><strong>Offline vs online.</strong> Beaver triples are made in a slower offline phase (often with homomorphic encryption) and consumed one per multiply in the fast online phase.</div>
+<div class="sidenote"><strong>Additive vs Shamir trade.</strong> Additive needs all n to open but multiplication is simpler; Shamir needs t and handles thresholds — choice depends on honest-majority assumption.</div>
+</aside>
+</div>
+<div class="controls" aria-label="Page controls">
+<button type="button" class="control-btn" id="themeBtn" title="Toggle dark/light" aria-label="Toggle theme">◐</button>
+<button type="button" class="control-btn" id="focusBtn" title="Focus mode" aria-label="Toggle focus mode">◧</button>
+</div>
+<script>
+(function(){
+var fill=document.getElementById('progressFill');
+function onScroll(){
+var h=document.documentElement;
+var max=h.scrollHeight - h.clientHeight;
+var pct=max>0? (h.scrollTop/max)*100:0;
+if(fill) fill.style.width=pct+'%';
+var nodes=[].slice.call(document.querySelectorAll('.orbit__node'));
+var secs=['baseline','bridge','exposition','application','boundary','synthesis'].map(function(id){return document.getElementById(id)}).filter(Boolean);
+var cur=0; for(var i=0;i<secs.length;i++){ if(secs[i].getBoundingClientRect().top < 120) cur=i; }
+nodes.forEach(function(n,i){
+n.setAttribute('data-reached', i<=cur ? 'true':'false');
+n.setAttribute('data-active', i===cur ? 'true':'false');
+});
+}
+document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+var toc=document.getElementById('toc');
+if(toc){
+var heads=[].slice.call(document.querySelectorAll('.canvas h2, .canvas h3'));
+heads.forEach(function(h){
+var li=document.createElement('li');
+var a=document.createElement('a');
+a.href='#'+h.id; a.textContent=h.textContent;
+if(h.tagName==='H3') a.className='toc-l3';
+a.addEventListener('click', function(e){ e.preventDefault(); h.scrollIntoView({behavior:'smooth', block:'start'}); history.replaceState(null,'','#'+h.id);});
+li.appendChild(a); toc.appendChild(li);
+});
+var links=[].slice.call(toc.querySelectorAll('a'));
+function markToc(){
+var curId=null; for(var i=heads.length-1;i>=0;i--){ if(heads[i].getBoundingClientRect().top < 80){ curId=heads[i].id; break; } }
+links.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href')==='#'+curId);});
+}
+document.addEventListener('scroll', markToc, {passive:true}); markToc();
+}
+var tBtn=document.getElementById('themeBtn');
+if(tBtn){ tBtn.addEventListener('click', function(){ var h=document.documentElement; var cur=h.getAttribute('data-theme'); var nxt=cur==='dark'?'light':'dark'; h.setAttribute('data-theme',nxt); try{localStorage.setItem('c6-theme',nxt);}catch(e){} }); try{var s=localStorage.getItem('c6-theme'); if(s) document.documentElement.setAttribute('data-theme',s);}catch(e){} }
+var fBtn=document.getElementById('focusBtn');
+if(fBtn){ fBtn.addEventListener('click', function(){ document.body.classList.toggle('focus-mode'); var a=document.body.classList.contains('focus-mode')?'true':'false'; fBtn.setAttribute('data-active',a);});}
+document.querySelectorAll('.flip-card').forEach(function(c){ c.addEventListener('click', function(){ c.classList.toggle('is-flipped');}); c.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); c.classList.toggle('is-flipped');}});});
+document.querySelectorAll('[data-checkpoint-reveal]').forEach(function(b){
+b.addEventListener('click', function(){
+var cp=b.closest('.checkpoint'); if(!cp) return;
+cp.classList.toggle('is-revealed');
+b.textContent = cp.classList.contains('is-revealed') ? 'Hide expert answer' : 'Compare to expert answer';
+try{var ta=cp.querySelector('textarea'); if(ta) localStorage.setItem('c6-cp-'+cp.getAttribute('data-checkpoint-id'), ta.value);}catch(e){}
+});
+});
+document.querySelectorAll('.checkpoint textarea').forEach(function(ta){
+var cp=ta.closest('.checkpoint'); if(!cp) return;
+var id=cp.getAttribute('data-checkpoint-id');
+try{var v=localStorage.getItem('c6-cp-'+id); if(v) ta.value=v;}catch(e){}
+ta.addEventListener('input', function(){ try{localStorage.setItem('c6-cp-'+id, ta.value);}catch(e){}});
+});
+var hintBtn=document.getElementById('hintBtn');
+if(hintBtn){
+var idx=0; var hints=[].slice.call(document.querySelectorAll('.launchpad__hint'));
+hintBtn.addEventListener('click', function(){
+if(idx < hints.length){ hints[idx].classList.add('is-visible'); idx++; hintBtn.textContent = idx < hints.length ? 'Reveal hint '+(idx+1) : 'All hints revealed'; if(idx>=hints.length) hintBtn.disabled=true; }
+});
+}
+function grade(){
+var fss=[].slice.call(document.querySelectorAll('.quiz fieldset'));
+var total=fss.length, score=0;
+fss.forEach(function(fs){
+var ans=parseInt(fs.getAttribute('data-answer'),10);
+var sel=fs.querySelector('input:checked');
+var opts=[].slice.call(fs.querySelectorAll('.quiz__option'));
+opts.forEach(function(o){ o.classList.remove('correct-answer','incorrect-answer');});
+if(sel){
+var idx=parseInt(sel.value,10);
+if(idx===ans){ score++; opts[idx].classList.add('correct-answer');}
+else { opts[idx].classList.add('incorrect-answer'); opts[ans].classList.add('correct-answer');}
+} else { opts[ans].classList.add('correct-answer');}
+});
+var quiz=document.getElementById('quiz');
+if(quiz) quiz.classList.add('is-graded');
+var sc=document.getElementById('quizScore');
+if(sc) sc.textContent='Score: '+score+' / '+total + (score===total ? ' — MPC price list owned.' : score>=2 ? ' — close. Revisit the degree story.' : ' — re-read the two scaffolds; add vs multiply is the split.');
+}
+var cb=document.getElementById('checkQuiz'); if(cb) cb.addEventListener('click', grade);
+var rb=document.getElementById('resetQuiz'); if(rb) rb.addEventListener('click', function(){
+document.querySelectorAll('.quiz fieldset input:checked').forEach(function(i){ i.checked=false;});
+document.querySelectorAll('.quiz__option').forEach(function(o){ o.classList.remove('correct-answer','incorrect-answer');});
+var quiz=document.getElementById('quiz'); if(quiz) quiz.classList.remove('is-graded');
+var sc=document.getElementById('quizScore'); if(sc) sc.textContent='';
+});
+})();</script>
+</body>
+</html>

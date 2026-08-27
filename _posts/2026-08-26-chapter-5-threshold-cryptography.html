@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 5: Threshold Cryptography — Using Shares Without Rebuilding</title>
+<meta name="description" content="Threshold signatures and decryption: combine partial results, never the secret key — additive homomorphism and Lagrange in the exponent.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --font-serif:'Merriweather', Georgia, serif;
+  --font-sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --bg:#FDFBF7; --bg-elevated:#FFFFFF; --bg-sunken:#F5F1EA;
+  --text:#2D3748; --text-muted:#718096; --text-strong:#1A202C;
+  --accent:#319795; --accent-strong:#285E61;
+  --accent2:#B7791F; --accent2-strong:#975A16; --accent2-soft:#FEEBC8;
+  --border:#E4DFD5; --sidenote-bg:#EDF2F7; --code-bg:#EDF2F7;
+  --success:#38A169; --success-bg:#C6F6D5; --danger:#C53030; --danger-bg:#FED7D7;
+  --warn:#B7791F; --warn-bg:#FEEBC8; --info:#2B6CB0; --info-bg:#BEE3F8;
+  --radius:10px; --radius-sm:6px; --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow:0 4px 12px rgba(0,0,0,.08);
+  --measure:65ch; --line:1.7; --transition:200ms cubic-bezier(.4,0,.2,1);
+}
+html[data-theme="dark"]{
+  --bg:#1A202C; --bg-elevated:#2D3748; --bg-sunken:#171923;
+  --text:#E2E8F0; --text-muted:#A0AEC0; --text-strong:#F7FAFC;
+  --accent:#4FD1C5; --accent-strong:#81E6D9; --accent2:#F6AD55; --accent2-strong:#FBD38D; --accent2-soft:#4A2E14;
+  --border:#2D3748; --sidenote-bg:#2A2F3A; --code-bg:#2A2F3A;
+  --success:#68D391; --success-bg:#22543D; --danger:#FC8181; --danger-bg:#63171B;
+  --warn:#F6AD55; --warn-bg:#7B341E; --info:#63B3ED; --info-bg:#2A4365;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 4px 12px rgba(0,0,0,.4);
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}
+.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px}
+.navigator::-webkit-scrollbar{width:6px}.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}
+body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px}
+.navigator__reading-time{color:var(--text);font-size:13px}
+.toc{list-style:none;padding:0;margin:0}.toc li{margin:2px 0}
+.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg)}
+.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500}
+.toc .toc-l3{padding-left:20px;font-size:13px}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.4rem;line-height:1.2;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.6rem;line-height:1.3;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px}
+.canvas h2:first-of-type{border-top:none;padding-top:0}
+.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.2rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong);font-weight:700}.canvas em{font-style:italic}
+.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}.canvas a:hover{color:var(--accent-strong)}
+.source{font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-muted);margin-left:4px;padding:1px 6px;border-radius:4px;background:var(--sidenote-bg);text-decoration:none;border:1px solid transparent;white-space:nowrap;vertical-align:baseline;transition:all var(--transition)}
+.source::before{content:"↗ ";opacity:.6}.source:hover{color:var(--accent);border-color:var(--accent);background:transparent}
+.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-top:12px;font-style:italic}
+.canvas ul,.canvas ol{margin:0 0 16px;padding-left:24px}.canvas li{margin:4px 0}
+.canvas blockquote{margin:24px 0;padding:12px 20px;border-left:3px solid var(--accent);background:var(--sidenote-bg);color:var(--text);border-radius:0 var(--radius) var(--radius) 0;font-style:italic}
+.canvas code{font-family:var(--font-mono);font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:var(--radius-sm)}
+.canvas pre{font-family:var(--font-mono);background:var(--code-bg);padding:16px 20px;border-radius:var(--radius);overflow-x:auto;margin:24px 0;font-size:14px;line-height:1.5;position:relative}
+.canvas pre code{background:transparent;padding:0}
+.tldr{margin:16px 0 24px;padding:14px 20px;background:var(--accent2-soft);border-left:4px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--text-strong)}
+.tldr strong{color:var(--accent2-strong);letter-spacing:.02em}
+.hook{margin:24px 0 48px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.1rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+.meta-block ul{margin:0;padding-left:20px}.meta-block li{margin:4px 0;color:var(--text)}
+.callout{margin:24px 0;padding:16px 20px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--tip .callout__label{color:var(--success)}
+.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--warn .callout__label{color:var(--warn)}
+.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}.callout--danger .callout__label{color:var(--danger)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text);background:transparent}
+.feynman::before{content:"🧒 Explain in one sentence:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted)}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.flip-card{perspective:1000px;height:180px;margin:24px 0;cursor:pointer}
+.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip-card:hover .flip-card__inner,.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}
+.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:20px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:white;transform:rotateY(180deg)}
+.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.flip-card__content{font-family:var(--font-sans);font-size:15px;line-height:1.5}
+.deep-dive{margin:24px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);overflow:hidden}
+.deep-dive>summary{padding:14px 18px;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);list-style:none;display:flex;align-items:center;gap:10px;user-select:none;transition:background var(--transition)}
+.deep-dive>summary::-webkit-details-marker{display:none}
+.deep-dive>summary::before{content:"▶";color:var(--accent);font-size:10px;transition:transform var(--transition)}
+.deep-dive[open]>summary::before{transform:rotate(90deg)}
+.deep-dive>summary:hover{background:var(--sidenote-bg)}
+.deep-dive__label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-right:auto}
+.deep-dive>*:not(summary){padding:0 18px 16px;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:170px 1fr 48px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:14px}
+.bar-label{color:var(--text)}
+.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong));border-radius:4px;transition:width 400ms cubic-bezier(.4,0,.2,1)}
+.bar-row:hover .bar-fill{filter:brightness(1.15)}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+@media(max-width:640px){.bar-row{grid-template-columns:110px 1fr 40px;font-size:13px}}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:32px 0}
+.concept-flow__step{padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px;min-height:90px;display:flex;flex-direction:column;justify-content:center;transition:transform var(--transition),box-shadow var(--transition)}
+.concept-flow__step:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px}
+.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;user-select:none}
+@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}}
+.glossary{margin:32px 0}.glossary dl{margin:0}.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px}
+.glossary dd{margin:4px 0 0;color:var(--text);font-size:15px;padding-left:0}
+.quiz{margin:56px 0 24px;padding:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.quiz h2{font-family:var(--font-sans);border-top:none;padding-top:0;margin-top:0;margin-bottom:8px}
+.quiz__intro{color:var(--text-muted);font-family:var(--font-sans);font-size:14px;margin-bottom:24px}
+.quiz fieldset{border:none;padding:0;margin:0 0 28px}
+.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px;font-size:16px}
+.quiz__option{display:block;padding:12px 16px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;transition:all var(--transition);position:relative;padding-left:44px}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%;transition:all var(--transition)}
+.quiz__option:hover{border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option input{position:absolute;opacity:0;pointer-events:none}
+.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option:has(input:checked)::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg-elevated)}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success);color:var(--text-strong)}
+.quiz__option.correct-answer::before{border-color:var(--success);background:var(--success);box-shadow:inset 0 0 0 3px var(--success-bg)}
+.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}
+.quiz__option.incorrect-answer::before{border-color:var(--danger);background:var(--danger);box-shadow:inset 0 0 0 3px var(--danger-bg)}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__explanation{display:block}
+.quiz__actions{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:white;cursor:pointer;font-size:14px;transition:all var(--transition)}
+.btn:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+.btn--ghost{background:transparent;color:var(--accent)}
+.btn--ghost:hover{background:var(--sidenote-bg);color:var(--accent-strong)}
+.quiz__score{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);margin:0;padding:12px 16px;background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all var(--transition);font-family:var(--font-sans);font-size:18px;padding:0}
+.control-btn:hover{color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.control-btn svg{width:18px;height:18px}.control-btn[data-active="true"]{background:var(--accent);color:white}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.progress-bar,.navigator,.marginalia,.orbit,.checkpoint__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border)}
+.orbit__title{font-family:var(--font-sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px}
+.orbit__track{position:relative;padding-left:22px}
+.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.orbit__node{position:relative;display:flex;align-items:center;margin:8px 0;color:var(--text-muted);font-family:var(--font-sans);font-size:12px;cursor:pointer;transition:color var(--transition);user-select:none}
+.orbit__node::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border);transition:all var(--transition);box-sizing:border-box}
+.orbit__node[data-reached="true"]::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%, transparent)}
+.orbit__node[data-active="true"]{color:var(--text-strong);font-weight:600}
+.orbit__node[data-active="true"]::before{transform:scale(1.15);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%, transparent)}
+.orbit__node:hover{color:var(--text)}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px;color:var(--text)}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0;align-items:start}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}
+.scaffold__row-body{font-size:15px;line-height:1.65}.scaffold__row-body p:last-child{margin-bottom:0}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm);background:transparent;overflow:hidden}
+.scaffold__probe>summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none;display:flex;gap:10px;align-items:baseline;user-select:none;transition:background var(--transition)}
+.scaffold__probe>summary::-webkit-details-marker{display:none}
+.scaffold__probe>summary::before{content:"🤔 Probe";flex-shrink:0;padding:2px 8px;border-radius:3px;background:var(--accent2-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2-strong)}
+.scaffold__probe[open]>summary::after{content:"";position:absolute}
+.scaffold__probe>summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px 14px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px;line-height:1.6;color:var(--text);animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.scaffold__resolve::before{content:"💡 Resolve";display:inline-block;padding:2px 8px;border-radius:3px;background:var(--accent2);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:8px;vertical-align:middle}
+.checkpoint{margin:32px 0;padding:20px 24px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}
+.checkpoint__label{display:block;font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.checkpoint__question{font-family:var(--font-sans);font-size:15px;color:var(--text-strong);margin:0 0 12px;line-height:1.5}
+.checkpoint textarea{width:100%;min-height:90px;padding:12px 14px;font-family:var(--font-serif);font-size:15px;line-height:1.5;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);resize:vertical;transition:border-color var(--transition);box-sizing:border-box}
+.checkpoint textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%, transparent)}
+.checkpoint__actions{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.checkpoint__expert{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:var(--radius-sm);border-left:3px solid var(--accent);font-family:var(--font-sans);font-size:14px;line-height:1.55;display:none}
+.checkpoint.is-revealed .checkpoint__expert{display:block;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.checkpoint__expert-label{display:block;font-weight:700;color:var(--accent);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.checkpoint__saved{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.launchpad{margin:48px 0 24px;padding:28px 32px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.launchpad::before{content:"🚀";position:absolute;top:-16px;right:-8px;font-size:96px;opacity:.06;transform:rotate(-15deg);pointer-events:none}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:white;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.3rem;color:var(--text-strong);margin:0 0 12px;line-height:1.3}
+.launchpad__problem{font-size:16px;line-height:1.7;color:var(--text);margin:0 0 24px}
+.launchpad__hints{border-top:1px dashed var(--border);padding-top:20px;font-family:var(--font-sans)}
+.launchpad__hints-label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:block}
+.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;color:var(--text);display:none;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.launchpad__hint.is-visible{display:block}
+.launchpad__hint-label{display:block;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:4px;letter-spacing:.08em}
+.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px;transition:all var(--transition)}
+.launchpad__reveal:hover{background:var(--accent2);color:white}
+.launchpad__reveal:disabled{opacity:.4;cursor:not-allowed;background:transparent;color:var(--text-muted);border-color:var(--border)}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.progress-bar,.navigator,.marginalia,.orbit,.checkpoint__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}}
+</style>
+</head>
+<body>
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+<aside class="navigator" aria-label="Table of contents">
+<div class="navigator__meta"><p style="margin:0 0 10px"><a href="secret-sharing-index.html" style="font-size:13px;text-decoration:none;border:1px solid var(--border);padding:6px 10px;border-radius:6px;display:inline-block;background:var(--bg-elevated)">← Series index</a></p><p class="navigator__title">Reading time</p><p class="navigator__reading-time" id="readingTime">~ 24 min</p></div>
+<div class="orbit" aria-label="Learning phases"><p class="orbit__title">Learning path</p><div class="orbit__track">
+<div class="orbit__node" data-target="baseline">1 · Anchor</div>
+<div class="orbit__node" data-target="bridge">2 · Bridge</div>
+<div class="orbit__node" data-target="exposition">3 · Construct</div>
+<div class="orbit__node" data-target="application">4 · Apply</div>
+<div class="orbit__node" data-target="boundary">5 · Boundary</div>
+<div class="orbit__node" data-target="synthesis">6 · Fade</div>
+</div></div>
+<nav><ul class="toc" id="toc"></ul></nav>
+</aside>
+<main class="canvas" id="canvas">
+<h1>Chapter 5: Threshold Cryptography</h1>
+<div class="tldr" role="note" aria-label="TL;DR"><strong>TL;DR.</strong> Never rebuild the key — let each stake produce a partial signature or decryption, then Lagrange-combine the parts.</div>
+<div class="hook">
+<span class="hook__label">🎣 The hook</span>
+The bank's vault key is now Shamir-shared 3-of-5 with receipts. To sign a transfer, the old workflow still says: "gather 3 shares, rebuild the key on one laptop, sign, delete." For five seconds, the whole key lives in one place — exactly the single point of failure we set out to remove.
+</div>
+<div class="meta-block"><h4>Prerequisites</h4><ul>
+<li>Chapters 1–4: Shamir sharing, Lagrange, finite fields, Feldman/Pedersen commitments, DKG intuition</li>
+<li>High-level idea of public-key signatures ("private key signs, public key verifies") — no formula needed</li>
+</ul></div>
+<div class="meta-block"><h4>By the end you will be able to…</h4><ul>
+<li>Distinguish rebuilding-based vs threshold use of a shared key</li>
+<li>Apply Lagrange-in-the-exponent to combine BLS partial signatures by hand on a tiny example</li>
+<li>Explain why ECDSA thresholds are hard (and how modern libraries solve it) vs BLS triviality</li>
+<li>Choose threshold decryption vs threshold signatures for a given deployment (custody vs sealed data)</li>
+</ul></div>
+
+<h2 id="baseline">The foundational truth</h2>
+<p>The strongest way to use a shared secret is to never assemble it.</p>
+<p>Shamir shares have a built-in homomorphism (structure-preserving map): linear combinations of shares are shares of the linear combination. That lets each holder act locally on their share — sign, decrypt — and publish only a partial result. The combiner (any party) Lagrange-interpolates the *results*, not the key.</p>
+<p>You know the pattern from Chapter 1's additive trick: add shares locally and the sum reveals the sum of secrets. Shamir generalizes this from addition to any threshold reconstruction in the exponent.</p>
+
+<h2 id="bridge">A familiar bridge — the choir singing without a solo</h2>
+<p>Imagine the vault key is a song only the full choir should sing, but no singer knows the whole melody. Call it the <strong>Choir Model</strong>.</p>
+<ul>
+<li><strong>Private key S</strong> → the full melody (never written down in one copy)</li>
+<li><strong>Partial signature / decryption</strong> → one singer humming their note for the current lyric (message or ciphertext)</li>
+<li><strong>Combine by Lagrange</strong> → the audience hears the full chord when t singers hum together — no one ever sang the whole tune</li>
+<li><strong>Public verification key</strong> → the program that says which chord is correct, without revealing how it was sung</li>
+</ul>
+<p>The key shift from Chapters 2–4: we move from "combine shares to get S, then use S" to "use shares to get partial uses of S, then combine uses."</p>
+<div class="concept-flow">
+<div class="concept-flow__step"><span class="concept-flow__num">01</span>Keep shares<br>apart</div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">02</span>Each stake signs<br>locally</div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">03</span>Lagrange the<br>partials to a full sig</div>
+</div>
+<div class="premortem">
+<span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+<p><span class="premortem__wrong">"Threshold crypto means splitting the private key file into three pieces and each server holds a copy of the same file format"</span></p>
+<p>This is wrong because each server would still hold the full key — that's replication, not sharing — and compromising one reveals everything.</p>
+<p><span class="premortem__truth">What's actually true:</span> Each server holds a *different* Shamir point of the key's polynomial — useless alone — and the protocol combines *outputs* computed from those points, never the points themselves.</p>
+</div>
+
+<h2 id="exposition">Building the model, one piece at a time</h2>
+
+<section class="scaffold" id="exposition-1">
+<h3 class="scaffold__concept">BLS threshold signatures — Lagrange in the exponent</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p><strong>BLS signatures</strong> (Boneh-Lynn-Shacham) make threshold trivial because the signing map is linear: signature <code>σ = H(m)^S</code> where <code>H(m)</code> is the hashed message in a pairing-friendly group and <code>S</code> is the private key. If <code>S</code> is Shamir-shared as polynomial <code>f(x)</code> with <code>f(0)=S</code>, then partial signature from holder <code>i</code> is <code>σi = H(m)^{f(i)}</code>. Combining t partials with Lagrange at zero in the exponent rebuilds the full signature:</p>
+<pre><code>σ = ∏ σi^{ Li(0) }  where  Li(0)= ∏_{m≠i} (−xm)/(xi−xm)  mod q</code></pre>
+<p>No holder ever learns S. Verification uses the same public key as a normal BLS signature — the verifier cannot tell it was threshold-built.</p></div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>Demo with same numbers as Chapter 2 but in exponent: p=101 group order q=101, generator g, message hash H(m) as group element. Shares from <code>f(x)=53+20x mod101</code> gave <code>(1,73),(2,93),(3,12)</code>. Threshold t=2, take <code>(1,73),(3,12)</code>:</p>
+<pre><code>L1(0)= 3·inv(1−3)=3·inv(−2)=3·50=150 mod101=52  (from Ch.2)
+L3(0)= 1·inv(3−1)=1·inv(2)=51          → check: 52+? Wait for t=2 only these two
+
+Partial sigs: σ1 = H^73,  σ3 = H^12
+Combined: σ = σ1^{52} · σ3^{51} = H^{73·52+12·51}=H^{3796+612}=H^{4408}
+  4408 mod101 = 4408−43·101=4408−4343=65 … not 53? — because we mixed q.
+
+Fix with consistent L for this pair: earlier Ch.2 gave L1=52, L3=50
+  (we swapped indices; for pair (1,3): L1=3/(1−3)=3·50=52, L3=1/(3−1)=51)
+  Actually 73·52=3796 mod101=59, 12·51=612 mod101=6, 59+6=65 ≠53.
+
+The error is pedagogy: Lagrange for (1,73),(3,12) over mod101
+gives L1= 3/−2 = −3/2 = 50? Let's recompute cleanly:
+  L1(0)= (−3)/(1−3)= (−3)/(−2)=3/2=3·51=52
+  L3(0)= (−1)/(3−1)= (−1)/2= −51 mod101=50
+  73·52=59, 12·50=600 mod101=95, 59+95=154 mod101=53 ✓
+So σ = σ1^{52}·σ3^{50}=H^{53}= correct full BLS sig.</code></pre>
+<p>Toy correction matters: the arithmetic is exactly Chapter 2's Lagrange, now in the exponent. A choir of two singers humming <code>H^{share}</code> with Lagrange weights makes the full chord <code>H^S</code>.</p>
+<pre><code># Real library (py): partial = hash_to_curve(msg) * share
+# Combined: sig = Σ Li·partial_i  (elliptic-curve scalar multiplication)
+def combine_partials(partials, xs, q):
+    sig = identity
+    for (x,y), partial in zip(xs, partials):
+        Li = lagrange_at_zero(x, xs, q)
+        sig = sig + Li*partial   # additive notation for BLS G1
+    return sig</code></pre>
+</div></div>
+<details class="scaffold__probe"><summary>If the combiner can produce σ = H^S, can't they then extract S and become the single point of failure again?</summary><div class="scaffold__resolve">No. They see only σ = H^S (the signature for that message), not S. Computing S from σ and H requires a discrete log — believed hard in the BLS group. Each signature leaks only one exponentiation of S, not S itself. A new message gives H(m')^S, still not S.</div></details>
+</section>
+<div class="feynman">Each singer holds a different note of the melody; two notes weighted correctly make the true chord, but neither singer heard the whole tune.</div>
+
+<div class="checkpoint" data-checkpoint-id="cp5a">
+<span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+<p class="checkpoint__question">BLS threshold felt almost automatic. Why don't we just use BLS everywhere and ignore harder thresholds like ECDSA/threshold RSA?</p>
+<textarea placeholder="Consider where BLS is and isn't deployed (Bitcoin, legacy HSMs)…"></textarea>
+<div class="checkpoint__actions"><button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button><span class="checkpoint__saved" data-checkpoint-saved></span></div>
+<div class="checkpoint__expert"><span class="checkpoint__expert-label">Expert answer</span>BLS needs pairing-friendly curves (BLS12-381) not yet universal in HSMs, blockchains, or legacy PKI. ECDSA/secp256k1 dominates Bitcoin/Ethereum and many HSMs. So we must threshold what the ecosystem already uses, even when the math is uglier — that's the next scaffold.</div>
+</div>
+
+<section class="scaffold" id="exposition-2">
+<h3 class="scaffold__concept">When the math is not linear — ECDSA &amp; threshold decryption</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p><strong>ECDSA signing</strong> computes <code>(r,s)</code> where <code>s = k⁻¹·(H(m)+r·S) mod q</code> with per-signature randomness <code>k</code>. Both inversion and multiplication of shared values require interaction — you cannot Lagrange-combine in one round as with BLS. Modern protocols (GG18/GG20, CGGMP21) solve this with additively-shared <code>k</code>, multiplicative-to-additive conversion (MtA), and a final combined <code>s</code> where no party learns <code>k</code> or <code>S</code> fully.</p><p><strong>Threshold decryption</strong> (e.g., ElGamal) is the mirror image: ciphertext <code>(g^r, m·pk^r)</code>, each holder publishes partial decryption <code>(g^r)^{f(i)}</code>, combiner Lagrange-rebuilds <code>pk^r</code> and divides. Linear again — decryption is BLS-like, signing with ECDSA is not.</p></div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>ElGamal threshold decryption, t=2: public key <code>pk=g^S</code>, encrypt <code>m</code> as <code>(c1=g^r, c2=m·pk^r)</code>. Holder i with share <code>f(i)</code> publishes <code>di = c1^{f(i)} = g^{r·f(i)}</code>. With holders 1 and 3:</p>
+<pre><code>L1=52, L3=50 as before (mod 101)
+Combine: pk^r = d1^{52}·d3^{50}= g^{r·(73·52+12·50)}=g^{r·53}= (g^S)^r
+Decrypt: m = c2 / pk^r</code></pre>
+<p>Same Lagrange weights as BLS — decryption composes. ECDSA instead needs 6–8 rounds in GG18: share <code>k</code>, compute <code>r</code> via joint ECDH, then MtA to combine <code>k⁻¹</code> terms without revealing <code>k</code>.</p>
+</div></div>
+<details class="scaffold__probe"><summary>Why can ElGamal decryption threshold with a single round, but ECDSA signing needs many?</summary><div class="scaffold__resolve">Decryption is one exponentiation by the shared key — linear in the share, so Lagrange-in-exponent works in one round. ECDSA mixes inversion and multiplication of two shared values (k⁻¹ and S), which are not linear — you need interactive multiplication protocols to keep both hidden.</div></details>
+</section>
+<div class="feynman">Some tunes can be hummed in parallel (BLS, ElGamal); others need the choir to rehearse back and forth (ECDSA).</div>
+
+<details class="deep-dive"><summary><span class="deep-dive__label">🔴 Deep dive</span> Why GG18 needs MtA — the 30-second sketch</summary>
+<p>After joint generation of random <code>k</code> split additively (<code>k = k1+k2+…</code>), parties need <code>k⁻¹</code> and then <code>s = k⁻¹(H+rS)</code> without exposing <code>k</code> or <code>S</code>. The trick: convert additive shares of <code>k</code> and <code>S</code> into multiplicative shares via Paillier encryption (MtA — multiplicative-to-additive). Each pair exchanges encrypted products, adds them locally, and obtains an additive sharing of <code>k·S</code> which can be opened as <code>k·S mod q</code>, then multiplied by <code>k⁻¹</code> shares. The security rests on Paillier hardness + VSS — no pure Shamir Lagrange alone suffices for ECDSA.</p>
+</details>
+
+<h2 id="application">In the wild</h2>
+<p>Once signing moves to partials, custody changes shape.</p>
+<p><strong>Custody without a single key.</strong> A typical exchange now runs 3-of-5 threshold ECDSA (CGGMP21 or GG20) across HSMs in different regions — no HSM ever holds the full signing key, yet any three can co-sign a withdrawal. An attacker who compromises one HSM learns only one Shamir point; a data-center loss takes two HSMs offline and the remaining three still sign. The quorum policy is the same hill from Chapter 2, but the melody never leaves the choir.</p>
+<p><strong>Sealing data without a single decryptor.</strong> Joint ciphertexts (e.g., medical cohorts) are ElGamal-encrypted to a DKG public key; threshold decryption requires t analysts to co-decrypt aggregated results, not individual rows — the pattern Chapter 6 extends to full MPC. Vault's transit engine can be fronted the same way: the decryption happens as partials, combined only at the requester.</p>
+<div class="sidenote"><strong>Watch the key type.</strong> Bitcoin/Ethereum legacy addresses mandate ECDSA on secp256k1 — you pay the multi-round cost. Newer systems (Ethereum's BLS12-381 for consensus, threshold credentials) choose BLS precisely because one-round Lagrange suffices.</div>
+<div class="bar-chart">
+<div class="bar-chart__title">Threshold crypto by operation — rounds &amp; hardness</div>
+<div class="bar-row"><div class="bar-label">BLS sign</div><div class="bar-track"><div class="bar-fill" style="width:18%"></div></div><div class="bar-value">1</div></div>
+<div class="bar-row"><div class="bar-label">ElGamal decrypt</div><div class="bar-track"><div class="bar-fill" style="width:18%"></div></div><div class="bar-value">1</div></div>
+<div class="bar-row"><div class="bar-label">Schnorr sign</div><div class="bar-track"><div class="bar-fill" style="width:36%"></div></div><div class="bar-value">2</div></div>
+<div class="bar-row"><div class="bar-label">ECDSA sign (GG18)</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">7*</div></div>
+<p class="bar-chart__caption">Schematic rounds of interaction for threshold operations. *GG18 ECDSA is the textbook multi-round case due to inversion+multiplication; Schnorr/BLS are linear. Lower is operationally cheaper and easier to make robust.</p>
+</div>
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer"><div class="flip-card__inner"><div class="flip-card__face flip-card__front"><span class="flip-card__label">Active recall — Question</span><div class="flip-card__content">A 2-of-3 BLS deployment has partials σ1=H^73, σ3=H^12 (q=101). What is the Lagrange-combined full signature, and why does this not reveal the key?</div></div><div class="flip-card__face flip-card__back"><span class="flip-card__label">Answer</span><div class="flip-card__content">With L1=52, L3=50: σ=H^{73·52+12·50}=H^{53}=H^S — correct, and S stays hidden behind discrete log of H^S.</div></div></div></div>
+
+<h2 id="boundary">Where it breaks</h2>
+<p>Threshold does not mean Byzantine-proof by default.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Common misconception</span><strong>"Any t partials always give a valid signature."</strong> A single malicious partial (wrong Lagrange exponent) corrupts the combined result like the bad stake in Chapter 4. Production thresholds add VSS-style proofs: each partial comes with a zero-knowledge proof that it used the correct share (e.g., Schnorr proofs of equal discrete log). Without those proofs, a cheater can force invalid signatures and cause liveness failures.</div>
+<div class="callout callout--danger"><span class="callout__label">🚫 Edge case</span><strong>Three traps:</strong> (1) Nonce reuse in ECDSA thresholds leaks S — the per-signature random k must be fresh and jointly generated; (2) Different curves have different orders — using p=101 demo moduli in production leaks; real q is ~2²⁵⁶. (3) Combining partials from different messages (mix-and-match) yields nonsense — each threshold operation is bound to one message/ciphertext.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Predict</span>Before Chapters 6–7: signatures and decryption use the key once per operation. What if parties want to compute a function of *several* shared secrets together — say an average salary — without ever rebuilding any individual's salary? What primitive extends threshold from "one key, one use" to "many secrets, one joint function"?</div>
+
+<h2 id="connections">How this connects</h2>
+<ul>
+<li><strong>Chapters 1–4</strong> built and hardened the hill and receipts.</li>
+<li><strong>This chapter</strong> used the hill without climbing it — partial operations plus Lagrange-in-exponent.</li>
+<li><strong>Chapter 6 — From Shares to Computation</strong> generalizes from "one key" to "many shared inputs, one joint function" — the step from threshold crypto to MPC.</li>
+<li><strong>Chapter 7 — PET Landscape</strong> places thresholds among PSI, federated learning, and differential privacy as different points on the share-vs-noise trade-off.</li>
+</ul>
+
+<h2 id="synthesis">The whole picture</h2>
+<p>The hook's five-second full-key window is unnecessary. The homomorphism that made additive shares sum to the secret — extended by Lagrange — lets each stake sign locally and publish a partial chord. The combiner Lagrange-weights those partials in the exponent and recovers the same signature a single key would have made.</p>
+<p>BLS-style schemes make this one-round because signing is linear in the key. ECDSA is not — it needs interactive MtA — which is why custody systems pay extra rounds for legacy curves and choose BLS where they can start fresh.</p>
+<p>The secret was never rebuilt. The melody was never sung solo — only the chord was heard. That pattern, from one secret to many, is multi-party computation.</p>
+<blockquote><strong>If you remember only one thing:</strong> Combine the *uses* of the key (partial sigs/decryptions) with Lagrange weights — never the key itself.</blockquote>
+
+<div class="launchpad">
+<span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+<h3 class="launchpad__title">Build a 2-of-2 threshold Schnorr by hand</h3>
+<p class="launchpad__problem">Schnorr signing is linear up to a nonce: signature is (R,s) where R=g^k, s=k+eS with e=Hash(R,m). Design a 2-of-2 protocol where each party holds additive share Si (S=S1+S2) and per-signature nonce shares ki (k=k1+k2): each publishes Ri=g^{ki}, they combine R=R1·R2, compute e, then each publishes si=ki+eSi, combiner sets s=s1+s2. Show verification g^s = R·pk^e holds with pk=g^S, and argue why reusing (k1,k2) across two messages leaks S — mirroring classic Schnorr nonce-reuse leakage, now in threshold form.</p>
+<div class="launchpad__hints"><span class="launchpad__hints-label">Stuck? Reveal a hint at a time.</span><button type="button" class="launchpad__reveal" id="hintBtn">Reveal hint 1</button>
+<div class="launchpad__hint" data-hint="1"><span class="launchpad__hint-label">Hint 1 — reframe</span>Verification is linear: g^{k1+eS1}·g^{k2+eS2}=g^{k1+k2}·g^{e(S1+S2)}=R·pk^e. The sum of partial s's is the full s. No Lagrange needed here because sharing is additive (n,n) — Shamir case would add Li weights.</div>
+<div class="launchpad__hint" data-hint="2"><span class="launchpad__hint-label">Hint 2 — key concept</span>Nonce reuse: two equations s= k+eS and s'=k+e'S with same k give s−s'=(e−e')S → S=(s−s')/(e−e'). Threshold version leaks S identically — each party's ki reuse collapses even though S is shared.</div>
+<div class="launchpad__hint" data-hint="3"><span class="launchpad__hint-label">Hint 3 — setup</span>Extend to 2-of-3 Shamir Schnorr: partial R's combine via Lagrange in exponent as with BLS, then signing uses Lagrange-weighted Si. The same reuse argument applies with weighted k shares — show why DKG per-signature nonce generation is mandatory.</div>
+</div>
+</div>
+
+<h2 id="glossary">Glossary</h2>
+<div class="glossary"><dl>
+<dt>Threshold signature</dt><dd>t partial signatures combine to a full signature valid under the single public key; no single party held the full private key. <em>In the Choir Model: t hummed notes make the true chord.</em></dd>
+<dt>Lagrange in the exponent</dt><dd>Combining rule σ=∏ σi^{Li(0)} or pk^r=∏ di^{Li(0)} — linear interpolation lifted into the group exponent. <em>Choir weights applied to notes, not to singers.</em></dd>
+<dt>BLS (Boneh-Lynn-Shacham)</dt><dd>Pairing-based signature where signing is one exponentiation — threshold is one round. <em>Tune you can hum in parallel.</em></dd>
+<dt>ECDSA (Elliptic Curve DSA)</dt><dd>Legacy signing with inversion and multiplication — threshold needs interactive MtA. <em>Tune that needs rehearsal.</em></dd>
+<dt>Partial decryption</dt><dd>di = c1^{f(i)} published by each holder; Lagrange combines to pk^r for ElGamal. <em>Each singer's decryption note.</em></dd>
+</dl></div>
+
+<section class="quiz" id="quiz">
+<h2 id="knowledge-check">Knowledge check</h2>
+<p class="quiz__intro">3 questions. Pick the best answer for each and click <em>Check answers</em>.</p>
+<fieldset data-answer="1">
+<legend>1. In BLS threshold with t=2, p=101, shares 73 and 12 with Lagrange weights 52,50, the full signature is…</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> H^{73}+H^{12}=H^{85} — add the partials directly.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> H^{73·52+12·50}=H^{53}=H^S — Lagrange-weighted product in the exponent.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> H^{73·12}=H^{876} — multiply the shares.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> H^{53} rebuilt by first reconstructing S then signing — the old rebuild-then-sign workflow.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct is weighted exponent combination. Option D is what threshold avoids — it reintroduces the five-second single-key window.</div>
+</fieldset>
+<fieldset data-answer="0">
+<legend>2. Why is ECDSA threshold harder than BLS threshold?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> ECDSA's signing mixes inversion and multiplication of shared values (k⁻¹·(H+rS)), not a single linear exponentiation — requires interactive MtA.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> ECDSA uses larger keys, so Lagrange coefficients do not fit.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> BLS is always 3-of-5 while ECDSA is always 2-of-2.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> ECDSA cannot use Shamir at all, only additive sharing.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct names the non-linear inversion/multiplication. ECDSA can use Shamir, but the signing step itself needs extra interaction beyond one-round Lagrange.</div>
+</fieldset>
+<fieldset data-answer="2">
+<legend>3. Threshold decryption of ElGamal vs threshold signing — which is linear?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Neither — both need MtA interactions.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Only signing is linear; decryption needs interaction.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Decryption (c1^{share} combined) is linear — one round like BLS; ECDSA signing is not.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Both are one-round linear operations.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct: decryption is c1^{f(i)} Lagrange-combined (linear); BLS signing is same pattern. ECDSA signing breaks linearity.</div>
+</fieldset>
+<div class="quiz__actions"><button type="button" class="btn" id="checkQuiz">Check answers</button><button type="button" class="btn btn--ghost" id="resetQuiz">Reset</button><p class="quiz__score" id="quizScore"></p></div>
+</section>
+
+<div class="footer"><p style="margin:0 0 12px"><a href="chapter-4-hardening-the-scheme.html">← 4 Hardening The Scheme</a> · <a href="secret-sharing-index.html">Series Index</a> · <a href="chapter-6-from-shares-to-computation.html">Next: 6 From Shares To Computation →</a></p>
+<p>Chapter 5 of <em>Secret Sharing &amp; Privacy-Enhancing Technologies</em> — Mechanism-first series. Previous: <a href="chapter-4-hardening-the-scheme.html">Chapter 4</a>. Next: Chapter 6 — From Shares to Computation (MPC).</p>
+<p style="margin-top:8px;font-size:12px">Sources: Shamir 1979; Feldman 1987; Gennaro et al. GG18/GG20 — threshold ECDSA; Boneh-Lynn-Shacham (2001) — BLS signatures; HashiCorp Vault seal; IBM 2024 breach cost data.</p>
+</div>
+</main>
+<aside class="marginalia" aria-label="Notes and elaborations">
+<div class="amplifier" id="amplifier"><span class="amplifier__label">Hover to elaborate</span><p class="amplifier__empty">Hover over a <span style="border-bottom:1px dashed var(--accent2)">dashed term</span> in the text to see its deeper note here.</p></div>
+<div class="sidenote"><strong>Watch the notation.</strong> In additive notation on elliptic curves, "exponentiation" is scalar multiplication: σi = Li · H(m)^{share} becomes σi = share · H(m). Same Lagrange idea, different symbols.</div>
+<div class="sidenote"><strong>Robust vs threshold.</strong> A t-of-n that aborts if one partial is bad is "threshold." One that identifies the cheater via proofs and finishes with honest t is "robust threshold" — Chapter 4's VSS plus this chapter's proofs.</div>
+</aside>
+</div>
+<div class="controls" aria-label="Page controls">
+<button type="button" class="control-btn" id="themeBtn" title="Toggle dark/light" aria-label="Toggle theme">◐</button>
+<button type="button" class="control-btn" id="focusBtn" title="Focus mode" aria-label="Toggle focus mode">◧</button>
+</div>
+<script>
+(function(){
+var fill=document.getElementById('progressFill');
+function onScroll(){
+var h=document.documentElement;
+var max=h.scrollHeight - h.clientHeight;
+var pct=max>0? (h.scrollTop/max)*100:0;
+if(fill) fill.style.width=pct+'%';
+var nodes=[].slice.call(document.querySelectorAll('.orbit__node'));
+var secs=['baseline','bridge','exposition','application','boundary','synthesis'].map(function(id){return document.getElementById(id)}).filter(Boolean);
+var cur=0; for(var i=0;i<secs.length;i++){ if(secs[i].getBoundingClientRect().top < 120) cur=i; }
+nodes.forEach(function(n,i){
+n.setAttribute('data-reached', i<=cur ? 'true':'false');
+n.setAttribute('data-active', i===cur ? 'true':'false');
+});
+}
+document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+var toc=document.getElementById('toc');
+if(toc){
+var heads=[].slice.call(document.querySelectorAll('.canvas h2, .canvas h3'));
+heads.forEach(function(h){
+var li=document.createElement('li');
+var a=document.createElement('a');
+a.href='#'+h.id; a.textContent=h.textContent;
+if(h.tagName==='H3') a.className='toc-l3';
+a.addEventListener('click', function(e){ e.preventDefault(); h.scrollIntoView({behavior:'smooth', block:'start'}); history.replaceState(null,'','#'+h.id);});
+li.appendChild(a); toc.appendChild(li);
+});
+var links=[].slice.call(toc.querySelectorAll('a'));
+function markToc(){
+var curId=null; for(var i=heads.length-1;i>=0;i--){ if(heads[i].getBoundingClientRect().top < 80){ curId=heads[i].id; break; } }
+links.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href')==='#'+curId);});
+}
+document.addEventListener('scroll', markToc, {passive:true}); markToc();
+}
+var tBtn=document.getElementById('themeBtn');
+if(tBtn){ tBtn.addEventListener('click', function(){ var h=document.documentElement; var cur=h.getAttribute('data-theme'); var nxt=cur==='dark'?'light':'dark'; h.setAttribute('data-theme',nxt); try{localStorage.setItem('c5-theme',nxt);}catch(e){} }); try{var s=localStorage.getItem('c5-theme'); if(s) document.documentElement.setAttribute('data-theme',s);}catch(e){} }
+var fBtn=document.getElementById('focusBtn');
+if(fBtn){ fBtn.addEventListener('click', function(){ document.body.classList.toggle('focus-mode'); var a=document.body.classList.contains('focus-mode')?'true':'false'; fBtn.setAttribute('data-active',a);});}
+document.querySelectorAll('.flip-card').forEach(function(c){ c.addEventListener('click', function(){ c.classList.toggle('is-flipped');}); c.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); c.classList.toggle('is-flipped');}});});
+document.querySelectorAll('[data-checkpoint-reveal]').forEach(function(b){
+b.addEventListener('click', function(){
+var cp=b.closest('.checkpoint'); if(!cp) return;
+cp.classList.toggle('is-revealed');
+b.textContent = cp.classList.contains('is-revealed') ? 'Hide expert answer' : 'Compare to expert answer';
+try{var ta=cp.querySelector('textarea'); if(ta) localStorage.setItem('c5-cp-'+cp.getAttribute('data-checkpoint-id'), ta.value);}catch(e){}
+});
+});
+document.querySelectorAll('.checkpoint textarea').forEach(function(ta){
+var cp=ta.closest('.checkpoint'); if(!cp) return;
+var id=cp.getAttribute('data-checkpoint-id');
+try{var v=localStorage.getItem('c5-cp-'+id); if(v) ta.value=v;}catch(e){}
+ta.addEventListener('input', function(){ try{localStorage.setItem('c5-cp-'+id, ta.value);}catch(e){}});
+});
+var hintBtn=document.getElementById('hintBtn');
+if(hintBtn){
+var idx=0; var hints=[].slice.call(document.querySelectorAll('.launchpad__hint'));
+hintBtn.addEventListener('click', function(){
+if(idx < hints.length){ hints[idx].classList.add('is-visible'); idx++; hintBtn.textContent = idx < hints.length ? 'Reveal hint '+(idx+1) : 'All hints revealed'; if(idx>=hints.length) hintBtn.disabled=true; }
+});
+}
+function grade(){
+var fss=[].slice.call(document.querySelectorAll('.quiz fieldset'));
+var total=fss.length, score=0;
+fss.forEach(function(fs){
+var ans=parseInt(fs.getAttribute('data-answer'),10);
+var sel=fs.querySelector('input:checked');
+var opts=[].slice.call(fs.querySelectorAll('.quiz__option'));
+opts.forEach(function(o){ o.classList.remove('correct-answer','incorrect-answer');});
+if(sel){
+var idx=parseInt(sel.value,10);
+if(idx===ans){ score++; opts[idx].classList.add('correct-answer');}
+else { opts[idx].classList.add('incorrect-answer'); opts[ans].classList.add('correct-answer');}
+} else { opts[ans].classList.add('correct-answer');}
+});
+var quiz=document.getElementById('quiz');
+if(quiz) quiz.classList.add('is-graded');
+var sc=document.getElementById('quizScore');
+if(sc) sc.textContent='Score: '+score+' / '+total + (score===total ? ' — choir mastered.' : score>=2 ? ' — strong. Revisit the BLS scaffold?' : ' — re-read the linear vs non-linear split.');
+}
+var cb=document.getElementById('checkQuiz'); if(cb) cb.addEventListener('click', grade);
+var rb=document.getElementById('resetQuiz'); if(rb) rb.addEventListener('click', function(){
+document.querySelectorAll('.quiz fieldset input:checked').forEach(function(i){ i.checked=false;});
+document.querySelectorAll('.quiz__option').forEach(function(o){ o.classList.remove('correct-answer','incorrect-answer');});
+var quiz=document.getElementById('quiz'); if(quiz) quiz.classList.remove('is-graded');
+var sc=document.getElementById('quizScore'); if(sc) sc.textContent='';
+});
+})();</script>
+</body>
+</html>

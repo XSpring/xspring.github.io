@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 7: Secret Sharing in the PET Landscape — Global Synthesis</title>
+<meta name="description" content="Where secret sharing fits among PETs — MPC, HE, DP, PSI, ZK — and when to use which, with a synthesis of the whole series.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --font-serif:'Merriweather', Georgia, serif;
+  --font-sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --bg:#FDFBF7; --bg-elevated:#FFFFFF; --bg-sunken:#F5F1EA;
+  --text:#2D3748; --text-muted:#718096; --text-strong:#1A202C;
+  --accent:#319795; --accent-strong:#285E61;
+  --accent2:#B7791F; --accent2-strong:#975A16; --accent2-soft:#FEEBC8;
+  --border:#E4DFD5; --sidenote-bg:#EDF2F7; --code-bg:#EDF2F7;
+  --success:#38A169; --success-bg:#C6F6D5; --danger:#C53030; --danger-bg:#FED7D7;
+  --warn:#B7791F; --warn-bg:#FEEBC8; --info:#2B6CB0; --info-bg:#BEE3F8;
+  --radius:10px; --radius-sm:6px; --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow:0 4px 12px rgba(0,0,0,.08);
+  --measure:65ch; --line:1.7; --transition:200ms cubic-bezier(.4,0,.2,1);
+}
+html[data-theme="dark"]{
+  --bg:#1A202C; --bg-elevated:#2D3748; --bg-sunken:#171923;
+  --text:#E2E8F0; --text-muted:#A0AEC0; --text-strong:#F7FAFC;
+  --accent:#4FD1C5; --accent-strong:#81E6D9; --accent2:#F6AD55; --accent2-strong:#FBD38D; --accent2-soft:#4A2E14;
+  --border:#2D3748; --sidenote-bg:#2A2F3A; --code-bg:#2A2F3A;
+  --success:#68D391; --success-bg:#22543D; --danger:#FC8181; --danger-bg:#63171B;
+  --warn:#F6AD55; --warn-bg:#7B341E; --info:#63B3ED; --info-bg:#2A4365;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 4px 12px rgba(0,0,0,.4);
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}
+.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px}
+.navigator::-webkit-scrollbar{width:6px}.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}
+body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px}
+.navigator__reading-time{color:var(--text);font-size:13px}
+.toc{list-style:none;padding:0;margin:0}.toc li{margin:2px 0}
+.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg)}
+.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500}
+.toc .toc-l3{padding-left:20px;font-size:13px}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.4rem;line-height:1.2;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.6rem;line-height:1.3;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px}
+.canvas h2:first-of-type{border-top:none;padding-top:0}
+.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.2rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong);font-weight:700}.canvas em{font-style:italic}
+.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}.canvas a:hover{color:var(--accent-strong)}
+.source{font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-muted);margin-left:4px;padding:1px 6px;border-radius:4px;background:var(--sidenote-bg);text-decoration:none;border:1px solid transparent;white-space:nowrap;vertical-align:baseline;transition:all var(--transition)}
+.source::before{content:"↗ ";opacity:.6}.source:hover{color:var(--accent);border-color:var(--accent);background:transparent}
+.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-top:12px;font-style:italic}
+.canvas ul,.canvas ol{margin:0 0 16px;padding-left:24px}.canvas li{margin:4px 0}
+.canvas blockquote{margin:24px 0;padding:12px 20px;border-left:3px solid var(--accent);background:var(--sidenote-bg);color:var(--text);border-radius:0 var(--radius) var(--radius) 0;font-style:italic}
+.canvas code{font-family:var(--font-mono);font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:var(--radius-sm)}
+.canvas pre{font-family:var(--font-mono);background:var(--code-bg);padding:16px 20px;border-radius:var(--radius);overflow-x:auto;margin:24px 0;font-size:14px;line-height:1.5;position:relative}
+.canvas pre code{background:transparent;padding:0}
+.tldr{margin:16px 0 24px;padding:14px 20px;background:var(--accent2-soft);border-left:4px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--text-strong)}
+.tldr strong{color:var(--accent2-strong);letter-spacing:.02em}
+.hook{margin:24px 0 48px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.1rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+.meta-block ul{margin:0;padding-left:20px}.meta-block li{margin:4px 0;color:var(--text)}
+.callout{margin:24px 0;padding:16px 20px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--tip .callout__label{color:var(--success)}
+.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--warn .callout__label{color:var(--warn)}
+.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}.callout--danger .callout__label{color:var(--danger)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text);background:transparent}
+.feynman::before{content:"🧒 Explain in one sentence:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted)}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.flip-card{perspective:1000px;height:180px;margin:24px 0;cursor:pointer}
+.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip-card:hover .flip-card__inner,.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}
+.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:20px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:white;transform:rotateY(180deg)}
+.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.flip-card__content{font-family:var(--font-sans);font-size:15px;line-height:1.5}
+.deep-dive{margin:24px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);overflow:hidden}
+.deep-dive>summary{padding:14px 18px;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);list-style:none;display:flex;align-items:center;gap:10px;user-select:none;transition:background var(--transition)}
+.deep-dive>summary::-webkit-details-marker{display:none}
+.deep-dive>summary::before{content:"▶";color:var(--accent);font-size:10px;transition:transform var(--transition)}
+.deep-dive[open]>summary::before{transform:rotate(90deg)}
+.deep-dive>summary:hover{background:var(--sidenote-bg)}
+.deep-dive__label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-right:auto}
+.deep-dive>*:not(summary){padding:0 18px 16px;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:190px 1fr 48px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:14px}
+.bar-label{color:var(--text)}
+.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong));border-radius:4px;transition:width 400ms cubic-bezier(.4,0,.2,1)}
+.bar-row:hover .bar-fill{filter:brightness(1.15)}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+@media(max-width:640px){.bar-row{grid-template-columns:120px 1fr 40px;font-size:13px}}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:32px 0}
+.concept-flow__step{padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px;min-height:90px;display:flex;flex-direction:column;justify-content:center;transition:transform var(--transition),box-shadow var(--transition)}
+.concept-flow__step:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px}
+.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;user-select:none}
+@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}}
+.glossary{margin:32px 0}.glossary dl{margin:0}.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px}
+.glossary dd{margin:4px 0 0;color:var(--text);font-size:15px;padding-left:0}
+.quiz{margin:56px 0 24px;padding:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.quiz h2{font-family:var(--font-sans);border-top:none;padding-top:0;margin-top:0;margin-bottom:8px}
+.quiz__intro{color:var(--text-muted);font-family:var(--font-sans);font-size:14px;margin-bottom:24px}
+.quiz fieldset{border:none;padding:0;margin:0 0 28px}
+.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px;font-size:16px}
+.quiz__option{display:block;padding:12px 16px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;transition:all var(--transition);position:relative;padding-left:44px}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%;transition:all var(--transition)}
+.quiz__option:hover{border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option input{position:absolute;opacity:0;pointer-events:none}
+.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option:has(input:checked)::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg-elevated)}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success);color:var(--text-strong)}
+.quiz__option.correct-answer::before{border-color:var(--success);background:var(--success);box-shadow:inset 0 0 0 3px var(--success-bg)}
+.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}
+.quiz__option.incorrect-answer::before{border-color:var(--danger);background:var(--danger);box-shadow:inset 0 0 0 3px var(--danger-bg)}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__explanation{display:block}
+.quiz__actions{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:white;cursor:pointer;font-size:14px;transition:all var(--transition)}
+.btn:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+.btn--ghost{background:transparent;color:var(--accent)}
+.btn--ghost:hover{background:var(--sidenote-bg);color:var(--accent-strong)}
+.quiz__score{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);margin:0;padding:12px 16px;background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all var(--transition);font-family:var(--font-sans);font-size:18px;padding:0}
+.control-btn:hover{color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.control-btn svg{width:18px;height:18px}.control-btn[data-active="true"]{background:var(--accent);color:white}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.progress-bar,.navigator,.marginalia,.orbit,.checkpoint__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border)}
+.orbit__title{font-family:var(--font-sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px}
+.orbit__track{position:relative;padding-left:22px}
+.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.orbit__node{position:relative;display:flex;align-items:center;margin:8px 0;color:var(--text-muted);font-family:var(--font-sans);font-size:12px;cursor:pointer;transition:color var(--transition);user-select:none}
+.orbit__node::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border);transition:all var(--transition);box-sizing:border-box}
+.orbit__node[data-reached="true"]::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%, transparent)}
+.orbit__node[data-active="true"]{color:var(--text-strong);font-weight:600}
+.orbit__node[data-active="true"]::before{transform:scale(1.15);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%, transparent)}
+.orbit__node:hover{color:var(--text)}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px;color:var(--text)}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0;align-items:start}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}
+.scaffold__row-body{font-size:15px;line-height:1.65}.scaffold__row-body p:last-child{margin-bottom:0}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm);background:transparent;overflow:hidden}
+.scaffold__probe>summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none;display:flex;gap:10px;align-items:baseline;user-select:none;transition:background var(--transition)}
+.scaffold__probe>summary::-webkit-details-marker{display:none}
+.scaffold__probe>summary::before{content:"🤔 Probe";flex-shrink:0;padding:2px 8px;border-radius:3px;background:var(--accent2-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2-strong)}
+.scaffold__probe[open]>summary::after{content:"";position:absolute}
+.scaffold__probe>summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px 14px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px;line-height:1.6;color:var(--text);animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.scaffold__resolve::before{content:"💡 Resolve";display:inline-block;padding:2px 8px;border-radius:3px;background:var(--accent2);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:8px;vertical-align:middle}
+.checkpoint{margin:32px 0;padding:20px 24px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}
+.checkpoint__label{display:block;font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.checkpoint__question{font-family:var(--font-sans);font-size:15px;color:var(--text-strong);margin:0 0 12px;line-height:1.5}
+.checkpoint textarea{width:100%;min-height:90px;padding:12px 14px;font-family:var(--font-serif);font-size:15px;line-height:1.5;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);resize:vertical;transition:border-color var(--transition);box-sizing:border-box}
+.checkpoint textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%, transparent)}
+.checkpoint__actions{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.checkpoint__expert{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:var(--radius-sm);border-left:3px solid var(--accent);font-family:var(--font-sans);font-size:14px;line-height:1.55;display:none}
+.checkpoint.is-revealed .checkpoint__expert{display:block;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.checkpoint__expert-label{display:block;font-weight:700;color:var(--accent);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.checkpoint__saved{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.launchpad{margin:48px 0 24px;padding:28px 32px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.launchpad::before{content:"🚀";position:absolute;top:-16px;right:-8px;font-size:96px;opacity:.06;transform:rotate(-15deg);pointer-events:none}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:white;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.3rem;color:var(--text-strong);margin:0 0 12px;line-height:1.3}
+.launchpad__problem{font-size:16px;line-height:1.7;color:var(--text);margin:0 0 24px}
+.launchpad__hints{border-top:1px dashed var(--border);padding-top:20px;font-family:var(--font-sans)}
+.launchpad__hints-label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:block}
+.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;color:var(--text);display:none;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.launchpad__hint.is-visible{display:block}
+.launchpad__hint-label{display:block;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:4px;letter-spacing:.08em}
+.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px;transition:all var(--transition)}
+.launchpad__reveal:hover{background:var(--accent2);color:white}
+.launchpad__reveal:disabled{opacity:.4;cursor:not-allowed;background:transparent;color:var(--text-muted);border-color:var(--border)}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.progress-bar,.navigator,.marginalia,.orbit,.checkpoint__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}}
+</style>
+</head>
+<body>
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+<aside class="navigator" aria-label="Table of contents">
+<div class="navigator__meta"><p style="margin:0 0 10px"><a href="secret-sharing-index.html" style="font-size:13px;text-decoration:none;border:1px solid var(--border);padding:6px 10px;border-radius:6px;display:inline-block;background:var(--bg-elevated)">← Series index</a></p><p class="navigator__title">Reading time</p><p class="navigator__reading-time" id="readingTime">~ 26 min</p></div>
+<div class="orbit" aria-label="Learning phases"><p class="orbit__title">Learning path</p><div class="orbit__track">
+<div class="orbit__node" data-target="baseline">1 · Anchor</div>
+<div class="orbit__node" data-target="bridge">2 · Bridge</div>
+<div class="orbit__node" data-target="exposition">3 · Construct</div>
+<div class="orbit__node" data-target="application">4 · Apply</div>
+<div class="orbit__node" data-target="boundary">5 · Boundary</div>
+<div class="orbit__node" data-target="synthesis">6 · Fade</div>
+</div></div>
+<nav><ul class="toc" id="toc"></ul></nav>
+</aside>
+<main class="canvas" id="canvas">
+<h1>Chapter 7: The PET Landscape</h1>
+<div class="tldr" role="note" aria-label="TL;DR"><strong>TL;DR.</strong> Secret sharing hides inputs with shares; DP adds noise to hide outputs; PSI, ZK, HE trade accuracy, interaction, and trust — composition is the real PET.</div>
+<div class="hook">
+<span class="hook__label">🎣 The hook</span>
+Alice's banks can now share, verify, threshold-sign, and even compute averages without revealing inputs (Chapters 1–6). Then a regulator asks: "Your average recovery time is 41 days — does that leak that Hospital A had very long stays?" Input privacy held, but output privacy did not. Where do shares end and other privacy tools begin?
+</div>
+<div class="meta-block"><h4>Prerequisites</h4><ul>
+<li>Chapters 1–6: Shamir, fields, VSS, threshold crypto, MPC addition vs multiplication price list</li>
+<li>Comfort with trade-off thinking — no tool gives everything, composition is the norm</li>
+</ul></div>
+<div class="meta-block"><h4>By the end you will be able to…</h4><ul>
+<li>Place secret sharing / MPC on a PET map alongside differential privacy, PSI, HE, ZK</li>
+<li>Explain why MPC hides inputs but not outputs — and why DP complements it</li>
+<li>Choose among PETs for four canonical problems (private aggregation, threshold custody, contact discovery, auditable claim)</li>
+<li>Combine PETs in a layered architecture and name what each layer protects</li>
+</ul></div>
+
+<h2 id="baseline">The foundational truth</h2>
+<p>Every PET hides something, but not the same thing.</p>
+<p>Secret sharing and MPC hide <em>inputs</em> from each other and from the servers — even with unbounded compute (Ch. 3), with thresholds. They do not hide what the <em>output itself</em> reveals about those inputs. If the average is 99 and you know two of three inputs were 0, you infer the third.</p>
+<p>That gap is why PETs come as a family, not a single winner. The foundational truth of this chapter: privacy has two endpoints — hide the inputs (MPC / HE / PSI) and hide the outputs (differential privacy) — and most real systems need both.</p>
+
+<h2 id="bridge">A familiar bridge — envelopes vs. frosted glass vs. blurred photos</h2>
+<p>Use three physical hides for the rest of the chapter.</p>
+<ul>
+<li><strong>Envelopes (secret sharing / MPC)</strong> → slip numbers into envelopes dealt to servers; servers tally without opening envelopes, then open only the total.</li>
+<li><strong>Frosted glass (homomorphic encryption)</strong> → one person works behind glass — they can add and multiply shapes they see as shadows without ever opening them.</li>
+<li><strong>Blurred photos (differential privacy)</strong> → publish a photo of the tally, but add a little blur so no single person changes the picture much — hides individuals even from the recipient of the output.</li>
+</ul>
+<p>Two more for completeness: <strong>PSI</strong> is "do our lists overlap without revealing non-overlaps," and <strong>ZK</strong> is "prove a claim without showing the evidence."</p>
+<div class="concept-flow">
+<div class="concept-flow__step"><span class="concept-flow__num">01</span>Hide inputs<br>MPC / PSI / HE</div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">02</span>Compute<br>jointly without seeing</div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">03</span>Hide outputs<br>DP / ZK before publish</div>
+</div>
+<div class="premortem">
+<span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+<p><span class="premortem__wrong">"`More PETs stacked = more private' — just layer DP, MPC, HE and you get total privacy"</span></p>
+<p>This is wrong because PETs pull against each other on accuracy, speed, and trust — wrong composition can waste budget or add no real guarantee.</p>
+<p><span class="premortem__truth">What's actually true:</span> PETs compose usefully only when each protects a different endpoint (inputs vs outputs vs integrity) — stacking two input-hiding tools without an output-hiding one leaves output leakage untouched.</p>
+</div>
+
+<h2 id="exposition">Building the model, one piece at a time</h2>
+
+<section class="scaffold" id="exposition-1">
+<h3 class="scaffold__concept">A PET map — what each hides and at what price</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p>Five major PETs, by the endpoint they protect:</p>
+<ul>
+<li><strong>MPC (this series: Shamir/Additive + Beaver)</strong> hides inputs from other inputs and from servers; exact output. Price: interaction (1 round per multiply) and honest-majority or authenticated triples. Ideal for joint analytics without a trusted server.</li>
+<li><strong>Homomorphic encryption (HE: BFV, CKKS, TFHE)</strong> hides inputs from a single untrusted worker; exact or approximate output; non-interactive (client encrypts, server computes). Price: ciphertext blow-up and slow non-linear ops.</li>
+<li><strong>Private Set Intersection (PSI)</strong> hides inputs except the intersection; special-purpose but very fast (OT-based). Price: only set problems, not general functions.</li>
+<li><strong>Zero-knowledge proofs (ZK: Groth16, PLONK)</strong> hides witness behind a claim — proves "I know a valid input" without revealing it. Price: prover cost, not input hiding from collaborators.</li>
+<li><strong>Differential privacy (DP)</strong> hides any single input's influence on the *output* — the only PET that limits what the recipient of the result can infer. Price: noise trades accuracy for privacy, parameterized by <strong>ε (epsilon)</strong> (smaller ε = more noise, more hiding).</li>
+</ul>
+</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>Salaries 30, 50, 40 from Chapter 6:</p>
+<ul>
+<li>MPC average = (30+50+40)/3 = 40 exactly; no server saw a salary, but the recipient learns 40 — if they know two salaries they learn the third.</li>
+<li>MPC+DP average = 40 + Lap(Δf/ε) noise, say 40+2 = 42. Now even knowing two salaries, the third is deniable within ε — output privacy. Accuracy loss is the price.</li>
+<li>HE version: Carol encrypts 40 to server, server homomorphically adds encrypted 30,50 from others, returns encrypted 120 — Carol decrypts. Non-interactive, but server work is heavier.</li>
+<li>PSI version does not apply — not a set problem.</li>
+</ul>
+<pre><code># DP layer after MPC (central DP)
+true_avg = reconstruct(mpc_shares) / n          # 40
+sensitivity = (max_salary - min_salary)/n       # how much one person moves avg
+noisy_avg = true_avg + laplace(0, sensitivity/epsilon)
+publish(noisy_avg)   # ε=1 → scale = sensitivity, moderate noise</code></pre>
+</div></div>
+<details class="scaffold__probe"><summary>A team proposes: "We will run MPC on salaries, then add DP noise, but the servers will see the DP noise value — is that a problem?"</summary><div class="scaffold__resolve">It can be, if noise is added *after* opening to one server. Better to add noise *inside* MPC: parties secret-share Laplace/ Gaussian noise and add it to the shared sum before opening — so no server sees which part was noise vs data. DP inside MPC composes cleanly; DP outside needs a trusted noise-adder.</div></details>
+</section>
+<div class="feynman">Envelopes hide who wrote what; blur hides whose handwriting could have changed the total — you need both to protect a person from the tally's readers.</div>
+
+<div class="checkpoint" data-checkpoint-id="cp7a">
+<span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+<p class="checkpoint__question">A hospital says "Our MPC sum leaks nothing, so we don't need DP." Name a case where the exact sum alone leaks a participant's secret, even though MPC hid every input from the servers.</p>
+<textarea placeholder="Consider n=3 with two colluding participants or extreme values…"></textarea>
+<div class="checkpoint__actions"><button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button><span class="checkpoint__saved" data-checkpoint-saved></span></div>
+<div class="checkpoint__expert"><span class="checkpoint__expert-label">Expert answer</span>If Alice and Bob collude after learning sum=120 and know Carol's input is in 0…100, they learn Carol has 40 exactly (120−30−50) — MPC hid it from servers, not from output recipients. With repeated queries, a single person's data can be reconstructed. DP would have made each output deniable.</div>
+</div>
+
+<section class="scaffold" id="exposition-2">
+<h3 class="scaffold__concept">Choosing among PETs — four canonical puzzles</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p><strong>Decision pattern</strong> (what you hide, from whom, with what cost):</p>
+<ul>
+<li><strong>Puzzle 1 — Private aggregation (mean salary, telemetry sum)</strong> → Additive secret sharing / SecAgg + DP. Why: sum is addition-only, cheap (Ch. 6 first scaffold); DP hides individuals from aggregate readers.</li>
+<li><strong>Puzzle 2 — Threshold custody (sign a transaction if 3-of-5 agree)</strong> → Threshold signatures (Ch. 5), no DP needed. Why: secret is a key, not a dataset — MPC threshold protects the key; output (signature) is meant to be public.</li>
+<li><strong>Puzzle 3 — Contact discovery ("which of my contacts are on this app?")</strong> → PSI (or PIR). Why: set intersection without revealing non-intersection; generic MPC would be overkill.</li>
+<li><strong>Puzzle 4 — Auditable claim ("all accounts balance without revealing balances")</strong> → ZK proof. Why: one prover to many verifiers, hides witness but proves predicate.</li>
+</ul>
+</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>Federated learning round in practice layers two: phones Shamir-share model deltas to two non-colluding servers (SecAgg additive shares — no Shamir degree needed), servers MPC-sum the shares, then a DP mechanism adds Gaussian noise inside MPC before publishing the new global model. The published model leaks bounded information per user (ε-DP) and no server saw a raw delta.</p>
+<pre><code>Phone → additive shares of delta to ServerA, ServerB
+Servers (no MPC mult needed): sum shares locally → shared sum
+Inside MPC: shared_sum + Lap(Δf/ε)  → open noisy_sum → update model
+Phones never revealed delta; recipients cannot infer one delta from noisy_sum.</code></pre>
+</div></div>
+<details class="scaffold__probe"><summary>Why not replace secret sharing with HE for federated aggregation — then only one server is needed?</summary><div class="scaffold__resolve">HE gives single-server, non-interactive aggregation — operationally simpler. Trade: HE ciphertexts are 100–1000× larger and non-linear ops (comparisons, thresholds) are far slower. For sum-only workloads, additive MPC on two non-colluding servers is orders of magnitude faster, which is why SecAgg chose it. HE wins when the operator truly cannot be split into non-colluding halves.</div></details>
+</section>
+<div class="feynman">Pick the envelope for shared work, the blur for published results, and the special cutter only for list problems.</div>
+
+<details class="deep-dive"><summary><span class="deep-dive__label">🔴 Deep dive</span> ε and sensitivity — the DP dial in one minute</summary>
+<p>Sensitivity Δf is how much one person's data can change the function (for mean, Δf = range/n). Laplace noise scale = Δf/ε. ε is the budget: ε→0 → huge noise, strong deniability; ε→∞ → no noise, no DP. Repeated queries compose: k queries with ε each spend kε total. That is why central DP inside MPC still tracks a privacy budget across training rounds.</p>
+<pre><code># mean 0…100, n=100, Δf=1.0
+# ε=1.0 → Lap(1.0) σ≈1.4, mild blur on mean 40
+# ε=0.1 → Lap(10) σ≈14, strong blur — hides anyone but mean is noisy</code></pre>
+</details>
+
+<h2 id="application">In the wild</h2>
+<p>Layered PETs are not academic — they ship in phones and browsers.</p>
+<p><strong>MPC + DP in the wild:</strong> <a href="https://research.google/pubs/secure-aggregation-for-federated-learning/" target="_blank" rel="noopener">Google SecAgg / federated learning</a> runs additive masking across phones with two servers summing shares (Ch. 6 addition path), then DP noise. Mozilla Prio (now <a href="https://divviup.org/" target="_blank" rel="noopener">Divvi Up</a>) splits telemetry via additive shares to two aggregators — no aggregator sees a raw measurement. Apple's private federated analytics uses a similar two-server split plus local DP.</p>
+<p><strong>Threshold in the wild:</strong> The vault and wallet cases from Chapters 2/5 — HashiCorp Vault (Shamir 5-of-3 default) <a href="https://developer.hashicorp.com/vault/docs/concepts/seal" target="_blank" rel="noopener">Vault Seal</a>, Ethereum distributed validators (DKG + threshold BLS), custody MPC wallets — all choose threshold not for DP but for single-point-of-failure removal.</p>
+<p><strong>HE vs MPC choice:</strong> When contact discovery must hide non-members under a single-server model, OT-based PSI beats generic MPC; when analytics must stay accurate but hide inputs, MPC beats DP alone; when the output must be publishable forever, DP is the only output-hiding PET.</p>
+<div class="bar-chart">
+<div class="bar-chart__title">PET trade space — input hiding vs. output hiding vs. exactness</div>
+<div class="bar-row"><div class="bar-label">MPC (Shamir/BGW)</div><div class="bar-track"><div class="bar-fill" style="width:88%"></div></div><div class="bar-value">exact</div></div>
+<div class="bar-row"><div class="bar-label">HE (BFV/CKKS)</div><div class="bar-track"><div class="bar-fill" style="width:72%"></div></div><div class="bar-value">exact≈</div></div>
+<div class="bar-row"><div class="bar-label">PSI (OT-based)</div><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><div class="bar-value">exact</div></div>
+<div class="bar-row"><div class="bar-label">DP (Laplace/Gauss)</div><div class="bar-track"><div class="bar-fill" style="width:36%"></div></div><div class="bar-value">noisy</div></div>
+<p class="bar-chart__caption">Schematic exactness when used alone: MPC/PSI/HE preserve exact outputs (inputs hidden); DP adds noise to hide outputs. Real pipelines compose — e.g., MPC+DP = exact hidden inputs, noisy hidden outputs.</p>
+</div>
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer"><div class="flip-card__inner"><div class="flip-card__face flip-card__front"><span class="flip-card__label">Active recall — Question</span><div class="flip-card__content">Your MPC average hid salaries from servers, but a regulator says "the published average 41 still leaks individuals." Which PET did you miss?</div></div><div class="flip-card__face flip-card__back"><span class="flip-card__label">Answer</span><div class="flip-card__content">Differential privacy on the output — you hid inputs (MPC), not output influence. Add Laplace/Gaussian noise to the opened result before publishing.</div></div></div></div>
+
+<h2 id="boundary">Where it breaks</h2>
+<p>Composition has sharper edges than any single PET.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Common misconception</span><strong>"If we used Shamir with t=n, we don't need DP — n−1 colluders still learn nothing."</strong> That protects inputs from colluders within the protocol, not recipients of the output after opening. Once the average is published, all thresholds are gone — DP is about the published artifact, not the sharing phase. Confusing the two is the most common PET misuse.</div>
+<div class="callout callout--danger"><span class="callout__label">🚫 Edge case</span><strong>Two composition traps:</strong> (1) DP budget exhaustion — repeated noisy averages with fresh MPC but same ε each time accumulate privacy loss (kε) until deniability evaporates; must budget across time. (2) Single-server HE that later runs DP after decryption reintroduces a trusted decryptor — if that server is compromised before noise, inputs leak. Add noise *inside* HE/MPC before any opening.</div>
+
+<h2 id="connections">How this connects — series synthesis</h2>
+<p>This chapter is the synthesis for the whole series. The path you built:</p>
+<ul>
+<li><strong>Ch.1</strong> Why cutting leaks; additive (n,n) hides perfectly but needs everyone.</li>
+<li><strong>Ch.2</strong> Shamir curves make any t-of-n hide perfectly, with ideal size.</li>
+<li><strong>Ch.3</strong> Prime-field wrap-around gives the counting proof — zero bits leaked to infinity.</li>
+<li><strong>Ch.4</strong> Receipts (VSS), dealer removal (DKG), and zero-hill refresh make it deployable.</li>
+<li><strong>Ch.5</strong> Lagrange in the exponent removes the five-second rebuild window — partials combine, not keys.</li>
+<li><strong>Ch.6</strong> Free addition plus one-round multiplication makes joint computation, not just joint custody.</li>
+<li><strong>Ch.7 (this)</strong> Input hiding (MPC) must meet output hiding (DP) — and PSI/ZK/HE fill the gaps MPC does not.</li>
+</ul>
+
+<h2 id="synthesis">The whole picture</h2>
+<p>The series hook in Chapter 1 asked: how do you hand out slips that look like gibberish alone yet rebuild 53 together? Additive sharing answered it for "all must meet," Shamir generalized it to "any t," the clock made the counting uniform, receipts made it trustworthy, threshold crypto removed the rebuild window, MPC let hospitals average without revealing, and this chapter blurred the published average so recipients cannot infer a single stay.</p>
+<p>Secret sharing was the root primitive — not because it solves privacy alone, but because it is the composable input-hiding layer that every other PET assumes when they say "parties." The vault combination, the choir's chord, the ballot tally, and the blurred photo are the same idea at different endpoints: spread trust so no one place is enough, then hide what even the answer would reveal.</p>
+<p>From envelope to blur — the series ends where privacy does: at composition.</p>
+<blockquote><strong>If you remember only one thing:</strong> Use shares to hide inputs, noise to hide outputs — compose them, never alone.</blockquote>
+
+<div class="launchpad">
+<span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+<h3 class="launchpad__title">Design a privacy-preserving pipeline</h3>
+<p class="launchpad__problem">Design an end-to-end pipeline for the three hospitals: each patient's recovery days are private; the hospitals want to publish a DP-noisy average for researchers while no hospital, server, or researcher sees a raw record. Your pipeline must use (a) additive or Shamir sharing for inputs, (b) MPC sum/average as in Ch.6, and (c) DP noise added inside MPC before opening. Name which PET sits at each stage, which servers would be Shamir vs additive, how many must collude to break input privacy, and how the published noisy average's ε trades accuracy vs output deniability. Then extend: how would you add PSI to let hospitals also find patients treated at two sites without revealing other patients, and ZK to prove "published average used exactly the MPC mean"?</p>
+<div class="launchpad__hints"><span class="launchpad__hints-label">Stuck? Reveal a hint at a time.</span><button type="button" class="launchpad__reveal" id="hintBtn">Reveal hint 1</button>
+<div class="launchpad__hint" data-hint="1"><span class="launchpad__hint-label">Hint 1 — reframe</span>Inputs never leave hospital — split each record into 2 additive shares to two non-colluding aggregators (Divvi Up / SecAgg model). t=2 additive needs both to open; honest-majority assumption is 1-of-2 non-collusion. Shamir would need 2-of-3 if you want dropout tolerance.</div>
+<div class="launchpad__hint" data-hint="2"><span class="launchpad__hint-label">Hint 2 — key concept</span>MPC sum is free adds (Ch.6); inside MPC, generate Laplace noise with MPC randomness, add to sum, then open noisy average. ε chosen upfront: small ε → large noise, strong per-patient deniability. The noise generation itself must be secret-shared.</div>
+<div class="launchpad__hint" data-hint="3"><span class="launchpad__hint-label">Hint 3 — setup</span>PSI for overlap is OT-based, run pairwise before the sum to deduplicate patients across sites. ZK proof: the aggregators produce a proof that "noisy average = MPC average + Lap(Δf/ε)" without revealing shares — ties integrity to privacy.</div>
+</div>
+</div>
+
+<h2 id="glossary">Glossary</h2>
+<div class="glossary"><dl>
+<dt>Privacy-Enhancing Technology (PET)</dt><dd>Umbrella for tools that hide data at some endpoint. <em>Family: MPC, HE, PSI, ZK, DP — envelopes, glass, blur, intersection, and proof.</em></dd>
+<dt>MPC / Secret-shared computation</dt><dd>Hides inputs, exact output, interactive (1 round per multiply). <em>Envelopes tallied without opening.</em></dd>
+<dt>Homomorphic encryption (HE)</dt><dd>Hides inputs from a single worker, non-interactive, heavier. <em>Frosted glass — one worker adds shadows.</em></dd>
+<dt>Private Set Intersection (PSI)</dt><dd>Hides inputs except overlap. <em>Find common contacts without revealing others.</em></dd>
+<dt>Zero-knowledge proof (ZK)</dt><dd>Hides witness, proves predicate. <em>Prove the tally was honest without opening ballots.</em></dd>
+<dt>Differential privacy (DP), ε</dt><dd>Adds noise to hide any one input's effect on the output; ε tunes trade-off. <em>Blur on the published photo.</em></dd>
+<dt>Composition</dt><dd>Layering PETs — e.g., MPC for inputs + DP for outputs + ZK for integrity. <em>Envelope then blur then receipt.</em></dd>
+</dl></div>
+
+<section class="quiz" id="quiz">
+<h2 id="knowledge-check">Knowledge check</h2>
+<p class="quiz__intro">3 questions. Pick the best answer for each and click <em>Check answers</em>.</p>
+<fieldset data-answer="2">
+<legend>1. MPC without DP hides…</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Everything — inputs and what the output reveals about them.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Only the output; inputs are still visible to servers.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Inputs from servers and from each other, but not what the published output itself leaks about those inputs.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Nothing — MPC is only for integrity (ZK).</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct is inputs hidden, output leakage remains. That is why the hook needed DP after MPC.</div>
+</fieldset>
+<fieldset data-answer="1">
+<legend>2. Which puzzle fits which PET?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Private aggregation → ZK; threshold custody → PSI</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Private aggregation (sum) → MPC addition + DP; custody → threshold signatures; contact discovery → PSI.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> All problems → homomorphic encryption alone.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> All problems → secret sharing alone.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct maps addition-only sum to cheap MPC+DP, custody to threshold, set overlap to PSI.</div>
+</fieldset>
+<fieldset data-answer="0">
+<legend>3. Why add DP noise inside MPC before opening, rather than after?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> So no single party ever sees the true (un-noised) output — output privacy holds even against the aggregators.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> It is faster — outside needs more modular inverses.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Inside-MPC DP is information-theoretic; outside is computational.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> It avoids Babylon's attack on Shamir commitments.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct: inside-MPC addition of noise keeps the exact sum secret-shared, so no trusted noise-adder is needed. Outside would reintroduce a single point of trust for outputs.</div>
+</fieldset>
+<div class="quiz__actions"><button type="button" class="btn" id="checkQuiz">Check answers</button><button type="button" class="btn btn--ghost" id="resetQuiz">Reset</button><p class="quiz__score" id="quizScore"></p></div>
+</section>
+
+<div class="footer"><p style="margin:0 0 12px"><a href="chapter-6-from-shares-to-computation.html">← 6 From Shares To Computation</a> · <a href="secret-sharing-index.html">Series Index</a></p>
+<p>Chapter 7 of 7 — <em>Secret Sharing &amp; Privacy-Enhancing Technologies</em> — Mechanism-first series. Previous: <a href="chapter-6-from-shares-to-computation.html">Chapter 6</a>. Start: <a href="chapter-1-the-problem-of-splitting-secrets.html">Chapter 1</a>.</p>
+<p style="margin-top:8px">Series thread: from <em>cutting leaks</em> (Ch.1) to <em>curves hide</em> (Ch.2) to <em>fields prove</em> (Ch.3) to <em>receipts harden</em> (Ch.4) to <em>partials combine</em> (Ch.5) to <em>sums become functions</em> (Ch.6) to <em>inputs and outputs both hidden</em> (this). Composition is the final primitive.</p>
+<p style="margin-top:8px;font-size:12px">Sources: Shamir 1979; Feldman 1987; BGW 1988; Beaver 1991; Bonawitz et al. 2017 (SecAgg); Corrigan-Gibbs &amp; Boneh 2017 (Prio/Poplar); Dwork et al. 2006 — Differential Privacy; Chase &amp; Miao 2020 — PSI.</p>
+</div>
+</main>
+<aside class="marginalia" aria-label="Notes and elaborations">
+<div class="amplifier" id="amplifier"><span class="amplifier__label">Hover to elaborate</span><p class="amplifier__empty">Hover over a <span style="border-bottom:1px dashed var(--accent2)">dashed term</span> in the text to see its deeper note here.</p></div>
+<div class="sidenote"><strong>The two endpoints.</strong> Input privacy = "no party sees another's data." Output privacy = "recipient cannot infer one person's data from the answer." MPC gives the first; DP gives the second.</div>
+<div class="sidenote"><strong>Budget.</strong> ε accumulates — 10 queries at ε=0.5 cost 5 total. Most deployments publish very few statistics for this reason, or use Renyi-DP for tighter accounting.</div>
+<div class="sidenote"><strong>Watch non-collusion.</strong> Additive 2-server MPC is only as non-colluding as your servers — run them in different trust domains (different clouds, orgs).</div>
+</aside>
+</div>
+<div class="controls" aria-label="Page controls">
+<button type="button" class="control-btn" id="themeBtn" title="Toggle dark/light" aria-label="Toggle theme">◐</button>
+<button type="button" class="control-btn" id="focusBtn" title="Focus mode" aria-label="Toggle focus mode">◧</button>
+</div>
+<script>
+(function(){
+var fill=document.getElementById('progressFill');
+function onScroll(){
+var h=document.documentElement;
+var max=h.scrollHeight - h.clientHeight;
+var pct=max>0? (h.scrollTop/max)*100:0;
+if(fill) fill.style.width=pct+'%';
+var nodes=[].slice.call(document.querySelectorAll('.orbit__node'));
+var secs=['baseline','bridge','exposition','application','boundary','synthesis'].map(function(id){return document.getElementById(id)}).filter(Boolean);
+var cur=0; for(var i=0;i<secs.length;i++){ if(secs[i].getBoundingClientRect().top < 120) cur=i; }
+nodes.forEach(function(n,i){
+n.setAttribute('data-reached', i<=cur ? 'true':'false');
+n.setAttribute('data-active', i===cur ? 'true':'false');
+});
+}
+document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+var toc=document.getElementById('toc');
+if(toc){
+var heads=[].slice.call(document.querySelectorAll('.canvas h2, .canvas h3'));
+heads.forEach(function(h){
+var li=document.createElement('li');
+var a=document.createElement('a');
+a.href='#'+h.id; a.textContent=h.textContent;
+if(h.tagName==='H3') a.className='toc-l3';
+a.addEventListener('click', function(e){ e.preventDefault(); h.scrollIntoView({behavior:'smooth', block:'start'}); history.replaceState(null,'','#'+h.id);});
+li.appendChild(a); toc.appendChild(li);
+});
+var links=[].slice.call(toc.querySelectorAll('a'));
+function markToc(){
+var curId=null; for(var i=heads.length-1;i>=0;i--){ if(heads[i].getBoundingClientRect().top < 80){ curId=heads[i].id; break; } }
+links.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href')==='#'+curId);});
+}
+document.addEventListener('scroll', markToc, {passive:true}); markToc();
+}
+var tBtn=document.getElementById('themeBtn');
+if(tBtn){ tBtn.addEventListener('click', function(){ var h=document.documentElement; var cur=h.getAttribute('data-theme'); var nxt=cur==='dark'?'light':'dark'; h.setAttribute('data-theme',nxt); try{localStorage.setItem('c7-theme',nxt);}catch(e){} }); try{var s=localStorage.getItem('c7-theme'); if(s) document.documentElement.setAttribute('data-theme',s);}catch(e){} }
+var fBtn=document.getElementById('focusBtn');
+if(fBtn){ fBtn.addEventListener('click', function(){ document.body.classList.toggle('focus-mode'); var a=document.body.classList.contains('focus-mode')?'true':'false'; fBtn.setAttribute('data-active',a);});}
+document.querySelectorAll('.flip-card').forEach(function(c){ c.addEventListener('click', function(){ c.classList.toggle('is-flipped');}); c.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); c.classList.toggle('is-flipped');}});});
+document.querySelectorAll('[data-checkpoint-reveal]').forEach(function(b){
+b.addEventListener('click', function(){
+var cp=b.closest('.checkpoint'); if(!cp) return;
+cp.classList.toggle('is-revealed');
+b.textContent = cp.classList.contains('is-revealed') ? 'Hide expert answer' : 'Compare to expert answer';
+try{var ta=cp.querySelector('textarea'); if(ta) localStorage.setItem('c7-cp-'+cp.getAttribute('data-checkpoint-id'), ta.value);}catch(e){}
+});
+});
+document.querySelectorAll('.checkpoint textarea').forEach(function(ta){
+var cp=ta.closest('.checkpoint'); if(!cp) return;
+var id=cp.getAttribute('data-checkpoint-id');
+try{var v=localStorage.getItem('c7-cp-'+id); if(v) ta.value=v;}catch(e){}
+ta.addEventListener('input', function(){ try{localStorage.setItem('c7-cp-'+id, ta.value);}catch(e){}});
+});
+var hintBtn=document.getElementById('hintBtn');
+if(hintBtn){
+var idx=0; var hints=[].slice.call(document.querySelectorAll('.launchpad__hint'));
+hintBtn.addEventListener('click', function(){
+if(idx < hints.length){ hints[idx].classList.add('is-visible'); idx++; hintBtn.textContent = idx < hints.length ? 'Reveal hint '+(idx+1) : 'All hints revealed'; if(idx>=hints.length) hintBtn.disabled=true; }
+});
+}
+function grade(){
+var fss=[].slice.call(document.querySelectorAll('.quiz fieldset'));
+var total=fss.length, score=0;
+fss.forEach(function(fs){
+var ans=parseInt(fs.getAttribute('data-answer'),10);
+var sel=fs.querySelector('input:checked');
+var opts=[].slice.call(fs.querySelectorAll('.quiz__option'));
+opts.forEach(function(o){ o.classList.remove('correct-answer','incorrect-answer');});
+if(sel){
+var idx=parseInt(sel.value,10);
+if(idx===ans){ score++; opts[idx].classList.add('correct-answer');}
+else { opts[idx].classList.add('incorrect-answer'); opts[ans].classList.add('correct-answer');}
+} else { opts[ans].classList.add('correct-answer');}
+});
+var quiz=document.getElementById('quiz');
+if(quiz) quiz.classList.add('is-graded');
+var sc=document.getElementById('quizScore');
+if(sc) sc.textContent='Score: '+score+' / '+total + (score===total ? ' — PET map owned.' : score>=2 ? ' — solid. Revisit the two-endpoints split.' : ' — re-read the map scaffold; envelopes vs blur is the split.');
+}
+var cb=document.getElementById('checkQuiz'); if(cb) cb.addEventListener('click', grade);
+var rb=document.getElementById('resetQuiz'); if(rb) rb.addEventListener('click', function(){
+document.querySelectorAll('.quiz fieldset input:checked').forEach(function(i){ i.checked=false;});
+document.querySelectorAll('.quiz__option').forEach(function(o){ o.classList.remove('correct-answer','incorrect-answer');});
+var quiz=document.getElementById('quiz'); if(quiz) quiz.classList.remove('is-graded');
+var sc=document.getElementById('quizScore'); if(sc) sc.textContent='';
+});
+})();</script>
+</body>
+</html>

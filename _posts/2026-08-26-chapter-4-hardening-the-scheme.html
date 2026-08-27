@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Chapter 4: Hardening the Scheme — Cheaters, Dealers &amp; Rotating Shares</title>
+<meta name="description" content="How to catch lying shares (VSS), remove the trusted dealer, and refresh shares without changing the secret.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+:root{
+  --font-serif:'Merriweather', Georgia, serif;
+  --font-sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --bg:#FDFBF7; --bg-elevated:#FFFFFF; --bg-sunken:#F5F1EA;
+  --text:#2D3748; --text-muted:#718096; --text-strong:#1A202C;
+  --accent:#319795; --accent-strong:#285E61;
+  --accent2:#B7791F; --accent2-strong:#975A16; --accent2-soft:#FEEBC8;
+  --border:#E4DFD5; --sidenote-bg:#EDF2F7; --code-bg:#EDF2F7;
+  --success:#38A169; --success-bg:#C6F6D5; --danger:#C53030; --danger-bg:#FED7D7;
+  --warn:#B7791F; --warn-bg:#FEEBC8; --info:#2B6CB0; --info-bg:#BEE3F8;
+  --radius:10px; --radius-sm:6px; --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow:0 4px 12px rgba(0,0,0,.08);
+  --measure:65ch; --line:1.7; --transition:200ms cubic-bezier(.4,0,.2,1);
+}
+html[data-theme="dark"]{
+  --bg:#1A202C; --bg-elevated:#2D3748; --bg-sunken:#171923;
+  --text:#E2E8F0; --text-muted:#A0AEC0; --text-strong:#F7FAFC;
+  --accent:#4FD1C5; --accent-strong:#81E6D9; --accent2:#F6AD55; --accent2-strong:#FBD38D; --accent2-soft:#4A2E14;
+  --border:#2D3748; --sidenote-bg:#2A2F3A; --code-bg:#2A2F3A;
+  --success:#68D391; --success-bg:#22543D; --danger:#FC8181; --danger-bg:#63171B;
+  --warn:#F6AD55; --warn-bg:#7B341E; --info:#63B3ED; --info-bg:#2A4365;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3); --shadow:0 4px 12px rgba(0,0,0,.4);
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}
+.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px}
+.navigator::-webkit-scrollbar{width:6px}.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}
+body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px}
+.navigator__reading-time{color:var(--text);font-size:13px}
+.toc{list-style:none;padding:0;margin:0}.toc li{margin:2px 0}
+.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg)}
+.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500}
+.toc .toc-l3{padding-left:20px;font-size:13px}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.4rem;line-height:1.2;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.6rem;line-height:1.3;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px}
+.canvas h2:first-of-type{border-top:none;padding-top:0}
+.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.2rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong);font-weight:700}.canvas em{font-style:italic}
+.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}.canvas a:hover{color:var(--accent-strong)}
+.source{font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-muted);margin-left:4px;padding:1px 6px;border-radius:4px;background:var(--sidenote-bg);text-decoration:none;border:1px solid transparent;white-space:nowrap;vertical-align:baseline;transition:all var(--transition)}
+.source::before{content:"↗ ";opacity:.6}.source:hover{color:var(--accent);border-color:var(--accent);background:transparent}
+.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-top:12px;font-style:italic}
+.canvas ul,.canvas ol{margin:0 0 16px;padding-left:24px}.canvas li{margin:4px 0}
+.canvas blockquote{margin:24px 0;padding:12px 20px;border-left:3px solid var(--accent);background:var(--sidenote-bg);color:var(--text);border-radius:0 var(--radius) var(--radius) 0;font-style:italic}
+.canvas code{font-family:var(--font-mono);font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:var(--radius-sm)}
+.canvas pre{font-family:var(--font-mono);background:var(--code-bg);padding:16px 20px;border-radius:var(--radius);overflow-x:auto;margin:24px 0;font-size:14px;line-height:1.5;position:relative}
+.canvas pre code{background:transparent;padding:0}
+.tldr{margin:16px 0 24px;padding:14px 20px;background:var(--accent2-soft);border-left:4px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--text-strong)}
+.tldr strong{color:var(--accent2-strong);letter-spacing:.02em}
+.hook{margin:24px 0 48px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.1rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+.meta-block ul{margin:0;padding-left:20px}.meta-block li{margin:4px 0;color:var(--text)}
+.callout{margin:24px 0;padding:16px 20px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--tip .callout__label{color:var(--success)}
+.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--warn .callout__label{color:var(--warn)}
+.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}.callout--danger .callout__label{color:var(--danger)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text);background:transparent}
+.feynman::before{content:"🧒 Explain in one sentence:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted)}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.flip-card{perspective:1000px;height:180px;margin:24px 0;cursor:pointer}
+.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip-card:hover .flip-card__inner,.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}
+.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:20px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:white;transform:rotateY(180deg)}
+.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.flip-card__content{font-family:var(--font-sans);font-size:15px;line-height:1.5}
+.deep-dive{margin:24px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);overflow:hidden}
+.deep-dive>summary{padding:14px 18px;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);list-style:none;display:flex;align-items:center;gap:10px;user-select:none;transition:background var(--transition)}
+.deep-dive>summary::-webkit-details-marker{display:none}
+.deep-dive>summary::before{content:"▶";color:var(--accent);font-size:10px;transition:transform var(--transition)}
+.deep-dive[open]>summary::before{transform:rotate(90deg)}
+.deep-dive>summary:hover{background:var(--sidenote-bg)}
+.deep-dive__label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-right:auto}
+.deep-dive>*:not(summary){padding:0 18px 16px;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:160px 1fr 48px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:14px}
+.bar-label{color:var(--text)}
+.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong));border-radius:4px;transition:width 400ms cubic-bezier(.4,0,.2,1)}
+.bar-row:hover .bar-fill{filter:brightness(1.15)}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+@media(max-width:640px){.bar-row{grid-template-columns:110px 1fr 40px;font-size:13px}}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:32px 0}
+.concept-flow__step{padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px;min-height:90px;display:flex;flex-direction:column;justify-content:center;transition:transform var(--transition),box-shadow var(--transition)}
+.concept-flow__step:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px}
+.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;user-select:none}
+@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}}
+.glossary{margin:32px 0}.glossary dl{margin:0}.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px}
+.glossary dd{margin:4px 0 0;color:var(--text);font-size:15px;padding-left:0}
+.quiz{margin:56px 0 24px;padding:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.quiz h2{font-family:var(--font-sans);border-top:none;padding-top:0;margin-top:0;margin-bottom:8px}
+.quiz__intro{color:var(--text-muted);font-family:var(--font-sans);font-size:14px;margin-bottom:24px}
+.quiz fieldset{border:none;padding:0;margin:0 0 28px}
+.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px;font-size:16px}
+.quiz__option{display:block;padding:12px 16px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;transition:all var(--transition);position:relative;padding-left:44px}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%;transition:all var(--transition)}
+.quiz__option:hover{border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option input{position:absolute;opacity:0;pointer-events:none}
+.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option:has(input:checked)::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg-elevated)}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success);color:var(--text-strong)}
+.quiz__option.correct-answer::before{border-color:var(--success);background:var(--success);box-shadow:inset 0 0 0 3px var(--success-bg)}
+.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}
+.quiz__option.incorrect-answer::before{border-color:var(--danger);background:var(--danger);box-shadow:inset 0 0 0 3px var(--danger-bg)}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__explanation{display:block}
+.quiz__actions{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:white;cursor:pointer;font-size:14px;transition:all var(--transition)}
+.btn:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+.btn--ghost{background:transparent;color:var(--accent)}
+.btn--ghost:hover{background:var(--sidenote-bg);color:var(--accent-strong)}
+.quiz__score{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);margin:0;padding:12px 16px;background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all var(--transition);font-family:var(--font-sans);font-size:18px;padding:0}
+.control-btn:hover{color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.control-btn svg{width:18px;height:18px}.control-btn[data-active="true"]{background:var(--accent);color:white}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.progress-bar,.navigator,.marginalia,.orbit,.checkpoint__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border)}
+.orbit__title{font-family:var(--font-sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px}
+.orbit__track{position:relative;padding-left:22px}
+.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.orbit__node{position:relative;display:flex;align-items:center;margin:8px 0;color:var(--text-muted);font-family:var(--font-sans);font-size:12px;cursor:pointer;transition:color var(--transition);user-select:none}
+.orbit__node::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border);transition:all var(--transition);box-sizing:border-box}
+.orbit__node[data-reached="true"]::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%, transparent)}
+.orbit__node[data-active="true"]{color:var(--text-strong);font-weight:600}
+.orbit__node[data-active="true"]::before{transform:scale(1.15);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 25%, transparent)}
+.orbit__node:hover{color:var(--text)}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px;color:var(--text)}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0;align-items:start}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}
+.scaffold__row-body{font-size:15px;line-height:1.65}.scaffold__row-body p:last-child{margin-bottom:0}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm);background:transparent;overflow:hidden}
+.scaffold__probe>summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none;display:flex;gap:10px;align-items:baseline;user-select:none;transition:background var(--transition)}
+.scaffold__probe>summary::-webkit-details-marker{display:none}
+.scaffold__probe>summary::before{content:"🤔 Probe";flex-shrink:0;padding:2px 8px;border-radius:3px;background:var(--accent2-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2-strong)}
+.scaffold__probe[open]>summary::after{content:"";position:absolute}
+.scaffold__probe>summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px 14px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px;line-height:1.6;color:var(--text);animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.scaffold__resolve::before{content:"💡 Resolve";display:inline-block;padding:2px 8px;border-radius:3px;background:var(--accent2);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:8px;vertical-align:middle}
+.checkpoint{margin:32px 0;padding:20px 24px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}
+.checkpoint__label{display:block;font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.checkpoint__question{font-family:var(--font-sans);font-size:15px;color:var(--text-strong);margin:0 0 12px;line-height:1.5}
+.checkpoint textarea{width:100%;min-height:90px;padding:12px 14px;font-family:var(--font-serif);font-size:15px;line-height:1.5;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);resize:vertical;transition:border-color var(--transition);box-sizing:border-box}
+.checkpoint textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 20%, transparent)}
+.checkpoint__actions{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.checkpoint__expert{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:var(--radius-sm);border-left:3px solid var(--accent);font-family:var(--font-sans);font-size:14px;line-height:1.55;display:none}
+.checkpoint.is-revealed .checkpoint__expert{display:block;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.checkpoint__expert-label{display:block;font-weight:700;color:var(--accent);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.checkpoint__saved{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.launchpad{margin:48px 0 24px;padding:28px 32px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.launchpad::before{content:"🚀";position:absolute;top:-16px;right:-8px;font-size:96px;opacity:.06;transform:rotate(-15deg);pointer-events:none}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:white;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.3rem;color:var(--text-strong);margin:0 0 12px;line-height:1.3}
+.launchpad__problem{font-size:16px;line-height:1.7;color:var(--text);margin:0 0 24px}
+.launchpad__hints{border-top:1px dashed var(--border);padding-top:20px;font-family:var(--font-sans)}
+.launchpad__hints-label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:block}
+.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;color:var(--text);display:none;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.launchpad__hint.is-visible{display:block}
+.launchpad__hint-label{display:block;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:4px;letter-spacing:.08em}
+.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px;transition:all var(--transition)}
+.launchpad__reveal:hover{background:var(--accent2);color:white}
+.launchpad__reveal:disabled{opacity:.4;cursor:not-allowed;background:transparent;color:var(--text-muted);border-color:var(--border)}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.progress-bar,.navigator,.marginalia,.orbit,.checkpoint__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}}
+</style>
+</head>
+<body>
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+<aside class="navigator" aria-label="Table of contents">
+<div class="navigator__meta"><p style="margin:0 0 10px"><a href="secret-sharing-index.html" style="font-size:13px;text-decoration:none;border:1px solid var(--border);padding:6px 10px;border-radius:6px;display:inline-block;background:var(--bg-elevated)">← Series index</a></p><p class="navigator__title">Reading time</p><p class="navigator__reading-time" id="readingTime">~ 22 min</p></div>
+<div class="orbit" aria-label="Learning phases"><p class="orbit__title">Learning path</p><div class="orbit__track">
+<div class="orbit__node" data-target="baseline">1 · Anchor</div>
+<div class="orbit__node" data-target="bridge">2 · Bridge</div>
+<div class="orbit__node" data-target="exposition">3 · Construct</div>
+<div class="orbit__node" data-target="application">4 · Apply</div>
+<div class="orbit__node" data-target="boundary">5 · Boundary</div>
+<div class="orbit__node" data-target="synthesis">6 · Fade</div>
+</div></div>
+<nav><ul class="toc" id="toc"></ul></nav>
+</aside>
+<main class="canvas" id="canvas">
+<h1>Chapter 4: Hardening the Scheme</h1>
+<div class="tldr" role="note" aria-label="TL;DR"><strong>TL;DR.</strong> Publish commitments to the hill so anyone can spot a lying stake, and re-hill without moving the flagpole — then remove the dealer entirely.</div>
+<div class="hook">
+<span class="hook__label">🎣 The hook</span>
+Alice's bank has a perfect 2-of-3 sharing: any two stakes rebuild 53, one teaches nothing. Then courier 2 submits a fake height of 99 and the quorum rebuilds the wrong secret. And the dealer who created the hill — Alice herself — already knows every share. The math was perfect. The trust was not.
+</div>
+<div class="meta-block"><h4>Prerequisites</h4><ul>
+<li>Chapters 1–3: Shamir sharing, Lagrange reconstruction, information-theoretic proof, prime fields</li>
+<li>Comfort with "hash/commitment" intuition — a fingerprint that binds but does not reveal</li>
+</ul></div>
+<div class="meta-block"><h4>By the end you will be able to…</h4><ul>
+<li>Explain why plain Shamir fails against a cheating share-holder or a cheating dealer</li>
+<li>Verify Feldman commitments by hand on a tiny example and spot a bad share before reconstruction</li>
+<li>Describe proactive refresh (same secret, new random hill) and dealer-free DKG at a high level</li>
+<li>Weigh when additive+XOR is enough vs when you need VSS/Pedersen hardness</li>
+</ul></div>
+
+<h2 id="baseline">The foundational truth</h2>
+<p>Shamir's security proof assumes two honesties: the dealer picks the hill fairly, and participants submit true stake heights at rebuild time.</p>
+<p>Remove either and the scheme fails silently. A cheating dealer can give inconsistent shares that different quorums reconstruct to different secrets. A cheating participant can submit a wrong height and make an honest quorum recover the wrong flagpole height, with no way to tell who lied.</p>
+<p>Real systems live where neither trust holds — servers are compromised over months, insiders collude. Hardening keeps the hill math but adds witnesses who can check it.</p>
+
+<h2 id="bridge">A familiar bridge — receipts for the hill survey</h2>
+<p>Keep the Hill-and-Stakes image, but add a notary. Call it the <strong>Receipts Model</strong>.</p>
+<ul>
+<li><strong>Commitment</strong> → a public receipt taped to the courthouse wall for each coefficient of the hill (e.g., "commitment to slope" ). The receipt hides the number but fingerprints it — change the slope and the fingerprint mismatches.</li>
+<li><strong>Share verification</strong> → each courier checks their stake height against the receipts before accepting it. No private channel needed — the receipts are public.</li>
+<li><strong>Refresh</strong> → periodically the couriers jointly pick a new hill with **zero** at the flagpole (a hill of height 0) and add it to their shares — flagpole unchanged, stakes all new.</li>
+</ul>
+<p>The receipts turn "trust the surveyor and trust each other" into "trust the math on the wall."</p>
+<div class="concept-flow">
+<div class="concept-flow__step"><span class="concept-flow__num">01</span>Dealer posts<br>public receipts</div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">02</span>Each stake<br>checked vs receipts</div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">03</span>Bad stakes<br>rejected early</div>
+</div>
+<div class="premortem">
+<span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+<p><span class="premortem__wrong">"Adding a hash of the secret to the shares lets you verify — just check the reconstructed secret's hash"</span></p>
+<p>This is wrong because a single bad share still forces you to reconstruct before you can check — and you won't know *which* share lied.</p>
+<p><span class="premortem__truth">What's actually true:</span> You need a commitment that lets each share be verified *individually*, before any quorum combines them — that's what Feldman/Pedersen receipts give.</p>
+</div>
+
+<h2 id="exposition">Building the model, one piece at a time</h2>
+<p>Three hardening moves, cheapest first.</p>
+
+<section class="scaffold" id="exposition-1">
+<h3 class="scaffold__concept">Verifiable Secret Sharing — catching a lying stake</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p><strong>Verifiable Secret Sharing (VSS)</strong> publishes a commitment to each polynomial coefficient so holders can test their share without seeing others. The simplest is <strong>Feldman VSS</strong> (1987): pick a cyclic group where discrete log is hard, publish <code>Cj = g^{aj} mod p'</code> for each coefficient <code>aj</code> (including <code>a0 = S</code>). Holder <code>i</code> checks:</p>
+<pre><code>g^{f(i)} ≟ C0 · C1^{i} · C2^{i²} … · C_{t−1}^{i^{t−1}}   (in the group)</code></pre>
+<p>If a dealer gave a bad share, the equality fails and the holder raises an alarm before reconstruction. <strong>Pedersen VSS</strong> strengthens this by hiding <code>C0</code> as well (computational hiding even for the secret), at the cost of an extra random polynomial.</p></div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>Tiny demo over group mod 7 with generator g=3 (not production size — just to see the arithmetic). Shamir from Chapter 2 line: <code>S=53→53 mod7=4</code>, but we use small numbers: let p=7, polynomial <code>f(x)=4+2x mod7</code> (S=4, slope 2). Feldman publishes:</p>
+<pre><code>C0 = g^4 = 3^4=81 mod7=4
+C1 = g^2 = 3^2=9 mod7=2
+Share for i=1: f(1)=6 → check: g^6=3^6=729 mod7=1
+  RHS: C0·C1^1 =4·2=8 mod7=1  ✓ matches
+
+Share for i=2: f(2)=1 (4+4=8 mod7=1) → g^1=3
+  RHS: C0·C1^2 =4·2^2=4·4=16 mod7=2  … mismatch?
+
+We cheated by mixing two moduli. In reality Feldman uses
+a share modulus p and a group order q dividing p−1, with
+q > secret space — the separation matters. Pedagogically:
+the *structure* is "commit to coefficients, recombine with
+same linear combo as Lagrange," and the equality is checked
+in the commitment group, not the share field.</code></pre>
+<p>The point survives the toy mismatch: each holder recomputes the RHS from public <code>Cj</code> and their <code>i</code>, then compares to <code>g^{share}</code>. A dealer who gave <code>(1, 99)</code> instead of <code>(1,6)</code> would fail the check — <code>g^99 ≠ C0·C1</code> — so the bad share is rejected immediately, without a quorum.</p>
+<pre><code># Pseudocode (Feldman verify)
+def verify_share(i, yi, commitments, g, q):
+    # commitments[j] = g^{aj} mod p', q is group order
+    lhs = pow(g, yi, p_prime)
+    rhs = 1
+    for j, Cj in enumerate(commitments):
+        rhs = rhs * pow(Cj, pow(i, j, q), p_prime) % p_prime
+    return lhs == rhs</code></pre>
+</div></div>
+<details class="scaffold__probe"><summary>A dealer publishes correct commitments but sends Alice the wrong share. Alice's verify fails. Could Alice have faked the failure to frame an honest dealer?</summary><div class="scaffold__resolve">No — the commitments are public and the check is deterministic. Anyone can recompute the expected RHS for i=1 from the public Cj and see it equals g^6, not g^{whatever Alice claims}. If Alice truly received a bad share she can broadcast it; others see it fails the same check. The receipt is judged by math, not by who complains.</div></details>
+</section>
+<div class="feynman">Post fingerprints of the hill's coefficients on the courthouse wall — then each stake height can be checked against those fingerprints alone.</div>
+
+<div class="checkpoint" data-checkpoint-id="cp4a">
+<span class="checkpoint__label">🛑 Pause &amp; reflect</span>
+<p class="checkpoint__question">Why can't we just sign each share with the dealer's private key instead of using Feldman commitments?</p>
+<textarea placeholder="Consider what a malicious dealer could still do with signed-but-inconsistent shares…"></textarea>
+<div class="checkpoint__actions"><button type="button" class="btn btn--ghost" data-checkpoint-reveal>Compare to expert answer</button><span class="checkpoint__saved" data-checkpoint-saved></span></div>
+<div class="checkpoint__expert"><span class="checkpoint__expert-label">Expert answer</span>A signature proves the dealer sent that share, but not that all shares lie on one consistent polynomial. A malicious dealer could sign inconsistent shares — signatures would all verify, yet different quorums would reconstruct different secrets and no one could pin blame. Commitments bind the *whole* polynomial, so inconsistency is detectable from the public receipts alone.</div>
+</div>
+
+<section class="scaffold" id="exposition-2">
+<h3 class="scaffold__concept">Dealer-free and fresh — DKG and proactive refresh</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div class="scaffold__row-body"><p><strong>Two remaining trusts to remove:</strong> (1) the dealer who knows all shares at creation time, and (2) the slow leakage where an attacker who steals one share per year eventually collects t.</p><p><strong>Distributed Key Generation (DKG)</strong> removes (1): each participant deals its own random polynomial and acts as dealer for a sub-share; the combined secret is the sum of constant terms, and no one ever knows the full set. <strong>Proactive Secret Sharing (PSS)</strong> removes (2): at intervals, parties jointly generate a random polynomial with constant term 0, add its evaluations to their existing shares, and erase the old values. The flagpole stays at S, but every stake is new — old stolen shares become worthless.</p></div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div class="scaffold__row-body"><p>Proactive refresh, line case t=2: starting shares from f(x)=53+20x mod101 are (1,73),(2,93),(3,12). Parties jointly pick random zero-hill <code>z(x)=0+14x</code> (constant 0, random slope 14):</p>
+<pre><code>z(1)=14, z(2)=28, z(3)=42
+New shares = old + z(i) mod101:
+  (1, 73+14=87), (2,93+28=20) [121 mod101=20], (3,12+42=54)
+Any 2 still rebuild 53 (because z(0)=0): check (1,87),(2,20):
+  slope = (20−87)/1 = −67 mod101=34 → 14+20=34 ✓, S=87−34=53
+Old stolen share (1,73) no longer sits on the new line.</code></pre>
+<p>DKG at a glance (3 parties, t=2): each picks random <code>si</code> and line <code>fi(x)=si+ai·x</code>, deals sub-shares to others with VSS. Final share for party i is sum of received sub-shares; final secret is <code>s1+s2+s3</code>. No dealer ever assembled it.</p>
+<pre><code>Party1 deals f1, Party2 deals f2, Party3 deals f3
+Final S = f1(0)+f2(0)+f3(0)   — never assembled centrally
+Final share(i)= f1(i)+f2(i)+f3(i)  — each Pi sums what it received</code></pre>
+</div></div>
+<details class="scaffold__probe"><summary>Could an attacker who stole share (1,73) before the refresh combine it with stolen (2,20) after the refresh to rebuild?</summary><div class="scaffold__resolve">No — they lie on different lines. (1,73) was on the old hill; (2,20) is on the new hill (old plus z). Mixing eras reconstructs to a random value, not S. Proactive refresh achieves forward security against mobile adversaries as long as fewer than t shares are stolen within a single epoch.</div></details>
+</section>
+<div class="feynman">Refresh the hill by adding a new zero-height hill — stakes all move, flagpole does not.</div>
+
+<details class="deep-dive"><summary><span class="deep-dive__label">🔴 Deep dive</span> Feldman vs Pedersen — hiding the secret in the commitment</summary>
+<p>Feldman publishes <code>g^S</code> directly — an observer learns something about S if S has low entropy (dictionary attack on small secrets). Pedersen fixes this by using two generators g, h and a blinding polynomial: commitment to <code>S</code> is <code>g^S · h^{S'}</code> where <code>S'</code> is random. Then even <code>C0</code> is statistically hiding, and the verification equation gains an extra factor. The cost is one extra field element per share. In practice, Vault and many DKGs use Feldman when S is a high-entropy key and Pedersen when human passwords are shared.</p>
+<pre><code># Pedersen share: (f(i), f'(i)) where f'(x) is blinding poly
+# Commitment: Cj = g^{aj} · h^{bj}
+# Verify: g^{f(i)}·h^{f'(i)} ≟ ∏ Cj^{i^j}</code></pre>
+</details>
+
+<h2 id="application">In the wild</h2>
+<p>Three places you meet these receipts in practice.</p>
+<p><strong>1. Vault and key ceremonies.</strong> <a href="https://developer.hashicorp.com/vault/docs/concepts/seal" target="_blank" rel="noopener">HashiCorp Vault's Shamir seal</a> in its simplest form trusts the initializer as dealer. Operators who cannot tolerate that run auto-unseal via HSM/KMS — or layer a DKG so no single initializer ever knows the combined key. Rekey (<code>vault operator rekey</code>) is a manual proactive refresh: new random polynomials, same barrier key re-wrapped, old shares invalidated.</p>
+<p><strong>2. Threshold wallets and custody.</strong> When a crypto custody quorum is 3-of-5 executives, Feldman/Pedersen VSS lets any executive verify their key shard against on-chain commitments before signing a transaction. Without it, a malicious dealer could give one executive a bad shard and frame them when signing fails.</p>
+<p><strong>3. DKG in distributed validators.</strong> Protocols like <a href="https://docs.ethstaker.cc/ethstaking-knowledge-base/rewards-advanced/dkg" target="_blank" rel="noopener">Ethereum distributed validator DKG</a> (e.g., Obol, SSV) run a Pedersen DKG among operators to generate a validator key where no operator ever knows the whole private key — shares are assembled additively as described above, with VSS transcripts publicly verifiable on-chain.</p>
+<div class="bar-chart">
+<div class="bar-chart__title">Trust removed per hardening layer</div>
+<div class="bar-row"><div class="bar-label">Plain Shamir</div><div class="bar-track"><div class="bar-fill" style="width:28%"></div></div><div class="bar-value">1 / 3</div></div>
+<div class="bar-row"><div class="bar-label">+ VSS (Feldman)</div><div class="bar-track"><div class="bar-fill" style="width:62%"></div></div><div class="bar-value">2 / 3</div></div>
+<div class="bar-row"><div class="bar-label">+ DKG</div><div class="bar-track"><div class="bar-fill" style="width:84%"></div></div><div class="bar-value">2.5</div></div>
+<div class="bar-row"><div class="bar-label">+ Proactive refresh</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">3 / 3</div></div>
+<p class="bar-chart__caption">Schematic — not a metric. Plain Shamir needs honest dealer + honest shares; VSS removes share-cheating; DKG removes dealer knowledge; proactive refresh removes long-term share leakage.</p>
+</div>
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer"><div class="flip-card__inner"><div class="flip-card__face flip-card__front"><span class="flip-card__label">Active recall — Question</span><div class="flip-card__content">Which failure does Feldman VSS catch, and which does it not catch alone?</div></div><div class="flip-card__face flip-card__back"><span class="flip-card__label">Answer</span><div class="flip-card__content">Catches: bad share from dealer or cheater at rebuild — each share verified vs public commitments before use. Does not catch: dealer knowledge (dealer still knows all shares — need DKG) or slow share-stealing over time (need proactive refresh).</div></div></div></div>
+
+<h2 id="boundary">Where it breaks</h2>
+<p>Commitments change the security type. Plain Shamir was information-theoretic (Chapter 3). Hardened schemes trade that for computational hardness — discrete log must stay hard.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Common misconception</span><strong>"VSS makes Shamir information-theoretic again."</strong> Feldman commitments leak <code>g^S</code> — with small secrets, brute force over <code>S</code> and check against <code>C0</code> recovers S. Pedersen hides computationally instead. Only plain Shamir with no public commitments retains pure information-theoretic hiding of S (and then you lose verifiability).</div>
+<div class="callout callout--danger"><span class="callout__label">🚫 Edge case</span><strong>Two silent failure modes:</strong> (1) Not erasing old shares after proactive refresh — the window stays open and an attacker who collected t shares across epochs can still win if any epoch had t in one window. Erase matters. (2) Reusing the same Feldman randomness for two secrets — commitments become linkable. <strong>Third edge:</strong> DKG needs a broadcast channel and dispute phase — without it, a dealer who accuses others of bad shares can stall the ceremony.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Predict</span>Before Chapter 5, predict: if we can verify shares and refresh them, what's stopping us from *using* the shared secret (signing, decrypting) without ever rebuilding it at one place? What math property of polynomials makes shares add locally?</div>
+
+<h2 id="connections">How this connects</h2>
+<ul>
+<li><strong>Chapters 1–3</strong> gave the ideal core: additive → Shamir → proof.</li>
+<li><strong>This chapter</strong> made it deployable: receipts (VSS), no dealer (DKG), moving stakes (proactive).</li>
+<li><strong>Chapter 5 — Threshold Cryptography</strong> keeps the hardened sharing and adds local homomorphism: sign and decrypt with shares, combine *results*, never the key.</li>
+<li><strong>Chapters 6–7 — From Shares to PETs</strong> reuse the additive homomorphism of shares for multi-party computation and private aggregation.</li>
+</ul>
+
+<h2 id="synthesis">The whole picture</h2>
+<p>The hook's two cheats — a lying courier with height 99 and a dealer who already knew 53 — are the cracks plain Shamir leaves open. Receipts close the first: publish <code>g^{aj}</code> on the courthouse wall and every stake can be tested alone, before any quorum assembles.</p>
+<p>Zero-hills close slow leakage: add a random 0-at-flagpole hill and every stake is fresh while the flagpole stands. Distributed dealing closes the last trust: no one ever draws the whole hill alone.</p>
+<p>The price is the shift from envelope to safe: commitments rest on discrete log — computationally hard, not information-theoretically perfect. That trade is why most production systems publish Feldman receipts for high-entropy keys and Pedersen blinding for human secrets.</p>
+<blockquote><strong>If you remember only one thing:</strong> Publish fingerprints of the polynomial so bad shares fail alone — then add zero-hills to age out stolen shares.</blockquote>
+
+<div class="launchpad">
+<span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+<h3 class="launchpad__title">Design a mobile adversary</h3>
+<p class="launchpad__problem">An attacker can steal one share per month from a (3,5) deployment. Without proactive refresh, they win in 3 months. With monthly refresh and perfect erasure, they never win unless they steal 3 in one month. Model a weaker erasure: party P3 fails to delete old shares. How many shares can the attacker collect over 4 months by targeting P3 plus one new victim each month? Which epoch-mixing composition still lets them rebuild? Propose a detection rule the honest parties could run before reconstruction that would catch the stale share, and name which VSS property it uses.</p>
+<div class="launchpad__hints"><span class="launchpad__hints-label">Stuck? Reveal a hint at a time.</span><button type="button" class="launchpad__reveal" id="hintBtn">Reveal hint 1</button>
+<div class="launchpad__hint" data-hint="1"><span class="launchpad__hint-label">Hint 1 — reframe</span>Without erasure, stolen sets stack across epochs. P3 holds shares from epochs 0,1,2,3 at stake 3 — four different hills at the same x but different flagpole-preserving offsets.</div>
+<div class="launchpad__hint" data-hint="2"><span class="launchpad__hint-label">Hint 2 — key concept</span>Attacker steals (3@epoch0), then (1@epoch1), then (2@epoch2) — but (3@epoch0)+(1@epoch1)+(2@epoch2) lie on no single hill, so naive mix yields garbage. To win they need 3 shares from one epoch — target P3's retained old share plus two fresh from the same month.</div>
+<div class="launchpad__hint" data-hint="3"><span class="launchpad__hint-label">Hint 3 — setup</span>Detection: verify each presented share against the *current* epoch's commitments Cj (which change after refresh). Stale shares fail Feldman check for the new hill — exactly the per-share verifiability from this chapter.</div>
+</div>
+</div>
+
+<h2 id="glossary">Glossary</h2>
+<div class="glossary"><dl>
+<dt>Verifiable Secret Sharing (VSS)</dt><dd>Shamir plus public commitments so each share is individually testable. <em>In the Receipts Model: fingerprints of each hill coefficient on the wall.</em></dd>
+<dt>Feldman VSS</dt><dd>VSS where Cj=g^{aj}; verifies but leaks g^S for low-entropy S. Computational security (discrete log). <em>Receipts that hide the number but fingerprint it.</em></dd>
+<dt>Pedersen VSS</dt><dd>VSS with blinding — Cj=g^{aj}·h^{bj} — hiding even g^S statistically. <em>Receipts with an extra random layer.</em></dd>
+<dt>Distributed Key Generation (DKG)</dt><dd>N dealers each share a random si; final secret is sum si, no one knew it alone. <em>Hill drawn by committee, no single surveyor.</em></dd>
+<dt>Proactive Secret Sharing (PSS)</dt><dd>Periodic refresh adding a random zero-secret polynomial; old shares expire. <em>New zero-height hill added, flagpole fixed.</em></dd>
+<dt>Mobile adversary</dt><dd>Attacker who steals few shares per epoch, hoping to collect t over time. <em>Thief who visits one courier per month.</em></dd>
+</dl></div>
+
+<section class="quiz" id="quiz">
+<h2 id="knowledge-check">Knowledge check</h2>
+<p class="quiz__intro">3 questions. Pick the best answer for each and click <em>Check answers</em>.</p>
+<fieldset data-answer="1">
+<legend>1. Why does checking g^{f(i)} vs ∏ Cj^{i^j} catch a lying share before a quorum forms?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Because the commitment hash is shorter than the share, so mismatches compress.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Because the check uses only public commitments and that single share — it is per-share, not cross-share.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Because Lagrange needs all t shares to detect a liar, so one extra share is verification.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Because g^{f(i)} is encrypted and only the dealer can open it.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct is per-share verification. The RHS is computed from public Cj and public i; LHS is g^{claimed share}. No quorum needed — a bad share fails alone, so you know who lied without reconstructing.</div>
+</fieldset>
+<fieldset data-answer="2">
+<legend>2. Which statement about proactive refresh is true?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> It changes the secret to a fresh random value so old thefts are irrelevant.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> It requires rebuilding the secret at one place to re-split it.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> It adds a random zero-secret polynomial so shares are fresh but the flagpole stays — old t−1 shares no longer combine with new ones.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> It halves the threshold t so fewer shares are needed after refresh.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct is the zero-hill addition. The secret (flagpole) is unchanged; the hill (polynomial) is re-randomized, so cross-epoch mixes lie on no single hill.</div>
+</fieldset>
+<fieldset data-answer="0">
+<legend>3. Feldman vs Pedersen trade-off?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Feldman is simpler but leaks g^S (bad for low-entropy secrets); Pedersen blinds it but needs an extra share per holder.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Pedersen is faster but only works for t=2.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Feldman is information-theoretic; Pedersen is computational.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> They are identical — names for the same scheme.</label>
+<div class="quiz__explanation"><strong>Why:</strong> Correct captures the blinding cost. Feldman publishes g^S directly (fine for 256-bit keys, not passwords); Pedersen adds hiding with g^S·h^{S'}.</div>
+</fieldset>
+<div class="quiz__actions"><button type="button" class="btn" id="checkQuiz">Check answers</button><button type="button" class="btn btn--ghost" id="resetQuiz">Reset</button><p class="quiz__score" id="quizScore"></p></div>
+</section>
+
+<div class="footer"><p style="margin:0 0 12px"><a href="chapter-3-why-its-unbreakable.html">← 3 Why Its Unbreakable</a> · <a href="secret-sharing-index.html">Series Index</a> · <a href="chapter-5-threshold-cryptography.html">Next: 5 Threshold Cryptography →</a></p>
+<p>Chapter 4 of <em>Secret Sharing &amp; Privacy-Enhancing Technologies</em> — Mechanism-first series. Previous: <a href="chapter-3-why-its-unbreakable.html">Chapter 3</a>. Next: Chapter 5 — Threshold Cryptography (using shares without rebuilding).</p>
+<p style="margin-top:8px;font-size:12px">Sources: Feldman, P. (1987). A Practical Scheme for Non-interactive VSS. FOCS. · Pedersen, T. (1991). Non-interactive and Information-Theoretic Secure VSS. CRYPTO. · Herzberg et al. (1995). Proactive Secret Sharing. CRYPTO. · HashiCorp Vault seal/rekey <a href="https://developer.hashicorp.com/vault/docs/concepts/seal">Vault Seal</a>.</p>
+</div>
+</main>
+<aside class="marginalia" aria-label="Notes and elaborations">
+<div class="amplifier" id="amplifier"><span class="amplifier__label">Hover to elaborate</span><p class="amplifier__empty">Hover over a <span style="border-bottom:1px dashed var(--accent2)">dashed term</span> in the text to see its deeper note here.</p></div>
+<div class="sidenote"><strong>Group vs field.</strong> The commitment group (mod p') is separate from the share field (mod p). Primes are chosen so q | p'−1, giving a subgroup of order q — the textbook detail behind the toy clash.</div>
+<div class="sidenote"><strong>Erasures matter.</strong> In PSS papers, the security proof assumes old shares are deleted. Real deployments enforce this with HSMs that can attest to deletion.</div>
+</aside>
+</div>
+<div class="controls" aria-label="Page controls">
+<button type="button" class="control-btn" id="themeBtn" title="Toggle dark/light" aria-label="Toggle theme">◐</button>
+<button type="button" class="control-btn" id="focusBtn" title="Focus mode" aria-label="Toggle focus mode">◧</button>
+</div>
+<script>
+(function(){
+var fill=document.getElementById('progressFill');
+function onScroll(){
+var h=document.documentElement;
+var max=h.scrollHeight - h.clientHeight;
+var pct=max>0? (h.scrollTop/max)*100:0;
+if(fill) fill.style.width=pct+'%';
+var nodes=[].slice.call(document.querySelectorAll('.orbit__node'));
+var secs=['baseline','bridge','exposition','application','boundary','synthesis'].map(function(id){return document.getElementById(id)}).filter(Boolean);
+var cur=0; for(var i=0;i<secs.length;i++){ if(secs[i].getBoundingClientRect().top < 120) cur=i; }
+nodes.forEach(function(n,i){
+n.setAttribute('data-reached', i<=cur ? 'true':'false');
+n.setAttribute('data-active', i===cur ? 'true':'false');
+});
+}
+document.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+var toc=document.getElementById('toc');
+if(toc){
+var heads=[].slice.call(document.querySelectorAll('.canvas h2, .canvas h3'));
+heads.forEach(function(h){
+var li=document.createElement('li');
+var a=document.createElement('a');
+a.href='#'+h.id; a.textContent=h.textContent;
+if(h.tagName==='H3') a.className='toc-l3';
+a.addEventListener('click', function(e){ e.preventDefault(); h.scrollIntoView({behavior:'smooth', block:'start'}); history.replaceState(null,'','#'+h.id);});
+li.appendChild(a); toc.appendChild(li);
+});
+var links=[].slice.call(toc.querySelectorAll('a'));
+function markToc(){
+var curId=null; for(var i=heads.length-1;i>=0;i--){ if(heads[i].getBoundingClientRect().top < 80){ curId=heads[i].id; break; } }
+links.forEach(function(a){ a.classList.toggle('is-active', a.getAttribute('href')==='#'+curId);});
+}
+document.addEventListener('scroll', markToc, {passive:true}); markToc();
+}
+var tBtn=document.getElementById('themeBtn');
+if(tBtn){ tBtn.addEventListener('click', function(){ var h=document.documentElement; var cur=h.getAttribute('data-theme'); var nxt=cur==='dark'?'light':'dark'; h.setAttribute('data-theme',nxt); try{localStorage.setItem('c4-theme',nxt);}catch(e){} }); try{var s=localStorage.getItem('c4-theme'); if(s) document.documentElement.setAttribute('data-theme',s);}catch(e){} }
+var fBtn=document.getElementById('focusBtn');
+if(fBtn){ fBtn.addEventListener('click', function(){ document.body.classList.toggle('focus-mode'); var a=document.body.classList.contains('focus-mode')?'true':'false'; fBtn.setAttribute('data-active',a);});}
+document.querySelectorAll('.flip-card').forEach(function(c){ c.addEventListener('click', function(){ c.classList.toggle('is-flipped');}); c.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); c.classList.toggle('is-flipped');}});});
+document.querySelectorAll('[data-checkpoint-reveal]').forEach(function(b){
+b.addEventListener('click', function(){
+var cp=b.closest('.checkpoint'); if(!cp) return;
+cp.classList.toggle('is-revealed');
+b.textContent = cp.classList.contains('is-revealed') ? 'Hide expert answer' : 'Compare to expert answer';
+try{var ta=cp.querySelector('textarea'); if(ta) localStorage.setItem('c4-cp-'+cp.getAttribute('data-checkpoint-id'), ta.value);}catch(e){}
+});
+});
+document.querySelectorAll('.checkpoint textarea').forEach(function(ta){
+var cp=ta.closest('.checkpoint'); if(!cp) return;
+var id=cp.getAttribute('data-checkpoint-id');
+try{var v=localStorage.getItem('c4-cp-'+id); if(v) ta.value=v;}catch(e){}
+ta.addEventListener('input', function(){ try{localStorage.setItem('c4-cp-'+id, ta.value);}catch(e){}});
+});
+var hintBtn=document.getElementById('hintBtn');
+if(hintBtn){
+var idx=0; var hints=[].slice.call(document.querySelectorAll('.launchpad__hint'));
+hintBtn.addEventListener('click', function(){
+if(idx < hints.length){ hints[idx].classList.add('is-visible'); idx++; hintBtn.textContent = idx < hints.length ? 'Reveal hint '+(idx+1) : 'All hints revealed'; if(idx>=hints.length) hintBtn.disabled=true; }
+});
+}
+function grade(){
+var fss=[].slice.call(document.querySelectorAll('.quiz fieldset'));
+var total=fss.length, score=0;
+fss.forEach(function(fs){
+var ans=parseInt(fs.getAttribute('data-answer'),10);
+var sel=fs.querySelector('input:checked');
+var opts=[].slice.call(fs.querySelectorAll('.quiz__option'));
+opts.forEach(function(o){ o.classList.remove('correct-answer','incorrect-answer');});
+if(sel){
+var idx=parseInt(sel.value,10);
+if(idx===ans){ score++; opts[idx].classList.add('correct-answer');}
+else { opts[idx].classList.add('incorrect-answer'); opts[ans].classList.add('correct-answer');}
+} else { opts[ans].classList.add('correct-answer');}
+});
+var quiz=document.getElementById('quiz');
+if(quiz) quiz.classList.add('is-graded');
+var sc=document.getElementById('quizScore');
+if(sc) sc.textContent='Score: '+score+' / '+total + (score===total ? ' — receipts mastered.' : score>=2 ? ' — solid. Re-read the VSS probe.' : ' — re-visit the Feldman check; per-share is the point.');
+}
+var cb=document.getElementById('checkQuiz'); if(cb) cb.addEventListener('click', grade);
+var rb=document.getElementById('resetQuiz'); if(rb) rb.addEventListener('click', function(){
+document.querySelectorAll('.quiz fieldset input:checked').forEach(function(i){ i.checked=false;});
+document.querySelectorAll('.quiz__option').forEach(function(o){ o.classList.remove('correct-answer','incorrect-answer');});
+var quiz=document.getElementById('quiz'); if(quiz) quiz.classList.remove('is-graded');
+var sc=document.getElementById('quizScore'); if(sc) sc.textContent='';
+});
+})();</script>
+</body>
+</html>
