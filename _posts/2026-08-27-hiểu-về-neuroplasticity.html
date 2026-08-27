@@ -1,0 +1,672 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Độ Mềm Dẻo Của Não Bộ (Neuroplasticity) và Cách Tạo Thói Quen Mới</title>
+<meta name="description" content="Thay đổi bền vững không đến từ quyết tâm lớn, mà từ những thói quen nhỏ lặp đi lặp lại. Cùng tìm hiểu cách thiết lập lại não bộ để vượt qua sự trì hoãn.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html { scroll-behavior: smooth; } /* Bổ sung cuộn mượt */
+img,svg{max-width:100%;height:auto;display:block}
+::selection{background:rgba(74,111,165,.2)}
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-classical: 'Playfair Display', Georgia, serif;
+  --bg:#FDFBF7; --bg-panel:#2B2B3D; --bg-elevated:#FFFFFF; --bg-sunken:#F5F1EA;
+  --text:#1A1A2E; --text-muted:#6B7280; --text-strong:#0F172A; --text-panel:#E5E7EB; --text-panel-muted:#9CA3AF;
+  --thesis:#4A6FA5; --thesis-soft:#E1E9F5; --thesis-strong:#2A4B7F;
+  --antithesis:#A34A4A; --antithesis-soft:#F5E0E0; --antithesis-strong:#7A2A2A;
+  --synthesis:#8A6FA5; --synthesis-soft:#ECE5F2; --synthesis-strong:#5D4478;
+  --accent:#319795; --accent-strong:#285E61; --accent-soft:#E6FFFA;
+  --border:#E4DFD5; --border-strong:#D4CFC5; --sidenote-bg:#F0EEE6;
+  --success:#38A169; --success-bg:#C6F6D5; --danger:#C53030; --danger-bg:#FED7D7; --warn:#B7791F; --warn-bg:#FEEBC8; --info:#2B6CB0; --info-bg:#BEE3F8;
+  --radius:12px; --radius-sm:6px; --shadow-sm:0 1px 2px rgba(0,0,0,.05); --shadow:0 4px 12px rgba(0,0,0,.08); --shadow-lg:0 12px 32px rgba(0,0,0,.12);
+  --measure:65ch; --line:1.7; --transition:220ms cubic-bezier(.4,0,.2,1);
+}
+html[data-theme="dark"]{
+  --bg:#14141F; --bg-panel:#0A0A15; --bg-elevated:#2B2B3D; --bg-sunken:#1F1F2E;
+  --text:#E5E7EB; --text-muted:#9CA3AF; --text-strong:#F9FAFB;
+  --thesis:#7AA3D4; --thesis-soft:#1E2E42; --thesis-strong:#A8C3E0;
+  --antithesis:#D48282; --antithesis-soft:#3B1F1F; --antithesis-strong:#E0A5A5;
+  --synthesis:#B49AD4; --synthesis-soft:#2F2138; --synthesis-strong:#D0BCE5;
+  --accent:#4FD1C5; --accent-strong:#81E6D9; --accent-soft:#1A3B3A;
+  --border:#2D3748; --border-strong:#4A5568; --sidenote-bg:#24243A;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:16px;line-height:1.8;transition:background var(--transition),color var(--transition)}
+.layout{display:grid;grid-template-columns:280px minmax(0,1fr) 320px;gap:0;max-width:1600px;margin:0 auto;min-height:100vh}
+.navigator{background:var(--bg-panel);color:var(--text-panel)}
+.canvas{background:var(--bg);color:var(--text);padding:40px 40px 120px;min-width:0;overflow-wrap:break-word}
+.canvas-inner{max-width:65ch;margin:0 auto;width:100%}
+.marginalia{background:var(--bg-panel);color:var(--text-panel)}
+@media(max-width:1024px){.layout{grid-template-columns:1fr} .navigator,.marginalia{position:static!important;max-height:none!important;padding:20px!important} .canvas{padding:24px;max-width:100%}}
+html.focus-mode .layout{grid-template-columns:1fr;max-width:820px} html.focus-mode .navigator,html.focus-mode .marginalia{display:none}
+.navigator{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:24px 18px;font-family:var(--font-sans);font-size:13.5px;line-height:1.5}
+.progress-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden;margin-bottom:20px}
+.progress-bar__fill{height:100%;background:var(--accent);width:0%;transition:width 100ms linear}
+.nav-meta{color:var(--text-panel-muted);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:20px;display:flex;justify-content:space-between}
+.compass-title{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-panel-muted);margin:20px 0 10px;font-weight:700}
+.compass{display:flex;flex-direction:column;gap:4px;margin-bottom:24px}
+.compass-node{display:flex;align-items:center;gap:8px;padding:9px 11px;border-radius:6px;cursor:pointer;transition:all var(--transition);color:var(--text-panel-muted);text-decoration:none;border-left:2px solid transparent;font-size:13px;line-height:1.4}
+.compass-node:hover{background:rgba(255,255,255,.06);color:var(--text-panel)}
+.compass-node.active{background:rgba(255,255,255,.1);color:#fff;border-left-color:currentColor}
+.compass-node__state{font-family:var(--font-mono);font-size:9px;font-weight:700;background:rgba(255,255,255,.08);color:var(--text-panel-muted);padding:2px 5px;border-radius:3px;min-width:26px;text-align:center}
+.compass-node.active .compass-node__state{background:currentColor;color:var(--bg-panel)}
+.toc-title{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-panel-muted);margin:8px 0 8px;font-weight:700}
+.toc{list-style:none;padding:0;margin:0} .toc li{margin:1px 0}
+.toc a{display:block;padding:6px 11px;color:var(--text-panel-muted);text-decoration:none;border-left:2px solid transparent;border-radius:0 6px 6px 0;transition:all var(--transition);font-size:13px;line-height:1.4}
+.toc a:hover{color:var(--text-panel);background:rgba(255,255,255,.05)} .toc a.active{color:#fff;background:rgba(255,255,255,.1);border-left-color:var(--accent);font-weight:500}
+.paradox-meter{position:sticky;top:12px;z-index:20;background:var(--bg-elevated);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin:0 0 32px;box-shadow:var(--shadow-sm);font-family:var(--font-sans)}
+.paradox-meter__label{display:flex;justify-content:space-between;align-items:center;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);font-weight:700;margin-bottom:8px}
+.paradox-meter__value{font-family:var(--font-mono);font-size:11px;color:var(--text-strong)}
+.paradox-meter__bar{height:8px;background:var(--bg-sunken);border-radius:4px;overflow:hidden;position:relative}
+.paradox-meter__fill{height:100%;width:0%;background:linear-gradient(to right,var(--thesis),var(--antithesis));transition:width 300ms cubic-bezier(.4,0,.2,1);border-radius:4px}
+.engine-status{background:var(--bg-elevated);border:1px solid var(--border);border-radius:12px;padding:16px 20px;margin:24px 0;font-family:var(--font-sans);box-shadow:var(--shadow-sm)}
+.engine-status__header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.engine-status__title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);font-weight:700}
+.engine-status__mode{font-family:var(--font-mono);font-size:10px;padding:2px 8px;border-radius:10px;background:var(--success-bg);color:var(--success);font-weight:700;text-transform:uppercase}
+.engine-status__grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:4px 12px}
+.engine-status__row{display:flex;align-items:center;gap:8px;font-size:12px;padding:4px 0;color:var(--text)}
+.engine-status__check{font-family:var(--font-mono);font-size:10px;font-weight:700;color:var(--success);min-width:14px}
+.engine-status__state{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);min-width:22px}
+.engine-status__name{font-weight:500}
+.engine-status__gates{margin-top:10px;padding-top:10px;border-top:1px dashed var(--border);font-size:11px;color:var(--text-muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.engine-status__gate{background:var(--accent-soft);color:var(--accent-strong);padding:2px 8px;border-radius:10px;font-weight:600;font-family:var(--font-mono);font-size:10px}
+.canvas h1{font-family:var(--font-sans);font-size:30px;line-height:1.2;margin:0 0 8px;color:var(--text-strong);letter-spacing:-.02em;overflow-wrap:break-word}
+.canvas h2{font-family:var(--font-sans);font-size:22px;line-height:1.35;margin:48px 0 14px;color:var(--text-strong);letter-spacing:-.01em;padding-bottom:10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;overflow-wrap:break-word}
+.canvas h3{font-family:var(--font-sans);font-size:20px;margin:36px 0 12px;color:var(--text-strong)}
+.canvas p{margin:0 0 18px}
+.canvas a{color:var(--accent);text-decoration:underline;text-decoration-color:var(--border-strong);text-underline-offset:3px}
+.canvas blockquote{border-left:3px solid var(--accent);padding:12px 18px;margin:24px 0;background:var(--bg-sunken);font-style:italic;color:var(--text);border-radius:0 6px 6px 0}
+.byline{font-family:var(--font-sans);color:var(--text-muted);font-size:14px;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.byline .pill{display:inline-block;padding:2px 10px;border-radius:12px;font-size:11px;text-transform:uppercase;letter-spacing:.05em;background:var(--accent-soft);color:var(--accent-strong);margin-right:6px;font-weight:600}
+.assumptions{background:var(--bg-sunken);border:1px solid var(--border);border-radius:12px;padding:20px 24px;margin:24px 0 40px;font-family:var(--font-sans)}
+.assumptions__title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.assumptions__grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 20px;font-size:13px}
+@media(max-width:640px){.assumptions__grid{grid-template-columns:1fr}}
+.assumption-row{display:flex;flex-direction:column;gap:2px} .assumption-key{color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em} .assumption-val{color:var(--text-strong);font-weight:500} .assumption-val .badge{display:inline-block;padding:1px 8px;border-radius:10px;font-family:var(--font-mono);font-size:10px;background:var(--accent-soft);color:var(--accent-strong);margin-right:4px}
+.dialectic-header{display:grid;grid-template-columns:1fr;gap:12px;margin:32px 0 40px}
+@media(min-width:720px){.dialectic-header{grid-template-columns:1fr 1fr 1fr}}
+.panel{padding:18px;border-radius:12px;border:1px solid var(--border);font-family:var(--font-sans);font-size:14px;line-height:1.5;position:relative}
+.panel__label{display:flex;align-items:center;gap:6px;font-size:10px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:8px}
+.panel--thesis{background:var(--thesis-soft);border-color:var(--thesis)} .panel--thesis .panel__label{color:var(--thesis-strong)}
+.panel--antithesis{background:var(--antithesis-soft);border-color:var(--antithesis)} .panel--antithesis .panel__label{color:var(--antithesis-strong)}
+.panel--synthesis{background:var(--synthesis-soft);border-color:var(--synthesis)} .panel--synthesis .panel__label{color:var(--synthesis-strong)}
+.argument-map{border:1px solid var(--border);border-radius:12px;padding:20px;margin:32px 0;background:var(--bg-elevated);font-family:var(--font-sans);font-size:13px;box-shadow:var(--shadow-sm)}
+.argument-map__title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:14px;font-weight:700}
+.toulmin{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:640px){.toulmin{grid-template-columns:1fr 1fr 1fr;grid-template-areas:"grounds warrant claim" "backing qualifier rebuttal"} .t-grounds{grid-area:grounds} .t-warrant{grid-area:warrant} .t-claim{grid-area:claim} .t-backing{grid-area:backing} .t-qualifier{grid-area:qualifier} .t-rebuttal{grid-area:rebuttal}}
+.toulmin__cell{padding:12px 14px;background:var(--bg-sunken);border-radius:6px;border-left:3px solid var(--accent);line-height:1.45}
+.toulmin__cell.t-claim{border-left-color:var(--synthesis);background:var(--synthesis-soft);font-weight:500}
+.toulmin__cell.t-rebuttal{border-left-color:var(--antithesis);background:var(--antithesis-soft)}
+.toulmin__cell.t-grounds{border-left-color:var(--thesis);background:var(--thesis-soft)}
+.toulmin__label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-bottom:4px;font-weight:700}
+.thesis-pillar{border-left:6px solid var(--thesis);background:linear-gradient(to right,var(--thesis-soft) 0%,transparent 80%);padding:20px 24px;margin:24px 0;border-radius:0 12px 12px 0}
+.thesis-pillar__label{font-family:var(--font-sans);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--thesis-strong);font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.thesis-pillar__statement{font-family:var(--font-serif);font-size:17px;font-weight:700;line-height:1.45;color:var(--text-strong);margin-bottom:8px;overflow-wrap:break-word}
+.thesis-pillar__contract{font-style:italic;color:var(--text-muted);font-size:14px;font-family:var(--font-sans)}
+.premise-walls{display:grid;gap:12px;margin:20px 0;font-family:var(--font-sans)}
+.premise-wall{display:grid;grid-template-columns:40px 1fr;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:var(--bg-elevated)}
+.premise-wall__index{background:var(--thesis);color:white;display:flex;align-items:center;justify-content:center;font-family:var(--font-mono);font-weight:700;font-size:14px}
+.premise-wall__body{padding:12px 14px;font-size:14px;line-height:1.5}
+.premise-wall__label{font-weight:700;color:var(--thesis-strong);font-size:12px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.xexam-card{border:1px solid var(--border);border-left:4px solid var(--antithesis);border-radius:12px;background:var(--bg-elevated);padding:20px 24px;margin:24px 0;font-family:var(--font-sans);box-shadow:var(--shadow-sm)}
+.xexam-card__meta{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+.xexam-card__meta .tag{padding:2px 8px;border-radius:10px;background:var(--antithesis-soft);color:var(--antithesis-strong);font-weight:700}
+.xexam-card__meta .tag--lens{background:var(--warn-bg);color:var(--warn)} .xexam-card__meta .tag--rigor{background:var(--info-bg);color:var(--info)}
+.xexam-card__probe{font-family:var(--font-sans);font-size:17px;font-weight:600;color:var(--text-strong);margin:8px 0 12px;line-height:1.4;font-style:italic}
+.xexam-card__probe::before{content:"Q: ";color:var(--antithesis);font-weight:700;font-style:normal;margin-right:4px}
+.xexam-card__setup{color:var(--text);font-size:14px;line-height:1.6;margin-bottom:16px;font-family:var(--font-serif)}
+.xexam-card__defense-btn{background:var(--bg-sunken);color:var(--text-strong);border:1px solid var(--border-strong);padding:10px 16px;border-radius:6px;cursor:pointer;font-family:var(--font-sans);font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:8px;transition:all var(--transition)}
+.xexam-card__defense-btn:hover{background:var(--thesis-soft);color:var(--thesis-strong);border-color:var(--thesis)}
+.xexam-card__defense{display:none;margin-top:16px;padding:16px 18px;background:var(--thesis-soft);border-left:3px solid var(--thesis);border-radius:0 6px 6px 0;font-size:14px;line-height:1.55;animation:defense-slide 320ms ease-out}
+.xexam-card__defense.is-open{display:block}
+.xexam-card__defense .label{font-family:var(--font-sans);font-weight:700;color:var(--thesis-strong);font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;display:block}
+.xexam-card__defense .verdict{margin-top:12px;padding:8px 12px;background:var(--bg-elevated);border-radius:6px;font-family:var(--font-sans);font-size:13px}
+.xexam-card__defense .verdict .verdict-tag{display:inline-block;padding:2px 8px;border-radius:10px;font-family:var(--font-mono);font-size:10px;font-weight:700;margin-right:6px;background:var(--warn-bg);color:var(--warn);text-transform:uppercase;letter-spacing:.05em}
+@keyframes defense-slide{from{opacity:0;transform:translateY(-6px)} to{opacity:1;transform:translateY(0)}}
+.collision{margin:40px 0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);position:relative}
+.collision__inner{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;min-height:220px}
+@media(max-width:640px){.collision__inner{grid-template-columns:1fr}}
+.collision__side{padding:24px 28px;font-family:var(--font-serif);font-size:15px;line-height:1.55}
+.collision__side--thesis{background:linear-gradient(135deg,var(--thesis-soft),var(--thesis-soft) 80%,transparent);color:var(--text)}
+.collision__side--antithesis{background:linear-gradient(-135deg,var(--antithesis-soft),var(--antithesis-soft) 80%,transparent);color:var(--text);text-align:right}
+@media(max-width:640px){.collision__side--antithesis{text-align:left}}
+.collision__side .label{display:block;font-family:var(--font-sans);font-size:11px;text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:12px}
+.collision__side--thesis .label{color:var(--thesis-strong)} .collision__side--antithesis .label{color:var(--antithesis-strong)}
+.collision__side .heading{font-family:var(--font-sans);font-size:15px;font-weight:700;color:var(--text-strong);margin-bottom:8px}
+.collision__divider{display:flex;align-items:center;justify-content:center;background:var(--bg);padding:0 16px;position:relative}
+.collision__zap{font-size:42px;line-height:1;z-index:1;background:var(--bg);padding:4px 8px;border-radius:50%}
+.collision__tension{padding:16px 24px;background:var(--bg-sunken);border-top:1px solid var(--border);font-family:var(--font-sans);font-size:13px;color:var(--text-muted);text-align:center}
+.collision__tension strong{color:var(--text-strong);font-family:var(--font-serif);font-style:italic;font-size:15px}
+.sublation{margin:40px 0;border-radius:12px;overflow:hidden;box-shadow:var(--shadow);background:linear-gradient(135deg,var(--thesis) 0%,var(--synthesis) 50%,var(--antithesis) 100%);padding:3px}
+.sublation__inner{background:var(--bg);border-radius:calc(12px - 3px);padding:28px 32px}
+.sublation__label{font-family:var(--font-sans);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--synthesis-strong);font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.sublation__statement{font-family:var(--font-classical);font-size:20px;line-height:1.4;font-weight:700;color:var(--text-strong);margin-bottom:20px;letter-spacing:-.01em;overflow-wrap:break-word}
+.sublation__elevation{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px}
+@media(max-width:640px){.sublation__elevation{grid-template-columns:1fr}}
+.sublation__elev-cell{padding:14px 16px;border-radius:6px;font-family:var(--font-sans);font-size:13px;line-height:1.55}
+.sublation__elev-cell--preserve{background:var(--thesis-soft);border-left:3px solid var(--thesis)}
+.sublation__elev-cell--absorb{background:var(--antithesis-soft);border-left:3px solid var(--antithesis)}
+.sublation__elev-cell .lead{font-weight:700;color:var(--text-strong);display:block;margin-bottom:4px;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.ripple{margin:40px 0;position:relative;padding:40px 32px;background:radial-gradient(ellipse at center,var(--synthesis-soft) 0%,var(--bg) 70%);border-radius:200px / 100px;border:2px solid var(--synthesis);text-align:center}
+.ripple__label{font-family:var(--font-sans);font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--synthesis-strong);font-weight:700;margin-bottom:12px}
+.ripple__claim{font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--text-strong);line-height:1.4;max-width:60ch;margin:0 auto 12px}
+.ripple__adjacent{font-family:var(--font-sans);font-size:13px;color:var(--text-muted);max-width:55ch;margin:0 auto}
+.residuals{border:1px solid var(--border);border-radius:12px;padding:24px;margin:32px 0;background:var(--bg-sunken)}
+.residuals h4{margin-top:20px} .residuals h4:first-child{margin-top:0} .residuals ul{padding-left:20px;margin:8px 0} .residuals li{margin:6px 0;font-size:15px}
+.residuals__badge{display:inline-block;font-family:var(--font-mono);font-size:10px;padding:2px 6px;border-radius:3px;background:var(--bg-elevated);border:1px solid var(--border);color:var(--text-muted);margin-right:6px}
+.quiz{border:1px solid var(--border);border-radius:12px;padding:24px;margin:40px 0 24px;background:var(--bg-elevated);font-family:var(--font-sans)}
+.quiz h2{border:none;padding:0;margin:0 0 16px;font-size:20px} .quiz fieldset{border:none;padding:0;margin:0 0 24px} .quiz legend{font-weight:700;margin-bottom:12px;color:var(--text-strong);font-size:15px;line-height:1.4}
+.quiz-option{display:block;padding:10px 14px;border:1px solid var(--border);border-radius:6px;margin:6px 0;cursor:pointer;transition:all var(--transition);font-size:14px;background:var(--bg)}
+.quiz-option:hover{border-color:var(--accent)} .quiz-option input{margin-right:10px;accent-color:var(--accent)} .quiz-option.selected{background:var(--accent-soft);border-color:var(--accent)} .quiz-option.correct-answer{background:var(--success-bg);border-color:var(--success);color:var(--success)} .quiz-option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger);color:var(--danger)}
+.quiz-check-btn{font-family:var(--font-sans);background:var(--synthesis);color:white;border:none;padding:10px 20px;font-size:14px;font-weight:600;border-radius:6px;cursor:pointer;transition:background var(--transition)} .quiz-check-btn:hover{background:var(--synthesis-strong)}
+.quiz-score{margin-top:16px;padding:14px 18px;border-radius:6px;font-weight:600;display:none} .quiz-score.show{display:block} .quiz-score.pass{background:var(--success-bg);color:var(--success)} .quiz-score.mid{background:var(--warn-bg);color:var(--warn)} .quiz-score.fail{background:var(--danger-bg);color:var(--danger)}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:8px;z-index:50}
+.ctrl-btn{background:var(--bg-elevated);border:1px solid var(--border);color:var(--text);width:44px;height:44px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all var(--transition);font-family:var(--font-sans);font-size:18px}
+.ctrl-btn:hover{background:var(--accent);color:white;border-color:var(--accent)}
+.footer-note{margin-top:60px;padding:20px 0;border-top:1px solid var(--border);font-family:var(--font-sans);font-size:12px;color:var(--text-muted);line-height:1.5}
+.gate5{margin:40px 0;padding:24px;border:1px solid var(--accent);border-radius:12px;background:var(--accent-soft);font-family:var(--font-sans)}
+.gate5__title{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent-strong);font-weight:700;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="controls">
+  <button class="ctrl-btn" id="theme-toggle" title="Toggle theme">☾</button>
+  <button class="ctrl-btn" id="focus-toggle" title="Focus mode">⛶</button>
+</div>
+<div class="layout">
+  <aside class="navigator" aria-label="Navigator">
+    <div class="progress-bar"><div class="progress-bar__fill" id="progress-fill"></div></div>
+    <div class="nav-meta"><span>📖 ~15 phút</span><span id="progress-percent">0%</span></div>
+    <div class="compass-title">Tiến Trình Đọc</div>
+    <div class="compass" id="compass">
+      <!-- Đã thêm thuộc tính href="#..." -->
+      <a href="#scope" class="compass-node active" data-target="scope" data-phase="scope"><span class="compass-node__state">1</span><span>🎯</span><span>Mục Tiêu</span></a>
+      <a href="#thesis" class="compass-node" data-target="thesis" data-phase="thesis"><span class="compass-node__state">2</span><span>📘</span><span>Cơ Chế Não</span></a>
+      <a href="#xexam" class="compass-node" data-target="xexam" data-phase="probe"><span class="compass-node__state">3</span><span>🔍</span><span>Nghi Ngờ</span></a>
+      <a href="#collision" class="compass-node" data-target="collision" data-phase="collision"><span class="compass-node__state">4</span><span>⚔️</span><span>Xung Đột</span></a>
+      <a href="#synthesis" class="compass-node" data-target="synthesis" data-phase="synthesis"><span class="compass-node__state">5</span><span>💎</span><span>Giải Pháp</span></a>
+      <a href="#ripple" class="compass-node" data-target="ripple" data-phase="ripple"><span class="compass-node__state">6</span><span>🌊</span><span>Ứng Dụng</span></a>
+    </div>
+    <div class="toc-title">Nội Dung Chính</div>
+    <ul class="toc" id="toc">
+      <li><a href="#scope">Phạm vi bài viết</a></li>
+      <li><a href="#dialectic">Tóm Tắt Nhanh</a></li>
+      <li><a href="#arena">Hành Trình Của Sự Thay Đổi</a></li>
+      <li><a href="#argument-map">Bản Đồ Lập Luận</a></li>
+      <li><a href="#thesis">Giai đoạn 1: Cơ Chế Của Não</a></li>
+      <li><a href="#xexam">Những Câu Hỏi Thực Tế (FAQ)</a></li>
+      <li><a href="#collision">Xung Đột Nội Tâm</a></li>
+      <li><a href="#synthesis">Giải Pháp Cốt Lõi</a></li>
+      <li><a href="#proof">Ví Dụ Thực Tế</a></li>
+      <li><a href="#loop2">Giai đoạn 2: Định Vị Bản Thân</a></li>
+      <li><a href="#ripple">Ứng Dụng Rộng Hơn</a></li>
+      <li><a href="#fallacy-log">Những Hiểu Lầm Thường Gặp</a></li>
+      <li><a href="#residuals">Lưu Ý Quan Trọng</a></li>
+      <li><a href="#quiz">Trắc Nghiệm Nhanh</a></li>
+    </ul>
+  </aside>
+
+  <main class="canvas"><div class="canvas-inner">
+    <h1>Độ Mềm Dẻo Của Não Bộ (Neuroplasticity) và Cách Bỏ Thói Quen Trì Hoãn</h1>
+    <div class="byline"><span class="pill">Cơ chế não bộ</span><span class="pill">Thực hành nhanh</span><span class="pill">Dành cho người đi làm</span> Tại sao hiểu rõ vấn đề mà vẫn không làm được? Đây là cách thực tế để xây dựng thói quen mới mà không cần dựa dẫm quá nhiều vào "ý chí".</div>
+
+    <div class="paradox-meter" id="paradox-meter" data-phase="thesis">
+      <div class="paradox-meter__label"><span>Sự Chuyển Biến Góc Nhìn</span><span class="paradox-meter__value" id="paradox-value">18%</span></div>
+      <div class="paradox-meter__bar"><div class="paradox-meter__fill" id="paradox-fill" style="width:18%"></div></div>
+      <div class="paradox-meter__hint" id="paradox-hint">Bạn bắt đầu từ việc đổ lỗi cho bản thân, và dần nhận ra đó là vấn đề về môi trường.</div>
+    </div>
+
+    <div class="engine-status">
+      <div class="engine-status__header"><span class="engine-status__title">📖 Hướng Dẫn Đọc Trang Web Này</span><span class="engine-status__mode">RẤT DỄ ĐỌC</span></div>
+      <p style="font-size:14px; margin: 0 0 10px 0;">Trang web này được thiết kế để dẫn dắt bạn qua quá trình thay đổi tư duy. Để có trải nghiệm tốt nhất, hãy:</p>
+      <div class="engine-status__grid">
+        <div class="engine-status__row"><span class="engine-status__check">1</span><span class="engine-status__name">Đọc phần "Tóm Tắt Nhanh" để hiểu toàn bộ cốt truyện.</span></div>
+        <div class="engine-status__row"><span class="engine-status__check">2</span><span class="engine-status__name">Khám phá cách não bộ hoạt động (Neuroplasticity).</span></div>
+        <div class="engine-status__row"><span class="engine-status__check">3</span><span class="engine-status__name">Nhấp vào các hộp tương tác trong phần "Nghi Ngờ" để xem lời giải đáp.</span></div>
+        <div class="engine-status__row"><span class="engine-status__check">4</span><span class="engine-status__name">Tập trung vào "Giải Pháp Cốt Lõi" để áp dụng cho chính mình.</span></div>
+      </div>
+    </div>
+
+    <div class="assumptions">
+      <div class="assumptions__title">💡 Ý Tưởng Trọng Tâm</div>
+      <p style="margin:0 0 .5rem;font-size:.95rem"><strong>Cốt lõi vấn đề:</strong> Sự thay đổi thói quen lâu dài không đến từ việc bạn "giác ngộ" hay quyết tâm cao độ. Nó đến từ việc bạn chủ động lặp đi lặp lại những phản ứng nhỏ (khác với thói quen cũ) ngay tại một tín hiệu quen thuộc (ví dụ: chuông báo thức). Nhờ đó, não bộ sẽ củng cố một "đường mòn mới" để cạnh tranh và dần thay thế thói quen cũ.</p>
+      <div style="font-weight:600;letter-spacing:.05em;text-transform:uppercase;font-size:.72rem;opacity:.65;margin:1rem 0 .35rem">Bối cảnh bài viết</div>
+      <div class="assumptions__grid">
+        <div class="assumption-row"><span class="assumption-key">Vấn đề thường gặp</span><span class="assumption-val">Trì hoãn công việc vào đầu ngày, mở điện thoại ngay khi ngủ dậy.</span></div>
+        <div class="assumption-row"><span class="assumption-key">Mục tiêu mang lại</span><span class="assumption-val">Thiết kế một hành động nhỏ chỉ mất 2 phút để áp dụng ngay sáng mai.</span></div>
+        <div class="assumption-row"><span class="assumption-key">Dành cho ai</span><span class="assumption-val">Nhân viên văn phòng muốn bỏ thói quen trì hoãn.</span></div>
+        <div class="assumption-row"><span class="assumption-key">Rào cản tâm lý</span><span class="assumption-val">"Nói thì dễ, làm mới khó" - và bài viết này sẽ giải quyết điều đó.</span></div>
+      </div>
+      <details style="margin-top:1rem"><summary style="cursor:pointer;font-weight:600;font-size:.9rem">🔀 Dễ Hiểu Hơn Nhờ Hình Ảnh So Sánh</summary>
+        <div style="margin:.5rem 0 0;font-size:.9rem;line-height:1.6">
+          <p style="margin:.25rem 0"><strong>Mạng lưới đường mòn:</strong> Thói quen cũ của bạn là một con đường cao tốc rộng lớn 8 làn xe. Thói quen mới là một lối đi nhỏ xuyên qua bụi rậm, chỉ rộng ra thêm một chút mỗi khi bạn bước qua.</p>
+          <p style="margin:.25rem 0"><strong>Lập trình lại:</strong> Bạn không thể gỡ cài đặt phần mềm cũ ngay lập tức, bạn chỉ có thể cài một bản cập nhật nhỏ lặp đi lặp lại hàng ngày.</p>
+        </div>
+      </details>
+    </div>
+
+    <section id="scope">
+      <h2><span>🎯</span> Phạm Vi Bài Viết</h2>
+      <p><strong>Lĩnh vực:</strong> Kiến thức khoa học thần kinh (neuroscience) ứng dụng cho hành vi của con người, đặc biệt là người đi làm thường xuyên bị phân tâm trong môi trường số. Bài viết không nói về các vấn đề tâm lý học lâm sàng hay cách huấn luyện vận động viên đỉnh cao.</p>
+      <p><strong>Bao gồm:</strong> Cơ chế ghi nhớ của não (hạch nền - basal ganglia), kế hoạch hành động "Nếu - Thì" (if-then planning), và sức mạnh của việc lặp lại những hành động nhỏ nhặt.</p>
+      <p><strong>Không bao gồm:</strong> Chấn thương não, nghiện chất kích thích nặng, hay các tranh luận triết học sâu xa về ý chí tự do.</p>
+      <p><strong>Điều kiện để thành công:</strong> Bạn cần một tín hiệu (cue) ổn định mỗi ngày (ví dụ: sau khi đánh răng) và khoảng 2 phút thật sự có quyền tự quyết để thực hiện thói quen mới.</p>
+      <p><strong>Có thể bạn đang nghĩ:</strong> <em>"Tôi đã thử mọi cách rồi, tôi sinh ra đã là một người hay trì hoãn."</em> Bài viết này được sinh ra để trả lời chính xác câu nói đó của bạn.</p>
+    </section>
+
+    <section id="dialectic">
+      <h2><span>👁️</span> Tóm Tắt Nhanh</h2>
+      <div class="dialectic-header">
+        <div class="panel panel--thesis"><span class="panel__label">📘 Góc nhìn ban đầu</span><div>Não bộ học hỏi qua việc lặp lại những hành động nhỏ nhất ngay tại một thời điểm cụ thể.</div></div>
+        <div class="panel panel--antithesis"><span class="panel__label">⚔️ Thực tế phũ phàng</span><div>Việc cố gắng lặp lại hành động mới thường thất bại khi bạn mệt mỏi, thiếu ngủ, hoặc khi môi trường xung quanh toàn cạm bẫy.</div></div>
+        <div class="panel panel--synthesis"><span class="panel__label">💎 Giải pháp hoàn thiện</span><div>Não sẽ duy trì hai "đường mòn" cũ và mới cùng lúc. Đường mòn mới chỉ trở nên dễ đi hơn khi bạn có tín hiệu ổn định và được nhận một phần thưởng ngay lập tức.</div></div>
+      </div>
+      <div class="dialectic-header" style="margin-top:12px">
+        <div class="panel panel--thesis"><span class="panel__label">📘 Về "Bản sắc cá nhân"</span><div>Tính cách của bạn (chăm chỉ hay lười biếng) chỉ là biểu hiện của con đường mòn được bạn đi qua nhiều nhất.</div></div>
+        <div class="panel panel--antithesis"><span class="panel__label">⚔️ Phản biện</span><div>Nhưng thói quen cũ đã hằn quá sâu, cộng thêm áp lực công việc khiến bạn khó lột xác.</div></div>
+        <div class="panel panel--synthesis"><span class="panel__label">💎 Chốt lại</span><div>Bạn không cần phải tranh cãi mình là ai. Hãy thiết kế một kế hoạch "Nếu - Thì" và lặp lại hành động mới. "Bản sắc" của bạn sẽ tự động thay đổi theo.</div></div>
+      </div>
+    </section>
+
+    <section id="arena">
+      <h2><span>🏛️</span> Hành Trình Của Sự Thay Đổi</h2>
+      <p style="font-size:14px;color:var(--text-muted)">Cuộc chiến thực sự không nằm ở triết lý, mà nằm ở việc <strong>nỗ lực bằng ý chí (Rất mệt mỏi) đối đầu với thói quen tự động hóa (Rất nhàn nhã)</strong>.</p>
+      <div style="background:var(--bg-sunken);border:1px solid var(--border);border-radius:12px;padding:16px;font-family:var(--font-sans);font-size:13px;text-align:center;line-height:1.6">
+        <span style="color:var(--thesis-strong)">📘 BƯỚC 1: Hiểu rằng phải lặp lại hành động nhỏ</span> → <span style="background:var(--warn-bg);padding:2px 8px;border-radius:10px">🔍 Nhận ra rào cản</span> → <span style="color:var(--antithesis-strong)">⚔️ BƯỚC 2: Kiệt sức khiến ta quay lại lối cũ</span><br>
+        <span style="opacity:.5">— Tại điểm giao thoa giữa —</span> <strong>🌀 Tốn năng lượng ý chí vs. Tự động hóa nhẹ nhàng</strong> — <span style="color:var(--synthesis-strong)">💎 BƯỚC 3: Chấp nhận hai đường mòn cùng tồn tại</span> → <span style="color:var(--thesis-strong)">📘 BƯỚC 4: Tính cách hình thành từ thói quen</span> → <span style="color:var(--synthesis-strong);border:2px solid var(--synthesis);padding:2px 8px;border-radius:10px">💎 TỔNG KẾT: Thiết kế kế hoạch và môi trường</span> → <span style="color:var(--info)">🌊 Môi trường mới là thứ quyết định thành bại</span>
+      </div>
+    </section>
+
+    <section id="argument-map">
+      <h2><span>🗺️</span> Bản Đồ Lập Luận</h2>
+      <div class="argument-map">
+        <div class="argument-map__title">Cơ sở khoa học đằng sau giải pháp</div>
+        <div class="toulmin">
+          <div class="toulmin__cell t-grounds"><span class="toulmin__label">Cơ sở khoa học</span>Khả năng linh hoạt của não bộ (Neuroplasticity), cách hạch nền (basal ganglia) đóng gói thông tin. Trung bình mất khoảng 66 ngày để hình thành một thói quen (theo Lally).</div>
+          <div class="toulmin__cell t-warrant"><span class="toulmin__label">Cơ chế hoạt động</span>Việc lặp lại một hành động tại cùng một tín hiệu sẽ củng cố mạng lưới thần kinh mới, giúp vỏ não tiết kiệm năng lượng.</div>
+          <div class="toulmin__cell t-claim"><span class="toulmin__label">Giải pháp đề xuất</span>Hãy rèn luyện một "đường mòn mới" chạy song song với thói quen cũ bằng cách dùng kế hoạch "Nếu - Thì".</div>
+          <div class="toulmin__cell t-backing"><span class="toulmin__label">Bằng chứng hỗ trợ</span>Nghiên cứu về vòng lặp vỏ não và cách hoóc-môn Dopamine mang lại phần thưởng cảm xúc tức thì (Wyatt 2024).</div>
+          <div class="toulmin__cell t-qualifier"><span class="toulmin__label">Điều kiện bắt buộc</span>Bạn phải có một tín hiệu ổn định, có vài phút để tự chủ, ngủ đủ giấc, và không bị môi trường cám dỗ đánh bại.</div>
+          <div class="toulmin__cell t-rebuttal"><span class="toulmin__label">Trường hợp ngoại lệ</span>Khi thiếu ngủ hoặc stress, đường mòn thói quen cũ sẽ giành lại quyền kiểm soát (Điều này hoàn toàn bình thường).</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="thesis">
+      <h2><span>📘</span> Giai đoạn 1: Hiểu Về Cơ Chế Của Não Bộ</h2>
+      <p style="color:var(--text-muted);font-size:14px;font-family:var(--font-sans)"><em>Dẫn dắt:</em> Bạn thường tin rằng "chỉ cần hiểu rõ tác hại là sẽ thay đổi được". Phần này sẽ cho thấy niềm tin đó sụp đổ như thế nào trước cơ chế sinh học của não. Nếu hiểu điều này, bạn sẽ ngừng tự trách mình và bắt đầu tập trung vào việc thiết kế lại môi trường sống.</p>
+      <div class="thesis-pillar">
+        <div class="thesis-pillar__label">📘 Cốt Lõi Vấn Đề</div>
+        <div class="thesis-pillar__statement">Sự thay đổi bền vững không đến từ việc bạn "hiểu sâu sắc hơn" hay có một "quyết tâm to lớn". Nó đến từ việc bạn cố tình lặp đi lặp lại một phản ứng nhỏ giọt, khác biệt so với thường ngày, ngay tại đúng một tín hiệu (cue) quen thuộc. Điều này giúp não bộ củng cố một "con đường mới" để cạnh tranh với đường mòn thói quen cũ.</div>
+        <div class="thesis-pillar__contract">Nghe rất hợp lý phải không? Nhưng hãy cùng xem xét kỹ hơn để thấy những rào cản thực tế.</div>
+      </div>
+      <h3>3 Trụ Cột Về Cơ Chế Não Bộ</h3>
+      <div class="premise-walls">
+        <div class="premise-wall"><div class="premise-wall__index">1</div><div class="premise-wall__body"><div class="premise-wall__label">Não bộ cực kỳ trung lập</div>Tính mềm dẻo của não (Neuroplasticity) không quan tâm việc bạn làm là "tốt" hay "xấu". Nó chỉ đơn giản là củng cố những gì bạn làm thường xuyên. Lặp lại = Học hỏi.</div></div>
+        <div class="premise-wall"><div class="premise-wall__index">2</div><div class="premise-wall__body"><div class="premise-wall__label">Não thích tự động hóa</div>Khi bạn lặp lại đủ nhiều, não chuyển quyền điều khiển từ Vỏ não trước trán (phần dùng để suy nghĩ, rất tốn sức) sang Hạch nền (phần tự động, ít tốn sức). Biến mọi hành động thành bản năng — kể cả thói quen xấu.</div></div>
+        <div class="premise-wall"><div class="premise-wall__index">3</div><div class="premise-wall__body"><div class="premise-wall__label">Sự cạnh tranh khốc liệt</div>Mạng lưới thần kinh cũ không bao giờ bị xóa bỏ hoàn toàn; mạng lưới mới phải chen chân vào tranh giành quyền ưu tiên. Sự khó chịu lúc đầu không phải vì bạn đi sai hướng, mà vì bạn chưa đi đủ nhiều.</div></div>
+      </div>
+      <p style="font-family:var(--font-sans);font-size:13px;color:var(--text-muted)"><em>Tiểu Kết:</em> Chúng ta đã nắm được cơ sở khoa học. Bây giờ hãy mang nó ra thực tế để xem nó có thực sự hiệu quả không.</p>
+    </section>
+
+    <section id="xexam">
+      <h2><span>🔍</span> Những Câu Hỏi Thực Tế (FAQ)</h2>
+      <p style="font-family:var(--font-sans);font-size:14px">Đây là những lời phản biện vô cùng thực tế mà bất kỳ ai cũng sẽ gặp phải. Hãy nhấp vào các nút bên dưới để xem lời giải đáp.</p>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta"><span class="tag">Câu hỏi 1: Về tính trung lập của não</span></div>
+        <div class="xexam-card__probe">Nếu não chỉ ghi nhớ thứ lặp lại mà không quan tâm tốt xấu, tại sao một người tập đàn Piano 1000 giờ thì tiến bộ, còn tôi lướt mạng 1000 giờ thì tâm trạng lại tệ đi? Ai quyết định điều đó?</div>
+        <p class="xexam-card__setup">Sự thật là: Việc lặp lại chỉ phát huy tác dụng khi hành động đó mang lại cho bạn một phần thưởng cảm xúc ngay lập tức.</p>
+        <button class="xexam-card__defense-btn" data-target="def-p1">🛡️ Xem Câu Trả Lời</button>
+        <div class="xexam-card__defense" id="def-p1">
+          <span class="label">Thực Tế Sinh Học</span>
+          <p>Lướt mạng mang lại sự dễ chịu ngay lập tức (nhờ Dopamine tiết ra), giúp bạn trốn tránh căng thẳng. Não chỉ học mối liên kết: Căng thẳng → Lướt điện thoại → Thấy dễ chịu ngay. Nó không hề quan tâm đến việc hành động đó làm hại mắt hay tốn thời gian của bạn về lâu dài (Wyatt 2024).</p>
+          <span class="label">Giải Đáp</span>
+          <p>Não bạn thực sự trung lập — bạn lướt mạng càng nhiều thì bạn càng "giỏi" việc lướt mạng (một cách tự động). Sự khác biệt với việc đánh đàn là ở tiêu chuẩn đánh giá của xã hội. Điểm mấu chốt ở đây là: Nếu muốn thay đổi, bạn phải gắn hành động mới với một <strong>phần thưởng ngay lập tức</strong>.</p>
+        </div>
+      </article>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta"><span class="tag">Câu hỏi 2: Về tính tự động hóa</span></div>
+        <div class="xexam-card__probe">Nếu tự động hóa giúp não tiết kiệm năng lượng, tại sao thói quen trì hoãn công việc tự động lại khiến tôi mệt mỏi, mất ngủ và kiệt sức đến thế?</div>
+        <p class="xexam-card__setup">"Tự động là tiết kiệm" có vẻ sai khi nó khiến bạn phải trả giá đắt vào ngày hôm sau.</p>
+        <button class="xexam-card__defense-btn" data-target="def-p2">🛡️ Xem Câu Trả Lời</button>
+        <div class="xexam-card__defense" id="def-p2">
+          <span class="label">Thực Tế Sinh Học</span>
+          <p>Việc bỏ qua email khó để lướt tin tức là một hành động tự động, không cần suy nghĩ, tiết kiệm sức lực NGAY TẠI THỜI ĐIỂM ĐÓ. Nhưng sau đó, phần não lý trí (PFC) của bạn phải tăng tốc gấp đôi để chữa cháy, dẫn đến kiệt sức.</p>
+          <span class="label">Giải Đáp</span>
+          <p>Hạch nền của não chỉ có nhiệm vụ tiết kiệm năng lượng <em>ngay tại khoảnh khắc ra quyết định</em>, nó không lập kế hoạch cho cả cuộc đời bạn.</p>
+        </div>
+      </article>
+
+      <article class="xexam-card">
+        <div class="xexam-card__meta"><span class="tag">Câu hỏi 3: Về sự cạnh tranh thói quen</span></div>
+        <div class="xexam-card__probe">Bạn nói sự khó chịu khi thay đổi chỉ là "tạm thời". Tại sao tôi đã ráng tập thể dục 60-90 ngày vẫn thấy gượng gạo, và chỉ cần một tuần stress là lại bỏ cuộc?</div>
+        <p class="xexam-card__setup">Nhiều người lầm tưởng làm liên tục 21 hay 60 ngày là thói quen sẽ tự hình thành một cách ma thuật.</p>
+        <button class="xexam-card__defense-btn" data-target="def-p3">🛡️ Xem Câu Trả Lời</button>
+        <div class="xexam-card__defense" id="def-p3">
+          <span class="label">Dữ Liệu Khoa Học</span>
+          <p>Theo nghiên cứu của Lally (2010), trung bình cần 66 ngày để một thói quen trở nên tự động, nhưng con số này dao động cực lớn: từ 18 ngày đến tận 254 ngày. Thói quen cũ của bạn không hề biến mất, nó chỉ nằm vùng chờ cơ hội.</p>
+          <span class="label">Giải Đáp</span>
+          <p>Đúng, sự khó chịu kéo dài không có nghĩa là bạn sai hướng. Nó chứng minh rằng "con đường mới" của bạn chưa được lặp lại đủ nhiều với một phần thưởng thích đáng. Tốc độ thành công phụ thuộc vào việc bạn bảo vệ giấc ngủ và thiết kế tín hiệu môi trường tốt đến mức nào.</p>
+        </div>
+      </article>
+
+      <p style="font-family:var(--font-sans);font-size:13px;color:var(--text-muted)"><em>Tiểu Kết:</em> Cả 3 cơ chế đều đúng, nhưng chúng đòi hỏi bạn phải thiết kế môi trường thật khéo léo thay vì chỉ dùng ý chí suông.</p>
+    </section>
+
+    <aside style="margin:2rem 0;padding:1.15rem 1.4rem;border-left:4px solid var(--antithesis);background:rgba(163,74,74,.06);border-radius:6px;font-family:var(--font-classical);font-size:1.05rem;font-style:italic;line-height:1.5">
+      🛑 Lối mòn thói quen cũ không cần sự đồng ý của bạn để chiến thắng — nó chỉ đợi bạn mệt mỏi, thiếu ngủ, hoặc lọt vào môi trường đầy cám dỗ.
+    </aside>
+
+    <section id="collision">
+      <h2><span>⚔️</span> Xung Đột Nội Tâm: Ý Chí vs. Cám Dỗ</h2>
+      <p><em>Dẫn dắt:</em> Bây giờ hãy gom tất cả những nghi ngờ lại để thấy được lý do thực sự khiến bạn luôn vấp ngã.</p>
+      <p><strong>Tổng hợp vấn đề:</strong> Não ghi nhớ tất cả, kể cả thói quen xấu nếu nó mang lại khoái cảm tức thời; tự động hóa giúp bạn nhàn nhã ngay lúc đó nhưng trả giá đắt về sau; đường mòn mới thì mong manh và dễ gãy đổ khi stress. Tóm lại, những nỗ lực thay đổi nhỏ nhoi sẽ bị đè bẹp khi bạn mất kiểm soát môi trường xung quanh.</p>
+      <div class="collision">
+        <div class="collision__inner">
+          <div class="collision__side collision__side--thesis"><span class="label">📘 Điểm yếu của ý chí</span><div class="heading">Môi trường thao túng, phần thưởng yếu ớt</div><p>Cố gắng lặp lại hành động tốt sẽ vô cùng tốn sức nếu chiếc điện thoại đầy cám dỗ luôn nằm ngay trên bàn làm việc, hút cạn năng lượng của vỏ não.</p></div>
+          <div class="collision__divider"><span class="collision__zap">⚡</span></div>
+          <div class="collision__side collision__side--antithesis"><span class="label">⚔️ Sức mạnh của thói quen</span><div class="heading">Đường cao tốc cũ vạn dặm</div><p>Giải thích tại sao chúng ta hay "ngựa quen đường cũ". Dù biết là không tốt nhưng khi mệt, chúng ta vẫn auto làm. Môi trường mới là thứ quyết định.</p></div>
+        </div>
+        <div class="collision__tension">Bản chất của sự va chạm: <strong>Nỗ lực có ý thức (rất tốn sức) đối đầu với Sự tự động hóa (không tốn sức) trên cùng một bối cảnh.</strong></div>
+      </div>
+      <blockquote style="border-left-color:var(--antithesis)">⚔️ <strong>THỰC TẾ PHŨ PHÀNG:</strong> Khi bạn đã quá mệt và môi trường toàn cám dỗ, cố gắng tạo thói quen mới chỉ là ảo tưởng. Đường mòn cũ chắc chắn sẽ giành lại quyền kiểm soát theo bản năng sinh học.</blockquote>
+    </section>
+
+    <section id="synthesis">
+      <h2><span>💎</span> Giải Pháp Cốt Lõi: Đặt Cố Gắng Đúng Chỗ</h2>
+      <p><em>Dẫn dắt:</em> Chúng ta không chọn phe "ý chí" hay phe "tự động hóa". Chúng ta sẽ thiết kế môi trường để sự tự động hóa phục vụ cho ý chí.</p>
+      <div class="sublation">
+        <div class="sublation__inner">
+          <div class="sublation__label">💎 Giải pháp hoàn thiện</div>
+          <div class="sublation__statement">Thay đổi bền vững là bạn phải huấn luyện một con đường mòn mới chạy song song với thói quen cũ. Hãy chấp nhận rằng thói quen cũ không bị xóa sổ hoàn toàn — thói quen mới chỉ trở nên dễ dàng hơn khi bạn có một tín hiệu môi trường ổn định, tự thưởng cho mình ngay lập tức, và biết bảo vệ năng lượng não bộ.</div>
+          <div class="sublation__elevation">
+            <div class="sublation__elev-cell sublation__elev-cell--preserve"><span class="lead">Giữ lại cơ chế cốt lõi</span>Bạn BẮT BUỘC phải lặp lại hành động mới ngay tại một tín hiệu quen thuộc (cue). Không lặp lại thì không bao giờ thành thói quen tự động.</div>
+            <div class="sublation__elev-cell sublation__elev-cell--absorb"><span class="lead">Công nhận sự yếu kém của con người</span>Chấp nhận rằng khi mệt mỏi hay thiếu ngủ, bạn sẽ lại sa ngã. Do đó, đừng dựa vào ý chí, hãy dựa vào việc thiết kế môi trường và tạo ra phần thưởng cảm xúc ngay lập tức cho hành động mới.</div>
+          </div>
+        </div>
+      </div>
+      <p><strong>Khoảnh khắc "À há!":</strong> Cùng một chiếc não bộ đó, nó có thể chạy chương trình "tốt" hoặc "xấu" tùy thuộc vào việc hành vi nào được khen thưởng ngay lập tức. Ý chí chỉ giúp bạn lúc đầu, còn hoàn cảnh và phần thưởng mới giữ bạn lại lâu dài.</p>
+      <div style="font-family:var(--font-sans);font-size:13px;background:var(--bg-sunken);padding:16px;border-radius:8px;border:1px solid var(--border);margin:16px 0">
+        <div style="font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-bottom:8px">So sánh mức độ hiệu quả của các phương pháp (Minh họa)</div>
+        <div style="display:grid;grid-template-columns:180px 1fr 50px;gap:8px;align-items:center;font-size:13px"><span>Tuyên thệ, thề thốt từ bỏ</span><span style="background:var(--bg);height:14px;border-radius:4px;position:relative"><span style="position:absolute;left:0;top:0;height:100%;width:12%;background:var(--text-muted);border-radius:4px"></span></span><span>Rất thấp</span></div>
+        <div style="display:grid;grid-template-columns:180px 1fr 50px;gap:8px;align-items:center;font-size:13px"><span>Hiểu đạo lý + Ráng gồng</span><span style="background:var(--bg);height:14px;border-radius:4px;position:relative"><span style="position:absolute;left:0;top:0;height:100%;width:28%;background:var(--antithesis);border-radius:4px"></span></span><span>Thấp</span></div>
+        <div style="display:grid;grid-template-columns:180px 1fr 50px;gap:8px;align-items:center;font-size:13px"><span>Làm hùng hục không kế hoạch</span><span style="background:var(--bg);height:14px;border-radius:4px;position:relative"><span style="position:absolute;left:0;top:0;height:100%;width:45%;background:var(--warn);border-radius:4px"></span></span><span>Trung bình</span></div>
+        <div style="display:grid;grid-template-columns:180px 1fr 50px;gap:8px;align-items:center;font-size:13px"><strong>Lặp lại nhỏ + Kế hoạch "Nếu-Thì" + Phần thưởng tức thì</strong><span style="background:var(--bg);height:14px;border-radius:4px;position:relative"><span style="position:absolute;left:0;top:0;height:100%;width:78%;background:var(--synthesis);border-radius:4px"></span></span><span>Cao Nhất</span></div>
+      </div>
+      <p style="font-style:italic;color:var(--text-muted);font-size:14px">Nói một cách dễ hiểu: Bạn không thể dùng mìn để phá hủy đường cao tốc cũ. Bạn chỉ có thể kiên nhẫn mở một lối mòn nhỏ ngay cạnh nó, đi lại trên đó mỗi sáng, và tự đặt một viên kẹo mỗi khi đi qua. Dần dần, não sẽ chọn lối mới vì nó dễ đi hơn và có phần thưởng.</p>
+    </section>
+
+    <section id="proof">
+      <h2><span>🧪</span> Ví Dụ Thực Tế</h2>
+      <p><em>Dẫn dắt:</em> Lý thuyết đã xong. Giờ áp dụng nó vào thói quen lúc 7h sáng.</p>
+      <p><strong>Trường hợp chuẩn: Thay đổi hành vi tại cùng một tín hiệu.</strong> Một nhân viên văn phòng 29 tuổi thường để điện thoại ngay cạnh gối, báo thức kêu lúc 7h00. Thói quen cũ: cầm máy lướt 20 phút rồi mới dậy đi làm trễ. Thói quen mới áp dụng: Sạc điện thoại ngoài phòng khách + để đôi dép ngay cạnh giường ngủ + quy tắc "Chạm chân vào dép thì phải đi uống ly nước lọc ngoài phòng khách". Lặp lại 45 ngày, người này tự động bật dậy uống nước 7/10 ngày. Vào tuần thứ 6 vì quá áp lực công việc, người này bị tái phạm 2 ngày — đúng như dự đoán: đường mòn cũ vẫn còn đó chứ chưa mất đi, chỉ là đang chờ cơ hội.</p>
+      <p><strong>Trường hợp thất bại: Thử nghiệm khi phá vỡ điều kiện.</strong> Cũng là người đó, nhưng phải làm ca đêm. Tín hiệu "7h sáng thức dậy" biến mất. Người này ngủ chưa được 4 tiếng, quá mệt mỏi và nằm bấm TikTok vô thức trên giường. Thói quen trì hoãn quay lại. Điều này KHÔNG làm sai lý thuyết, mà nó chứng minh rõ rằng: Khi phá vỡ tín hiệu môi trường và cạn kiệt năng lượng não bộ, thói quen cũ sẽ lại chiến thắng.</p>
+      <p style="font-style:italic;background:var(--bg-sunken);color:var(--text);border-left:3px solid var(--warn);padding:10px 14px;border-radius:0 6px 6px 0;font-family:var(--font-sans);font-size:13px;line-height:1.6"><strong style="color:var(--warn);font-style:normal">💡 Bài học rút ra:</strong> Tại cùng một tín hiệu (chuông báo thức), bạn dạy cho não một hành động mới (uống nước). Lặp lại đủ lâu, hành động đó sẽ bớt tốn sức đi. Nhưng khi bạn quá mệt hoặc hoàn cảnh thay đổi, hành động cũ sẽ trỗi dậy. Đó là điều bình thường, bạn không hề hỏng hóc hay tồi tệ.</p>
+    </section>
+
+    <section id="loop2">
+      <h2><span>🔁</span> Giai đoạn 2: Vượt Qua Cái Nhãn "Bản Sắc" Cá Nhân</h2>
+      <p><em>Dẫn dắt:</em> Chúng ta đã chứng minh được hành động nhỏ sẽ hiệu quả. Nhưng nhiều người hay trì hoãn vẫn luôn tự vấn: "Vậy bản chất tôi sinh ra đã là người trì hoãn lười biếng rồi sao?". Nếu bạn tin vào cái "nhãn" đó, mọi nỗ lực thay đổi đều sẽ bị xem như bạn đang cố diễn kịch.</p>
+      <div class="thesis-pillar" style="border-left-color:var(--synthesis)">
+        <div class="thesis-pillar__label" style="color:var(--synthesis-strong)">📘 Định Vị Lại Bản Thân</div>
+        <div class="thesis-pillar__statement">Những thứ mà chúng ta hay dán nhãn là "tính cách" — như "tôi là người lười biếng / hay nổi cáu / thiếu kỷ luật" — thực chất chỉ là con đường mòn được bạn tưới nước và đi qua nhiều nhất. Đó không phải là bản chất cố định của bạn. Thay đổi bản sắc chỉ đơn giản là thay đổi con đường nào được bạn chọn đi lại mỗi ngày.</div>
+      </div>
+      <h3>3 Nhận Thức Mới Về Bản Sắc</h3>
+      <div class="premise-walls">
+        <div class="premise-wall"><div class="premise-wall__index" style="background:var(--synthesis)">1</div><div class="premise-wall__body"><div class="premise-wall__label">Cái nhãn tự củng cố chính nó</div>Tự nhận mình là "người lười biếng" sẽ làm tăng xác suất bạn cư xử lười biếng, tạo thành một vòng lặp tự ứng nghiệm.</div></div>
+        <div class="premise-wall"><div class="premise-wall__index" style="background:var(--synthesis)">2</div><div class="premise-wall__body"><div class="premise-wall__label">Hành động thực tế thắng lời nói xuông</div>Não bộ cập nhật "bạn là ai" thông qua tần suất những hành động nhỏ nhặt (kèm phần thưởng), chứ không thông qua những lời hô khẩu hiệu hùng hồn (Theo Fogg Shine).</div></div>
+        <div class="premise-wall"><div class="premise-wall__index" style="background:var(--synthesis)">3</div><div class="premise-wall__body"><div class="premise-wall__label">Thiết kế hệ thống thắng ý chí</div>Sử dụng quy tắc "Nếu - Thì" (Ví dụ: "Nếu đến 8h00 thì tôi làm việc này 2 phút") sẽ chuyển gánh nặng từ ý chí sang tín hiệu môi trường. Não bộ sẽ tự động đi theo mà không cần phải tranh đấu.</div></div>
+      </div>
+      <blockquote style="border-left-color:var(--antithesis)">⚔️ <strong>Sự cản trở:</strong> Tất nhiên, môi trường làm việc hay bạn bè đồng nghiệp đã quen dán nhãn bạn là "người hay trễ giờ", và áp lực từ họ sẽ kéo bạn lại với lối cư xử cũ.</blockquote>
+      <p><strong>Mâu thuẫn:</strong> Hành động nhỏ lẻ tẻ của bạn đối đầu với thói quen và định kiến to lớn của những người xung quanh.</p>
+      <div class="sublation">
+        <div class="sublation__inner">
+          <div class="sublation__label">💎 CHỐT LẠI</div>
+          <div class="sublation__statement" style="font-size:21px">Bản sắc của bạn giống như một bản hợp đồng cần được tập luyện thực tế — bạn không cần phải tốn công tìm kiếm "con người thật" của mình. Hãy chọn con đường mòn bạn muốn đi, sử dụng kế hoạch "Nếu - Thì", thay đổi môi trường, và tự thưởng khi làm được. Cái nhãn "Tôi là người như thế nào" sẽ tự động nâng cấp sau khi bạn lặp lại hành động đó đủ số lần.</div>
+        </div>
+      </div>
+      <p style="font-style:italic;color:var(--text-muted)">Nói một cách dễ hiểu: Đừng tốn thời gian cãi vã với chính mình xem mình là người giỏi hay dở. Hãy đặt đồng hồ báo thức, viết một câu "Nếu - Thì", và để não bộ học hỏi từ lần thực hành tiếp theo. Tính cách của bạn sẽ đuổi theo sau.</p>
+    </section>
+
+    <section id="ripple">
+      <h2><span>🌊</span> Ứng Dụng Rộng Hơn: Áp Dụng Cho Đội Nhóm</h2>
+      <p><em>Dẫn dắt:</em> Hai khía cạnh (cơ chế sinh học và bản sắc tâm lý) đều quay về một nguyên lý cốt lõi: Lặp lại hành động tại một tín hiệu cố định. Nguyên lý này còn đúng ở quy mô tổ chức.</p>
+      <h3>Bài Toán Thực Tế</h3>
+      <p><strong>Tình huống:</strong> Một nhóm 4 người muốn chấm dứt tình trạng hay đi họp trễ. Thay vì mở cuộc họp "chỉnh đốn tinh thần kỷ luật", họ áp dụng giải pháp: Mỗi người tự đặt quy tắc "Nếu đồng hồ chỉ 8h58, thì đứng dậy bước vào phòng họp chờ sẵn trong 2 phút", đồng thời mở toang cửa phòng họp từ trước. Không ai phải "cố gắng gồng mình". Kết quả: 3 tuần sau, việc họp đúng giờ tăng rõ rệt; đến tuần thứ 4 chạy KPI căng thẳng thì lại có người trễ — nhưng cả nhóm đã lường trước điều này và không hề đổ lỗi cho nhau.</p>
+      <div class="ripple">
+        <div class="ripple__label">🌊 Nếu hiểu được điều này, thì...</div>
+        <div class="ripple__claim">Thay đổi môi trường xung quanh và tạo ra các quy tắc "Nếu - Thì" rõ ràng là cách can thiệp hiệu quả nhất. Mọi nỗ lực chỉ tập trung vào việc khuyên nhủ "hãy có ý chí lên" chắc chắn sẽ thất bại trước sức mạnh của hoàn cảnh.</div>
+      </div>
+      <p style="font-family:var(--font-sans);font-size:13px;color:var(--text-muted)"><em>Tiểu Kết:</em> Trách nhiệm thay đổi không chỉ nằm ở cá nhân bạn, mà còn nằm ở cách bạn thiết lập không gian làm việc và tín hiệu sống xung quanh mình.</p>
+    </section>
+
+    <section id="fallacy-log">
+      <h2><span>⚠️</span> Những Hiểu Lầm Thường Gặp (FAQ)</h2>
+      <details class="deep-dive fallacy-log" style="border:1px solid var(--warn);border-radius:6px;padding:0;margin:20px 0;background:var(--bg-sunken);overflow:hidden">
+        <summary style="cursor:pointer;padding:14px 18px;font-family:var(--font-sans);font-weight:600;font-size:14px;color:var(--warn);display:flex;align-items:center;gap:8px">⚠️ 5 Sai lầm phổ biến khi tạo thói quen (Nhấp để mở rộng)</summary>
+        <div style="padding:16px 18px;font-size:14px">
+          <div style="border-left:3px solid var(--warn);padding:10px 14px;background:var(--bg-sunken);color:var(--text);margin:10px 0;border-radius:0 6px 6px 0"><strong style="color:var(--warn)">1. Tin vào con số ma thuật "21 ngày" hay "66 ngày"</strong> — Thực tế, trung bình là 66 ngày, nhưng tùy người có thể mất từ 18 đến tận 254 ngày. Đừng nản lòng quá sớm.</div>
+          <div style="border-left:3px solid var(--warn);padding:10px 14px;background:var(--bg-sunken);color:var(--text);margin:10px 0;border-radius:0 6px 6px 0"><strong style="color:var(--warn)">2. Chỉ nhìn người thành công mà quên hoàn cảnh của người thất bại</strong> — Bỏ điện thoại dễ hơn nếu bạn ngủ đủ giấc. Ngược lại, nếu bạn phải trực ca đêm mệt mỏi, việc rớt đài là đương nhiên.</div>
+          <div style="border-left:3px solid var(--warn);padding:10px 14px;background:var(--bg-sunken);color:var(--text);margin:10px 0;border-radius:0 6px 6px 0"><strong style="color:var(--warn)">3. Nghĩ rằng "Hoặc là dùng ý chí, hoặc là buông xui"</strong> — Sự thật là bạn dùng ý chí ban đầu để thiết lập sự tự động hóa về sau.</div>
+          <div style="border-left:3px solid var(--warn);padding:10px 14px;background:var(--bg-sunken);color:var(--text);margin:10px 0;border-radius:0 6px 6px 0"><strong style="color:var(--warn)">4. Nghe lời khuyên mù quáng của các "Gurus"</strong> — Hãy nhìn vào dữ liệu khoa học, quy tắc hành vi rõ ràng có tỷ lệ thành công thực tế cao hơn những lời động viên sáo rỗng.</div>
+          <div style="border-left:3px solid var(--warn);padding:10px 14px;background:var(--bg-sunken);color:var(--text);margin:10px 0;border-radius:0 6px 6px 0"><strong style="color:var(--warn)">5. Đòi hỏi thay đổi 100%</strong> — Hãy nhớ rằng 40-50% hành vi của chúng ta trong ngày là hoàn toàn tự động, đừng hy vọng kiểm soát được tất cả.</div>
+        </div>
+      </details>
+    </section>
+
+    <section id="residuals">
+      <h2><span>📉</span> Lưu Ý Quan Trọng</h2>
+      <div class="residuals">
+        <h4>Điều bài viết này KHÔNG hứa hẹn</h4>
+        <ul>
+          <li><span class="residuals__badge">Lưu ý</span>Không dùng để chữa trị chấn thương não, nghiện ma túy, hay trầm cảm lâm sàng (Hãy tìm chuyên gia y tế).</li>
+          <li><span class="residuals__badge">Lưu ý</span>Không hứa hẹn thành công nhanh chóng "sau 21 ngày".</li>
+          <li><span class="residuals__badge">Lưu ý</span>Nếu bạn bị vắt kiệt thời gian, làm ca đêm liên tục, hay bị nhồi nhét nội dung độc hại, bài viết này không đủ sức mạnh cứu bạn. Bạn phải dọn dẹp môi trường trước tiên.</li>
+        </ul>
+        <h4>Điều gì khiến phương pháp này dễ áp dụng hơn?</h4>
+        <ul>
+          <li><span class="residuals__badge">Thủ thuật</span>Đơn giản nhất: Chỉ cần để điện thoại ở phòng khác khi ngủ, bạn đã giải quyết được 80% rắc rối vào sáng hôm sau.</li>
+          <li><span class="residuals__badge">Đảm bảo</span>Nghiên cứu qua máy quét não (fMRI) cho thấy càng tập thói quen nhỏ, phần não tiêu hao năng lượng ý chí (PFC) càng được giảm tải.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="quiz" class="quiz">
+      <h2>🧠 Trắc Nghiệm Nhanh</h2>
+      <fieldset data-q="1" data-answer="b"><legend>1. Tại sao nói "chỉ hiểu vấn đề thôi là chưa đủ để thay đổi"?</legend>
+        <label class="quiz-option"><input type="radio" name="q1" value="a">a. Vì việc hiểu biết là hoàn toàn vô dụng</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="b">b. Vì việc "hiểu" không trực tiếp củng cố mạng lưới dây thần kinh hành vi của não. Bạn cần hành động lặp lại tại đúng hoàn cảnh</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="c">c. Vì não bộ con người không thể thay đổi</label>
+        <label class="quiz-option"><input type="radio" name="q1" value="d">d. Vì nỗ lực ý chí mạnh hơn tri thức</label>
+      </fieldset>
+      <fieldset data-q="2" data-answer="c"><legend>2. Việc bạn tái phạm thói quen xấu khi bị stress chứng tỏ điều gì?</legend>
+        <label class="quiz-option"><input type="radio" name="q2" value="a">a. Bạn là kẻ yếu kém, thất bại</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="b">b. Đường mòn thói quen cũ đã bị xóa sạch, nhưng bạn không chịu đi đường mới</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="c">c. Hai "đường mòn" đang cạnh tranh nhau. Khi cạn kiệt năng lượng, bộ não chọn đường cũ quen thuộc. Điều này là bình thường</label>
+        <label class="quiz-option"><input type="radio" name="q2" value="d">d. Việc lặp lại những hành động nhỏ là vô ích</label>
+      </fieldset>
+      <fieldset data-q="3" data-answer="b"><legend>3. Tại sao lập kế hoạch "Nếu - Thì" lại mang lại hiệu quả cao?</legend>
+        <label class="quiz-option"><input type="radio" name="q3" value="a">a. Vì nó tạo ra động lực to lớn</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="b">b. Vì nó giúp chuyển bớt gánh nặng suy nghĩ ra khỏi đầu óc và gắn nó vào một hoàn cảnh cụ thể</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="c">c. Vì nó xóa sạch dấu vết của thói quen cũ</label>
+        <label class="quiz-option"><input type="radio" name="q3" value="d">d. Vì nó giúp bạn giác ngộ sâu sắc hơn</label>
+      </fieldset>
+      <button class="quiz-check-btn" id="check-quiz">Kiểm tra đáp án</button>
+      <div class="quiz-score" id="quiz-score"></div>
+    </section>
+
+    <section id="gate5" class="gate5">
+      <div class="gate5__title">🚀 Bước Tiếp Theo Dành Cho Bạn</div>
+      <div style="font-size:14px;line-height:1.55"><em>Lý thuyết lớn nhất:</em> "Việc thay đổi môi trường xung quanh và đặt ra kế hoạch (Nếu-Thì) là cách can thiệp tuyệt vời nhất." Bây giờ hãy tự hỏi:</div>
+      <ul style="font-size:14px;line-height:1.5;margin:12px 0 0 18px">
+        <li><strong>Cá nhân bạn:</strong> Tối nay bạn có thể thiết lập nguyên tắc "Nếu-Thì" nào chỉ mất 2 phút để thực hiện vào sáng mai không?</li>
+        <li><strong>Môi trường:</strong> Thứ gì đang "cám dỗ" bạn nhất ở nơi làm việc, và làm sao để dọn nó đi khuất mắt bạn?</li>
+      </ul>
+      <div style="margin-top:16px;padding:12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;font-size:13px">
+        <strong>🎯 Chốt lại:</strong> Nếu bạn đọc đến đây, nghĩa là bạn đã sẵn sàng rũ bỏ sự dằn vặt bản thân. Chìa khóa không nằm ở việc ép bản thân phải "mạnh mẽ" hơn, mà ở việc khéo léo lừa bộ não tự động chạy theo hướng có lợi cho bạn. Chúc bạn thành công.
+      </div>
+    </section>
+
+    <section style="margin-top:2rem">
+      <h2><span>🔤</span> Phụ Lục — Bảng Từ Vựng Đơn Giản</h2>
+      <table style="width:100%;border-collapse:collapse;font-size:.9rem">
+        <thead><tr style="border-bottom:2px solid var(--border)"><th style="text-align:left;padding:.5rem">Thuật ngữ</th><th style="text-align:left;padding:.5rem">Ý nghĩa đơn giản</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:.5rem"><strong>Neuroplasticity</strong></td><td style="padding:.5rem">Độ mềm dẻo thần kinh — Khả năng não tự thiết kế lại các liên kết dựa trên những gì bạn làm thường xuyên</td></tr>
+          <tr><td style="padding:.5rem"><strong>Basal ganglia (Hạch nền)</strong></td><td style="padding:.5rem">Khu vực não đảm nhận việc "lái xe tự động", giúp bạn làm mọi thứ theo thói quen mà không cần nghĩ</td></tr>
+          <tr><td style="padding:.5rem"><strong>Prefrontal cortex (Vỏ não trước trán)</strong></td><td style="padding:.5rem">Phần não của lý trí, chuyên dùng để suy nghĩ, lập kế hoạch, và kìm nén cám dỗ (rất tốn năng lượng)</td></tr>
+          <tr><td style="padding:.5rem"><strong>If-then planning (Kế hoạch Nếu-Thì)</strong></td><td style="padding:.5rem">Kế hoạch hành động gắn với một điều kiện cụ thể (Ví dụ: NẾU về đến nhà, THÌ tôi sẽ thay đồ tập thể dục ngay)</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="footer-note">
+      <p>Nội dung được cô đọng lại để mang đến trải nghiệm đọc nhẹ nhàng, dễ tiếp thu và có thể áp dụng trực tiếp vào công việc và đời sống hàng ngày.</p>
+      <p>Nguồn tham khảo: Wyatt (2024), Graybiel & Smith (2014), Lally et al. (2010), Sheeran et al. (2025).</p>
+    </div>
+  </div></main>
+
+  <aside class="marginalia">
+    <div style="font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--text-panel-muted);font-weight:700;margin:24px 0 8px">🔎 Tài liệu bằng chứng</div>
+    <div style="background:rgba(255,255,255,.05);padding:12px 14px;border-radius:6px;margin-bottom:16px;border-left:3px solid var(--accent);line-height:1.55;font-size:12px">
+      <strong style="display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:4px">Wyatt (2024)</strong>Khoa học thần kinh về thói quen — Sự liên kết giữa Vỏ não trước trán và hạch nền.
+    </div>
+    <div style="background:rgba(255,255,255,.05);padding:12px 14px;border-radius:6px;margin-bottom:16px;border-left:3px solid var(--accent);line-height:1.55;font-size:12px">
+      <strong style="display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:4px">Lally (2010)</strong>Nghiên cứu về 66 ngày hình thành thói quen.
+    </div>
+    <div style="background:rgba(255,255,255,.05);padding:12px 14px;border-radius:6px;margin-bottom:16px;border-left:3px solid var(--accent);line-height:1.55;font-size:12px">
+      <strong style="display:block;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:4px">Sheeran (2025)</strong>Các phân tích đánh giá hành vi qua kế hoạch Nếu-Thì.
+    </div>
+  </aside>
+</div>
+<script>
+(function(){
+  const btn=document.getElementById('theme-toggle');
+  const stored=localStorage.getItem('dialectic-theme');
+  if(stored) document.documentElement.setAttribute('data-theme',stored);
+  const update=()=>{const d=document.documentElement.getAttribute('data-theme')==='dark';btn.textContent=d?'☀':'☾'};
+  update(); btn.addEventListener('click',()=>{const cur=document.documentElement.getAttribute('data-theme');const nxt=cur==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',nxt);localStorage.setItem('dialectic-theme',nxt);update()});
+})();
+(function(){
+  const btn=document.getElementById('focus-toggle');
+  if(localStorage.getItem('dialectic-focus')==='1') document.documentElement.classList.add('focus-mode');
+  btn.addEventListener('click',()=>{document.documentElement.classList.toggle('focus-mode');localStorage.setItem('dialectic-focus',document.documentElement.classList.contains('focus-mode')?'1':'0')});
+})();
+document.querySelectorAll('.xexam-card__defense-btn').forEach(b=>b.addEventListener('click',()=>{
+  const id=b.getAttribute('data-target');const el=document.getElementById(id);
+  const open=el.classList.toggle('is-open');b.setAttribute('aria-expanded',open?'true':'false');b.textContent=open?'✓ Đã đóng/mở giải đáp':'🛡️ Xem Câu Trả Lời';
+}));
+
+// XỬ LÝ SỰ KIỆN SCROLL - Cập nhật Progress, Thanh trạng thái và Nội dung chính
+(function(){
+  const fill=document.getElementById('progress-fill');
+  const pct=document.getElementById('progress-percent');
+  
+  // Các thành phần cần theo dõi class 'active'
+  const sections = document.querySelectorAll('section[id]');
+  const compassNodes = document.querySelectorAll('.compass-node');
+  const tocLinks = document.querySelectorAll('.toc a');
+
+  const onScroll=()=>{
+    const h=document.documentElement;
+    const scrollY = window.scrollY;
+    
+    // 1. Cập nhật thanh % trên cùng
+    const scrolled=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+    fill.style.width=scrolled+'%';
+    pct.textContent=Math.round(scrolled)+'%';
+    
+    // 2. Cập nhật paradox meter
+    const meterFill=document.getElementById('paradox-fill');
+    const val=document.getElementById('paradox-value');
+    const hint=document.getElementById('paradox-hint');
+    if(scrolled<20){
+      meterFill.style.width='18%';val.textContent='18%';hint.textContent='Giai đoạn 1: Mở rộng tư duy'
+    }else if(scrolled<45){
+      meterFill.style.width='52%';val.textContent='52%';hint.textContent='Giai đoạn 2: Xung đột nội tâm'
+    }else if(scrolled<75){
+      meterFill.style.width='28%';val.textContent='28%';hint.textContent='Giai đoạn 3: Hình thành giải pháp'
+    }else{
+      meterFill.style.width='12%';val.textContent='12%';hint.textContent='Giai đoạn 4: Môi trường quyết định tất cả' 
+    }
+
+    // 3. Theo dõi Section hiện tại để đổi 'active' cho TOC và Compass
+    let current = '';
+    sections.forEach(section => {
+      const sectionTop = section.offsetTop;
+      // Trừ đi một khoảng bù (offset) để kích hoạt sớm trước khi lướt tới nơi
+      if (scrollY >= (sectionTop - 150)) {
+        current = section.getAttribute('id');
+      }
+    });
+
+    // Cập nhật TOC (Nội Dung Chính)
+    tocLinks.forEach(link => {
+      link.classList.remove('active');
+      if (link.getAttribute('href') === '#' + current) {
+        link.classList.add('active');
+      }
+    });
+
+    // Cập nhật Compass (Tiến Trình Đọc - Vì nó chỉ track vài ID chính)
+    const validCompassTargets = Array.from(compassNodes).map(n => n.getAttribute('data-target'));
+    let activeCompassId = current;
+    
+    // Nếu section hiện tại không nằm trong Compass, tìm section gần nhất trước đó có trong Compass
+    for (let i = sections.length - 1; i >= 0; i--) {
+        if (sections[i].offsetTop - 150 <= scrollY) {
+            const secId = sections[i].getAttribute('id');
+            if (validCompassTargets.includes(secId)) {
+                activeCompassId = secId;
+                break;
+            }
+        }
+    }
+
+    compassNodes.forEach(node => {
+      node.classList.remove('active');
+      if (node.getAttribute('data-target') === activeCompassId) {
+        node.classList.add('active');
+      }
+    });
+  };
+  
+  document.addEventListener('scroll',onScroll,{passive:true});
+  onScroll(); // Gọi ngay khi vừa tải trang
+})();
+
+// Hàm kiểm tra đáp án Quiz
+(function(){
+  const btn=document.getElementById('check-quiz');const score=document.getElementById('quiz-score');
+  btn.addEventListener('click',()=>{
+    let correct=0,total=3;
+    document.querySelectorAll('.quiz fieldset').forEach(fs=>{
+      const ans=fs.getAttribute('data-answer');const sel=fs.querySelector('input:checked');
+      fs.querySelectorAll('.quiz-option').forEach(l=>{l.classList.remove('correct-answer','incorrect-answer','selected')});
+      if(sel){
+        const lab=sel.closest('.quiz-option');lab.classList.add('selected');
+        if(sel.value===ans){lab.classList.add('correct-answer');correct++} else {lab.classList.add('incorrect-answer');const right=fs.querySelector('input[value="'+ans+'"]');if(right) right.closest('.quiz-option').classList.add('correct-answer')}
+      } else {
+        const right=fs.querySelector('input[value="'+ans+'"]');if(right) right.closest('.quiz-option').classList.add('correct-answer');
+      }
+    });
+    score.classList.add('show');
+    if(correct===total){score.className='quiz-score show pass';score.textContent='🎉 '+correct+'/'+total+' — Tuyệt vời! Bạn đã nắm trọn cốt lõi của bài viết.'}
+    else if(correct>=2){score.className='quiz-score show mid';score.textContent='✅ '+correct+'/'+total+' — Rất tốt! Bạn hiểu hầu hết các khái niệm.'}
+    else {score.className='quiz-score show fail';score.textContent='⚠️ '+correct+'/'+total+' — Hãy đọc lại phần "Giải Pháp Cốt Lõi" một chút nhé.'}
+    score.scrollIntoView({behavior:'smooth',block:'center'});
+  });
+})();
+</script>
+</body>
+</html>
