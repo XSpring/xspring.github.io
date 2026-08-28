@@ -1,0 +1,2894 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cảm xúc con người — Khảo cứu #6: Ghen tị và đố kỵ - Ngọn lửa âm ỉ trong lòng</title>
+<meta name="description" content="Khảo cứu về sự so sánh xã hội, cảm giác thiếu thốn và ngọn lửa âm ỉ bên trong — từ tâm lý học tiến hóa đến tư tưởng Khổng Tử.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+html { scroll-behavior: smooth; }
+img,svg{max-width:100%;height:auto;display:block}
+
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg:            #FDFBF7;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #2D3748;
+  --text-muted:    #718096;
+  --text-strong:   #1A202C;
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  /* Secondary accent — used for interactive elements (probes, hints, checkpoints)
+     so structural accents (teal) stay visually separate from "try this" accents (amber). */
+  --accent2:        #B7791F;
+  --accent2-strong: #975A16;
+  --accent2-soft:   #FEEBC8;
+  --border:        #E4DFD5;
+  --sidenote-bg:   #EDF2F7;
+  --code-bg:       #EDF2F7;
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #1A202C;
+  --bg-elevated:   #2D3748;
+  --bg-sunken:     #171923;
+  --text:          #E2E8F0;
+  --text-muted:    #A0AEC0;
+  --text-strong:   #F7FAFC;
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent2:        #F6AD55;
+  --accent2-strong: #FBD38D;
+  --accent2-soft:   #4A2E14;
+  --border:        #2D3748;
+  --sidenote-bg:   #2A2F3A;
+  --code-bg:       #2A2F3A;
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: var(--line);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   PROGRESS BAR (fixed top)
+============================================================ */
+.progress-bar{
+  position: fixed; top:0; left:0; right:0;
+  height: 3px;
+  background: transparent;
+  z-index: 100;
+}
+.progress-bar__fill{
+  height:100%;
+  width:0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+
+/* ============================================================
+   LAYOUT — 3 column grid
+============================================================ */
+.app{
+  display:grid;
+  grid-template-columns: minmax(220px, 20%) minmax(0, 1fr) minmax(240px, 20%);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 32px 128px;
+}
+
+/* CỐ ĐỊNH SIDEBAR TRÁI */
+.navigator{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding-right: 8px;
+}
+.navigator::-webkit-scrollbar{width:6px}
+.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+.canvas{
+  max-width: var(--measure);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* CỐ ĐỊNH SIDEBAR PHẢI */
+.marginalia{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-muted);
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.marginalia::-webkit-scrollbar{width:6px}
+.marginalia::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* Focus mode: collapse side panels */
+body.focus-mode .navigator,
+body.focus-mode .marginalia{
+  display:none;
+}
+body.focus-mode .app{
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+/* Mobile */
+@media (max-width: 960px){
+  .app{
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px 96px;
+  }
+  .navigator, .marginalia{
+    position: relative;
+    top: 0;
+    max-height: none;
+    overflow-y: visible;
+  }
+  .navigator {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .marginalia{
+    order: 3;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+}
+
+/* ============================================================
+   NAVIGATOR
+============================================================ */
+.navigator__meta{
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.navigator__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+.navigator__reading-time{
+  color: var(--text);
+  font-size: 13px;
+}
+
+.toc{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc li{margin: 2px 0}
+.toc a{
+  display: block;
+  padding: 6px 10px;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition);
+  line-height: 1.4;
+}
+.toc a:hover{
+  color: var(--text);
+  background: var(--sidenote-bg);
+}
+.toc a.is-active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--sidenote-bg);
+  font-weight: 500;
+}
+.toc .toc-l3{ padding-left: 20px; font-size: 13px }
+
+/* ============================================================
+   CANVAS (main reading area)
+============================================================ */
+.canvas h1{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin: 8px 0 16px;
+  letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--text-strong);
+  margin: 56px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+.canvas h2:first-of-type{ border-top: none; padding-top: 0 }
+.canvas h3{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-strong);
+  margin: 32px 0 12px;
+  scroll-margin-top: 24px;
+}
+.canvas p{ margin: 0 0 16px }
+.canvas strong{ color: var(--text-strong); font-weight: 700 }
+.canvas em{ font-style: italic }
+.canvas a{
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.canvas a:hover{ color: var(--accent-strong) }
+
+/* Source citation — subtle inline badge for linked evidence */
+.source{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--sidenote-bg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all var(--transition);
+}
+.source::before{ content: "↗ "; opacity: .6 }
+.source:hover{
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+/* Chart caption line — usually holds the data source */
+.bar-chart__caption{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+.bar-chart__caption a{ color: var(--text-muted); text-decoration: underline dotted }
+.bar-chart__caption a:hover{ color: var(--accent) }
+/* Provenance footer — printed when the note was generated without live web tools */
+.provenance-note{
+  margin: 32px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--sidenote-bg);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-left: 3px solid var(--text-muted);
+}
+
+.canvas ul, .canvas ol{
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.canvas li{ margin: 4px 0 }
+
+.canvas blockquote{
+  margin: 24px 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--sidenote-bg);
+  color: var(--text);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+}
+
+.canvas code{
+  font-family: var(--font-mono);
+  font-size: .9em;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.canvas pre{
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 24px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  position: relative;
+}
+.canvas pre code{ background: transparent; padding: 0 }
+
+/* Hook block (curiosity primer at the top) */
+.hook{
+  margin: 24px 0 48px;
+  padding: 24px 28px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.hook__label{
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Prerequisites and objectives blocks */
+.meta-block{
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.meta-block h4{
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.meta-block ul{ margin: 0; padding-left: 20px }
+.meta-block li{ margin: 4px 0; color: var(--text) }
+
+/* Callouts */
+.callout{
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--info);
+  background: var(--info-bg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+}
+.callout__label{
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.callout--tip{ border-left-color: var(--success); background: var(--success-bg) }
+.callout--tip .callout__label{ color: var(--success) }
+.callout--warn{ border-left-color: var(--warn); background: var(--warn-bg) }
+.callout--warn .callout__label{ color: var(--warn) }
+.callout--danger{ border-left-color: var(--danger); background: var(--danger-bg) }
+.callout--danger .callout__label{ color: var(--danger) }
+
+/* Feynman check */
+.feynman{
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+}
+.feynman::before{
+  content: "🧒 Giải thích trong một câu:";
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Tooltips on vocabulary */
+.term{
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+  position: relative;
+}
+.term:hover::after{
+  content: attr(data-def);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-strong);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-style: normal;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  z-index: 10;
+  box-shadow: var(--shadow);
+  line-height: 1.4;
+}
+
+/* Marginalia sidenotes */
+.sidenote{
+  margin: 24px 0;
+  padding: 12px 14px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.sidenote strong{ color: var(--text); display: block; margin-bottom: 4px; font-weight: 600 }
+
+/* ============================================================
+   FLIP CARD (active recall)
+============================================================ */
+.flip-card{
+  perspective: 1000px;
+  height: 180px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+.flip-card__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg) }
+
+.flip-card__face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__front{
+  background: var(--bg-elevated);
+}
+.flip-card__back{
+  background: var(--accent);
+  color: white;
+  transform: rotateY(180deg);
+}
+.flip-card__label{
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.flip-card__back .flip-card__label{ color: rgba(255,255,255,.85) }
+.flip-card__content{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PROGRESSIVE DISCLOSURE (details/summary)
+============================================================ */
+.deep-dive{
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+.deep-dive > summary{
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  transition: background var(--transition);
+}
+.deep-dive > summary::-webkit-details-marker{ display: none }
+.deep-dive > summary::before{
+  content: "▶";
+  color: var(--accent);
+  font-size: 10px;
+  transition: transform var(--transition);
+}
+.deep-dive[open] > summary::before{ transform: rotate(90deg) }
+.deep-dive > summary:hover{ background: var(--sidenote-bg) }
+.deep-dive__label{
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  margin-right: auto;
+}
+.deep-dive > *:not(summary){
+  padding: 0 18px 16px;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideDown{
+  from{ opacity: 0; transform: translateY(-8px) }
+  to  { opacity: 1; transform: translateY(0) }
+}
+
+/* ============================================================
+   CSS-ONLY BAR CHART
+============================================================ */
+.bar-chart{
+  margin: 32px 0;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.bar-chart__title{
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 16px;
+}
+.bar-row{
+  display: grid;
+  grid-template-columns: 140px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.bar-label{ color: var(--text) }
+.bar-track{
+  background: var(--sidenote-bg);
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill{
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  border-radius: 4px;
+  transition: width 400ms cubic-bezier(.4,0,.2,1);
+}
+.bar-row:hover .bar-fill{ filter: brightness(1.15) }
+.bar-value{ color: var(--text-muted); font-weight: 600; text-align: right }
+
+@media (max-width: 640px){
+  .bar-row{ grid-template-columns: 100px 1fr 40px; font-size: 13px }
+}
+
+/* ============================================================
+   CONCEPT FLOW (3-step)
+============================================================ */
+.concept-flow{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 32px 0;
+}
+.concept-flow__step{
+  padding: 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.concept-flow__step:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.concept-flow__num{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.concept-flow__arrow{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 20px;
+  user-select: none;
+}
+@media (max-width: 640px){
+  .concept-flow{ grid-template-columns: 1fr; }
+  .concept-flow__arrow{ transform: rotate(90deg); justify-self: center }
+}
+
+/* ============================================================
+   GLOSSARY
+============================================================ */
+.glossary{ margin: 32px 0 }
+.glossary dl{ margin: 0 }
+.glossary dt{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: 16px;
+  font-size: 15px;
+}
+.glossary dd{
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 15px;
+  padding-left: 0;
+}
+
+/* ============================================================
+   QUIZ
+============================================================ */
+.quiz{
+  margin: 56px 0 24px;
+  padding: 32px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.quiz h2{
+  font-family: var(--font-sans);
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.quiz__intro{
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.quiz fieldset{
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.quiz legend{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.quiz__option{
+  display: block;
+  padding: 12px 16px;
+  margin: 6px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  transition: all var(--transition);
+  position: relative;
+  padding-left: 44px;
+}
+.quiz__option::before{
+  content: "";
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  transition: all var(--transition);
+}
+.quiz__option:hover{ border-color: var(--accent); background: var(--sidenote-bg) }
+.quiz__option input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.quiz__option:has(input:checked){
+  border-color: var(--accent);
+  background: var(--sidenote-bg);
+}
+.quiz__option:has(input:checked)::before{
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg-elevated);
+}
+.quiz__option.correct-answer{
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--text-strong);
+}
+.quiz__option.correct-answer::before{
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 3px var(--success-bg);
+}
+.quiz__option.incorrect-answer{
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+.quiz__option.incorrect-answer::before{
+  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: inset 0 0 0 3px var(--danger-bg);
+}
+
+.quiz__explanation{
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__explanation{ display: block }
+
+.quiz__actions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.btn{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--transition);
+}
+.btn:hover{ background: var(--accent-strong); border-color: var(--accent-strong) }
+.btn--ghost{ background: transparent; color: var(--accent) }
+.btn--ghost:hover{ background: var(--sidenote-bg); color: var(--accent-strong) }
+
+.quiz__score{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__score{ display: block }
+
+/* ============================================================
+   FLOATING CONTROLS
+============================================================ */
+.controls{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 50;
+}
+.control-btn{
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+  font-size: 18px;
+  padding: 0;
+}
+.control-btn:hover{
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.control-btn svg{ width: 18px; height: 18px }
+.control-btn[data-active="true"]{ background: var(--accent); color: white }
+
+/* ============================================================
+   PRINT
+============================================================ */
+@media print{
+  .navigator, .marginalia, .controls, .progress-bar, .quiz__actions{ display: none !important }
+  .app{ grid-template-columns: 1fr; max-width: none; padding: 0 }
+  body{ background: white; color: black; font-size: 12pt }
+  .canvas h1, .canvas h2, .canvas h3{ page-break-after: avoid }
+  .flip-card{ height: auto }
+  .flip-card__inner{ transform: none !important; height: auto }
+  .flip-card__face{ position: static; padding: 8px 0; box-shadow: none; border: none }
+  .flip-card__back{ display: block; background: white; color: black }
+  .deep-dive[open] > *:not(summary){ animation: none }
+}
+
+/* ============================================================
+   PHASE ORBIT (6-node progress in left navigator)
+============================================================ */
+.orbit{
+  margin: 0 0 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.orbit__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+.orbit__track{
+  position: relative;
+  padding-left: 22px;
+}
+.orbit__track::before{
+  content: "";
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.orbit__node{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--transition);
+  user-select: none;
+}
+.orbit__node::before{
+  content: "";
+  position: absolute;
+  left: -22px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  transition: all var(--transition);
+  box-sizing: border-box;
+}
+.orbit__node[data-reached="true"]::before{
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.orbit__node[data-active="true"]{
+  color: var(--text-strong);
+  font-weight: 600;
+}
+.orbit__node[data-active="true"]::before{
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.orbit__node:hover{ color: var(--text) }
+
+/* ============================================================
+   MISCONCEPTION PRE-MORTEM (State 2 tail)
+============================================================ */
+.premortem{
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--accent2-soft);
+  border-left: 4px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text);
+}
+.premortem__label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 8px;
+}
+.premortem__wrong{ text-decoration: line-through; color: var(--text-muted) }
+.premortem__truth{ font-weight: 600; color: var(--text-strong) }
+
+/* ============================================================
+   SCAFFOLD CARD (S/I/P/R micro-loop, State 3)
+============================================================ */
+.scaffold{
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.scaffold__concept{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scaffold__concept::before{
+  content: "◆";
+  color: var(--accent);
+  font-size: 12px;
+}
+.scaffold__row{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px 16px;
+  margin: 12px 0;
+  align-items: start;
+}
+.scaffold__row-label{
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 4px;
+}
+.scaffold__row-body{ font-size: 15px; line-height: 1.65 }
+.scaffold__row-body p:last-child{ margin-bottom: 0 }
+
+/* Probe/Resolve details — nested within the scaffold card */
+.scaffold__probe{
+  margin: 8px 0 0;
+  border: 1px dashed var(--accent2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  overflow: hidden;
+}
+.scaffold__probe > summary{
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent2-strong);
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  user-select: none;
+  transition: background var(--transition);
+}
+.scaffold__probe > summary::-webkit-details-marker{ display: none }
+.scaffold__probe > summary::before{
+  content: "🤔 Tự hỏi";
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent2-strong);
+}
+.scaffold__probe[open] > summary::after{
+  content: "";
+  position: absolute;
+}
+.scaffold__probe > summary:hover{ background: var(--accent2-soft) }
+.scaffold__resolve{
+  padding: 12px 14px 14px 14px;
+  background: var(--accent2-soft);
+  border-top: 1px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.scaffold__resolve::before{
+  content: "💡 Giải đáp";
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINT (textarea + reveal)
+============================================================ */
+.checkpoint{
+  margin: 32px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+}
+.checkpoint__label{
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.checkpoint__question{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.checkpoint textarea{
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--transition);
+  box-sizing: border-box;
+}
+.checkpoint textarea:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.checkpoint__actions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.checkpoint__expert{
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  display: none;
+}
+.checkpoint.is-revealed .checkpoint__expert{ display: block; animation: slideDown 300ms cubic-bezier(.4,0,.2,1) }
+.checkpoint__expert-label{
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.checkpoint__saved{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   LAUNCH PAD (Extension Problem, State 6)
+============================================================ */
+.launchpad{
+  margin: 48px 0 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.launchpad::before{
+  content: "🚀";
+  position: absolute;
+  top: -16px; right: -8px;
+  font-size: 96px;
+  opacity: .06;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+.launchpad__label{
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--accent2);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.launchpad__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+.launchpad__problem{
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.launchpad__hints{
+  border-top: 1px dashed var(--border);
+  padding-top: 20px;
+  font-family: var(--font-sans);
+}
+.launchpad__hints-label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: block;
+}
+.launchpad__hint{
+  margin: 10px 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-left: 3px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  display: none;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.launchpad__hint.is-visible{ display: block }
+.launchpad__hint-label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 4px;
+  letter-spacing: .08em;
+}
+.launchpad__reveal{
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all var(--transition);
+}
+.launchpad__reveal:hover{
+  background: var(--accent2);
+  color: white;
+}
+.launchpad__reveal:disabled{
+  opacity: .4;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER (right-panel hover-to-elaborate)
+============================================================ */
+/* Terms in the canvas that are wired to amplifier notes */
+.canvas .term-amp{
+  border-bottom: 1px dashed var(--accent2);
+  cursor: help;
+  transition: background var(--transition);
+}
+.canvas .term-amp:hover,
+.canvas .term-amp.is-active{
+  background: var(--accent2-soft);
+  border-bottom-color: var(--accent2-strong);
+}
+/* The sticky slot at the top of the marginalia column */
+.amplifier{
+  position: sticky;
+  top: 0px;
+  z-index: 10;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: var(--accent2-soft);
+  border: 1px solid var(--accent2);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  min-height: 96px;
+  transition: opacity var(--transition);
+}
+.amplifier__label{
+  display: block;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 6px;
+}
+.amplifier__term{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+  display: block;
+  font-size: 14px;
+}
+.amplifier__body{ margin: 0 }
+.amplifier__empty{ color: var(--text-muted); font-style: italic }
+/* Hidden data pool — right-panel notes stored here, activated by JS */
+.amp-notes{ display: none }
+
+/* ============================================================
+   MISC
+============================================================ */
+.footer{
+  max-width: var(--measure);
+  margin: 64px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-align: center;
+}
+.kbd{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<div class="app">
+
+  <!-- =========================================================
+       LEFT — NAVIGATOR (sticky ToC)
+       ========================================================= -->
+  <aside class="navigator" aria-label="Table of contents">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời lượng đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 40 phút</p>
+    </div>
+
+    <!-- Phase Orbit — 6 phase nodes that light up as the reader scrolls past each section.
+         Each node targets a section id in the canvas: #baseline, #bridge, #exposition, #application, #boundary, #synthesis. -->
+    <div class="orbit" aria-label="Learning phases">
+      <p class="orbit__title">Lộ trình khám phá</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Điểm xuất phát</div>
+        <div class="orbit__node" data-target="bridge">2 · Nhịp cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Đi sâu vấn đề</div>
+        <div class="orbit__node" data-target="application">4 · Ứng dụng thực tế</div>
+        <div class="orbit__node" data-target="boundary">5 · Ranh giới cần nhớ</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tóm lại là...</div>
+      </div>
+    </div>
+
+    <nav>
+      <ul class="toc" id="toc">
+        <!-- Auto-populated by JS from h2/h3 in .canvas -->
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- =========================================================
+       MIDDLE — CANVAS (main content)
+       ========================================================= -->
+  <main class="canvas" id="canvas">
+
+    <h1>Ghen tị và đố kỵ: Ngọn lửa âm ỉ trong lòng</h1>
+
+    
+<!-- HOOK -->
+    <div class="hook">
+      <span class="hook__label">🎣 Móc câu</span>
+	<p>Bạn lướt mạng, thấy bạn cũ khoe cuộc sống viên mãn, tim chợt hẫng đi một nhịp. Đó không hẳn là ghét bỏ, mà là một nỗi bứt rứt khó tả — nửa muốn chúc mừng, nửa lại ước gì mình được như họ. Đó chính là sự đố kỵ. Thường bị mọi nền văn hóa và tôn giáo lên án, nhưng ghen tị lại tồn tại trong tất cả chúng ta. Nghịch lý là, nó vừa đóng vai trò như một động lực thúc đẩy ta tiến lên, <em>vừa</em> là mồi lửa ngầm thiêu rụi các mối quan hệ. Nhà tâm lý học Leon Festinger gọi hiện tượng này là "so sánh xã hội" — cái cân mặc định của não bộ để giúp bạn định vị chỗ đứng của mình. Ở phương Đông, Khổng Tử từng răn: "不患莫己知，求为可知也" (Bù huàn mò jǐ zhī, qiú wéi kě zhī yě) — đừng lo người khác không biết mình, hãy tự hỏi mình đã đủ xuất sắc để họ biết đến chưa. Còn phương Tây, từ ngàn xưa đã coi thèm muốn đồ của người khác là điều cấm kỵ. Vậy rốt cuộc, ghen tị là một "căn bệnh" cần chữa, một tội lỗi, hay là một nguồn năng lượng mạnh mẽ mà bạn có thể tận dụng?</p>
+    </div>
+
+    <!-- PREREQUISITES + OBJECTIVES -->
+    <div class="meta-block">
+      <h4>Bạn cần chuẩn bị gì?</h4>
+      <ul>
+        <li>Loạt bài <em>Khảo cứu</em> này bóc tách cảm xúc thành từng mảnh nhỏ — bạn có thể đọc lại phần nền tảng ở <a href="https://xspring.github.io/2026-08-20/kh%E1%BA%A3o-c%E1%BB%A9u-c%E1%BA%A3m-x%C3%BAc" target="_blank" rel="noopener">Khảo cứu #1</a>.</li>
+        <li>Ở <a href="https://xspring.github.io/2026-08-20/s%E1%BB%A3-h%C3%A3i-v%C3%A0-lo-%C3%A2u" target="_blank" rel="noopener">Khảo cứu #5</a>, chúng ta đã xem sợ hãi là còi báo động trước những nguy hiểm. Hôm nay, ta sẽ nhìn về một hướng khác: cảm xúc sinh ra từ việc <em>so sánh bản thân với người khác</em>. Ở đây không có đe dọa nào từ bên ngoài, chỉ có khoảng cách giữa "mình đang ở đâu" và "mình muốn gì".</li>
+        <li>Bạn đã từng ghen tị và từng bị người khác ghen tị — đó là điều kiện thực tế duy nhất bạn cần để hiểu bài viết này.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Sau bài viết này, bạn sẽ nắm được…</h4>
+<ul>
+        <li><strong>Hiểu rõ sự khác biệt:</strong> Phân định rạch ròi giữa <em>envy</em> (sự ghen tị — xảy ra giữa hai người, nảy sinh do bạn thiếu thốn thứ gì đó) và <em>jealousy</em> (sự đố kỵ/ghen tuông — rắc rối của ba người, xuất phát từ nỗi sợ mất đi người mình yêu) <a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037//0022-3514.64.6.906" target="_blank" rel="noopener">Parrott &amp; Smith, 1993</a>.</li>
+        <li><strong>Nguồn gốc tâm lý:</strong> Hiểu được vì sao ta hay so sánh qua Thuyết so sánh xã hội (Festinger, 1954). Biết cách nhận diện ghen tị lành mạnh (<em>benign envy</em> — động lực vươn lên) và ghen tị độc hại (<em>malicious envy</em> — muốn dìm người khác xuống) <a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037/a0015669" target="_blank" rel="noopener">van de Ven et al., 2009</a>.</li>
+        <li><strong>Góc nhìn tiến hóa:</strong> Đàn ông thường sợ bị cắm sừng về mặt thể xác, trong khi phụ nữ lại sợ mất đi sự kết nối tình cảm. Lăng kính tiến hóa sẽ giải mã nguyên nhân đằng sau những nỗi sợ này <a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037//0022-3514.64.6.906" target="_blank" rel="noopener">Buss et al., 1992</a>.</li>
+        <li><strong>Góc nhìn đa văn hóa:</strong> Phương Tây coi ghen tị là một trong bảy đại tội. Phương Đông thì có thành ngữ "bịt tai trộm chuông" (tự dối lòng) và lời răn của Khổng Tử để biến ghen tị thành sự rèn luyện bản thân.</li>
+        <li><strong>Cú lừa của mạng xã hội:</strong> Bạn sẽ hiểu hiệu ứng "highlight reel" (chỉ khoe những thứ tốt đẹp nhất). Mạng xã hội không đẻ ra sự ghen tị, nó chỉ là chiếc kính lúp khổng lồ phóng đại cảm xúc của bạn <a class="source" href="https://doi.org/10.1037/0022-3514.76.1.129" target="_blank" rel="noopener">Gibbons &amp; Buunk, 1999</a>.</li>
+        <li><strong>Khi ghen tị trở thành bệnh:</strong> Nhận biết ranh giới giữa một cơn ghen bình thường và ghen tuông mang tính hoang tưởng, áp đặt độc hại <a class="source" href="https://doi.org/10.1016/j.avb.2011.08.006" target="_blank" rel="noopener">Buss &amp; Duntley, 2011</a>.</li>
+        <li><strong>Cách hóa giải:</strong> Sở hữu bộ công cụ tâm lý để gọi tên cảm xúc, rèn luyện sự bao dung với chính mình (<em>self-compassion</em>), và áp dụng tinh thần "quân tử tự cầu ở mình" để tập trung xây dựng giá trị bản thân.</li>
+      </ul>
+    </div>
+
+<h2 id="baseline">Khởi điểm · Ghen tị là gì — Hai mặt của một đồng xu</h2>
+<p>Bí mật cốt lõi của bài viết này nằm ở đây: <strong>Ghen tị (envy) xuất hiện khi bạn thấy mình <em>thiếu</em> thứ người khác có. Còn đố kỵ/ghen tuông (jealousy) ập đến khi bạn sợ <em>mất</em> người mình yêu thương vào tay kẻ thứ ba.</strong> Chúng ta hay dùng hai từ này lẫn lộn với nhau, nhưng về mặt tâm lý, chúng hoàn toàn khác biệt từ nguyên nhân đến cách giải quyết. Theo Parrott &amp; Smith (1993), sự khác biệt nằm ở số lượng người tham gia: <strong>envy chỉ cần hai người</strong> (bạn và người có thứ bạn thích); trong khi <strong>jealousy là drama ba người</strong> (bạn, người yêu, và kẻ thứ ba) <a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037//0022-3514.64.6.906" target="_blank" rel="noopener">Parrott &amp; Smith, 1993</a>. Nói dễ hiểu: <em>Envy thầm nghĩ "tôi muốn cái xe của bạn"; Jealousy gào lên "tôi không muốn mất bạn vào tay người đó".</em> Bạn có lẽ đã trải qua cả hai rồi. Bài viết này sẽ trao cho bạn tấm bản đồ để hiểu rõ chúng bắt nguồn từ đâu: đó chính là thói quen <em>thích so sánh</em> của con người.</p>
+
+<h2 id="bridge">Cầu nối · Cơ chế So sánh – Cảm xúc – Hành động</h2>
+<p>Hãy tưởng tượng trong đầu bạn luôn có <strong>một chiếc cân vô hình</strong>. Một bên đĩa cân là bạn, bên kia là người bạn đang dòm ngó. Chiếc cân này không phải tự dưng mà có, nó là <strong>bản năng sinh tồn</strong> giúp bạn biết mình đang đứng ở đâu trong xã hội, lúc nào cần ganh đua, lúc nào nên lùi lại. Năm 1954, nhà tâm lý học Leon Festinger gọi đây là <strong>Thuyết so sánh xã hội</strong>. Vì cuộc đời không có chiếc thước kẻ nào để đo xem "tôi có đang hạnh phúc không", nên chúng ta đành phải nhìn sang nhà hàng xóm để làm mốc <a class="source" href="https://journals.sagepub.com/doi/10.1177/001972495400700203" target="_blank" rel="noopener">Festinger, 1954</a>. Chiếc cân này chạy qua ba bước:</p>
+
+<ul>
+  <li><strong>So sánh (Quét radar):</strong> Não bạn liên tục rà soát xem ai có nhà to hơn, ai xinh hơn, ai nhiều tiền hơn.</li>
+  <li><strong>Cảm xúc (Báo động):</strong> Kết quả so sánh sẽ tạo ra cảm xúc ngay tắp lự. Nếu họ hơn bạn → sinh ra ghen tị (cảm giác thèm thuồng); nếu có kẻ nhòm ngó người yêu bạn → sinh ra đố kỵ (nỗi lo sợ).</li>
+  <li><strong>Hành động (Phản ứng):</strong> Cảm xúc đó sẽ đẩy bạn vào hành động: cố gắng vươn lên, chê bai dìm hàng họ, hoặc chìm trong tự ti.</li>
+</ul>
+
+<p>Đó gọi là <strong>Mô hình So sánh – Cảm xúc – Hành động</strong>, với ba điểm cần lưu ý:</p>
+
+<ul>
+  <li><strong>Não so sánh hoàn toàn tự động.</strong> Dù bạn có nhủ thầm "mình không sân si", não bạn vẫn âm thầm so đong đếm. Festinger gọi đó là một động lực bản năng, giống như việc bạn khát thì phải tìm nước uống.</li>
+  <li><strong>Mọi thước đo đều là tương đối.</strong> Bạn có thể đang rất vui với mức lương 50 triệu, cho đến khi biết đồng nghiệp ngồi cạnh kiếm 70 triệu. Tự dưng bạn thấy ấm ức dù tiền trong túi bạn không hề ít đi. Đó là sức mạnh của chiếc cân so sánh.</li>
+  <li><strong>Cảm xúc có thể rẽ làm hai hướng.</strong> Nếu sự chênh lệch khiến bạn muốn cố gắng hơn → đó là ghen tị lành mạnh (benign envy). Nhưng nếu nó khiến bạn chỉ muốn đạp người ta xuống bùn → đó là ghen tị độc hại (malicious envy). Vấn đề không phải là bạn có so sánh hay không, mà là <em>bạn làm gì</em> sau khi so sánh.</li>
+</ul>
+
+<p>Sự phân chia này là thành quả của hàng thập kỷ nghiên cứu từ nhiều chuyên gia: từ Festinger (1954) đến van de Ven (2009), từ khái niệm Bảy Đại Tội của phương Tây đến triết lý tu dưỡng của phương Đông. Hãy nhớ kỹ bản đồ này, chúng ta sẽ dùng nó xuyên suốt bài viết.</p>
+
+<!-- Concept-flow -->
+<div class="concept-flow">
+  <div class="concept-flow__step"><span class="concept-flow__num">01</span>So sánh — Não quét môi trường xung quanh</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">02</span>Cảm xúc — Ghen tị (thiếu thốn) hoặc Đố kỵ (sợ mất)</div>
+  <div class="concept-flow__arrow">→</div>
+  <div class="concept-flow__step"><span class="concept-flow__num">03</span>Hành động — Vươn lên · Kéo xuống · Bất lực</div>
+</div>
+
+<!-- Pre-mortem -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Trước khi đọc tiếp — nhiều người hay hiểu lầm rằng…</span>
+  <p><span class="premortem__wrong">"Ghen tị là một thói xấu tồi tệ; người tốt thì không bao giờ biết ghen."</span></p>
+  <p>Thực ra, <em>ghen tị là một bản năng sinh tồn được giữ lại qua quá trình tiến hóa. Nó tồn tại ở mọi nền văn hóa. Chức năng của nó là thôi thúc bạn cố gắng hơn (ghen lành) hoặc bảo vệ mối quan hệ của bạn (ghen tuông).</em></p>
+  <p><span class="premortem__truth">Sự thật là:</span> Ghen tị là <strong>một dòng cảm xúc có hai mặt</strong>. Trong khi "ghen lành" (benign envy) giúp bạn có động lực học hỏi; thì "ghen độc" (malicious envy) lại nuôi dưỡng sự cay cú và muốn phá hoại. Chìa khóa không nằm ở việc bạn có ghen hay không, mà là <em>bạn dùng cảm xúc đó để làm gì</em>. Khổng Tử từng nói: "Đừng lo người không biết mình, hãy lo mình chưa đáng để người biết". Đó chính là nghệ thuật biến sự ghen tị tăm tối thành động lực rèn luyện bản thân.</p>
+</div>
+
+<h2 id="exposition">Đi sâu vấn đề · Từng mảnh ghép của sự ghen tị</h2>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch1-scaffold-1">
+  <h3 class="scaffold__concept">Envy (Ghen tị) vs Jealousy (Đố kỵ/Ghen tuông) — Khác nhau thế nào?</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body">
+<p>Dù chúng ta hay dùng chung một từ, Parrott &amp; Smith (1993) đã phân chia chúng rất rõ ràng qua ba điểm: <strong class="term-amp" data-note="amp-envy-vs-jealousy" tabindex="0">(1) Số người tham gia</strong> — <em>envy</em> là chuyện của hai người (bạn và đối tượng bạn ghen), còn <em>jealousy</em> là rắc rối ba người (bạn, người yêu, và kẻ thứ ba); <strong>(2) Cảm xúc chính</strong> — <em>envy</em> đến từ <em>sự thiếu thốn và thèm thuồng</em>, còn <em>jealousy</em> sinh ra từ <em>sự bất an, sợ mất mát</em>; <strong>(3) Mục tiêu</strong> — <em>envy</em> nhắm vào <em>tài sản, tài năng, nhan sắc</em> của người khác, còn <em>jealousy</em> nhắm vào việc bảo vệ <em>mối quan hệ hay vị trí</em> của chính mình <a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037//0022-3514.64.6.906" target="_blank" rel="noopener">Parrott &amp; Smith, 1993</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Khi bạn thấy đồng nghiệp lên sếp — đó là <em>envy</em>: "Mình cũng muốn vị trí đó". Còn khi bạn thấy người yêu nhắn tin à ơi với người khác — đó là <em>jealousy</em>: "Mình sợ bị cắm sừng". Hai cảm xúc này cần hai cách xử lý khác nhau: envy cần bạn tự phát triển bản thân, còn jealousy đòi hỏi bạn phải vun đắp lại mối quan hệ. Bắt sai bệnh sẽ dẫn đến uống sai thuốc.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Hai cái này có bao giờ ập đến cùng lúc không?</summary>
+    <div class="scaffold__resolve">
+<p>Có chứ — và đó là lúc mệt mỏi nhất! Thử tưởng tượng người yêu bạn trò chuyện vui vẻ với một người vô cùng duyên dáng. Bạn nảy sinh <em>jealousy</em> (sợ mất người yêu), đồng thời bạn cũng thấy <em>envy</em> với kẻ kia (họ cuốn hút hơn mình). Khi hai cảm xúc này hòa làm một, bạn sẽ cực kỳ dễ mất kiểm soát. Việc tỉnh táo bóc tách được: "Mình đang sợ mất mát, hay đang tự ti vì kém cỏi hơn?" sẽ giúp bạn tìm đúng cách để tháo gỡ.</p>
+
+</div>
+  </details>
+</section>
+<div class="feynman">Tóm lại: <em>envy</em> là "tôi muốn thứ của bạn"; còn <em>jealousy</em> là "tôi sợ mất người của tôi vào tay kẻ khác".</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch1-scaffold-2">
+  <h3 class="scaffold__concept">Ghen lành (Benign) vs Ghen độc (Malicious)</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Van de Ven và cộng sự (2009) đã chia nhỏ sự ghen tị thành hai loại: <strong>Ghen lành (benign envy)</strong> là khi bạn thấy người ta giỏi hơn và bạn tin rằng mình <em>có thể cố gắng vươn tới mức đó</em> — nó biến thành động lực học tập. <strong>Ghen độc (malicious envy)</strong> là khi bạn thấy họ giỏi hơn nhưng bạn lại tin rằng mình <em>không thể nào với tới được</em> — sự bất lực này biến thành khao khát muốn dìm họ xuống bùn <a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037/a0015669" target="_blank" rel="noopener">van de Ven et al., 2009</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Hai sinh viên thấy bạn mình điểm cao. Sinh viên A nghĩ: "Bạn ấy học nhóm nào thế nhỉ, mình phải xin học cùng mới được" → Lần sau điểm cao hơn (Ghen lành). Sinh viên B nghĩ: "Chắc nịnh thầy thôi, chả có gì hay" → Đi nói xấu bạn (Ghen độc). Cùng là so sánh, nhưng điểm khác biệt nằm ở <em>niềm tin vào khả năng của bản thân</em> (self-efficacy) — tin mình làm được thì sẽ ghen lành, thấy mình vô dụng thì sẽ ghen độc.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Vậy nên kìm nén hay là cứ thừa nhận mình ghen?</summary>
+    <div class="scaffold__resolve"><p>Cả hai cách đều dở. Kìm nén (giả vờ như không quan tâm) sẽ khiến cảm xúc đó xì ra ở chỗ khác, như là cáu gắt vô cớ hay mệt mỏi. Còn nếu cứ "thả trôi" mặc kệ sự ghen độc xúi giục, bạn sẽ tự phá hoại cuộc sống của mình. Cách tốt nhất là <em>Nhận diện và Chuyển hóa</em>. Gọi tên nó: "Mình đang ghen đây". Sau đó bẻ lái: Nếu đang ghen độc, hãy tự hỏi mình đang thiếu kỹ năng gì để có thể làm được như họ? Cứ hướng năng lượng vào việc nâng cấp chính mình, như lời Khổng Tử dạy: "Quân tử cầu ở mình".</p>
+</div>
+  </details>
+</section>
+<div class="feynman">Ghen có hai đường: "ghen lành" đẩy bạn lên cao; "ghen độc" xúi bạn kéo người ta xuống. Bạn chọn đường nào tùy thuộc vào việc bạn có tin vào năng lực của mình hay không.</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch1-scaffold-3">
+  <h3 class="scaffold__concept">Ghen tị là chuyện thường tình — Nó cực kỳ phổ biến</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body">
+<p>Ghen tị là một trong những cảm xúc phổ biến nhất của loài người. Phương Tây đưa thói "thèm muốn đồ của người khác" vào một trong Mười Điều Răn (cấm ngay từ trong suy nghĩ). Phương Đông thì có cả rổ thành ngữ cảnh báo về thói đố kỵ ("ghen ăn tức ở"). Các nhà khoa học dùng thang đo INCOM (Gibbons &amp; Buunk, 1999) và phát hiện ra rằng: <strong>chúng ta so sánh bản thân với người khác liên tục</strong>, và phần lớn là toàn thích đi so với những người giỏi hơn mình (so sánh hướng lên - upward comparison) <a class="source" href="https://doi.org/10.1037/0022-3514.76.1.129" target="_blank" rel="noopener">Gibbons &amp; Buunk, 1999</a>.</p>
+</div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body">
+<p>Đừng vội trách bản thân xấu tính khi thấy chạnh lòng lúc bạn thân mua nhà mới, hay người yêu cũ chuẩn bị cưới. Mạng xã hội chỉ làm mọi thứ tệ hơn, chứ cái tính thích so bì thì con người đã có từ thuở hồng hoang rồi. Người La Mã gọi nó là "invidia", còn Khổng Tử thì răn dạy học trò đừng đong đếm. Vấn đề không phải là làm sao để hết ghen, mà là biết gọi tên nó, hiểu nó và đừng để nó làm mờ mắt mình.</p>
+
+</div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Ai cũng ghen, sao ít ai dám thừa nhận?</summary>
+<div class="scaffold__resolve"><p>Bởi vì việc thú nhận mình đang ghen tị thường bị gắn nhãn là kẻ ích kỷ, yếu kém và nhỏ nhen. Ở phương Tây, nó bị quy vào "bảy đại tội". Ở phương Đông, đố kỵ cũng mang tiếng xấu về mặt đạo đức. Kết quả là, thay vì đối diện thẳng thắn, chúng ta chọn cách lấp liếm, cười nói giả lả chúc mừng, hoặc ngấm ngầm nói xấu sau lưng. Việc dũng cảm tự thừa nhận "Ừ, tôi đang ghen tị đấy!" với chính mình là bước đầu tiên để giải thoát khỏi nó.</p></div>
+
+  </details>
+</section>
+<div class="feynman">Ghen tị không phải "sản phẩm lỗi" của thời nay, nó là tính năng mặc định của con người, chỉ là mạng xã hội đang làm nó chạy quá công suất mà thôi.</div>
+
+<!-- Bar chart -->
+<div class="bar-chart">
+  <div class="bar-chart__title">Tần suất hay đi so sánh của chúng ta (Thang điểm 1-5)</div>
+  <div class="bar-row">
+    <div class="bar-label">Hay nhìn người giỏi hơn (Upward)</div>
+    <div class="bar-track"><div class="bar-fill" style="width:62%"></div></div>
+    <div class="bar-value">3.1</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Mức độ so sánh chung</div>
+    <div class="bar-track"><div class="bar-fill" style="width:58%"></div></div>
+    <div class="bar-value">2.9</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Hay nhìn người kém hơn (Downward)</div>
+    <div class="bar-track"><div class="bar-fill" style="width:54%"></div></div>
+    <div class="bar-value">2.7</div>
+  </div>
+  <p class="bar-chart__caption">Nghiên cứu trên 7.500 người cho thấy: Bản tính con người là thích nhìn lên những người giỏi hơn mình thay vì nhìn xuống để tự an ủi. Điều đó nghĩa là: thói quen ghen tị là bản năng mặc định của não bộ.</p>
+</div>
+
+<!-- Checkpoint 1 -->
+<div class="checkpoint" data-checkpoint-id="cp-ghen-ti-1">
+  <span class="checkpoint__label">🛑 Tạm dừng &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Hãy nhớ lại một khoảnh khắc bạn từng <em>thèm muốn thứ người khác có (envy)</em> và một lần bạn <em>sợ mất người yêu/bạn thân vào tay kẻ khác (jealousy)</em>. Hãy thử viết ra hai tình huống đó để phân biệt rõ hai cảm giác này nhé.</p>
+  <textarea placeholder="Viết vài dòng chia sẻ của bạn ở đây..."></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Xem gợi ý</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Gợi ý cách nhận diện</span>
+    <p>Nếu bạn thấy đồng nghiệp mới đổi xe xịn và bạn cũng muốn có nó → Đó là Envy (chỉ có 2 người). Nếu bạn thấy crush đi xem phim với người khác và bạn đứng ngồi không yên → Đó là Jealousy (có sự xuất hiện của người thứ 3). Phân biệt đúng bệnh thì mới có cách giải quyết đúng: Envy thì cần cày cuốc kiếm tiền mua xe, Jealousy thì cần nói chuyện rõ ràng với crush!</p>
+  </div>
+</div>
+
+<h2 id="application">Ứng dụng thực tế · Đọc vị một ngày của bạn</h2>
+<p>Hãy thử xem chiếc cân so sánh hoạt động trong đời sống hàng ngày thế nào nhé. Sáng mở mắt ra lướt Facebook, thấy cô bạn cũ đăng ảnh chuẩn bị đi du học thạc sĩ.</p>
+<ul>
+  <li><strong>Não tự động quét</strong>: Bạn và cô ấy bằng tuổi, cùng xuất phát điểm, nhưng cô ấy đang làm được điều bạn hằng ao ước.</li>
+  <li><strong>Cảm xúc dâng lên</strong>: Bạn thấy cồn cào thèm muốn (Envy xuất hiện).</li>
+  <li><strong>Hành động phản ứng</strong>: Nếu bạn nghĩ tích cực (ghen lành) → Bạn sẽ bật máy tính lên tìm hiểu về học bổng. Nếu bạn cáu kỉnh (ghen độc) → Bạn lầm bầm "Chắc nhà giàu ném tiền cho đi chứ gì" rồi mang tâm trạng bực dọc đó suốt cả ngày.</li>
+</ul>
+<p>Điều quan trọng là: <em>bạn không cấm não bộ đi so sánh được</em>, nhưng bạn hoàn toàn có thể tự nhắc mình: "À, mình đang ghen tị. Mình sẽ dùng cảm giác này làm động lực đi cày tiếng Anh!".</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+  <div class="flip-card__face flip-card__front">
+    <span class="flip-card__label">Câu hỏi nhanh</span>
+    <div class="flip-card__content">Một người bạn than phiền: "Mình rất ghen tị khi thấy chồng mình đi ăn với cô đồng nghiệp." Dựa trên kiến thức vừa đọc, bạn thấy người bạn này dùng từ "ghen tị" đã chuẩn chưa?</div>
+  </div>
+  <div class="flip-card__face flip-card__back">
+    <span class="flip-card__label">Giải đáp</span>
+    <div class="flip-card__content">Dùng từ "ghen tị" (envy) ở đây là sai bối cảnh. Cô ấy đang trải qua sự "ghen tuông/đố kỵ" (jealousy) vì sợ mất chồng vào tay người thứ 3. Nếu lầm tưởng là envy, cô ấy có thể đi thẩm mỹ, mua sắm để "nâng cấp bản thân". Nhưng giải pháp thực sự cho jealousy là phải đối thoại thẳng thắn với chồng để vun đắp niềm tin. Gọi đúng tên cảm xúc rất quan trọng!</div>
+  </div>
+</div>
+
+<h2 id="boundary">Ranh giới cần nhớ · Ghen tị KHÔNG PHẢI LÀ…</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Đừng hiểu lầm</span>
+
+<p><strong>"Người tử tế thì không bao giờ biết ghen."</strong> Hoàn toàn sai. Ghen tị là một công cụ tiến hóa giúp con người nhận biết vị trí xã hội của mình. Mười Điều Răn của phương Tây hay những lời răn dạy của phương Đông không chứng minh rằng ghen tị là đồ bỏ đi; chúng chỉ là những biển báo giao thông giúp bạn kiểm soát và chuyển hóa nó thành năng lượng tích cực mà thôi.</p>
+
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Lưu ý nhỏ</span>
+<p><strong>Đôi khi bạn ghen tị vô cớ — và đó không phải lỗi của bạn.</strong> Không phải lúc nào não bộ cũng hoạt động một cách có lý trí. Đôi lúc bạn sẽ thấy chạnh lòng với một người lạ hoắc trên mạng, hoặc thèm muốn một món đồ mà bạn vốn chẳng cần. Đó là do radar tự động của não đang làm việc quá sức. Đừng tự trách mình là kẻ tồi tệ, hãy nhận diện nó và mỉm cười cho qua.</p>
+
+</div>
+
+<!-- Metacognitive prompt -->
+<div class="callout callout--tip">
+  <span class="callout__label">🔮 Thử tài dự đoán</span>
+  <p>Trước khi qua phần tiếp theo, hãy thử đoán xem: Nếu ghen tị là bản năng sinh tồn, thì ngày xưa tổ tiên chúng ta dùng nó để làm gì? Và tại sao chuyện ghen tuông nam nữ lại luôn gay gắt và dữ dội hơn so với việc ghen tị chuyện tiền bạc?</p>
+</div>
+
+<h2 id="synthesis">Tóm lại là... · Kết thúc Chương 1</h2>
+<p>Ghen tị (envy) là khi bạn <strong>thiếu thốn</strong> thứ người khác có, còn đố kỵ (jealousy) là nỗi <strong>sợ mất</strong> người mình yêu. Chúng đều do chiếc radar so sánh xã hội của não bộ kích hoạt. Ghen tị chia làm hai hướng: Ghen lành (động lực vươn lên) và Ghen độc (muốn kéo người khác xuống). Việc so đo tính toán là thói quen chung của toàn nhân loại, phương Tây gán cho nó mác "tội lỗi", còn phương Đông khuyên ta nên rèn luyện bản thân thay vì ấm ức. Nhớ kỹ: Lần tới khi thấy ghen tị, đừng tự dằn vặt mình, hãy hỏi bản thân: "Mình dùng năng lượng này để bay lên hay chìm xuống?". Phần tiếp theo, chúng ta sẽ đi lùi về quá khứ để xem Tổ tiên chúng ta đã "ghen" như thế nào.</p>
+
+<blockquote>
+  <strong>Chìa khóa mang về:</strong> Ghen tị không phải là kẻ thù. Câu hỏi đúng không phải là "làm sao để hết ghen?", mà là "mình sẽ dùng cơn ghen này làm bàn đạp hay làm đá tảng?".
+</blockquote>
+
+<h2>Chương 2 · Nguồn gốc tiến hóa — Vì sao ta lại ghen?</h2>
+
+<p>Rõ ràng là chẳng có con hổ nào đuổi theo, nhưng thấy đứa bạn thăng chức là tim bạn tự dưng đập thình thịch. Nghịch lý ở chỗ: <em>một thông tin xã hội vô hình lại kích hoạt phản ứng cơ thể y hệt như lúc bạn gặp nguy hiểm tính mạng.</em> Ở phần này, chúng ta sẽ xem xét xem vì sao nam và nữ lại có kiểu ghen tuông khác biệt nhau dưới góc nhìn của thuyết tiến hóa.</p>
+
+<h3>Chỗ neo Chương 2: So sánh là bản năng sinh tồn</h3>
+<p>Não bạn thiết kế tính năng so sánh để biết bạn đang mạnh hay yếu hơn người khác, từ đó quyết định xem nên đánh, nên hùa theo hay nên bỏ chạy. Nhờ có nó mà tổ tiên chúng ta mới phân chia được thức ăn và tìm được bạn tình. Vấn đề là: <em>tại sao cái sự so sánh đó đôi khi lại đớn đau đến vậy?</em></p>
+
+<!-- Pre-mortem ch2 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Đừng hiểu lầm rằng…</span>
+
+  <p><span class="premortem__wrong">"Ghen tuông tiến hóa chỉ là cái cớ để đàn ông kiểm soát phụ nữ."</span></p>
+  <p>Sai lầm! <em>Nó là cơ chế phòng vệ có ở cả hai giới, chỉ là biểu hiện hơi khác nhau một chút do quá trình phân chia sinh sản từ thời đồ đá.</em></p>
+  <p><span class="premortem__truth">Sự thật là:</span> Ghen tuông đóng vai trò như <strong>hệ thống báo động đỏ để bảo vệ các mối quan hệ quan trọng</strong>. Đàn ông thường nhạy cảm hơn với việc bị cắm sừng thể xác (vì họ sợ rủi ro phải nuôi con của kẻ khác), còn phụ nữ lại nhạy cảm hơn với sự phản bội tình cảm (vì họ sợ mất đi người che chở và chu cấp cho mẹ con họ). Hiểu điều này không phải để dung túng cho tính gia trưởng, mà để bạn biết thông cảm cho những nỗi sợ ngầm bên trong bản thân và đối tác.</p>
+</div>
+
+<h3>Đi sâu vấn đề · Nguồn gốc tiến hóa của ghen tị</h3>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch2-scaffold-1">
+  <h3 class="scaffold__concept">Động lực tự đánh giá — Cái radar của Festinger</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Theo Festinger (1954), chúng ta sinh ra đã có nhu cầu phải tự đánh giá bản thân. Không có chiếc thước kẻ nào đo được hạnh phúc hay năng lực, nên ta buộc phải ngó sang người xung quanh <a class="source" href="https://journals.sagepub.com/doi/10.1177/001972495400700203" target="_blank" rel="noopener">Festinger, 1954</a>. Nó là một <strong>bản năng (drive)</strong> mãnh liệt như việc bạn thấy đói thì phải ăn. Trong bộ lạc ngày xưa, biết mình yếu hay mạnh hơn người khác sẽ định đoạt việc bạn sống hay chết.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Bạn bước vào một phòng tiệc, não bộ tự động quét trong 3 giây: ai mặc đẹp hơn, ai tự tin hơn, ai đi một mình. Bạn không cố tình làm thế, nhưng não phải quét để định vị chỗ đứng của bạn. Nhìn người giỏi hơn (upward comparison) giúp bạn biết mình cần cố gắng gì, nhìn người kém hơn (downward comparison) giúp bạn thấy an ủi. Vấn đề chỉ nảy sinh khi bạn nhìn lên và thấy mình quá bất lực, sinh ra cay cú.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Chỉ vì so sánh mà sinh ra ghen tị à?</summary>
+    <div class="scaffold__resolve"><p>So sánh chỉ là mồi lửa. Ghen tị bùng lên to hay nhỏ phụ thuộc vào: Bạn có nghĩ thành công của người khác sẽ làm mất phần của mình không? Lòng tự trọng của bạn có đang thấp không? Môi trường có quá chênh lệch giàu nghèo không? Tóm lại, so sánh ai cũng có, nhưng người tự tin sẽ ít bị cơn ghen hành hạ hơn người tự ti.</p></div>
+  </details>
+</section>
+<div class="feynman">Festinger nói: Việc bạn hay so sánh không phải tật xấu, đó là bản năng sinh tồn giúp bạn biết mình đang đứng ở đâu trong xã hội.</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch2-scaffold-2">
+  <h3 class="scaffold__concept">Ghen lành và Ghen độc — Hai ngã rẽ của tiến hóa</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Van de Ven (2009) khẳng định: Niềm tin vào bản thân quyết định bạn sẽ ghen kiểu gì. Tin mình có thể thay đổi cục diện → Sinh ra <strong>Ghen lành</strong> (nỗ lực vươn lên). Thấy mình vô dụng, bất lực → Sinh ra <strong>Ghen độc</strong> (tìm cách kéo người khác xuống) <a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037/a0015669" target="_blank" rel="noopener">van de Ven et al., 2009</a>. Quyền kiểm soát (<em class="term-amp" data-note="amp-perceived-controllability" tabindex="0">perceived controllability</em>) nằm ở chính suy nghĩ của bạn.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Ghen độc thực chất từng là chiến thuật sinh tồn thời nguyên thủy: Khi con khỉ đầu đàn quá mạnh, cách duy nhất để con khỉ xếp dưới có phần ăn là phải kéo con đầu đàn xuống. Nhưng trong xã hội văn minh hiện đại, chiến thuật này trở nên ngớ ngẩn và độc hại.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Dùng "ghen độc" ở thời nay thì sao?</summary>
+<div class="scaffold__resolve"><p>Đó là uống thuốc độc tự sát! Thời nguyên thủy thức ăn hiếm hoi nên phải triệt hạ nhau. Thời nay cơ hội có ở khắp nơi. Phá hoại người khác chỉ làm bạn mất đi đối tác và bị cô lập. Hiểu điều này để bạn tự phanh mình lại mỗi khi trong đầu nảy ra ý định muốn dìm hàng ai đó.</p></div>
+
+  </details>
+</section>
+<div class="feynman">Tổ tiên truyền lại cho ta cả hai loại ghen, nhưng chỉ có "ghen lành" (cố gắng học hỏi) mới giúp bạn tồn tại và phát triển ở thời hiện đại.</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch2-scaffold-3">
+  <h3 class="scaffold__concept">Đàn ông sợ cắm sừng, Phụ nữ sợ thay lòng</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Năm 1992, chuyên gia David Buss làm một thử nghiệm kinh điển: Đưa ra 2 lựa chọn (1) Người yêu lên giường với người khác và (2) Người yêu nảy sinh tình cảm sâu đậm với người khác. <strong>60% đàn ông sợ bị phản bội thể xác hơn</strong>, trong khi phần lớn <strong>phụ nữ lại sợ sự phản bội tình cảm hơn</strong> <a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037//0022-3514.64.6.906" target="_blank" rel="noopener">Buss et al., 1992</a>. Nghiên cứu sau này cũng tái khẳng định điều này là có thật <a class="source" href="https://www.sciencedirect.com/science/article/abs/pii/S1090513812000244" target="_blank" rel="noopener">Sagarin et al., 2012</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+<div class="scaffold__row-body"><p>Giải thích về mặt tiến hóa rất dễ hiểu: Đàn ông thời xưa luôn mang nỗi lo "đổ vỏ" (nuôi nhầm con người khác) nên phản bội thể xác là cú tát nặng nề nhất. Phụ nữ thì luôn biết chắc đứa con mình đẻ ra là của mình, nhưng họ lại sợ mất đi người đàn ông mang thức ăn về bảo vệ mẹ con họ, nên họ sợ đối phương "thay lòng đổi dạ" hơn. Đặc tính tâm lý này vẫn di truyền ngầm đến tận ngày nay.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Cái này có phải để cổ xúy thói gia trưởng, kiểm soát của nam giới không?</summary>
+    <div class="scaffold__resolve"><p>Không hề! Thuyết tiến hóa chỉ giải thích "tại sao ta lại có cảm giác đó", chứ không cấp phép cho bạn hành động bạo lực hay kiểm soát người yêu. Hiểu bản thân để tự trấn an mình, và giải quyết khủng hoảng niềm tin bằng cách đối thoại văn minh, chứ không phải giở thói côn đồ.</p></div>
+  </details>
+</section>
+<div class="feynman">Ghen tuông nam nữ khác nhau là do di truyền từ thuở hồng hoang: Đàn ông sợ mất nòi giống, phụ nữ sợ mất chỗ dựa.</div>
+
+<!-- Deep dive (optional 🔴) -->
+<details class="deep-dive">
+
+<summary><span class="deep-dive__label">🔴 Đào sâu</span> Bằng chứng này có đáng tin không?</summary>
+  <div>
+    <p>Rất đáng tin. Ban đầu người ta cũng cãi nhau dữ lắm. Nhưng nghiên cứu gộp của Sagarin (2012) phân tích trên hàng chục nghìn người với đủ mọi bài test từ đo nhịp tim đến phỏng vấn thực tế đều cho ra chung một đáp án: Sự khác biệt giới tính trong việc ghen tuông là có thật.</p>
+    <p>Tất nhiên, vẫn có đàn ông suy sụp vì vợ yêu người khác bằng con tim, và có phụ nữ điên tiết vì chồng ngoại tình thể xác. Tiến hóa chỉ đưa ra xu hướng chung, còn mỗi cá nhân sẽ linh hoạt tùy tình huống. Đừng mang tiến hóa ra làm bia đỡ đạn cho tính xấu của bản thân nhé.</p>
+  </div>
+
+</details>
+
+<!-- Checkpoint 2 -->
+<div class="checkpoint" data-checkpoint-id="cp-ghen-ti-2">
+  <span class="checkpoint__label">🛑 Tạm dừng &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Thử nhớ lại lúc bạn ghen tị với ai đó gần đây. Bạn rơi vào trạng thái "ghen lành" (tin mình sẽ làm được) hay "ghen độc" (thấy bất lực và chỉ muốn họ xui xẻo)?</p>
+  <textarea placeholder="Viết vài dòng chia sẻ ở đây..."></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Xem gợi ý</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Gợi ý cách nhận diện</span>
+    <p>Ví dụ: Thấy đồng nghiệp được sếp khen giỏi Excel. Ghen lành: "Mình cũng phải đăng ký khóa học Excel ngay". Ghen độc: "Chắc chuyên đi bợ đỡ sếp chứ gì". Sự khác biệt nằm ở chỗ: Bạn có tin là mình đi học thì mình sẽ giỏi lên không? Nếu CÓ → Ghen lành. Nếu KHÔNG → Ghen độc.</p>
+  </div>
+</div>
+
+<h2>Ứng dụng thực tế · Đọc vị cơn ghen thời hiện đại</h2>
+<p>Dù xã hội hiện đại không còn phải tranh giành từng miếng thịt như thời nguyên thủy, nhưng bộ não chúng ta vẫn dùng hệ điều hành cũ. Khi bạn hiểu điều này, bạn sẽ phản ứng khôn ngoan hơn:</p>
+<ul>
+  <li><strong>Trong tình yêu</strong>: Tim bạn thắt lại khi thấy crush đi chơi với người khác. Bản năng xúi bạn lồng lộn lên, lục lọi điện thoại. Giải pháp tỉnh táo: <em>Ngồi lại nói chuyện thẳng thắn để vun đắp niềm tin</em>. Tình yêu hiện đại không có chỗ cho thói sở hữu.</li>
+  <li><strong>Trong công sở</strong>: Thấy đồng nghiệp lên sếp. Bản năng xúi bạn tẩy chay, chia bè kết phái. Giải pháp khôn ngoan: <em>Tự mài giũa kỹ năng, hợp tác cùng nhau tiến lên</em>. Vì công ty bây giờ trọng dụng sự đoàn kết, không dung túng kẻ chuyên phá hoại.</li>
+  <li><strong>Trên mạng xã hội</strong>: Thấy hot girl khoe túi xách hàng hiệu. Bản năng xúi bạn tự ti, than thân trách phận. Giải pháp: <em>Nhắc nhở bản thân rằng trên mạng người ta chỉ khoe cái đẹp nhất thôi, sau hậu trường biết đâu họ đang nợ đầm đìa</em>.</li>
+</ul>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+  <div class="flip-card__face flip-card__front">
+    <span class="flip-card__label">Câu hỏi nhanh</span>
+    <div class="flip-card__content">Tại sao dưới góc nhìn của tiến hóa, đàn ông lại ám ảnh việc vợ ngoại tình thể xác hơn là việc vợ có tư tưởng tình cảm với người đàn ông khác?</div>
+  </div>
+  <div class="flip-card__face flip-card__back">
+    <span class="flip-card__label">Giải đáp</span>
+    <div class="flip-card__content">Bởi vì đàn ông thuở xưa phải đối mặt với rủi ro "nuôi nhầm con kẻ khác". Ngoại tình thể xác chạm đúng vào tử huyệt duy trì nòi giống của họ. Ngược lại, phụ nữ luôn chắc chắn đứa con sinh ra là của mình, nên họ lại sợ mất đi tài nguyên và người che chở (nếu chồng yêu người khác).</div>
+  </div>
+</div>
+
+<h2>Ranh giới cần nhớ · Thuyết tiến hóa KHÔNG PHẢI LÀ…</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Đừng hiểu lầm</span>
+  <p><strong>"Bản năng là thứ không thể kiểm soát."</strong> Sai hoàn toàn. Tiến hóa chỉ cung cấp cho bạn một cái "radar", còn việc bạn có lao vào đánh nhau hay không là do giáo dục và lý trí quyết định. Radar kêu tít tít không có nghĩa là bạn phải hành động như kẻ mất trí.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp nguy hiểm</span>
+  <p><strong>Ghen tuông mù quáng dẫn đến bạo lực.</strong> Không bao giờ được vin vào cớ "anh ghen vì bản năng bảo vệ giống nòi" để đe dọa, kiểm soát tự do hay đánh đập người yêu. Đó là hành vi phạm pháp và cần được can thiệp tâm lý/pháp luật ngay lập tức.</p>
+</div>
+
+<h2>Tóm lại là... · Kết thúc Chương 2</h2>
+<p>Ghen tị là một công cụ giúp con người <strong>định vị bản thân và bảo vệ quyền lợi cá nhân</strong> từ thời nguyên thủy. Tùy vào việc bạn có tin tưởng vào bản thân hay không mà nó biến thành động lực (ghen lành) hoặc sự thù hằn (ghen độc). Việc phân hóa cách ghen tuông giữa nam và nữ cũng bắt nguồn từ nỗi lo duy trì nòi giống xa xưa. Hiểu được cái gốc này để ta bao dung hơn với những lúc "yếu lòng" của bản thân, nhưng kiên quyết dùng lý trí của người văn minh để giải quyết vấn đề. Tiếp theo, ta sẽ xem các nền văn hóa, tôn giáo phương Đông và phương Tây xử trí căn bệnh "đỏ mắt" này ra sao nhé.</p>
+
+<blockquote>
+  <strong>Chìa khóa mang về:</strong> Ghen tị là bản thiết kế của tự nhiên, ai cũng có. Vấn đề là bạn dùng bản thiết kế đó để đi lên, hay để tự hủy hoại bản thân trong thế giới hiện đại.
+</blockquote>
+
+<h2>Chương 3 · Văn hóa Đông Tây đối mặt với Đố kỵ</h2>
+<p>Cơ chế sinh học thì ai cũng như nhau, nhưng cách con người đối xử với sự ghen tị lại tùy thuộc vào nơi họ sinh ra. Ở phương Tây, Đạo giáo quy ghen tị vào 7 Đại Tội, coi nó là vết nhơ cần được rửa sạch. Ở phương Đông, Khổng Tử lại dạy học trò dùng nó làm đòn bẩy rèn luyện mình: "Đừng lo người không biết mình, hãy lo mình chưa đáng để người biết". Lại có chuyện "Bịt tai trộm chuông" để châm biếm thói tự dối lòng. Chung quy lại, cảm xúc này cần được quản lý bài bản.</p>
+
+<h3>Chỗ neo chương 3: Cảm xúc giống nhau, nhưng cách xử lý mang tính văn hóa</h3>
+<p>Hiểu được văn hóa đã nhào nặn bạn thế nào sẽ giúp bạn có thêm vũ khí để đối phó với những lúc lòng ngứa ngáy khó chịu. Bạn sẽ biết lúc nào nên bao dung, lúc nào nên nghiêm khắc rèn giũa bản thân.</p>
+
+<!-- Pre-mortem ch3 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Đừng hiểu lầm rằng…</span>
+  <p><span class="premortem__wrong">"Ghen tị ở đâu cũng bị coi là xấu xa đê tiện."</span></p>
+  <p>Thực ra <em>mỗi nơi có một cách nhìn khác nhau: Phương Tây thiên về việc "bắt tội" (để con người sám hối), Phương Đông thiên về việc "tu dưỡng" (để con người chuyển hóa thành hành động), còn Chủ nghĩa Khắc kỷ thì coi nó chỉ là mây bay gió thoảng, việc của mình là giữ tâm bình thản</em>.</p>
+  <p><span class="premortem__truth">Sự thật là:</span> Mọi nền văn hóa đều tìm cách trị cơn ghen. Phương Tây (Bảy Đại Tội) gò con người vào kỷ luật đạo đức; Phương Đông (Khổng Tử, Tuân Tử) xúi con người lấy đó làm động lực nâng cấp chính mình. Cả hai đều tốt, chỉ là chọn con đường nào thôi.</p>
+
+<h3>Đi sâu vấn đề · Lăng kính đa văn hóa</h3>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch3-scaffold-1">
+  <h3 class="scaffold__concept">Phương Tây: 7 Đại Tội — Ghen tị là ác nghiệp</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Giáo hội Công giáo liệt Ghen tị (Envy) vào Bảy Đại Tội. Triết gia Thomas Aquinas định nghĩa nó cực kỳ sắc sảo: Đó là <strong>sự buồn bực trước thành công của người khác vì nghĩ rằng nó làm lu mờ sự xuất sắc của chính mình</strong>. Ghen tị bị coi là một hố đen kéo tâm hồn con người xuống đáy <a class="source" href="https://www.britannica.com/topic/seven-deadly-sins" target="_blank" rel="noopener">Britannica, Seven Deadly Sins</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Vì sao lại gắt gao thế? Vì khi ghen tị, bạn đang oán trách số phận và không công nhận phước lành của người khác. Shakespeare từng gọi cơn ghen là "Con quái vật mắt xanh" từ từ nuốt chửng linh hồn con người. Cách giải quyết của phương Tây mang đậm tính tôn giáo: Thú nhận, sám hối và cầu nguyện.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Thế Phương Đông xử lý thế nào?</summary>
+    <div class="scaffold__resolve"><p>Phương Đông (nhất là Nho giáo) chọn cách <em>thuần hóa</em> nó. Khổng Tử nói: Cứ kệ người ta, hãy lo tu bổ bản thân cho xuất sắc thì tự khắc người ta sẽ nể. Phương Tây bắt đi xưng tội, Phương Đông bắt về bàn học bài. Rất thực tế và hiệu quả!</p></div>
+  </details>
+</section>
+<div class="feynman">Tóm lại: Phương Tây coi ghen là tội cần chuộc; Phương Đông coi ghen là năng lượng cần chuyển hóa thành việc nâng cấp bản thân.</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch3-scaffold-2">
+  <h3 class="scaffold__concept">Khổng Tử: "Bất hoạn nhân chi bất kỷ tri" — Vắc xin chống so đo</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Khổng Tử chốt hạ vài câu cực thấm trong Luận Ngữ: "Không lo không có vị trí, chỉ lo không có tài đức để ngồi vị trí đó. Không lo người ta không biết mình, chỉ lo mình chưa đủ giỏi để người ta biết". Ông nhấn mạnh: Người quân tử tìm lỗi ở mình, kẻ tiểu nhân hay trách móc người khác <a class="source" href="https://ctext.org/analects/li-ren/zh" target="_blank" rel="noopener">《论语·里仁》4.14</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+<div class="scaffold__row-body"><p>Khi bạn ức chế vì đồng nghiệp thăng chức: Thay vì rủa xả "Sếp chột mắt rồi", hãy tự soi lại: "Mình thiếu kỹ năng gì? Mình đã đóng góp đủ chưa?". Nếu chưa đủ thì đi học thêm. Nếu đủ rồi mà sếp vẫn không nhận ra thì giá trị của mình vẫn còn nguyên đó, chẳng mất đi đâu cả.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Dạy thế này có phải là đang chối bỏ cảm xúc không?</summary>
+    <div class="scaffold__resolve"><p>Không hề. Khổng Tử không cấm bạn thèm thuồng, ông chỉ nắn dòng cảm xúc đó: Đừng tốn năng lượng để bực bội chuyện bao đồng, hãy lấy sự bực bội đó làm động lực cày cuốc. Đây là liệu pháp tâm lý cực đỉnh từ 2.500 năm trước đấy.</p></div>
+  </details>
+</section>
+<div class="feynman">Lời dạy của Khổng Tử thực chất là bí kíp chuyển hóa sự bực dọc thành năng lượng để đi cày kỹ năng.</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch3-scaffold-3">
+  <h3 class="scaffold__concept">Bịt tai trộm chuông — Đừng tự dối lòng mình</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Tích cũ kể về kẻ trộm cái chuông to, đập vỡ chuông sợ người ta nghe thấy nên tự... bịt tai mình lại. Ảo tưởng rằng mình không nghe thì thiên hạ cũng không nghe <a class="source" href="https://ctext.org/lvshi-chunqiu/zi-zhi/zh" target="_blank" rel="noopener">《吕氏春秋·自知》</a>. Trạng thái này y hệt như lúc chúng ta ghen nổ đom đóm mắt nhưng miệng cứ chối đây đẩy: "Ôi dào, tôi chả quan tâm". Cảm xúc không mất đi, nó chỉ mưng mủ và biến bạn thành kẻ hay xỉa xói, chọc ngoáy người khác.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Thấy người yêu cũ cưới vợ đẹp, bạn tự nhủ "Mình ổn, dăm ba cái đám cưới". Nhưng tối về lướt ảnh người ta lại bực dọc đá thúng đụng nia. Tốt nhất là tự thú nhận: "Ok, tôi đang ghen tị một chút đấy". Chấp nhận thực tế là bước đầu tiên để chữa lành.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Thừa nhận xong rồi thì làm gì tiếp?</summary>
+    <div class="scaffold__resolve"><p>Thừa nhận xong thì phải hành động: Phân tích xem mình đang thèm muốn điều gì? Nếu thèm hạnh phúc, hãy tự xây dựng cuộc sống riêng của mình. Đừng bao giờ làm kẻ "bịt tai trộm chuông".</p></div>
+  </details>
+</section>
+<div class="feynman">Thành ngữ "Bịt tai trộm chuông" châm biếm việc chúng ta hay nói xạo cảm xúc của mình. Ghen thì cứ nhận là ghen, chối quanh co chỉ làm tâm tính xấu đi mà thôi.</div>
+
+<!-- Bar chart -->
+<div class="bar-chart">
+  <div class="bar-chart__title">3 Cách giải quyết Ghen tị theo văn hóa</div>
+  <div class="bar-row">
+    <div class="bar-label">Bắt tội (Sám hối)</div>
+    <div class="bar-track"><div class="bar-fill" style="width:33%"></div></div>
+    <div class="bar-value">Phương Tây</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Chuyển hóa (Rèn luyện)</div>
+    <div class="bar-track"><div class="bar-fill" style="width:33%"></div></div>
+    <div class="bar-value">Phương Đông</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Chấp nhận thản nhiên</div>
+    <div class="bar-track"><div class="bar-fill" style="width:33%"></div></div>
+    <div class="bar-value">CN Khắc Kỷ</div>
+  </div>
+<p class="bar-chart__caption">Mỗi phương pháp có một cái hay riêng. Phương Tây nhắc ta giữ đạo đức; Phương Đông tạo động lực thực hành; Khắc kỷ dạy ta sự thanh thản trong tâm hồn.</p>
+</div>
+
+<!-- Checkpoint 3 -->
+<div class="checkpoint" data-checkpoint-id="cp-ghen-ti-3">
+  <span class="checkpoint__label">🛑 Tạm dừng &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Khi thấy ghen tị, phản ứng đầu tiên của bạn thường là gì? Có phải bạn hay cố lờ nó đi không? Thử tự ngẫm xem mình đang dùng chiêu của phương Đông, phương Tây hay là đang "bịt tai trộm chuông"?</p>
+  <textarea placeholder="Thử tự trả lời vài dòng nhé..."></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Xem gợi ý</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Bật mí</span>
+    <p>Phần lớn chúng ta hay dùng cách "Bịt tai trộm chuông" - tức là giấu nhẹm đi vì xấu hổ. Nếu bạn biết lôi nó ra và nói "Tôi đang ghen đây, giờ làm sao để giỏi như người ta nhỉ?", thì chúc mừng, bạn đã giác ngộ được chân lý của Khổng Tử rồi đấy!</p>
+  </div>
+</div>
+
+<h2>Ứng dụng thực tế · Chuyển hóa cảm xúc mỗi ngày</h2>
+<p>Giả sử bạn thấy cô bạn thân khoe tậu được chiếc xế hộp đắt tiền. Bạn có 3 cách để phản ứng:</p>
+<ul>
+<li><strong>Tự trách mình (Phương Tây)</strong>: "Chết, ghen tị là xấu lắm, mình không được như vậy." → Cảm xúc bị đè nén, lâu dần sinh uất ức.</li>
+  <li><strong>Làm động lực (Phương Đông)</strong>: "Oa xe xịn thế! Mình thực sự cần chiếc xe đó hay chỉ là đang so bì? Nếu cần thì mình phải lên kế hoạch kiếm tiền thế nào?" → Biến cảm xúc thành bảng kế hoạch tài chính.</li>
+  <li><strong>Bình thản (Khắc Kỷ)</strong>: "Ờ thì não mình đang auto ghen tị đấy, kệ nó đi, mình vẫn chọn cách cư xử đàng hoàng, đi ăn mừng với bạn." → Thoát khỏi sự kìm kẹp của cảm xúc.</li>
+</ul>
+<p>Cả 3 cách đều tốt tùy hoàn cảnh. Miễn là bạn làm chủ nó. Sang chương 4, chúng ta sẽ xem mạng xã hội đã thao túng cái cân so sánh này kinh khủng thế nào nhé.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+  <div class="flip-card__face flip-card__front">
+    <span class="flip-card__label">Câu hỏi nhanh</span>
+    <div class="flip-card__content">Hãy áp dụng lời dạy "Không lo người ta không biết mình..." của Khổng Tử vào tình huống: Bạn làm việc hì hục nhưng sếp lại thăng chức cho đứa hay đi nịnh hót. Bạn xử lý sao?</div>
+  </div>
+  <div class="flip-card__face flip-card__back">
+    <span class="flip-card__label">Giải đáp</span>
+    <div class="flip-card__content">Thay vì than vãn "Sếp mù rồi", hãy tự soi lại: "Năng lực chuyên môn của mình đủ chưa? Kỹ năng mềm/giao tiếp (kể cả việc PR bản thân) của mình có yếu không?". Nếu yếu thì rèn thêm. Cứ vững nội công thì ở đâu cũng sống tốt, không sếp này thì sếp khác sẽ nhận ra giá trị của bạn.</div>
+  </div>
+</div>
+
+<h2>Ranh giới cần nhớ · Văn hóa KHÔNG PHẢI LÀ…</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Đừng hiểu lầm</span>
+  <p><strong>"Cách giải quyết ghen tị chỉ có một lối mòn."</strong> Không phải. Đọc văn hóa Đông - Tây để bạn thấy có vô vàn cách xử lý. Tùy tính cách mà bạn chọn cách "giữ tâm tịnh" hay "xách mông lên đi học".</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp biên</span>
+  <p><strong>Bịt tai trộm chuông là cách độc hại nhất.</strong> Dối lòng, giả vờ thanh cao trong khi bụng sôi sùng sục là gốc rễ của những hành vi bẩn tính chốn công sở. Dám thừa nhận điểm yếu mới là người thực sự dũng cảm.</p>
+</div>
+
+<h2>Tóm lại là... · Kết thúc Chương 3</h2>
+<p>Từ cổ chí kim, con người đã biết độ sát thương của ghen tị và nghĩ ra đủ cách để trị nó: Phương Tây cảnh cáo bằng giáo lý Bảy Đại Tội, Phương Đông dùng triết lý tu dưỡng bản thân của Khổng Tử để biến ghen tị thành hành động tích cực. Cách tệ nhất chính là "Bịt tai trộm chuông" - từ chối đối mặt với cảm xúc của chính mình. Sự dũng cảm lớn nhất là dám vỗ ngực tự nhận: "Tôi đang ghen tị đấy, và tôi sẽ dùng nó làm động lực tiến lên". Chuẩn bị tinh thần nhé, Chương 4 sẽ giải mã mạng xã hội - một cái đấu trường khoe khoang tàn khốc nhất lịch sử.</p>
+
+
+<blockquote>
+  <strong>Chìa khóa mang về:</strong> Trốn tránh sự đố kỵ chẳng khác nào nhốt một con thú hoang trong nhà. Thừa nhận nó là bước đầu tiên để thuần hóa và dắt nó đi cày cho tương lai của bạn.
+</blockquote>
+
+<h2>Chương 4 · Mạng xã hội — Nơi sự so sánh trở thành đại dịch</h2>
+<p>Ở các chương trước, chúng ta hiểu rằng ghen tị là bản năng có từ thời bộ lạc. Nhưng ngày nay, thay vì so đong đếm với 50 người trong làng, bạn bị quẳng vào một cái đấu trường có tới 5.000 ảo ảnh hoàn hảo trên Instagram, Facebook, TikTok. Mạng xã hội không cấy con virus đố kỵ vào não bạn, nó chỉ là một cái loa phường khổng lồ phóng đại cảm xúc của bạn lên gấp ngàn lần.</p>
+
+<h3>Chỗ neo chương 4: Mạng xã hội không sinh ra ghen tị, nó chỉ phóng đại lên thôi</h3>
+
+<p>Trên mạng, không ai đăng lúc đi bốc vác, thất tình, hay khóc lóc. Họ chỉ đăng những khoảnh khắc chắt lọc tinh túy nhất (highlight reel). Thế là bạn lôi 100% cuộc sống đầy drama rắc rối của mình đi so với 1% phiên bản lung linh nhất của họ. Kết quả là bạn thấy mình thua toàn tập.</p>
+
+<!-- Pre-mortem ch4 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Đừng hiểu lầm rằng…</span>
+    <p><span class="premortem__wrong">"Chỉ cần xóa sạch Facebook, Tiktok là sẽ hết ghen tị ngay."</span></p>
+    <p>Xóa mạng xã hội giống như vứt cái gương đi khi mặt bạn dính nhọ vậy. <em>Mạng xã hội không sinh ra sự sân si, nó chỉ tạo ra một môi trường quá hoàn hảo để bạn rà soát lại sự tự ti của chính mình</em>.</p>
+    <p><span class="premortem__truth">Sự thật là:</span> Mạng xã hội gài bẫy bạn qua 3 cách: (1) Tăng tần suất so sánh lên chóng mặt; (2) Toàn đưa ra hình mẫu "tốt khoe xấu che"; (3) Dìm chết sự tự tin của bạn khi thấy thiên hạ ai cũng thành công còn mình lẹt đẹt. Từ đó, cái thói "ghen lành" bị bóp nghẹt, chỉ còn nhường chỗ cho sự "ghen độc" bực dọc. Giải pháp không phải là tuyệt giao internet, mà là tỉnh táo nhìn thấu cú lừa của nó.</p>
+</div>
+
+<h3>Đi sâu vấn đề · Cú lừa của mạng xã hội</h3>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch4-scaffold-1">
+  <h3 class="scaffold__concept">Hiệu ứng "Highlight reel" — Khoe khoảnh khắc vàng</h3>
+    <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Thuật ngữ "Highlight reel" chỉ những đoạn phim nổi bật nhất. Mạng xã hội là nơi trưng bày những thành tựu tuyệt vời nhất của người ta. Một nghiên cứu trên ScienceDirect năm 2022 xác nhận: Nền tảng số không tự đẻ ra sự đố kỵ, nó chỉ liên tục ném vào mặt bạn những hình mẫu phi thực tế khiến bạn tủi thân <a class="source" href="https://www.sciencedirect.com/science/article/pii/S0747563222000809" target="_blank" rel="noopener">ScienceDirect, SM &amp; Envy (2022)</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Bạn thấy đứa bạn chụp ảnh nghỉ dưỡng ở resort 5 sao. Bạn ghen tị nổ mắt. Nhưng bạn không biết rằng: Chuyến bay của họ bị trễ 8 tiếng, vợ chồng vừa cãi nhau chí chóe lúc chụp ảnh, và họ đang gánh khoản nợ thẻ tín dụng khổng lồ để đi chơi. Bạn mang 100% cuộc sống xô bồ của mình đi đong đếm với 1% phần chóp lung linh của họ. Phép tính này từ đầu đã gian lận rồi!</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Thế thì cứ nghỉ chơi mạng xã hội cho nhẹ đầu?</summary>
+    <div class="scaffold__resolve"><p>Làm thế hơi cực đoan. Cách tốt hơn là dùng mạng xã hội một cách "tỉnh táo": Tự niệm thần chú "Đây chỉ là đồ cúng phây búc thôi", giới hạn thời gian lướt, Unfollow những ai khiến bạn thấy tự ti, và thỉnh thoảng ra ngoài gặp mặt trực tiếp để thấy ai cũng có những khó khăn đời thường.</p></div>
+  </details>
+</section>
+<div class="feynman">Nói dễ hiểu: Mạng xã hội là một rạp chiếu phim chỉ chiếu toàn cảnh chiến thắng rực rỡ, còn giấu nhẹm đi hậu trường bê bối đổ nát. Đừng có ngây thơ mà tin sái cổ!</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch4-scaffold-2">
+  <h3 class="scaffold__concept">Chỉ số INCOM — Bệnh "nghiện so sánh"</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Có những người lướt mạng thì thấy bình thường, có người lại phát điên. Tại sao? Thang đo INCOM ra đời để đo mức độ "nghiện đi so đo" của mỗi người. Người có INCOM cao thường là người có lòng tự trọng thấp, hay lo âu, tự ti <a class="source" href="https://doi.org/10.1037/0022-3514.76.1.129" target="_blank" rel="noopener">Gibbons &amp; Buunk, 1999</a>. Mạng xã hội chính là thuốc độc với tạng người này.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Cùng xem một clip khoe sắm túi hiệu. Người tự tin (INCOM thấp) sẽ chép miệng "Kệ họ, túi xịn thế" rồi tắt máy đi ngủ. Người tự ti (INCOM cao) sẽ trằn trọc cả đêm: "Tại sao nó giàu thế, số mình bọt bèo vô dụng". Vấn đề không chỉ ở cái video, vấn đề nằm ở bộ lọc tâm lý của chính bạn.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Chỉ số INCOM cao thì có bị coi là người xấu tính không?</summary>
+<div class="scaffold__resolve"><p>Không hề. INCOM cao chỉ chứng tỏ radar xã hội của bạn nhạy bén quá mức mà thôi. Đừng tự trách mình hỏng hóc. Hãy học cách "giải độc" bằng việc so sánh bản thân với chính mình của ngày hôm qua, thay vì chạy đua với những ảo ảnh trên mạng.</p></div>
+  </details>
+</section>
+<div class="feynman">Người có INCOM cao giống như ăn đồ cay mà dạ dày yếu vậy. Phải biết lượng sức mà dùng mạng xã hội cho hợp lý, đừng tự hành hạ bản thân.</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch4-scaffold-3">
+  <h3 class="scaffold__concept">Văn hóa "Nội cuốn" và Áp lực giữ thể diện</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Văn hóa mạng xã hội ở Trung Quốc là một ví dụ điển hình cho sự ngạt thở. Ở đó, người ta đăng bài để giữ <strong>thể diện</strong> (<strong class="term-amp" data-note="amp-mianzi" tabindex="0">面子</strong>, miànzi). Một báo cáo sức khỏe tâm thần năm 2022 cho thấy có tới hơn 24% giới trẻ Trung Quốc rơi vào khủng hoảng, trầm cảm vì chịu áp lực cạnh tranh quá gay gắt (gọi là "nội cuốn" - 内卷) <a class="source" href="http://psy.china.com.cn/2023-08/09/content_42453596.htm" target="_blank" rel="noopener">2022 国民心理健康调查报告</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Ai cũng cố tạo ra một mặt tiền hoành tráng để lòe thiên hạ: đi ăn sang, xài đồ xịn, con học trường top. Vì phải giữ thể diện nên có ấm ức ghen tị cũng cắn răng nuốt vào trong, không dám bộc lộ ra (hiện tượng Bịt tai trộm chuông). Bề ngoài thì rạng rỡ, bên trong thì vỡ vụn. Đấy là mặt trái của sự sĩ diện hão.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Sĩ diện thì làm trầm trọng thêm sự ghen tị à?</summary>
+    <div class="scaffold__resolve"><p>Chuẩn luôn! Ai cũng gồng mình lên để làm màu, tạo ra một sự cạnh tranh ảo tưởng vắt kiệt sức lực của nhau. Giữa cái vòng xoáy ngạt thở đó, lời răn của Khổng Tử "Đừng lo người khác không biết mình" lại càng trở thành chiếc phao cứu sinh quý giá hơn bao giờ hết.</p></div>
+  </details>
+</section>
+<div class="feynman">Tóm lại: Chạy đua khoe mẽ trên mạng xã hội là một cuộc đua không hồi kết, chỉ khiến tất cả cùng kiệt sức và trầm cảm. Mặc kệ thiên hạ chính là giải thoát!</div>
+
+<!-- Bar chart -->
+<div class="bar-chart">
+  <div class="bar-chart__title">Mối quan hệ giữa mạng xã hội và sự ghen tị (Minh họa)</div>
+  <div class="bar-row">
+    <div class="bar-label">Tính hay so sánh (INCOM cao)</div>
+    <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
+    <div class="bar-value">Tác động mạnh</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Lướt mạng nhiều giờ/ngày</div>
+    <div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>
+    <div class="bar-value">Tác động rõ</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Lướt xem toàn ảnh đẹp</div>
+    <div class="bar-track"><div class="bar-fill" style="width:45%"></div></div>
+    <div class="bar-value">Tác động vừa</div>
+  </div>
+  <p class="bar-chart__caption">Càng rảnh rỗi lên mạng xem người ta sống ảo, cộng thêm bản tính hay tự ti so sánh, bạn sẽ càng cảm thấy ghen tị và bất hạnh. Công thức phá hủy tâm trạng là đây chứ đâu.</p>
+</div>
+
+<!-- Checkpoint 4 -->
+<div class="checkpoint" data-checkpoint-id="cp-ghen-ti-4">
+  <span class="checkpoint__label">🛑 Tạm dừng &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Nhớ lại lần gần nhất lướt Facebook/Tiktok mà thấy bực mình vì ai đó giỏi hơn/giàu hơn. Có phải bạn đang lấy 100% cuộc sống thực của mình so với bức ảnh đã qua 7749 lớp filter của họ không?</p>
+  <textarea placeholder="Thử phân tích cú lừa này nhé..."></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Xem gợi ý</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Bật mí</span>
+    <p>Thay vì ủ rũ, hãy niệm thần chú: "Họ cũng có nợ nần, cũng có cãi vã đau đầu như mình thôi, chỉ là họ giấu đi". Sau đó cất điện thoại và tập trung làm việc của mình. Biến Ghen độc thành Kế hoạch hành động đi nào!</p>
+  </div>
+</div>
+
+<h2>Ứng dụng thực tế · Nghệ thuật dùng MXH tỉnh táo</h2>
+<p>Tuyệt giao với mạng thì khó, nhưng bạn có thể dùng các mẹo sau để tự bảo vệ mình:</p>
+
+<ul>
+<li><strong>Tỉnh táo trước "mặt tiền"</strong>: Tự nhắc nhở bản thân rằng trên mạng toàn là lừa tình, không ai rảnh rỗi mà đăng ảnh khóc lóc thất bại lên đâu.</li>
+  <li><strong>Đặt ranh giới rõ ràng</strong>: Tắt thông báo, quy định mỗi ngày chỉ lướt 30 phút. Đừng để thuật toán của Mark Zuckerberg bắt cóc thời gian của bạn.</li>
+  <li><strong>Dọn dẹp danh sách bạn bè (Unfollow)</strong>: Lướt xem đứa nào khoe của làm mình gai mắt thì mạnh tay Unfollow hoặc Mute. Chỉ giữ lại những trang chia sẻ kiến thức tích cực.</li>
+  <li><strong>Khoe sự chân thật</strong>: Thỉnh thoảng đăng vài mẩu chuyện xui xẻo tấu hài của bản thân để lan tỏa sự gần gũi, gỡ bỏ áp lực làm màu cho bạn và cho cả người xem.</li>
+  <li><strong>Hẹn hò đời thực</strong>: Ra quán cafe chém gió để thấy ai cũng tàn tạ và nhiều rắc rối như nhau, phá tan ảo ảnh lung linh trên mạng.</li>
+ </ul>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+  <div class="flip-card__face flip-card__front">
+    <span class="flip-card__label">Câu hỏi nhanh</span>
+    <div class="flip-card__content">Tại sao nói mạng xã hội là chất xúc tác mạnh nhất dành cho những người có chỉ số INCOM cao?</div>
+  </div>
+  <div class="flip-card__face flip-card__back">
+    <span class="flip-card__label">Giải đáp</span>
+    <div class="flip-card__content">Vì nhóm người này vốn đã có sẵn máu hay so sánh tự ti. Mạng xã hội giống như vứt họ vào một kho thuốc súng toàn là hình ảnh khoe mẽ giàu sang. Một mồi lửa nhỏ cũng đủ làm bùng nổ sự đố kỵ và trầm cảm.</div>
+  </div>
+</div>
+
+<h2>Ranh giới cần nhớ · Mạng xã hội KHÔNG PHẢI LÀ…</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Đừng hiểu lầm</span>
+
+  <p><strong>"Tại điện thoại nên mình mới ghen tị."</strong> Đừng đổ lỗi cho cái điện thoại. Mạng xã hội chỉ là chất xúc tác. Cách giải quyết là học kỹ năng "sống chung với lũ" chứ không phải đập bỏ cái điện thoại.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp nguy cấp</span>
+  <p><strong>Cần cai nghiện kỹ thuật số.</strong> Nếu bạn lướt mạng mà thấy tim đập nhanh, trầm cảm, ức chế kéo dài không chịu nổi, thì hãy mạnh dạn xóa app vài ngày (detox kỹ thuật số) để đầu óc phục hồi nhé. Không có gì phải xấu hổ cả!</p>
+</div>
+
+<h2>Tóm lại là... · Kết thúc Chương 4</h2>
+<p>Mạng xã hội đâm 3 nhát dao vào tâm lý bạn: (1) Ép bạn so sánh liên tục; (2) Mang ảo ảnh ra làm thước đo; (3) Làm bạn tuyệt vọng vì thấy ai cũng giỏi hơn mình. Chỉ số INCOM càng cao thì độ sát thương càng thê thảm. Cái thói sĩ diện hão chỉ khiến người ta phát điên vì trầm cảm. Chìa khóa thoát hiểm nằm ở việc sử dụng mạng lưới ảo một cách tỉnh táo và khôn ngoan. Phần tiếp theo, chúng ta sẽ xem xét ranh giới mong manh giữa ghen tị bình thường và "ghen hoang tưởng bệnh lý" cần đến gặp bác sĩ.</p>
+
+<blockquote>
+  <strong>Chìa khóa mang về:</strong> So sánh 100% cuộc sống hậu trường của mình với 1% cảnh trên sân khấu của người khác là một ván cược ngu ngốc. Hãy ngừng trò chơi gian lận này lại.
+</blockquote>
+
+<h2>Chương 5 · Khi ghen tị "bùng binh" thành bệnh tâm lý</h2>
+<p>Bốn phần trên ta đã nói về sự ghen tuông bình thường. Phần này sẽ nói về lằn ranh đỏ: Khi nào thì sự ghen tuông đi quá giới hạn và trở thành bệnh cần chữa? Có hai dạng: <strong>Ghen tuông bệnh lý (pathological jealousy)</strong> — thích kiểm soát, bạo hành; và <strong>Ghen tị lâm sàng (clinical envy)</strong> — sinh ra trầm cảm, tự kỷ. Hiểu điều này để bạn biết lúc nào nên tự dặn lòng cố gắng, và lúc nào thì phải tìm gặp chuyên gia.</p>
+
+<h3>Chỗ neo chương 5: Ranh giới mong manh giữa bình thường và bệnh hoạn</h3>
+<p>Cảm xúc ghen bình thường nằm trong giới hạn kiểm soát. Nhưng nó sẽ thành bệnh nếu vi phạm 3 mức: <strong>Quá lố (cường độ mãnh liệt)</strong>, <strong>Dai dẳng (chuyện qua rồi vẫn đay nghiến)</strong>, và <strong>Phá hoại cuộc sống (không làm ăn gì được)</strong>.</p>
+
+<!-- Pre-mortem ch5 -->
+<div class="premortem">
+  <span class="premortem__label">⚠️ Đừng hiểu lầm rằng…</span>
+  <p><span class="premortem__wrong">"Chỉ mấy người điên mới mắc bệnh ghen tuông hoang tưởng."</span></p>
+  <p>Thực ra <em>ghen tuông bệnh lý rất phổ biến và ranh giới của nó với sự ghen bình thường rất mỏng manh</em>.</p>
+  <p><span class="premortem__truth">Sự thật là:</span> Nó là một "chứng bệnh" có phổ liên tục. Điển hình là việc theo dõi điện thoại, đe dọa bạo hành đối phương dù chẳng có chứng cứ gì. Nhận ra mình hay đối tác đang ở đâu trên thang đo này là việc cực kỳ cấp thiết để bảo vệ bản thân.</p>
+</div>
+
+<h3>Đi sâu vấn đề · Ghen tuông thành bệnh</h3>
+
+<!-- Scaffold 1 -->
+<section class="scaffold" id="ch5-scaffold-1">
+  <h3 class="scaffold__concept">Ghen tuông bệnh lý — Thích kiểm soát và bạo lực</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Sổ tay y khoa không có bệnh nào tên là "bệnh ghen", nhưng ghen tuông hoang tưởng là biểu hiện của nhiều hội chứng như: <strong>Rối loạn ám ảnh cưỡng chế (OCD)</strong>, <strong>Rối loạn hoang tưởng</strong>, <strong>Rối loạn nhân cách ái kỷ</strong>. Tức là ghen mù quáng, vô cớ. Buss &amp; Duntley (2011) cho thấy ghen tuông là thủ phạm hàng đầu gây ra bạo lực gia đình: Đàn ông ghen thì đánh đập đe dọa, phụ nữ ghen thì thao túng tâm lý, rạch tay tự tử <a class="source" href="https://doi.org/10.1016/j.avb.2011.08.006" target="_blank" rel="noopener">Buss &amp; Duntley, 2011</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Mức 1 (Bình thường): Thấy bồ nói chuyện với người khác, bực nhưng vẫn nói chuyện đàng hoàng. Mức 2 (Báo động): Liên tục kiểm tra tin thoại, tra hỏi đi đâu làm gì. Mức 3 (Bệnh hoạn): Gắn định vị theo dõi, cấm giao du với bạn bè, hăm dọa dù không có bất kỳ chứng cứ ngoại tình nào. Ranh giới từ mức 2 sang mức 3 rất nguy hiểm!</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Dấu hiệu nhận biết ghen thành bệnh là gì?</summary>
+    <div class="scaffold__resolve"><p>Ba cái cờ đỏ to đùng: (1) <em>Quá lố</em> — phản ứng hung hãn vô cớ; (2) <em>Ngoan cố</em> — người ta đã chứng minh trong sạch rành rành rồi vẫn không tin, vẫn đay nghiến; (3) <em>Phá nát cuộc sống</em> — bỏ bê công việc, mất ăn mất ngủ chỉ để rình rập đánh ghen. Có 3 cái này là phải đi khám tâm lý gấp!</p></div>
+  </details>
+</section>
+<div class="feynman">Nói dễ hiểu: Nhân danh "tình yêu mãnh liệt" để nhốt người yêu vào lồng kính và kiểm tra tin nhắn mỗi giờ — đó là dấu hiệu của tâm thần hoang tưởng, không phải tình yêu!</div>
+
+<!-- Scaffold 2 -->
+<section class="scaffold" id="ch5-scaffold-2">
+  <h3 class="scaffold__concept">Ghen tị lâm sàng — Sinh ra tự kỷ và trầm cảm</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Sự thèm muốn đồ của người khác (Envy) khi đi quá xa sẽ thiêu rụi chính tâm hồn bạn. Nó làm bạn trầm cảm ("Mình là đồ vô dụng, đời thật bất công"), sợ giao tiếp, và tự hủy hoại tương lai của chính mình. Đúng kiểu "Ngọn lửa đố kỵ thiêu rụi tâm can".</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Bạn ghen tị với hội bạn cấp 3 vì ai cũng thành đạt. Xấu hổ quá, bạn trốn luôn không đi họp lớp, tự cô lập mình. Dần dần, bạn lún sâu vào trầm cảm, còn bọn bạn thì vẫn thăng tiến vèo vèo. Bạn dính đòn "tự dối lòng" (Bịt tai trộm chuông) - giấu giếm cảm xúc để rồi nó quay lại cắn nát sự nghiệp của bạn.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Ghen tị mà cũng gây trầm cảm ư?</summary>
+    <div class="scaffold__resolve"><p>Cực kỳ chặt chẽ là đằng khác. Ghen nhiều → Cảm thấy mình kém cỏi → Lòng tự trọng tụt dốc → Trốn tránh xã hội → Trầm cảm. Khổng Tử cấm học trò học thói phù phiếm của thiên hạ chính là để phòng cái bệnh này: Hãy tập trung vào giá trị cốt lõi của bản thân để miễn nhiễm với sự tự ti!</p></div>
+  </details>
+</section>
+<div class="feynman">Ghen độc âm ỉ như mồi lửa ngầm — Nó không nổ tung ra ngoài nhưng lại gặm nhấm sự tự tin và đẩy bạn vào hố sâu trầm cảm.</div>
+
+<!-- Scaffold 3 -->
+<section class="scaffold" id="ch5-scaffold-3">
+  <h3 class="scaffold__concept">Ai là người dễ bị "ghen thành bệnh"?</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Những người dễ dính bẫy ghen tuông bệnh lý thường có chung đặc điểm: (1) Lòng tự trọng quá thấp; (2) Có tuổi thơ thiếu thốn tình thương, hay sợ bị bỏ rơi; (3) Mắc chứng ái kỷ (sĩ diện quá cao); (4) Sống trong môi trường chuộng thành tích, giữ sĩ diện; (5) Nghiện MXH.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Lớn lên trong gia đình hay bị so sánh "nhìn con nhà người ta kìa" → Lòng tự trọng mong manh → Lớn lên lúc nào cũng lo sợ người yêu sẽ bỏ mình chạy theo người tốt hơn (sinh ra kiểm soát hoang tưởng), và cực kỳ thù ghét những ai giỏi hơn mình. Tự nhìn nhận lại để biết thương bản thân mình hơn thay vì trách móc.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Thế là do tự ti nên mới sinh bệnh à?</summary>
+    <div class="scaffold__resolve"><p>Đúng, nhưng chưa đủ. Nó là tổ hợp của sự tự ti + mối quan hệ thiếu an toàn + áp lực xã hội + sống ảo trên mạng. Bệnh này không chữa bằng cách khuyên nhủ suông được, mà phải đi trị liệu tâm lý bài bản để thay đổi tận gốc nhận thức.</p></div>
+  </details>
+</section>
+<div class="feynman">Người dễ mắc bệnh ghen tuông hoang tưởng thường là người mang trong mình nhiều tổn thương từ quá khứ và sự tự ti sâu sắc.</div>
+
+<!-- Bar chart -->
+<div class="bar-chart">
+  <div class="bar-chart__title">Thang đo Mức độ Ghen tuông</div>
+  <div class="bar-row">
+    <div class="bar-label">Ghen bình thường</div>
+    <div class="bar-track"><div class="bar-fill" style="width:25%"></div></div>
+    <div class="bar-value">Chấp nhận được</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Ghen "cảnh báo"</div>
+    <div class="bar-track"><div class="bar-fill" style="width:50%"></div></div>
+    <div class="bar-value">Cần nhìn lại</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Ghen bệnh lý</div>
+    <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
+    <div class="bar-value">Cần đi khám tâm lý</div>
+  </div>
+  <div class="bar-row">
+    <div class="bar-label">Ghen hoang tưởng</div>
+    <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+    <div class="bar-value">Cần dùng thuốc</div>
+  </div>
+  <p class="bar-chart__caption">Cấp độ càng cao càng nguy hiểm. Nếu ghen vô lý, không tin bằng chứng, và ảnh hưởng tới bát cơm manh áo thì hãy đến gặp chuyên gia tâm lý ngay lập tức.</p>
+</div>
+
+<!-- Checkpoint 5 -->
+<div class="checkpoint" data-checkpoint-id="cp-ghen-ti-5">
+  <span class="checkpoint__label">🛑 Tạm dừng &amp; suy ngẫm</span>
+  <p class="checkpoint__question">3 dấu hiệu đỏ: Ghen quá đà vô cớ - Không chịu tin sự thật - Phá hoại cuộc sống. Bạn hay bạn bè xung quanh đã từng rơi vào trường hợp này chưa?</p>
+  <textarea placeholder="Thử viết thật thà xem sao..."></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Xem gợi ý</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Bật mí</span>
+    <p>Nếu lâu lâu mới hờn dỗi chút đỉnh thì không sao. Nhưng nếu ngày nào cũng dằn vặt, theo dõi định vị, cãi vã tung trời thì đó là mầm mống của bạo lực tinh thần. Nên tìm cách giải thoát hoặc gặp chuyên gia gỡ rối nhé!</p>
+  </div>
+</div>
+
+<h2>Ứng dụng thực tế · Tự bắt mạch xem có bệnh không</h2>
+<p>Dùng 4 câu hỏi này để kiểm tra nhanh mức độ ghen của mình (hoặc người yêu):</p>
+<ul>
+  <li><strong>Có làm quá không?</strong> — Bồ nói chuyện với đồng nghiệp mà chửi bới ầm ĩ cho là cắm sừng → Có.</li>
+  <li><strong>Có ngoan cố không?</strong> — Đưa mọi tin nhắn, chứng cớ ra rồi vẫn cãi cùn "tao không tin" → Có.</li>
+  <li><strong>Có mất ăn mất ngủ không?</strong> — Ghen tới mức nghỉ làm, bỏ ăn, bỏ chơi với bạn bè → Có.</li>
+  <li><strong>Có hành động vi phạm quyền cá nhân không?</strong> — Lén cài định vị, đe dọa đánh đập đối phương → Có.</li>
+</ul>
+<p>Nếu trả lời "Có" tới 3 câu, hãy khuyên nhau đi gặp bác sĩ tâm lý ngay. Còn nếu chỉ hơi chạnh lòng một chút thôi, mời bạn sang Chương 6 để xem cách xử lý.</p>
+
+<!-- Flip card -->
+<div class="flip-card" tabindex="0" role="button" aria-label="Flip to reveal answer">
+  <div class="flip-card__inner">
+  <div class="flip-card__face flip-card__front">
+    <span class="flip-card__label">Câu hỏi nhanh</span>
+    <div class="flip-card__content">Hãy phân biệt sự ghen tuông bình thường và ghen tuông hoang tưởng.</div>
+  </div>
+  <div class="flip-card__face flip-card__back">
+    <span class="flip-card__label">Giải đáp</span>
+    <div class="flip-card__content">Ghen bình thường: Cảm thấy bực khi người yêu vô ý quá thân mật với người khác → Nói chuyện để người yêu hiểu và chấm dứt sự lo lắng. Ghen hoang tưởng: Chửi bới, đập điện thoại, nhốt người yêu ở nhà dù đối phương không hề làm gì sai sai trái cả.</div>
+  </div>
+</div>
+
+<h2>Ranh giới cần nhớ · Ghen bệnh lý KHÔNG PHẢI LÀ…</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Đừng hiểu lầm</span>
+  <p><strong>"Bệnh ghen chắc toàn trong phim mới có."</strong> Sai — Nó có đầy ngoài xã hội. Những vụ đánh ghen lột đồ, rạch mặt, khống chế người yêu tự tử đều là biểu hiện tột cùng của căn bệnh rối loạn tâm thần này.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp nguy cấp</span>
+  <p><strong>Đừng lấy tình yêu ra để bao biện.</strong> Khi sự ghen tuông đi kèm bạo lực, dọa dẫm, hãy nhờ pháp luật và y tế can thiệp. Rất nhiều trường hợp hoang tưởng nặng phải dùng đến thuốc an thần mới có thể chữa trị (antipsychotics).</p>
+</div>
+
+<h2>Tóm lại là... · Kết thúc Chương 5</h2>
+<p>Ghen tị nhẹ nhàng thì vui, nhưng quá đà thì nát nhà. Ghen tuông bệnh lý sẽ dẫn đến thói bạo hành và kiểm soát, còn ghen tị lâm sàng sẽ đẻ ra căn bệnh tự ti, trầm cảm, thu mình lại. Ba dấu hiệu cần gọi xe cấp cứu tâm lý là: ghen vô cớ, ghen ngoan cố và ghen phá nát cuộc sống. Đừng bao giờ đùa với sức khỏe tinh thần. Chương 6, chương cuối cùng, sẽ trang bị cho bạn 5 thứ vũ khí sắc bén để thuần phục cơn ghen tị thường ngày.</p>
+
+<blockquote>
+  <strong>Chìa khóa mang về:</strong> Ghen tị là một cảm xúc tự nhiên, nhưng mượn danh ghen để đe dọa, xâm phạm cuộc sống của người khác thì là bệnh lý cần loại bỏ!
+</blockquote>
+
+<h2>Chương 6 · Giải độc cơn ghen — 5 Vũ khí tâm lý</h2>
+<p>Lý thuyết rườm rà xin khép lại ở đây. Chương này là bài tập thực hành. Không ai khuyên bạn "phải từ bỏ ghen tị đi", vì đó là nhiệm vụ bất khả thi. Điều chúng ta cần học là cách bẻ lái nó, từ sự thù hằn cay cú (malicious) sang động lực học hỏi vươn lên (benign).</p>
+
+<h3>Chỗ neo chương 6: Làm chủ cỗ xe cảm xúc</h3>
+<p>Đừng để cảm xúc lái bạn đâm sầm vào vách đá. Người bản lĩnh là người khi nghe tiếng còi báo động "so sánh" vang lên trong đầu, họ lập tức rút bảo bối ra để kiểm soát vô lăng ngay lập tức.</p>
+
+<div class="premortem">
+  <span class="premortem__label">⚠️ Đừng hiểu lầm rằng…</span>
+  <p><span class="premortem__wrong">"Khắc phục cơn ghen là ngồi thiền tịnh tâm, trốn lên núi ở."</span></p>
+  <p>Trốn tránh không giải quyết được gốc rễ của lòng tham.</p>
+  <p><span class="premortem__truth">Sự thật là:</span> Vũ khí xịn nhất là sự đối diện. Cứ gọi đích danh nó ra, mổ xẻ xem mình đang thiếu cái gì, tự bao dung cho bản thân và lấy đó làm mục tiêu rèn luyện. Tức là biến cay cú thành năng suất lao động!</p>
+</div>
+
+<h3>Đi sâu vấn đề · 5 Tuyệt chiêu giải độc</h3>
+
+<section class="scaffold" id="ch6-scaffold-1">
+  <h3 class="scaffold__concept">Tuyệt chiêu 1 — Điểm mặt chỉ tên: "Cái này là Envy hay Jealousy?"</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Não bộ rất kỳ diệu, khi bạn gọi đúng tên cảm xúc (affect labeling), hạch hạnh nhân (trung tâm sợ hãi, bực tức của não) sẽ hạ nhiệt ngay lập tức. Đừng nói "Tôi đang điên lắm", hãy hỏi "Mình đang ước được như nó (Envy) hay mình sợ mất người yêu (Jealousy)? Mình đang ghen lành hay ghen độc?". Gọi tên xong là não tự động chuyển sang chế độ đi tìm giải pháp.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Thay vì hậm hực: "Con kia có gì hơn mình mà được sếp ưu ái", hãy tự lẩm bẩm: "Aha, mình đang ghen tị (envy). Mình đang ghen kiểu độc hại (malicious). Ok, giờ phải làm gì để chuyển sang ghen lành (benign) đây ta?".</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Gọi tên xong vẫn còn tức thì sao?</summary>
+    <div class="scaffold__resolve"><p>Gọi tên không phải là nút xóa thần kỳ, nó chỉ giúp bạn "đạp phanh" để không cư xử hàm hồ. Đạp phanh xong rồi thì sang chiêu số 2 để chuyển hướng vô lăng nhé.</p></div>
+  </details>
+</section>
+<div class="feynman">Chìa khóa số 1: Tự hỏi "Mình đang thèm đồ của nó (Envy) hay sợ nó cướp đồ của mình (Jealousy)?" - Gọi đúng tên để não hạ hỏa.</div>
+
+<section class="scaffold" id="ch6-scaffold-2">
+  <h3 class="scaffold__concept">Tuyệt chiêu 2 — Biến Độc thành Lành: "Mình thiếu cái gì?"</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Để chuyển từ Ghen độc sang Ghen lành, hãy thu hồi ánh mắt soi mói người khác về soi lại chính mình. Hỏi câu này: "Để đạt được như họ, mình đang thiếu kỹ năng gì? Ngày mai mình bắt đầu làm gì để trám chỗ thiếu đó?". Đây chính là triết lý "Quân tử tìm lỗi ở mình" của Khổng Tử. Khi bạn bận rộn cày cuốc học hỏi, cơn ghen tự dưng tan biến hết.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Thấy bạn được thăng chức. Thay vì chê bai "Do nó ăn may", hãy chuyển thành: "Mình thiếu gì nhỉ? Khả năng thuyết trình? Tiếng Anh? Ok, tối nay mình sẽ đăng ký ngay khóa học giao tiếp". 3 tháng sau, level của bạn tăng lên, và bạn chẳng còn rảnh mà đi sân si nữa.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Nhỡ mình thiếu nhiều thứ quá, học không kịp thì sao?</summary>
+    <div class="scaffold__resolve"><p>Đừng nôn nóng đòi ăn tươi nuốt sống ngay. Chỉ cần bạn bắt tay làm MỘT VỆC nhỏ xíu thôi, não bộ sẽ lập tức có cảm giác thành tựu và xóa đi sự bất lực ghen tị ban đầu. Cứ nhích từng bước một!</p></div>
+  </details>
+</section>
+<div class="feynman">Chìa khóa số 2: Ngừng soi mói người ta. Xoay gương lại tự hỏi bản thân "Mình thiếu gì để được như thế?" rồi lao vào làm.</div>
+
+<section class="scaffold" id="ch6-scaffold-3">
+  <h3 class="scaffold__concept">Tuyệt chiêu 3 — Đập tan niềm tin "Mình không làm được đâu"</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Ghen độc sinh ra vì bạn tin rằng mình không bao giờ vươn tới được đẳng cấp đó. Hãy dùng liệu pháp thay đổi góc nhìn (Cognitive reappraisal) để đập nát niềm tin ngớ ngẩn đó bằng 3 câu hỏi: (1) Bằng chứng nào cấm mình không được thành công? (2) Có ai xuất phát điểm như mình mà vẫn phất lên được không? (3) Việc nhỏ nhất mình có thể làm ngay bây giờ là gì? <a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6877126/" target="_blank" rel="noopener">PMC6877126</a>.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Niềm tin cũ: "Mình nghèo từ trong trứng, sao mà có nhà lầu như nó". Phản biện: (1) Đã cố hết sức đâu mà biết không được; (2) Thiếu gì tỷ phú đi lên từ hai bàn tay trắng; (3) Việc nhỏ nhất: Từ nay bớt uống trà sữa để tiết kiệm. Bạn thấy không, chỉ 3 câu là chuyển bại thành thắng ngay.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Nếu thực tế nó khó quá, không đua nổi thật thì sao?</summary>
+    <div class="scaffold__resolve"><p>Nếu thực tế khó đến mức vô lý (vd: đua mua siêu xe với tỷ phú), thì hãy chuyển hướng mục tiêu (Plan B). "Mình không cần đi siêu xe, mình chỉ cần mua một chiếc xe tử tế che nắng che mưa". Chấp nhận thực tại một cách vui vẻ cũng là một dạng năng lực.</p></div>
+  </details>
+</section>
+<div class="feynman">Chìa khóa số 3: Tự chất vấn lại sự tự ti của mình. Đừng chưa ra trận đã vội nhận thua!</div>
+
+<section class="scaffold" id="ch6-scaffold-4">
+  <h3 class="scaffold__concept">Tuyệt chiêu 4 — Trắc ẩn với bản thân (Self-compassion)</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Người ta hay xấu hổ tự dằn vặt: "Sao mình lại đi ghen tị với bạn thân thế này, mình đúng là loại cặn bã". Đừng mắng bản thân như thế! Nhà tâm lý Kristin Neff bảo rằng: Hãy dịu dàng với chính mình. Công nhận rằng ai trên đời cũng có phút yếu lòng, ghen tị là bản năng sinh học thôi mà. Càng bao dung với mình, bạn càng nhanh thoát khỏi hố đen đó.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Thay vì tự vả: "Mày là đồ tồi". Hãy an ủi: "Mình đang ghen tị vì mình cũng ao ước có một công việc tốt như nó. Cảm giác này ai cũng có cả, bình thường thôi. Mình sẽ dùng nó làm động lực sửa lại cái CV xin việc".</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Dễ dãi với mình như thế thì có thành người ích kỷ luôn không?</summary>
+    <div class="scaffold__resolve"><p>Thương bản thân (Self-compassion) khác với nuông chiều bản thân (Self-indulgence). Nuông chiều là cắn rứt rồi kệ xác đời buông xuôi. Thương bản thân là dỗ dành để đứng lên đi tiếp. Nghiên cứu chỉ ra người biết tự thương mình sẽ có dũng khí để học hỏi mạnh mẽ hơn những kẻ hay tự đay nghiến.</p></div>
+  </details>
+</section>
+<div class="feynman">Chìa khóa số 4: Ghen tị là cảm xúc rất con người. Hãy xoa dịu bản thân rồi nhẹ nhàng bước tiếp, đừng tự rủa sả chính mình nữa.</div>
+
+<section class="scaffold" id="ch6-scaffold-5">
+  <h3 class="scaffold__concept">Tuyệt chiêu 5 — "Quân tử cầu chư kỷ" (Tìm giá trị từ bên trong)</h3>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Khái niệm</div>
+    <div class="scaffold__row-body"><p>Tuyệt chiêu cuối đến từ Khổng Tử: "Người quân tử tìm ở chính mình, kẻ tiểu nhân đòi hỏi ở người khác". Mạng xã hội ép bạn phải chạy theo lượt Like, lượt Follow (những thứ bên ngoài). Hãy bẻ gãy luật chơi đó: Đo lường thành công bằng những gì bạn "Học" được và "Trau dồi" được từ bên trong.</p></div>
+  </div>
+  <div class="scaffold__row">
+    <div class="scaffold__row-label">Ví dụ</div>
+    <div class="scaffold__row-body"><p>Đừng bận tâm "Sao bài của nó nhiều like thế". Hãy bận tâm "Hôm nay mình đã đọc thêm được một quyển sách hay". Học không phải để khoe với thiên hạ, học là để mài sắc nội lực của chính mình. Sự tự tôn nội tại này sẽ bọc thép cho tâm hồn bạn trước mọi sự so đo nhỏ nhen.</p></div>
+  </div>
+  <details class="scaffold__probe">
+    <summary>🤔 Tự hỏi: Sống ở thời đại này mà mặc kệ lượt Like thì có lập dị quá không?</summary>
+    <div class="scaffold__resolve"><p>Sống sâu sắc chứ không phải lập dị. Khi giá trị của bạn vững như kiềng ba chân, bạn không cần phải diễn tuồng trên mạng. Những người cứ mải miết chạy theo sự tung hô trên mạng mới là những con rối đáng thương nhất.</p></div>
+  </details>
+</section>
+<div class="feynman">Chìa khóa số 5: Xây dựng bộ khung giá trị ngầm bên trong bạn. Khi nội công thâm hậu, những lời chê bai hay thành tựu của người khác chẳng thể nào làm lung lay được bạn.</div>
+
+<div class="checkpoint" data-checkpoint-id="cp-ghen-ti-6">
+  <span class="checkpoint__label">🛑 Tạm dừng &amp; suy ngẫm</span>
+  <p class="checkpoint__question">Chọn 1 trong 5 vũ khí trên và thử giải quyết một sự bực dọc gần đây nhất của bạn. Bạn chọn vũ khí nào? Bạn làm như thế nào?</p>
+  <textarea placeholder="Viết nháp kế hoạch hành động vào đây nhé..."></textarea>
+  <div class="checkpoint__actions">
+    <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Xem gợi ý</button>
+    <span class="checkpoint__saved" data-checkpoint-saved></span>
+  </div>
+  <div class="checkpoint__expert">
+    <span class="checkpoint__expert-label">Bật mí</span>
+    <p>Ví dụ xài chiêu số 2 (Biến độc thành lành): Thấy đứa em họ đi du lịch Châu Âu hoài. Mình hỏi: "Mình thiếu cái gì? Tiền! Làm sao có tiền? Mai mình phải xem lại cách tiết kiệm chi tiêu hàng tháng và tìm tòi đầu tư". Bùm! Cơn ghen đã chuyển hóa thành Kế hoạch làm giàu!</p>
+  </div>
+</div>
+
+<h2>Ranh giới cần nhớ · Xử lý ghen tị KHÔNG PHẢI LÀ…</h2>
+
+<div class="callout callout--warn">
+  <span class="callout__label">⚠️ Đừng hiểu lầm</span>
+  <p><strong>"Xử lý ghen là dối lòng chối bay chối biến"</strong> Sai bét — Ép mình nói "Tôi không ghen" là trò Bịt tai trộm chuông ngớ ngẩn nhất. 5 tuyệt chiêu ở trên đều yêu cầu bạn phải ngẩng cao đầu thừa nhận cảm xúc trước khi ra tay xử lý.</p>
+</div>
+
+<div class="callout callout--danger">
+  <span class="callout__label">🚫 Trường hợp đặc biệt</span>
+  <p><strong>5 món vũ khí này chỉ dùng cho người bình thường.</strong> Nếu bạn đang mắc chứng ghen tuông hoang tưởng, có ý định kiểm soát bạo lực hay trầm cảm muốn tự tử (Chương 5), thì 5 mẹo này KHÔNG ĐỦ ĐÔ. Xin vui lòng nhấc máy gọi bác sĩ tâm lý ngay nhé!</p>
+</div>
+
+<h2 id="connections">Đọc thêm về các chủ đề liên quan</h2>
+<p>Ghen tị chỉ là một góc nhỏ trong mớ bòng bong cảm xúc. Bạn có thể mở rộng kiến thức qua:</p>
+<ul>
+  <li><strong><a href="so-hai-va-lo-au.html" target="_blank" rel="noopener">Khảo cứu #5 — Nỗi sợ và Lo âu</a></strong>: Ghen tuông thực chất là nỗi lo sợ bị mất mát kiểm soát. Đọc để gỡ nốt cục nghẽn này.</li>
+  <li><strong>Tâm lý học tiến hóa (David Buss)</strong>: Hiểu về bản năng "vượn người" của chúng ta để biết vì sao yêu đương lại hay khổ đau mệt mỏi thế.</li>
+  <li><strong>Tâm lý học tích cực & Lòng biết ơn</strong>: Chuyên trị bệnh so sánh. Tập thói quen biết ơn những gì đang có sẽ dập tắt cơn thèm khát những thứ viển vông.</li>
+  <li><strong>Nho giáo (Luận Ngữ)</strong>: Đọc nguyên văn tư tưởng "Quân tử cầu chư kỷ" để thấm thía phong thái sống thanh cao không màn hơn thua.</li>
+</ul>
+
+<h2>Tóm lại là... · Kết thúc toàn tập</h2>
+<p>Bài học dài đã đến hồi kết. Tóm gọn lại: Sự thèm muốn (envy) và thói ghen tuông (jealousy) là hai cái radar tiến hóa để giúp con người sinh tồn. Nó có thể là liều thuốc tăng lực (ghen lành) hoặc chén thuốc độc (ghen độc). Phương Tây bắt đi xưng tội, Phương Đông bắt đi học, còn Mạng Xã Hội thì đang châm ngòi nổ cho nó bùng phát mạnh mẽ hơn bao giờ hết. Khi đi quá giới hạn, nó sẽ biến thành bệnh lý tâm thần cần dùng thuốc. Để tự chữa lành mỗi ngày, hãy ghim 5 chiêu thức: Gọi tên cảm xúc, Hỏi xem mình thiếu gì, Đập tan sự tự ti, Thương xót bản thân, và Tập trung tu dưỡng chính mình.</p>
+<p>Đừng bao giờ tự trách mình vì đã lỡ ghen tị. Hãy tự hỏi: "Mình sẽ dùng cảm giác ghen này để bay cao hơn hay chìm nghỉm đi?".</p>
+
+<blockquote>
+  <strong>Chốt hạ:</strong> Ghen tị là một nguồn năng lượng tái tạo, không phải thứ rác thải cần vứt đi. Hãy khéo léo dùng nó để thắp sáng con đường rèn luyện của bản thân bạn.
+</blockquote>
+
+<!-- Launch Pad — Extension Problem, shaped by APPLICATION_GOAL, with progressive hints. -->
+<div class="launchpad">
+  <span class="launchpad__label">🚀 Bệ phóng · Bài tập về nhà</span>
+  <h3 class="launchpad__title">Kẻ gác cổng trong bạn đang gác thứ gì?</h3>
+  <p class="launchpad__problem">Thử thách 7 ngày tới: Hãy ghi chép lại những lần bạn thấy ganh tỵ. Tự hỏi 5 điều: (1) Ai/Chuyện gì làm mình bực? (2) Là "thèm của nó" (Envy) hay "sợ nó cướp của mình" (Jealousy)? (3) Mình đang tính rèn luyện đi lên hay muốn dìm nó xuống? (4) Mình đang tự ti điều gì? (5) Một việc nhỏ mình làm ngay ngày mai là gì? Cuối tuần đọc lại xem cơn ghen của bạn rốt cuộc đang muốn bảo vệ bạn khỏi nỗi sợ hãi yếu kém nào?</p>
+  <div class="launchpad__hints">
+    <span class="launchpad__hints-label">Bí ý tưởng? Mở từng gợi ý nhé.</span>
+    <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+    <div class="launchpad__hint" data-hint="1">
+      <span class="launchpad__hint-label">Gợi ý 1 — Thoải mái lên</span>
+      Đây là nhật ký tìm hiểu bản thân, không phải bản cáo trạng kết tội bạn. Cứ thành thật phơi bày sự sân si ra nhé.
+    </div>
+    <div class="launchpad__hint" data-hint="2">
+      <span class="launchpad__hint-label">Gợi ý 2 — Ôn bài</span>
+      Nhớ quy tắc phân loại: Ghen vì thiếu thốn (Envy) hay sợ mất mát (Jealousy). Quyết tâm vươn lên (Ghen lành) hay muốn đạp đổ (Ghen độc).
+    </div>
+    <div class="launchpad__hint" data-hint="3">
+      <span class="launchpad__hint-label">Gợi ý 3 — Bước quyết định</span>
+      Nhật ký phải chốt bằng Kế hoạch hành động. Cần học kỹ năng gì? Cần nói chuyện thẳng thắn với người yêu thế nào? Hành động ngay cho nóng!
+    </div>
+  </div>
+</div>
+
+<!-- Glossary -->
+    <h2 id="glossary">Từ điển nhỏ dắt túi</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Ghen tị (Envy)</dt>
+        <dd>Thèm thuồng thứ người khác có (tài sản, nhan sắc). Chuyện của 2 người. <em>(Chiếc cân nghiêng về bạn, báo bạn đang thiếu.)</em></dd>
+        <dt>Đố kỵ/Ghen tuông (Jealousy)</dt>
+        <dd>Nơm nớp lo sợ bị kẻ thứ 3 cướp mất người mình yêu hoặc vị trí của mình. Chuyện của 3 người. <em>(Có kẻ khác thò tay tính bê mất đồ trên đĩa cân của bạn.)</em></dd>
+        <dt>Ghen lành (Benign envy)</dt>
+        <dd>Thấy người ta giỏi thì ấm ức nhưng biến nó thành động lực đi học, phấn đấu vươn lên. <em>(Thêm quả tạ vào đĩa cân của mình cho bằng người ta.)</em></dd>
+        <dt>Ghen độc (Malicious envy)</dt>
+        <dd>Thấy người ta giỏi, tự nghĩ mình bất tài nên quay ra cay cú, nói xấu dìm hàng. <em>(Cố tình hất đổ đĩa cân của người ta xuống.)</em></dd>
+        <dt>Lý thuyết so sánh xã hội (Festinger 1954)</dt>
+        <dd>Bản năng tọc mạch đong đếm của não bộ để định vị xem mình đang ở tầng lớp nào trong xã hội. Không so sánh không chịu nổi.</dd>
+        <dt>INCOM</dt>
+        <dd>Cái thước đo xem bạn có thuộc tuýp người "nghiện đi so sánh" hay không. Điểm cao chứng tỏ bạn dễ tủi thân, hay lo âu và rất dễ bị tổn thương trên MXH.</dd>
+        <dt>Jealousy tiến hóa (Buss 1992)</dt>
+        <dd>Đàn ông sợ bị cắm sừng do bản năng sợ nuôi nhầm con. Phụ nữ sợ chồng thay lòng do sợ bị cắt đứt nguồn chu cấp và bảo vệ. Bản năng di truyền từ thời tiền sử.</dd>
+        <dt>Highlight reel (Những khoảnh khắc vàng)</dt>
+        <dd>Đăng ảnh facebook thì phải qua 7749 cái app làm đẹp. So sánh mớ bòng bong đời bạn với 1% cảnh "làm màu" của người ta là tự chuốc lấy sự trầm cảm.</dd>
+        <dt>Bảy Đại Tội (Seven Deadly Sins)</dt>
+        <dd>Sách giáo lý Phương Tây liệt kê Ghen tị là một tội ác kinh tởm cần đi xưng tội và sám hối ngay lập tức.</dd>
+        <dt>Bịt tai trộm chuông</dt>
+        <dd>Thành ngữ châm biếm kẻ tự dối lòng. Rõ ràng là đang ghen tị nổ đom đóm mắt nhưng miệng lại bảo "Tôi chả thèm quan tâm".</dd>
+        <dt>Quân tử cầu chư kỷ</dt>
+        <dd>Tư tưởng đỉnh cao của Khổng Tử: Ráng mà mài giũa bản thân đi, kệ xác người ta nói gì hay làm gì. Giá trị cốt lõi đến từ bên trong.</dd>
+        <dt>Ghen tuông bệnh lý (Pathological jealousy)</dt>
+        <dd>Bệnh thần kinh rồi! Ghen tới mức kiểm tra điện thoại hàng giờ, lắp định vị, đánh đập bạo hành người yêu dù người ta trong sáng. Phải đi khám bác sĩ!</dd>
+        <dt>Thương bản thân (Self-compassion)</dt>
+        <dd>Nhẹ nhàng bao dung với chính mình. Biết mình lỡ ghen thì tự vỗ vai an ủi "ai cũng thế mà", rồi từ từ đứng lên sửa đổi, thay vì tự tát vào mặt mình sỉ vả.</dd>
+      </dl>
+    </div>
+
+    <!-- =====================================================
+         KNOWLEDGE CHECK (auto-graded quiz)
+         ===================================================== -->
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra nhanh xem hiểu bài chưa nào</h2>
+      <p class="quiz__intro">3 câu hỏi vui vẻ nhé. Chọn đáp án và bấm <em>Kiểm tra đáp án</em> để xem bạn đạt mấy điểm!</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Theo phân tích tâm lý học, điểm khác nhau to đùng giữa Envy (Ghen tị) và Jealousy (Đố kỵ) là gì?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Envy là ghen nhẹ, Jealousy là ghen mạnh muốn đánh nhau</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Envy là thấy thiếu thốn (chuyện 2 người), Jealousy là sợ bị cướp mất người yêu (drama 3 người)</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Con gái hay bị Envy, con trai chuyên trị Jealousy</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Vớ vẩn, hai từ này là một mà!</label>
+        <div class="quiz__explanation"><strong>Đáp án đúng:</strong> Envy là khát khao đồ của người khác (2 bên). Jealousy là hoảng sợ bảo vệ mối quan hệ trước kẻ thứ 3 bủa vây (3 bên). Bắt đúng bệnh mới kê đúng thuốc được nhé!</div>
+      </fieldset>
+
+      <fieldset data-answer="1">
+        <legend>2. Theo thuyết tiến hóa, tại sao nam và nữ lại phản ứng khác nhau về chuyện ngoại tình?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Đàn ông và phụ nữ ghen y hệt nhau, mấy ông khoa học bịa đấy</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Đàn ông sợ bị cắm sừng do bản năng duy trì nòi giống, phụ nữ sợ đối phương thay lòng đổi dạ vì lo mất đi người bảo vệ chu cấp.</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Đàn bà sợ cắm sừng hơn, đàn ông thì sướt mướt sợ thay lòng đổi dạ</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Do xem phim truyền hình nhiều quá nên nhiễm thôi</label>
+        <div class="quiz__explanation"><strong>Đáp án đúng:</strong> Nỗi sợ này đã được in sâu vào mã gen từ thời bộ lạc hoang dã rồi. Nam giới sợ nuôi nhầm con (bất định về huyết thống), nữ giới lo sợ mẹ con chết đói bơ vơ (mất tài nguyên).</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>3. Khổng Tử khuyên "Đừng lo người không biết mình, hãy lo mình chưa đáng để người biết". Lời khuyên này nên áp dụng vào việc trị ghen tị thế nào?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Bỏ vào rừng sống, không chơi với ai nữa cho đỡ phiền</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Viết status chửi đổng bọn sống ảo trên mạng</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Đừng rảnh rỗi sân si nữa, lôi sách ra học, tự cày cuốc nâng cấp bản thân đi!</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Mình giỏi như thế này cơ mà, sao phải học nữa</label>
+        <div class="quiz__explanation"><strong>Đáp án đúng:</strong> Đây là tuyệt kỹ chuyển hóa Ghen độc thành Ghen lành. Thay vì hằn hộc nhìn người khác, hãy lấy đó làm bảng mục tiêu để cắm đầu vào mài giũa chuyên môn nội công của chính mình!</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra đáp án</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+<h2 id="sources">Nguồn tham khảo &amp; đọc thêm</h2>
+    <p><a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037//0022-3514.64.6.906" target="_blank" rel="noopener">Parrott &amp; Smith</a> — 1993, Phân biệt về Envy và Jealousy (JPSP, 64(6), 906–920).</p><p><a class="source" href="https://journals.sagepub.com/doi/10.1177/001972495400700203" target="_blank" rel="noopener">Festinger</a> — 1954, Thuyết so sánh xã hội (Human Relations, 7(2), 117–140).</p><p><a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037/a0015669" target="_blank" rel="noopener">van de Ven, Zeelenberg &amp; Pieters</a> — 2009, Nghiên cứu về Ghen lành và Ghen độc (Emotion, 9(3), 414–431).</p><p><a class="source" href="https://psycnet.apa.org/doiLanding?doi=10.1037//0022-3514.64.6.906" target="_blank" rel="noopener">Buss, Larsen, Westen &amp; Semmelroth</a> — 1992, Tâm lý ghen tuông giữa 2 giới tính (Psychological Science, 3(4), 251–255).</p><p><a class="source" href="https://www.sciencedirect.com/science/article/abs/pii/S1090513812000244" target="_blank" rel="noopener">Sagarin et al.</a> — 2012, Phân tích gộp về sự khác biệt ghen tuông ở giới tính (Evolution &amp; Human Behavior, 33(6), 595–614).</p><p><a class="source" href="https://doi.org/10.1037/0022-3514.76.1.129" target="_blank" rel="noopener">Gibbons &amp; Buunk</a> — 1999, Thang đo INCOM về xu hướng hay so sánh (JPSP, 76(1), 129–142).</p><p><a class="source" href="https://www.sciencedirect.com/science/article/pii/S0747563222000809" target="_blank" rel="noopener">ScienceDirect</a> — 2022, Tổng hợp báo cáo Mạng xã hội và Đố kỵ.</p><p><a class="source" href="https://www.britannica.com/topic/seven-deadly-sins" target="_blank" rel="noopener">Britannica</a> — "Bảy Đại Tội" của phương Tây.</p><p><a class="source" href="https://doi.org/10.1016/j.avb.2011.08.006" target="_blank" rel="noopener">Buss &amp; Duntley</a> — 2011, Bạo lực do ghen tuông dưới góc nhìn tiến hóa (Aggression and Violent Behavior, 16(5), 411–419).</p><p><a class="source" href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6877126/" target="_blank" rel="noopener">PMC6877126</a> — Ứng dụng phương pháp CBT (Thay đổi nhận thức).</p><p><a class="source" href="https://ctext.org/analects/li-ren/zh" target="_blank" rel="noopener">《论语·里仁》4.14</a> — Những lời dạy của Khổng Tử.</p><p><a class="source" href="http://psy.china.com.cn/2023-08/09/content_42453596.htm" target="_blank" rel="noopener">Báo cáo sức khỏe tâm lý</a> — Viện Tâm lý CAS năm 2022.</p>
+
+
+
+    <div class="footer">
+      <p>Phím tắt: <span class="kbd">J</span>/<span class="kbd">K</span> cuộn · <span class="kbd">F</span> chế độ tập trung · <span class="kbd">T</span> đổi màu nền · <span class="kbd">P</span> in tài liệu</p>
+    </div>
+
+  </main>
+
+  <!-- =========================================================
+       RIGHT — MARGINALIA (sidenotes)
+       ========================================================= -->
+  <aside class="marginalia" aria-label="Sidenotes">
+
+    <!-- Contextual Amplifier — sticky slot at the top of the right column.
+         Hovering any .term-amp[data-note] in the canvas fills this slot with the note whose id matches data-note.
+         Notes themselves are stored in the .amp-notes pool below (hidden). -->
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Chú giải thuật ngữ</span>
+      <p class="amplifier__empty">Hãy di chuột lên những từ <span style="border-bottom:1px dashed var(--accent2)">có gạch chân đứt nét</span> trong bài để xem chú giải siêu tốc tại đây nhé.</p>
+    </div>
+
+    <!-- Amplifier notes — populate one per term. id must match the data-note attribute on the corresponding .term-amp in the canvas. -->
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="amp-envy-vs-jealousy">
+        <span class="amplifier__term">Envy vs Jealousy</span>
+        <p class="amplifier__body">Đây là hai trạng thái khác nhau hoàn toàn: <strong>Envy</strong> (Ghen tị) là thèm muốn đồ của người khác, việc của 2 người; <strong>Jealousy</strong> (Đố kỵ/Ghen tuông) là nơm nớp sợ bị kẻ thứ 3 nẫng tay trên mất người mình yêu, việc của 3 người.</p>
+      </div>
+      <div data-note-id="amp-perceived-controllability">
+        <span class="amplifier__term">Quyền kiểm soát (Perceived controllability)</span>
+        <p class="amplifier__body">Đó là sự tự confidence vào khả năng của bản thân. Tin mình làm được thì sẽ biến thành <strong>Ghen lành</strong> (cố gắng học hỏi); thấy đời bất công và mình vô dụng thì sẽ sinh ra <strong>Ghen độc</strong> (chuyên đi cắn xé người khác).</p>
+      </div>
+      <div data-note-id="amp-mianzi">
+        <span class="amplifier__term">面子 (miànzi) — Sĩ diện</span>
+        <p class="amplifier__body">Văn hóa "giữ thể diện" kinh điển. Mọi người đua nhau lên mạng sống ảo khoe khoang để ra oai với thiên hạ, vô tình làm cho những người xung quanh bị áp lực và rơi vào vòng xoáy đố kỵ mệt mỏi.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Chuyện nhỏ 1</strong>
+      Thành ngữ "Bịt tai trộm chuông" và "Bảy Đại Tội" đều nói về ghen tị. Một bên là tự dối lòng (phủ nhận là mình đang ghen), một bên là mang ra kết án (sám hối đi). Còn Khổng Tử thì sao? Kệ, lo mài giũa bản thân đi!
+    </div>
+    <div class="sidenote">
+      <strong>Chuyện nhỏ 2</strong>
+      Hồi năm 1954 khi Festinger nghĩ ra trò "Thuyết so sánh xã hội", thời đó làm gì có mạng internet. Thử tưởng tượng nếu ổng sống vào thời đại Instagram xem, chắc ổng sẽ bảo: "Bây giờ người ta so sánh nó mang tầm vóc công nghiệp vũ trụ rồi!".
+    </div>
+    <div class="sidenote">
+      <strong>Góc nhìn thú vị</strong>
+      Cụ Shakespeare ví von sự ghen tị là "Con quái vật mắt xanh" (green-eyed monster). Ngẫu nhiên làm sao, văn hóa phương Đông cũng hay gọi ghen tị là "đỏ mắt", hay ngọn lửa độc thiêu rụi cả tâm hồn. Dù màu xanh hay màu đỏ thì nó cũng là con quái vật chuyên đi nuốt chửng linh hồn mà thôi!
+    </div>
+  </aside>
+
+</div>
+
+<!-- Floating controls -->
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật/tắt chế độ tập trung">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Theme (T)" aria-label="Toggle theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</div>
+
+<script>
+/* ============================================================
+   PERSISTENCE — theme + reading position + quiz state
+   Uses localStorage. This file is saved to disk and opened
+   directly in a browser, so localStorage is available.
+============================================================ */
+const STORAGE_KEY = 'edu-notes:' + (document.title || 'untitled');
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY + ':' + k)); }catch{ return null; } },
+  set(k,v){ try{ localStorage.setItem(STORAGE_KEY + ':' + k, JSON.stringify(v)); }catch{} },
+};
+
+/* ============================================================
+   THEME
+============================================================ */
+(function initTheme(){
+  const saved = store.get('theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  store.set('theme', next);
+});
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function initFocus(){
+  if(store.get('focus')) document.body.classList.add('focus-mode');
+})();
+document.getElementById('focusBtn').addEventListener('click', () => {
+  document.body.classList.toggle('focus-mode');
+  const on = document.body.classList.contains('focus-mode');
+  document.getElementById('focusBtn').setAttribute('data-active', on ? 'true' : 'false');
+  store.set('focus', on);
+});
+
+/* ============================================================
+   TABLE OF CONTENTS — auto-generate from h2/h3
+============================================================ */
+(function buildTOC(){
+  const canvas = document.getElementById('canvas');
+  const toc = document.getElementById('toc');
+  const headings = canvas.querySelectorAll('h2, h3');
+
+  function removeVietnameseTones(str) {
+      str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+      str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+      str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+      str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+      str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+      str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+      str = str.replace(/đ/g, "d");
+      return str;
+  }
+
+  headings.forEach(h => {
+    if(!h.id){
+      let idStr = h.textContent.toLowerCase().trim();
+      idStr = removeVietnameseTones(idStr);
+      h.id = idStr.replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').slice(0,60);
+    }
+    const li = document.createElement('li');
+    if(h.tagName === 'H3') li.className = 'toc-l3';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+})();
+
+/* ============================================================
+   SCROLL TRACKING (Progress, TOC, Orbit)
+============================================================ */
+(function initScrollTracking(){
+  const fill = document.getElementById('progressFill');
+  const tocLinks = document.querySelectorAll('.toc a');
+  const orbitNodes = Array.from(document.querySelectorAll('.orbit__node'));
+  const sectionsForNav = Array.from(document.querySelectorAll('#canvas h2, #canvas h3'));
+  const orbitTargets = orbitNodes.map(n => n.dataset.target);
+  
+  // Phục hồi trạng thái Lộ trình (Orbit) đã lướt qua
+  const reached = new Set(store.get('reached') || []);
+  orbitNodes.forEach(n => {
+    if(reached.has(n.dataset.target)) n.setAttribute('data-reached','true');
+  });
+
+  // Xử lý sự kiện click cho Orbit
+  orbitNodes.forEach(n => {
+    n.addEventListener('click', () => {
+      const target = document.getElementById(n.dataset.target);
+      if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+
+  function update(){
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    fill.style.width = pct + '%';
+    store.set('scroll', scrolled);
+
+    // Xác định section hiện tại cho mục lục (TOC) và Lộ trình (Orbit)
+    let currentTocId = '';
+    let currentOrbitId = '';
+
+    for (let i = sectionsForNav.length - 1; i >= 0; i--) {
+      const sec = sectionsForNav[i];
+      // offsetTop - 150px làm ngưỡng (threshold) để highlight sớm hơn một chút khi lướt tới
+      if (scrolled >= sec.offsetTop - 150) {
+        if (!currentTocId) currentTocId = sec.id;
+        if (!currentOrbitId && orbitTargets.includes(sec.id)) {
+          currentOrbitId = sec.id;
+        }
+      }
+    }
+
+    // Dự phòng trường hợp scroll ở tuốt trên cùng
+    if (!currentOrbitId && orbitTargets.length > 0) currentOrbitId = orbitTargets[0];
+
+    // Cập nhật thẻ a trong TOC
+    tocLinks.forEach(a => {
+      a.classList.remove('is-active');
+      if (currentTocId && a.getAttribute('href') === '#' + currentTocId) {
+        a.classList.add('is-active');
+      }
+    });
+
+    // Cập nhật Orbit
+    orbitNodes.forEach(node => {
+      node.removeAttribute('data-active');
+      if (node.dataset.target === currentOrbitId) {
+        node.setAttribute('data-active', 'true');
+        node.setAttribute('data-reached', 'true');
+        reached.add(currentOrbitId);
+        store.set('reached', Array.from(reached));
+      }
+    });
+  }
+
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  
+  // Phục hồi vị trí scroll lần đọc trước
+  const saved = store.get('scroll');
+  if(typeof saved === 'number' && saved > 100){
+    setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 60);
+  }
+})();
+
+/* ============================================================
+   FLIP CARDS — click + keyboard support
+============================================================ */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+  card.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      card.classList.toggle('is-flipped');
+    }
+  });
+});
+
+/* ============================================================
+   QUIZ — auto grade + persist
+============================================================ */
+(function initQuiz(){
+  const quiz = document.getElementById('quiz');
+  if(!quiz) return;
+  const check = document.getElementById('quizCheck');
+  const reset = document.getElementById('quizReset');
+  const score = document.getElementById('quizScore');
+
+  // Restore prior answers
+  const prior = store.get('quiz') || {};
+  Object.entries(prior).forEach(([name, val]) => {
+    const input = quiz.querySelector(`input[name="${name}"][value="${val}"]`);
+    if(input) input.checked = true;
+  });
+
+  quiz.addEventListener('change', () => {
+    const state = {};
+    quiz.querySelectorAll('input[type=radio]:checked').forEach(i => state[i.name] = i.value);
+    store.set('quiz', state);
+  });
+
+  check.addEventListener('click', () => {
+    let correct = 0, total = 0;
+    quiz.querySelectorAll('fieldset').forEach(fs => {
+      const answer = parseInt(fs.dataset.answer, 10);
+      const selected = fs.querySelector('input:checked');
+      total++;
+      // Reset styling on all options first
+      fs.querySelectorAll('.quiz__option').forEach(o => {
+        o.classList.remove('correct-answer','incorrect-answer');
+      });
+      // Mark the correct one green
+      const correctOption = fs.querySelector(`input[value="${answer}"]`);
+      if(correctOption) correctOption.closest('.quiz__option').classList.add('correct-answer');
+      // If the user picked wrong, mark theirs red
+      if(selected && parseInt(selected.value, 10) !== answer){
+        selected.closest('.quiz__option').classList.add('incorrect-answer');
+      }
+      if(selected && parseInt(selected.value, 10) === answer) correct++;
+    });
+    quiz.classList.add('is-graded');
+    const pct = Math.round((correct / total) * 100);
+    let msg = `${correct}/${total} câu đúng (${pct}%)`;
+    if(pct === 100) msg += ' — 🎯 Tuyệt vời, bạn nắm trọn bí kíp rồi!';
+    else if(pct >= 66) msg += ' — Khá vững vàng rồi đấy!';
+    else msg += ' — Chắc cần lướt lên trên ôn bài một chút nhé!';
+    score.textContent = msg;
+  });
+
+  reset.addEventListener('click', () => {
+    quiz.querySelectorAll('input[type=radio]').forEach(i => i.checked = false);
+    quiz.querySelectorAll('.quiz__option').forEach(o => o.classList.remove('correct-answer','incorrect-answer'));
+    quiz.classList.remove('is-graded');
+    score.textContent = '';
+    store.set('quiz', {});
+  });
+})();
+
+/* ============================================================
+   KEYBOARD SHORTCUTS
+============================================================ */
+document.addEventListener('keydown', e => {
+  if(e.target.matches('input, textarea, select')) return;
+  if(e.metaKey || e.ctrlKey || e.altKey) return;
+  switch(e.key.toLowerCase()){
+    case 'j': window.scrollBy({ top: 200, behavior: 'smooth' }); break;
+    case 'k': window.scrollBy({ top: -200, behavior: 'smooth' }); break;
+    case 'f': document.getElementById('focusBtn').click(); break;
+    case 't': document.getElementById('themeBtn').click(); break;
+    case 'p': window.print(); break;
+  }
+});
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER — hover .term-amp[data-note] → fill #amplifier
+============================================================ */
+(function initAmplifier(){
+  const amp = document.getElementById('amplifier');
+  const pool = document.getElementById('ampNotes');
+  if(!amp || !pool) return;
+  const emptyHtml = amp.innerHTML;
+  let currentId = null;
+
+  function show(id){
+    if(id === currentId) return;
+    const note = pool.querySelector(`[data-note-id="${id}"]`);
+    if(!note) return;
+    currentId = id;
+    amp.innerHTML = '<span class="amplifier__label">Chú giải siêu tốc</span>' + note.innerHTML;
+    // Mark the corresponding term active
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+    document.querySelectorAll(`.term-amp[data-note="${id}"]`).forEach(t => t.classList.add('is-active'));
+  }
+  function reset(){
+    currentId = null;
+    amp.innerHTML = emptyHtml;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+  }
+
+  document.querySelectorAll('.term-amp[data-note]').forEach(t => {
+    t.addEventListener('mouseenter', () => show(t.dataset.note));
+    t.addEventListener('focus', () => show(t.dataset.note));
+    t.setAttribute('tabindex','0');
+  });
+  const canvas = document.getElementById('canvas');
+  if(canvas){
+    canvas.addEventListener('mouseleave', reset);
+  }
+})();
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINTS — textarea persistence + Compare to Expert
+============================================================ */
+(function initCheckpoints(){
+  document.querySelectorAll('.checkpoint').forEach(cp => {
+    const id = cp.dataset.checkpointId;
+    const ta = cp.querySelector('textarea');
+    const savedLabel = cp.querySelector('[data-checkpoint-saved]');
+    const revealBtn = cp.querySelector('[data-checkpoint-reveal]');
+    if(!id || !ta) return;
+
+    // Restore prior answer
+    const prior = store.get('cp:' + id);
+    if(prior){ ta.value = prior; if(savedLabel) savedLabel.textContent = 'Đã lưu'; }
+
+    // Persist as user types (debounced)
+    let t;
+    ta.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        store.set('cp:' + id, ta.value);
+        if(savedLabel) savedLabel.textContent = 'Đã lưu tự động';
+      }, 400);
+    });
+
+    if(revealBtn){
+      revealBtn.addEventListener('click', () => {
+        cp.classList.toggle('is-revealed');
+        revealBtn.textContent = cp.classList.contains('is-revealed')
+          ? 'Đóng đáp án'
+          : 'Xem đáp án gợi ý';
+      });
+    }
+  });
+})();
+
+/* ============================================================
+   LAUNCH PAD — progressive hint reveal
+============================================================ */
+(function initLaunchpad(){
+  const btn = document.getElementById('hintBtn');
+  if(!btn) return;
+  const hints = Array.from(document.querySelectorAll('.launchpad__hint'));
+  const total = hints.length;
+  let shown = 0;
+
+  // Restore prior state
+  const prior = parseInt(store.get('hints') || 0, 10);
+  for(let i=0; i<prior && i<total; i++){
+    hints[i].classList.add('is-visible');
+    shown = i + 1;
+  }
+  updateBtn();
+
+  btn.addEventListener('click', () => {
+    if(shown >= total) return;
+    hints[shown].classList.add('is-visible');
+    shown++;
+    store.set('hints', shown);
+    updateBtn();
+  });
+
+  function updateBtn(){
+    if(shown >= total){
+      btn.textContent = 'Đã mở hết bảo bối rồi nhé';
+      btn.disabled = true;
+    } else {
+      btn.textContent = `Mở gợi ý ${shown + 1}/${total}`;
+    }
+  }
+})();
+</script>
+</body>
+</html>
