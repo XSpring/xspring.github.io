@@ -1,14 +1,14 @@
 # Site settings
-title:          Loc's Notes
+title:          Just Notes
 description:    "Another boring blog from a lazy blogger"
 url:            "https://xspring.github.io"
 
 # Google Analytics
-google_analytics: 
+google_analytics: G-JD5BTL7C4N
 
 # Author
 author:
-  name:         Loc Do
+  name:         LD
   url:          
   email:        
 
