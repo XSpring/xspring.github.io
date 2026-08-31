@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tư duy được hình thành từ đâu? — Atlas tổng (4 bài nối mạch)</title>
+<meta name="description" content="Atlas tổng hợp chuỗi 4 bài về tư duy: bài chính Khu Vườn + 3 phụ lục Dòng Sông, Phòng Tập, Thư Viện. Truy cập nhanh, đọc liền mạch.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{--font-serif:'Merriweather', Georgia, serif;--font-sans:'Inter', sans-serif;--bg:#FDFBF7;--bg-elevated:#fff;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--border:#E4DFD5;--sidenote-bg:#EDF2F7;--radius:12px;--shadow:0 4px 16px rgba(0,0,0,.08);--transition:200ms cubic-bezier(.4,0,.2,1)}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;--accent:#4FD1C5;--border:#2D3748;--sidenote-bg:#2A2F3A}
+*{box-sizing:border-box}html,body{margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;transition:font-size 0.2s ease, background var(--transition), color var(--transition)}
+a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+a:hover{color:var(--accent-strong)}
+.wrap{max-width:1100px;margin:0 auto;padding:28px 24px 80px;transition:max-width var(--transition)}
+.hero{padding:28px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);margin-bottom:28px}
+.hero h1{font-family:var(--font-sans);font-weight:700;font-size:2.1rem;line-height:1.25;color:var(--text-strong);margin:0 0 8px;letter-spacing:-.02em}
+.hero p{margin:0;color:var(--text-muted);font-family:var(--font-sans);font-size:0.9em}
+.badge{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--sidenote-bg);font-family:var(--font-sans);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin:24px 0}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+.card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);padding:18px 18px;box-shadow:0 1px 2px rgba(0,0,0,.04);transition:transform 150ms, box-shadow 150ms}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.card__top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.card__icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;background:var(--sidenote-bg);font-size:18px}
+.card__meta{font-family:var(--font-sans);font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.card h3{font-family:var(--font-sans);font-size:1.05rem;font-weight:700;color:var(--text-strong);margin:0 0 6px;line-height:1.35}
+.card p{margin:0 0 10px;color:var(--text);font-size:0.85em;line-height:1.6}
+.card__links{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.btn{font-family:var(--font-sans);font-size:13px;font-weight:600;padding:8px 12px;border-radius:8px;border:1px solid var(--accent);background:var(--accent);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{background:var(--accent-strong);border-color:var(--accent-strong);color:#fff}
+.btn--ghost{background:transparent;color:var(--accent)}
+.btn--ghost:hover{background:var(--sidenote-bg);color:var(--accent-strong)}
+.kits{margin:28px 0;padding:18px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:0.85em}
+.kits h3{margin:0 0 8px;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+.route{margin:24px 0;padding:18px 20px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:0.85em}
+.route strong{color:var(--text-strong)}
+.footer{margin-top:36px;padding-top:18px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+.controls{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-btn{width:42px;height:42px;border-radius:50%;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+</style>
+
+<style>
+@media(max-width:900px){ #miniToc{display:none} }
+#miniToc a:hover{color:var(--text)!important}
+/* CSS cho Focus Mode */
+body.focus-mode #miniToc { display: none !important; }
+body.focus-mode .wrap { max-width: 800px; }
+body.focus-mode .control-btn#focusBtn { background: var(--accent); color: white; }
+</style>
+
+</head>
+<body>
+
+<nav id="miniToc" style="position:fixed;top:20px;left:20px;z-index:48;display:flex;flex-direction:column;gap:6px;padding:10px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);font-family:var(--font-sans);font-size:12px;max-width:190px">
+  <span style="font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-size:11px">Mục lục Atlas</span>
+  <a href="#hero" style="text-decoration:none;color:var(--text-muted)">↗ Đầu trang</a>
+  <a href="#route" style="text-decoration:none;color:var(--text-muted)">↗ Lộ trình 45’</a>
+  <a href="#grid" style="text-decoration:none;color:var(--text-muted)">↗ 4 bài</a>
+  <a href="#quick" style="text-decoration:none;color:var(--text-muted)">↗ Truy cập nhanh</a>
+  <a href="tu-duy-duoc-hinh-thanh-tu-dau.html" style="text-decoration:none;color:var(--accent);font-weight:600">↗ Bài chính</a>
+</nav>
+
+<div class="wrap">
+  <div id="hero" class="hero">
+    <span class="badge">Atlas tổng · 4 bài nối mạch</span>
+    <h1>Tư duy được hình thành từ đâu?</h1>
+    <p>Từ nguyên liệu thô đến những va chạm thực tế — khám phá 3 đòn bẩy giúp tư duy tự vận hành, tự phát triển và tự sửa lỗi trong kỷ nguyên AI.</p>
+    <p style="margin-top:10px;font-size:13px;color:var(--text-muted)">Bao gồm 4 bài viết liên kết chặt chẽ (định dạng HTML). Bạn có thể đọc độc lập từng phần, nhưng để có trải nghiệm tối ưu nhất, hãy đi theo lộ trình đề xuất dưới đây.</p>
+  </div>
+
+  <div id="route" class="route">
+    <strong>Lộ trình tối ưu (45 phút):</strong> <a href="tu-duy-duoc-hinh-thanh-tu-dau.html">Bài chính — Khu Vườn</a> (28’) → <a href="thiet-ke-moi-truong-ra-quyet-dinh.html">Phụ lục A — Dòng Sông</a> (7’) → <a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html">Phụ lục B — Phòng Tập</a> (7’) → <a href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html">Phụ lục C — Thư Viện</a> (7’) — <em>hiểu hệ thống → đào rãnh → đặt tạ → mượn bản đồ</em>.
+  </div>
+
+  <div id="grid" class="grid">
+    <!-- Bài chính -->
+    <div class="card" style="border-left:4px solid var(--accent)">
+      <div class="card__top"><div class="card__icon">🌱</div><div class="card__meta">Bài chính · LONG · ~28 phút · Khu Vườn</div></div>
+      <h3>Tư duy được hình thành từ đâu? — Từ nguyên liệu đến va chạm đời thật</h3>
+      <p>Tư duy là một hệ thống dự đoán sống động, bắt rễ từ nền tảng sinh học và khí hậu văn hóa. Nó phát triển qua 4 lớp: nạp nguyên liệu, phản biện, tự học và cọ xát thực tế. Tư duy chỉ thực sự bền vững khi giữ được khả năng tự sửa lỗi.</p>
+      <div class="card__links">
+        <a class="btn" href="tu-duy-duoc-hinh-thanh-tu-dau.html">Mở HTML →</a>
+      </div>
+      <p style="margin-top:10px;font-size:12px;color:var(--text-muted)">Cầu nối: <strong>Khu Vườn</strong> (đất/khí hậu/hạt/tỉa/tưới/nắng gió) · Đóng vai trò gốc rễ nền tảng cho 3 phụ lục.</p>
+    </div>
+
+    <!-- A -->
+    <div class="card" style="border-left:4px solid #2B6CB0">
+      <div class="card__top"><div class="card__icon">🌊</div><div class="card__meta">Phụ lục A · MEDIUM · ~7 phút · Dòng Sông</div></div>
+      <h3>Thiết kế môi trường ra quyết định — Khi rãnh quyết định dòng chảy</h3>
+      <p>Mọi lựa chọn đều bị chi phối bởi môi trường. Học cách thiết kế lại 3 rãnh định hướng: <strong>mặc định</strong>, <strong>ma sát 20 giây</strong>, và <strong>tín hiệu xã hội</strong> để thói quen tốt tự động chảy mà không cần gồng ép ý chí.</p>
+      <div class="card__links">
+        <a class="btn" href="thiet-ke-moi-truong-ra-quyet-dinh.html">Mở HTML →</a>
+      </div>
+      <p style="margin-top:10px;font-size:12px;color:var(--text-muted)">Liên kết: Mở rộng khái niệm <em>Rãnh</em> từ Khu Vườn (chương 4) để xây dựng <em>Nghi thức</em> cho Phòng Tập (Phụ lục B).</p>
+    </div>
+
+    <!-- B -->
+    <div class="card" style="border-left:4px solid #B7791F">
+      <div class="card__top"><div class="card__icon">🏋️</div><div class="card__meta">Phụ lục B · MEDIUM · ~7 phút · Phòng Tập</div></div>
+      <h3>Đọc sâu trong thời AI — Giao thức 2-pass để không bị nghĩ hộ</h3>
+      <p>Sử dụng <strong>Giao thức 2-pass</strong>: tự tóm tắt ý chính trước, nhờ AI bắt lỗi sau. Đảo lộn thứ tự này sẽ tạo ra <strong>ảo giác hiểu biết</strong>. Hướng dẫn thiết lập thói quen đọc sâu qua giấy bút để bảo vệ tư duy độc lập.</p>
+      <div class="card__links">
+        <a class="btn" href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html">Mở HTML →</a>
+      </div>
+      <p style="margin-top:10px;font-size:12px;color:var(--text-muted)">Liên kết: Áp dụng <em>Rãnh 20 giây</em> của Phụ lục A để tạo không gian đọc sâu; dùng <em>Thẻ 5 dòng</em> làm nguyên liệu đầu vào cho Phụ lục C.</p>
+    </div>
+
+    <!-- C -->
+    <div class="card" style="border-left:4px solid #975A16">
+      <div class="card__top"><div class="card__icon">📚</div><div class="card__meta">Phụ lục C · MEDIUM · ~7 phút · Thư Viện Bản Đồ</div></div>
+      <h3>Tiểu sử như dữ liệu — Học từ người đi trước không thành bắt chước</h3>
+      <p>Biến câu chuyện thành dữ liệu thực tế bằng khung <strong>5 cột</strong>: bối cảnh, giả định, lựa chọn, lựa chọn bị loại, và giá phải trả. Đừng chỉ copy kết quả, hãy học cách ra quyết định để áp dụng linh hoạt vào bối cảnh của riêng bạn.</p>
+      <div class="card__links">
+        <a class="btn" href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html">Mở HTML →</a>
+      </div>
+      <p style="margin-top:10px;font-size:12px;color:var(--text-muted)">Liên kết: Bước khép kín chuỗi — kết hợp kỹ năng <em>tự sinh (Phụ lục B)</em> và <em>đào rãnh (Phụ lục A)</em> để biến bài học thành hành động thực tế.</p>
+    </div>
+  </div>
+
+  <div id="quick" class="kits">
+    <h3>⚡ Truy cập nhanh</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+      <a class="btn" href="tu-duy-duoc-hinh-thanh-tu-dau.html">Bài chính (HTML)</a>
+      <a class="btn btn--ghost" href="thiet-ke-moi-truong-ra-quyet-dinh.html">Phụ lục A</a>
+      <a class="btn btn--ghost" href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html">Phụ lục B</a>
+      <a class="btn btn--ghost" href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html">Phụ lục C</a>
+    </div>
+    <p style="margin-top:10px;color:var(--text-muted);font-size:13px">Mẹo: Mở Atlas này trên trình duyệt rồi nhấn <em>Ctrl+P</em> để in toàn bộ lộ trình. Các file HTML tự chứa vẫn hoạt động hoàn hảo khi offline (tự động lưu tiến trình, điểm trắc nghiệm và giao diện).</p>
+  </div>
+
+  <div class="kits" style="background:var(--bg-elevated);border:1px solid var(--border)">
+    <h3>🧭 Hướng dẫn đọc liền mạch và hiệu quả</h3>
+    <p style="margin:0"><strong>Nếu bạn có 45 phút:</strong> Đọc theo thứ tự Bài chính → A → B → C. <strong>Nếu chỉ có 15 phút:</strong> Đọc phần <em>Neo & Cầu nối</em> của từng bài, sau đó thực hành ngay 1 Bệ phóng ở Phụ lục B hoặc C. <strong>Nếu muốn hành động ngay:</strong> Bắt đầu với Phụ lục A (đổi 1 rãnh thói quen) hoặc Phụ lục B (áp dụng giao thức 2-pass). Bạn sẽ thấy kết quả cải thiện tư duy rõ rệt ngay trong tuần đầu tiên.</p>
+  </div>
+
+  <div class="footer">
+    <p>Atlas tổng · Chuỗi “Tư duy được hình thành từ đâu?” · 4 bài · Mắt xích kế “Tư duy được hình thành từ đâu?” · 2026-08-31</p>
+<p>Atlas tổng · Chuỗi “Tư duy được hình thành từ đâu?” · 4 bài · MEDIUM · Mắt xích nối tiếp từ “Tư duy được hình thành từ đâu?” · 2026-08-31</p>
+
+    <p style="margin-top:6px"><a href="tu-duy-duoc-hinh-thanh-tu-dau.html">← Về bài chính</a> · <a href="thiet-ke-moi-truong-ra-quyet-dinh.html">A</a> · <a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html">B</a> · <a href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html">C</a></p>
+  </div>
+</div>
+
+<div id="readProgress" style="position:fixed;bottom:20px;left:20px;z-index:49;display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow);font-family:var(--font-sans);font-size:12px;color:var(--text-muted)">
+  <span id="progText">0% · còn ~-- phút</span>
+  <span style="width:60px;height:6px;background:var(--sidenote-bg);border-radius:999px;overflow:hidden;display:inline-block"><span id="progBar" style="display:block;height:100%;width:0%;background:var(--accent);transition:width 80ms linear"></span></span>
+</div>
+
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Focus mode (F)" aria-label="Focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Đổi nền sáng/tối (T)" aria-label="Theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="fontIncBtn" title="Tăng cỡ chữ ( + )" aria-label="Tăng cỡ chữ">A+</button>
+  <button type="button" class="control-btn" id="fontDecBtn" title="Giảm cỡ chữ ( - )" aria-label="Giảm cỡ chữ">A−</button>
+  <button type="button" class="control-btn" id="topBtn" title="Lên đầu trang (Home)" aria-label="Lên đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In / Lưu PDF (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+  </button>
+</div>
+
+<script>
+/* === Quản lý Theme === */
+const k = 'atlas-theme';
+const s = localStorage.getItem(k);
+if(s) document.documentElement.setAttribute('data-theme', s);
+document.getElementById('themeBtn').addEventListener('click', () => {
+    const c = document.documentElement.getAttribute('data-theme');
+    const n = c === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', n);
+    localStorage.setItem(k, n);
+});
+
+/* === Quản lý Focus Mode === */
+const focusKey = 'edu-focus'; // Dùng chung key với các trang khác để đồng bộ
+if (localStorage.getItem(focusKey) === 'true') document.body.classList.add('focus-mode');
+const focusBtn = document.getElementById('focusBtn');
+if (focusBtn) {
+    focusBtn.addEventListener('click', () => {
+        document.body.classList.toggle('focus-mode');
+        localStorage.setItem(focusKey, document.body.classList.contains('focus-mode'));
+    });
+}
+
+/* === Thay đổi Cỡ chữ, Top, và In ấn === */
+(function(){
+  const key = 'edu-font';
+  const container = document.body; // Dùng body làm đối tượng thay đổi cỡ chữ vì Atlas không có #canvas
+  let size = parseInt(localStorage.getItem(key) || '17', 10);
+  
+  function apply(){ 
+      if(container) container.style.fontSize = size + 'px'; 
+      localStorage.setItem(key, String(size)); 
+  }
+  apply();
+  
+  const inc = document.getElementById('fontIncBtn');
+  const dec = document.getElementById('fontDecBtn');
+  
+  if(inc) inc.addEventListener('click', () => { if(size < 24) { size += 1; apply(); }});
+  if(dec) dec.addEventListener('click', () => { if(size > 14) { size -= 1; apply(); }});
+  
+  const top = document.getElementById('topBtn');
+  if(top) top.addEventListener('click', () => window.scrollTo({top: 0, behavior: 'smooth'}));
+  
+  const pr = document.getElementById('printBtn');
+  if(pr) pr.addEventListener('click', () => window.print());
+  
+  // Điều khiển bằng bàn phím: +, -, Home
+  document.addEventListener('keydown', e => {
+    if(e.target.matches('input, textarea')) return;
+    if(e.key === '+' || e.key === '='){ e.preventDefault(); inc && inc.click(); }
+    if(e.key === '-' || e.key === '_'){ e.preventDefault(); dec && dec.click(); }
+    if(e.key === 'Home'){ e.preventDefault(); top && top.click(); }
+  });
+})();
+
+/* === Thanh tiến trình đọc === */
+(function(){
+  const text = document.getElementById('progText');
+  const bar = document.getElementById('progBar');
+  if(!text || !bar) return;
+  
+  let totalMin = 3; // Thời gian đọc trung bình của Atlas
+  function upd(){
+    const sc = window.scrollY;
+    const tot = document.documentElement.scrollHeight - window.innerHeight;
+    const p = tot > 0 ? sc / tot : 0;
+    const pct = Math.round(p * 100);
+    const remain = Math.max(0, Math.round(totalMin * (1 - p)));
+    text.textContent = pct + '% \u00B7 c\u00F2n ~' + remain + ' ph\u00FAt';
+    bar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', upd, {passive: true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+</script>
+</body>
+</html>

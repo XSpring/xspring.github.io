@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Đọc sâu trong thời AI — Giao thức 2-pass để không bị nghĩ hộ</title>
+<meta name="description" content="Hiểu không đến từ độ mượt của chữ. Giao thức 2-pass: tự tóm tắt không AI trước, rồi mới dùng AI để bắt lỗi — thứ tự quyết định bạn giữ được tư duy riêng.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}
+:root{--font-serif:'Merriweather', Georgia, serif;--font-sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;--font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;--bg:#FDFBF7;--bg-elevated:#FFFFFF;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;--border:#E4DFD5;--sidenote-bg:#EDF2F7;--code-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;--radius:10px;--radius-sm:6px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 4px 12px rgba(0,0,0,.08);--measure:65ch;--line:1.7;--transition:200ms cubic-bezier(.4,0,.2,1)}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;--accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--code-bg:#2A2F3A;--success:#68D391;--success-bg:#22543D;--danger:#FC8181;--danger-bg:#63171B;--warn:#F6AD55;--warn-bg:#7B341E;--info:#63B3ED;--info-bg:#2A4365;--shadow-sm:0 1px 2px rgba(0,0,0,.3);--shadow:0 4px 12px rgba(0,0,0,.4)}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%;transition:font-size 0.2s ease}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px}.navigator__reading-time{color:var(--text);font-size:13px}
+.toc{list-style:none;padding:0;margin:0}.toc li{margin:2px 0}.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg)}.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.15rem;line-height:1.25;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px}
+.canvas h2:first-of-type{border-top:none;padding-top:0}.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.2rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong);font-weight:700}.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.source{font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-muted);margin-left:4px;padding:1px 6px;border-radius:4px;background:var(--sidenote-bg);text-decoration:none;border:1px solid transparent;white-space:nowrap;vertical-align:baseline}
+.source::before{content:"↗ ";opacity:.6}.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-top:12px;font-style:italic}
+.hook{margin:24px 0 48px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.05rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+.callout{margin:24px 0;padding:16px 20px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--tip .callout__label{color:var(--success)}
+.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--warn .callout__label{color:var(--warn)}
+.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}.callout--danger .callout__label{color:var(--danger)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text)}
+.feynman::before{content:"🧒 Đúc kết một câu:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted)}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:190px 1fr 70px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:14px}
+.bar-label{color:var(--text)}.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg, var(--accent), var(--accent-strong));border-radius:4px;transition:width 400ms cubic-bezier(.4,0,.2,1)}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:32px 0}
+.concept-flow__step{padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px;min-height:90px;display:flex;flex-direction:column;justify-content:center}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px}.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px}
+@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}.bar-row{grid-template-columns:130px 1fr 60px}}
+.glossary{margin:32px 0}.glossary dl{margin:0}.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px}
+.glossary dd{margin:4px 0 0;color:var(--text);font-size:15px}
+.quiz{margin:56px 0 24px;padding:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.quiz h2{border-top:none;padding-top:0;margin-top:0;margin-bottom:8px}.quiz__intro{color:var(--text-muted);font-family:var(--font-sans);font-size:14px;margin-bottom:24px}
+.quiz fieldset{border:none;padding:0;margin:0 0 28px}.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px;font-size:16px}
+.quiz__option{display:block;padding:12px 16px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;position:relative;padding-left:44px}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%}
+.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg)}.quiz__option:has(input:checked)::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg-elevated)}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success)}.quiz__option.correct-answer::before{border-color:var(--success);background:var(--success)}
+.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}.quiz__option.incorrect-answer::before{border-color:var(--danger);background:var(--danger)}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__explanation{display:block}.quiz__actions{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:white;cursor:pointer;font-size:14px}
+.btn--ghost{background:transparent;color:var(--accent)}.quiz__score{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);margin:0;padding:12px 16px;background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border)}.orbit__title{font-family:var(--font-sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px}
+.orbit__track{position:relative;padding-left:22px}.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.orbit__node{position:relative;display:flex;align-items:center;margin:8px 0;color:var(--text-muted);font-family:var(--font-sans);font-size:12px;cursor:pointer}
+.orbit__node::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border)}
+.orbit__node[data-reached="true"]::before{background:var(--accent);border-color:var(--accent)}.orbit__node[data-active="true"]{color:var(--text-strong);font-weight:600}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px;color:var(--text)}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0;align-items:start}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}
+.scaffold__row-body{font-size:15px;line-height:1.65}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm);overflow:hidden}
+.scaffold__probe>summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none;display:flex;gap:10px;align-items:baseline}
+.scaffold__probe>summary::before{content:"🤔 Thăm dò";flex-shrink:0;padding:2px 8px;border-radius:3px;background:var(--accent2-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2-strong)}
+.scaffold__probe>summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px;line-height:1.6}
+.scaffold__resolve::before{content:"💡 Giải";display:inline-block;padding:2px 8px;border-radius:3px;background:var(--accent2);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:8px}
+.checkpoint{margin:32px 0;padding:20px 24px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}
+.checkpoint textarea{width:100%;min-height:90px;padding:12px 14px;font-family:var(--font-serif);font-size:15px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.checkpoint__expert{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:var(--radius-sm);border-left:3px solid var(--accent);font-family:var(--font-sans);font-size:14px;display:none}
+.checkpoint.is-revealed .checkpoint__expert{display:block}.launchpad{margin:48px 0 24px;padding:28px 32px;background:linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius);position:relative}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:white;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.3rem;color:var(--text-strong);margin:0 0 12px}
+.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-size:14px;display:none}
+.launchpad__hint.is-visible{display:block}.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+.kbd{font-family:var(--font-mono);font-size:12px;padding:1px 6px;border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;background:var(--bg-elevated)}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+<aside class="navigator">
+<div class="navigator__meta"><p class="navigator__title">Thời gian đọc</p><p class="navigator__reading-time">~ 7 phút · MEDIUM</p></div>
+<div class="orbit"><p class="orbit__title">Hành trình</p><div class="orbit__track">
+<div class="orbit__node" data-target="baseline">1 · Neo</div>
+<div class="orbit__node" data-target="bridge">2 · Cầu</div>
+<div class="orbit__node" data-target="exposition">3 · Ba nhịp</div>
+<div class="orbit__node" data-target="application">4 · Ra đồng</div>
+<div class="orbit__node" data-target="boundary">5 · Biên</div>
+<div class="orbit__node" data-target="synthesis">6 · Thu hoạch</div>
+</div></div>
+<nav><ul class="toc" id="toc"></ul></nav>
+</aside>
+<main class="canvas" id="canvas">
+<h1>Đọc sâu trong thời AI<br><span style="font-weight:400;font-size:1.25rem;color:var(--text-muted)">Giao thức 2-pass để không bị nghĩ hộ</span></h1>
+
+<div style="margin:16px 0 24px;padding:12px 16px;background:var(--sidenote-bg);border:1px solid var(--border);border-radius:10px;font-family:var(--font-sans);font-size:13px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+<span style="font-weight:700;color:var(--accent);font-size:11px;letter-spacing:.08em;text-transform:uppercase">Chuỗi Tư duy — Điều hướng nhanh:</span>
+<a href="tu-duy-atlas.html" style="padding:6px 10px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600">Atlas tổng</a>
+<a href="tu-duy-duoc-hinh-thanh-tu-dau.html" style="padding:6px 10px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">Bài chính — Khu Vườn</a>
+<a href="thiet-ke-moi-truong-ra-quyet-dinh.html" style="padding:6px 10px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">← A (Dòng Sông)</a>
+<span style="padding:6px 10px;background:var(--accent2-soft);border:1px solid var(--accent2);border-radius:8px;font-weight:600">Bạn đang ở: Phụ lục B — Phòng Tập</span>
+<a href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html" style="padding:6px 10px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">Tiếp → C (Thư Viện)</a>
+</div>
+
+<div class="hook"><span class="hook__label">🎣 Móc câu</span>Bạn mở một báo cáo 20 trang. AI tóm tắt thành 5 gạch đầu dòng mượt mà. Bạn gật gù đắc ý. Ba ngày sau, khi được hỏi quan điểm cá nhân, bạn chỉ nhớ mang máng 5 ý đó — và tuyệt nhiên không bật ra được một luận điểm nào của riêng mình. Đó không phải là sự suy giảm trí nhớ. Đó là <strong>ảo giác hiểu biết</strong>: sự trơn tru của AI đã đánh lừa não bộ rằng bạn thực sự làm chủ kiến thức.</div>
+<div class="meta-block"><h4>Bạn cần gì trước</h4><ul><li>Nắm vững cốt lõi bài “Tư duy được hình thành từ đâu?” (não dự đoán) & “Thiết kế môi trường” (rãnh hành vi).</li><li>Đang có thói quen dùng AI để tóm tắt hoặc giải thích kiến thức hằng tuần.</li><li>Sẵn sàng dấn thân vào thử thách 7 ngày với một cuốn sách hoặc báo cáo.</li></ul></div>
+<div class="meta-block"><h4>Đọc xong bạn sẽ có thể…</h4><ul><li><strong>Lý giải</strong> nguyên lý "tự kiến tạo" (generation effect) giúp khắc sâu trí nhớ hơn hẳn việc thụ động tiêu thụ.</li><li><strong>Phân định</strong> rạch ròi giữa lướt thông tin (mẫu F/Z) với đọc sâu, và chiến thuật áp dụng từng phương pháp.</li><li><strong>Vận dụng</strong> Giao thức 2-pass: tự chắt lọc ý chính trước, dùng AI làm giám khảo bắt lỗi sau.</li><li><strong>Thiết kế</strong> chuỗi nghi thức 7 ngày với các chỉ số đo lường hiệu suất rạch ròi.</li></ul></div>
+
+<h2 id="baseline">Nền tảng chung — Sự thấu hiểu khởi nguồn từ nỗ lực</h2>
+<blockquote style="border-left-color:var(--accent2);background:var(--accent2-soft)"><strong>⚓ Neo.</strong> Sự thấu hiểu không nảy mầm từ những câu chữ mượt mà; nó kết tinh từ "độ nhọc có ích" khi bạn vắt óc diễn đạt lại kiến thức bằng ngôn từ của chính mình. AI có thể gọt giũa văn bản, nhưng chỉ có bạn mới tự khoét sâu được rãnh tư duy — và trật tự thực hiện thao tác này mang tính sống còn.</blockquote>
+<p>Tự giải một bài toán rồi mới xem đáp án, kiến thức sẽ in sâu; xem đáp án ngay từ đầu, bạn chỉ đang nuôi dưỡng sự ngộ nhận. Giao thức 2-pass bản chất là kỷ luật về trật tự. Nếu bài viết trước thiết lập rãnh hành vi, thì bài này trao cho bạn <strong>phương pháp nâng tạ</strong>: vòng 1 tự lực gánh vác, vòng 2 mới nhờ người hỗ trợ.</p>
+
+<h2 id="bridge">Cầu nối — Mô hình Phòng Tập</h2>
+<p>Đọc sâu là quá trình rèn luyện cơ bắp tư duy. Bản tóm tắt của AI chỉ là cỗ máy hỗ trợ lực.</p>
+<div class="concept-flow">
+<div class="concept-flow__step"><span class="concept-flow__num">01</span>Tự lực<br><span style="font-size:12px;color:var(--text-muted)">Pass 1: 5 dòng cốt lõi</span></div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">02</span>Đo lường<br><span style="font-size:12px;color:var(--text-muted)">Quiz 3 câu</span></div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">03</span>Giám khảo<br><span style="font-size:12px;color:var(--text-muted)">Pass 2: AI bắt lỗi</span></div>
+</div>
+<ul><li><strong>Tự lực (pass 1)</strong> là hiệp tập cốt lõi: tự đúc kết bằng ngôn từ cá nhân, tuyệt đối cách ly AI — ép não bộ tạo ra sai số để kiến tạo rãnh tư duy.</li><li><strong>Giám khảo (pass 2)</strong> là AI: chỉ can thiệp sau khi bạn đã dốc sức, với vai trò căn chỉnh lại form tập.</li><li><strong>Dựa dẫm toàn thời gian</strong> là việc đọc tóm tắt AI ngay từ đầu — bạn thấy mức tạ bay lên rất nhẹ nhàng, nhưng cơ bắp của bạn lại teo tóp.</li></ul>
+<p>Đảo lộn trật tự, kết quả sẽ đảo chiều. Cùng một AI, cùng một văn bản: tự lực trước thì cơ bắp phát triển; nhờ AI trước thì ảo giác hiểu biết phình to.</p>
+<div class="premortem"><span class="premortem__label">⚠️ Trước khi xây tiếp — Lật tẩy ngộ nhận phổ biến…</span><p><span class="premortem__wrong">“AI tóm tắt dễ hiểu tức là mình đã làm chủ kiến thức; đọc sâu giờ đây là sự lãng phí thời gian.”</span></p><p>Hoàn toàn sai lầm. Sự mượt mà của câu từ không tỷ lệ thuận với độ sâu của nhận thức. Nó chỉ bơm phồng sự tự tin ảo, không giúp bạn ghi nhớ hay chuyển giao tri thức.</p><p><span class="premortem__truth">Bản chất thực sự:</span> Sự trơn tru của AI chỉ là tín hiệu về độ trôi chảy (fluency). Sự thấu hiểu đích thực đòi hỏi 'độ nhọc có ích' — bạn phải tự kiến tạo, tự truy xuất và tự diễn giải.</p></div>
+
+<h2 id="exposition">Ba nhịp đập của Giao thức 2-pass</h2>
+<p>Mỗi nhịp dưới đây phân tích theo cấu trúc <strong>Nêu → Minh họa → Thăm dò → Giải đáp</strong>.</p>
+
+<h3 id="nhip-1-tu-sinh">Nhịp 1 — Tự kiến tạo</h3>
+<section class="scaffold">
+<h3 class="scaffold__concept">Hiệu ứng tự kiến tạo (Generation Effect)</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Hiệu ứng tự kiến tạo</strong> (chủ động sinh ra kiến thức thay vì thụ động tiêu thụ) là phát hiện bản lề của Slamecka &amp; Graf (1978): ngôn từ do bạn tự dệt nên sẽ được khắc sâu vững chắc hơn hẳn văn bản bạn chỉ đọc lướt qua. Áp dụng vào việc đọc: 'tự kiến tạo' chính là tự tay tóm tắt bằng ngôn từ của mình mà không dựa dẫm vào AI.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Khi đọc một cuốn tiểu sử, thay vì tìm đọc bản tóm tắt, bạn chủ động xâu chuỗi các mảnh ghép cuộc đời nhân vật để trả lời câu hỏi "họ đã tư duy như thế nào?". Đó là quá trình tự kiến tạo. Trong phòng tập, đây là hiệp bạn dồn sức tự nâng tạ — cơ bắp sẽ rách ra để rồi phục hồi dày dặn hơn. Nhà thần kinh học Maryanne Wolf cảnh báo: não bộ không được sinh ra để đọc sâu; trước màn hình, nó tự kích hoạt cơ chế <strong>đọc lướt (skim)</strong> — quét mắt theo mô hình F/Z, nhặt nhạnh từ khóa và vội vàng thỏa mãn với "ảo giác hiểu biết". Khi bạn ốp ngay bản tóm tắt của AI vào đầu, bạn đang cho bộ não lười biếng ăn chính thứ đồ ăn nhanh mà nó thèm khát.</div></div>
+<details class="scaffold__probe"><summary>Tại sao tự viết 5 dòng đúc kết (không dùng AI) lại khắc sâu vào trí nhớ hơn hẳn việc đọc 5 gạch đầu dòng xuất sắc do AI viết?</summary><div class="scaffold__resolve">Bởi vì 5 dòng của bạn là thành phẩm sau những lần vấp váp và sửa sai — não bộ đã phải lao động thực sự: truy xuất trí nhớ, chọn lọc ngôn từ, và đan cài ý tưởng. 5 gạch đầu dòng của AI là thành phẩm của kẻ khác; não bạn chỉ há miệng chờ sung. Cơ bắp chỉ phát triển khi bạn tự mình chịu sức nặng.</div></details>
+</section>
+<div class="feynman">Tự đúc kết bằng lời mình sẽ khắc sâu trí nhớ; lướt qua câu chữ của người khác chỉ làm trơn mắt mà thôi.</div>
+<p><em>Khóa nhịp 1.</em> Bạn đã hoàn thành hiệp tập cốt lõi. Giờ là lúc gọi vị giám khảo bước ra.</p>
+
+<h3 id="nhip-2-doi-chieu">Nhịp 2 — Đối chiếu có ma sát</h3>
+<section class="scaffold">
+<h3 class="scaffold__concept">Ảo giác hiểu biết &amp; Lỗ hổng lưu loát (Fluency illusion)</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Ảo giác hiểu biết</strong> xảy ra khi sự trơn tru trong câu chữ của AI bị đánh tráo thành sự thấu hiểu của chính bạn. Nghiên cứu của IJERT (2025) vạch trần: việc tiêu thụ các bản tóm tắt mượt mà đẩy mức độ tự tin lên cao ngất ngưởng, nhưng <strong>điểm số phân tích thực tế lại tụt giảm ~15%</strong>. Messeri &amp; Crockett (Nature 2024) cảnh báo: AI đang kiến tạo một thế hệ "độc canh tư duy" — sản xuất nội dung ồ ạt nhưng năng lực thấu cảm lại nghèo nàn đi.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Nhóm nghiên cứu IJERT chỉ ra rằng sinh viên lạm dụng AI có độ tự tin ngút ngàn nhưng điểm số rơi rụng. Lời thú nhận phổ biến: "Tôi đinh ninh mình đã hiểu vì AI diễn đạt quá hoàn hảo, cho đến khi tôi bị yêu cầu tự giải thích lại bằng ngôn từ của mình." Giao thức 2-pass thiết lập điểm ma sát đúng vị trí: <strong>Pass 1 tự viết 5 dòng → Pass 2 đưa cho AI với prompt:</strong> "Hãy đóng vai giám khảo phản biện. Bắt lỗi 5 dòng này, đưa ra 2 phản ví dụ, và chất vấn tôi 3 câu khó." Biến AI từ một cỗ máy làm thuê thành một vị giám khảo khó tính.</div></div>
+<details class="scaffold__probe"><summary>Sự khác biệt cốt lõi giữa việc "Hỏi AI sau khi tự làm" và "Hỏi AI trước rồi mới chỉnh sửa" là gì?</summary><div class="scaffold__resolve">Bởi vì "hỏi sau" bảo toàn trọn vẹn sức lao động nhận thức; não bộ đã tự đào xong rãnh của riêng mình. "Hỏi trước" bóp nghẹt quá trình đó, não chỉ trượt theo rãnh có sẵn của máy móc — trơn tru nhưng vô cùng nông cạn. Giám khảo chỉ đỡ tạ khi bạn đã hết sức; nếu máy móc nâng tạ thay bạn từ đầu, bạn sẽ mãi yếu ớt.</div></details>
+</section>
+<div class="feynman">Hãy dùng AI như một vị giám khảo bắt lỗi, tuyệt đối không biến nó thành kẻ làm thuê.</div>
+<p><em>Khóa nhịp 2.</em> Hiệp tập và vị giám khảo đã sẵn sàng. Giờ là việc bày trí phòng tập để bạn không thể thoái thác.</p>
+
+<h3 id="nhip-3-moi-truong">Nhịp 3 — Thiết kế Môi trường &amp; Nghi thức</h3>
+<section class="scaffold">
+<h3 class="scaffold__concept">Giấy mực truyền thống &amp; Kỷ luật 20 phút</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body">Đọc sâu đòi hỏi một <strong>bối cảnh cô lập</strong> (rãnh hành vi) vững chắc: ưu tiên tài liệu in, sử dụng giấy bút, và một <strong>nghi thức</strong> bất di bất dịch. Maryanne Wolf khuyến nghị: Nếu mục tiêu là chiêm nghiệm sâu sắc, hãy <strong>in nó ra</strong>. Giấy in thiết lập tốc độ của riêng bạn, chặn đứng thói quen lướt mắt chữ F/Z trên màn hình.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Kỷ luật 20 phút: <strong>Dành đúng 20 phút mỗi ngày, tại một không gian cố định, cùng một cuốn sổ, tự tay viết ra 5 dòng đúc kết + 3 câu hỏi đào sâu</strong>. Không cần phô trương; chỉ cần sự bền bỉ. Áp dụng quy tắc ma sát 20 giây: "Đặt sách lên gối, quăng điện thoại ra phòng khách" — chèn thêm chướng ngại vật cho sự xao nhãng, dọn đường cho việc đọc. Checklist thực chiến: Pass 1 (12 phút) đọc 10 trang → gấp sách → viết tay 5 dòng. Pass 2 (8 phút) gõ 5 dòng đó vào AI → yêu cầu bắt lỗi → tinh chỉnh thẻ ghi nhớ → lưu trữ.</div></div>
+<details class="scaffold__probe"><summary>Tại sao việc viết tay 5 dòng lại nghiền ép não bộ hiệu quả hơn việc gõ phím 10 dòng?</summary><div class="scaffold__resolve">Tốc độ chậm chạp của việc viết tay cưỡng ép não bộ phải chắt lọc ngôn từ khắt khe hơn. Nó đồng thời kiến tạo "hình học không gian" cho trí nhớ — bạn sẽ nhớ rõ luận điểm đó nằm ở góc trái, đoạn giữa trang giấy. Gõ phím tuy nhanh nhưng sự chắt lọc hời hợt, không tạo ra dấu ấn không gian, dẫn đến đường rãnh nhận thức cực kỳ nông.</div></details>
+</section>
+<div class="feynman">Giấy và bút hãm lại tốc độ của đôi tay, buộc não bộ phải chắt lọc từng con chữ.</div>
+
+<h2 id="application">Thực chiến — Chinh phục báo cáo 20 trang trong 7 ngày</h2>
+<p>Lồng ghép Giao thức 2-pass vào guồng quay thực tế của bạn.</p>
+<p><strong>Ngày 1–2 — Khởi động (Pass 1):</strong> In báo cáo ra giấy. Dành 12 phút tập trung đọc 10 trang, đóng tài liệu lại, tự tay viết 5 dòng cốt lõi + 3 câu hỏi trăn trở. Tuyệt đối cách ly AI.</p>
+<p><strong>Ngày 3 — Đối đầu (Pass 2):</strong> Nạp 5 dòng đúc kết vào AI với câu lệnh: "Đóng vai giám khảo phản biện. Hãy vạch lá tìm sâu 5 dòng luận điểm này, đưa ra 2 phản ví dụ sắc bén, và chất vấn tôi bằng 3 câu hỏi hóc búa. Tuyệt đối không tóm tắt lại văn bản." Tự lực trả lời không nhìn tài liệu, sau đó tinh chỉnh lại thẻ ghi nhớ.</p>
+<p><strong>Ngày 4–5:</strong> Lặp lại quy trình cho 10 trang tài liệu cuối cùng. Lưu trữ 2 thẻ ghi nhớ.</p>
+<p><strong>Ngày 7 — Đo lường:</strong> Không được lật lại thẻ, hãy tự tay viết một bản tổng hợp 10 dòng + giải quyết 6 câu hỏi quiz. Đối chiếu mức độ tự tin trước và sau khi thực hiện. Nếu sự ngạo mạn giảm xuống nhưng sự thấu hiểu sắc nét hơn, bạn đang đi đúng hướng.</p>
+<div class="bar-chart">
+<div class="bar-chart__title">Dữ liệu chứng minh: Thứ tự thao tác quyết định chất lượng tư duy</div>
+<div class="bar-row"><div class="bar-label">Tự tin sau khi dùng AI</div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><div class="bar-value">~85%</div></div>
+<div class="bar-row"><div class="bar-label">Điểm số phân tích thực tế</div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div><div class="bar-value">~70%</div></div>
+<div class="bar-row"><div class="bar-label">Lỗ hổng hiệu chuẩn (Gap)</div><div class="bar-track"><div class="bar-fill" style="width:45%"></div></div><div class="bar-value">Lớn</div></div>
+<div class="bar-row"><div class="bar-label">Tự kiến tạo vs Đọc thụ động</div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><div class="bar-value">Áp đảo</div></div>
+<p class="bar-chart__caption">Nguồn dữ liệu: Nghiên cứu IJERT 2025 (Chênh lệch ~15%) — <a href="https://doi.org/10.5281/zenodo.20522460" target="_blank">doi:10.5281/zenodo.20522460</a>; Slamecka &amp; Graf 1978 — <a href="https://doi.org/10.1037/0278-7393.4.6.592" target="_blank">doi:10.1037/0278-7393.4.6.592</a>; Maryanne Wolf về mô hình F-pattern — <a href="https://www.npr.org/2024/04/30/1196979151/how-to-practice-deep-reading" target="_blank">NPR 2024</a>. Tỷ lệ % mang tính chất minh họa tương đối từ các mô tả định tính.</p>
+</div>
+<p><em>Rãnh đã được đào.</em> Giao thức sẽ vận hành hoàn hảo nếu bối cảnh vừa khít. Vậy khi nào nó sẽ vỡ vụn?</p>
+
+<h2 id="boundary">Biên giới — Khi Giao thức 2-pass trượt bánh</h2>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Góc nhìn sai lệch — "AI tóm tắt chính xác nghĩa là mình đã hiểu"</span>Một nhận định nguy hiểm như Messeri &amp; Crockett đã cảnh báo: Một bản tóm tắt xuất sắc vẫn dư sức tạo ra <strong>ảo giác hiểu biết</strong> và "độc canh tư duy" — con người sản xuất nội dung ồ ạt hơn nhưng sự thấu hiểu lại rỗng tuếch.</div>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Góc nhìn sai lệch — "Ghi chép bằng tay là cổ hủ"</span>Giấy bút không phải sự hoài cổ lãng mạn; nó là điểm ma sát vật lý kiến tạo nên hình học cho trí nhớ. Khi truy cầu tốc độ, hãy gõ phím; khi khao khát chiều sâu, hãy cầm bút lên.</div>
+<div class="callout callout--danger"><span class="callout__label">🚫 Điểm mù — Tuyệt đối không dùng 2-pass khi nào?</span>Đối mặt với tin tức thời sự, tra cứu dữ liệu nhanh hoặc kiểm chứng sự kiện (fact-check), combo <strong>Skim (lướt) + AI</strong> là công cụ hoàn hảo. Giao thức 2-pass là vũ khí hạng nặng dành riêng cho những tri thức cần sự chuyển giao sâu sắc (giải thích, viết lách, ra quyết định chiến lược). Đừng vác búa tạ đi nhặt rau.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Thử thách tư duy</span>Giả sử bạn chỉ được phép duy trì một nhịp duy nhất trong chuỗi 7 ngày (Tự kiến tạo / AI đối chiếu / Thiết kế môi trường), bạn sẽ chốt giữ nhịp nào? Nếu gạt bỏ hai nhịp còn lại, hệ thống sẽ sụp đổ ra sao?</div>
+<p><em>Ranh giới đã rõ ràng.</em> Thấu tỏ điểm mù giúp bạn bảo toàn năng lượng và sử dụng công cụ đúng mục đích.</p>
+
+<h2 id="connections">Bản đồ liên kết tri thức</h2>
+<ul><li><strong>Khoa học Ký ức (Generation effect)</strong> — Giải mã uy lực của việc tự kiến tạo kiến thức.</li><li><strong>Siêu nhận thức (Metacognition)</strong> — Đo lường độ vênh giữa sự tự tin ảo và năng lực thực tế.</li><li><strong>Kiến trúc Lựa chọn (Phụ lục A)</strong> — Áp dụng ma sát 20 giây để dọn đường cho việc đọc sâu.</li><li><strong>Tư duy Phản biện (Bài chính)</strong> — Kích hoạt AI như một lưỡi dao tỉa sắc bén.</li></ul>
+
+<h2 id="synthesis">Thu hoạch — Tóm gọn bức tranh toàn cảnh</h2>
+<p>Chúng ta khởi đầu bằng một nghịch lý: Tại sao nhai ngấu nghiến những bản tóm tắt hoàn hảo của AI mà khi mở miệng lại trống rỗng? Lời giải mã không nằm ở việc AI yếu kém hay trí não bạn chậm chạp, mà nằm trọn ở lỗ hổng về trật tự tiếp nhận.</p>
+<p><strong>Tự lực trước, AI theo sau.</strong> Nâng tạ trước, nhờ người đỡ sau. Vắt óc ra 5 dòng trước, đón nhận 5 gạch đầu dòng của AI sau. Sự đảo lộn trật tự này tước đi quyền làm thuê của AI, buộc nó phải ngồi vào ghế giám khảo — và lột xác quá trình đọc từ việc tiêu thụ thụ động thành một buổi rèn luyện tư duy khắc nghiệt.</p>
+<p>Nếu Bài chính trao cho bạn Khu Vườn, Phụ lục A xây cho bạn bờ kè, thì Phụ lục này ấn vào tay bạn <strong>giáo án 20 phút thực chiến</strong>: 12 phút dốc sức tự kiến tạo, 8 phút đối mặt với giám khảo AI, thu về 1 tấm thẻ 5 dòng cô đọng. Kiên trì 7 ngày, bạn sở hữu 7 tấm thẻ đắt giá — và một trí nhớ đủ sắc bén để cất tiếng nói của riêng mình.</p>
+<blockquote><strong>Chốt hạ một câu:</strong> Đừng bao giờ cho phép AI tóm tắt khi bạn chưa tự tay vắt kiệt suy nghĩ; sự trơn tru của AI không định nghĩa sự thấu hiểu của bạn — chính "độ nhọc có ích" mới là minh chứng duy nhất.</blockquote>
+
+<div class="launchpad">
+<span class="launchpad__label">🚀 Bệ phóng hành động · Chiến dịch 7 ngày</span>
+<h3 class="launchpad__title">Thiết lập Giao thức 7 ngày chinh phục tài liệu lõi</h3>
+<p class="launchpad__problem">Khoanh vùng một cuốn sách hoặc báo cáo chuyên sâu mà bạn đang cần chinh phục. Lên khung <strong>giao thức 2-pass 7 ngày</strong> (20 phút/ngày) bao gồm: (1) Thiết lập môi trường cô lập, (2) Định dạng thẻ ghi chép 5 dòng, (3) Câu lệnh (prompt) ép AI bắt lỗi, (4) Bộ chỉ số đo lường. Xác định rõ giới hạn: Khi nào bạn sẽ vứt bỏ 2-pass để quay về combo <strong>Skim + AI</strong>.</p>
+<div class="launchpad__hints"><span style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em">Bế tắc? Mở từng ô gợi ý.</span><br><button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+<div class="launchpad__hint" data-hint="1"><strong>Gợi ý 1 — Đảo ngược tư duy:</strong> Xóa ngay câu nói "Tôi sẽ cố gắng đọc chăm chỉ hơn". Hãy chốt hạ hành động: "Tối nay tôi in đúng 10 trang, đặt bút và thẻ A5 lên gối, tống khứ điện thoại ra phòng khách, và cài báo thức 20 phút ngay sau bữa ăn."</div>
+<div class="launchpad__hint" data-hint="2"><strong>Gợi ý 2 — Khung lý thuyết:</strong> Ứng dụng Hiệu ứng tự kiến tạo (Slamecka) + Chống Ảo giác hiểu biết (Messeri) + Đập tan thói quen lướt F/Z (Wolf). Mục tiêu hằng ngày: 1 thẻ 5 dòng + 3 câu hỏi đào sâu; AI chỉ được xuất hiện ở pass 2 với nhiệm vụ duy nhất: "Vạch lá tìm sâu, đưa phản ví dụ, và chất vấn."</div>
+<div class="launchpad__hint" data-hint="3"><strong>Gợi ý 3 — Bản phác thảo:</strong> Kẻ bảng 7 hàng: Ngày | 10 trang mục tiêu | 5 dòng (Bắt buộc viết tay) | 3 câu hỏi hóc búa | Những lỗi AI vạch trần | Đánh giá lại sau 24h. Chốt lại cuối tuần: Gom đủ 7 thẻ, đo lường điểm trung bình, và đếm số lần bạn có thể tự tin thuyết trình lại vấn đề mà không vấp váp.</div>
+</div></div>
+
+<h2 id="glossary">Từ điển tra cứu — Gắn liền với Mô hình Phòng Tập</h2>
+<div class="glossary"><dl>
+<dt>Hiệu ứng tự kiến tạo (Generation Effect)</dt><dd>Nguyên lý khẳng định kiến thức do tự mình sinh ra sẽ in sâu hơn hẳn việc thụ động đọc (Slamecka &amp; Graf 1978). <em>(Đóng vai trò: Tự gồng mình nâng tạ trong Phòng Tập.)</em></dd>
+<dt>Ảo giác hiểu biết (Illusion of Understanding)</dt><dd>Căn bệnh ngộ nhận sự thấu hiểu khi tiếp xúc với câu chữ quá đỗi mượt mà (Messeri &amp; Crockett 2024). <em>(Đóng vai trò: Ảo tưởng sức mạnh khi thấy mức tạ bay lên nhờ máy móc hỗ trợ.)</em></dd>
+<dt>Lỗ hổng lưu loát (Fluency illusion)</dt><dd>Nhầm lẫn sự trơn tru trong diễn đạt thành độ chính xác của tri thức. <em>(Đóng vai trò: Dựa dẫm vào cỗ máy làm giảm trọng lượng tạ.)</em></dd>
+<dt>Đọc sâu (Deep Reading)</dt><dd>Quá trình đọc chậm rãi, chiêm nghiệm, xâu chuỗi thông tin và kiến tạo góc nhìn độc bản (Maryanne Wolf). <em>(Đóng vai trò: Những hiệp tập nặng đô, ép cơ bắp phải bung sức.)</em></dd>
+<dt>Skim / Mẫu F/Z</dt><dd>Phản xạ quét mắt chớp nhoáng, nhặt nhạnh từ khóa khi não bộ quá tải. <em>(Đóng vai trò: Bài tập khởi động làm nóng, tuyệt đối không phải hiệp tập chính.)</em></dd>
+<dt>Giao thức 2-pass (2-Pass Protocol)</dt><dd>Vòng 1: Tự đúc kết cách ly AI → Vòng 2: Gọi AI ra bắt lỗi và khoét sâu vấn đề. <em>(Đóng vai trò: Tự lực gánh tạ rồi mới gọi huấn luyện viên ra căn chỉnh.)</em></dd>
+<dt>Lỗ hổng hiệu chuẩn (Calibration Gap)</dt><dd>Độ vênh thảm hại giữa sự tự tin ảo và năng lực giải quyết vấn đề thực tế. <em>(Đóng vai trò: Sự khác biệt giữa ảo ảnh trong gương và con số trên bàn cân.)</em></dd>
+<dt>Nghi thức môi trường</dt><dd>Kết hợp Ma sát 20s + Tài liệu in giấy + Viết tay thủ công. <em>(Đóng vai trò: Khâu chuẩn bị bày trí phòng tập khắc nghiệt.)</em></dd>
+</dl></div>
+
+<section class="quiz" id="quiz">
+<h2>Kiểm tra nhận thức</h2>
+<p class="quiz__intro">Dành 2 phút cho 3 câu trắc nghiệm cốt lõi. Chọn đáp án sắc bén nhất rồi bấm <em>Kiểm tra</em>.</p>
+<fieldset data-answer="1"><legend>1. Tại sao thao tác viết tay 5 dòng đúc kết (không dùng AI) lại khắc sâu vào trí nhớ bền bỉ hơn?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Bởi vì bạn thường viết dài hơn so với bản tóm tắt của AI.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Bởi vì quá trình tự kiến tạo sản sinh ra "độ nhọc có ích", cày xới nên những rãnh tư duy độc bản.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Bởi vì AI thường xuyên cung cấp thông tin sai lệch.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Bởi vì 5 gạch đầu dòng của AI luôn thiếu hụt thông tin trầm trọng.</label>
+<div class="quiz__explanation"><strong>Phân tích:</strong> Theo Slamecka 1978: Hiệu ứng tự kiến tạo luôn nghiền nát việc tiêu thụ thụ động. Độ dài hay tính chính xác không phải là nguyên lý lõi.</div></fieldset>
+<fieldset data-answer="1"><legend>2. Bản chất thực sự của "Ảo giác hiểu biết" là gì?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Tình trạng hiểu sai vấn đề do AI cung cấp dữ liệu rác.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Bị thao túng tâm lý, ngộ nhận sự thấu hiểu do tiếp xúc với câu chữ quá mượt mà (fluency).</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Tình trạng thấu hiểu sâu sắc nhưng bộ não từ chối ghi nhớ.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Tình trạng hiểu rõ vấn đề nhưng sinh ra tâm lý chán ghét thông tin.</label>
+<div class="quiz__explanation"><strong>Phân tích:</strong> Khớp hoàn toàn với định nghĩa vạch trần bởi Messeri &amp; Crockett 2024 và khảo sát IJERT 2025.</div></fieldset>
+<fieldset data-answer="1"><legend>3. Đâu là chiến trường phù hợp nhất để tung ra combo Skim (lướt) + AI, thay vì dùng Giao thức 2-pass?</legend>
+<label class="quiz__option"><input type="radio" name="q3" value="0"> Khi tài liệu đòi hỏi sự chuyển giao kiến thức chuyên sâu và ra quyết định chiến lược.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="1"> Khi đối mặt với nhu cầu tra cứu tốc độ cao và sàng lọc một lượng dữ liệu khổng lồ.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="2"> Khi mục tiêu tối thượng là khắc sâu kiến thức vào trí nhớ dài hạn.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="3"> Khi bạn đang vật lộn để thu hẹp lỗ hổng hiệu chuẩn (calibration gap).</label>
+<div class="quiz__explanation"><strong>Phân tích:</strong> 2-pass là vũ khí cho sự đào sâu và chuyển giao tri thức; Skim + AI là công cụ sinh ra để cày nát mỏ dữ liệu rác và tra cứu tốc độ.</div></fieldset>
+<div class="quiz__actions"><button type="button" class="btn" id="quizCheck">Kiểm tra đáp án</button><button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button><p class="quiz__score" id="quizScore"></p></div>
+</section>
+
+<h2 id="sources">Nguồn tài liệu tham khảo & Đọc thêm</h2>
+<ul style="font-size:14px;line-height:1.6">
+<li>Slamecka, N. J. &amp; Graf, P. (1978). Kỷ nguyên của Hiệu ứng tự kiến tạo. <em>J. Exp. Psych: Human Learning &amp; Memory</em>, 4(6). <a href="https://doi.org/10.1037/0278-7393.4.6.592" target="_blank">doi:10.1037/0278-7393.4.6.592</a></li>
+<li>Messeri, L. &amp; Crockett, M. J. (2024). AI và Ảo giác hiểu biết định hình lại tư duy nhân loại. <em>Nature</em>, 627. <a href="https://doi.org/10.1038/s41586-024-07146-0" target="_blank">doi:10.1038/s41586-024-07146-0</a></li>
+<li>Wolf, M. — Reader Come Home &amp; Phân tích trên NPR Life Kit (2024). <a href="https://www.npr.org/2024/04/30/1196979151/how-to-practice-deep-reading" target="_blank">NPR 2024</a></li>
+<li>Joshi et al. (2025). Lỗ hổng của sự thành thạo giả tạo (IJERT). <a href="https://doi.org/10.5281/zenodo.20522460" target="_blank">doi:10.5281/zenodo.20522460</a></li>
+</ul>
+
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin:48px 0 0;padding:16px 18px;background:var(--sidenote-bg);border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px">
+  <a href="thiet-ke-moi-truong-ra-quyet-dinh.html" style="padding:10px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);font-weight:600">← Trở lại: Phụ lục A — Dòng Sông</a>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <a href="tu-duy-atlas.html" style="padding:10px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text)">Atlas tổng</a>
+    <a href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html" style="padding:10px 16px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600">Tiếp theo: Phụ lục C — Thư Viện →</a>
+  </div>
+</div>
+
+<div class="footer">
+      <p>Atlas tổng · <strong>Chuỗi “Tư duy được hình thành từ đâu?”</strong> · 4 bài · MEDIUM · 2026-08-31</p>
+
+<p>Phím tắt điều khiển: <span class="kbd">J</span>/<span class="kbd">K</span> cuộn · <span class="kbd">F</span> Chế độ tập trung (Focus) · <span class="kbd">T</span> Chuyển đổi nền · <span class="kbd">P</span> In ấn</p></div>
+</main>
+<aside class="marginalia">
+<div class="amplifier" id="amplifier"><span style="font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong)">Trạm khuếch đại thuật ngữ</span><p style="color:var(--text-muted);font-style:italic">Rê chuột lên cụm từ <span style="border-bottom:1px dashed var(--accent2)">gạch đứt</span> để hiển thị giải nghĩa sắc bén.</p></div>
+<div class="sidenote"><strong>Ghi chú 1 — Trục liên kết hệ thống</strong>Bài chính giao cho bạn một Khu Vườn, Phụ lục A ném cho bạn bản vẽ hệ thống bờ kè, còn bài viết này dúi vào tay bạn một giáo án rèn luyện 20 phút khắc nghiệt.</div>
+<div class="sidenote"><strong>Ghi chú 2 — Đo lường thực chiến</strong>Tuyệt đối không đong đếm thành quả bằng cảm giác "đọc trơn tru, dễ hiểu"; hãy đo bằng số lượng câu hỏi bạn tự tay giải quyết triệt để sau 24 giờ mà không cần lật lại tài liệu.</div>
+<div class="sidenote"><strong>Trivia thực tế</strong>Khái niệm "Generation effect" tuy đã ngót nghét nửa thế kỷ (1978), nhưng sức mạnh của nó lại bùng nổ dữ dội hơn bao giờ hết giữa kỷ nguyên AI đang thao túng và làm hộ con người mọi khâu kiến tạo.</div>
+</aside>
+</div>
+
+<div id="readProgress" style="position:fixed;bottom:20px;left:20px;z-index:49;display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow);font-family:var(--font-sans);font-size:12px;color:var(--text-muted)">
+  <span id="progText">0% · còn ~-- phút</span>
+  <span style="width:60px;height:6px;background:var(--sidenote-bg);border-radius:999px;overflow:hidden;display:inline-block"><span id="progBar" style="display:block;height:100%;width:0%;background:var(--accent);transition:width 80ms linear"></span></span>
+</div>
+
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Focus mode (F)" aria-label="Focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Đổi nền sáng/tối (T)" aria-label="Theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="fontIncBtn" title="Tăng cỡ chữ ( + )" aria-label="Tăng cỡ chữ">A+</button>
+  <button type="button" class="control-btn" id="fontDecBtn" title="Giảm cỡ chữ ( - )" aria-label="Giảm cỡ chữ">A−</button>
+  <button type="button" class="control-btn" id="topBtn" title="Lên đầu trang (Home)" aria-label="Lên đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In / Lưu PDF (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+  </button>
+</div>
+<script>
+/* === Quản lý Theme === */
+const STORAGE_KEY='edu-notes:'+(document.title||'untitled');
+const store={get(k){try{return JSON.parse(localStorage.getItem(STORAGE_KEY+':'+k))}catch{return null}},set(k,v){try{localStorage.setItem(STORAGE_KEY+':'+k,JSON.stringify(v))}catch{}}};
+(function(){const s=store.get('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.setAttribute('data-theme','dark')})();
+document.getElementById('themeBtn').addEventListener('click',()=>{const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);store.set('theme',n)});
+
+/* === Quản lý Focus Mode === */
+const focusKey = 'edu-focus';
+if (localStorage.getItem(focusKey) === 'true') document.body.classList.add('focus-mode');
+const focusBtn = document.getElementById('focusBtn');
+if (focusBtn) {
+    focusBtn.addEventListener('click', () => {
+        document.body.classList.toggle('focus-mode');
+        localStorage.setItem(focusKey, document.body.classList.contains('focus-mode'));
+    });
+}
+
+(function(){const c=document.getElementById('canvas'),t=document.getElementById('toc');c.querySelectorAll('h2,h3').forEach(h=>{if(!h.id)h.id=h.textContent.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').slice(0,60);const li=document.createElement('li');if(h.tagName==='H3')li.style.paddingLeft='14px';const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);t.appendChild(li)})})();
+(function(){const f=document.getElementById('progressFill');function u(){const s=window.scrollY,tot=document.documentElement.scrollHeight-window.innerHeight;f.style.width=(tot>0?s/tot*100:0)+'%'};window.addEventListener('scroll',u,{passive:true});u()})();
+(function(){const ns=Array.from(document.querySelectorAll('.orbit__node'));ns.forEach(n=>n.addEventListener('click',()=>{const t=document.getElementById(n.dataset.target);if(t)t.scrollIntoView({behavior:'smooth'})}));const obs=new IntersectionObserver(es=>{es.forEach(e=>{const nd=ns.find(x=>x.dataset.target===e.target.id);if(nd&&e.isIntersecting){ns.forEach(x=>x.removeAttribute('data-active'));nd.setAttribute('data-active','true');nd.setAttribute('data-reached','true')}})},{rootMargin:'-20% 0px -70% 0px'});document.querySelectorAll('#canvas h2').forEach(h=>obs.observe(h))})();
+(function(){const q=document.getElementById('quiz');if(!q)return;const ch=document.getElementById('quizCheck'),rs=document.getElementById('quizReset'),sc=document.getElementById('quizScore');ch.addEventListener('click',()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{const a=parseInt(fs.dataset.answer,10),sel=fs.querySelector('input:checked');t++;fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const cor=fs.querySelector(`input[value="${a}"]`);if(cor)cor.closest('.quiz__option').classList.add('correct-answer');if(sel&&parseInt(sel.value,10)!==a&&sel)sel.closest('.quiz__option').classList.add('incorrect-answer');if(sel&&parseInt(sel.value,10)===a)c++});q.classList.add('is-graded');sc.textContent=`${c} / ${t} đúng (${Math.round(c/t*100)}%)`});rs.addEventListener('click',()=>{q.querySelectorAll('input[type=radio]').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');sc.textContent=''})})();
+(function(){document.querySelectorAll('.checkpoint').forEach(cp=>{const b=cp.querySelector('button');if(b)b.addEventListener('click',()=>cp.classList.toggle('is-revealed'))})})();
+(function(){const b=document.getElementById('hintBtn');if(!b)return;const h=Array.from(document.querySelectorAll('.launchpad__hint'));let s=parseInt(store.get('hints')||0,10);for(let i=0;i<s&&i<h.length;i++)h[i].classList.add('is-visible');if(s>=h.length)b.disabled=true;else b.textContent=`Mở gợi ý ${s+1} / ${h.length}`;b.addEventListener('click',()=>{if(s>=h.length)return;h[s].classList.add('is-visible');s++;store.set('hints',s);if(s>=h.length){b.textContent='Đã khai thác hết';b.disabled=true}else b.textContent=`Mở gợi ý ${s+1} / ${h.length}`})})();
+
+/* === Thay đổi Cỡ chữ, Top, và In ấn === */
+(function(){
+  const key='edu-font';
+  const canvas=document.getElementById('canvas');
+  let size=parseInt(localStorage.getItem(key)||'18',10);
+  function apply(){ if(canvas) canvas.style.fontSize=size+'px'; localStorage.setItem(key, String(size)); }
+  apply();
+  const inc=document.getElementById('fontIncBtn');
+  const dec=document.getElementById('fontDecBtn');
+  if(inc) inc.addEventListener('click',()=>{ if(size<24){ size+=1; apply(); }});
+  if(dec) dec.addEventListener('click',()=>{ if(size>15){ size-=1; apply(); }});
+  const top=document.getElementById('topBtn');
+  if(top) top.addEventListener('click',()=> window.scrollTo({top:0, behavior:'smooth'}));
+  const pr=document.getElementById('printBtn');
+  if(pr) pr.addEventListener('click',()=> window.print());
+  // Điều khiển bằng phím cứng: +, -, Home
+  document.addEventListener('keydown', e=>{
+    if(e.target.matches('input, textarea')) return;
+    if(e.key==='+'||e.key==='='){ e.preventDefault(); inc&&inc.click(); }
+    if(e.key==='-'||e.key==='_'){ e.preventDefault(); dec&&dec.click(); }
+    if(e.key==='Home'){ e.preventDefault(); top&&top.click(); }
+  });
+})();
+
+/* === Cập nhật thanh tiến trình đọc === */
+(function(){
+  const text=document.getElementById('progText');
+  const bar=document.getElementById('progBar');
+  if(!text||!bar) return;
+  let totalMin=7; // Thời gian đọc trung bình của bài này
+  const rt=document.querySelector('.navigator__reading-time');
+  if(rt){ const m=rt.textContent.match(/(\d+)\s*ph/); if(m) totalMin=parseInt(m[1],10); }
+  function upd(){
+    const sc=window.scrollY;
+    const tot=document.documentElement.scrollHeight-window.innerHeight;
+    const p=tot>0? sc/tot : 0;
+    const pct=Math.round(p*100);
+    const remain=Math.max(0, Math.round(totalMin*(1-p)));
+    text.textContent=pct+'% \u00B7 c\u00F2n ~'+remain+' ph\u00FAt';
+    bar.style.width=pct+'%';
+  }
+  window.addEventListener('scroll', upd, {passive:true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+
+</script>
+</body>
+</html>

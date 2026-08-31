@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tiểu sử như dữ liệu — Học từ người đi trước không thành bắt chước</title>
+<meta name="description" content="Mượn bộ dữ liệu quyết định của người khác: trích bối cảnh, giả định, lựa chọn bị loại và giá phải trả, rồi dịch sang bối cảnh của mình — thay vì copy kết quả.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}
+:root{--font-serif:'Merriweather', Georgia, serif;--font-sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;--font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;--bg:#FDFBF7;--bg-elevated:#FFFFFF;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;--border:#E4DFD5;--sidenote-bg:#EDF2F7;--code-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;--radius:10px;--radius-sm:6px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 4px 12px rgba(0,0,0,.08);--measure:65ch;--line:1.7;--transition:200ms cubic-bezier(.4,0,.2,1)}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;--accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--code-bg:#2A2F3A;--success:#68D391;--success-bg:#22543D;--danger:#FC8181;--danger-bg:#63171B;--warn:#F6AD55;--warn-bg:#7B341E;--info:#63B3ED;--info-bg:#2A4365;--shadow-sm:0 1px 2px rgba(0,0,0,.3);--shadow:0 4px 12px rgba(0,0,0,.4)}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%;transition:font-size 0.2s ease}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px}.navigator__reading-time{color:var(--text);font-size:13px}
+.toc{list-style:none;padding:0;margin:0}.toc li{margin:2px 0}.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg)}.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.15rem;line-height:1.25;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px}
+.canvas h2:first-of-type{border-top:none;padding-top:0}.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.2rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong);font-weight:700}.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.source{font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-muted);margin-left:4px;padding:1px 6px;border-radius:4px;background:var(--sidenote-bg);text-decoration:none;border:1px solid transparent;white-space:nowrap;vertical-align:baseline}
+.source::before{content:"↗ ";opacity:.6}.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-top:12px;font-style:italic}
+.hook{margin:24px 0 48px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.05rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+.callout{margin:24px 0;padding:16px 20px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--tip .callout__label{color:var(--success)}
+.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--warn .callout__label{color:var(--warn)}
+.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}.callout--danger .callout__label{color:var(--danger)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text)}
+.feynman::before{content:"🧒 Đúc kết một câu:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted)}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:200px 1fr 90px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:14px}
+.bar-label{color:var(--text)}.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg, var(--accent), var(--accent-strong));border-radius:4px;transition:width 400ms cubic-bezier(.4,0,.2,1)}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:32px 0}
+.concept-flow__step{padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px;min-height:90px;display:flex;flex-direction:column;justify-content:center}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px}.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px}
+@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}.bar-row{grid-template-columns:130px 1fr 70px}}
+.glossary{margin:32px 0}.glossary dl{margin:0}.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px}
+.glossary dd{margin:4px 0 0;color:var(--text);font-size:15px}
+.quiz{margin:56px 0 24px;padding:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.quiz h2{border-top:none;padding-top:0;margin-top:0;margin-bottom:8px}.quiz__intro{color:var(--text-muted);font-family:var(--font-sans);font-size:14px;margin-bottom:24px}
+.quiz fieldset{border:none;padding:0;margin:0 0 28px}.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px;font-size:16px}
+.quiz__option{display:block;padding:12px 16px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;position:relative;padding-left:44px}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%}
+.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg)}.quiz__option:has(input:checked)::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg-elevated)}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success)}.quiz__option.correct-answer::before{border-color:var(--success);background:var(--success)}
+.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}.quiz__option.incorrect-answer::before{border-color:var(--danger);background:var(--danger)}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__explanation{display:block}.quiz__actions{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:white;cursor:pointer;font-size:14px}
+.btn--ghost{background:transparent;color:var(--accent)}.quiz__score{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);margin:0;padding:12px 16px;background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border)}.orbit__title{font-family:var(--font-sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px}
+.orbit__track{position:relative;padding-left:22px}.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.orbit__node{position:relative;display:flex;align-items:center;margin:8px 0;color:var(--text-muted);font-family:var(--font-sans);font-size:12px;cursor:pointer}
+.orbit__node::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border)}
+.orbit__node[data-reached="true"]::before{background:var(--accent);border-color:var(--accent)}.orbit__node[data-active="true"]{color:var(--text-strong);font-weight:600}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px;color:var(--text)}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0;align-items:start}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}
+.scaffold__row-body{font-size:15px;line-height:1.65}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm);overflow:hidden}
+.scaffold__probe>summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none;display:flex;gap:10px;align-items:baseline}
+.scaffold__probe>summary::before{content:"🤔 Thăm dò";flex-shrink:0;padding:2px 8px;border-radius:3px;background:var(--accent2-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2-strong)}
+.scaffold__probe>summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px;line-height:1.6}
+.scaffold__resolve::before{content:"💡 Giải";display:inline-block;padding:2px 8px;border-radius:3px;background:var(--accent2);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:8px}
+.launchpad{margin:48px 0 24px;padding:28px 32px;background:linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius);position:relative}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:white;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.3rem;color:var(--text-strong);margin:0 0 12px}
+.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-size:14px;display:none}
+.launchpad__hint.is-visible{display:block}.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+.kbd{font-family:var(--font-mono);font-size:12px;padding:1px 6px;border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;background:var(--bg-elevated)}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+<aside class="navigator">
+<div class="navigator__meta"><p class="navigator__title">Thời gian đọc</p><p class="navigator__reading-time">~ 7 phút · MEDIUM</p></div>
+<div class="orbit"><p class="orbit__title">Hành trình</p><div class="orbit__track">
+<div class="orbit__node" data-target="baseline">1 · Neo</div>
+<div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+<div class="orbit__node" data-target="exposition">3 · Ba kệ sách</div>
+<div class="orbit__node" data-target="application">4 · Thực chiến</div>
+<div class="orbit__node" data-target="boundary">5 · Biên giới</div>
+<div class="orbit__node" data-target="synthesis">6 · Thu hoạch</div>
+</div></div>
+<nav><ul class="toc" id="toc"></ul></nav>
+</aside>
+<main class="canvas" id="canvas">
+<h1>Tiểu sử như dữ liệu<br><span style="font-weight:400;font-size:1.25rem;color:var(--text-muted)">Học từ người đi trước không thành bắt chước</span></h1>
+
+<div style="margin:16px 0 24px;padding:12px 16px;background:var(--sidenote-bg);border:1px solid var(--border);border-radius:10px;font-family:var(--font-sans);font-size:13px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+<span style="font-weight:700;color:var(--accent);font-size:11px;letter-spacing:.08em;text-transform:uppercase">Chuỗi Tư duy — Điều hướng nhanh:</span>
+<a href="tu-duy-atlas.html" style="padding:6px 10px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600">Atlas tổng</a>
+<a href="tu-duy-duoc-hinh-thanh-tu-dau.html" style="padding:6px 10px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">Bài chính — Khu Vườn</a>
+<a href="thiet-ke-moi-truong-ra-quyet-dinh.html" style="padding:6px 10px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">A (Dòng Sông)</a>
+<a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html" style="padding:6px 10px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">← B (Phòng Tập)</a>
+<span style="padding:6px 10px;background:var(--accent2-soft);border:1px solid var(--accent2);border-radius:8px;font-weight:600">Bạn đang ở: Phụ lục C — Thư Viện</span>
+</div>
+
+<div class="hook"><span class="hook__label">🎣 Móc câu</span>Hai người cùng đọc chung một cuốn tiểu sử Warren Buffett. Người thứ nhất hì hục ghi chép: "Mua Apple, mua BYD, giữ núi tiền mặt." Người thứ hai điềm tĩnh phân tích: "Năm 1965, ông mua Berkshire trong cơn giận dữ; năm 1993, mua Dexter bằng cổ phiếu và ném qua cửa sổ 1,6% công ty; năm 2015, thương vụ Kraft Heinz bốc hơi 60% giá trị — và ông luôn mổ xẻ sai lầm nhiều hơn tô hồng chiến thắng." Một năm sau, người thứ nhất sao chép y hệt danh mục và ôm hận. Người thứ hai sao chép <em>cách tư duy</em> và sống sót qua giông bão.</div>
+<div class="meta-block"><h4>Bạn cần gì trước</h4><ul><li>Nắm vững bài “Tư duy được hình thành từ đâu?” (đặc biệt là 4 màng lọc và mô hình Khu Vườn).</li><li>Đã từng đọc ít nhất một cuốn tiểu sử hoặc xem một video chia sẻ kinh nghiệm (Guru Share).</li><li>Sẵn sàng dành 30 phút để mổ xẻ một nhân vật thực tế.</li></ul></div>
+<div class="meta-block"><h4>Đọc xong bạn sẽ có thể…</h4><ul><li><strong>Lý giải</strong> 4 mắt xích cốt lõi trong thuyết học tập quan sát của Bandura.</li><li><strong>Phân định</strong> ranh giới giữa việc "sao chép kết quả" với "chuyển giao quy trình ra quyết định".</li><li><strong>Làm chủ</strong> ma trận 5 cột (bối cảnh — giả định — lựa chọn — phương án bị loại — cái giá phải trả).</li><li><strong>Đánh giá</strong> xem một bài học thành công có khả năng "sống sót" khi mang cấy ghép sang bối cảnh của riêng bạn hay không.</li></ul></div>
+
+<h2 id="baseline">Nền tảng chung — Tiểu sử là một tập dữ liệu</h2>
+<blockquote style="border-left-color:var(--accent2);background:var(--accent2-soft)"><strong>⚓ Neo.</strong> Tiểu sử tuyệt đối không phải là một cuốn cẩm nang đáp án; nó là một tập dữ liệu quyết định chân thực mà bạn có đặc quyền vay mượn. Giá trị thực sự không nằm ở những hào quang họ gặt hái, mà nằm ở hệ quy chiếu tư duy của họ trong bối cảnh đó — và ở năng lực của bạn khi dịch mã hệ quy chiếu ấy sang thực tại của chính mình.</blockquote>
+<p>Bạn từng nghe lời khuyên "hãy dậy lúc 4h sáng như CEO X" và làm thử, để rồi gục ngã vì kiệt sức. Lỗi không nằm ở bạn. Lỗi nằm ở việc bạn copy kết quả mà tảng lờ bối cảnh (vị CEO kia có tài xế riêng, còn bạn phải tự chạy xe máy đưa con đi học). Dữ liệu đúng, nhưng thuật toán phiên dịch sai bét. Bài viết này sẽ mài sắc kỹ năng "vay mượn tri thức từ người khổng lồ" mà không bị biến thành cái bóng của họ.</p>
+
+<h2 id="bridge">Cầu nối — Mô hình Thư Viện Bản Đồ</h2>
+<p>Hãy nhìn nhận tiểu sử như những tấm bản đồ do người đi trước để lại sau khi băng qua rừng rậm. Bạn không thể "teleport" theo bản đồ của họ; bạn mượn nó để vẽ lại lộ trình sinh tồn cho riêng mình.</p>
+<div class="concept-flow">
+<div class="concept-flow__step"><span class="concept-flow__num">01</span>Kệ sách<br><span style="font-size:12px;color:var(--text-muted)">Tiểu sử cuộc đời</span></div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">02</span>Ma trận trích xuất<br><span style="font-size:12px;color:var(--text-muted)">Khung 5 cột</span></div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">03</span>La bàn cá nhân<br><span style="font-size:12px;color:var(--text-muted)">Dịch mã bối cảnh</span></div>
+</div>
+<ul><li><strong>Kệ sách</strong> là kho lưu trữ tiểu sử — mỗi cuốn sách là một tuyến đường đẫm máu và mồ hôi.</li><li><strong>Thẻ trích xuất</strong> là tấm bản đồ thu nhỏ — gồm 5 cột: bối cảnh, giả định, lựa chọn, lựa chọn bị loại, cái giá phải trả.</li><li><strong>La bàn</strong> chính là bối cảnh của bạn — chung một bản đồ, nhưng la bàn khác nhau sẽ vạch ra lộ trình khác nhau.</li><li><strong>Vùng mù</strong> là thiên kiến sống sót — bản đồ thường chỉ vẽ lại tuyến đường của những kẻ may mắn không tử trận.</li></ul>
+<div class="premortem"><span class="premortem__label">⚠️ Trước khi đi tiếp — Lật tẩy ngộ nhận phổ biến…</span><p><span class="premortem__wrong">“Đọc tiểu sử là hành trình săn lùng công thức thành công để sao chép.”</span></p><p>Hoàn toàn sai. Công thức luôn bị trói chặt vào bối cảnh (quy mô vốn, thời điểm lịch sử, yếu tố rủi ro, và sự may mắn) — những thứ mà các bản tóm tắt thường tiện tay gạt bỏ.</p><p><span class="premortem__truth">Bản chất thực sự:</span> Đọc tiểu sử là thao tác mượn tập dữ liệu ra quyết định, trích xuất sòng phẳng cả bối cảnh lẫn những phương án bị loại bỏ, sau đó "dịch" chúng sang thực tại của bạn.</p></div>
+
+<h2 id="exposition">Ba kệ sách trong thư viện tư duy</h2>
+<p>Mỗi kệ sách dưới đây được phân tích theo cấu trúc <strong>Nêu → Minh họa → Thăm dò → Giải đáp</strong>.</p>
+
+<h3 id="ke-1-hoc-gian-tiep">Kệ 1 — Nền tảng học tập gián tiếp</h3>
+<section class="scaffold">
+<h3 class="scaffold__concept">Thuyết học tập quan sát của Bandura (1977)</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Học tập quan sát</strong> (Vicarious learning) đòi hỏi 4 mắt xích tàn nhẫn: <strong>Chú ý</strong>, <strong>Lưu trữ</strong> (mã hóa thành ký hiệu), <strong>Tái tạo</strong> (năng lực thực thi), và <strong>Động lực</strong> (được kích hoạt thông qua việc quan sát mô hình mẫu bị trừng phạt hay khen thưởng). Bỏ sót một khâu, bạn chỉ đang xem giải trí, tuyệt đối không phải học hỏi.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Tác giả bài gốc thừa nhận: "Mình không học tất cả từ một người, mình học từ rất nhiều người, mỗi người nhặt một mảnh". Đó chính là sự <em>Chú ý có chọn lọc</em>. Ông duy trì thói quen <em>Guru Share</em>: xem xét cả quyết định khôn ngoan <em>lẫn</em> ngớ ngẩn, và đào bới lý do họ phải bẻ lái. Trong thư viện, bạn không đọc ngấu nghiến toàn bộ kệ sách; bạn phải tự hỏi: "Tuần này mình hổng kiến thức gì?" Rồi chỉ rút đúng tấm bản đồ của kẻ đã từng ngã sấp mặt ở cái hố đó.</div></div>
+<details class="scaffold__probe"><summary>Tại sao bạn xem hàng chục video "Thói quen 4h sáng của CEO" nhưng hành vi cốt lõi vẫn không xê dịch?</summary><div class="scaffold__resolve">Bởi vì bạn mới chỉ quẹt thẻ ở cổng "Chú ý". Bạn chưa hề "Lưu trữ" nó thành một quy trình có thể tái sử dụng, bạn thiếu hụt "Năng lực tái tạo" (bạn không có hệ thống hỗ trợ như vị CEO kia), và động lực của bạn chỉ dừng lại ở sự ngưỡng mộ hời hợt. Thiếu đi Lưu trữ và Tái tạo, xem video truyền cảm hứng chỉ là một liều dopamine rẻ tiền.</div></details>
+</section>
+<div class="feynman">Học gián tiếp là mượn nhãn quan của kẻ khác, nhưng bạn vẫn phải tự cầm bút vẽ lại lộ trình của chính mình.</div>
+
+<h3 id="ke-2-khung-trich">Kệ 2 — Ma trận trích xuất 5 cột</h3>
+<section class="scaffold">
+<h3 class="scaffold__concept">Bối cảnh — Giả định — Lựa chọn — Bị loại — Cái giá phải trả</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Khung 5 cột</strong> lột xác một câu chuyện truyền cảm hứng thành dữ liệu thô: (1) <strong>Bối cảnh</strong>, (2) <strong>Giả định</strong>, (3) <strong>Lựa chọn</strong>, (4) <strong>Lựa chọn bị loại</strong>, (5) <strong>Cái giá phải trả</strong>. Thiếu đi hai cột cuối cùng, bạn chỉ đang nhai lại những cuốn truyện cổ tích suy tôn cá nhân (hagiography).</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Hãy mổ xẻ Warren Buffett: Năm <strong>1965</strong>, Berkshire thực chất là một xưởng dệt đang thoi thóp. Buffett thâu tóm nó chỉ vì cay cú khi bị giám đốc công ty lật kèo giá — ông thừa nhận đây là thương vụ ngớ ngẩn nhất đời mình dù cổ phiếu sau đó tăng phi mã. <strong>1993, thảm họa Dexter Shoe:</strong> Đốt 433 triệu USD (tương đương <strong>1,6% cổ phần Berkshire</strong>) cho một doanh nghiệp vô giá trị. <strong>2015, Kraft Heinz:</strong> Bơm 57 tỷ USD cùng 3G Capital, để rồi bốc hơi ~60% tài sản. Cùng một huyền thoại, ba cái giá đắt đỏ khác nhau. Chỉ khi ráp đủ 5 cột, bạn mới nhìn thấu <em>cách tư duy</em> của ông chuyển dịch tàn nhẫn từ "mua đồ bỏ đi giá rẻ" sang "mua doanh nghiệp tuyệt vời với giá hợp lý".</div></div>
+<details class="scaffold__probe"><summary>Tại sao cột "Lựa chọn bị loại" lại mang sức nặng sống còn hơn cả cột "Lựa chọn"?</summary><div class="scaffold__resolve">Bởi vì "Lựa chọn" chỉ phơi bày bề nổi hành động; trong khi "Bị loại" vạch trần thứ họ <em>từ chối</em> — và lý do vì sao. Sự khước từ mới tiết lộ kỷ luật thép và những giả định ngầm. Bỏ qua nó, bạn chỉ đang copy một hành động mù quáng mà không hiểu nguyên lý phòng ngự phía sau.</div></details>
+</section>
+<div class="feynman">Đừng chỉ ghi chép những chiến công họ gặt hái; hãy mổ xẻ những thứ họ gạt bỏ và cái giá đẫm máu họ phải trả.</div>
+
+<h3 id="ke-3-dich-boi-canh">Kệ 3 — Dịch mã bối cảnh & Thiên kiến sống sót</h3>
+<section class="scaffold">
+<h3 class="scaffold__concept">Dịch mã bối cảnh &amp; Thiên kiến sống sót (Survivorship bias)</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Dịch mã bối cảnh</strong> là thao tác mang một quyết định nhổ tận gốc rễ và cấy ghép sang một vùng đất mới (Tái tạo + Động lực). <strong>Thiên kiến sống sót</strong> cảnh báo sự nguy hiểm khi bạn chỉ tung hô những kẻ chiến thắng mà phớt lờ những xác chết dưới vực sâu — hệt như cách nhà toán học Abraham Wald từng vạch trần sai lầm của quân đội Mỹ khi định bọc thép vào những lỗ đạn trên máy bay.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Trong Thế chiến II, quân đội muốn bọc thép những chỗ chi chít vết đạn trên máy bay trở về. Wald lạnh lùng phản bác: <strong>Hãy bọc thép ở những chỗ KHÔNG CÓ vết đạn</strong>, bởi những chiếc máy bay trúng đạn ở vị trí đó đã vĩnh viễn bỏ xác ngoài chiến trường. Bài học cho thư viện tư duy: Kệ sách thường chỉ lưu giữ bản đồ của những kẻ sống sót. Buffett khư khư ôm <strong>370 tỷ USD tiền mặt (2025)</strong> thay vì giải ngân — bởi ông chấp nhận trả cái giá "đứng ngoài cuộc chơi". Bạn có gánh nổi cái giá đó không? Nếu không, đừng copy hành động "giữ tiền", hãy vay mượn nguyên lý: "Tuyệt đối không vung tiền khi chưa hiểu rõ cuộc chơi".</div></div>
+<details class="scaffold__probe"><summary>Tại sao mổ xẻ thất bại của Buffett lại mài giũa tư duy sắc bén hơn việc chỉ trầm trồ trước thương vụ Apple hay BYD?</summary><div class="scaffold__resolve">Vì thất bại lột trần những giả định sai lầm và vạch rõ ranh giới của cái giá phải trả — những thứ thường bị ánh hào quang thành công che lấp. Đọc thất bại cung cấp cho bạn tập dữ liệu vô giá về câu hỏi: "Khi nào thì bộ công thức này trở thành thuốc độc?". Một tấm bản đồ sinh tồn đích thực phải đánh dấu đỏ chót những ngõ cụt.</div></details>
+</section>
+<div class="feynman">Nghiên cứu kẻ thắng để xin một tấm bản đồ; mổ xẻ kẻ thua để khoanh vùng những cạm bẫy tử thần.</div>
+
+<h2 id="application">Thực chiến — 30 phút mổ xẻ một video Guru Share</h2>
+<p>Hãy ép 3 kệ sách lý thuyết vào 30 phút thực chiến.</p>
+<p><strong>15 phút — Quét radar & Chú ý:</strong> Khóa mục tiêu vào một video/cuốn sách giải quyết đúng lỗ hổng lớn nhất của bạn tuần này.</p>
+<p><strong>10 phút — Trích xuất tàn nhẫn (Thẻ A6):</strong> Ép thông tin vào 5 cột: Bối cảnh / Giả định / Lựa chọn / Bị loại / Cái giá phải trả.</p>
+<p><strong>5 phút — Dịch mã sinh tồn:</strong> Phải chốt lại bằng một câu: "Đứng trong bối cảnh của tôi (...), tôi sẽ triển khai một phiên bản mini của chiến lược này (...) với mức độ rủi ro tôi chấp nhận được là (...), và tôi sẽ nghiệm thu nó bằng chỉ số (...)." Nếu thiếu câu dịch mã này, mọi tấm thẻ bạn ghi chép chỉ là rác.</p>
+<div class="bar-chart">
+<div class="bar-chart__title">Tối ưu hóa nguồn dữ liệu từ Tiểu sử</div>
+<div class="bar-row"><div class="bar-label">Chỉ tung hô bề nổi (Apple/BYD)</div><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><div class="bar-value">40%</div></div>
+<div class="bar-row"><div class="bar-label">Mổ xẻ cả hố đen (Dexter/Kraft)</div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><div class="bar-value">85%</div></div>
+<div class="bar-row"><div class="bar-label">Ép khung 5 cột + Dịch mã</div><div class="bar-track"><div class="bar-fill" style="width:95%"></div></div><div class="bar-value">95%</div></div>
+<div class="bar-row"><div class="bar-label">Triết lý Wald: Nghiên cứu cả kẻ tử trận</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">100%</div></div>
+<p class="bar-chart__caption">Cơ sở dữ liệu: Wald SRG memos — MacTutor &amp; AMS 2016-06; Thư gửi cổ đông Buffett. Tỷ lệ % minh họa tương quan giá trị dữ liệu đối với việc dịch mã bối cảnh.</p>
+</div>
+<p><em>Ma trận đã vận hành.</em> Nhưng mọi hệ thống đều có ranh giới chịu đựng. Khi nào thư viện sẽ sụp đổ?</p>
+
+<h2 id="boundary">Biên giới — Khi Thư viện trở nên vô dụng</h2>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Góc nhìn sai lệch — "Đọc tiểu sử là săn tìm người giỏi để ngoan ngoãn nghe theo"</span>Một sai lầm chí mạng như Bandura đã chỉ ra: Bạn phải học qua quá trình mã hóa biểu tượng trước khi hành động. Nếu chỉ tôn sùng vĩ nhân, bạn đã chặt đứt khâu "Lưu trữ" và "Tái tạo". Một bộ óc vĩ đại đặt sai bối cảnh vẫn sẽ đưa ra những lời khuyên tự sát.</div>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Góc nhìn sai lệch — "Copy y hệt thành quả chính là học"</span>Sao chép mù quáng kết quả khi hệ sinh thái bối cảnh đã thay đổi là hành động ném tiền qua cửa sổ mà không hiểu vì sao mình cháy túi.</div>
+<div class="callout callout--danger"><span class="callout__label">🚫 Điểm mù — Tuyệt đối không dùng phương pháp này khi nào?</span>Khi bạn hoàn toàn trống rỗng về <strong>năng lực tái tạo</strong> (thiếu vốn liếng/kỹ năng sinh tồn tối thiểu) hoặc cạn kiệt <strong>động lực nội tại</strong>, hãy dẹp tiểu sử sang một bên. Lùi về Bài chính: Hãy cày nát các nền tảng cơ bản và thực thi những bước thật nhỏ. Tiểu sử không bao giờ là thuốc tiên thay thế được 4 lớp màng lọc tư duy.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Thử thách tư duy</span>Nếu chỉ được quyền bảo vệ đúng một cột trong ma trận 5 cột suốt tuần tới, bạn sẽ chọn cột nào? Nếu vứt bỏ 4 cột kia, hệ thống của bạn sẽ sụp đổ ra sao?</div>
+<p><em>Ranh giới đã rõ ràng.</em> Nắm được điểm yếu này, bạn sẽ tự động miễn nhiễm với căn bệnh cuồng tín.</p>
+
+<h2 id="connections">Bản đồ liên kết tri thức</h2>
+<ul><li><strong>Khoa học học tập (Bandura)</strong> — 4 bước vay mượn tri thức mãnh liệt nhưng không quỳ gối sùng bái.</li><li><strong>Tư duy Thống kê (Wald)</strong> — Mở to mắt nhìn vào mảng tối của những kẻ thất bại để thấy toàn cảnh phân bố.</li><li><strong>Chiến lược Đầu tư (Buffett)</strong> — Tàn nhẫn đối diện với cái giá của việc "không hành động" và "hành động sai".</li><li><strong>Tư duy Phản biện</strong> — Cột "Giả định" chính là lưỡi dao gọt giũa sắc bén nhất.</li></ul>
+
+<h2 id="synthesis">Thu hoạch — Tóm gọn bức tranh toàn cảnh</h2>
+<p>Chúng ta khởi đầu bằng một nghi vấn hóc búa: Làm sao để hút cạn chất xám của kẻ đi trước mà không bị biến thành một bản sao nhạt nhòa? Chìa khóa không nằm ở sự vĩ đại của họ, mà nằm ở độ sắc bén trong lưỡi dao trích xuất của bạn.</p>
+<p><strong>Khóa mục tiêu, ép vào khung 5 cột, cấy ghép sang bối cảnh của mình, và trả những cái giá rủi ro cực nhỏ để kiểm chứng.</strong> Tuột xích ở bất kỳ khâu nào, bạn chỉ là kẻ sưu tầm chuyện phiếm. Kỷ luật áp dụng trọn vẹn 4 khâu, mỗi cuốn tiểu sử sẽ trao cho bạn 10 năm kinh nghiệm sương máu mà không bắt bạn phải trả bằng 10 năm tuổi thọ.</p>
+<p>Nếu Bài chính trao cho bạn Khu Vườn, (A) cấp cho bạn bờ kè, (B) rèn cho bạn giáo án 20 phút, thì bài này trang bị cho bạn một <strong>thư viện quyết định chiến lược</strong>: 1 thẻ/tuần, 20 tuần, 20 lộ trình — và một chiếc la bàn định vị hoàn hảo trong bối cảnh của chính bạn.</p>
+<blockquote><strong>Chốt hạ một câu:</strong> Tuyệt đối đừng vay mượn kết quả; hãy vay mượn phương trình ra quyết định. Ép dữ liệu vào khung 5 cột và cấy ghép nó sang lãnh địa của mình với một mức giá bạn đủ sức chi trả.</blockquote>
+
+<div class="launchpad">
+<span class="launchpad__label">🚀 Bệ phóng hành động · Kỷ luật 7 ngày</span>
+<h3 class="launchpad__title">Tạo 1 Thẻ 5 cột để lấp ngay lỗ hổng tuần này</h3>
+<p class="launchpad__problem">Chỉ định <strong>một</strong> lỗ hổng kiến thức cấp bách của tuần này và chọn <strong>một</strong> nhân vật/video Guru Share. Rút ruột trích xuất 1 thẻ 5 cột mổ xẻ một quyết định cụ thể, sau đó viết câu lệnh dịch mã: "Đứng trong bối cảnh của tôi (...), tôi sẽ triển khai một phiên bản mini (...) với mức độ rủi ro chấp nhận được là (...), và nghiệm thu bằng chỉ số (...)." Yêu cầu bổ sung: Chốt hạ 1 phương án bị loại mà bạn <strong>tuyệt đối không</strong> dẫm vào và lý do tại sao.</p>
+<div class="launchpad__hints"><span style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em">Bế tắc? Mở từng ô gợi ý.</span><br><button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+<div class="launchpad__hint" data-hint="1"><strong>Gợi ý 1 — Đảo ngược tư duy:</strong> Vứt bỏ tư duy viết bài tập làm văn "Mình học được 3 điều bổ ích". Hãy thay bằng tư duy của một nhà điều tra: "Quyết định sống còn nào, diễn ra trong bối cảnh nào, dựa trên giả định gì, đã gạt bỏ phương án nào, và phải trả cái giá đẫm máu nào."</div>
+<div class="launchpad__hint" data-hint="2"><strong>Gợi ý 2 — Khung lý thuyết lõi:</strong> Vicarious learning (Bandura) + Thiên kiến sống sót (Wald) + Mổ xẻ cái giá phải trả (Buffett). Một thẻ trích xuất hợp lệ bắt buộc không được khuyết bất kỳ cột nào trong 5 cột.</div>
+<div class="launchpad__hint" data-hint="3"><strong>Gợi ý 3 — Bản phác thảo thực chiến:</strong> Sử dụng thẻ A6: Dòng 1 — Định vị lỗ hổng | Dòng 2 — Truy xuất Nguồn | Dòng 3 đến 7 — Nhồi dữ liệu vào 5 cột | Dòng 8 — Câu lệnh dịch mã bối cảnh | Dòng 9 — Chốt chỉ số đo lường sau 7 ngày.</div>
+</div></div>
+
+<h2 id="glossary">Từ điển tra cứu — Gắn liền với Mô hình Thư Viện Bản Đồ</h2>
+<div class="glossary"><dl>
+<dt>Học tập quan sát (Vicarious learning)</dt><dd>Cơ chế tiếp thu kiến thức khốc liệt qua việc thẩm định mô hình và quan sát hậu quả nhãn tiền (Bandura 1977). <em>(Đóng vai trò: Mượn nhãn quan chiến lược.)</em></dd>
+<dt>Chú ý — Lưu trữ — Tái tạo — Động lực</dt><dd>4 rào cản gác cổng quyết định việc học quan sát có biến thành hành vi thực tế hay không. <em>(Đóng vai trò: 4 lớp kiểm duyệt trước khi vay mượn bản đồ.)</em></dd>
+<dt>Động lực gián tiếp (Vicarious reinforcement)</dt><dd>Kích hoạt hành vi dựa trên việc chứng kiến kẻ khác được vinh danh hoặc bị trừng phạt. <em>(Đóng vai trò: Phân tích độ an toàn của tuyến đường trước khi dấn bước.)</em></dd>
+<dt>Ma trận 5 cột</dt><dd>Khung trích xuất tàn nhẫn: Bối cảnh, giả định, lựa chọn, lựa chọn bị loại, cái giá phải trả. <em>(Đóng vai trò: Chế tạo Thẻ trích xuất định vị.)</em></dd>
+<dt>Cái giá phải trả (Cost/Trade-off)</dt><dd>Thời gian, máu, nước mắt, tiền bạc, danh tiếng. <em>(Đóng vai trò: Lệ phí qua trạm sinh tử.)</em></dd>
+<dt>Dịch mã bối cảnh (Context Translation)</dt><dd>Kỹ thuật cấy ghép một quyết định sang hệ sinh thái mới với những tinh chỉnh sinh tồn. <em>(Đóng vai trò: Cầm la bàn vẽ lại tuyến đường máu.)</em></dd>
+<dt>Thiên kiến sống sót (Survivorship Bias)</dt><dd>Căn bệnh mù lòa khi chỉ tung hô những kẻ chiến thắng mà tảng lờ những nấm mồ vô danh (Wald). <em>(Đóng vai trò: Phản xạ chỉ đọc bản đồ của người may mắn sống sót.)</em></dd>
+</dl></div>
+
+<section class="quiz" id="quiz">
+<h2>Kiểm tra nhận thức</h2>
+<p class="quiz__intro">Dành 2 phút cho 3 câu trắc nghiệm cốt lõi. Chọn đáp án sắc bén nhất rồi bấm <em>Kiểm tra</em>.</p>
+<fieldset data-answer="1"><legend>1. Tại sao chiến lược "sao chép y hệt danh mục của Buffett" thường dẫn đến thảm họa?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Bởi vì danh mục đó vốn dĩ là những lựa chọn tồi tệ.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Bởi vì kết quả cuối cùng bị trói chặt vào bối cảnh, hệ giả định và mức định giá — những thứ đã hoàn toàn thay đổi.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Bởi vì Warren Buffett luôn cố tình giấu giếm bí quyết thực sự.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Bởi vì thị trường tài chính luôn tìm cách trừng phạt những kẻ bắt chước Buffett.</label>
+<div class="quiz__explanation"><strong>Phân tích:</strong> Kết quả luôn dính liền với bối cảnh/giả định/giá cả tại thời điểm đó. Sao chép kết quả khi hệ sinh thái đã thay đổi đồng nghĩa với việc bạn tự bỏ tiền ra mua một cái án tử mà không hiểu nguyên nhân.</div></fieldset>
+<fieldset data-answer="2"><legend>2. Di sản của nhà toán học Wald trong Thế chiến II răn dạy điều gì khi ta mổ xẻ tiểu sử?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Phải tập trung bọc thép vào những vị trí lãnh nhiều đạn nhất để sinh tồn.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Đừng bận tâm đến kẻ thất bại, chỉ cần copy kẻ chiến thắng là đủ.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Buộc phải nhìn sâu vào khoảng tối của những kẻ không sống sót để nhận diện toàn cảnh phân bố rủi ro — đập tan Thiên kiến sống sót.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Hãy lạnh lùng gạt bỏ mọi mảnh dữ liệu không đầy đủ.</label>
+<div class="quiz__explanation"><strong>Phân tích:</strong> Wald chứng minh: phải gia cố thép ở những chỗ <em>không</em> có vết đạn trên chiếc máy bay trở về, bởi những chiếc ăn đạn ở vị trí đó đã nổ tung và vĩnh viễn không thể cất tiếng nói.</div></fieldset>
+<fieldset data-answer="1"><legend>3. Nếu rút bỏ hai cột nào, thẻ 5 cột sẽ lập tức tha hóa thành một khẩu hiệu sáo rỗng?</legend>
+<label class="quiz__option"><input type="radio" name="q3" value="0"> Rút bỏ cột Bối cảnh.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="1"> Rút bỏ cột "Lựa chọn bị loại" và "Cái giá phải trả".</label>
+<label class="quiz__option"><input type="radio" name="q3" value="2"> Quên ghi tên nhân vật chính.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="3"> Quên ghi chú năm tháng xảy ra sự kiện.</label>
+<div class="quiz__explanation"><strong>Phân tích:</strong> Chính "Lựa chọn bị loại" và "Cái giá phải trả" là hai mỏ neo vạch trần kỷ luật thép và hệ giả định ngầm. Mất đi chúng, thẻ trích xuất của bạn chỉ là một danh sách nhạt nhẽo liệt kê "họ đã làm cái gì".</div></fieldset>
+<div class="quiz__actions"><button type="button" class="btn" id="quizCheck">Kiểm tra đáp án</button><button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button><p class="quiz__score" id="quizScore"></p></div>
+</section>
+
+<h2 id="sources">Nguồn tài liệu tham khảo & Đọc thêm</h2>
+<ul style="font-size:14px;line-height:1.6">
+<li>Bandura, A. (1977). <em>Thuyết Học tập Xã hội (Social Learning Theory)</em>. <a href="https://doi.org/10.5281/zenodo.15521700" target="_blank">doi:10.5281/zenodo.15521700</a></li>
+<li>Di sản của Wald, A. — Bản ghi nhớ nhóm SRG trong Thế chiến II; Dữ liệu MacTutor — <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Wald/" target="_blank">mathshistory.st-andrews.ac.uk/Biographies/Wald/</a> &amp; Biên niên sử AMS 2016-06</li>
+<li>Thư gửi cổ đông của Buffett &amp; Tư liệu AP/PBS/Fortune: Phân tích sâu các case study Berkshire, Dexter, Kraft Heinz, Apple/BYD, kho tiền mặt $370 tỷ. <a href="https://apnews.com/article/warren-buffett-billionaire-berkshire-hathaway-investor-738682bb" target="_blank">AP 2025</a>; <a href="https://fortune.com/2025/09/03/warren-buffet-kraft-heinz-57-billion-faceplant/" target="_blank">Fortune 2025</a></li>
+</ul>
+
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin:48px 0 0;padding:16px 18px;background:var(--sidenote-bg);border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px">
+  <a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html" style="padding:10px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);font-weight:600">← Trở lại: Phụ lục B — Phòng Tập</a>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <a href="thiet-ke-moi-truong-ra-quyet-dinh.html" style="padding:10px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text)">A — Dòng Sông</a>
+    <a href="tu-duy-atlas.html" style="padding:10px 16px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600">Về Atlas tổng →</a>
+    <a href="tu-duy-duoc-hinh-thanh-tu-dau.html" style="padding:10px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text)">Bài chính</a>
+  </div>
+</div>
+
+<div class="footer">
+      <p>Atlas tổng · <strong>Chuỗi “Tư duy được hình thành từ đâu?”</strong> · 4 bài · MEDIUM · Mắt xích (c) khép lại chuỗi nền tảng · 2026-08-31</p>
+<p>Phím tắt điều khiển: <span class="kbd">J</span>/<span class="kbd">K</span> cuộn · <span class="kbd">F</span> Chế độ tập trung (Focus) · <span class="kbd">T</span> Chuyển đổi nền · <span class="kbd">P</span> In ấn</p></div>
+</main>
+<aside class="marginalia">
+<div class="amplifier" id="amplifier"><span style="font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong)">Trạm khuếch đại thuật ngữ</span><p style="color:var(--text-muted);font-style:italic">Rê chuột lên cụm từ <span style="border-bottom:1px dashed var(--accent2)">gạch đứt</span> để hiển thị giải nghĩa sắc bén.</p></div>
+<div class="sidenote"><strong>Ghi chú 1 — Trục liên kết hệ thống</strong>Bài chính vạch ra Khu Vườn. Phụ lục (A) xây dựng bờ kè Dòng Sông. Phụ lục (B) ném cho bạn giáo án Phòng Tập. Và Phụ lục (C) trao tay bạn Thư Viện Bản Đồ — 4 chiều không gian kiến tạo nên một tư duy vững chãi.</div>
+<div class="sidenote"><strong>Ghi chú 2 — Quyền lực của 5 cột</strong>Thiếu đi cột số 4 và số 5, những cuốn tiểu sử chỉ là những bài thánh ca sùng bái. Đóng đinh đủ 5 cột, tiểu sử lập tức lột xác thành vũ khí dữ liệu thực chiến.</div>
+<div class="sidenote"><strong>Trivia thực tế</strong>Wald tử nạn trong một vụ rơi máy bay năm 1950 tại Ấn Độ, trên chính chặng đường đi giảng dạy — một nghịch lý cay đắng khi người dùng thống kê để cứu rỗi hàng ngàn chiếc máy bay lại gục ngã vì chính một tai nạn hàng không.</div>
+</aside>
+</div>
+
+<div id="readProgress" style="position:fixed;bottom:20px;left:20px;z-index:49;display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow);font-family:var(--font-sans);font-size:12px;color:var(--text-muted)">
+  <span id="progText">0% · còn ~-- phút</span>
+  <span style="width:60px;height:6px;background:var(--sidenote-bg);border-radius:999px;overflow:hidden;display:inline-block"><span id="progBar" style="display:block;height:100%;width:0%;background:var(--accent);transition:width 80ms linear"></span></span>
+</div>
+
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Focus mode (F)" aria-label="Focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Đổi nền sáng/tối (T)" aria-label="Theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="fontIncBtn" title="Tăng cỡ chữ ( + )" aria-label="Tăng cỡ chữ">A+</button>
+  <button type="button" class="control-btn" id="fontDecBtn" title="Giảm cỡ chữ ( - )" aria-label="Giảm cỡ chữ">A−</button>
+  <button type="button" class="control-btn" id="topBtn" title="Lên đầu trang (Home)" aria-label="Lên đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In / Lưu PDF (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+  </button>
+</div>
+<script>
+/* === Quản lý Theme === */
+const STORAGE_KEY='edu-notes:'+(document.title||'untitled');
+const store={get(k){try{return JSON.parse(localStorage.getItem(STORAGE_KEY+':'+k))}catch{return null}},set(k,v){try{localStorage.setItem(STORAGE_KEY+':'+k,JSON.stringify(v))}catch{}}};
+(function(){const s=store.get('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.setAttribute('data-theme','dark')})();
+document.getElementById('themeBtn').addEventListener('click',()=>{const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);store.set('theme',n)});
+
+/* === Quản lý Focus Mode === */
+const focusKey = 'edu-focus';
+if (localStorage.getItem(focusKey) === 'true') document.body.classList.add('focus-mode');
+const focusBtn = document.getElementById('focusBtn');
+if (focusBtn) {
+    focusBtn.addEventListener('click', () => {
+        document.body.classList.toggle('focus-mode');
+        localStorage.setItem(focusKey, document.body.classList.contains('focus-mode'));
+    });
+}
+
+(function(){const c=document.getElementById('canvas'),t=document.getElementById('toc');c.querySelectorAll('h2,h3').forEach(h=>{if(!h.id)h.id=h.textContent.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').slice(0,60);const li=document.createElement('li');if(h.tagName==='H3')li.style.paddingLeft='14px';const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);t.appendChild(li)})})();
+(function(){const f=document.getElementById('progressFill');function u(){const s=window.scrollY,tot=document.documentElement.scrollHeight-window.innerHeight;f.style.width=(tot>0?s/tot*100:0)+'%'};window.addEventListener('scroll',u,{passive:true});u()})();
+(function(){const ns=Array.from(document.querySelectorAll('.orbit__node'));ns.forEach(n=>n.addEventListener('click',()=>{const t=document.getElementById(n.dataset.target);if(t)t.scrollIntoView({behavior:'smooth'})}));const obs=new IntersectionObserver(es=>{es.forEach(e=>{const nd=ns.find(x=>x.dataset.target===e.target.id);if(nd&&e.isIntersecting){ns.forEach(x=>x.removeAttribute('data-active'));nd.setAttribute('data-active','true');nd.setAttribute('data-reached','true')}})},{rootMargin:'-20% 0px -70% 0px'});document.querySelectorAll('#canvas h2').forEach(h=>obs.observe(h))})();
+(function(){const q=document.getElementById('quiz');if(!q)return;const ch=document.getElementById('quizCheck'),rs=document.getElementById('quizReset'),sc=document.getElementById('quizScore');ch.addEventListener('click',()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{const a=parseInt(fs.dataset.answer,10),sel=fs.querySelector('input:checked');t++;fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const cor=fs.querySelector(`input[value="${a}"]`);if(cor)cor.closest('.quiz__option').classList.add('correct-answer');if(sel&&parseInt(sel.value,10)!==a&&sel)sel.closest('.quiz__option').classList.add('incorrect-answer');if(sel&&parseInt(sel.value,10)===a)c++});q.classList.add('is-graded');sc.textContent=`${c} / ${t} đúng (${Math.round(c/t*100)}%)`});rs.addEventListener('click',()=>{q.querySelectorAll('input[type=radio]').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');sc.textContent=''})})();
+(function(){const b=document.getElementById('hintBtn');if(!b)return;const h=Array.from(document.querySelectorAll('.launchpad__hint'));let s=parseInt(store.get('hints')||0,10);for(let i=0;i<s&&i<h.length;i++)h[i].classList.add('is-visible');if(s>=h.length)b.disabled=true;else b.textContent=`Mở gợi ý ${s+1} / ${h.length}`;b.addEventListener('click',()=>{if(s>=h.length)return;h[s].classList.add('is-visible');s++;store.set('hints',s);if(s>=h.length){b.textContent='Đã khai thác hết';b.disabled=true}else b.textContent=`Mở gợi ý ${s+1} / ${h.length}`})})();
+
+/* === Thay đổi Cỡ chữ, Top, và In ấn === */
+(function(){
+  const key='edu-font';
+  const canvas=document.getElementById('canvas');
+  let size=parseInt(localStorage.getItem(key)||'18',10);
+  function apply(){ if(canvas) canvas.style.fontSize=size+'px'; localStorage.setItem(key, String(size)); }
+  apply();
+  const inc=document.getElementById('fontIncBtn');
+  const dec=document.getElementById('fontDecBtn');
+  if(inc) inc.addEventListener('click',()=>{ if(size<24){ size+=1; apply(); }});
+  if(dec) dec.addEventListener('click',()=>{ if(size>15){ size-=1; apply(); }});
+  const top=document.getElementById('topBtn');
+  if(top) top.addEventListener('click',()=> window.scrollTo({top:0, behavior:'smooth'}));
+  const pr=document.getElementById('printBtn');
+  if(pr) pr.addEventListener('click',()=> window.print());
+  // Điều khiển bằng phím cứng: +, -, Home
+  document.addEventListener('keydown', e=>{
+    if(e.target.matches('input, textarea')) return;
+    if(e.key==='+'||e.key==='='){ e.preventDefault(); inc&&inc.click(); }
+    if(e.key==='-'||e.key==='_'){ e.preventDefault(); dec&&dec.click(); }
+    if(e.key==='Home'){ e.preventDefault(); top&&top.click(); }
+  });
+})();
+
+/* === Cập nhật thanh tiến trình đọc === */
+(function(){
+  const text=document.getElementById('progText');
+  const bar=document.getElementById('progBar');
+  if(!text||!bar) return;
+  let totalMin=7; // Thời gian đọc trung bình của bài này
+  const rt=document.querySelector('.navigator__reading-time');
+  if(rt){ const m=rt.textContent.match(/(\d+)\s*ph/); if(m) totalMin=parseInt(m[1],10); }
+  function upd(){
+    const sc=window.scrollY;
+    const tot=document.documentElement.scrollHeight-window.innerHeight;
+    const p=tot>0? sc/tot : 0;
+    const pct=Math.round(p*100);
+    const remain=Math.max(0, Math.round(totalMin*(1-p)));
+    text.textContent=pct+'% \u00B7 c\u00F2n ~'+remain+' ph\u00FAt';
+    bar.style.width=pct+'%';
+  }
+  window.addEventListener('scroll', upd, {passive:true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+
+</script>
+</body>
+</html>

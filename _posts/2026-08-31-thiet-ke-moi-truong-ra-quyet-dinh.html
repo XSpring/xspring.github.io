@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thiết kế môi trường ra quyết định — Khi rãnh quyết định dòng chảy</title>
+<meta name="description" content="Mọi lựa chọn đều có kiến trúc. Rèn tư duy bền là đào lại rãnh — mặc định, ma sát 20 giây, và tín hiệu xã hội — trước khi cần dùng ý chí.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}img,svg{max-width:100%;height:auto;display:block}
+:root{--font-serif:'Merriweather', Georgia, serif;--font-sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;--font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;--bg:#FDFBF7;--bg-elevated:#FFFFFF;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;--border:#E4DFD5;--sidenote-bg:#EDF2F7;--code-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;--radius:10px;--radius-sm:6px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 4px 12px rgba(0,0,0,.08);--measure:65ch;--line:1.7;--transition:200ms cubic-bezier(.4,0,.2,1)}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;--accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--code-bg:#2A2F3A;--success:#68D391;--success-bg:#22543D;--danger:#FC8181;--danger-bg:#63171B;--warn:#F6AD55;--warn-bg:#7B341E;--info:#63B3ED;--info-bg:#2A4365;--shadow-sm:0 1px 2px rgba(0,0,0,.3);--shadow:0 4px 12px rgba(0,0,0,.4)}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%;transition:font-size 0.2s ease}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px}.navigator__reading-time{color:var(--text);font-size:13px}
+.toc{list-style:none;padding:0;margin:0}.toc li{margin:2px 0}.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg)}.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500}.toc .toc-l3{padding-left:20px;font-size:13px}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.15rem;line-height:1.25;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px}
+.canvas h2:first-of-type{border-top:none;padding-top:0}.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.2rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong);font-weight:700}.canvas em{font-style:italic}.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}.canvas a:hover{color:var(--accent-strong)}
+.source{font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-muted);margin-left:4px;padding:1px 6px;border-radius:4px;background:var(--sidenote-bg);text-decoration:none;border:1px solid transparent;white-space:nowrap;vertical-align:baseline;transition:all var(--transition)}
+.source::before{content:"↗ ";opacity:.6}.source:hover{color:var(--accent);border-color:var(--accent);background:transparent}
+.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-top:12px;font-style:italic}.bar-chart__caption a{color:var(--text-muted);text-decoration:underline dotted}.bar-chart__caption a:hover{color:var(--accent)}
+.canvas ul,.canvas ol{margin:0 0 16px;padding-left:24px}.canvas li{margin:4px 0}
+.canvas blockquote{margin:24px 0;padding:12px 20px;border-left:3px solid var(--accent);background:var(--sidenote-bg);color:var(--text);border-radius:0 var(--radius) var(--radius) 0;font-style:italic}
+.canvas code{font-family:var(--font-mono);font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:var(--radius-sm)}
+.hook{margin:24px 0 48px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.05rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+.meta-block ul{margin:0;padding-left:20px}.meta-block li{margin:4px 0;color:var(--text)}
+.callout{margin:24px 0;padding:16px 20px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--tip .callout__label{color:var(--success)}
+.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--warn .callout__label{color:var(--warn)}
+.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}.callout--danger .callout__label{color:var(--danger)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text);background:transparent}
+.feynman::before{content:"🧒 Đúc kết một câu:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted)}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:160px 1fr 70px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:14px}
+.bar-label{color:var(--text)}.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg, var(--accent), var(--accent-strong));border-radius:4px;transition:width 400ms cubic-bezier(.4,0,.2,1)}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:32px 0}
+.concept-flow__step{padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px;min-height:90px;display:flex;flex-direction:column;justify-content:center}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px}.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px}
+@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}.bar-row{grid-template-columns:120px 1fr 60px}}
+.glossary{margin:32px 0}.glossary dl{margin:0}.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px}
+.glossary dd{margin:4px 0 0;color:var(--text);font-size:15px}
+.quiz{margin:56px 0 24px;padding:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.quiz h2{border-top:none;padding-top:0;margin-top:0;margin-bottom:8px}.quiz__intro{color:var(--text-muted);font-family:var(--font-sans);font-size:14px;margin-bottom:24px}
+.quiz fieldset{border:none;padding:0;margin:0 0 28px}.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px;font-size:16px}
+.quiz__option{display:block;padding:12px 16px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;position:relative;padding-left:44px}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%}
+.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg)}.quiz__option:has(input:checked)::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg-elevated)}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success)}.quiz__option.correct-answer::before{border-color:var(--success);background:var(--success)}
+.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}.quiz__option.incorrect-answer::before{border-color:var(--danger);background:var(--danger)}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__explanation{display:block}.quiz__actions{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:white;cursor:pointer;font-size:14px}
+.btn--ghost{background:transparent;color:var(--accent)}.quiz__score{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);margin:0;padding:12px 16px;background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border)}.orbit__title{font-family:var(--font-sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px}
+.orbit__track{position:relative;padding-left:22px}.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.orbit__node{position:relative;display:flex;align-items:center;margin:8px 0;color:var(--text-muted);font-family:var(--font-sans);font-size:12px;cursor:pointer}
+.orbit__node::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border)}
+.orbit__node[data-reached="true"]::before{background:var(--accent);border-color:var(--accent)}.orbit__node[data-active="true"]{color:var(--text-strong);font-weight:600}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px;color:var(--text)}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0;align-items:start}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}
+.scaffold__row-body{font-size:15px;line-height:1.65}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm);overflow:hidden}
+.scaffold__probe>summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none;display:flex;gap:10px;align-items:baseline}
+.scaffold__probe>summary::before{content:"🤔 Thăm dò";flex-shrink:0;padding:2px 8px;border-radius:3px;background:var(--accent2-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2-strong)}
+.scaffold__probe>summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px;line-height:1.6}
+.scaffold__resolve::before{content:"💡 Giải";display:inline-block;padding:2px 8px;border-radius:3px;background:var(--accent2);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:8px}
+.checkpoint{margin:32px 0;padding:20px 24px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}
+.checkpoint__label{display:block;font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.checkpoint textarea{width:100%;min-height:90px;padding:12px 14px;font-family:var(--font-serif);font-size:15px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm)}
+.checkpoint__expert{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:var(--radius-sm);border-left:3px solid var(--accent);font-family:var(--font-sans);font-size:14px;display:none}
+.checkpoint.is-revealed .checkpoint__expert{display:block}.amplifier{position:sticky;top:24px;margin:0 0 24px;padding:16px 18px;background:var(--accent2-soft);border:1px solid var(--accent2);border-radius:var(--radius);font-family:var(--font-sans);font-size:13px}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+.kbd{font-family:var(--font-mono);font-size:12px;padding:1px 6px;border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;background:var(--bg-elevated)}
+.launchpad{margin:48px 0 24px;padding:28px 32px;background:linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius);position:relative}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:white;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.3rem;color:var(--text-strong);margin:0 0 12px}
+.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-size:14px;display:none}
+.launchpad__hint.is-visible{display:block}.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+<aside class="navigator">
+<div class="navigator__meta"><p class="navigator__title">Thời gian đọc</p><p class="navigator__reading-time">~ 7 phút · MEDIUM</p></div>
+<div class="orbit"><p class="orbit__title">Hành trình</p><div class="orbit__track">
+<div class="orbit__node" data-target="baseline">1 · Neo</div>
+<div class="orbit__node" data-target="bridge">2 · Cầu</div>
+<div class="orbit__node" data-target="exposition">3 · Ba rãnh</div>
+<div class="orbit__node" data-target="application">4 · Ra đồng</div>
+<div class="orbit__node" data-target="boundary">5 · Biên</div>
+<div class="orbit__node" data-target="synthesis">6 · Thu hoạch</div>
+</div></div>
+<nav><ul class="toc" id="toc"></ul></nav>
+</aside>
+<main class="canvas" id="canvas">
+<h1>Thiết kế môi trường ra quyết định<br><span style="font-weight:400;font-size:1.25rem;color:var(--text-muted)">Khi rãnh định đoạt dòng chảy tư duy</span></h1>
+
+<div style="margin:16px 0 24px;padding:12px 16px;background:var(--sidenote-bg);border:1px solid var(--border);border-radius:10px;font-family:var(--font-sans);font-size:13px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+<span style="font-weight:700;color:var(--accent);font-size:11px;letter-spacing:.08em;text-transform:uppercase">Chuỗi Tư duy — Điều hướng nhanh:</span>
+<a href="tu-duy-atlas.html" style="padding:6px 10px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600">Atlas tổng</a>
+<a href="tu-duy-duoc-hinh-thanh-tu-dau.html" style="padding:6px 10px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">Bài chính — Khu Vườn</a>
+<span style="padding:6px 10px;background:var(--accent2-soft);border:1px solid var(--accent2);border-radius:8px;font-weight:600">Bạn đang ở: Phụ lục A — Dòng Sông</span>
+<a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html" style="padding:6px 10px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">Tiếp → B (Phòng Tập)</a>
+<a href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html" style="padding:6px 10px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">C (Thư Viện)</a>
+</div>
+
+<div class="hook"><span class="hook__label">🎣 Móc câu</span>Bạn hạ quyết tâm "đọc sách 30 phút mỗi tối", nhưng chiếc điện thoại nằm ngay cạnh gối và TikTok chỉ cách một cú vuốt. Bạn thất bại. Không phải vì bạn lười biếng, mà vì một ai đó đã đào sẵn rãnh cho dòng nước chảy — và bạn không phải là người cầm cuốc. Nếu tư duy là một hệ thống dự đoán, thì môi trường chính là hệ thống bờ kè quyết định dự đoán nào sẽ được kích hoạt trước.</div>
+<div class="meta-block"><h4>Bạn cần gì trước</h4><ul><li>Đã nếm mùi thất bại khi đặt mục tiêu dựa thuần túy vào ý chí.</li><li>Đã nắm được nguyên lý của bài “Tư duy được hình thành từ đâu?” (Mô hình Khu Vườn).</li><li>Sẵn sàng thiết kế một can thiệp nhỏ trong vòng 7 ngày tới.</li></ul></div>
+<div class="meta-block"><h4>Đọc xong bạn sẽ có thể…</h4><ul><li><strong>Lý giải</strong> nguyên lý cốt lõi của "kiến trúc lựa chọn" và lý do ý chí luôn đầu hàng trước môi trường.</li><li><strong>Làm chủ</strong> 3 công cụ định hướng hành vi: lựa chọn mặc định, ma sát vật lý và tín hiệu xã hội.</li><li><strong>Vận dụng</strong> quy tắc 20 giây để dọn đường cho thói quen bạn muốn hình thành.</li><li><strong>Thiết kế</strong> một chiến dịch can thiệp hành vi 7 ngày với các chỉ số đo lường rạch ròi.</li></ul></div>
+
+<h2 id="baseline">Nền tảng chung — Không có lựa chọn nào là trung lập</h2>
+<p>Phần này cung cấp cho bạn một trụ cột nhận thức duy nhất trước khi phân tích các đường rãnh.</p>
+<blockquote style="border-left-color:var(--accent2);background:var(--accent2-soft)"><strong>⚓ Neo.</strong> Không tồn tại lựa chọn nào mang tính trung lập; mọi quyết định đều bị chi phối bởi một "kiến trúc" vô hình. Khi bạn từ chối lựa chọn, kiến trúc đó sẽ định đoạt thay bạn. Rèn luyện tư duy bền vững không phải là gồng mình bơi ngược dòng, mà là nghệ thuật thiết kế lại hệ thống bờ kè.</blockquote>
+<p>Việc bạn "quên" hủy gói dùng thử tự gia hạn, tiếp tục sử dụng gói cước cũ dù đã có tùy chọn tốt hơn, hay gọi món ăn nằm ngay dòng đầu tiên của menu — tất cả không xuất phát từ việc thiếu thông tin. Thực chất, bạn đang di chuyển dọc theo rãnh ít tốn năng lượng nhất. Bài viết trước đã trang bị cho bạn khái niệm về đất, khí hậu và 4 lớp màng lọc tư duy. Bài này sẽ xoáy sâu vào "nghệ thuật tỉa tót môi trường" — đòn bẩy uy lực nhất, bởi nó trực tiếp định đoạt hạt giống nào sẽ nhận được nguồn nước.</p>
+<p>Thaler & Sunstein định danh những người thiết lập bối cảnh này là <strong>kiến trúc sư lựa chọn</strong> (choice architect), và chiến thuật điều hướng hành vi mà vẫn bảo toàn quyền tự do cá nhân được gọi là <strong>cú hích</strong> (nudge).</p>
+
+<h2 id="bridge">Cầu nối — Mô hình Dòng Sông</h2>
+<p>Để 3 khái niệm trừu tượng neo chặt vào thực tế, hãy mường tượng tư duy của bạn như một dòng sông.</p>
+<div class="concept-flow">
+<div class="concept-flow__step"><span class="concept-flow__num">01</span>Dòng nước<br><span style="font-size:12px;color:var(--text-muted)">Hành vi</span></div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">02</span>Bờ kè<br><span style="font-size:12px;color:var(--text-muted)">Mặc định</span></div>
+<div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">03</span>Đá + Biển báo<br><span style="font-size:12px;color:var(--text-muted)">Ma sát & tín hiệu</span></div>
+</div>
+<ul><li><strong>Mặc định (Bờ kè):</strong> Đường rãnh sâu nhất. Khi bạn không làm gì, nước tự động đổ dồn về đây.</li><li><strong>Ma sát (Đá cuội):</strong> Chướng ngại vật. Ném thêm một viên đá, dòng chảy chậm lại; bốc đi một viên, nước chảy xiết hơn.</li><li><strong>Tín hiệu (Biển báo):</strong> "Đám đông đang rẽ phải ở khúc cua này". Nước luôn có xu hướng nhìn vào dòng nước khác để phán đoán hướng đi an toàn.</li></ul>
+<p>Bạn không thể chế ngự dòng sông bằng cách cố sức bơi giỏi hơn. Bạn chỉ chiến thắng khi biết cách đào lại rãnh.</p>
+<div class="premortem"><span class="premortem__label">⚠️ Trước khi xây tiếp — Lật tẩy ngộ nhận phổ biến…</span><p><span class="premortem__wrong">“Ý chí sắt đá sẽ chiến thắng môi trường; rèn kỷ luật thép là đủ.”</span></p><p>Hoàn toàn sai. Bờ kè luôn quyết định dòng chảy vào những khoảnh khắc bạn mệt mỏi, bận rộn hay xao nhãng — và đó lại chiếm phần lớn thời gian trong đời bạn.</p><p><span class="premortem__truth">Bản chất thực sự:</span> Ý chí chỉ là dòng nước cố chảy ngược dốc. Phương pháp bền vững nhất là tái thiết kế rãnh để dòng nước tự động chảy đúng hướng.</p></div>
+
+<h2 id="exposition">Ba đường rãnh thao túng hành vi</h2>
+<p>Mỗi đường rãnh dưới đây được phân tích theo cấu trúc: <strong>Khái niệm → Minh họa → Thăm dò → Giải đáp</strong>. Hãy tự tư duy câu trả lời trước khi mở phần giải đáp.</p>
+
+<h3 id="ranch-1-mac-dinh">Rãnh 1 — Quyền lực của Lựa chọn Mặc định</h3>
+<p>Đây là rãnh sâu nhất, uy lực nhất, nhưng cũng vô hình nhất.</p>
+<section class="scaffold">
+<h3 class="scaffold__concept">Sức mạnh của Mặc định (Default)</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Mặc định</strong> (kết quả tự động xảy ra khi bạn không hành động) luôn chiến thắng vì nó triệt tiêu cùng lúc ba loại chi phí: thể chất (công sức điền form), nhận thức (nỗ lực đọc hiểu), và cảm xúc (nỗi sợ chọn sai). Mọi hệ thống đều bị chi phối bởi một thiết lập mặc định; vấn đề cốt lõi là ai đang nắm quyền thiết lập nó.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Nghiên cứu của Johnson &amp; Goldstein (2003) về tỷ lệ hiến tạng: ở các quốc gia áp dụng mô hình <strong>opt-out (mặc định đồng ý hiến)</strong>, tỷ lệ tham gia cao gần gấp đôi so với mô hình opt-in (phải chủ động đăng ký); chênh lệch lên đến ~60%. Ngay cả khi kiểm soát yếu tố hạ tầng, tỷ lệ hiến tạng thực tế vẫn tăng <strong>+16,3% (từ 14,1 lên 16,4/triệu người)</strong><a class="source" href="https://doi.org/10.1126/science.1091721" target="_blank">Johnson 2003</a>. Trong việc trích lập quỹ hưu trí tại Mỹ: tỷ lệ tham gia dạng <strong>opt-in chỉ xấp xỉ 20% sau 3 tháng → đổi sang opt-out, con số vọt lên 90% ngay lập tức, và >98% sau 36 tháng</strong> (Madrian &amp; Shea 2001). Hệ thống không hề cấm bạn rút lui; nhưng một khi rãnh đã được đào, dòng nước cứ thế tuôn chảy.</div></div>
+<details class="scaffold__probe"><summary>Vì sao chiến dịch gửi 12 triệu bức thư kêu gọi hiến tạng tại Hà Lan (1998) thất bại, trong khi việc thay đổi tùy chọn mặc định lại mang đến hiệu quả đột phá?</summary><div class="scaffold__resolve">Bởi vì những bức thư chỉ đánh vào ý chí và nhận thức, trong khi "rãnh" quy định hành vi vẫn là opt-in. Chi phí để thay đổi (điền form, gọi điện thoại, gửi thư hồi đáp) vẫn án ngữ ở đó, khiến đa số người dân chọn cách phớt lờ — dù trong thâm tâm họ ủng hộ. Việc đổi rãnh sang opt-out đã hạ bệ chi phí hành động cho số đông, từ đó làm thay đổi hoàn toàn hành vi.</div></details>
+</section>
+<div class="feynman">Mặc định là đáp án có sẵn khi bạn lười suy nghĩ; kẻ nắm giữ đáp án đó chính là người thao túng cuộc chơi.</div>
+<div class="checkpoint" data-checkpoint-id="cp-a1"><span class="checkpoint__label">🛑 Điểm dừng suy ngẫm</span><p class="checkpoint__question">Hãy chỉ mặt điểm tên một lựa chọn mặc định đang "chọn hộ" bạn (tự động gia hạn thẻ tín dụng, thư mục tải xuống mặc định, món ăn đầu tiên trên menu). Nếu bạn không thể gọi tên, rãnh đó đang hoàn toàn tàng hình — và đó chính là lúc nó bành trướng quyền lực nhất.</p><textarea placeholder="Một mặc định đang thao túng bạn…"></textarea><div class="checkpoint__expert"><strong>Góc nhìn chuyên gia:</strong> Một lựa chọn mặc định xuất sắc phải trả lời được câu hỏi: "Một người tỉnh táo, nắm đủ thông tin sẽ quyết định ra sao?" Với bảo hiểm y tế → mặc định "giữ nguyên"; tài khoản chi tiêu linh hoạt cuối năm → mặc định "trả về 0". Không tồn tại một thiết lập mặc định vạn năng cho mọi tình huống.</div></div>
+<p><em>Rãnh thứ nhất đã rõ.</em> Mặc định là đường hào sâu nhất. Nhưng những dòng chảy nông hơn hoàn toàn có thể bị đổi hướng nếu bạn rải sỏi đúng vị trí.</p>
+
+<h3 id="ranch-2-ma-sat">Rãnh 2 — Năng lượng Ma sát & Quy tắc 20 giây</h3>
+<p>Ném thêm một viên đá, nước chảy chậm lại; nhấc đi một viên, nước chảy cuồn cuộn.</p>
+<section class="scaffold">
+<h3 class="scaffold__concept">Ma sát kích hoạt &amp; Quy tắc 20 giây</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Ma sát</strong> (năng lượng cần thiết để khởi động) định đoạt việc bạn có bắt tay vào làm hay không, đặc biệt khi mức độ động lực đang ở ranh giới mong manh. <strong>Quy tắc 20 giây</strong> (phát triển bởi Shawn Achor) khẳng định: Cắt giảm 20 giây cho thói quen tốt, cộng thêm 20 giây cho thói quen xấu — bạn sẽ thao túng được hành vi mà không cần bòn rút thêm chút ý chí nào.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Kinh nghiệm từ Shawn Achor: Khi cây đàn guitar bị cất kỹ trong tủ (cách 20 giây di chuyển) → anh chỉ tập được 4 ngày rồi bỏ cuộc. Mua một chiếc giá đỡ 2 đô la và đặt đàn chễm chệ giữa phòng khách → kết quả là <strong>21 ngày luyện tập liên tục trong 3 tuần</strong><a class="source" href="https://www.shawnachor.com/wp-content/uploads/2018/09/Happiness-Advantage-excerpt.pdf" target="_blank">Achor 2010</a>. Anh áp dụng cơ chế này cho việc tập gym buổi sáng: viết kế hoạch từ tối hôm trước, đặt giày ngay cạnh giường, và ngủ trong chính bộ đồ tập — sáng hôm sau chỉ việc xỏ giày và bước ra cửa. Nếu muốn cai nghiện mạng xã hội: xóa app khỏi màn hình chính, cất điện thoại sang phòng khác khi đọc sách (+20s ma sát). Môi trường không hề cấm đoán bạn; nó chỉ chèn thêm vài viên đá cuội.</div></div>
+<details class="scaffold__probe"><summary>Vì sao "cài cắm thêm một thao tác vật lý" lại uy lực hơn hẳn việc "truyền cảm hứng rực rỡ"?</summary><div class="scaffold__resolve">Bởi cảm hứng chỉ là con nước thủy triều lên xuống thất thường; trong khi đá cuội là cấu trúc địa hình vật lý. Khi dòng nước cảm hứng rút đi, địa hình vẫn trơ gan cùng tuế nguyệt. Việc thêm một thao tác đã định hình lại đường rãnh vĩnh viễn, trong khi cảm hứng đòi hỏi bạn phải bơm đi bơm lại mỗi ngày.</div></details>
+</section>
+<div class="feynman">Thói quen muốn nuôi, hãy bày ngay trước mắt; tật xấu muốn bỏ, hãy đày đọa nó cách xa tầm tay 20 giây.</div>
+<p><em>Rãnh thứ hai đã lộ diện.</em> Đá cuội thay đổi tốc độ. Nhưng dòng nước vẫn liên tục ngóng nhìn những dòng chảy khác để quyết định phương hướng.</p>
+
+<h3 id="ranch-3-tin-hieu">Rãnh 3 — Quyền lực của Tín hiệu Xã hội</h3>
+<p>Hành vi của đám đông kiến tạo nên sức mạnh áp đảo hơn bất kỳ lời hô hào khẩu hiệu nào.</p>
+<section class="scaffold">
+<h3 class="scaffold__concept">Chuẩn mực mô tả &amp; Chuẩn Provincial</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Chuẩn mực mô tả</strong> ("đám đông xung quanh đang làm gì") có sức thao túng hành vi khủng khiếp hơn mọi lời kêu gọi chung chung. <strong>Chuẩn Provincial</strong> (chuẩn mực của đội nhóm, căn phòng sát vách với bạn) tạo ra ảnh hưởng uy lực hơn chuẩn mực toàn cục, mặc dù về mặt logic toán học, chúng sử dụng cùng một bộ dữ liệu.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Thí nghiệm kinh điển của Goldstein, Cialdini &amp; Griskevicius (2008) tại các phòng khách sạn: thông điệp "Đa số khách hàng tái sử dụng khăn tắm" đạt tỷ lệ thành công <strong>44,1%, đánh bại hoàn toàn mức 35,1% của thông điệp kêu gọi bảo vệ môi trường</strong> (N=433, p&lt;.05)<a class="source" href="https://doi.org/10.1086/586910" target="_blank">Goldstein 2008</a>. Đáng kinh ngạc hơn ở pha thử nghiệm 2, thông điệp <strong>"Những vị khách từng lưu trú tại chính căn phòng này đã tái sử dụng khăn"</strong> vươn lên giành chiến thắng tuyệt đối trước thông điệp dựa trên chuẩn mực của toàn khách sạn. Logic thông thường không thể giải thích điều này — lý do là não bộ luôn ưu tiên những tín hiệu tương đồng nhất với hoàn cảnh hiện tại của bản thân.</div></div>
+<details class="scaffold__probe"><summary>Tại sao lập luận "75% khách hàng giống bạn đã tái sử dụng khăn" lại có sức thuyết phục tàn nhẫn hơn lời kêu gọi "Hãy chung tay cứu lấy Trái Đất"?</summary><div class="scaffold__resolve">Bởi "cứu lấy Trái Đất" là một mục tiêu xa vời, mông lung và trừu tượng; trong khi "75% những người ở hoàn cảnh của bạn đã làm điều này" là một bằng chứng đanh thép, cụ thể, trực tiếp xóa bỏ nỗi sợ "hành động sai lệch khỏi đám đông". Dòng nước luôn thăm dò các luồng chảy lân cận trước khi quyết định rẽ vào rãnh nào.</div></details>
+</section>
+<div class="feynman">Con người có xu hướng copy hành vi của những cá nhân có nét tương đồng với họ, tại chính bối cảnh mà họ đang đứng.</div>
+<p><em>Ba rãnh đã được gia cố bờ kè.</em> Rãnh chính (mặc định), đá cuội (ma sát) và biển báo (tín hiệu xã hội) đã sẵn sàng. Đã đến lúc đưa chúng ra chiến trường thực tế.</p>
+
+<h2 id="application">Thực chiến — Đóng khung 3 rãnh vào một ngày của bạn</h2>
+<p>Hãy ráp 3 đường rãnh này vào một ngày làm việc bình thường — để dòng sông đó chính là tư duy của bạn.</p>
+<p><strong>Buổi sáng — Tăng/Giảm Ma sát:</strong> Bạn muốn đọc 20 trang sách trước khi đắm chìm vào mạng xã hội. Tối hôm trước: đặt cuốn sách ngay lên gối ngủ, ném điện thoại ra phòng khách, và gỡ app TikTok khỏi màn hình chính (cộng thêm 20 giây ma sát). Sáng tỉnh giấc, cuốn sách trở thành đường rãnh duy nhất hiển hiện trước mắt.</p>
+<p><strong>Buổi trưa — Thiết lập Mặc định:</strong> Can thiệp vào văn hóa họp hành: Cài đặt lịch họp mặc định kéo dài 25 phút thay vì 60 phút. Quy định ngầm: "Không có agenda = mặc định hủy họp". Số lượng cuộc họp vô bổ sẽ tự động bốc hơi.</p>
+<p><strong>Buổi tối — Kích hoạt Tín hiệu:</strong> Thay vì dán tờ giấy sáo rỗng "Hãy tiết kiệm điện", hãy in dòng chữ này dán ở bếp: "78% nhân sự làm việc tại tầng này đã tắt đèn khi rời đi vào tuần trước". Con số phải xác thực, tập khách hàng phải tiệm cận, và đường rãnh sẽ hiện ra rõ nét.</p>
+<div class="bar-chart">
+<div class="bar-chart__title">Dữ liệu chứng minh: Đổi Rãnh đè bẹp Đổi Ý Chí</div>
+<div class="bar-row"><div class="bar-label">Hiến tạng: Opt-in (Đăng ký)</div><div class="bar-track"><div class="bar-fill" style="width:28%"></div></div><div class="bar-value">~28%</div></div>
+<div class="bar-row"><div class="bar-label">Hiến tạng: Opt-out (Rút lui)</div><div class="bar-track"><div class="bar-fill" style="width:90%"></div></div><div class="bar-value">~90%</div></div>
+<div class="bar-row"><div class="bar-label">Dùng khăn: Lời kêu gọi môi trường</div><div class="bar-track"><div class="bar-fill" style="width:35.1%"></div></div><div class="bar-value">35.1%</div></div>
+<div class="bar-row"><div class="bar-label">Dùng khăn: Chuẩn mực mô tả</div><div class="bar-track"><div class="bar-fill" style="width:44.1%"></div></div><div class="bar-value">44.1%</div></div>
+<p class="bar-chart__caption">Nguồn: Phân tích của Johnson &amp; Goldstein 2003 (Science) — <a href="https://doi.org/10.1126/science.1091721" target="_blank">doi:10.1126/science.1091721</a>; Khảo sát Goldstein et al. 2008 (JCR) — <a href="https://doi.org/10.1086/586910" target="_blank">doi:10.1086/586910</a>. Lưu ý: Tỷ lệ đăng ký và tỷ lệ hiến tạng thực tế là hai thước đo độc lập.</p>
+</div>
+<p><em>Hệ thống rãnh đã vận hành.</em> Tuy nhiên, chúng chỉ phát huy uy lực khi bối cảnh vừa khít. Vậy khi nào hệ thống này sẽ phản tác dụng?</p>
+
+<h2 id="boundary">Biên giới — Khi hệ thống rãnh trượt bánh</h2>
+<p>Ba nguyên lý trên cực kỳ hiệu quả trong cuộc sống thường nhật, nhưng chúng sẽ trượt bánh ở ba ranh giới sau đây.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Góc nhìn sai lệch — "Nudge là thủ thuật thao túng đê hèn, cần phải bài trừ"</span>Sai một nửa. Nudge bản chất là kiến trúc; mà kiến trúc thì luôn hiện hữu ở mọi nơi. Vấn đề cốt lõi không phải là "có áp dụng nudge hay không", mà là "kẻ nào đang thiết kế nó, và nó phục vụ lợi ích của ai". Thaler &amp; Sunstein định danh triết lý này là <strong>libertarian paternalism (thuyết gia trưởng tự do)</strong>: Bảo toàn tuyệt đối quyền tự do lựa chọn, nhưng âm thầm thiết kế bối cảnh để ngay cả khi kiệt sức, người ta vẫn nhắm trúng cái đích mà họ mong muốn lúc tỉnh táo.</div>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Góc nhìn sai lệch — "Đã đọc thấu mánh khóe thì miễn nhiễm với nó"</span>Hiểu về lựa chọn mặc định không cấp cho bạn kim bài miễn tử. Bạn vẫn sẽ ngoan ngoãn đi theo rãnh khi mệt mỏi. Chính vì thế, nhiệm vụ sống còn là <strong>phải tự đào rãnh từ khi còn minh mẫn</strong> (ví dụ: tối hôm trước), chứ không phải nghiến răng gồng mình vào khoảnh khắc kiệt quệ.</div>
+<div class="callout callout--danger"><span class="callout__label">🚫 Điểm mù — Tuyệt đối cấm dùng Nudge khi nào?</span>Đối phó với những quyết định mang sức nặng giá trị sâu sắc (như hiến tạng dựa trên niềm tin tôn giáo), phương pháp <strong>bắt buộc chọn (mandated choice)</strong> ưu việt hơn hẳn cài đặt mặc định. Tại bang Illinois, yêu cầu bắt buộc trả lời câu hỏi hiến tạng khi cấp đổi bằng lái đã kéo tỷ lệ đăng ký lên <strong>60% so với mức 38% trung bình toàn quốc</strong> mà không cần áp đặt ý chí. Tuyệt đối không dùng nudge khi cần sự tôn trọng tuyệt đối cho những quyết định minh bạch.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Thử thách tư duy trước khi chốt hạ</span>Nếu chỉ được quyền giữ lại duy nhất một rãnh (Mặc định / Ma sát / Tín hiệu) trong suốt 7 ngày tới, bạn sẽ chọn rãnh nào, và thảm họa gì sẽ xảy ra nếu thiếu vắng hai rãnh kia?</div>
+<p><em>Ranh giới đã rõ ràng.</em> Thấu tỏ điểm mù giúp bạn không dại dột mang búa tạ đi nhặt rau.</p>
+
+<h2 id="connections">Bản đồ liên kết tri thức</h2>
+<p>Đặt khái niệm Rãnh vào một tấm bản đồ lớn hơn để mở rộng tầm nhìn:</p>
+<ul><li><strong>Khoa học hành vi (Kahneman - Hệ thống 1 & 2):</strong> Lý giải cặn kẽ vì sao đường Rãnh (Hệ thống 1) luôn đè bẹp ý chí khi não bộ quá tải.</li><li><strong>Thiết kế trải nghiệm (UX defaults):</strong> Cạm bẫy "mặc định tick sẵn" trong các form đăng ký nhận tin quảng cáo.</li><li><strong>Quản trị vận hành:</strong> Chiến lược thay đổi cài đặt mặc định trong lịch họp, lưu trữ tài liệu, chia sẻ thông tin.</li><li><strong>Đạo đức thiết kế:</strong> Lằn ranh mong manh khi Nudge tha hóa thành Dark Pattern (thiết kế hắc ám).</li></ul>
+
+<h2 id="synthesis">Thu hoạch — Tóm gọn bức tranh toàn cảnh</h2>
+<p>Chúng ta khởi đầu bằng một nghi vấn: Vì sao hạ quyết tâm hừng hực nhưng cuối cùng vẫn đầu hàng trước chiếc điện thoại nằm cạnh gối? Lời giải mã không nằm ở sức mạnh ý chí, mà nằm ở hệ thống đường rãnh.</p>
+<p><strong>Mặc định</strong> cày xới đường rãnh chủ đạo. <strong>Ma sát</strong> rải đá cuội điều tiết tốc độ. <strong>Tín hiệu</strong> cắm biển báo điều hướng dòng người. Cả ba hợp lực đắp nên một hệ thống bờ kè kiên cố. Dòng nước chắc chắn sẽ chảy. Nhiệm vụ của bạn không phải là gồng mình bơi giỏi hơn, mà là cầm xẻng đào lại bờ kè trước khi cơn lũ ập đến — hãy làm việc đó từ tối hôm trước, đừng đợi đến sáng hôm sau.</p>
+<p>Nếu bài viết trước trao cho bạn một Khu Vườn, thì bài viết này trang bị cho bạn <strong>bộ nông cụ rà soát</strong>: Lật ngược một cài đặt mặc định, thêm/bớt 20 giây ma sát, và cắm một tấm biển báo tín hiệu sát sườn.</p>
+<blockquote><strong>Chốt hạ một câu:</strong> Mọi lựa chọn đều chạy trên một đường rãnh vô hình; bạn không thể đập nát rãnh bằng ý chí, bạn chỉ chiến thắng khi tự tay thiết kế lại đường rãnh trước khi buộc phải sử dụng đến nó.</blockquote>
+
+<div class="launchpad">
+<span class="launchpad__label">🚀 Bệ phóng hành động · Chiến dịch 7 ngày</span>
+<h3 class="launchpad__title">Thiết kế một can thiệp 7 ngày lột xác thói quen</h3>
+<p class="launchpad__problem">Chỉ định <strong>một</strong> hành vi duy nhất (Đọc 20 trang sách / Tập thể dục 15 phút / Viết 200 từ). Thiết lập <strong>một</strong> luật mặc định, <strong>một</strong> điểm ma sát, và <strong>một</strong> tín hiệu xã hội cho nó trong suốt 7 ngày. Yêu cầu rõ ràng: Xác định chỉ số đo lường (số ngày thực hiện), phương pháp nhận diện rãnh nào đang gánh vác hiệu suất, và tình huống nào bắt buộc bạn phải dùng <strong>Lựa chọn rạch ròi</strong> thay vì Nudge.</p>
+<div class="launchpad__hints"><span style="font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em">Bế tắc? Mở từng ô gợi ý.</span><br><button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+<div class="launchpad__hint" data-hint="1"><strong>Gợi ý 1 — Đảo ngược tư duy:</strong> Xóa ngay câu nói sáo rỗng "Tôi sẽ cố gắng hơn". Hãy chốt hạ bằng hành động: "Tối nay tôi sẽ đặt vật X ở vị trí này, gỡ bỏ app Y khỏi màn hình, và dán câu khẩu hiệu Z ngay tại đây để sáng mai không phải dùng đến nửa giọt ý chí nào".</div>
+<div class="launchpad__hint" data-hint="2"><strong>Gợi ý 2 — Khung chiến thuật:</strong> Mặc định: Thiết lập lịch trình/form/vị trí. Ma sát: Cộng thêm 20 giây cho thói quen muốn từ bỏ, trừ đi 20 giây cho thói quen muốn xây dựng. Tín hiệu: Áp dụng chuẩn mực cục bộ ("78% phòng tầng này đã..."). Đánh giá sát sao bằng số ngày thực thi.</div>
+<div class="launchpad__hint" data-hint="3"><strong>Gợi ý 3 — Bản phác thảo:</strong> Kẻ bảng 3 cột: Tên rãnh | Can thiệp tối hôm trước | Chỉ số đo lường. Hết 7 ngày, tổng kết và phong sát rãnh mang lại ROI (tỷ suất sinh lời) cao nhất.</div>
+</div></div>
+
+<h2 id="glossary">Từ điển tra cứu — Gắn liền với Mô hình Dòng Sông</h2>
+<div class="glossary"><dl>
+<dt>Kiến trúc lựa chọn (Choice Architecture)</dt><dd>Nghệ thuật sắp đặt cấu trúc bối cảnh nhằm thao túng quyết định. <em>(Đóng vai trò: Kẻ cầm xẻng đào rãnh trong Mô hình Dòng Sông.)</em></dd>
+<dt>Cú hích (Nudge)</dt><dd>Kỹ thuật can thiệp hành vi tinh vi, không cấm đoán lựa chọn và rất dễ từ chối. <em>(Đóng vai trò: Nắn nót bờ kè, không xây đập chắn sông.)</em></dd>
+<dt>Mặc định (Default)</dt><dd>Kết quả tự động kích hoạt khi chủ thể từ chối hành động. <em>(Đóng vai trò: Rãnh xả lũ chính.)</em></dd>
+<dt>Ma sát (Friction)</dt><dd>Mức năng lượng tối thiểu để khởi động một cỗ máy hành vi. <em>(Đóng vai trò: Những viên đá cuội cản dòng.)</em></dd>
+<dt>Quy tắc 20 giây (20-Second Rule)</dt><dd>Cắt giảm 20s cho việc tốt, chèn ép thêm 20s cho việc xấu. <em>(Đóng vai trò: Hành động bốc đá và ném đá.)</em></dd>
+<dt>Chuẩn mực mô tả (Descriptive Norm)</dt><dd>Bằng chứng sống về "điều đám đông đang làm". <em>(Đóng vai trò: Tấm biển báo điều hướng dòng người.)</em></dd>
+<dt>Chuẩn Provincial</dt><dd>Chuẩn mực của nhóm/phòng ban sát sườn nhất, sở hữu sức công phá mạnh hơn chuẩn mực toàn cục. <em>(Đóng vai trò: Tấm biển báo cắm ngay khúc cua bạn đang đứng.)</em></dd>
+<dt>Bắt buộc chọn (Mandated Choice)</dt><dd>Ép buộc đối tượng phải đưa ra quyết định rạch ròi thay vì dựa dẫm vào mặc định. <em>(Đóng vai trò: Trạm gác thu phí bắt buộc hỏi hướng rẽ.)</em></dd>
+</dl></div>
+
+<section class="quiz" id="quiz">
+<h2>Kiểm tra nhận thức</h2>
+<p class="quiz__intro">Dành 2 phút cho 3 câu trắc nghiệm cốt lõi. Chọn đáp án sắc bén nhất rồi bấm <em>Kiểm tra</em>.</p>
+<fieldset data-answer="1"><legend>1. Tại sao chiến lược opt-out (mặc định hiến) lại bóp nghẹt chiến dịch gửi thư kêu gọi hiến tạng?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Bởi những người chọn opt-out vốn dĩ đã có tư tưởng cao thượng hơn.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Bởi mặc định đã thay đổi cấu trúc bờ kè, trong khi những bức thư chỉ vô vọng kêu gọi ý chí và thông tin.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Bởi chính sách opt-out tước đoạt quyền rút lui của công dân.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Bởi hàng triệu bức thư đã bị thất lạc trong quá trình vận chuyển.</label>
+<div class="quiz__explanation"><strong>Phân tích:</strong> Thư từ chỉ bòn rút ý chí; mặc định thì cấu trúc lại bờ kè. Rãnh nước vẫn sừng sững tồn tại rất lâu sau khi bức thư bị vứt vào sọt rác.</div></fieldset>
+<fieldset data-answer="1"><legend>2. Bản chất cốt lõi của Quy tắc 20 giây là gì?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Yêu cầu 20 giây thiền định trước mọi quyết định lớn.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Gọt dũa đi 20 giây cho hành vi mong muốn, chèn ép thêm 20 giây cho thói quen muốn tiễu trừ.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Bất kỳ hành động nào cũng đòi hỏi tốn kém đúng 20 giây.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Bộ não cần 20 giây để khởi động ý chí chiến đấu.</label>
+<div class="quiz__explanation"><strong>Phân tích:</strong> Khớp hoàn toàn với định nghĩa của Shawn Achor: Nghệ thuật di dời đá cuội vật lý trong 20 giây.</div></fieldset>
+<fieldset data-answer="1"><legend>3. Tại sao chuẩn mực "những khách từng ở căn phòng này" lại đánh sập chuẩn mực "toàn bộ khách sạn"?</legend>
+<label class="quiz__option"><input type="radio" name="q3" value="0"> Vì số liệu thống kê của từng phòng đảm bảo độ chính xác toán học cao hơn.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="1"> Vì não bộ được lập trình để ưu tiên tuyệt đối những tín hiệu có độ tương đồng hoàn cảnh cao nhất với bản thân.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="2"> Vì khách hàng mặc định cho rằng bộ phận quản lý khách sạn đang nói dối.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="3"> Vì chuẩn mực toàn cục không được xếp vào loại chuẩn mực mô tả.</label>
+<div class="quiz__explanation"><strong>Phân tích:</strong> Thí nghiệm Goldstein 2008 khẳng định: Chuẩn Provincial luôn giành chiến thắng áp đảo, dù xét về mặt logic nó không hề vượt trội hơn.</div></fieldset>
+<div class="quiz__actions"><button type="button" class="btn" id="quizCheck">Kiểm tra đáp án</button><button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button><p class="quiz__score" id="quizScore"></p></div>
+</section>
+
+<h2 id="sources">Nguồn tài liệu tham khảo & Đọc thêm</h2>
+<ul style="font-size:14px;line-height:1.6">
+<li>Johnson, E. J. &amp; Goldstein, D. (2003). Liệu những thiết lập mặc định có thể cứu sống sinh mạng? <em>Science</em>, 302, 1338–39. <a href="https://doi.org/10.1126/science.1091721" target="_blank">doi:10.1126/science.1091721</a></li>
+<li>Goldstein, N. J., Cialdini, R. B. &amp; Griskevicius, V. (2008). Một góc nhìn từ căn phòng khách sạn. <em>J. Consumer Research</em>, 35(3). <a href="https://doi.org/10.1086/586910" target="_blank">doi:10.1086/586910</a> — 44,1% vs 35,1%</li>
+<li>Achor, S. (2010). <em>Lợi thế của Hạnh phúc (The Happiness Advantage)</em> — Giải phẫu Quy tắc 20 giây. <a href="https://www.shawnachor.com/wp-content/uploads/2018/09/Happiness-Advantage-excerpt.pdf" target="_blank">PDF</a></li>
+<li>Thaler, R. H. &amp; Sunstein, C. R. (2008). <em>Cú hích (Nudge)</em>. <a href="https://issc.al.uw.edu.pl/wp-content/uploads/sites/2/2022/05/Nudge-Improving-Decisions-About-Health-Wealth-and-Happiness-by-Richard-H.-Thaler-Cass-R.-Sunstein.pdf" target="_blank">PDF</a></li>
+</ul>
+
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin:48px 0 0;padding:16px 18px;background:var(--sidenote-bg);border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px">
+  <a href="tu-duy-duoc-hinh-thanh-tu-dau.html" style="padding:10px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text);font-weight:600">← Trở lại: Bài chính — Khu Vườn</a>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <a href="tu-duy-atlas.html" style="padding:10px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text)">Atlas tổng</a>
+    <a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html" style="padding:10px 16px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600">Tiếp theo: Phụ lục B — Phòng Tập →</a>
+  </div>
+</div>
+
+<div class="footer">
+<p>Atlas tổng · Chuỗi “Tư duy được hình thành từ đâu?” · 4 bài · MEDIUM · Mắt xích nối tiếp từ “Tư duy được hình thành từ đâu?” · 2026-08-31</p>
+<p>Phím tắt điều khiển: <span class="kbd">J</span>/<span class="kbd">K</span> cuộn · <span class="kbd">F</span> Chế độ tập trung (Focus) · <span class="kbd">T</span> Chuyển đổi nền · <span class="kbd">P</span> In ấn</p></div>
+</main>
+<aside class="marginalia">
+<div class="amplifier" id="amplifier"><span style="font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong)">Trạm khuếch đại thuật ngữ</span><p style="color:var(--text-muted);font-style:italic">Rê chuột lên cụm từ <span style="border-bottom:1px dashed var(--accent2)">gạch đứt</span> để hiển thị giải nghĩa sắc bén.</p></div>
+<div class="sidenote"><strong>Ghi chú 1 — Trục liên kết bài chính</strong>Bài chính giao cho bạn một Khu Vườn (đất/khí hậu/hạt giống/dao tỉa/vòi tưới/nắng gió). Bài viết này trao vào tay bạn bộ nông cụ thiết yếu để cấu trúc lại môi trường — rãnh nước sẽ tự động quyết định dòng chảy tư duy.</div>
+<div class="sidenote"><strong>Ghi chú 2 — Lằn ranh Đạo đức</strong>Nudge bắt buộc phải bảo tồn quyền tự do. Nếu bạn phải che đậy mánh khóe can thiệp của mình, đó không còn là Nudge, nó đã tha hóa thành Dark Pattern (thiết kế hắc ám) thao túng.</div>
+<div class="sidenote"><strong>Trivia thực tế</strong>Thuật ngữ "nudge" chính thức ghi danh vào từ điển Oxford năm 2018, tròn một thập kỷ sau khi cuốn sách cùng tên ra mắt. Đơn vị "Nudge unit" tiên phong tại Anh (2010) đã nhét túi thêm hàng trăm triệu bảng tiền thuế thu hồi chỉ bằng thủ thuật tinh chỉnh câu chữ trên văn bản.</div>
+</aside>
+</div>
+
+<div id="readProgress" style="position:fixed;bottom:20px;left:20px;z-index:49;display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow);font-family:var(--font-sans);font-size:12px;color:var(--text-muted)">
+  <span id="progText">0% · còn ~-- phút</span>
+  <span style="width:60px;height:6px;background:var(--sidenote-bg);border-radius:999px;overflow:hidden;display:inline-block"><span id="progBar" style="display:block;height:100%;width:0%;background:var(--accent);transition:width 80ms linear"></span></span>
+</div>
+
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Focus mode (F)" aria-label="Focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Đổi nền sáng/tối (T)" aria-label="Theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="fontIncBtn" title="Tăng cỡ chữ ( + )" aria-label="Tăng cỡ chữ">A+</button>
+  <button type="button" class="control-btn" id="fontDecBtn" title="Giảm cỡ chữ ( - )" aria-label="Giảm cỡ chữ">A−</button>
+  <button type="button" class="control-btn" id="topBtn" title="Lên đầu trang (Home)" aria-label="Lên đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In / Lưu PDF (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+  </button>
+</div>
+<script>
+/* === Quản lý Theme === */
+const STORAGE_KEY='edu-notes:'+(document.title||'untitled');
+const store={get(k){try{return JSON.parse(localStorage.getItem(STORAGE_KEY+':'+k))}catch{return null}},set(k,v){try{localStorage.setItem(STORAGE_KEY+':'+k,JSON.stringify(v))}catch{}}};
+(function(){const s=store.get('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.setAttribute('data-theme','dark')})();
+document.getElementById('themeBtn').addEventListener('click',()=>{const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);store.set('theme',n)});
+
+/* === Quản lý Focus Mode === */
+const focusKey = 'edu-focus';
+if (localStorage.getItem(focusKey) === 'true') document.body.classList.add('focus-mode');
+const focusBtn = document.getElementById('focusBtn');
+if (focusBtn) {
+    focusBtn.addEventListener('click', () => {
+        document.body.classList.toggle('focus-mode');
+        localStorage.setItem(focusKey, document.body.classList.contains('focus-mode'));
+    });
+}
+
+(function(){const c=document.getElementById('canvas'),t=document.getElementById('toc');c.querySelectorAll('h2,h3').forEach(h=>{if(!h.id)h.id=h.textContent.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').slice(0,60);const li=document.createElement('li');if(h.tagName==='H3')li.style.paddingLeft='14px';const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);t.appendChild(li)})})();
+(function(){const f=document.getElementById('progressFill');function u(){const s=window.scrollY,tot=document.documentElement.scrollHeight-window.innerHeight;f.style.width=(tot>0?s/tot*100:0)+'%'};window.addEventListener('scroll',u,{passive:true});u()})();
+document.querySelectorAll('.flip-card').forEach(c=>{c.addEventListener('click',()=>c.classList.toggle('is-flipped'))});
+(function(){const q=document.getElementById('quiz');if(!q)return;const ch=document.getElementById('quizCheck'),rs=document.getElementById('quizReset'),sc=document.getElementById('quizScore');ch.addEventListener('click',()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{const a=parseInt(fs.dataset.answer,10),sel=fs.querySelector('input:checked');t++;fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const cor=fs.querySelector(`input[value="${a}"]`);if(cor)cor.closest('.quiz__option').classList.add('correct-answer');if(sel&&parseInt(sel.value,10)!==a&&sel)sel.closest('.quiz__option').classList.add('incorrect-answer');if(sel&&parseInt(sel.value,10)===a)c++});q.classList.add('is-graded');sc.textContent=`${c} / ${t} đúng (${Math.round(c/t*100)}%)`});rs.addEventListener('click',()=>{q.querySelectorAll('input[type=radio]').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');sc.textContent=''})})();
+(function(){const ns=Array.from(document.querySelectorAll('.orbit__node'));ns.forEach(n=>n.addEventListener('click',()=>{const t=document.getElementById(n.dataset.target);if(t)t.scrollIntoView({behavior:'smooth'})}));const obs=new IntersectionObserver(es=>{es.forEach(e=>{const nd=ns.find(x=>x.dataset.target===e.target.id);if(nd&&e.isIntersecting){ns.forEach(x=>x.removeAttribute('data-active'));nd.setAttribute('data-active','true');nd.setAttribute('data-reached','true')}})},{rootMargin:'-20% 0px -70% 0px'});document.querySelectorAll('#canvas h2').forEach(h=>obs.observe(h))})();
+(function(){document.querySelectorAll('.checkpoint').forEach(cp=>{const ta=cp.querySelector('textarea'),btn=cp.querySelector('button');if(btn)btn.addEventListener('click',()=>cp.classList.toggle('is-revealed'))})})();
+(function(){const b=document.getElementById('hintBtn');if(!b)return;const h=Array.from(document.querySelectorAll('.launchpad__hint'));let s=parseInt(store.get('hints')||0,10);for(let i=0;i<s&&i<h.length;i++)h[i].classList.add('is-visible');if(s>=h.length)b.disabled=true;else b.textContent=`Mở gợi ý ${s+1} / ${h.length}`;b.addEventListener('click',()=>{if(s>=h.length)return;h[s].classList.add('is-visible');s++;store.set('hints',s);if(s>=h.length){b.textContent='Đã khai thác hết';b.disabled=true}else b.textContent=`Mở gợi ý ${s+1} / ${h.length}`})})();
+
+/* === Thay đổi Cỡ chữ, Top, và In ấn === */
+(function(){
+  const key='edu-font';
+  const canvas=document.getElementById('canvas');
+  let size=parseInt(localStorage.getItem(key)||'18',10);
+  function apply(){ if(canvas) canvas.style.fontSize=size+'px'; localStorage.setItem(key, String(size)); }
+  apply();
+  const inc=document.getElementById('fontIncBtn');
+  const dec=document.getElementById('fontDecBtn');
+  if(inc) inc.addEventListener('click',()=>{ if(size<24){ size+=1; apply(); }});
+  if(dec) dec.addEventListener('click',()=>{ if(size>15){ size-=1; apply(); }});
+  const top=document.getElementById('topBtn');
+  if(top) top.addEventListener('click',()=> window.scrollTo({top:0, behavior:'smooth'}));
+  const pr=document.getElementById('printBtn');
+  if(pr) pr.addEventListener('click',()=> window.print());
+  // Điều khiển bằng phím cứng: +, -, Home
+  document.addEventListener('keydown', e=>{
+    if(e.target.matches('input, textarea')) return;
+    if(e.key==='+'||e.key==='='){ e.preventDefault(); inc&&inc.click(); }
+    if(e.key==='-'||e.key==='_'){ e.preventDefault(); dec&&dec.click(); }
+    if(e.key==='Home'){ e.preventDefault(); top&&top.click(); }
+  });
+})();
+
+/* === Cập nhật thanh tiến trình đọc === */
+(function(){
+  const text=document.getElementById('progText');
+  const bar=document.getElementById('progBar');
+  if(!text||!bar) return;
+  let totalMin=7; // Thời gian đọc trung bình của bài này
+  const rt=document.querySelector('.navigator__reading-time');
+  if(rt){ const m=rt.textContent.match(/(\d+)\s*ph/); if(m) totalMin=parseInt(m[1],10); }
+  function upd(){
+    const sc=window.scrollY;
+    const tot=document.documentElement.scrollHeight-window.innerHeight;
+    const p=tot>0? sc/tot : 0;
+    const pct=Math.round(p*100);
+    const remain=Math.max(0, Math.round(totalMin*(1-p)));
+    text.textContent=pct+'% \u00B7 c\u00F2n ~'+remain+' ph\u00FAt';
+    bar.style.width=pct+'%';
+  }
+  window.addEventListener('scroll', upd, {passive:true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+
+</script>
+</body>
+</html>

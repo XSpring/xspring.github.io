@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tư duy được hình thành từ đâu? — Từ nguyên liệu đến va chạm đời thật</title>
+<meta name="description" content="Tư duy không phải tài năng bẩm sinh hay một khóa mindset. Nó là hệ dự đoán mọc trên nền sinh học và văn hóa, lớn qua 4 lớp: nguyên liệu, phản biện, tự học và làm thật — đặc biệt trong thời AI ngập thông tin.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+:root{
+  --font-serif:'Merriweather', Georgia, serif;
+  --font-sans:'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+  --bg:#FDFBF7;--bg-elevated:#FFFFFF;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;
+  --accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;
+  --border:#E4DFD5;--sidenote-bg:#EDF2F7;--code-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;
+  --radius:10px;--radius-sm:6px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 4px 12px rgba(0,0,0,.08);
+  --measure:65ch;--line:1.7;--transition:200ms cubic-bezier(.4,0,.2,1);
+}
+html[data-theme="dark"]{
+  --bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;
+  --accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;
+  --border:#2D3748;--sidenote-bg:#2A2F3A;--code-bg:#2A2F3A;--success:#68D391;--success-bg:#22543D;--danger:#FC8181;--danger-bg:#63171B;--warn:#F6AD55;--warn-bg:#7B341E;--info:#63B3ED;--info-bg:#2A4365;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);--shadow:0 4px 12px rgba(0,0,0,.4);
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}
+.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%;transition:font-size 0.2s ease}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}
+body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}
+.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px}
+.navigator__reading-time{color:var(--text);font-size:13px}
+.toc{list-style:none;padding:0;margin:0}
+.toc li{margin:2px 0}
+.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg)}
+.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500}
+.toc .toc-l3{padding-left:20px;font-size:13px}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.15rem;line-height:1.25;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.55rem;line-height:1.3;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px}
+.canvas h2:first-of-type{border-top:none;padding-top:0}
+.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.2rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px}
+.canvas p{margin:0 0 16px}
+.canvas strong{color:var(--text-strong);font-weight:700}
+.canvas em{font-style:italic}
+.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px}
+.canvas a:hover{color:var(--accent-strong)}
+.source{font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-muted);margin-left:4px;padding:1px 6px;border-radius:4px;background:var(--sidenote-bg);text-decoration:none;border:1px solid transparent;white-space:nowrap;vertical-align:baseline;transition:all var(--transition)}
+.source::before{content:"↗ ";opacity:.6}
+.source:hover{color:var(--accent);border-color:var(--accent);background:transparent}
+.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-top:12px;font-style:italic}
+.bar-chart__caption a{color:var(--text-muted);text-decoration:underline dotted}
+.bar-chart__caption a:hover{color:var(--accent)}
+.provenance-note{margin:32px 0 0;padding:12px 16px;border-radius:var(--radius-sm);background:var(--sidenote-bg);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;border-left:3px solid var(--text-muted)}
+.canvas ul,.canvas ol{margin:0 0 16px;padding-left:24px}
+.canvas li{margin:4px 0}
+.canvas blockquote{margin:24px 0;padding:12px 20px;border-left:3px solid var(--accent);background:var(--sidenote-bg);color:var(--text);border-radius:0 var(--radius) var(--radius) 0;font-style:italic}
+.canvas code{font-family:var(--font-mono);font-size:.9em;background:var(--code-bg);padding:2px 6px;border-radius:var(--radius-sm)}
+.canvas pre{font-family:var(--font-mono);background:var(--code-bg);padding:16px 20px;border-radius:var(--radius);overflow-x:auto;margin:24px 0;font-size:14px;line-height:1.5;position:relative}
+.canvas pre code{background:transparent;padding:0}
+.tldr{margin:16px 0 24px;padding:14px 20px;background:var(--accent2-soft);border-left:4px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--text-strong)}
+.tldr strong{color:var(--accent2-strong);letter-spacing:.02em}
+.hook{margin:24px 0 48px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.05rem;color:var(--text);box-shadow:var(--shadow-sm)}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700}
+.meta-block ul{margin:0;padding-left:20px}
+.meta-block li{margin:4px 0;color:var(--text)}
+.callout{margin:24px 0;padding:16px 20px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}
+.callout--tip .callout__label{color:var(--success)}
+.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}
+.callout--warn .callout__label{color:var(--warn)}
+.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}
+.callout--danger .callout__label{color:var(--danger)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text);background:transparent}
+.feynman::before{content:"🧒 Giải thích một câu:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.term{border-bottom:1px dotted var(--accent);cursor:help;position:relative}
+.term:hover::after{content:attr(data-def);position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--text-strong);color:var(--bg);padding:8px 12px;border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:13px;font-style:normal;white-space:normal;width:max-content;max-width:280px;z-index:10;box-shadow:var(--shadow);line-height:1.4}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted)}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.flip-card{perspective:1000px;height:180px;margin:24px 0;cursor:pointer}
+.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flip-card:hover .flip-card__inner,.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}
+.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:20px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.flip-card__front{background:var(--bg-elevated)}
+.flip-card__back{background:var(--accent);color:white;transform:rotateY(180deg)}
+.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.flip-card__content{font-family:var(--font-sans);font-size:15px;line-height:1.5}
+.deep-dive{margin:24px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);overflow:hidden}
+.deep-dive>summary{padding:14px 18px;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);list-style:none;display:flex;align-items:center;gap:10px;user-select:none;transition:background var(--transition)}
+.deep-dive>summary::-webkit-details-marker{display:none}
+.deep-dive>summary::before{content:"▶";color:var(--accent);font-size:10px;transition:transform var(--transition)}
+.deep-dive[open]>summary::before{transform:rotate(90deg)}
+.deep-dive>summary:hover{background:var(--sidenote-bg)}
+.deep-dive__label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-right:auto}
+.deep-dive>*:not(summary){padding:0 18px 16px;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:150px 1fr 60px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:14px}
+.bar-label{color:var(--text)}
+.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:linear-gradient(90deg, var(--accent), var(--accent-strong));border-radius:4px;transition:width 400ms cubic-bezier(.4,0,.2,1)}
+.bar-row:hover .bar-fill{filter:brightness(1.15)}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+@media(max-width:640px){.bar-row{grid-template-columns:110px 1fr 50px;font-size:13px}}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:32px 0}
+.concept-flow__step{padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px;min-height:90px;display:flex;flex-direction:column;justify-content:center;transition:transform var(--transition),box-shadow var(--transition)}
+.concept-flow__step:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px}
+.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;user-select:none}
+@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}}
+.glossary{margin:32px 0}
+.glossary dl{margin:0}
+.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px}
+.glossary dd{margin:4px 0 0;color:var(--text);font-size:15px;padding-left:0}
+.quiz{margin:56px 0 24px;padding:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.quiz h2{font-family:var(--font-sans);border-top:none;padding-top:0;margin-top:0;margin-bottom:8px}
+.quiz__intro{color:var(--text-muted);font-family:var(--font-sans);font-size:14px;margin-bottom:24px}
+.quiz fieldset{border:none;padding:0;margin:0 0 28px}
+.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px;font-size:16px}
+.quiz__option{display:block;padding:12px 16px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;transition:all var(--transition);position:relative;padding-left:44px}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%;transition:all var(--transition)}
+.quiz__option:hover{border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option input{position:absolute;opacity:0;pointer-events:none}
+.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option:has(input:checked)::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg-elevated)}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success);color:var(--text-strong)}
+.quiz__option.correct-answer::before{border-color:var(--success);background:var(--success);box-shadow:inset 0 0 0 3px var(--success-bg)}
+.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}
+.quiz__option.incorrect-answer::before{border-color:var(--danger);background:var(--danger);box-shadow:inset 0 0 0 3px var(--danger-bg)}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__explanation{display:block}
+.quiz__actions{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:white;cursor:pointer;font-size:14px;transition:all var(--transition)}
+.btn:hover{background:var(--accent-strong);border-color:var(--accent-strong)}
+.btn--ghost{background:transparent;color:var(--accent)}
+.btn--ghost:hover{background:var(--sidenote-bg);color:var(--accent-strong)}
+.quiz__score{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);margin:0;padding:12px 16px;background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none}
+.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);transition:all var(--transition);font-family:var(--font-sans);font-size:18px;padding:0}
+.control-btn:hover{color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.15)}
+.control-btn svg{width:18px;height:18px}
+.control-btn[data-active="true"]{background:var(--accent);color:white}
+@media print{html,body{background:#fff;color:#000;font-size:11pt}.navigator,.marginalia,.controls,.progress-bar,.quiz__actions{display:none!important}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}details{display:block!important}details>summary{display:block;font-weight:700;margin-bottom:6px;cursor:default;list-style:none}details>summary::-webkit-details-marker{display:none}details[open]>*,details:not([open])>*{display:revert!important}.hook,.tldr,.premortem,.checkpoint,.scaffold,.feynman,.callout,.knowledge-check__q{break-inside:avoid}h1,h2,h3{break-after:avoid}a{color:#000;text-decoration:underline}a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all}}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border)}
+.orbit__title{font-family:var(--font-sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px}
+.orbit__track{position:relative;padding-left:22px}
+.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.orbit__node{position:relative;display:flex;align-items:center;margin:8px 0;color:var(--text-muted);font-family:var(--font-sans);font-size:12px;cursor:pointer;transition:color var(--transition);user-select:none}
+.orbit__node::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border);transition:all var(--transition);box-sizing:border-box}
+.orbit__node[data-reached="true"]::before{background:var(--accent);border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent)}
+.orbit__node[data-active="true"]{color:var(--text-strong);font-weight:600}
+.orbit__node[data-active="true"]::before{transform:scale(1.15);box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent)}
+.orbit__node:hover{color:var(--text)}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px;color:var(--text)}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}
+.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm)}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px;display:flex;align-items:center;gap:10px}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0;align-items:start}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}
+.scaffold__row-body{font-size:15px;line-height:1.65}
+.scaffold__row-body p:last-child{margin-bottom:0}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm);background:transparent;overflow:hidden}
+.scaffold__probe>summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none;display:flex;gap:10px;align-items:baseline;user-select:none;transition:background var(--transition)}
+.scaffold__probe>summary::-webkit-details-marker{display:none}
+.scaffold__probe>summary::before{content:"🤔 Thăm dò";flex-shrink:0;padding:2px 8px;border-radius:3px;background:var(--accent2-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2-strong)}
+.scaffold__probe[open]>summary::after{content:"";position:absolute}
+.scaffold__probe>summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px 14px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px;line-height:1.6;color:var(--text);animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.scaffold__resolve::before{content:"💡 Giải";display:inline-block;padding:2px 8px;border-radius:3px;background:var(--accent2);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:8px;vertical-align:middle}
+.checkpoint{margin:32px 0;padding:20px 24px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}
+.checkpoint__label{display:block;font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.checkpoint__question{font-family:var(--font-sans);font-size:15px;color:var(--text-strong);margin:0 0 12px;line-height:1.5}
+.checkpoint textarea{width:100%;min-height:90px;padding:12px 14px;font-family:var(--font-serif);font-size:15px;line-height:1.5;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);resize:vertical;transition:border-color var(--transition);box-sizing:border-box}
+.checkpoint textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent)}
+.checkpoint__actions{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
+.checkpoint__expert{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:var(--radius-sm);border-left:3px solid var(--accent);font-family:var(--font-sans);font-size:14px;line-height:1.55;display:none}
+.checkpoint.is-revealed .checkpoint__expert{display:block;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.checkpoint__expert-label{display:block;font-weight:700;color:var(--accent);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px}
+.checkpoint__saved{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.launchpad{margin:48px 0 24px;padding:28px 32px;background:linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);position:relative;overflow:hidden}
+.launchpad::before{content:"🚀";position:absolute;top:-16px;right:-8px;font-size:96px;opacity:.06;transform:rotate(-15deg);pointer-events:none}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:white;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.3rem;color:var(--text-strong);margin:0 0 12px;line-height:1.3}
+.launchpad__problem{font-size:16px;line-height:1.7;color:var(--text);margin:0 0 24px}
+.launchpad__hints{border-top:1px dashed var(--border);padding-top:20px;font-family:var(--font-sans)}
+.launchpad__hints-label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:block}
+.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;color:var(--text);display:none;animation:slideDown 300ms cubic-bezier(.4,0,.2,1)}
+.launchpad__hint.is-visible{display:block}
+.launchpad__hint-label{display:block;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:4px;letter-spacing:.08em}
+.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px;transition:all var(--transition)}
+.launchpad__reveal:hover{background:var(--accent2);color:white}
+.launchpad__reveal:disabled{opacity:.4;cursor:not-allowed;background:transparent;color:var(--text-muted);border-color:var(--border)}
+.canvas .term-amp{border-bottom:1px dashed var(--accent2);cursor:help;transition:background var(--transition)}
+.canvas .term-amp:hover,.canvas .term-amp.is-active{background:var(--accent2-soft);border-bottom-color:var(--accent2-strong)}
+.amplifier{position:sticky;top:24px;margin:0 0 24px;padding:16px 18px;background:var(--accent2-soft);border:1px solid var(--accent2);border-radius:var(--radius);font-family:var(--font-sans);font-size:13px;line-height:1.55;color:var(--text);min-height:96px;transition:opacity var(--transition)}
+.amplifier__label{display:block;font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:6px}
+.amplifier__term{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-bottom:6px;display:block;font-size:14px}
+.amplifier__body{margin:0}
+.amplifier__empty{color:var(--text-muted);font-style:italic}
+.amp-notes{display:none}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+.kbd{font-family:var(--font-mono);font-size:12px;padding:1px 6px;border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;background:var(--bg-elevated);color:var(--text)}
+</style>
+</head>
+<body>
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time">~ 28 phút · LONG</p>
+    </div>
+    <div class="orbit" aria-label="Hành trình học">
+      <p class="orbit__title">Hành trình</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Neo</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Ra đồng</div>
+        <div class="orbit__node" data-target="boundary">5 · Biên</div>
+        <div class="orbit__node" data-target="synthesis">6 · Thu hoạch</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+    <h1>Tư duy được hình thành từ đâu?<br><span style="font-weight:400;font-size:1.25rem;color:var(--text-muted)">Từ nguyên liệu đến va chạm đời thật</span></h1>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Móc câu</span>
+      Hai người đọc cùng một bản tin, học cùng một trường, và dùng chung một công cụ AI. Thế nhưng, cách họ đặt câu hỏi lại hoàn toàn khác biệt. Giữa thời đại mà <strong>51,7% nội dung web mới là do AI tạo ra (05/2025)</strong>, điều gì sẽ là cốt lõi kiến tạo nên "tư duy độc bản" của bạn?
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần gì trước khi đọc</h4>
+      <ul>
+        <li>Từng thắc mắc vì sao đối mặt với cùng một sự kiện, mỗi người lại đưa ra kết luận khác nhau.</li>
+        <li>Từng nỗ lực rút kinh nghiệm sau khi hoàn thành một cuốn sách, xem tiểu sử hay trải qua một dự án.</li>
+        <li>Cảm thấy ngộp thở trong tình trạng "bội thực thông tin" giữa kỷ nguyên mạng xã hội và AI.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li><strong>Hiểu rõ</strong> bản chất tư duy là một hệ thống dự đoán liên tục được cập nhật qua sai số, không phải tài năng trời ban.</li>
+        <li><strong>Phân định</strong> rạch ròi vai trò của nền tảng sinh học (đất) và môi trường văn hóa (khí hậu) đối với vạch xuất phát của tư duy.</li>
+        <li><strong>Áp dụng</strong> mô hình 4 lớp (chọn lọc, phản biện, tự học, thực hành) để cá nhân hóa "chế độ ăn thông tin" trong thời AI.</li>
+        <li><strong>Đối chiếu</strong> niềm tin cá nhân với bằng chứng thực tế, sẵn sàng tinh chỉnh mô hình khi có phản hồi.</li>
+        <li><strong>Phản biện</strong> những ngộ nhận phổ biến (như tư duy phát triển chỉ đơn giản là sự cố gắng).</li>
+      </ul>
+    </div>
+
+    <!-- STATE 1 -->
+    <h2 id="baseline">Nền tảng chung — Tư duy là hệ thống dự đoán sống động</h2>
+    <p>Phần này cung cấp một mỏ neo nhận thức. Thiếu nó, 6 chương tiếp theo sẽ chỉ là những kiến thức rời rạc.</p>
+    <blockquote style="border-left-color:var(--accent2);background:var(--accent2-soft)">
+      <strong>⚓ Neo.</strong> Tư duy không phải là một phần mềm bạn chỉ cần "cài đặt" một lần. Nó là một <strong>hệ thống dự đoán</strong> của não bộ, được định hình bởi văn hóa và tinh chỉnh liên tục thông qua 4 lớp màng lọc: lựa chọn đầu vào, cách phản biện, khả năng tự học, và cọ xát với thực tế.
+    </blockquote>
+    <p><strong>Tư duy là hệ thống dự đoán</strong> có nghĩa là não bộ không thụ động chờ dữ liệu để hiểu; nó liên tục dự đoán trước, và dùng sai số để sửa đổi. Đã bao giờ bạn thay đổi hoàn toàn quan điểm sau khi bắt tay vào làm một việc, dù trước đó đinh ninh là mình đã "hiểu rõ"? Khoảnh khắc đó, não bạn không hề nạp thêm thông tin mới, nó vừa tái cấu trúc lại công thức dự đoán.</p>
+    <p>Vòng lặp <strong>dự đoán → kiểm tra → tinh chỉnh</strong> diễn ra suốt nhiều năm chính là thứ đẽo gọt nên tư duy. Yếu tố sinh học trao cho bạn cỗ máy; văn hóa tạo nên những chiếc khuôn đúc đầu tiên. Nhưng chính 4 lớp màng lọc phía sau mới quyết định bạn sẽ nâng cấp cỗ máy ấy ra sao. Khả năng phục hồi của tư duy không nằm ở việc sở hữu đáp án đúng một lần, mà ở tính linh hoạt dám tự sửa sai.</p>
+    <p>Bài viết này giữ lại 4 lớp màng lọc quen thuộc đó, kết hợp thêm hai yếu tố nền tảng cốt lõi — <span class="term-amp" data-note="dat-khi-hau">đất và khí hậu</span> — để lý giải vì sao xuất phát điểm giống nhau nhưng mỗi người lại hình thành một nếp tư duy khác biệt.</p>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:40px 0">
+
+    <!-- STATE 2 -->
+    <h2 id="bridge">Cầu nối — Mô hình Khu Vườn</h2>
+    <p>Để dễ dàng hình dung 4 lớp tư duy trừu tượng, hãy liên tưởng đến việc làm vườn. Bạn không thể "lắp ráp" tư duy như xây nhà; bạn phải "nuôi trồng" nó.</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Đất<br><span style="font-size:12px;color:var(--text-muted)">Não dự đoán</span></div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Khí hậu<br><span style="font-size:12px;color:var(--text-muted)">Văn hóa & ngôn ngữ</span></div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Hạt → Tỉa → Tưới → Nắng<br><span style="font-size:12px;color:var(--text-muted)">4 lớp chủ động</span></div>
+    </div>
+
+    <ul>
+      <li><strong>Đất</strong> (Sinh học): Não bộ dự đoán, hệ thống phần thưởng, các giai đoạn nhạy cảm phát triển thời ấu thơ.</li>
+      <li><strong>Khí hậu</strong> (Văn hóa): Ngôn ngữ, gia đình, nhà trường và những chuẩn mực ngầm định.</li>
+      <li><strong>Hạt giống</strong> (Nguyên liệu đầu vào): Sách báo, video, câu lệnh AI – những gì bạn chủ động nạp vào.</li>
+      <li><strong>Cắt tỉa</strong> (Phản biện): Đặt câu hỏi, quan sát và dọn dẹp những luận điểm mâu thuẫn.</li>
+      <li><strong>Tưới nước</strong> (Tự học): Chủ động lấp đầy khoảng trống kiến thức bằng cách chọn thầy, chọn hệ thống.</li>
+      <li><strong>Nắng gió</strong> (Thực hành): Chấp nhận va chạm thực tế, đối mặt với rủi ro và tinh chỉnh sau thất bại.</li>
+    </ul>
+    <p>Một khu vườn không thể trưởng thành chỉ sau một đêm tưới nước, và tư duy cũng vậy. Xuyên suốt 6 chương tới, bất cứ khi nào gặp thuật ngữ mới, hãy đặt câu hỏi: Nó đang đóng vai trò là đất, khí hậu, hạt giống, dao tỉa, vòi tưới hay nắng gió?</p>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — Hãy cẩn thận với ngộ nhận:</span>
+      <p><span class="premortem__wrong">"Tư duy là tố chất bẩm sinh, hoặc có thể thay đổi ngay lập tức qua một khóa học 'mindset' hay cuốn sách self-help."</span></p>
+      <p>Điều này hoàn toàn sai, bởi não bộ không hoạt động như một ổ cứng để tải về phần mềm "mindset". Nó là cỗ máy học hỏi bằng cách dự đoán, sai sót, và sửa đổi liên tục thông qua phản hồi thực tế.</p>
+      <p><span class="premortem__truth">Bản chất thực sự:</span> Tư duy là một hệ sinh thái sống động bắt rễ trên nền tảng sinh học và văn hóa. Nó chỉ lớn lên thông qua 4 bước: nạp thông tin, gọt giũa, tự học và cọ xát. Sự bền vững của tư duy nằm ở khả năng liên tục tự sửa lỗi.</p>
+    </div>
+    <p style="font-size:14px;color:var(--text-muted);font-style:italic">Micro-khóa: Giàn giáo đã được thiết lập. Mọi thuật ngữ trừu tượng phía sau sẽ bám sát vào 6 mảnh vườn này.</p>
+    <p style="font-size:14px;color:var(--text-muted);font-style:italic">Móc nối: Sau khi hiểu rõ Đất và Khí hậu là nền móng, chúng ta sẽ tiến vào 4 lớp mà bạn có toàn quyền kiểm soát.</p>
+
+    <!-- STATE 3 -->
+    <h2 id="exposition">Xây dựng mô hình, từng mảnh một</h2>
+    <p>Dưới đây là 6 mảnh ghép quan trọng được trình bày theo cấu trúc: <strong>Nêu Khái Niệm → Minh Họa Thực Tế → Thăm Dò Suy Nghĩ → Giải Đáp</strong>. Hãy tự thử thách tư duy của bạn ở phần thăm dò trước khi xem giải đáp.</p>
+
+    <!-- Chap 1 -->
+    <h3 id="chuong-1-dat">1. Đất — Não bộ dự đoán thay vì ghi chép thụ động</h3>
+    <p>Đây là nền tảng sinh học định hình cách bạn tiếp nhận thế giới. Bỏ qua nó, mọi phương pháp phía sau sẽ trở nên hời hợt.</p>
+    <section class="scaffold" id="exp-1">
+      <h3 class="scaffold__concept">Mô hình dự đoán &amp; Nguyên lý Hebbian</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Nêu</div>
+        <div class="scaffold__row-body"><strong>Mô hình dự đoán</strong> (predictive processing) cho rằng não bộ luôn đi trước một bước, phác thảo thực tại và dùng những sai số thực tế để tự cân chỉnh. <strong>Nguyên lý Hebbian</strong> ("tế bào nào cùng kích hoạt thì sẽ kết nối chặt chẽ với nhau") lý giải vì sao sự lặp lại biến những dự đoán đúng thành lối mòn tư duy. <strong>Cửa sổ nhạy cảm</strong> (sensitive period) giải thích tại sao những tiếp xúc ngôn ngữ sớm lại để lại dấu ấn hằn sâu.</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Minh họa</div>
+        <div class="scaffold__row-body">Khi bạn bế một đứa trẻ 3 tuổi và nói "con mèo", ban đầu não trẻ sẽ dự đoán mơ hồ. Nhưng khi bạn chỉ vào con mèo thật, mỉm cười và lặp lại từ đó, sai số giảm dần. Qua chục lần lặp lại, chỉ cần nghe âm thanh "mèo", não trẻ lập tức dự đoán hình ảnh, tiếng kêu và cảm giác mềm mại. Bộ não tự động khóa mạch kết nối sau những vòng lặp có phản hồi. Đó chính là lớp đất ẩm dung dưỡng hạt giống tư duy.<br><br>Với người trưởng thành, nguyên lý này không hề biến mất. Các tài xế taxi ở London mất 3-4 năm để học thuộc 25.000 con phố. Nghiên cứu của Maguire (2000, 2011) chỉ ra rằng <strong>hồi hải mã</strong> (vùng não chịu trách nhiệm bản đồ không gian) của họ lớn hơn hẳn người thường, và thời gian lái xe càng dài, vùng này càng phát triển. Đất không hề cứng nhắc; nó dày lên tùy thuộc vào cách bạn cày xới.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu não bộ là cỗ máy dự đoán, tại sao "đọc càng nhiều" đôi khi lại khiến tư duy cùn mòn?</summary>
+        <div class="scaffold__resolve">Bởi vì cỗ máy dự đoán không quan tâm đến "số lượng" hay "chất lượng". Nếu bạn đọc rất nhiều nhưng chỉ quanh quẩn trong những nguồn tin xác nhận lại niềm tin cũ, lối mòn tư duy sẽ càng lún sâu. Để đổi mới tư duy, bạn phải chủ động nạp sai số mới — tiếp cận góc nhìn đối lập và đối mặt với phản hồi thực tế. Tưới mãi một loại phân bón không làm đất phì nhiêu, nó chỉ khiến đất thêm cằn cỗi.</div>
+      </details>
+    </section>
+    <div class="feynman">Não đoán trước và tự sửa lỗi khi đoán sai; sự lặp lại biến đường mòn thành đại lộ tư duy.</div>
+    <div class="checkpoint" data-checkpoint-id="cp1">
+      <span class="checkpoint__label">🛑 Tạm dừng & Phản chiếu</span>
+      <p class="checkpoint__question">Hãy đúc kết lại bằng ngôn từ của bạn: Khái niệm "Mô hình dự đoán" của não bộ khác với "ổ cứng máy tính" ở điểm nào, kèm theo một ví dụ thực tế?</p>
+      <textarea placeholder="Viết câu trả lời của bạn vào đây trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions"><button type="button" class="btn btn--ghost" data-checkpoint-reveal>Đối chiếu đáp án chuyên gia</button><span class="checkpoint__saved" data-checkpoint-saved></span></div>
+      <div class="checkpoint__expert"><span class="checkpoint__expert-label">Đáp án chuyên gia</span>Ổ cứng lưu giữ thông tin dưới dạng bản sao tĩnh. Não bộ lưu trữ "công thức" để kiến tạo lại hiện thực. Nếu ổ cứng gặp lỗi, file sẽ hỏng. Nếu não dự đoán sai, nó sửa công thức. Ví dụ: Bạn đinh ninh sếp sẽ nổi giận (phản ứng A) nhưng sếp lại bình tĩnh (phản ứng B). Bạn không "lưu" phản ứng B như một file mới, bạn vừa tái lập trình lại quy tắc dự đoán hành vi của sếp.</div>
+    </div>
+    <p><em>Bạn đã hiểu về nền móng đất đai.</em> Tuy nhiên, đất tốt chưa chắc đã cho trái ngọt — yếu tố khí hậu mới là điều kiện quyết định.</p>
+
+    <!-- Chap 2 -->
+    <h3 id="chuong-2-khi-hau">2. Khí hậu — Văn hóa định hình suy nghĩ trước khi bạn kịp nhận ra</h3>
+    <p>Bạn không tự phát minh ra cách tư duy; bạn kế thừa nó qua lời ru, những điều cấm kỵ và cách đặt câu hỏi trong mâm cơm gia đình.</p>
+    <section class="scaffold" id="exp-2">
+      <h3 class="scaffold__concept">Trung gian văn hóa &amp; Vùng phát triển gần</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Nêu</div>
+        <div class="scaffold__row-body"><strong>Trung gian văn hóa</strong> (cultural mediation theo Vygotsky) nhấn mạnh rằng tư duy cấp cao được văn hóa chuyển giao thông qua hệ thống ký hiệu, điển hình là ngôn ngữ. <strong>Vùng phát triển gần</strong> (ZPD - zone of proximal development) là khoảng không gian giao thoa giữa "những gì bạn tự làm được" và "những gì bạn làm được khi có sự dẫn dắt", nơi tư duy bứt phá mạnh mẽ nhất.</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Minh họa</div>
+        <div class="scaffold__row-body">Lấy ví dụ lời dặn "con phải ngoan". Ở gia đình A, "ngoan" đồng nghĩa với "biết vâng lời, không cãi lại". Ở gia đình B, "ngoan" lại là "biết đặt câu hỏi phản biện". Hai đứa trẻ mang theo hai định nghĩa này lớn lên. Khi sếp yêu cầu "hãy chủ động", chúng sẽ diễn dịch khái niệm "chủ động" theo hai hướng hoàn toàn trái ngược. Ngôn ngữ chính là chiếc kéo tỉa dáng cho tư duy.<br><br>Vygotsky (1934) gọi đây là quá trình <strong>nội hóa</strong> (internalization — biến ngôn ngữ ngoại cảnh thành tư duy nội tại). Mẹ dặn "cẩn thận, nóng đấy"; bạn nhẩm lại trong đầu; và cuối cùng, bạn chỉ cần <em>nghĩ</em> đến cảm giác "nóng". Tiếng nói nội tâm đó chính là tư duy bằng lời.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu sự chi phối của văn hóa mạnh mẽ đến vậy, tại sao hai anh em lớn lên trong cùng một gia đình lại có cách nghĩ hoàn toàn khác nhau?</summary>
+        <div class="scaffold__resolve">Bởi vì dù chung khí hậu vĩ mô, vi khí hậu của mỗi cá nhân là độc bản: vòng tròn bạn bè khác nhau, thầy cô giáo khác nhau, sách đọc khác nhau, và đặc biệt là sự khác biệt ở vùng phát triển gần (ZPD). Một người may mắn có người dẫn dắt bước qua khỏi vùng an toàn; người kia thì không. Cùng trồng trên một mảnh vườn, nhưng hai luống cây lại đón nhận lượng ánh sáng hoàn toàn khác biệt.</div>
+      </details>
+    </section>
+    <div class="feynman">Văn hóa cung cấp khuôn đúc tư duy thông qua ngôn ngữ; bạn trưởng thành bằng cách giao tiếp với những người có tư duy đi trước mình một bậc.</div>
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Ngôn ngữ định hình cách chúng ta nhìn nhận trách nhiệm</summary>
+      <p>Các chuẩn mực ngầm được mã hóa sâu trong ngôn ngữ. Nghiên cứu xuyên văn hóa chỉ ra rằng, những người nói ngôn ngữ đề cao đại từ "tôi" thường có xu hướng quy trách nhiệm cho cá nhân. Ngược lại, ngôn ngữ đề cao "chúng ta" thường hướng nguyên nhân về phía hoàn cảnh. Không có ngôn ngữ nào vượt trội hơn; chúng chỉ uốn nắn tư duy theo những hình dáng khác nhau. Hiểu được điều này giúp bạn tách bạch tư duy khỏi "bản tính cố hữu" và nhìn nhận nó như một cái cây có thể uốn lại dáng.</p>
+    </details>
+    <p><em>Khí hậu đã được xác định rõ.</em> Sau nền móng đất và khí hậu, chúng ta tiến vào 4 lớp màng lọc mà bạn hoàn toàn có thể làm chủ. Bắt đầu từ việc gieo hạt.</p>
+
+    <!-- Chap 3 -->
+    <h3 id="chuong-3-hat-giong">3. Hạt giống — "Chế độ ăn" thông tin quyết định chất lượng dự đoán</h3>
+    <p>Trong kỷ nguyên AI bùng nổ, bộ lọc thông tin đóng vai trò sống còn trong việc kiến tạo nếp tư duy sắc bén.</p>
+    <section class="scaffold" id="exp-3">
+      <h3 class="scaffold__concept">Chế độ ăn thông tin &amp; Thuyết tâm trí (Theory of mind)</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Nêu</div>
+        <div class="scaffold__row-body"><strong>Chế độ ăn thông tin</strong> (information diet) là tập hợp các nguồn nội dung bạn dung nạp hằng ngày, quyết định độ nhạy bén của cỗ máy dự đoán. <strong>Thuyết tâm trí</strong> (Theory of mind — khả năng thấu hiểu tâm lý người khác) được bồi đắp thông qua việc đọc đa dạng, đặc biệt là <strong>tiểu thuyết hư cấu (fiction)</strong>. Đọc sách không chỉ để nạp dữ kiện; nó trao cho bạn đặc quyền sống thử vô số cuộc đời.</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Minh họa</div>
+        <div class="scaffold__row-body">Bài viết gốc nhấn mạnh quá trình đọc từ báo chí, kinh tế, chính trị đến tiểu sử danh nhân. Mỗi cuốn tiểu sử là một "bộ dữ liệu mượn": thay vì mất 20 năm trả giá cho một quyết định, bạn thẩm thấu trọn vẹn kinh nghiệm đó qua 300 trang sách.<br><br>Khoa học củng cố luận điểm này bằng nghiên cứu của <strong>Wimmer (2024)</strong>: phân tích <strong>70 thí nghiệm</strong> và <strong>114 nghiên cứu tương quan</strong> chứng minh đọc tiểu thuyết mang lại lợi ích vững chắc trong việc gia tăng sự đồng cảm và khả năng đọc vị tâm lý người khác[cite: 5]. IDC ước tính tổng dữ liệu toàn cầu tăng vọt từ <strong>132 ZB (2023) lên 394 ZB (2028)</strong>[cite: 5]. Graphite chỉ ra <strong>kể từ tháng 11/2024, số lượng bài viết do AI tạo ra đã vượt mặt con người (chiếm 51,7% vào 05/2025)</strong>[cite: 5]. Vấn đề không nằm ở việc thiếu "hạt giống", mà là thiếu bộ lọc chọn lọc hạt chất lượng.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu AI đã có khả năng tóm tắt xuất sắc, tại sao "đọc nguyên bản" vẫn rèn giũa tư duy tốt hơn?</summary>
+        <div class="scaffold__resolve">Bởi vì tư duy không chỉ là thành phẩm cuối cùng; nó là quá trình kiến tạo đường đi. Đọc bản gốc buộc não bộ tự thiết lập dự đoán, tự sửa lỗi, tự xâu chuỗi các mảnh ghép rời rạc — chính những sai số trong quá trình đó mới làm sắc bén mô hình. Bản tóm tắt của AI dọn sẵn một kết luận mượt mà, triệt tiêu sai số và tước đi cơ hội rèn luyện của bạn. Giống như việc chỉ ngắm ảnh khu vườn qua màn hình thay vì tự tay vục xuống lớp đất mùn.</div>
+      </details>
+    </section>
+    <div class="feynman">Bạn trở thành những gì bạn đọc. Tiếp xúc với những mảnh đời đa dạng giúp bạn thấu hiểu nhân sinh, và thấu hiểu nhân sinh định hình lại cách bạn tư duy.</div>
+    <p style="font-size:15px;color:var(--text-muted)">Nhịp nghỉ: Ghi nhớ một nguyên lý cốt lõi: <strong>Đọc đa dạng cung cấp cho não bộ nguồn dữ liệu sống động để đưa ra những dự đoán chuẩn xác hơn.</strong></p>
+    <p><em>Hạt giống tốt đã gieo.</em> Nhưng nếu bỏ mặc không cắt tỉa, cỏ dại sẽ lấn lướt mầm xanh. Đây là lúc sử dụng con dao tỉa.</p>
+
+    <!-- Chap 4 -->
+    <h3 id="chuong-4-lam-vuon">4. Làm vườn — Vũ khí của quan sát, đặt câu hỏi và cắt tỉa</h3>
+    <p>Đây là màng lọc thứ hai: Quan sát và Phản biện. Thiếu đi màng lọc này, mọi thông tin bạn dung nạp chỉ biến não bộ thành một cái nhà kho chật chội.</p>
+    <section class="scaffold" id="exp-4">
+      <h3 class="scaffold__concept">Quan sát khách quan &amp; Phản biện đa chiều</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Nêu</div>
+        <div class="scaffold__row-body"><strong>Quan sát</strong> là ghi nhận cách con người hoặc hệ thống phản ứng mà không vội vàng phán xét. <strong>Phản biện</strong> là nghệ thuật đặt các luồng thông tin cạnh nhau để dò tìm vết nứt. Nó đóng vai trò như một chiếc dao tỉa sắc bén.</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Minh họa</div>
+        <div class="scaffold__row-body">Tác giả bài gốc đúc kết: "Quan sát là nhìn nhận cách một cá nhân hay tổ chức phản ứng, tìm hiểu lý do tại sao trong cùng một hoàn cảnh, người chọn rẽ trái, kẻ chọn rẽ phải." Phản biện đi xa hơn: "Tại sao lại như vậy? Chuyện gì xảy ra nếu thay đổi điều kiện giả định? Liệu có cách làm nào tối ưu hơn lặp lại lối mòn cũ?" Và quan trọng nhất: "Phải đủ can đảm lật đổ chính kết luận của mình khi có bằng chứng mới."<br><br>Ví dụ: Một cửa hàng ghi nhận doanh số sụt giảm sau chiến dịch quảng cáo rầm rộ. Lối tư duy lười biếng sẽ kết luận: "Quảng cáo vô tác dụng". Nhưng một nhà quan sát nhạy bén sẽ tách bạch vấn đề: quảng cáo vẫn thu hút luồng khách mới, nhưng quy trình đổi trả phức tạp khiến họ bực dọc rời đi. Vấn đề không nằm ở hạt giống, mà nằm ở hệ thống tưới tiêu. Không mài sắc lưỡi dao phản biện, bạn sẽ nhổ nhầm gốc cây khỏe mạnh.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Tại sao những người mọt sách đôi khi lại yếu kém trong phản biện hơn những người đọc ít nhưng hay đặt câu hỏi?</summary>
+        <div class="scaffold__resolve">Việc đọc nhiều tự thân nó không sinh ra kỹ năng phản biện; nó chỉ làm phình to kích cỡ nhà kho thông tin. Người hay đặt câu hỏi liên tục mài giũa kỹ năng "đặt lên bàn cân và tìm khe hở" mỗi ngày. Ngược lại, người chỉ biết nhồi nhét sẽ sở hữu một cái kho vĩ đại nhưng lại cầm trên tay một con dao cùn — và tệ hại hơn, cái kho khổng lồ ấy đánh lừa họ rằng con dao của họ rất sắc bén.</div>
+      </details>
+    </section>
+    <div class="feynman">Quan sát cho bạn bức tranh toàn cảnh; câu hỏi xoáy sâu giúp bạn bóc tách nguyên nhân cốt lõi và định vị điểm đứt gãy.</div>
+    <div class="checkpoint" data-checkpoint-id="cp2">
+      <span class="checkpoint__label">🛑 Tạm dừng & Phản chiếu</span>
+      <p class="checkpoint__question">Hãy nhớ lại một lần bạn buộc phải thay đổi kết luận sau khi đặt hai thông tin mâu thuẫn lên bàn cân. Điều gì đã thuyết phục bạn chấp nhận sửa đổi góc nhìn?</p>
+      <textarea placeholder="Ghi chép lại trải nghiệm thực tế của bạn…"></textarea>
+      <div class="checkpoint__actions"><button type="button" class="btn btn--ghost" data-checkpoint-reveal>Đối chiếu góc nhìn chuyên gia</button><span class="checkpoint__saved" data-checkpoint-saved></span></div>
+      <div class="checkpoint__expert"><span class="checkpoint__expert-label">Góc nhìn chuyên gia</span> Phân tích xuất sắc cần làm rõ: (1) Tính chất của hai nguồn thông tin xung đột, (2) Câu hỏi lật ngược vấn đề bạn đã sử dụng, (3) Hành động thử nghiệm bạn thực hiện và phản hồi thu được. Nếu bỏ qua bước (3), phản biện mới chỉ dừng lại ở lý thuyết suông.</div>
+    </div>
+    <p><em>Lưỡi dao phản biện đã được mài sắc.</em> Tuy nhiên, con dao sắc bén cũng vô dụng nếu nằm yên trong vỏ. Cần có kỹ năng tự tưới tiêu chủ động.</p>
+
+    <!-- Chap 5 -->
+    <h3 id="chuong-5-tu-tuoi">5. Tự tưới — Tự chẩn đoán và đào tạo bản thân</h3>
+    <p>Lớp màng lọc thứ ba, và cũng là tầng cốt lõi nhất để bức phá: Kỹ năng tự học.</p>
+    <section class="scaffold" id="exp-5">
+      <h3 class="scaffold__concept">Tự học có định hướng chiến lược</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Nêu</div>
+        <div class="scaffold__row-body"><strong>Tự học có định hướng</strong> (self-directed learning) là quy trình chủ động chẩn đoán lỗ hổng, thiết lập mục tiêu, chọn lọc tài liệu và tự đo lường tiến độ, hoàn toàn khác biệt với kiểu "học tùy hứng khi rảnh rỗi". Nghiên cứu chứng minh rằng nó đóng vai trò <strong>trung gian cốt lõi</strong> kết nối tư duy phản biện với năng lực giải quyết vấn đề. Phản biện xuất sắc nhưng không tự học thì mọi nỗ lực vẫn chỉ dậm chân tại chỗ.</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Minh họa</div>
+        <div class="scaffold__row-body">Tác giả bài gốc thừa nhận: "Tôi chưa từng trải qua khóa đào tạo chính quy nào về tư duy. Mọi thứ được xây đắp qua quá trình tự huấn luyện: nhận diện lỗ hổng, vá lỗi bằng cách học, và quan sát học hỏi từ những người giỏi." Việc duy trì thói quen phân tích những vĩ nhân (Guru Share) là minh chứng: mỗi cuộc đời là một bộ dữ liệu tham khảo vô giá, nơi những thất bại cũng rực rỡ như những thành công.<br><br>Khoa học chứng thực: Nghiên cứu của <strong>Song, Lee &amp; Lee (2022)</strong> trên 138 sinh viên điều dưỡng chỉ ra mối tương quan thuận rõ nét giữa tư duy phản biện, kỹ năng tự học và năng lực giải quyết vấn đề. Trong đó, tự học đóng vai trò trung gian mạnh mẽ với hệ số <strong>β = 0.78 (p &lt; 0.001)</strong>[cite: 5]. Dù mẫu nghiên cứu hẹp, cơ chế "Phản biện → Tự học → Giải quyết vấn đề" áp dụng hoàn hảo cho hầu hết mọi ngành nghề.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Trong kỷ nguyên AI biến đổi chóng mặt, vì sao chiến lược "thiếu gì học nấy" lại hiệu quả hơn "bám sát lộ trình đóng gói sẵn"?</summary>
+        <div class="scaffold__resolve">Bởi lộ trình có sẵn được thiết kế cho một thế giới tĩnh lặng. Khi AI tái thiết lập ranh giới mỗi ngày, lỗ hổng kỹ năng của bạn cũng dịch chuyển theo. Chiến lược "thiếu gì học nấy" gắn chặt việc học vào nhu cầu giải quyết một bài toán thực tế ngay tức khắc, mang lại phản hồi lập tức và khắc sâu trí nhớ. Trong việc làm vườn, một lịch trình tưới nước cố định luôn thất bại trước một cảm biến đo độ ẩm đất thời gian thực.</div>
+      </details>
+    </section>
+    <div class="feynman">Tự học là khả năng chủ động tưới nước ngay tại những gốc cây đang héo, không phải tưới tràn lan cho có lệ.</div>
+    <div class="callout callout--tip">
+      <span class="callout__label">⚠️ Làm rõ ngộ nhận về Tư duy phát triển (Growth Mindset)</span>
+      <strong>Tư duy phát triển</strong> không hề đồng nghĩa với việc "cứ nỗ lực hết mình là đủ". Chính tác giả <strong>Carol Dweck</strong> đã cảnh báo về <strong>false growth mindset</strong>: những lời khen sáo rỗng, những tấm poster cổ động hô hào, hay việc đổ lỗi thất bại do "tư duy bảo thủ" đều là phản khoa học. Mỗi cá nhân là sự pha trộn giữa hai luồng tư duy. Tư duy phát triển chỉ phát huy sức mạnh khi nó song hành với <strong>chiến lược hành động cụ thể, phản hồi thực tế và những tiến bộ có thể đong đếm được</strong>[cite: 5].
+    </div>
+    <p><em>Việc tưới tiêu đã đi vào quỹ đạo.</em> Cuối cùng, khu vườn chỉ thực sự bám rễ khi đối mặt với nắng gió khắc nghiệt.</p>
+
+    <!-- Chap 6 -->
+    <h3 id="chuong-6-ra-nang">6. Ra nắng gió — Va đập thực tế để lật tẩy ngụy biện</h3>
+    <p>Lớp màng lọc thứ 4: Thực hành. Đây là nơi những giả định mơ mộng bị bóc trần.</p>
+    <section class="scaffold" id="exp-6">
+      <h3 class="scaffold__concept">Kiểm nghiệm thực tế &amp; Dữ liệu phản hồi</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Nêu</div>
+        <div class="scaffold__row-body"><strong>Kiểm nghiệm trong đời sống</strong> (enactive testing) là quá trình mang vốn hiểu biết cọ xát với con người thật, rủi ro thật. Đó là đấu trường duy nhất lật tẩy các <strong>giả định</strong> (những điều bạn mặc định là đúng nhưng chưa từng thử nghiệm). <strong>Dữ liệu phản hồi</strong> từ thực tế chính là liều phân bón đắng chát nhưng là sự thật trần trụi.</div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Minh họa</div>
+        <div class="scaffold__row-body">Tác giả bài viết rất tâm đắc câu nói của Theodore Roosevelt: "Tin rằng mình làm được là bạn đã đi được nửa đường." Nhưng ông cũng tỉnh táo nhấn mạnh: nửa quãng đường còn lại, bạn bắt buộc phải tự lê bước. Đọc nạp nguyên liệu, quan sát cung cấp dữ liệu, câu hỏi đào sâu ngóc ngách, và <em>chỉ thông qua hành động thực tế</em>, bạn mới thu thập được loại dữ liệu mà sách vở không bao giờ đề cập: những cú nhíu mày của khách hàng, những lỗ hổng quy trình chí mạng, và giới hạn chịu đựng thực sự của bản thân.<br><br>Trong thời đại số, AI có thể phác thảo chiến lược kinh doanh lấp lánh trong 30 giây, nhưng nó không phải hứng chịu cơn thịnh nộ của khách hàng, không nghe thấy tiếng thở dài của đối tác, và không bị bào mòn dòng tiền thật. Chỉ khi bạn lao vào thực chiến, bạn mới chạm vào những dữ liệu ấy. Bất kể bạn đọc bao nhiêu cuốn cẩm nang về trồng cà chua, chỉ khi cuốc đất, bạn mới vỡ lẽ rằng đất nhà mình quá phèn và giống cà chua kia không hề phù hợp. Tri thức thiếu đi nắng gió va đập, vĩnh viễn chỉ là mớ lý thuyết suông.</div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao chiến lược "thất bại nhỏ, sửa đổi nhanh" lại tôi luyện tư duy sắc bén hơn việc "chuẩn bị hoàn hảo rồi đánh một trận lớn"?</summary>
+        <div class="scaffold__resolve">Vì não bộ học hỏi thông qua việc tinh chỉnh sai số. Thử nghiệm quy mô nhỏ tạo ra những sai số nhỏ nhưng phản hồi lập tức, cho phép bạn xoay trục nhanh chóng. Một ván cược lớn dồn nén sai số khổng lồ, độ trễ phản hồi cao, và khi thất bại xảy đến, cái tôi dễ dàng đổ lỗi cho hoàn cảnh thay vì dũng cảm đập bỏ mô hình cũ để làm lại. Nghệ thuật làm vườn đòi hỏi bạn phải tỉa lá hằng tuần, chứ không phải đợi cây mục nát rồi đốn hạ trong một nhát rìu.</div>
+      </details>
+    </section>
+    <div class="feynman">Am hiểu lý thuyết không mang lại một khu vườn đẹp đẽ; chỉ có xắn tay áo, cuốc đất, gieo hạt, gánh chịu thất bại và kiên trì sửa chữa mới kiến tạo nên kiệt tác.</div>
+    <p><em>Sáu mảnh ghép đã hội tụ hoàn chỉnh.</em> Đất, khí hậu, hạt giống, dao tỉa, vòi tưới và nắng gió. Câu hỏi đặt ra là: khi phối hợp chúng trong đời sống thực tế, kết quả sẽ ra sao?</p>
+
+    <!-- STATE 4 -->
+    <h2 id="application">Ra đồng — Kế hoạch 30 ngày cọ xát giữa tâm bão AI</h2>
+    <p>Hãy cùng thả mô hình này vào một bối cảnh thực chiến: Bạn là một marketer 26 tuổi, đang vật lộn giữa sự bùng nổ của AI.</p>
+    <p>Mỗi tối bạn có 2 giờ trống. Mục tiêu của bạn là mài giũa tư duy sắc bén hơn.</p>
+    <p><strong>Tuần 1 — Nhận diện Đất &amp; Khí hậu:</strong> Bạn nhận ra mình dễ bị thao túng bởi những tiêu đề giật gân (Đất: não ưa thích nhảy vọt đến kết luận để tiết kiệm năng lượng). Bạn cũng nhận ra tư duy của mình bị kìm kẹp bởi câu cửa miệng của gia đình: "Ổn định là trên hết" (Khí hậu). Bạn ghi hai rào cản này ra sổ. Khoan vội sửa đổi; việc đầu tiên là gọi đúng tên chúng.</p>
+    <p><strong>Tuần 2 — Lựa chọn Hạt giống:</strong> Tái cấu trúc triệt để chế độ ăn thông tin. Thay vì lướt mạng xã hội vô thức 60 phút, bạn dành quỹ thời gian đó đọc 2 cuốn tiểu sử (30 phút/ngày) và nghiên cứu 1 báo cáo chuyên ngành gốc. Bạn thiết lập kỷ luật: tuyệt đối không dùng AI để tóm tắt trước khi đọc nguyên bản; chỉ nhờ AI phản biện sau khi đã tự phác thảo ý chính. Nâng số lượng góc nhìn đối lập dung nạp hằng tuần từ 0 lên 2.</p>
+    <p><strong>Tuần 3 — Vung Dao Tỉa:</strong> Rèn luyện kỹ năng lật ngược vấn đề: ứng với mỗi lập luận, hãy viết ra câu hỏi "Điều kiện nào sẽ khiến điều này sai?" và tìm kiếm một ví dụ phản bác. Thực hành 5 lần/tuần. Lưỡi dao phản biện của bạn sẽ bén ngọt từng ngày.</p>
+    <p><strong>Tuần 4 — Tự Tưới &amp; Đứng Trước Nắng Gió:</strong> Xác định chính xác một kỹ năng còn yếu (ví dụ: "phân tích báo cáo tài chính") và chủ động kết nối với một chuyên gia giỏi hơn (ZPD) để nhờ dẫn dắt. Bạn tự tay viết một bài phân tích sâu 600 từ và gửi cho 3 người uy tín để xin góp ý. Khi nhận phản hồi, bạn lập tức điều chỉnh.</p>
+    <p>Sau 30 ngày, bạn không đột nhiên "lột xác". Nhưng bạn đã thành công thiết lập một vòng lặp tư duy hoàn toàn mới. Hãy lặp lại quy trình đó 12 vòng, và tư duy sắc bén sẽ trở thành phản xạ.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Dữ liệu minh chứng "Chọn Hạt" quan trọng hơn "Tưới Nhiều"</div>
+      <div class="bar-row"><div class="bar-label">Bài mới do AI (05/2025)</div><div class="bar-track"><div class="bar-fill" style="width:51.7%"></div></div><div class="bar-value">51.7%</div></div>
+      <div class="bar-row"><div class="bar-label">Bài do con người viết</div><div class="bar-track"><div class="bar-fill" style="width:48.3%"></div></div><div class="bar-value">48.3%</div></div>
+      <div class="bar-row"><div class="bar-label">Dữ liệu 2023 (~132 ZB)</div><div class="bar-track"><div class="bar-fill" style="width:33.5%"></div></div><div class="bar-value">33.5%</div></div>
+      <div class="bar-row"><div class="bar-label">Dữ liệu 2028 (~394 ZB)</div><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><div class="bar-value">100%</div></div>
+      <p class="bar-chart__caption">Nguồn: Phân tích 43.000 URLs từ Graphite (đường chéo giao cắt 11/2024, chiếm 51,7% 05/2025) — <a href="https://graphite.io/five-percent/research/more-articles-are-now-created-by-ai-than-humans" target="_blank" rel="noopener">graphite.io</a> ; Dự phóng IDC Global DataSphere 2025–2029 — <a href="https://my.idc.com/getdoc.jsp?containerId=US52799725" target="_blank" rel="noopener">IDC</a>. Dữ liệu ZB được quy về tỷ lệ % so với mốc 2028.</p>
+    </div>
+    <p>Sự thật đằng sau biểu đồ: <strong>Hơn nửa lượng nội dung mới trên web là sản phẩm của AI</strong> nhưng tốc độ đã chững lại sau 05/2024 — viễn cảnh "AI thâu tóm tất cả" chưa xảy ra. Trong khi đó, <strong>lượng dữ liệu khổng lồ vẫn tăng trưởng ổn định ~25%/năm</strong>. Cuộc đua thực sự không phải giữa bạn và AI; đó là cuộc chiến chống lại sự dễ dãi trong thói quen chọn lọc thông tin của chính bạn.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front"><span class="flip-card__label">Ghi nhớ — Trắc nghiệm nhỏ</span><div class="flip-card__content">Tại sao "tự đúc kết trước, rồi mới dùng AI phản biện" lại mài giũa tư duy xuất sắc hơn việc "để AI tóm tắt hộ ngay từ đầu"?</div></div>
+        <div class="flip-card__face flip-card__back"><span class="flip-card__label">Giải đáp</span><div class="flip-card__content">Bởi tự đúc kết ép não bộ thiết lập dự đoán và đối mặt với sai số; AI làm hộ sẽ dọn sẵn một kết luận mượt mà, triệt tiêu sai số và tước đi cơ hội luyện tập của não bộ. Trật tự thực hiện quan trọng hơn sức mạnh của công cụ.</div></div>
+      </div>
+    </div>
+    <p><em>Mô hình Khu Vườn đã được kiểm chứng thực tế.</em> Nhưng mọi hệ thống đều có giới hạn. Khi nào thì Khu Vườn trở nên bất lực?</p>
+
+    <!-- STATE 5 -->
+    <h2 id="boundary">Biên giới — Khi nào mô hình phản tác dụng?</h2>
+    <p>Mô hình Khu Vườn giải quyết xuất sắc hầu hết các vấn đề nền tảng. Tuy nhiên, nó sẽ trật nhịp ở ba ranh giới ngộ nhận phổ biến dưới đây. Nắm vững điều này để không phí công dùng dao tỉa khi đất đang ngập úng.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận 1 — "Tư duy là bẩm sinh, không thể suy chuyển"</span>
+      Sai lệch hoàn toàn. Não bộ sở hữu <strong>tính dẻo</strong> (neuroplasticity — khả năng thiết lập các liên kết neuron mới) duy trì suốt cuộc đời, dù tốc độ có chậm lại ở tuổi xế chiều. Nghiên cứu tài xế taxi London minh chứng hồi hải mã vẫn phình to ở người trưởng thành. Giới hạn nằm ở tốc độ tiếp thu, tuyệt đối không phải ở tiềm năng phát triển. (Dẫn chứng từ Maguire et al. 2000/2011)
+    </div>
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận 2 — "Tư duy phát triển (Growth Mindset) = cứ cố gắng là sẽ giỏi"</span>
+      Sai lầm nghiêm trọng như Dweck đã cảnh báo: Tư duy phát triển chỉ phát huy uy lực khi nó được neo vào <strong>chiến lược hành động sắc bén + vòng lặp phản hồi trung thực + tiến độ được đo lường rõ ràng</strong>. Những lời khen nỗ lực sáo rỗng không giải quyết được vấn đề, mà còn che đậy sự yếu kém trong chiến lược.
+    </div>
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Điểm mù — Khi Khu Vườn bó tay</span>
+      (a) <strong>Tình trạng đất ngập úng:</strong> Căng thẳng mãn tính, thiếu ngủ trầm trọng, môi trường độc hại — lúc này, việc nhồi nhét học hỏi (tưới thêm nước) là vô ích; bạn phải chữa lành nền đất trước. (b) <strong>Khí hậu bị thuật toán thao túng:</strong> Các bảng tin mạng xã hội được tối ưu hóa tàn nhẫn để giam cầm sự chú ý của bạn; nếu bạn không can thiệp, "chế độ ăn thông tin" của bạn thực chất đang bị thuật toán nhồi nhét.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Thử thách tư duy</span>
+      Nếu chỉ được giữ lại đúng một lớp màng lọc (Hạt giống / Dao tỉa / Vòi tưới / Nắng gió) trong 30 ngày tới, bạn sẽ chọn cái nào và thảm họa gì sẽ xảy ra đầu tiên nếu vắng bóng ba yếu tố còn lại? Hãy đưa ra câu trả lời trước khi bước sang phần tiếp theo.
+    </div>
+    <p><em>Ranh giới đã được thiết lập.</em> Nhận diện rõ điểm mù giúp bạn không tự dằn vặt khi sự tiến bộ diễn ra chậm chạp. Đã đến lúc đưa Khu Vườn định vị vào bản đồ tri thức tổng thể.</p>
+
+    <h2 id="connections">Bản đồ kết nối tri thức</h2>
+    <p>Định vị bài viết này trong hệ thống tri thức rộng lớn, tạo bước đệm để bạn đào sâu nghiên cứu:</p>
+    <ul>
+      <li><strong>Khoa học nhận thức (Predictive brain):</strong> Cung cấp lời giải cho cơ chế "Dự đoán → Phát hiện sai số → Tinh chỉnh", chứng minh vì sao sự lặp lại kèm phản hồi thực tế hiệu quả gấp vạn lần ý chí nỗ lực suông.</li>
+      <li><strong>Xã hội học tri thức (Vygotsky):</strong> Vạch trần sự thật rằng "khí hậu" văn hóa đã đúc sẵn khuôn mẫu cho những điều bạn lầm tưởng là "quan điểm cá nhân".</li>
+      <li><strong>Giáo dục học người trưởng thành (Self-directed learning):</strong> Cung cấp khung phương pháp luận: Tự chẩn đoán điểm mù — Lập mục tiêu — Chọn lọc nguồn — Đánh giá hiệu suất.</li>
+      <li><strong>Thiết kế môi trường quyết định (Choice Architecture):</strong> Kỹ năng "tỉa tót" môi trường sống (thuật toán mạng xã hội, vòng tròn quan hệ, người hướng dẫn) để tư duy sắc bén phát triển tự nhiên mà không cần bòn rút cạn kiệt ý chí.</li>
+    </ul>
+
+    <!-- STATE 6 -->
+    <h2 id="synthesis">Thu hoạch — Bức tranh toàn cảnh</h2>
+    <p>Chúng ta khởi đầu bằng một nghi vấn cốt lõi: Tư duy thực chất hình thành từ đâu, nếu không phải từ việc nhồi nhét qua những khóa học sáo rỗng? Lời giải không nằm ngoan ngoãn trong những trang sách, mà nằm ẩn mình trong trọn vẹn vòng đời sinh trưởng của một khu vườn.</p>
+    <p><strong>Nền đất sinh học</strong> trang bị cho bạn một cỗ máy dự đoán tinh vi. <strong>Khí hậu văn hóa</strong> rèn những chiếc khuôn đúc tư tưởng đầu tiên. <strong>Hạt giống thông tin</strong> quyết định nguyên liệu thô để cỗ máy vận hành. <strong>Dao tỉa phản biện</strong> quyết định dũng khí đập bỏ những kết luận bám rễ sai lầm. <strong>Dòng nước tự học</strong> định đoạt sức vươn lên khi không có ai thúc ép. Và cuối cùng, <strong>nắng gió thực tế</strong> là phép thử tàn khốc quyết định bạn có can đảm để cuộc đời gọt giũa mình hay không.</p>
+    <p>Bài viết khởi nguồn đã đúc kết xuất sắc: Giá trị tối thượng không nằm ở việc sở hữu một đáp án hoàn hảo trong chốc lát, mà ở chỗ sau mọi vấp ngã, bạn vẫn ngoan cường giữ được khao khát học hỏi, dũng khí đập bỏ tư duy cũ, và góc nhìn bao dung hơn với chính phiên bản chưa hoàn thiện của mình ngày hôm qua. Phiên bản nâng cấp này chỉ gia cố thêm cho nền móng sinh học và văn hóa, đồng thời đặt trọn khu vườn đó vào tâm bão AI — nơi hạt giống thì la liệt, nhưng những người làm vườn bản lĩnh lại hiếm hoi như những giọt sương mai.</p>
+    <p>Nếu kiên trì cày xới đủ số vòng lặp, khu vườn sẽ tự cất tiếng trả lời câu hỏi ban đầu — không bằng những định nghĩa khô khốc, mà bằng chính sự điềm tĩnh và sắc bén của bạn khi đối mặt với những ngã rẽ thông tin.</p>
+
+    <blockquote><strong>Cốt lõi vấn đề:</strong> Tư duy là một hệ thống dự đoán sống động, cắm rễ trên nền tảng sinh học và khí hậu văn hóa, sinh trưởng qua 4 màng lọc — chất lượng thông tin dung nạp, góc độ đặt câu hỏi, bản lĩnh tự học, và dũng khí va chạm thực tế. Nó chỉ trường tồn khi bạn không ngừng đánh thức khả năng tự sửa lỗi của chính mình.</blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · Bước đột phá hành động</span>
+      <h3 class="launchpad__title">Thiết kế "Chế độ ăn thông tin" 30 ngày giữa kỷ nguyên AI</h3>
+      <p class="launchpad__problem">Bạn là một nhân sự 26 tuổi, khai thác AI mỗi ngày và được sếp tán thưởng là "thao tác AI điêu luyện". Nhưng bạn nhận ra, những bản kế hoạch của mình ngày càng rập khuôn, sặc mùi máy móc và hòa lẫn vào đám đông đồng nghiệp. Hãy lập một <strong>chế độ ăn thông tin 30 ngày</strong> để giải cứu tư duy độc lập, ứng dụng mô hình Khu Vườn (Đất/Khí hậu/Hạt/Tỉa/Tưới/Nắng gió). Trình bày cô đọng trên 1 trang A4, xác lập chỉ số đo lường (tần suất, định lượng), và cách thức nghiệm thu hiệu quả sau 30 ngày.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bế tắc? Mở từng gợi ý.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1"><span class="launchpad__hint-label">Gợi ý 1 — Lật ngược vấn đề</span>Đừng loay hoay với mục tiêu "giảm thời lượng dùng AI". Hãy thiết lập tư duy "khai thác tối đa chất xám của mình trước khi kích hoạt AI". Trình tự tư duy mang tính quyết định hơn liều lượng sử dụng. Vận hành theo vòng lặp: "Tự dự đoán → Tự sửa sai → Mới truy vấn AI".</div>
+        <div class="launchpad__hint" data-hint="2"><span class="launchpad__hint-label">Gợi ý 2 — Các trụ cột chiến lược</span>Áp dụng 4 màng lọc: (1) Hạt giống — Nạp 2 luồng quan điểm trái chiều/tuần; (2) Dao tỉa — Ứng với mỗi khẳng định, bắt buộc tìm ra một điều kiện phản bác; (3) Vòi tưới — Khoanh vùng 1 lỗ hổng kiến thức/tuần + tìm 1 mentor dẫn dắt (ZPD); (4) Nắng gió — Tung ra 1 sản phẩm thực tế/tuần để thu thập phản hồi tàn khốc. Đánh giá bằng số liệu minh bạch, bài xích cảm tính.</div>
+        <div class="launchpad__hint" data-hint="3"><span class="launchpad__hint-label">Gợi ý 3 — Kiến trúc khung hành động</span>Khung A4 chuẩn: Dòng 1 — Mục tiêu cốt lõi (VD: "Sản xuất luận điểm sắc sảo, thoát ly văn phong AI"). Dòng 2 — Nguyên tắc kỷ luật ("Tự đúc kết 200 từ trước khi gõ prompt"). Dòng 3–6 — Lịch trình đọc chuyên sâu (văn bản gốc / tiểu sử / báo cáo ngành). Dòng 7 — Bộ chỉ số đo lường (số lượng luận điểm phản bác, số lượng phản hồi thu thập). Dòng 8 — Đo lường nghiệm thu sau 30 ngày: Đối chiếu 2 văn bản cách nhau 1 tháng dựa trên tỷ lệ "Số lượng luận điểm độc bản / Số lượng luận điểm do AI mớm lời".</div>
+      </div>
+    </div>
+
+    <section style="margin:40px 0;padding:20px;background:var(--sidenote-bg);border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px">
+<h3 style="margin:0 0 8px;color:var(--accent);font-size:13px;letter-spacing:.08em;text-transform:uppercase">Atlas & Phụ lục — Điều hướng thần tốc</h3>
+<p style="margin:0 0 10px">Đây là bài viết xương sống của toàn bộ hệ thống. Để đạt hiệu suất tiếp thu tối đa, hãy di chuyển theo trục: <a href="tu-duy-atlas.html" style="font-weight:700">Atlas tổng quan (Index)</a> → Bài chính → Phụ lục A → Phụ lục B → Phụ lục C.</p>
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px">
+<a href="tu-duy-atlas.html" style="padding:8px 12px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600">Atlas Tổng ↗</a>
+<a href="thiet-ke-moi-truong-ra-quyet-dinh.html" style="padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">Phụ Lục A — Dòng Sông</a>
+<a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html" style="padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">Phụ Lục B — Phòng Tập</a>
+<a href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html" style="padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none">Phụ Lục C — Thư Viện</a>
+</div>
+</section>
+
+<h2 id="appendices">Phụ lục — 3 đòn bẩy khuếch đại sức mạnh Khu Vườn</h2>
+<p>Ba phụ lục dưới đây là các mảnh ghép chiến thuật triển khai từ bài chính. Mỗi phụ lục là một bài phân tích chuyên sâu (MEDIUM ~7 phút), bám sát mỏ neo "tư duy là hệ thống dự đoán sống và chỉ trường tồn khi dám tự sửa sai". Đọc độc lập để giải quyết vấn đề cục bộ, hoặc đọc liền mạch qua Atlas để rèn luyện toàn diện.</p>
+
+<div style="display:grid;gap:16px;margin:20px 0;font-family:var(--font-sans);font-size:14.5px">
+<div style="padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid #2B6CB0;border-radius:var(--radius)">
+<strong>Phụ lục A — Nghệ thuật thiết kế môi trường ra quyết định <span style="color:var(--text-muted);font-weight:400">(Dòng Sông)</span></strong><br>
+Khám phá 3 đường rãnh định hướng: mặc định (Opt-out tăng hiệu suất gấp đôi - Johnson & Goldstein 2003), ma sát 20 giây (Chiến thuật dời đá - Achor), tín hiệu chuẩn địa phương (Chuẩn Provincial 44,1% - Goldstein 2008). Biến kỹ năng "tỉa môi trường" thành 3 chiến dịch can thiệp thói quen đong đếm được trong 7 ngày. <br>
+<a href="thiet-ke-moi-truong-ra-quyet-dinh.html" style="font-weight:600">Truy cập Phụ lục A →</a> · <a href="thiet-ke-moi-truong-ra-quyet-dinh.md">Bản Markdown</a> · <a href="tu-duy-atlas.html">Trở về Atlas</a>
+</div>
+<div style="padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid #B7791F;border-radius:var(--radius)">
+<strong>Phụ lục B — Đọc sâu thời đại AI — Giao thức 2-pass <span style="color:var(--text-muted);font-weight:400">(Phòng Tập)</span></strong><br>
+Kích hoạt Pass 1: Tự đúc kết 5 dòng thủ công (Hiệu ứng Generation - Slamecka & Graf 1978) → Pass 2: AI rà soát lỗi; Đảo lộn trật tự sẽ tạo ra ảo giác hiểu biết chết người (Khảo sát IJERT chênh lệch ~15%). Hiện thực hóa "hạt giống" bằng chuỗi nghi thức rèn luyện 20'/ngày.<br>
+<a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html" style="font-weight:600">Truy cập Phụ lục B →</a> · <a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.md">Bản Markdown</a> · <a href="tu-duy-atlas.html">Trở về Atlas</a>
+</div>
+<div style="padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid #975A16;border-radius:var(--radius)">
+<strong>Phụ lục C — Khai thác tiểu sử như tập dữ liệu <span style="color:var(--text-muted);font-weight:400">(Thư Viện Bản Đồ)</span></strong><br>
+Ứng dụng ma trận 5 cột: bối cảnh — giả định — lựa chọn — phương án bị loại — cái giá phải trả. Tích hợp Học thuyết Bandura 1977 (Vicarious learning) + Bài học Wald Thế chiến II (Thiên kiến sống sót) + Thương vụ Buffett (Dexter 1,6%, Kraft Heinz -60%). <br>
+<a href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html" style="font-weight:600">Truy cập Phụ lục C →</a> · <a href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.md">Bản Markdown</a> · <a href="tu-duy-atlas.html">Trở về Atlas</a>
+</div>
+</div>
+
+<p style="font-size:14px">Thanh công cụ: <a href="tu-duy-atlas.html">Atlas Tổng</a> · <a href="thiet-ke-moi-truong-ra-quyet-dinh.html">Phụ Lục A</a> · <a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html">Phụ Lục B</a> · <a href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html">Phụ Lục C</a> · <a href="tu-duy-duoc-hinh-thanh-tu-dau.md">Bản Markdown Chính</a></p>
+
+<h2 id="glossary">Từ điển tra cứu — Thuật ngữ gắn liền Khu Vườn</h2>
+    <p>Các thuật ngữ chuyên môn được ghim chặt vào hình ảnh khu vườn để bạn dễ dàng nắm bắt mô hình.</p>
+    <div class="glossary">
+      <dl>
+        <dt>Mô hình dự đoán (Predictive Processing)</dt><dd>Cơ chế não bộ phác thảo trước hiện thực, dùng sai số để sửa chữa lỗ hổng. <em>(Đóng vai trò: Tính chất của nền đất đai.)</em></dd>
+        <dt>Củng cố Hebbian (Hebbian Learning)</dt><dd>Các tế bào thần kinh đồng loạt kích hoạt sẽ thắt chặt liên kết; sự lặp lại biến đường mòn thành đại lộ. <em>(Đóng vai trò: Khả năng ngậm nước của đất.)</em></dd>
+        <dt>Cửa sổ nhạy cảm (Sensitive Period)</dt><dd>Khung thời gian vàng khi não bộ cực kỳ nhạy bén với thông tin đầu vào, thiết lập các lối mòn sâu thẳm. <em>(Đóng vai trò: Mùa màng gieo hạt tối ưu.)</em></dd>
+        <dt>Trung gian văn hóa (Cultural Mediation)</dt><dd>Tư duy cấp cao được chuyển giao qua lăng kính văn hóa và hệ thống ký hiệu (Vygotsky). <em>(Đóng vai trò: Đặc thù khí hậu.)</em></dd>
+        <dt>Vùng phát triển gần (ZPD)</dt><dd>Khoảng cách giữa năng lực tự chủ và năng lực khi được cố vấn; điểm bứt phá mạnh mẽ nhất. <em>(Đóng vai trò: Giàn giáo cho dây leo bám vào.)</em></dd>
+        <dt>Nội hóa (Internalization)</dt><dd>Chuyển hóa ngôn ngữ ngoại cảnh thành tư duy nội tại. <em>(Đóng vai trò: Quá trình khí hậu thẩm thấu vào đất.)</em></dd>
+        <dt>Chế độ ăn thông tin (Information Diet)</dt><dd>Nguồn nguyên liệu đầu vào bạn dung nạp hằng ngày, quyết định vật liệu dự đoán của não. <em>(Đóng vai trò: Túi hạt giống chuẩn bị gieo.)</em></dd>
+        <dt>Thuyết tâm trí (Theory of Mind)</dt><dd>Khả năng đọc vị suy nghĩ người khác, được mài giũa mạnh mẽ qua việc đọc tiểu thuyết hư cấu. <em>(Đóng vai trò: Độ nhạy cảm nhận mùi đất.)</em></dd>
+        <dt>Quan sát (Observation)</dt><dd>Ghi nhận khách quan chuỗi sự kiện mà không vội vàng phán xét. <em>(Đóng vai trò: Đi dạo thanh tra khu vườn mỗi ban mai.)</em></dd>
+        <dt>Phản biện (Critical Thinking)</dt><dd>Kỹ thuật đối chiếu thông tin để tìm vết rạn nứt, sẵn sàng gạt bỏ ngụy biện. <em>(Đóng vai trò: Chiếc kéo tỉa cành sắc bén.)</em></dd>
+        <dt>Tự học có định hướng (Self-directed Learning)</dt><dd>Năng lực tự chẩn bệnh, lập mục tiêu, chọn nguyên liệu và đo lường sự tiến bộ. <em>(Đóng vai trò: Kỹ thuật tưới nước chủ động ngay tại gốc khô.)</em></dd>
+        <dt>Tư duy phát triển (Growth Mindset)</dt><dd>Niềm tin năng lực sẽ thăng hạng qua chiến lược đúng đắn; tuyệt đối không phải khẩu hiệu sáo rỗng. <em>(Đóng vai trò: Tâm thế của người cầm vòi tưới.)</em></dd>
+        <dt>Kiểm nghiệm thực tế (Enactive Testing)</dt><dd>Quăng mình vào những va chạm thực tế khốc liệt để thu thập dữ liệu chân thực. <em>(Đóng vai trò: Chống chọi với nắng gió bão bùng.)</em></dd>
+        <dt>Giả định (Assumption)</dt><dd>Những ảo tưởng mặc định là đúng nhưng chưa từng qua bài test thực tế. <em>(Đóng vai trò: Đám cỏ dại xảo quyệt ngụy trang thành mầm xanh.)</em></dd>
+        <dt>Dữ liệu phản hồi (Feedback Data)</dt><dd>Tín hiệu trần trụi mà thực tế dội lại để phá vỡ ảo tưởng. <em>(Đóng vai trò: Bản tin dự báo thời tiết khắc nghiệt.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2>Kiểm tra nhận thức</h2>
+      <p class="quiz__intro">Dành 2 phút để hoàn thành 3 câu trắc nghiệm, sau đó bấm <em>Kiểm tra đáp án</em>.</p>
+      <fieldset data-answer="2">
+        <legend>1. Luận điểm nào sau đây lột tả chính xác nhất vai trò của "Đất" trong mô hình Khu Vườn?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Tính cách bẩm sinh ấn định 80% cấu trúc tư duy.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Não bộ vận hành như ổ cứng thụ động, tư duy là phần mềm cài đặt thêm.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Não bộ là hệ thống dự đoán, củng cố rãnh mòn qua lặp lại, hiệu chỉnh qua sai số và sở hữu các khung cửa sổ nhạy cảm.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Não bộ đóng băng hoàn toàn sau tuổi 25, mất đi tính dẻo dai.</label>
+        <div class="quiz__explanation"><strong>Phân tích:</strong> Đáp án A sai vì tố chất bẩm sinh không bất biến; Đáp án B sai vì não không phải ổ cứng thụ động; Đáp án D sai vì tính dẻo (plasticity) duy trì suốt vòng đời. Chỉ có C phản ánh trọn vẹn bản chất của "đất".</div>
+      </fieldset>
+      <fieldset data-answer="1">
+        <legend>2. Tại sao tiểu thuyết hư cấu (fiction) lại được xem là "hạt giống" thượng hạng?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Bởi tiểu thuyết hư cấu mô tả sự thật chuẩn xác hơn sách phi hư cấu.</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Bởi nó mài giũa thuyết tâm trí (Theory of mind) và sự thấu cảm thông qua việc sống thử những cuộc đời xa lạ.</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Bởi đọc fiction kích thích chỉ số IQ tăng vọt ngay tức khắc.</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Bởi AI hiện tại chưa đủ trình độ tóm tắt cốt truyện tiểu thuyết.</label>
+        <div class="quiz__explanation"><strong>Phân tích:</strong> Nghiên cứu đồ sộ của Wimmer (2024) khẳng định lợi ích vững chắc của fiction nằm ở việc gia tăng sự thấu cảm và năng lực đọc vị tâm lý (mentalizing), không phải ở IQ hay tính xác thực dữ kiện. B là đáp án chính xác.[cite: 5]</div>
+      </fieldset>
+      <fieldset data-answer="2">
+        <legend>3. Kịch bản nào lột tả chuẩn xác cơ chế "tự học đóng vai trò trung gian" (Song et al. 2022)?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Sở hữu khả năng phản biện bén nhạy thì tự khắc giải quyết vấn đề xuất sắc, không cần kỹ năng tự học.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Rải tiền tham gia vô số khóa học có sẵn để bù đắp điểm yếu phản biện.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Dùng phản biện như radar quét lỗ hổng, dùng tự học có định hướng để vá lỗi, từ đó giải quyết triệt để vấn đề.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Tung hô sự nỗ lực mù quáng mỗi ngày để nuôi dưỡng ảo tưởng sức mạnh.</label>
+        <div class="quiz__explanation"><strong>Phân tích:</strong> Khớp hoàn hảo với hệ số trung gian β=0.78: Phản biện → Tự học → Giải quyết vấn đề. Đáp án A bác bỏ vai trò tự học; Đáp án D vướng bẫy "False growth mindset" (Lời khen sáo rỗng).[cite: 5]</div>
+      </fieldset>
+      <div class="quiz__actions"><button type="button" class="btn" id="quizCheck">Kiểm tra đáp án</button><button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button><p class="quiz__score" id="quizScore"></p></div>
+    </section>
+
+    <h2 id="sources">Nguồn tài liệu tham khảo & Đọc thêm</h2>
+    <ul style="font-size:14px;line-height:1.6">
+      <li>Wimmer, L. et al. (2024). Củng cố hiệu ứng nhận thức từ việc đọc tiểu thuyết: Phân tích tổng hợp đa cấp bậc. <em>Journal of Experimental Psychology: General</em>, 153(6). <a href="https://doi.org/10.1037/xge0001583" target="_blank" rel="noopener">doi:10.1037/xge0001583</a> — 70 thí nghiệm g=0.14; 114 nghiên cứu r=.16.[cite: 5]</li>
+      <li>Song, Y., Lee, Y. & Lee, J. (2022). Vai trò trung gian của tự học lên mối liên hệ giữa tư duy phản biện và năng lực giải quyết vấn đề. <em>Nurse Education Today</em>, 109, 105227. <a href="https://doi.org/10.1016/j.nedt.2021.105227" target="_blank" rel="noopener">doi:10.1016/j.nedt.2021.105227</a> — N=138, β=0.78.[cite: 5]</li>
+      <li>Graphite (2025). Nội dung do AI tạo đã vượt mặt con người. Phân tích 43k URLs từ CommonCrawl; vượt ranh giới 11/2024, chiếm 51.7% vào 05/2025. <a href="https://graphite.io/five-percent/research/more-articles-are-now-created-by-ai-than-humans" target="_blank" rel="noopener">graphite.io</a>[cite: 5]</li>
+      <li>IDC Global DataSphere Forecast, 2025–2029. Quy mô dữ liệu: ~132 ZB (2023) → ~202 ZB (2025) → ~394 ZB (2028), tỷ lệ tăng trưởng kép 25.1%. <a href="https://my.idc.com/getdoc.jsp?containerId=US52799725" target="_blank" rel="noopener">IDC</a>[cite: 5]</li>
+      <li>Vygotsky, L. S. (1934/1986). <em>Tư duy và Ngôn ngữ</em> (Kozulin ed., MIT Press). <a href="https://mitpress.mit.edu/9780262720106/thought-and-language/" target="_blank" rel="noopener">MIT Press</a>[cite: 5]</li>
+      <li>Dweck, C. (2016). Bản chất thực sự của "Tư duy phát triển". <em>Harvard Business Review</em>. <a href="https://www.iths.org/wp-content/uploads/What-Having-a-Growth-Mindset-Actually-Means.pdf" target="_blank" rel="noopener">PDF</a>[cite: 5]</li>
+      <li>Maguire, E. A. et al. (2000). Biến đổi cấu trúc hồi hải mã ở tài xế taxi London. <em>PNAS</em>; Woollett & Maguire (2011). Dẫn chứng về tính dẻo thần kinh ở người trưởng thành.[cite: 5]</li>
+    </ul>
+
+    
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin:48px 0 0;padding:16px 18px;background:var(--sidenote-bg);border:1px solid var(--border);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px">
+  <a href="tu-duy-atlas.html" style="padding:10px 16px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600">Atlas tổng — Khám phá lộ trình →</a>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <a href="thiet-ke-moi-truong-ra-quyet-dinh.html" style="padding:10px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text)">Phụ Lục A →</a>
+    <a href="doc-sau-trong-thoi-ai-giao-thuc-2-pass.html" style="padding:10px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text)">Phụ Lục B</a>
+    <a href="tieu-su-nhu-du-lieu-hoc-tu-nguoi-di-truoc.html" style="padding:10px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:8px;text-decoration:none;color:var(--text)">Phụ Lục C</a>
+  </div>
+</div>
+
+<div class="footer">
+      <p>Atlas tổng · <strong>Chuỗi “Tư duy được hình thành từ đâu?”</strong> · 4 bài · LONG (~6000 từ) · 2026-08-31</p>
+      <p>Phím tắt điều khiển: <span class="kbd">J</span>/<span class="kbd">K</span> cuộn · <span class="kbd">F</span> Chế độ tập trung (Focus) · <span class="kbd">T</span> Chuyển đổi nền · <span class="kbd">P</span> In ấn</p>
+    </div>
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú bên lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Trạm khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột vào <span style="border-bottom:1px dashed var(--accent2)">các cụm từ gạch đứt</span> trong văn bản để hiển thị định nghĩa chi tiết tại đây.</p>
+    </div>
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="dat-khi-hau"><span class="amplifier__term">Đất & khí hậu</span><p class="amplifier__body">Đất = Cơ chế não dự đoán & Tính dẻo thần kinh; Khí hậu = Văn hóa, ngôn ngữ & hệ thống chuẩn mực ngầm. Đây là hai rào cản nền tảng trước khi bạn có cơ hội tự tay gieo mầm.</p></div>
+    </div>
+    <div class="sidenote"><strong>Ghi chú 1 — Trục lõi bài viết</strong>Bốn trụ cột (Lựa chọn nguyên liệu → Phản biện → Tự học → Cọ xát thực tế) được giữ vững. Phân tích này bổ sung khối đế sinh học & văn hóa, đặt toàn bộ mô hình vào áp lực khốc liệt của kỷ nguyên AI.[cite: 5]</div>
+    <div class="sidenote"><strong>Ghi chú 2 — Những con số biết nói</strong>Con số 51,7% bài viết mới do AI tạo ra (05/2025, Graphite) không đồng nghĩa với "sự thông minh vượt trội của máy móc". Nó chỉ báo hiệu rác thông tin đang rẻ rúng hơn bao giờ hết — và năng lực của "người làm vườn" (người chọn hạt) mới là vũ khí sắc bén nhất.[cite: 5]</div>
+    <div class="sidenote"><strong>Trivia lịch sử</strong>Vygotsky chắp bút <em>Tư duy và Ngôn ngữ</em> năm 1934, và ra đi vì bạo bệnh lao phổi cùng năm ở tuổi 37. Quan điểm "tư duy bị văn hóa thao túng" từng bị kiểm duyệt gắt gao tại Liên Xô, trước khi vươn mình trở thành hòn đá tảng của tâm lý học phát triển đương đại.[cite: 5]</div>
+  </aside>
+</div>
+
+
+<div id="readProgress" style="position:fixed;bottom:20px;left:20px;z-index:49;display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow);font-family:var(--font-sans);font-size:12px;color:var(--text-muted)">
+  <span id="progText">0% · còn ~-- phút</span>
+  <span style="width:60px;height:6px;background:var(--sidenote-bg);border-radius:999px;overflow:hidden;display:inline-block"><span id="progBar" style="display:block;height:100%;width:0%;background:var(--accent);transition:width 80ms linear"></span></span>
+</div>
+
+<div class="controls">
+  <button type="button" class="control-btn" id="focusBtn" title="Focus mode (F)" aria-label="Focus mode">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v6M12 17v6M4.22 4.22l4.24 4.24M15.54 15.54l4.24 4.24M1 12h6M17 12h6M4.22 19.78l4.24-4.24M15.54 8.46l4.24-4.24"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="themeBtn" title="Đổi nền sáng/tối (T)" aria-label="Theme">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="fontIncBtn" title="Tăng cỡ chữ ( + )" aria-label="Tăng cỡ chữ">A+</button>
+  <button type="button" class="control-btn" id="fontDecBtn" title="Giảm cỡ chữ ( - )" aria-label="Giảm cỡ chữ">A−</button>
+  <button type="button" class="control-btn" id="topBtn" title="Lên đầu trang (Home)" aria-label="Lên đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In / Lưu PDF (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>
+  </button>
+</div>
+
+<script>
+const STORAGE_KEY='edu-notes:'+(document.title||'untitled');
+const store={get(k){try{return JSON.parse(localStorage.getItem(STORAGE_KEY+':'+k))}catch{return null}},set(k,v){try{localStorage.setItem(STORAGE_KEY+':'+k,JSON.stringify(v))}catch{}}};
+(function initTheme(){const s=store.get('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches){document.documentElement.setAttribute('data-theme','dark')}})();
+document.getElementById('themeBtn').addEventListener('click',()=>{const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);store.set('theme',n)});
+(function initFocus(){if(store.get('focus'))document.body.classList.add('focus-mode')})();
+document.getElementById('focusBtn').addEventListener('click',()=>{document.body.classList.toggle('focus-mode');const o=document.body.classList.contains('focus-mode');document.getElementById('focusBtn').setAttribute('data-active',o?'true':'false');store.set('focus',o)});
+(function buildTOC(){const c=document.getElementById('canvas');const t=document.getElementById('toc');const h=c.querySelectorAll('h2, h3');h.forEach(x=>{if(!x.id){x.id=x.textContent.toLowerCase().replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').slice(0,60)}const li=document.createElement('li');if(x.tagName==='H3')li.className='toc-l3';const a=document.createElement('a');a.href='#'+x.id;a.textContent=x.textContent;li.appendChild(a);t.appendChild(li)})})();
+(function initObserver(){const links=document.querySelectorAll('.toc a');const map=new Map();links.forEach(a=>map.set(a.getAttribute('href').slice(1),a));const obs=new IntersectionObserver(es=>{es.forEach(e=>{const l=map.get(e.target.id);if(!l)return;if(e.isIntersecting){document.querySelectorAll('.toc a.is-active').forEach(x=>x.classList.remove('is-active'));l.classList.add('is-active')}})},{rootMargin:'-20% 0px -70% 0px',threshold:0});document.querySelectorAll('#canvas h2, #canvas h3').forEach(h=>obs.observe(h))})();
+(function initProgress(){const f=document.getElementById('progressFill');function u(){const s=window.scrollY;const tot=document.documentElement.scrollHeight-window.innerHeight;const p=tot>0?(s/tot)*100:0;f.style.width=p+'%';store.set('scroll',s)}window.addEventListener('scroll',u,{passive:true});u();const sv=store.get('scroll');if(typeof sv==='number'&&sv>100){setTimeout(()=>window.scrollTo({top:sv,behavior:'instant'}),60)}})();
+document.querySelectorAll('.flip-card').forEach(c=>{c.addEventListener('click',()=>c.classList.toggle('is-flipped'));c.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();c.classList.toggle('is-flipped')}})});
+(function initQuiz(){const q=document.getElementById('quiz');if(!q)return;const ch=document.getElementById('quizCheck');const rs=document.getElementById('quizReset');const sc=document.getElementById('quizScore');const pr=store.get('quiz')||{};Object.entries(pr).forEach(([n,v])=>{const i=q.querySelector(`input[name="${n}"][value="${v}"]`);if(i)i.checked=true});q.addEventListener('change',()=>{const s={};q.querySelectorAll('input[type=radio]:checked').forEach(i=>s[i.name]=i.value);store.set('quiz',s)});ch.addEventListener('click',()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{const a=parseInt(fs.dataset.answer,10);const sel=fs.querySelector('input:checked');t++;fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const cor=fs.querySelector(`input[value="${a}"]`);if(cor)cor.closest('.quiz__option').classList.add('correct-answer');if(sel&&parseInt(sel.value,10)!==a){sel.closest('.quiz__option').classList.add('incorrect-answer')}if(sel&&parseInt(sel.value,10)===a)c++});q.classList.add('is-graded');const pct=Math.round((c/t)*100);let msg=`${c} / ${t} đúng (${pct}%)`;if(pct===100)msg+=' — 🎯 Xuất sắc, bạn đã nắm trọn vẹn vấn đề';else if(pct>=66)msg+=' — Rất vững';else msg+=' — Bạn nên rà soát lại phần ranh giới điểm mù';sc.textContent=msg});rs.addEventListener('click',()=>{q.querySelectorAll('input[type=radio]').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');sc.textContent='';store.set('quiz',{})})})();
+document.addEventListener('keydown',e=>{if(e.target.matches('input, textarea, select'))return;if(e.metaKey||e.ctrlKey||e.altKey)return;switch(e.key.toLowerCase()){case 'j':window.scrollBy({top:200,behavior:'smooth'});break;case 'k':window.scrollBy({top:-200,behavior:'smooth'});break;case 'f':document.getElementById('focusBtn').click();break;case 't':document.getElementById('themeBtn').click();break;case 'p':window.print();break;}});
+(function initOrbit(){const ns=Array.from(document.querySelectorAll('.orbit__node'));if(!ns.length)return;const reached=new Set(store.get('reached')||[]);ns.forEach(n=>{if(reached.has(n.dataset.target))n.setAttribute('data-reached','true')});ns.forEach(n=>{n.addEventListener('click',()=>{const t=document.getElementById(n.dataset.target);if(t)t.scrollIntoView({behavior:'smooth',block:'start'})})});const targets=ns.map(n=>document.getElementById(n.dataset.target)).filter(Boolean);if(!targets.length)return;const obs=new IntersectionObserver(es=>{es.forEach(e=>{const node=ns.find(x=>x.dataset.target===e.target.id);if(!node)return;if(e.isIntersecting){node.setAttribute('data-reached','true');reached.add(e.target.id);store.set('reached',Array.from(reached));ns.forEach(x=>x.removeAttribute('data-active'));node.setAttribute('data-active','true')}})},{rootMargin:'-15% 0px -70% 0px',threshold:0});targets.forEach(t=>obs.observe(t))})();
+(function initAmplifier(){const amp=document.getElementById('amplifier');const pool=document.getElementById('ampNotes');if(!amp||!pool)return;const empty=amp.innerHTML;let cur=null;function show(id){if(id===cur)return;const note=pool.querySelector(`[data-note-id="${id}"]`);if(!note)return;cur=id;amp.innerHTML='<span class="amplifier__label">Trạm khuếch đại thuật ngữ</span>'+note.innerHTML;document.querySelectorAll('.term-amp.is-active').forEach(t=>t.classList.remove('is-active'));document.querySelectorAll(`.term-amp[data-note="${id}"]`).forEach(t=>t.classList.add('is-active'))}function reset(){cur=null;amp.innerHTML=empty;document.querySelectorAll('.term-amp.is-active').forEach(t=>t.classList.remove('is-active'))}document.querySelectorAll('.term-amp[data-note]').forEach(t=>{t.addEventListener('mouseenter',()=>show(t.dataset.note));t.addEventListener('focus',()=>show(t.dataset.note));t.setAttribute('tabindex','0')});const cv=document.getElementById('canvas');if(cv)cv.addEventListener('mouseleave',reset)})();
+(function initCheckpoints(){document.querySelectorAll('.checkpoint').forEach(cp=>{const id=cp.dataset.checkpointId;const ta=cp.querySelector('textarea');const saved=cp.querySelector('[data-checkpoint-saved]');const btn=cp.querySelector('[data-checkpoint-reveal]');if(!id||!ta)return;const prior=store.get('cp:'+id);if(prior){ta.value=prior;if(saved)saved.textContent='Đã lưu dữ liệu'}let t;ta.addEventListener('input',()=>{clearTimeout(t);t=setTimeout(()=>{store.set('cp:'+id,ta.value);if(saved)saved.textContent='Đã lưu dữ liệu'},400)});if(btn){btn.addEventListener('click',()=>{cp.classList.toggle('is-revealed');btn.textContent=cp.classList.contains('is-revealed')?'Ẩn góc nhìn chuyên gia':'Đối chiếu góc nhìn chuyên gia'})}})})();
+(function initLaunchpad(){const btn=document.getElementById('hintBtn');if(!btn)return;const hints=Array.from(document.querySelectorAll('.launchpad__hint'));const tot=hints.length;let shown=0;const prior=parseInt(store.get('hints')||0,10);for(let i=0;i<prior&&i<tot;i++){hints[i].classList.add('is-visible');shown=i+1}upd();btn.addEventListener('click',()=>{if(shown>=tot)return;hints[shown].classList.add('is-visible');shown++;store.set('hints',shown);upd()});function upd(){if(shown>=tot){btn.textContent='Đã khai thác hết gợi ý';btn.disabled=true}else{btn.textContent=`Mở gợi ý ${shown+1} / ${tot}`}}})();
+
+/* === Enhancements: font size, top, print === */
+(function(){
+  const key='edu-font';
+  const canvas=document.getElementById('canvas');
+  let size=parseInt(localStorage.getItem(key)||'18',10);
+  function apply(){ if(canvas) canvas.style.fontSize=size+'px'; localStorage.setItem(key, String(size)); }
+  apply();
+  const inc=document.getElementById('fontIncBtn');
+  const dec=document.getElementById('fontDecBtn');
+  if(inc) inc.addEventListener('click',()=>{ if(size<24){ size+=1; apply(); }});
+  if(dec) dec.addEventListener('click',()=>{ if(size>15){ size-=1; apply(); }});
+  const top=document.getElementById('topBtn');
+  if(top) top.addEventListener('click',()=> window.scrollTo({top:0, behavior:'smooth'}));
+  const pr=document.getElementById('printBtn');
+  if(pr) pr.addEventListener('click',()=> window.print());
+  // keyboard: + - Home
+  document.addEventListener('keydown', e=>{
+    if(e.target.matches('input, textarea')) return;
+    if(e.key==='+'||e.key==='='){ e.preventDefault(); inc&&inc.click(); }
+    if(e.key==='-'||e.key==='_'){ e.preventDefault(); dec&&dec.click(); }
+    if(e.key==='Home'){ e.preventDefault(); top&&top.click(); }
+  });
+})();
+
+/* === Reading progress + time remaining === */
+(function(){
+  const text=document.getElementById('progText');
+  const bar=document.getElementById('progBar');
+  if(!text||!bar) return;
+  // reading time from meta or fallback
+  let totalMin=28;
+  const rt=document.querySelector('.navigator__reading-time');
+  if(rt){ const m=rt.textContent.match(/(\d+)\s*ph/); if(m) totalMin=parseInt(m[1],10); }
+  // hero has no rt, fallback by file
+  if(document.title.includes('Atlas')) totalMin=3;
+  function upd(){
+    const sc=window.scrollY;
+    const tot=document.documentElement.scrollHeight-window.innerHeight;
+    const p=tot>0? sc/tot : 0;
+    const pct=Math.round(p*100);
+    const remain=Math.max(0, Math.round(totalMin*(1-p)));
+    text.textContent=pct+'% \u00B7 c\u00F2n ~'+remain+' ph\u00FAt';
+    bar.style.width=pct+'%';
+  }
+  window.addEventListener('scroll', upd, {passive:true});
+  window.addEventListener('resize', upd);
+  upd();
+})();
+
+</script>
+</body>
+</html>
