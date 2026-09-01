@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atlas Tổng Hợp — Từ Vườn Ươm Đến World Café: 4 Bài Về Chủ Tọa, An Toàn và Cấu Trúc</title>
+<meta name="description" content="Atlas 4 bài liền mạch: Chủ Tọa Lùi Một Bước → An Toàn Tâm Lý → Liberating Structures 1-2-4-All → World Café. Hướng dẫn toàn diện từ phiên 12 phút đến workshop 100 người.">
+<meta name="iterator-cycles" content="0">
+<meta name="iterator-stopped-by" content="skipped">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}
+:root{
+  --font-serif:'Merriweather',Georgia,serif;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --bg:#FDFBF7;--bg-elevated:#FFFFFF;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;
+  --accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;
+  --border:#E4DFD5;--sidenote-bg:#EDF2F7;--code-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;
+  --radius:10px;--radius-sm:6px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 4px 12px rgba(0,0,0,.08);--measure:72ch;--line:1.7;--transition:200ms cubic-bezier(.4,0,.2,1);
+}
+html[data-theme="dark"]{
+  --bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;
+  --accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--code-bg:#2A2F3A;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);--shadow:0 4px 12px rgba(0,0,0,.4);
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100;}
+.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear;}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px;}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px;}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%;}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted);}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none;}body.focus-mode .app{grid-template-columns:1fr;max-width:780px;}
+@media (max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px;}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px;}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px;}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px;}
+.toc{list-style:none;padding:0;margin:0;}.toc li{margin:2px 0}.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4;}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg);}.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500;}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.2rem;line-height:1.2;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em;}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.45rem;line-height:1.3;color:var(--text-strong);margin:48px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px;}
+.canvas h2:first-of-type{border-top:none;padding-top:0}
+.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.12rem;color:var(--text-strong);margin:28px 0 12px;scroll-margin-top:24px;}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong);font-weight:700}.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;}
+.tldr{margin:16px 0 24px;padding:14px 20px;background:var(--accent2-soft);border-left:4px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--text-strong);}
+.tldr strong{color:var(--accent2-strong);}
+.hook{margin:24px 0 32px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.02rem;color:var(--text);box-shadow:var(--shadow-sm);}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px;}
+.card{margin:20px 0;padding:20px 22px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);transition:transform var(--transition),box-shadow var(--transition);}
+.card:hover{transform:translateY(-2px);box-shadow:var(--shadow);}
+.card__num{font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:6px;}
+.card__title{font-family:var(--font-sans);font-weight:700;font-size:1.08rem;color:var(--text-strong);margin:0 0 6px;}
+.card__title a{color:var(--text-strong);text-decoration:none;border-bottom:2px solid var(--accent);}
+.card__title a:hover{color:var(--accent);}
+.card__meta{font-family:var(--font-sans);font-size:13px;color:var(--text-muted);margin-bottom:8px;}
+.card__desc{font-family:var(--font-sans);font-size:14px;line-height:1.55;color:var(--text);margin:0 0 10px;}
+.card__links{font-family:var(--font-sans);font-size:13px;}
+.card__links a{margin-right:12px;}
+.badge{display:inline-block;padding:3px 8px;border-radius:999px;background:var(--sidenote-bg);border:1px solid var(--border);font-family:var(--font-sans);font-size:12px;color:var(--text-muted);margin-right:6px;}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted);}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center;line-height:1.6;}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;align-items:center;gap:10px;z-index:50;}
+.control-group{display:flex;flex-direction:column;background:var(--bg-elevated);border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);overflow:hidden;}
+.control-group .control-btn{width:44px;height:36px;border:0;box-shadow:none;border-radius:0;background:transparent;}
+.control-group .control-btn + .control-btn{border-top:1px solid var(--border)}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);font-family:var(--font-sans);font-size:14px;font-weight:600;padding:0;}
+.control-btn:hover{color:var(--accent);transform:translateY(-2px);}
+.control-btn svg{width:18px;height:18px}
+.control-btn--top{opacity:0;pointer-events:none;transform:translateY(8px);}
+.control-btn--top.is-visible{opacity:1;pointer-events:auto;transform:translateY(0);}
+:root{--reading-scale:1}body{font-size:calc(18px * var(--reading-scale))}
+.reading-badge{position:fixed;bottom:24px;left:24px;display:inline-flex;align-items:baseline;gap:6px;padding:6px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow-sm);font-family:var(--font-sans);font-size:12px;color:var(--text-muted);z-index:50;}
+.reading-badge__pct{font-weight:700;color:var(--accent-strong);}
+.reading-badge__label{text-transform:uppercase;letter-spacing:.08em}
+body.focus-mode .reading-badge{display:none}
+.shortcuts{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px;}
+.shortcuts[hidden]{display:none}
+.shortcuts__panel{background:var(--bg-elevated);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;max-width:460px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.25);font-family:var(--font-sans);}
+.shortcuts__list{display:grid;grid-template-columns:max-content 1fr;gap:8px 20px;margin:0;font-size:14px;}
+.shortcuts__list kbd{font-family:var(--font-mono);font-size:11px;padding:2px 6px;border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;background:var(--bg-sunken);color:var(--text);}
+.shortcuts__close{margin-top:16px;padding:8px 16px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:13px;cursor:pointer;}
+.canvas h2,.canvas h3{position:relative;cursor:pointer}
+.canvas h2::after,.canvas h3::after{content:"🔗";position:absolute;left:-28px;top:50%;transform:translateY(-50%);opacity:0;font-size:14px;transition:opacity 200ms;}
+.canvas h2:hover::after,.canvas h3:hover::after{opacity:.6;}
+.canvas h2.anchor-copied::after,.canvas h3.anchor-copied::after{content:"✓ copied";opacity:1;color:var(--accent-strong);font-size:11px;font-family:var(--font-sans);left:-66px;}
+@media print{html,body{background:white;color:black;font-size:12pt}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}.navigator,.marginalia,.controls,.progress-bar,.reading-badge,.shortcuts{display:none!important}a{color:black;text-decoration:underline}a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Atlas · Tổng hợp 4 bài</p>
+      <p style="font-size:13px;color:var(--text);margin:0;">Thời gian đọc: ~29 phút</p>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+  <main class="canvas" id="canvas">
+    <h1>Atlas Tổng Hợp — Từ Vườn Ươm Đến World Café</h1>
+    <div class="tldr"><strong>TL;DR.</strong> 4 bài viết liên kết chặt chẽ: nghệ thuật lùi bước để mở phân kỳ → xây dựng lưới an toàn tâm lý → cấu trúc 12 phút chia đều tiếng nói → nghệ thuật gom tri thức 90 phút. Nguyên lý cốt lõi: thay đổi cấu trúc tương tác, không cần thay đổi con người.</div>
+    <div class="hook">
+      <span class="hook__label">🎣 Vì sao cần atlas?</span>
+      Bạn hoàn toàn có thể làm chủ cuộc họp 12 người trong 12 phút (qua 1-2-4-All) hay điều phối 60 người trong 90 phút (qua World Café) chỉ bằng nền tảng Vườn Ươm và Lưới An Toàn. Atlas này tổng hợp 4 bài viết thành một lộ trình xuyên suốt. Bạn có thể đọc liền mạch, hoặc nhảy thẳng vào phần mình cần ngay lập tức.
+    </div>
+
+    <h2 id="tong-quan">Tổng quan chuỗi · lộ trình 4 bài</h2>
+    <p>Lộ trình đi từ <strong>sự im lặng của quyền lực</strong> (vì sao lãnh đạo cần lùi bước) → <strong>điều kiện để nói thật</strong> (an toàn tâm lý) → <strong>công cụ thực chiến 12 phút</strong> (chia đều cơ hội phát biểu) → <strong>hội thoại quy mô lớn 90 phút</strong> (tổng hợp tri thức tập thể). Mỗi bài viết là một học phần độc lập nhưng khi ghép lại sẽ tạo thành một hệ thống vững chắc.</p>
+    <div style="display:flex;align-items:center;gap:8px;margin:16px 0;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);flex-wrap:wrap;">
+      Thời gian đọc dự kiến: <a href="chu-toa-lui-mot-buoc.html" style="text-decoration:none;"><span class="badge" style="cursor:pointer;border-color:var(--accent);color:var(--accent);">1 · 8'</span></a> <span>→</span> <a href="an-toan-tam-ly-edmondson.html" style="text-decoration:none;"><span class="badge" style="cursor:pointer;border-color:var(--accent);color:var(--accent);">2 · 7'</span></a> <span>→</span> <a href="liberating-structures-1-2-4-all.html" style="text-decoration:none;"><span class="badge" style="cursor:pointer;border-color:var(--accent);color:var(--accent);">3 · 7'</span></a> <span>→</span> <a href="world-cafe-30-100.html" style="text-decoration:none;"><span class="badge" style="cursor:pointer;border-color:var(--accent);color:var(--accent);">4 · 7'</span></a> <span style="margin-left:8px;">= <strong>29'</strong> tổng cộng</span> <span style="margin-left:6px;color:var(--accent);font-size:11px;">(nhấp vào 1–4 để xem nhanh)</span>
+    </div>
+
+    <div class="card">
+      <span class="card__num"><a href="chu-toa-lui-mot-buoc.html" style="color:var(--accent);text-decoration:none;">1</a> — Nền tảng</span>
+      <h3 class="card__title"><a href="chu-toa-lui-mot-buoc.html">Chủ Tọa Lùi Một Bước — Nghệ Thuật Kiềm Chế Quyền Lực Để Mở Không Gian Phân Kỳ</a></h3>
+      <div class="card__meta">Mô hình Vườn Ươm · Đọc ~8 phút</div>
+      <p class="card__desc">Khám phá lý do "sếp nói trước" dễ dàng bóp nghẹt sự sáng tạo. Bài viết phân tích từ lịch sử Quaker, nghiên cứu của Lewin/Rogers đến quy trình 5 bước thực chiến: lùi - quan sát - ghi - hỏi lại - hội tụ. Giúp bạn rèn luyện bản thân và nhận diện 4 kiểu tương tác trong phòng họp.</p>
+      <div class="card__links"><a href="chu-toa-lui-mot-buoc.html">→ Đọc bài viết</a> <span style="color:var(--text-muted);">· Khuyến nghị đọc trước để làm nền tảng</span></div>
+    </div>
+
+    <div class="card">
+      <span class="card__num"><a href="an-toan-tam-ly-edmondson.html" style="color:var(--accent);text-decoration:none;">2</a> — Điều kiện</span>
+      <h3 class="card__title"><a href="an-toan-tam-ly-edmondson.html">An Toàn Tâm Lý — Vì Sao Đội Ngũ Nói Thật Làm Tốt Hơn (Edmondson & Aristotle)</a></h3>
+      <div class="card__meta">Mô hình Lưới An Toàn Xiếc · Đọc ~7 phút</div>
+      <p class="card__desc">Tìm hiểu định nghĩa chuẩn từ Edmondson (1999) và dự án Aristotle của Google. Cung cấp ma trận 4 vùng, bộ 7 câu hỏi chẩn đoán và công cụ 3 đòn bẩy: đặt khung → mời → phản ứng. Xây dựng sự an toàn thực chất thay vì những khẩu hiệu sáo rỗng.</p>
+      <div class="card__links"><a href="an-toan-tam-ly-edmondson.html">→ Đọc bài viết</a> <span style="color:var(--text-muted);">· Công cụ đo lường và xây dựng team</span></div>
+    </div>
+
+    <div class="card">
+      <span class="card__num"><a href="liberating-structures-1-2-4-all.html" style="color:var(--accent);text-decoration:none;">3</a> — Động tác 12'</span>
+      <h3 class="card__title"><a href="liberating-structures-1-2-4-all.html">Liberating Structures — 1-2-4-All: 12 Phút Để Mọi Người Nói Thật</a></h3>
+      <div class="card__meta">Mô hình Bộ Lego · Đọc ~7 phút</div>
+      <p class="card__desc">Giới thiệu cấu trúc giải phóng 1-2-4-All với 5 yếu tố cốt lõi. Áp dụng nhịp điệu 1-2-4-5 (12 phút) để mọi người đều có tiếng nói. Bao gồm các biến thể (15% Solutions, Troika) và 3 bẫy phổ biến cần tránh. Dễ dàng triển khai mà không cần kỹ năng điều phối chuyên sâu.</p>
+      <div class="card__links"><a href="liberating-structures-1-2-4-all.html">→ Đọc bài viết</a> <span style="color:var(--text-muted);">· Áp dụng ngay cho cuộc họp tiếp theo</span></div>
+    </div>
+
+    <div class="card">
+      <span class="card__num"><a href="world-cafe-30-100.html" style="color:var(--accent);text-decoration:none;">4</a> — Hội thoại 90'</span>
+      <h3 class="card__title"><a href="world-cafe-30-100.html">World Café — 3 Vòng, 90 Phút Để 60 Người Nghe Thấy Nhau</a></h3>
+      <div class="card__meta">Mô hình Chợ Phiên · Đọc ~7 phút</div>
+      <p class="card__desc">Hướng dẫn chi tiết phương pháp tổ chức nhóm lớn (30-100 người) dựa trên mô hình Brown & Isaacs. Sử dụng 7 nguyên tắc thiết kế, 3 vòng thảo luận (mở → sâu → hành động) và kỹ thuật thu hoạch tri thức tập thể. Biến một đám đông thành mạng lưới tư duy mạnh mẽ.</p>
+      <div class="card__links"><a href="world-cafe-30-100.html">→ Đọc bài viết</a> <span style="color:var(--text-muted);">· Hoàn hảo cho các buổi workshop</span></div>
+    </div>
+
+    <h2 id="cach-doc">Cách đọc atlas</h2>
+    <p>Bạn có thể tiếp cận chuỗi bài viết theo ba cách linh hoạt:</p>
+    <ul>
+      <li><strong>Đọc liền mạch (29'):</strong> Đi theo thứ tự 1 → 2 → 3 → 4. Lộ trình tự nhiên giúp bạn đi từ gốc rễ quyền lực đến kỹ thuật điều phối thực chiến.</li>
+      <li><strong>Nhảy vào việc cần nhất:</strong> Sắp điều phối họp 12 người? Mở ngay Chủ đề 3 (1-2-4-All). Chuẩn bị tổ chức workshop 60 người? Bắt đầu với Chủ đề 4 (World Café). Nếu cảm thấy thiếu nền tảng, hãy quay lại bài 1 và 2.</li>
+      <li><strong>Dùng như sổ tay tra cứu:</strong> Các bài viết đều có từ điển thuật ngữ chuyên sâu và checklist chuẩn (5 yếu tố LS, 7 nguyên tắc Café). Bạn có thể dễ dàng in ra và đem vào phòng họp.</li>
+    </ul>
+
+    <h2 id="lien-ket">Liên kết nhanh</h2>
+    <p>Danh sách đường dẫn nhanh đến các chủ đề trong chuỗi:</p>
+    <ul>
+      <li><a href="chu-toa-lui-mot-buoc.html">chu-toa-lui-mot-buoc.html</a> — Chủ đề 1 · Vườn Ươm</li>
+      <li><a href="an-toan-tam-ly-edmondson.html">an-toan-tam-ly-edmondson.html</a> — Chủ đề 2 · Lưới An Toàn</li>
+      <li><a href="liberating-structures-1-2-4-all.html">liberating-structures-1-2-4-all.html</a> — Chủ đề 3 · Bộ Lego</li>
+      <li><a href="world-cafe-30-100.html">world-cafe-30-100.html</a> — Chủ đề 4 · Chợ Phiên</li>
+    </ul>
+
+    <div class="footer">
+      <p><strong>Series: Từ Vườn Ươm Đến World Café</strong><br>
+      Bộ 4 bài viết chuyên sâu về Nghệ thuật Chủ Tọa, An Toàn Tâm Lý và Cấu Trúc Nhóm.<br>
+      <a href="atlas-tong-hop.html">Atlas Tổng Hợp</a> · <a href="chu-toa-lui-mot-buoc.html">1. Vườn Ươm</a> · <a href="an-toan-tam-ly-edmondson.html">2. Lưới An Toàn</a> · <a href="liberating-structures-1-2-4-all.html">3. Bộ Lego</a> · <a href="world-cafe-30-100.html">4. Chợ Phiên</a></p>
+      <p style="margin-top:8px;">© 2026. All rights reserved</p>
+    </div>
+  </main>
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="sidenote">
+      <strong>Lộ trình đề xuất</strong>
+      1 → 2 → 3 → 4. Nếu chỉ có 12 phút trong tuần: làm ngay Chủ đề 3 (1-2-4-All). Nếu có 90 phút cho tháng này: học Chủ đề 4 (World Café) sau khi nắm vững Chủ đề 1 và 2.
+    </div>
+    <div class="sidenote">
+      <strong>Hướng dẫn sử dụng atlas</strong>
+      Bấm vào các thẻ bài để mở nội dung. Dùng menu ở chân trang hoặc thanh điều hướng để chuyển đổi giữa các bài. Hoàn toàn có thể in atlas ra 1 trang để mang theo.
+    </div>
+    <div class="sidenote">
+      <strong>Thống kê nhanh</strong>
+      Bao gồm 4 bài viết và 1 trang atlas tổng hợp. Chứa 12 câu hỏi trắc nghiệm, 4 Launch Pad thực hành và 32 thuật ngữ cốt lõi.
+    </div>
+  </aside>
+</div>
+<div class="controls" aria-label="Điều khiển">
+  <button class="control-btn control-btn--top" id="toTopBtn" aria-label="Lên đầu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <div class="control-group" aria-label="Cỡ chữ">
+    <button class="control-btn" id="fontDown">A−</button>
+    <button class="control-btn" id="fontUp">A+</button>
+  </div>
+  <button class="control-btn" id="focusBtn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></button>
+  <button class="control-btn" id="themeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
+  <button class="control-btn" id="printBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
+  <button class="control-btn" id="helpBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
+</div>
+<div class="reading-badge"><span class="reading-badge__pct" id="readingPct">0%</span><span class="reading-badge__label">đã đọc</span></div>
+<div class="shortcuts" id="shortcuts" hidden>
+  <div class="shortcuts__panel">
+    <h3>Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>j</kbd>/<kbd>k</kbd></dt><dd>Cuộn</dd>
+      <dt><kbd>n</kbd>/<kbd>p</kbd></dt><dd>Tiêu đề</dd>
+      <dt><kbd>f</kbd></dt><dd>Focus</dd>
+      <dt><kbd>t</kbd></dt><dd>Theme</dd>
+      <dt><kbd>+</kbd>/<kbd>−</kbd></dt><dd>Cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Reset</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Trợ giúp</dd>
+    </dl>
+    <button class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+<script>
+(function(){
+  const progressFill=document.getElementById('progressFill');
+  const readingPct=document.getElementById('readingPct');
+  const toTopBtn=document.getElementById('toTopBtn');
+  const toc=document.getElementById('toc');
+  const headings=[...document.querySelectorAll('.canvas h2')];
+  headings.forEach(h=>{const li=document.createElement('li');const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);toc.appendChild(li);});
+  function onScroll(){
+    const h=document.documentElement;
+    const scrolled=(h.scrollTop)/(h.scrollHeight - h.clientHeight);
+    const pct=Math.round(scrolled*100);
+    if(progressFill) progressFill.style.width=(scrolled*100)+'%';
+    if(readingPct) readingPct.textContent=pct+'%';
+    if(h.scrollTop>400) toTopBtn.classList.add('is-visible'); else toTopBtn.classList.remove('is-visible');
+    let activeId=null;
+    for(let i=headings.length-1;i>=0;i--){ if(headings[i].getBoundingClientRect().top<120){ activeId=headings[i].id; break; } }
+    document.querySelectorAll('.toc a').forEach(a=>{ a.classList.toggle('is-active', a.getAttribute('href')==='#'+activeId); });
+    localStorage.setItem('scrollYAtlas', h.scrollTop);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  toTopBtn.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+  let scale=parseFloat(localStorage.getItem('readingScale')||'1');
+  function applyScale(){ document.documentElement.style.setProperty('--reading-scale', scale); localStorage.setItem('readingScale', scale); }
+  applyScale();
+  document.getElementById('fontUp').addEventListener('click', ()=>{ scale=Math.min(1.4,scale+0.1); applyScale(); });
+  document.getElementById('fontDown').addEventListener('click', ()=>{ scale=Math.max(0.85,scale-0.1); applyScale(); });
+  let theme=localStorage.getItem('theme')||'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeBtn').addEventListener('click', ()=>{ theme=theme==='light'?'dark':'light'; document.documentElement.setAttribute('data-theme', theme); localStorage.setItem('theme', theme); });
+  let focus=localStorage.getItem('focus')==='1';
+  if(focus) document.body.classList.add('focus-mode');
+  document.getElementById('focusBtn').addEventListener('click', function(){ document.body.classList.toggle('focus-mode'); this.setAttribute('aria-pressed', document.body.classList.contains('focus-mode')?'true':'false'); localStorage.setItem('focus', document.body.classList.contains('focus-mode')?'1':'0'); });
+  document.getElementById('printBtn').addEventListener('click', ()=>window.print());
+  const shortcuts=document.getElementById('shortcuts');
+  function openHelp(){ shortcuts.hidden=false; } function closeHelp(){ shortcuts.hidden=true; }
+  document.getElementById('helpBtn').addEventListener('click', openHelp);
+  document.getElementById('shortcutsClose').addEventListener('click', closeHelp);
+  shortcuts.addEventListener('click', e=>{ if(e.target===shortcuts) closeHelp(); });
+  window.addEventListener('keydown', e=>{
+    if(e.key==='?' ){ e.preventDefault(); shortcuts.hidden?openHelp():closeHelp(); }
+    if(e.key==='Escape' && !shortcuts.hidden) closeHelp();
+    if(e.key==='f' && shortcuts.hidden) document.getElementById('focusBtn').click();
+    if(e.key==='t' && shortcuts.hidden) document.getElementById('themeBtn').click();
+    if(e.key==='+' || e.key==='='){ scale=Math.min(1.4,scale+0.1); applyScale(); }
+    if(e.key==='-' || e.key==='_'){ scale=Math.max(0.85,scale-0.1); applyScale(); }
+    if(e.key==='0'){ scale=1; applyScale(); }
+  });
+  document.querySelectorAll('.canvas h2,.canvas h3').forEach(h=>{
+    h.addEventListener('click', ()=>{
+      const url=location.origin+location.pathname+'#'+h.id;
+      navigator.clipboard.writeText(url).then(()=>{ h.classList.add('anchor-copied'); setTimeout(()=>h.classList.remove('anchor-copied'),1500); });
+    });
+  });
+  const savedY=parseFloat(localStorage.getItem('scrollYAtlas')||'0');
+  if(savedY>0) window.scrollTo(0,savedY);
+})();
+</script>
+</body>
+</html>

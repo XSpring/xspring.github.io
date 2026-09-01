@@ -1,0 +1,610 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>World Café — 3 Vòng, 90 Phút Để 60 Người Nghe Thấy Nhau</title>
+<meta name="description" content="World Café Brown & Isaacs 1995/2005: 7 nguyên tắc, 3 vòng 20 phút, table host và harvest — kịch bản 90 phút cho 30-100 người, kèm bẫy và checklist.">
+<meta name="iterator-cycles" content="0">
+<meta name="iterator-stopped-by" content="skipped">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}
+:root{
+  --font-serif:'Merriweather',Georgia,serif;--font-sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;--font-mono:'JetBrains Mono',ui-monospace,monospace;
+  --bg:#FDFBF7;--bg-elevated:#FFFFFF;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;
+  --accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;
+  --border:#E4DFD5;--sidenote-bg:#EDF2F7;--code-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;
+  --radius:10px;--radius-sm:6px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 4px 12px rgba(0,0,0,.08);--measure:65ch;--line:1.7;--transition:200ms cubic-bezier(.4,0,.2,1);
+}
+html[data-theme="dark"]{
+  --bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;
+  --accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--code-bg:#2A2F3A;
+  --success:#68D391;--success-bg:#22543D;--danger:#FC8181;--danger-bg:#63171B;--warn:#F6AD55;--warn-bg:#7B341E;--info:#63B3ED;--info-bg:#2A4365;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.3);--shadow:0 4px 12px rgba(0,0,0,.4);
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition);}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100;}
+.progress-bar__fill{height:100%;width:0%;background:var(--accent);transition:width 80ms linear;}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px;}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px;padding-right:8px;}
+.navigator::-webkit-scrollbar{width:6px}.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%;}
+.marginalia{position:relative;font-family:var(--font-sans);font-size:14px;color:var(--text-muted);}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none;}body.focus-mode .app{grid-template-columns:1fr;max-width:780px;}
+@media (max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px;}.navigator{position:relative;top:0;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px;}.marginalia{order:3;border-top:1px solid var(--border);padding-top:16px;}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px;}
+.navigator__title{font-family:var(--font-sans);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px;}
+.toc{list-style:none;padding:0;margin:0;}.toc li{margin:2px 0}.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 var(--radius-sm) var(--radius-sm) 0;transition:all var(--transition);line-height:1.4;}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg);}.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500;}.toc .toc-l3{padding-left:20px;font-size:13px}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.1rem;line-height:1.2;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em;}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.48rem;line-height:1.3;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px;}
+.canvas h2:first-of-type{border-top:none;padding-top:0}
+.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.13rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px;}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong);font-weight:700}.canvas a{color:var(--accent);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:3px;}
+.tldr{margin:16px 0 24px;padding:14px 20px;background:var(--accent2-soft);border-left:4px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:15px;line-height:1.55;color:var(--text-strong);}
+.tldr strong{color:var(--accent2-strong);}
+.hook{margin:24px 0 48px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic;font-size:1.02rem;color:var(--text);box-shadow:var(--shadow-sm);}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px;}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700;}
+.callout{margin:24px 0;padding:16px 20px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px;}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--tip .callout__label{color:var(--success)}
+.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--warn .callout__label{color:var(--warn)}
+.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}.callout--danger .callout__label{color:var(--danger)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px;color:var(--text);background:transparent;}
+.feynman::before{content:"🧒 Giải thích 1 câu:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px;line-height:1.5;color:var(--text-muted);}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px;font-weight:600}
+.flip-card{perspective:1000px;height:180px;margin:24px 0;cursor:pointer;}
+.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;}
+.flip-card:hover .flip-card__inner,.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}
+.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:20px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border);box-shadow:var(--shadow-sm);}
+.flip-card__front{background:var(--bg-elevated);}.flip-card__back{background:var(--accent);color:white;transform:rotateY(180deg);}
+.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px;}
+.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.flip-card__content{font-family:var(--font-sans);font-size:15px;line-height:1.5;}
+.deep-dive{margin:24px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated);overflow:hidden;}
+.deep-dive > summary{padding:14px 18px;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);list-style:none;display:flex;align-items:center;gap:10px;user-select:none;}
+.deep-dive > summary::-webkit-details-marker{display:none}
+.deep-dive > summary::before{content:"▶";color:var(--accent);font-size:10px;transition:transform var(--transition);}
+.deep-dive[open] > summary::before{transform:rotate(90deg)}
+.deep-dive > summary:hover{background:var(--sidenote-bg)}
+.deep-dive__label{font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-right:auto;}
+.deep-dive > *:not(summary){padding:0 18px 16px;animation:slideDown 300ms cubic-bezier(.4,0,.2,1);}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px;}
+.bar-row{display:grid;grid-template-columns:160px 1fr 56px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:14px;}
+.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden;}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong));border-radius:4px;}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:32px 0;}
+.concept-flow__step{padding:16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px;min-height:90px;display:flex;flex-direction:column;justify-content:center;}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px;}
+.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;user-select:none;}
+@media (max-width:640px){.concept-flow{grid-template-columns:1fr;}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}}
+.glossary{margin:32px 0}.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px;}.glossary dd{margin:4px 0 0;color:var(--text);font-size:15px;}
+.quiz{margin:56px 0 24px;padding:32px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);}
+.quiz h2{border-top:none;padding-top:0;margin-top:0;margin-bottom:8px;}
+.quiz__intro{color:var(--text-muted);font-family:var(--font-sans);font-size:14px;margin-bottom:24px;}
+.quiz fieldset{border:none;padding:0;margin:0 0 28px;}
+.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px;font-size:16px;}
+.quiz__option{display:block;padding:12px 16px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;position:relative;padding-left:44px;}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%;}
+.quiz__option:hover{border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option input{position:absolute;opacity:0;pointer-events:none;}
+.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg);}
+.quiz__option:has(input:checked)::before{border-color:var(--accent);background:var(--accent);box-shadow:inset 0 0 0 3px var(--bg-elevated);}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success);}
+.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger);}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none;}
+.quiz.is-graded .quiz__explanation{display:block}
+.quiz__actions{display:flex;gap:12px;align-items:center;margin-top:8px;flex-wrap:wrap;}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:white;cursor:pointer;font-size:14px;}
+.btn--ghost{background:transparent;color:var(--accent)}
+.quiz__score{font-family:var(--font-sans);font-weight:600;font-size:15px;color:var(--text-strong);margin:0;padding:12px 16px;background:var(--sidenote-bg);border-radius:var(--radius-sm);display:none;}
+.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;align-items:center;gap:10px;z-index:50;}
+.control-group{display:flex;flex-direction:column;background:var(--bg-elevated);border:1px solid var(--border);border-radius:22px;box-shadow:var(--shadow);overflow:hidden;}
+.control-group .control-btn{width:44px;height:36px;border:0;box-shadow:none;border-radius:0;background:transparent;}
+.control-group .control-btn + .control-btn{border-top:1px solid var(--border)}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);font-family:var(--font-sans);font-size:14px;font-weight:600;padding:0;}
+.control-btn:hover{color:var(--accent);transform:translateY(-2px);}
+.control-btn svg{width:18px;height:18px}
+.control-btn--top{opacity:0;pointer-events:none;transform:translateY(8px);}
+.control-btn--top.is-visible{opacity:1;pointer-events:auto;transform:translateY(0);}
+:root{--reading-scale:1}body{font-size:calc(18px * var(--reading-scale))}
+.reading-badge{position:fixed;bottom:24px;left:24px;display:inline-flex;align-items:baseline;gap:6px;padding:6px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow-sm);font-family:var(--font-sans);font-size:12px;color:var(--text-muted);z-index:50;}
+.reading-badge__pct{font-weight:700;color:var(--accent-strong);}
+.reading-badge__label{text-transform:uppercase;letter-spacing:.08em}
+body.focus-mode .reading-badge{display:none}
+.shortcuts{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px;}
+.shortcuts[hidden]{display:none}
+.shortcuts__panel{background:var(--bg-elevated);color:var(--text);border:1px solid var(--border);border-radius:var(--radius);padding:24px 28px;max-width:460px;width:100%;box-shadow:0 12px 40px rgba(0,0,0,.25);font-family:var(--font-sans);}
+.shortcuts__list{display:grid;grid-template-columns:max-content 1fr;gap:8px 20px;margin:0;font-size:14px;}
+.shortcuts__list kbd{font-family:var(--font-mono);font-size:11px;padding:2px 6px;border:1px solid var(--border);border-bottom-width:2px;border-radius:4px;background:var(--bg-sunken);color:var(--text);}
+.shortcuts__close{margin-top:16px;padding:8px 16px;border:1px solid var(--border);background:var(--bg-sunken);color:var(--text);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:13px;cursor:pointer;}
+.canvas h2,.canvas h3{position:relative;cursor:pointer}
+.canvas h2::after,.canvas h3::after{content:"🔗";position:absolute;left:-28px;top:50%;transform:translateY(-50%);opacity:0;font-size:14px;transition:opacity 200ms;}
+.canvas h2:hover::after,.canvas h3:hover::after{opacity:.6;}
+.canvas h2.anchor-copied::after,.canvas h3.anchor-copied::after{content:"✓ copied";opacity:1;color:var(--accent-strong);font-size:11px;font-family:var(--font-sans);left:-66px;}
+@media print{html,body{background:white;color:black;font-size:12pt}.app{display:block;max-width:none;padding:0;margin:0}.canvas{max-width:none;width:100%}.navigator,.marginalia,.controls,.progress-bar,.reading-badge,.shortcuts{display:none!important}details{display:block!important}details > summary{display:block;font-weight:700;margin-bottom:6px;}a{color:black;text-decoration:underline}a[href^="http"]::after{content:" (" attr(href) ")";font-size:9pt;word-break:break-all}}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border);}
+.orbit__title{font-family:var(--font-sans);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px;}
+.orbit__track{position:relative;padding-left:22px;}
+.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border);}
+.orbit__Chủ đề{position:relative;display:flex;align-items:center;margin:8px 0;color:var(--text-muted);font-family:var(--font-sans);font-size:12px;cursor:pointer;}
+.orbit__Chủ đề::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border);}
+.orbit__Chủ đề[data-reached="true"]::before{background:var(--accent);border-color:var(--accent);}
+.orbit__Chủ đề[data-active="true"]{color:var(--text-strong);font-weight:600;}
+.orbit__Chủ đề[data-active="true"]::before{transform:scale(1.15);}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px;color:var(--text);}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px;}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}
+.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow-sm);}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px;display:flex;align-items:center;gap:10px;}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px;}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0;align-items:start;}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px;}
+.scaffold__row-body{font-size:15px;line-height:1.65}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm);background:transparent;overflow:hidden;}
+.scaffold__probe > summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none;display:flex;gap:10px;align-items:baseline;}
+.scaffold__probe > summary::before{content:"🤔 Probe";flex-shrink:0;padding:2px 8px;border-radius:3px;background:var(--accent2-soft);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent2-strong);}
+.scaffold__probe > summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px;line-height:1.6;color:var(--text);}
+.scaffold__resolve::before{content:"💡 Resolve";display:inline-block;padding:2px 8px;border-radius:3px;background:var(--accent2);color:white;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-right:8px;}
+.checkpoint{margin:32px 0;padding:20px 24px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border);}
+.checkpoint__label{display:block;font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+.checkpoint__question{font-family:var(--font-sans);font-size:15px;color:var(--text-strong);margin:0 0 12px;line-height:1.5;}
+.checkpoint textarea{width:100%;min-height:90px;padding:12px 14px;font-family:var(--font-serif);font-size:15px;line-height:1.5;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:var(--radius-sm);resize:vertical;box-sizing:border-box;}
+.checkpoint__actions{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap;}
+.checkpoint__expert{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:var(--radius-sm);border-left:3px solid var(--accent);font-family:var(--font-sans);font-size:14px;line-height:1.55;display:none;}
+.checkpoint.is-revealed .checkpoint__expert{display:block}
+.checkpoint__expert-label{display:block;font-weight:700;color:var(--accent);font-size:11px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;}
+.checkpoint__saved{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic;}
+.launchpad{margin:48px 0 24px;padding:28px 32px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);position:relative;overflow:hidden;}
+.launchpad::before{content:"🚀";position:absolute;top:-16px;right:-8px;font-size:96px;opacity:.06;transform:rotate(-15deg);pointer-events:none;}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:white;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px;}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.3rem;color:var(--text-strong);margin:0 0 12px;line-height:1.3;}
+.launchpad__problem{font-size:16px;line-height:1.7;color:var(--text);margin:0 0 24px;}
+.launchpad__hints{border-top:1px dashed var(--border);padding-top:20px;font-family:var(--font-sans);}
+.launchpad__hints-label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;display:block;}
+.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-size:14px;line-height:1.6;color:var(--text);display:none;}
+.launchpad__hint.is-visible{display:block}
+.launchpad__hint-label{display:block;font-weight:700;font-size:11px;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:4px;letter-spacing:.08em;}
+.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px;}
+.launchpad__reveal:hover{background:var(--accent2);color:white;}
+.launchpad__reveal:disabled{opacity:.4;cursor:not-allowed}
+.amplifier{position:sticky;top:24px;margin:0 0 24px;padding:16px 18px;background:var(--accent2-soft);border:1px solid var(--accent2);border-radius:var(--radius);font-family:var(--font-sans);font-size:13px;line-height:1.55;color:var(--text);min-height:96px;}
+.amplifier__label{display:block;font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:6px;}
+.amplifier__term{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-bottom:6px;display:block;font-size:14px;}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center;}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta"><p class="navigator__title">Thời gian đọc</p><p class="navigator__reading-time">~ 7 phút</p></div>
+    <div class="orbit" aria-label="Lộ trình"><p class="orbit__title">Lộ trình</p><div class="orbit__track">
+      <div class="orbit__Chủ đề" data-target="baseline">1 · Neo</div>
+      <div class="orbit__Chủ đề" data-target="bridge">2 · Cầu nối</div>
+      <div class="orbit__Chủ đề" data-target="exposition">3 · Dựng</div>
+      <div class="orbit__Chủ đề" data-target="application">4 · Ứng dụng</div>
+      <div class="orbit__Chủ đề" data-target="boundary">5 · Biên</div>
+      <div class="orbit__Chủ đề" data-target="synthesis">6 · Tổng hợp</div>
+    </div></div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+  <main class="canvas" id="canvas">
+    <h1>Chủ Đề #4: World Café — 3 Vòng, 90 Phút Để 60 Người Nghe Thấy Nhau</h1>
+    <div class="tldr"><strong>TL;DR.</strong> World Café là 3 vòng thảo luận 20 phút ở bàn 4 người, host ở lại, khách luân chuyển. 90 phút, 60 người, ai cũng được nói và mẫu hình chung nổi lên rõ ràng.</div>
+    <div class="hook">
+      <span class="hook__label">🎣 Mở bài</span>
+      Năm 1995, một nhóm lãnh đạo vô tình tản ra các bàn nhỏ và vẽ nguệch ngoạc lên giấy lót bàn. Họ nhận ra: Bàn nhỏ + luân chuyển + host nối ý tạo ra tri thức chung nhanh hơn hẳn một ngày ngồi nghe diễn thuyết. Vậy tại sao giấy lót bàn và chu kỳ 20 phút lại đánh bại micro?
+    </div>
+    <div class="meta-block">
+      <h4>Bạn cần chuẩn bị</h4>
+      <ul>
+        <li>Đã đọc 3 Chủ đề trước (Vườn Ươm, Lưới An Toàn, 1-2-4-All — hiểu phân kỳ/hội tụ và vi cấu trúc).</li>
+        <li>Từng dự hội thảo 30–100 người kiểu “nghe 1 người nói 2 giờ”.</li>
+        <li>Có 1 chủ đề thật cần tri thức chung (chiến lược, văn hóa, hành trình khách hàng).</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li><strong>Mô tả</strong> 7 nguyên tắc World Café và vì sao chúng phải đi cùng nhau.</li>
+        <li><strong>Tổ chức</strong> 3 vòng 20' với table host và luân chuyển đúng.</li>
+        <li><strong>Thiết kế</strong> 3 câu hỏi theo cung (mở → đào sâu → hướng hành động).</li>
+        <li><strong>Thực hiện</strong> harvest 20–30' ra 3 insight chung (gallery/cluster).</li>
+        <li><strong>Tránh</strong> 3 bẫy (bàn đông, không harvest, thiếu follow-through).</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Chân lý nền: Tri thức tập thể nằm trong mạng lưới, không nằm ở diễn giả</h2>
+    <p>Giữ câu này.</p>
+    <blockquote>⚓ <strong>Chân lý nền.</strong> Nhóm lớn có sẵn trí tuệ cần thiết — nhưng chỉ khi hội thoại được dệt thành mạng, không phải phát từ một micro.</blockquote>
+    <p><strong>World Café</strong> (Quán Cà phê Thế giới) là phương thức hội thoại có cấu trúc cho nhóm lớn. Nó kết hợp sự thân mật của bàn 4 người với tầm vóc của sự kiện 100 người: bàn nhỏ tạo an toàn, luân chuyển tạo thụ phấn chéo, harvest làm tri thức chung hiện hình.</p>
+    <p>Khác Open Space (người tham gia tự đặt chủ đề) hay 1-2-4-All (12 phút cho quyết nhanh), World Café dùng câu hỏi dẫn dắt sẵn và nhịp cố định — hợp khi bạn đã biết <em>hỏi gì</em> nhưng chưa biết <em>đáp án</em>.</p>
+    <div class="sidenote">
+      <strong>Neo lịch sử.</strong> Sau 1995, World Café lan ra hàng chục nghìn người toàn cầu. 7 nguyên tắc là lõi cốt lõi được hệ thống hóa trong sách <em>The World Café</em> (2005).
+    </div>
+    <p><em>Neo đã gắn: trí tuệ nằm trong mạng, không ở micro.</em> Nhưng “mạng” nghe trừu tượng. Cần một chợ phiên để thấy.</p>
+
+    <h2 id="bridge">Cầu nối: Mô hình Chợ Phiên Hạt Giống</h2>
+    <p>Về chợ quê.</p>
+    <p>Gọi đây là <strong>Mô hình Chợ Phiên</strong>. Sáng chợ, nông dân mang hạt đến, bày ra bàn nhỏ 4 người. Sau 20 phút, kẻng vang — trừ người giữ sạp, ai cũng đứng dậy, mang hạt vừa đổi sang sạp mới. Người giữ sạp ở lại tóm tắt cho tốp mới. Sau 3 phiên, cả chợ gom hạt nổi bật ra rổ chung.</p>
+    <p>Ánh xạ:</p>
+    <ul>
+      <li><strong>Bàn 4 người</strong> là <em>sạp</em> — đủ thân mật để ai cũng nói.</li>
+      <li><strong>Giấy lót bàn</strong> là <em>nong hạt</em> — viết/vẽ để hạt không rơi mất.</li>
+      <li><strong>Host ở lại</strong> là <em>người giữ sạp</em> — tóm 60s, nối mạch cũ với người mới.</li>
+      <li><strong>Luân chuyển</strong> là <em>đổi sạp</em> — thụ phấn chéo, ý du hành.</li>
+      <li><strong>Harvest</strong> là <em>rổ chung</em> — mẫu hình nổi lên từ tập thể.</li>
+    </ul>
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span><strong>Bày</strong><br>bàn 4, giấy, câu hỏi 1</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span><strong>Đổi</strong><br>host ở lại, khách luân chuyển, câu hỏi 2</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span><strong>Gom</strong><br>harvest 20–30', rổ chung 3 insight</div>
+    </div>
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Tránh hiểu lầm phổ biến…</span>
+      <p><span class="premortem__wrong">“World Café là cà phê tán gẫu cho vui, khăn trải bàn cho đẹp.”</span></p>
+      <p>Sai vì nghiêm ở câu hỏi và harvest, không phải ở khăn.</p>
+      <p><span class="premortem__truth">Thực tế:</span> 20 phút × 3 có host và harvest cho ra 3 insight chung để hành động. Khăn chỉ là nong giữ hạt khỏi rơi.</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng thanh kèo một</h2>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Tiểu chủ đề 1 — 7 nguyên tắc: Bộ khung giữ chợ không thành nơi tán gẫu</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body"><p><strong>7 nguyên tắc là một bộ hoàn chỉnh.</strong> Bỏ một, mạng đứt và chợ thành tán gẫu.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p><strong>1) Rõ bối cảnh:</strong> Vì sao tụ, muốn gì. <strong>2) Không gian thân thiện:</strong> Bàn 4, khăn giấy trắng, bút màu hạ rào cản thứ bậc. <strong>3) Câu hỏi trúng:</strong> Câu hỏi mở, kích thích tư duy. <strong>4) Ai cũng góp:</strong> Bắt buộc viết/vẽ lên khăn. <strong>5) Thụ phấn chéo:</strong> Luân chuyển + host tóm 60s nối mạch. <strong>6) Lắng nghe mẫu hình:</strong> Nghe để tìm điểm chung, không phản biện. <strong>7) Thu hoạch (Harvest):</strong> Gom rổ chung, không harvest = không có rổ.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao “Không gian thân thiện” không phải trang trí cho đẹp, mà là điều kiện nhận thức?</summary>
+        <div class="scaffold__resolve">Bàn tròn 4 người + bút màu kích hoạt não hình ảnh và hạ rào cản thứ bậc. Người ít nói dám viết, người nói nhiều phải viết ngắn. Nó là vi cấu trúc, không phải décor.</div>
+      </details>
+    </section>
+    <div class="feynman">Vắn tắt: 7 nguyên tắc là: rõ bối cảnh, không gian café, câu hỏi trúng, ai cũng góp, đổi bàn thụ phấn, nghe mẫu hình, gom rổ chung.</div>
+
+    <div class="checkpoint" data-checkpoint-id="cpC">
+      <span class="checkpoint__label">🛑 Dừng & phản chiếu</span>
+      <p class="checkpoint__question">Workshop gần nhất của bạn thiếu nguyên tắc nào nhất? Nêu 1 dấu hiệu.</p>
+      <textarea placeholder="Thiếu nguyên tắc nào và dấu hiệu là gì…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>Gợi ý chuyên gia</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Gợi ý chuyên gia</span>
+        Thường thiếu harvest. Dấu hiệu: 60 phút nói sôi nổi nhưng ra về không ai nhớ “quyết định cuối cùng là gì”.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Tiểu chủ đề 2 — 3 vòng & host: Vòng 1 mở, vòng 2 sâu, vòng 3 hành động</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body"><p><strong>3 vòng 20 phút — nhịp cứng, không thương lượng.</strong> Host ở lại nối ý, khách luân chuyển.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p><strong>Vòng 1 (Mở):</strong> “Điều gì quan trọng với bạn về thách thức X?”. <strong>Vòng 2 (Sâu):</strong> “Kết nối nào bạn thấy? Điều gì còn thiếu?”. <strong>Vòng 3 (Hành động):</strong> “Cần chú ý ngay điều gì và ta góp gì?”.</p>
+          <p><strong>Luân chuyển (3–5'):</strong> Khách tản ra bàn mới (không đi cùng nhóm cũ). Host tóm 60s ý bàn cũ để nhóm mới xây tiếp mạch.</p>
+          <p><strong>Bàn 4–5 người:</strong> Quá 6 người = song thoại + có người im lặng. Thà 15 bàn thưa còn hơn 8 bàn đông.</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao host phải ở lại thay vì ai cũng luân chuyển?</summary>
+        <div class="scaffold__resolve">Host là sợi chỉ nối. Tóm 60s để ý cũ du hành sang bàn mới và tốp mới không lặp lại từ đầu. Host không giảng, chỉ giữ sạp.</div>
+      </details>
+    </section>
+    <div class="feynman">Vắn tắt: Vòng 1 mở rộng, vòng 2 đào sâu, vòng 3 hành động. Host tóm 60s để ý tưởng kế thừa.</div>
+
+    <section class="scaffold" id="exposition-3">
+      <h3 class="scaffold__concept">Tiểu chủ đề 3 — Harvest & bẫy: Harvest là rổ chung, không harvest là giấy lộn</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">State</div>
+        <div class="scaffold__row-body"><p><strong>Không harvest, Café là đống giấy lộn.</strong> Đừng cắt harvest để “tiết kiệm thời gian”.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Illustrate</div>
+        <div class="scaffold__row-body">
+          <p><strong>3 format harvest:</strong> <strong>A) Gallery Walk</strong> — Treo khăn, đi xem, dán chấm. <strong>B) Host báo 90s</strong> — Nêu 1 insight nổi bật. <strong>C) Cluster (Khuyên dùng):</strong> Gom sticky, cụm chủ đề, dot-vote top 3.</p>
+          <p><strong>Timeline:</strong> Chuẩn 140 phút. Rút gọn 90 phút (10' Mở → 3 vòng 20' → 20' Harvest → 10' Đóng). Dưới 90 phút, hãy dùng 1-2-4-All.</p>
+          <p><strong>3 Bẫy:</strong> (1) <strong>Bàn đông</strong> (>5 người). (2) <strong>Không harvest</strong> (20 bàn đầy chữ, không chốt). (3) <strong>Thiếu follow-through</strong> (không ai xử lý kết quả).</p>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu chỉ có 90 phút, bạn cắt gì — vòng 3 hay harvest?</summary>
+        <div class="scaffold__resolve">Cắt vòng 3. 2 vòng + harvest 30' vẫn ra rổ chung. Cắt harvest là vứt rổ.</div>
+      </details>
+    </section>
+    <div class="feynman">Vắn tắt: Harvest (gom, cụm, chọn top 3) là bắt buộc. Thiếu harvest = tốn thời gian vô ích.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> World Café vs Open Space</summary>
+      <p>World Café: Câu hỏi cố định, luân chuyển theo nhịp (Hội tụ có khung). Open Space: Tự đặt chủ đề, tự do di chuyển (Khám phá mở). Cần hòa giải sâu? Dùng mediation.</p>
+    </details>
+
+    <h2 id="application">Thực hành: 90 phút rút gọn</h2>
+    <p><strong>Bối cảnh:</strong> Redesign hành trình bệnh nhân. 60 người (15 bàn × 4). Chủ đề: “Làm sao hành trình liền mạch hơn trong 90 ngày?”</p>
+    <p><strong>Kịch bản 90':</strong> Mở 10' → V1 20' (Khoảnh khắc lo nhất?) → đổi 3' (host 60s) → V2 20' (Ngạc nhiên/Thiếu sót?) → đổi 3' → V3 20' (Hành động ngay?) → Harvest Cluster 20' → Đóng 10'.</p>
+    <div class="bar-chart">
+      <div class="bar-chart__title">Timeline 90' rút gọn vs 140' đủ</div>
+      <div class="bar-row"><span class="bar-label">90' rút gọn</span><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div><span class="bar-value">90</span></div>
+      <div class="bar-row"><span class="bar-label">140' đủ</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span class="bar-value">140</span></div>
+      <div class="bar-row"><span class="bar-label">Harvest (20–30')</span><div class="bar-track"><div class="bar-fill" style="width:21%"></div></div><span class="bar-value">20–30</span></div>
+      <div class="bar-row"><span class="bar-label">3 Vòng (60–75')</span><div class="bar-track"><div class="bar-fill" style="width:54%"></div></div><span class="bar-value">60–75</span></div>
+      <div class="bar-chart__caption">Dưới 90 phút, hãy chuyển sang 1-2-4-All.</div>
+    </div>
+    
+    <div class="flip-card" onclick="this.classList.toggle('is-flipped')">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Nhớ nhanh — lật thẻ</span>
+          <div class="flip-card__content">Vì sao host phải tóm 60s khi tốp mới đến?</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Đáp án</span>
+          <div class="flip-card__content">Để ý cũ du hành và xây tiếp, tránh 3 vòng thành 3 cuộc tán gẫu rời rạc.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Biên giới: Nơi chợ loãng</h2>
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Hiểu lầm — Café là tán gẫu</span>
+      Nghiêm ở câu hỏi và harvest. Không harvest, khăn chỉ là giấy lộn.
+    </div>
+    <div class="callout callout--danger">
+      <span class="callout__label">⛔ Bẫy — Câu hỏi đóng & Thiếu follow-up</span>
+      Câu đóng giết chết Café. Không có người xử lý kết quả sau đó khiến nhân viên mất niềm tin (“nói cũng không được nghe”).
+    </div>
+
+    <h2 id="connection">Bản đồ liên kết</h2>
+    <ul>
+      <li><strong>Vườn Ươm:</strong> Café là phiên bản lớn của lùi-quan sát-nối ý.</li>
+      <li><strong>Lưới An Toàn:</strong> Bàn 4 + khăn giấy tạo an toàn vi mô.</li>
+      <li><strong>Bộ Lego:</strong> Café 90' cho tri thức chung, 1-2-4-All 12' cho quyết nhanh.</li>
+    </ul>
+
+    <h2 id="synthesis">Bức tranh chung: Tri thức chung hiện hình</h2>
+    <p>Vì sao giấy lót bàn thắng micro? Vì micro dồn 80% thời gian cho 1 người, Café chia đều cho 60 người. Bàn 4 thân mật, luân chuyển thụ phấn chéo, harvest tạo rổ chung. Không cần diễn giả giỏi, chỉ cần câu hỏi giỏi và harvest nghiêm túc.</p>
+    <blockquote>🎯 <strong>Nếu chỉ nhớ một điều:</strong> Bàn 4, 3 vòng 20', host tóm tắt, harvest chốt 3 insight.</blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Launch Pad — project 90 phút</span>
+      <h3 class="launchpad__title">Dẫn 1 World Café 90' cho 40–60 người</h3>
+      <p class="launchpad__problem"><strong>Mục tiêu:</strong> Thiết kế 3 câu hỏi (mở/sâu/hành động), kịch bản 15 bàn × 4 người, và cách Harvest cluster 20 phút.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Gợi ý</span>
+        <button class="launchpad__reveal" data-hint="1">Câu hỏi</button>
+        <div class="launchpad__hint" data-hint-panel="1"><span class="launchpad__hint-label">Câu hỏi</span> Đừng hỏi "Có nên làm?". Hỏi: "Điều gì quan trọng?" → "Kết nối nào?" → "Bước tiếp theo?".</div>
+        <button class="launchpad__reveal" data-hint="2">Host</button>
+        <div class="launchpad__hint" data-hint-panel="2"><span class="launchpad__hint-label">Host</span> Chọn người giỏi tóm tắt, không phải giỏi diễn thuyết.</div>
+        <button class="launchpad__reveal" data-hint="3">Harvest</button>
+        <div class="launchpad__hint" data-hint-panel="3"><span class="launchpad__hint-label">Harvest</span> Dùng Cluster: gom sticky, cụm 4 chủ đề, dot-vote top 3.</div>
+      </div>
+    </div>
+
+    <div class="glossary">
+      <h2 id="glossary">Từ điển thuật ngữ (Glossary)</h2>
+      <dl>
+        <dt>World Café</dt><dd>Hội thoại cấu trúc 12–1000+ người, bàn 4, 3 vòng. <em>(Chợ phiên hạt giống)</em></dd>
+        <dt>Table host</dt><dd>Người ở lại tóm 60s nối mạch. <em>(Người giữ sạp)</em></dd>
+        <dt>Cross-pollination</dt><dd>Luân chuyển tạo ý du hành. <em>(Đổi hạt)</em></dd>
+        <dt>Harvest</dt><dd>Gom insight chung. <em>(Rổ chung)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2>Kiểm tra hiểu — 3 câu</h2>
+      <fieldset data-quiz="q1">
+        <legend>1. Vì sao bàn 4–5 người là chuẩn, không phải 8?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="A"> Vì bàn 4 đẹp hơn.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="B"> Vì quá 6 sinh song thoại và người im lặng.</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="C"> Vì tiết kiệm giấy.</label>
+        <div class="quiz__explanation" data-explain="q1"><strong>B đúng.</strong> Quá 6 người khiến hội thoại tách đôi. 4-5 giữ thân mật đều lượt.</div>
+      </fieldset>
+      <fieldset data-quiz="q2">
+        <legend>2. Vai của table host là gì?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="A"> Giảng lại 10 phút.</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="B"> Tóm 60s nối ý cũ, không giảng.</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="C"> Đi cùng khách.</label>
+        <div class="quiz__explanation" data-explain="q2"><strong>B đúng.</strong> Host là sợi chỉ nối để ý tưởng du hành.</div>
+      </fieldset>
+      <fieldset data-quiz="q3">
+        <legend>3. Nếu chỉ có 90', bạn cắt gì?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="A"> Cắt harvest còn 10'.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="B"> Cắt vòng 3, giữ harvest 20-30'.</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="C"> Cắt luân chuyển.</label>
+        <div class="quiz__explanation" data-explain="q3"><strong>B đúng.</strong> Harvest là rổ chung, không phải phụ lục.</div>
+      </fieldset>
+      <div class="quiz__actions">
+        <button class="btn" id="gradeBtn">Chấm điểm</button>
+        <button class="btn btn--ghost" id="resetBtn">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <div class="footer">
+      <p><strong>Series: Từ Vườn Ươm Đến World Café</strong><br>
+      Bộ 4 bài viết chuyên sâu về Nghệ thuật Chủ Tọa, An Toàn Tâm Lý và Cấu Trúc Nhóm.<br>
+      <a href="atlas-nghe-thuat-chu-tri-cuoc-hop.html">Atlas Tổng Hợp</a> · <a href="chu-toa-lui-mot-buoc.html">1. Vườn Ươm</a> · <a href="an-toan-tam-ly-edmondson.html">2. Lưới An Toàn</a> · <a href="liberating-structures-1-2-4-all.html">3. Bộ Lego</a> · <a href="world-cafe-30-100.html">4. Chợ Phiên</a></p>
+      <p style="margin-top:8px;">© 2026. All rights reserved</p>
+    </div>
+  </main>
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier">
+      <span class="amplifier__label">Nhấn thuật ngữ</span>
+      <span class="amplifier__term">Chợ Phiên</span>
+      <p class="amplifier__body">Bàn 4 là sạp, host giữ sạp, luân chuyển là đổi hạt, harvest là rổ chung.</p>
+    </div>
+    <div class="sidenote">
+      <strong>Cách dùng</strong>
+      Bấm tiêu đề chép link. Bàn 4-5, 3 vòng 20', harvest 20-30'.
+    </div>
+  </aside>
+</div>
+<div class="controls" aria-label="Điều khiển">
+  <button class="control-btn control-btn--top" id="toTopBtn" aria-label="Lên đầu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  <div class="control-group" aria-label="Cỡ chữ">
+    <button class="control-btn" id="fontDown">A−</button>
+    <button class="control-btn" id="fontUp">A+</button>
+  </div>
+  <button class="control-btn" id="focusBtn" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg></button>
+  <button class="control-btn" id="themeBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></button>
+  <button class="control-btn" id="printBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
+  <button class="control-btn" id="helpBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></button>
+</div>
+<div class="reading-badge"><span class="reading-badge__pct" id="readingPct">0%</span><span class="reading-badge__label">đã đọc</span></div>
+<div class="shortcuts" id="shortcuts" hidden>
+  <div class="shortcuts__panel">
+    <h3>Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>j</kbd>/<kbd>k</kbd></dt><dd>Cuộn</dd>
+      <dt><kbd>n</kbd>/<kbd>p</kbd></dt><dd>Tiêu đề</dd>
+      <dt><kbd>f</kbd></dt><dd>Focus</dd>
+      <dt><kbd>t</kbd></dt><dd>Theme</dd>
+      <dt><kbd>+</kbd>/<kbd>−</kbd></dt><dd>Cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Reset</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Trợ giúp</dd>
+    </dl>
+    <button class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+<script>
+(function(){
+  const progressFill=document.getElementById('progressFill');
+  const readingPct=document.getElementById('readingPct');
+  const toTopBtn=document.getElementById('toTopBtn');
+  const toc=document.getElementById('toc');
+  const headings=[...document.querySelectorAll('.canvas h2, .canvas h3')];
+  const Chủ đềs=[...document.querySelectorAll('.orbit__Chủ đề')];
+  headings.forEach(h=>{const li=document.createElement('li');const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;if(h.tagName==='H3')a.classList.add('toc-l3');li.appendChild(a);toc.appendChild(li);});
+  function onScroll(){
+    const h=document.documentElement;
+    const scrolled=(h.scrollTop)/(h.scrollHeight - h.clientHeight);
+    const pct=Math.round(scrolled*100);
+    if(progressFill) progressFill.style.width=(scrolled*100)+'%';
+    if(readingPct) readingPct.textContent=pct+'%';
+    if(h.scrollTop>400) toTopBtn.classList.add('is-visible'); else toTopBtn.classList.remove('is-visible');
+    let activeId=null;
+    for(let i=headings.length-1;i>=0;i--){ if(headings[i].getBoundingClientRect().top<120){ activeId=headings[i].id; break; } }
+    document.querySelectorAll('.toc a').forEach(a=>{ a.classList.toggle('is-active', a.getAttribute('href')==='#'+activeId); });
+    Chủ đềs.forEach(n=>{
+      const t=n.getAttribute('data-target');
+      const el=document.getElementById(t);
+      if(!el) return;
+      n.setAttribute('data-reached', el.getBoundingClientRect().top < window.innerHeight*0.6 ? 'true':'false');
+      n.setAttribute('data-active', t===activeId ? 'true':'false');
+    });
+    localStorage.setItem('scrollY4', h.scrollTop);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  toTopBtn.addEventListener('click', ()=>window.scrollTo({top:0,behavior:'smooth'}));
+  Chủ đềs.forEach(n=>n.addEventListener('click', ()=>{const t=document.getElementById(n.getAttribute('data-target')); if(t) t.scrollIntoView({behavior:'smooth'});}));
+  let scale=parseFloat(localStorage.getItem('readingScale')||'1');
+  function applyScale(){ document.documentElement.style.setProperty('--reading-scale', scale); localStorage.setItem('readingScale', scale); }
+  applyScale();
+  document.getElementById('fontUp').addEventListener('click', ()=>{ scale=Math.min(1.4,scale+0.1); applyScale(); });
+  document.getElementById('fontDown').addEventListener('click', ()=>{ scale=Math.max(0.85,scale-0.1); applyScale(); });
+  let theme=localStorage.getItem('theme')||'light';
+  document.documentElement.setAttribute('data-theme', theme);
+  document.getElementById('themeBtn').addEventListener('click', ()=>{ theme=theme==='light'?'dark':'light'; document.documentElement.setAttribute('data-theme', theme); localStorage.setItem('theme', theme); });
+  let focus=localStorage.getItem('focus')==='1';
+  if(focus) document.body.classList.add('focus-mode');
+  document.getElementById('focusBtn').addEventListener('click', function(){ document.body.classList.toggle('focus-mode'); this.setAttribute('aria-pressed', document.body.classList.contains('focus-mode')?'true':'false'); localStorage.setItem('focus', document.body.classList.contains('focus-mode')?'1':'0'); });
+  document.getElementById('printBtn').addEventListener('click', ()=>window.print());
+  const shortcuts=document.getElementById('shortcuts');
+  function openHelp(){ shortcuts.hidden=false; } function closeHelp(){ shortcuts.hidden=true; }
+  document.getElementById('helpBtn').addEventListener('click', openHelp);
+  document.getElementById('shortcutsClose').addEventListener('click', closeHelp);
+  shortcuts.addEventListener('click', e=>{ if(e.target===shortcuts) closeHelp(); });
+  window.addEventListener('keydown', e=>{
+    if(e.key==='?' ){ e.preventDefault(); shortcuts.hidden?openHelp():closeHelp(); }
+    if(e.key==='Escape' && !shortcuts.hidden) closeHelp();
+    if(e.key==='f' && shortcuts.hidden) document.getElementById('focusBtn').click();
+    if(e.key==='t' && shortcuts.hidden) document.getElementById('themeBtn').click();
+    if(e.key==='+' || e.key==='='){ scale=Math.min(1.4,scale+0.1); applyScale(); }
+    if(e.key==='-' || e.key==='_'){ scale=Math.max(0.85,scale-0.1); applyScale(); }
+    if(e.key==='0'){ scale=1; applyScale(); }
+  });
+  headings.forEach(h=>{
+    h.addEventListener('click', ()=>{
+      const url=location.origin+location.pathname+'#'+h.id;
+      navigator.clipboard.writeText(url).then(()=>{ h.classList.add('anchor-copied'); setTimeout(()=>h.classList.remove('anchor-copied'),1500); });
+    });
+  });
+  document.querySelectorAll('[data-checkpoint-reveal]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const cp=btn.closest('.checkpoint');
+      cp.classList.toggle('is-revealed');
+      btn.textContent=cp.classList.contains('is-revealed')?'Ẩn đáp án':'Đối chiếu đáp án chuyên gia';
+    });
+  });
+  document.querySelectorAll('.checkpoint textarea').forEach(ta=>{
+    const id=ta.closest('.checkpoint').getAttribute('data-checkpoint-id');
+    ta.value=localStorage.getItem('ta-'+id)||'';
+    ta.addEventListener('input', ()=>{ localStorage.setItem('ta-'+id, ta.value); const s=ta.closest('.checkpoint').querySelector('[data-checkpoint-saved]'); s.textContent='Đã lưu'; setTimeout(()=>s.textContent='',1500); });
+  });
+  document.querySelectorAll('.launchpad__reveal').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const h=btn.getAttribute('data-hint');
+      const panel=document.querySelector('[data-hint-panel="'+h+'"]');
+      panel.classList.add('is-visible');
+      btn.disabled=true; btn.textContent='Đã mở';
+    });
+  });
+  const answers={q1:'B',q2:'B',q3:'B'};
+  document.getElementById('gradeBtn').addEventListener('click', ()=>{
+    let score=0;
+    Object.keys(answers).forEach(k=>{
+      const fs=document.querySelector('[data-quiz="'+k+'"]');
+      const checked=fs.querySelector('input:checked');
+      fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));
+      if(checked){
+        const opt=checked.closest('.quiz__option');
+        if(checked.value===answers[k]){ opt.classList.add('correct-answer'); score++; }
+        else { opt.classList.add('incorrect-answer'); fs.querySelector('input[value="'+answers[k]+'"]').closest('.quiz__option').classList.add('correct-answer'); }
+      } else {
+        fs.querySelector('input[value="'+answers[k]+'"]').closest('.quiz__option').classList.add('correct-answer');
+      }
+      fs.querySelector('[data-explain="'+k+'"]').style.display='block';
+    });
+    document.getElementById('quiz').classList.add('is-graded');
+    document.getElementById('quizScore').textContent='Kết quả: '+score+'/3 đúng';
+    document.getElementById('quizScore').style.display='block';
+  });
+  document.getElementById('resetBtn').addEventListener('click', ()=>{
+    document.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));
+    document.querySelectorAll('[data-explain]').forEach(e=>e.style.display='none');
+    document.querySelectorAll('.quiz input').forEach(i=>i.checked=false);
+    document.getElementById('quiz').classList.remove('is-graded');
+    document.getElementById('quizScore').style.display='none';
+  });
+  const savedY=parseFloat(localStorage.getItem('scrollY4')||'0');
+  if(savedY>0) window.scrollTo(0,savedY);
+})();
+</script>
+</body>
+</html>
