@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Không ai điều khiển tuyệt đối: thị trường BĐS tự cân bằng như thế nào?</title>
+<meta name="description" content="Mỗi chủ thể chỉ nắm một van. Thị trường tự cân bằng qua nhiều biến số và tìm cân bằng mới.">
+<meta name="artifact-length" content="MEDIUM">
+<meta name="iterator-cycles" content="0">
+<meta name="iterator-stopped-by" content="skipped">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}
+:root{--font-serif:'Merriweather',Georgia,serif;--font-sans:'Inter',-apple-system,sans-serif;--bg:#FDFBF7;--bg-elevated:#fff;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;--border:#E4DFD5;--sidenote-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;--radius:10px;--radius-sm:6px;--measure:68ch;--line:1.75}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;--accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--success-bg:#22543D;--danger-bg:#63171B;--warn-bg:#7B341E;--info-bg:#2A4365}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line)}
+.app{display:grid;grid-template-columns:minmax(200px,18%) minmax(0,1fr) minmax(230px,20%);gap:40px;max-width:1380px;margin:0 auto;padding:28px 28px 120px}
+.navigator{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow-y:auto;font-family:var(--font-sans);font-size:14px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}.marginalia{font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;padding:20px 18px 90px}.navigator{position:relative;max-height:none;border-bottom:1px solid var(--border)}}
+.canvas h1{font-family:var(--font-sans);font-size:2.1rem;line-height:1.25;color:var(--text-strong);margin:8px 0 14px}
+.canvas h2{font-family:var(--font-sans);font-size:1.5rem;color:var(--text-strong);margin:50px 0 14px;padding-top:22px;border-top:1px solid var(--border)}
+.canvas h2:first-of-type{border-top:none;padding-top:0}.canvas h3{font-family:var(--font-sans);font-size:1.12rem;color:var(--text-strong);margin:28px 0 10px}
+.canvas p{margin:0 0 14px}.canvas a{color:var(--accent)}
+.hook{margin:22px 0 40px;padding:22px 26px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:22px 0;padding:14px 18px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.callout{margin:22px 0;padding:14px 18px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase}.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}
+.feynman{margin:18px 0;padding:12px 16px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}.feynman::before{content:"🧒 Một câu cho bé 10 tuổi:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase}
+.premortem{margin:22px 0;padding:18px 22px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px}.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}
+.scaffold{margin:26px 0;padding:18px 22px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.02rem;color:var(--text-strong);margin:0 0 6px}.scaffold__row{display:grid;grid-template-columns:88px 1fr;gap:12px;margin:10px 0}.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm)}.scaffold__probe>summary{padding:10px 12px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong)}.scaffold__resolve{padding:12px;background:var(--accent2-soft);font-family:var(--font-sans);font-size:14px}
+.checkpoint{margin:28px 0;padding:18px 22px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}.deep-dive{margin:22px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated)}.deep-dive>summary{padding:12px 16px;cursor:pointer;font-family:var(--font-sans);font-weight:600}.deep-dive>*:not(summary){padding:0 16px 14px}
+.bar-chart{margin:28px 0;padding:18px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px}.bar-row{display:grid;grid-template-columns:170px 1fr 90px;gap:10px;margin:8px 0;font-family:var(--font-sans);font-size:14px}.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong))}.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;margin:26px 0}.concept-flow__step{padding:14px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px}.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;align-self:center}@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}.bar-row{grid-template-columns:110px 1fr 70px}}
+.flip-card{perspective:1000px;height:170px;margin:22px 0;cursor:pointer}.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms;transform-style:preserve-3d}.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:18px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border)}.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:#fff;transform:rotateY(180deg)}.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--accent);margin-bottom:6px}.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.glossary dt{font-family:var(--font-sans);font-weight:700;margin-top:12px}.quiz{margin:48px 0 22px;padding:26px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.quiz__option{display:block;padding:10px 14px 10px 14px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px}.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success)}.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}.quiz__explanation{display:none;font-family:var(--font-sans);font-size:13px;background:var(--sidenote-bg);padding:8px 12px;border-radius:var(--radius-sm)}.quiz.is-graded .quiz__explanation{display:block}.btn{font-family:var(--font-sans);font-weight:600;padding:9px 18px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}.btn--ghost{background:transparent;color:var(--accent)}
+.launchpad{margin:40px 0 20px;padding:24px 28px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius)}.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:#fff;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}.launchpad__hint{display:none;margin:8px 0;padding:12px 14px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:14px}.launchpad__hint.is-visible{display:block}
+.sidenote{margin:20px 0;padding:10px 12px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px}.toc{list-style:none;padding:0}.toc a{display:block;padding:5px 10px;color:var(--text-muted);text-decoration:none;border-left:2px solid transparent}.toc a.is-active{color:var(--accent);border-left-color:var(--accent)}
+.controls{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:50}.control-btn{width:42px;height:42px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;font-family:var(--font-sans)}
+@media print{.navigator,.marginalia,.controls{display:none!important}.app{display:block}.flip-card{height:auto}.flip-card__face{position:static}.flip-card__back{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="navigator"><div style="font-family:var(--font-sans);font-size:13px;padding:8px 0 12px;border-bottom:1px solid var(--border);margin-bottom:12px">⏱ ~15 min · MEDIUM · narrative</div><nav><ul class="toc" id="toc"></ul></nav></aside>
+<main class="canvas" id="canvas">
+<h1>Không ai điều khiển tuyệt đối: thị trường BĐS tự cân bằng như thế nào?</h1>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted);margin:0 0 18px">Chuỗi Cung–Cầu Bất động sản · Bài 6/6 · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a></p>
+<div class="hook"><span class="hook__label">🎣 The hook</span>
+<p>Một con phố giữ giá 5 tỷ suốt một năm. Không giảm. Nhưng phòng công chứng vắng dần, tin rao tồn hàng tháng, chủ đầu tư lén tăng chiết khấu.</p>
+<p>Ai đang điều khiển con phố này? Câu trả lời khó chịu mà đúng: không ai cả. Con phố tự tìm một trạng thái mới, bằng những biến số mà bảng giá không hiện.</p></div>
+<div class="meta-block"><h4>Prerequisites</h4><ul><li>Điểm giao sinh ra giá và khối lượng cùng lúc.</li><li>Điểm chết thanh khoản từ ghi chú trước.</li><li>Khái niệm lãi suất, tín dụng, tồn kho dự án.</li></ul></div>
+<div class="meta-block"><h4>By the end you will be able to…</h4><ul><li>Xác định van mà từng chủ thể thật sự nắm.</li><li>Giải thích cân bằng không cần qua giá.</li><li>Phân biệt cân bằng mới với quay về điểm cũ.</li><li>Đánh giá cân bằng xấu nhưng bền.</li><li>Đặt đúng câu hỏi van nào đang xoay.</li></ul></div>
+
+<h2 id="baseline">Nền tảng: nhiều van, không nhạc trưởng</h2>
+<p>Phần này đặt viên gạch duy nhất. Mọi van sau đây đều gắn lên nó.</p>
+<p>Không chủ thể nào nắm mọi van. Người bán giữ giá chào, nhà đầu tư đẩy cầu một đoạn, chủ đầu tư nắn hàng, ngân hàng bơm sức mua, ngân hàng trung ương đổi chi phí vốn. Mỗi bên chỉ xoay van của mình.</p>
+<p>Trạng thái cuối là tổng va chạm của mọi van. Thị trường luôn về một điểm dừng nào đó, nhưng không ai báo trước điểm dừng nằm ở đâu.</p>
+<p>Móng đã đặt: nhiều van, không nhạc trưởng. Câu hỏi tiếp theo là hình dung hệ nhiều van mà không cần sơ đồ. Một hồ nước trên đồng sẽ làm việc đó.</p>
+
+<h2 id="bridge">Cây cầu quen: Hồ Nước Nhiều Van</h2>
+<p>Phần này mượn một hồ nước quen thuộc. Bạn sẽ dùng nó để gọi tên mọi van khó.</p>
+<p>Gọi đây là <strong>Mô hình Hồ Nước Nhiều Van</strong>. Hồ giữa đồng có nhiều cửa: van xả đáy, van bơm vào, van tràn, cống ra ruộng. Không van nào một mình quyết được mực nước.</p>
+<p>Mực nước là mặt bằng giá. Lưu lượng qua cống là khối lượng giao dịch. Mỗi van là một chủ thể: người bán giữ van xả, ngân hàng giữ van bơm, ngân hàng trung ương giữ nguồn thượng lưu. Mưa và nắng là kỳ vọng và tín dụng.</p>
+<div class="concept-flow"><div class="concept-flow__step">01 · Mưa-nắng<br>Kỳ vọng, tín dụng</div><div class="concept-flow__arrow">→</div><div class="concept-flow__step">02 · Hồ nhiều van<br>Các chủ thể</div><div class="concept-flow__arrow">→</div><div class="concept-flow__step">03 · Mực nước + lưu lượng<br>Giá + khối lượng</div></div>
+<p>Hồ khác nhà đất ở một điểm. Nước chảy liên tục và đo ngay. Giao dịch nhà đất thưa nên mực nước đổi chậm, đôi khi đứng yên nhiều quý.</p>
+<div class="premortem"><span class="premortem__label">⚠️ Before we build further…</span>
+<p><span class="premortem__wrong">Giá chưa giảm tức thị trường chưa điều chỉnh gì.</span></p>
+<p>This is wrong because hồ có thể cân bằng bằng cách giảm lưu lượng, đóng bớt cống và chờ mưa, không cần hạ mực nước.</p>
+<p><strong>What's actually true:</strong> Điều chỉnh có thể đi qua khối lượng, thời gian và rút lui. Giá chỉ là một van trong nhiều van.</p></div>
+
+<h2 id="exposition">Dựng mô hình, từng cụm một</h2>
+<p>Mỗi cụm dưới đây đi qua <strong>State → Illustrate → Probe → Resolve</strong>. Hãy thử trả lời Probe trong đầu trước khi mở đáp án.</p>
+
+<section class="scaffold"><h3 class="scaffold__concept">1 · Giới hạn của hai phía tư nhân</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Quyền giữ giá</strong> (khả năng từ chối bán dưới một mức mà không ai ép được) thuộc về bên bán, nhưng không mua được giao dịch. <strong>Vòng kỳ vọng</strong> (giá tăng nuôi kỳ vọng tăng tiếp, kéo cầu đầu tư vào) chỉ chạy tới khi giá rời khỏi thu nhập và giá thuê.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Chủ nhà đòi dưới 5 tỷ không bán, người mua đòi trên 4,5 tỷ không mua. Thị trường không nhất thiết gãy về 4,5 tỷ. Nó phản ứng bằng giao dịch giảm và thời gian bán dài ra. Giá đứng, hồ ngừng chảy. Với nhà đầu tư, tới lúc lợi suất teo và vốn đắt, sợ bỏ lỡ đảo thành chờ xem. Cầu đầu tư rút nhanh hơn cầu ở thực.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Chủ nhà chờ được 3 năm, người mua thuê được 3 năm. Van nào gãy trước?</summary><div class="scaffold__resolve">💡 Van của bên cần tiền hơn gãy trước. Kẹt đáo hạn phải nhả van xả. Tiền thuê tăng hoặc lãi vay hạ phải mở van mua. Sức chịu đo bằng dòng tiền, không bằng lời tuyên bố.</div></details></section>
+<div class="feynman">Giữ giá thì dễ, bắt người khác mua mới khó. Hét giá cao mà vắng người chỉ là hồ đầy không ai mở cống.</div>
+<div class="checkpoint"><strong>🛑 Pause &amp; reflect.</strong> Hãy giải thích quyền giữ giá bằng ngôn ngữ Hồ Nước: van xả là gì, mưa là gì? Nếu chưa gọi tên được, đọc lại một lượt trước khi đi tiếp.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">2 · Giới hạn của cung có tổ chức và tiền</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Quyền nắn nguồn hàng</strong> (giãn mở bán, giữ hàng, đổi phân khúc) thuộc về chủ đầu tư, nhưng không đẻ ra sức mua. <strong>Cầu hiệu lực</strong> (nhu cầu có tiền thật hoặc vay được) mới khớp lệnh, và ngân hàng chỉ bơm tới giới hạn trả nợ và vốn. <strong>Chính sách tiền tệ</strong> đổi chi phí vốn toàn hệ nhưng đánh cả hai phía cùng lúc.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Sản phẩm quá đắt, sai vị trí hoặc sai phân khúc thì thị trường trả lời bằng hấp thụ chậm và tồn kho phình. Ngân hàng biến người muốn mua thành mua được, nhưng tới ngưỡng rủi ro van bơm khóa lại. NHTW hạ lãi suất thì cầu dễ thở mà dự án cũng vay rẻ hơn. Không có nút bấm một chiều cho giá nhà.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Hạ lãi suất để cứu thanh khoản, vì sao tồn kho tăng trước, giá đứng yên?</summary><div class="scaffold__resolve">💡 Vì van bơm mở cho cả hai phía. Cầu nhích một nấc, van hàng cũng mở khi dự án được gỡ vướng và vay dễ hơn. Hàng vào nhanh hơn hấp thụ. Tồn kho tăng trước, giá phản ứng sau.</div></details></section>
+<div class="feynman">Tiền vay là máy bơm, không phải mưa thật. Bơm khỏe mấy cũng phải xem ruộng có cần nước không.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">3 · Cân bằng không cần qua giá</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Cân bằng đa van</strong> (trạng thái dừng đạt bằng nhiều biến số, không nhất thiết xoay giá) là chế độ bình thường của bất động sản. Sách viết lệch cung cầu thì giá đổi rồi về cân bằng. Ngoài đời hồ có nhiều cửa.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Mười van gom thành ba nhóm. Nhóm giá và dòng chảy: giá khớp, khối lượng, thời gian bán, lượng hàng rao. Nhóm tiền và niềm tin: tín dụng, kỳ vọng, tốc độ xây. Nhóm thích nghi: thuê thay mua, đổi khu vực, thu nhỏ diện tích. Danh sách này là khung tổng hợp của tác giả dàn ý. Thị trường không nhất thiết giảm giá để cân bằng. Nó cân bằng bằng việc người mua rời đi hoặc người bán ngừng bán.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Giá quanh 5 tỷ một năm, giao dịch teo, thời gian bán gấp đôi. Đã điều chỉnh chưa?</summary><div class="scaffold__resolve">💡 Đã điều chỉnh sâu, chỉ là qua van khác. Số 70% và gấp đôi là kịch bản minh họa. Dấu hiệu thật nằm ở khối lượng, thời gian và chiết khấu.</div></details></section>
+<div class="feynman">Hồ không cần hạ mực nước để yên lại. Đóng bớt cống, ngừng bơm, chờ mưa tạnh là hồ đã yên.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">4 · Cân bằng mới và giới hạn của nó</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Cân bằng mới</strong> (điểm dừng sau cú sốc, khác điểm cũ ở nhiều chiều) là kết cục thường gặp. Và điểm dừng có thể là <strong>cân bằng xấu nhưng bền</strong> (không bên nào muốn đổi hành vi, dù xã hội chịu giá cao và thiếu vừa túi tiền).</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Chuyện không đi A mất cân bằng rồi về A. Nó đi A gặp sốc, các van xoay, rồi dừng ở B với giá, người mua, thuê, phân khúc và lãi suất đều khác. B có thể rất khó ở: giá cao, giao dịch thấp, dân ở xa nơi làm. Cung cầu vẫn gặp nhau, nhưng xã hội tốn kém. Cân bằng không đồng nghĩa công bằng.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Phố cân bằng 3 năm ở giá cao, giao dịch thấp. Nên ép giá hay vặn van khác?</summary><div class="scaffold__resolve">💡 Vặn van cấu trúc: nguồn vừa túi tiền, hạ tầng kéo giãn nhu cầu, tín dụng phân hóa cho ở thực, giám sát rủi ro. Mở rộng hồ ở chỗ trũng, không tát cạn chỗ sâu.</div></details></section>
+<div class="feynman">Hồ yên không có nghĩa hồ tốt. Nước tù vẫn yên, nhưng không ai muốn uống.</div>
+
+<details class="deep-dive"><summary>🔴 Deep dive: Vì sao lãi suất tăng đánh cả hai phía?</summary><p>Lãi tăng làm người mua vay đắt nên van cầu khép. Chủ đầu tư vay đắt nên dự án chậm, nguồn tương lai mỏng đi. Tác động ròng lên giá tùy phía nào co nhanh hơn, và độ trễ xây dựng làm cung phản ứng chậm hơn cầu. Không có nút bấm một chiều cho giá nhà.</p></details>
+
+<h2 id="application">Ra thực địa: Việt Nam 2024–2025</h2>
+<p>Phần này mang hệ nhiều van ra thực địa. Mỗi con số là một van đang xoay.</p>
+<p>Van tiền mở có kiểm soát. Tín dụng toàn nền kinh tế tăng khoảng 15,08% năm 2024, quý I/2025 tăng thêm 3,93%, lãi cho vay giảm thêm 0,4%. Định hướng 2025 khoảng 16%, linh hoạt theo lạm phát. Van bơm mở, nhưng mở có chọn lọc.</p>
+<p>Van hàng mở cùng lúc. Năm 2024 hoàn thành 28 dự án nhà ở xã hội với 20.284 căn, tăng 46%; 645 dự án triển khai quy mô hơn 581.000 căn. Dư nợ kinh doanh bất động sản tới hết quý I/2025 khoảng 1,56 triệu tỷ đồng. Hàng vào nhanh. Đây là nửa giải thích vì sao giao dịch tăng mà tồn kho vẫn tăng.</p>
+<p>Van rủi ro siết lại. Vốn vào đầu cơ và dự án thiếu khả thi bị kiểm soát chặt, hệ số rủi ro 150–200%. Khuyến nghị phân hóa: ưu tiên nhà giá phù hợp và mua lần đầu, siết đầu cơ đòn bẩy cao. Van bơm không mở đều mọi cống.</p>
+<div class="bar-chart"><div class="bar-chart__title">Nhịp van tiền và van hàng · 2024–Q1/2025</div>
+<div class="bar-row"><div>Tín dụng 2024</div><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><div>+15,1%</div></div>
+<div class="bar-row"><div>Tín dụng Q1/25</div><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><div>+3,9%</div></div>
+<div class="bar-row"><div>Dư nợ KD BĐS</div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><div>~1563 ntỷ</div></div>
+<div class="bar-row"><div>NOXH xong 24</div><div class="bar-track"><div class="bar-fill" style="width:55%"></div></div><div>+46%</div></div>
+<p class="bar-chart__caption">Nguồn: NHNN/DIV và Tạp chí Ngân hàng, 2025. Thang minh họa.</p></div>
+<p>Bài học rút ra rất gọn. Tiền rẻ kéo van cầu, gỡ pháp lý kéo van hàng, siết đầu cơ giữ van rủi ro. Ba van xoay cùng lúc nên giá không chạy đường thẳng. Giá dính nhiều kỳ trong khi tồn kho và thời gian bán đã đổi là bình thường của mô hình tìm kiếm.</p>
+<div class="flip-card" tabindex="0"><div class="flip-card__inner"><div class="flip-card__face flip-card__front"><span class="flip-card__label">Active recall — Question</span>Vì sao hạ lãi suất mà giá đứng yên nhưng thị trường vẫn cân bằng lại?</div><div class="flip-card__face flip-card__back"><span class="flip-card__label">Answer</span>Vì van cầu và van hàng mở cùng lúc, van kỳ vọng mở chậm hơn. Cân bằng đi qua khối lượng, tồn kho và thời gian bán trước khi chạm giá.</div></div></div>
+<p>Mô hình đã đi qua thực địa. Việc còn lại là vạch biên: đâu là hiểu lầm hay gặp, đâu là biên mô hình không bao phủ.</p>
+
+<h2 id="boundary">Biên của mô hình</h2>
+<p>Phần này chỉ hai vấp phổ biến. Đọc kỹ, bạn tránh được đa số lỗi đọc thị trường.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Common misconception</span>“Thị trường tự cân bằng nên giá sẽ về mức hợp lý và công bằng.” Sai vì cân bằng chỉ nói hệ đã dừng, không nói điểm dừng có tốt không. Hồ tù vẫn yên. Giá cao, giao dịch thấp, vừa túi tiền thiếu vẫn là cân bằng bền.</div>
+<p>Vấp thứ hai là tưởng chính sách vặn được mọi van cùng lúc. Chính sách chỉ sửa được lệch cấu trúc: đất đai, quy hoạch, hạ tầng, tín dụng phân hóa, nhà ở xã hội, giám sát rủi ro. Không phải điều khiển tuyệt đối, mà là sửa điều thị trường tự thân khó sửa.</p>
+<div class="callout callout--danger"><span class="callout__label">🚫 Edge case</span>Cân bằng xấu kéo dài nhiều năm: giá neo cao, thanh khoản mỏng, dân dạt xa trung tâm. Mô hình vẫn vẽ được điểm giao, nhưng điểm đó không tự sửa cấu trúc.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Predict</span>Lần tới thấy tin hạ lãi suất kèm địa ốc sắp nóng, bạn kiểm tra van nào trước: giá rao hay tồn kho, thời gian bán và chuẩn cho vay? Viết câu trả lời một câu.</div>
+
+<h2 id="connections">Mắt lưới bên cạnh</h2>
+<p>Ghi chú này là một mắt lưới. Ba mắt bên cạnh giúp bạn đi tiếp mà không lạc.</p>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">Trong chuỗi này: điểm giao giá–khối lượng ở <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">Bài 2</a> · cung lệch ở <a href="2026-09-09-cung-bds-thiếu-nhà-hay-cung-bị-lệch.html">Bài 4</a> · cầu khuếch đại ở <a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">Bài 5</a>.</p>
+<p><strong>Hành vi.</strong> Sợ lỗ và neo giá là ma sát giữ van xả người bán. <strong>Dòng tiền.</strong> Giá thuê chia giá mua cho biết mực nước rời nguồn bao xa. <strong>Đô thị.</strong> Quy hoạch và hạ tầng dời cả hồ sang chỗ trũng mới.</p>
+
+<h2 id="synthesis">Bức tranh chung</h2>
+<p>Phần này thu toàn bộ ghi chú về con phố 5 tỷ trong Hook. Cùng một cơ chế giải thích cả phố vắng lẫn phố đông.</p>
+<p>Không ai điều khiển tuyệt đối con phố 5 tỷ. Người bán giữ giá chào nhưng không mua được giao dịch. Nhà đầu tư đẩy cầu một đoạn nhưng không giữ kỳ vọng. Chủ đầu tư nắn hàng nhưng không đẻ sức mua. Ngân hàng bơm tiền nhưng tới trần trả nợ. Ngân hàng trung ương đổi chi phí vốn nhưng đánh cả hai phía.</p>
+<p>Con phố tự cân bằng bằng nhiều van và dừng ở điểm mới, không phải điểm cũ. Điểm yên chưa chắc đã tốt. Đó là toàn bộ câu chuyện tự cân bằng.</p>
+<blockquote><strong>Nếu chỉ nhớ một điều:</strong> Khi bảng giá đứng yên, hãy hỏi các van còn lại đang xoay hướng nào — đó mới là nơi thị trường thật sự cân bằng.</blockquote>
+<div class="launchpad"><span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+<h3>Nghịch lý con phố yên</h3>
+<p>Một con phố cân bằng 3 năm ở giá cao, giao dịch thấp, dân phải thuê xa. Mọi bên hết động cơ đổi hành vi. Đây là cân bằng loại nào, và nếu chỉ được vặn một van chính sách thì vặn van nào mà không phá tự cân bằng?</p>
+<button class="launchpad__reveal" id="hintBtn" type="button">Reveal hint 1</button>
+<div class="launchpad__hint" data-hint="1"><strong>Hint 1 — reframe.</strong> Hồ tù vẫn yên. Bạn gọi đó là hồ khỏe hay hồ tù? Áp cách gọi sang con phố.</div>
+<div class="launchpad__hint" data-hint="2"><strong>Hint 2 — key concept.</strong> Dùng cặp cân bằng mới và cân bằng xấu nhưng bền. Tìm van sửa cấu trúc thay vì ép giá trực tiếp.</div>
+<div class="launchpad__hint" data-hint="3"><strong>Hint 3 — setup.</strong> Xin ba số: thuê trên giá, thời gian bán trung vị, tỷ trọng ở thực so với đầu cơ. Ba số xấu mà hệ vẫn đứng: mở rộng hồ ở chỗ trũng.</div></div>
+
+<h2 id="glossary">Glossary</h2>
+<p>Bảng từ vựng đi kèm cầu nối Hồ Nước. Đọc cột cầu nối để thấy trực giác sau thuật ngữ.</p>
+<dl class="glossary">
+<dt>Quyền giữ giá</dt><dd>Khả năng từ chối bán dưới một mức mà không ai ép được. <i>Trong Hồ Nước: đóng van xả.</i></dd>
+<dt>Vòng kỳ vọng</dt><dd>Giá tăng nuôi kỳ vọng tăng tiếp, kéo cầu vào. <i>Trong Hồ Nước: cơn mưa làm hồ dâng.</i></dd>
+<dt>Quyền nắn nguồn hàng</dt><dd>Giãn mở bán, giữ hàng, đổi phân khúc. <i>Trong Hồ Nước: đắp thêm cửa cống.</i></dd>
+<dt>Cầu hiệu lực</dt><dd>Nhu cầu có tiền thật hoặc vay được. <i>Trong Hồ Nước: nước thật chảy vào ruộng.</i></dd>
+<dt>Chính sách tiền tệ</dt><dd>Điều hành lãi suất và chi phí vốn toàn hệ. <i>Trong Hồ Nước: mực nước nguồn thượng lưu.</i></dd>
+<dt>Cân bằng đa van</dt><dd>Trạng thái dừng đạt bằng nhiều biến số. <i>Trong Hồ Nước: hồ yên nhờ đóng cống và ngừng bơm.</i></dd>
+<dt>Cân bằng mới</dt><dd>Điểm dừng sau cú sốc, khác điểm cũ. <i>Trong Hồ Nước: hồ yên ở mực nước mới.</i></dd>
+<dt>Cân bằng xấu nhưng bền</dt><dd>Hệ đã dừng dù xã hội chịu giá cao. <i>Trong Hồ Nước: hồ tù vẫn yên.</i></dd>
+<dt>Cân bằng phi tập trung</dt><dd>Ổn định mà không ai thiết kế. <i>Trong Hồ Nước: hồ yên không người gác chung.</i></dd>
+<dt>Giá dính</dt><dd>Giá phản ứng chậm sau cú sốc. <i>Trong Hồ Nước: mực nước đổi chậm sau khi cống đóng.</i></dd>
+</dl>
+
+<section class="quiz" id="quiz"><h2>Knowledge check</h2>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">3 câu. Chọn rồi bấm Chấm điểm.</p>
+<fieldset data-answer="1"><legend>1. Phố giữ giá 5 tỷ một năm, giao dịch teo, thời gian bán dài. Đọc nào đúng?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Chưa điều chỉnh vì giá chưa giảm</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Đang cân bằng lại qua khối lượng và thời gian</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Người bán đã mất quyền giữ giá</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> NHTW đã thất bại</label>
+<div class="quiz__explanation"><strong>Why:</strong> Giá đứng mà khối lượng và thời gian đã đổi nghĩa là các van khác đang xoay.</div></fieldset>
+<fieldset data-answer="1"><legend>2. Hạ lãi suất nhưng tồn kho tăng trước, giá đứng yên. Vì sao?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Chính sách vô tác dụng</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Van cầu và van hàng mở cùng lúc</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Hết nhu cầu ở thực</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Chủ đầu tư ngừng xây</label>
+<div class="quiz__explanation"><strong>Why:</strong> Hàng vào nhanh hơn hấp thụ. Giá phản ứng sau cùng.</div></fieldset>
+<fieldset data-answer="1"><legend>3. Cân bằng 3 năm ở giá cao, giao dịch thấp, thiếu vừa túi tiền. Đây là gì?</legend>
+<label class="quiz__option"><input type="radio" name="q3" value="0"> Chưa tìm được cân bằng</label>
+<label class="quiz__option"><input type="radio" name="q3" value="1"> Cân bằng xấu nhưng bền; cần van cấu trúc</label>
+<label class="quiz__option"><input type="radio" name="q3" value="2"> Cung–cầu đã sai</label>
+<label class="quiz__option"><input type="radio" name="q3" value="3"> Sắp quay về điểm cũ</label>
+<div class="quiz__explanation"><strong>Why:</strong> Hệ đã dừng nên là cân bằng, nhưng điểm dừng tốn kém xã hội. Van đúng là nguồn vừa túi tiền và hạ tầng.</div></fieldset>
+<div><button class="btn" id="quizCheck" type="button">Chấm điểm</button> <button class="btn btn--ghost" id="quizReset" type="button">Reset</button><p id="quizScore" style="font-family:var(--font-sans)"></p></div></section>
+
+<h2 id="sources">Sources &amp; further reading</h2>
+<ul style="font-size:14px;font-family:var(--font-sans)">
+<li>NHNN / DIV Q1/2025: tín dụng +3,93%, lãi vay −0,4%; định hướng 2025 ~16%. <a href="https://div.gov.vn/dieu-hanh-lai-suat-tin-dung-linh-hoat-ho-tro-tang-truong-kinh-te" target="_blank" rel="noopener">DIV</a></li>
+<li>Tạp chí Ngân hàng 19/06/2025: dư nợ KD BĐS ~1,56 triệu tỷ; NOXH +46%; hệ số rủi ro 150–200%. <a href="https://tapchinganhang.gov.vn/dieu-hanh-tin-dung-linh-hoat-la-nen-tang-cho-thi-truong-bat-dong-san-phat-trie-n-ben-vung-16191.html" target="_blank" rel="noopener">Tạp chí Ngân hàng</a></li>
+<li>Genesove &amp; Mayer (2001), Loss Aversion and Seller Behavior, QJE. <a href="https://doi.org/10.1162/003355301753265561" target="_blank" rel="noopener">DOI</a></li>
+<li>Díaz &amp; Jerez (2013), IER. <a href="https://ideas.repec.org/a/wly/iecrev/v54y2013i3p837-872.html" target="_blank" rel="noopener">IDEAS</a> · Caplin &amp; Leahy (2008), NBER. <a href="https://doi.org/10.3386/w14605" target="_blank" rel="noopener">DOI</a></li>
+<li>Price stickiness in competitive search, Economic Theory 2025. <a href="https://link.springer.com/article/10.1007/s00199-025-01659-z" target="_blank" rel="noopener">Springer</a></li>
+</ul>
+<div style="text-align:center;color:var(--text-muted);font-family:var(--font-sans);font-size:13px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px">Chuỗi Cung–Cầu Bất động sản · Bài 6/6<br><a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">← Bài 5: Cần nhà ≠ cầu mạnh</a> · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a><br><span>Nội dung chỉ mang tính tham khảo, không phải khuyến nghị đầu tư. Ngày cập nhật: 2026-09-09.</span></div>
+</main>
+<aside class="marginalia"><div class="sidenote"><strong>Sidenote · Boston 1990–97</strong>Số Boston: chủ nhà né lỗ treo giá cao hơn 25–35% phần chênh, xác suất bán mỗi tuần giảm vài phần trăm. Con số không bê nguyên sang Việt Nam được; giữ lại cơ chế van thời gian.</div>
+<div class="sidenote"><strong>Sidenote · Giá dính</strong>Giá dính xảy ra được ngay cả khi kỳ vọng hợp lý, không cần chi phí menu. Nhưng đó là kết quả mô hình hiệu chuẩn dữ liệu Mỹ, Anh, Vancouver và Bắc Kinh. Áp sang Việt Nam như lăng kính, chưa có bản hiệu chuẩn trong nước.</div>
+<div class="sidenote"><strong>Cách đọc nhanh</strong>Mỗi lần thấy giá mới: hỏi khối lượng khớp, tồn kho, thời gian bán và chuẩn cho vay cùng kỳ.</div></aside>
+</div>
+<div class="controls"><button class="control-btn" id="topBtn" title="Top">↑</button><button class="control-btn" id="focusBtn" title="Focus">◐</button><button class="control-btn" id="themeBtn" title="Theme">◑</button></div>
+<script>
+document.querySelectorAll('.flip-card').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('is-flipped')));
+document.getElementById('themeBtn').addEventListener('click',()=>{const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark')});
+document.getElementById('focusBtn').addEventListener('click',()=>document.body.classList.toggle('focus-mode'));
+document.getElementById('topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+(function(){const t=document.getElementById('toc');document.querySelectorAll('#canvas h2').forEach(h=>{if(!h.id)return;const li=document.createElement('li');const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);t.appendChild(li)})})();
+(function(){const q=document.getElementById('quiz');if(!q)return;const sc=document.getElementById('quizScore');document.getElementById('quizCheck').addEventListener('click',()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{t++;const a=parseInt(fs.dataset.answer,10);const s=fs.querySelector('input:checked');fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const co=fs.querySelector('input[value="'+a+'"]');if(co)co.closest('.quiz__option').classList.add('correct-answer');if(s&&parseInt(s.value,10)!==a)s.closest('.quiz__option').classList.add('incorrect-answer');if(s&&parseInt(s.value,10)===a)c++});q.classList.add('is-graded');sc.textContent=c+' / '+t+' đúng.'});document.getElementById('quizReset').addEventListener('click',()=>{q.querySelectorAll('input').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');sc.textContent=''})})();
+(function(){let n=0;const b=document.getElementById('hintBtn');if(!b)return;b.addEventListener('click',()=>{n++;const h=document.querySelector('.launchpad__hint[data-hint="'+n+'"]');if(h)h.classList.add('is-visible');b.textContent=n>=3?'Hết gợi ý':'Reveal hint '+(n+1);if(n>=3)b.disabled=true})})();
+</script>
+</body>
+</html>

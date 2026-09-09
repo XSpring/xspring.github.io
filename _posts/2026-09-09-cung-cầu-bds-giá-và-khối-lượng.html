@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Khi cung và cầu BĐS gặp nhau: giá và khối lượng được tạo ra như thế nào?</title>
+<meta name="description" content="Điểm giao cung-cầu sinh ra giá và khối lượng cùng lúc. Bài học chi tiết cho nhà đầu tư và người mua ở thực.">
+<meta name="artifact-length" content="MEDIUM">
+<meta name="iterator-cycles" content="0">
+<meta name="iterator-stopped-by" content="skipped">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}img,svg{max-width:100%;height:auto;display:block}
+:root{--font-serif:'Merriweather',Georgia,serif;--font-sans:'Inter',-apple-system,sans-serif;--font-mono:'JetBrains Mono',monospace;--bg:#FDFBF7;--bg-elevated:#fff;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;--border:#E4DFD5;--sidenote-bg:#EDF2F7;--code-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;--radius:10px;--radius-sm:6px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 4px 12px rgba(0,0,0,.08);--measure:68ch;--line:1.75;--transition:200ms cubic-bezier(.4,0,.2,1)}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;--accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--code-bg:#2A2F3A;--success:#68D391;--success-bg:#22543D;--danger:#FC8181;--danger-bg:#63171B;--warn:#F6AD55;--warn-bg:#7B341E;--info:#63B3ED;--info-bg:#2A4365}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line)}
+.app{display:grid;grid-template-columns:minmax(200px,18%) minmax(0,1fr) minmax(230px,20%);gap:40px;max-width:1380px;margin:0 auto;padding:28px 28px 120px}
+.navigator{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow-y:auto;font-family:var(--font-sans);font-size:14px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}.marginalia{font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;padding:20px 18px 90px}.navigator{position:relative;max-height:none;border-bottom:1px solid var(--border);padding-bottom:12px}}
+.canvas h1{font-family:var(--font-sans);font-size:2.2rem;line-height:1.25;color:var(--text-strong);margin:8px 0 14px}
+.canvas h2{font-family:var(--font-sans);font-size:1.55rem;color:var(--text-strong);margin:52px 0 14px;padding-top:22px;border-top:1px solid var(--border)}
+.canvas h2:first-of-type{border-top:none;padding-top:0}.canvas h3{font-family:var(--font-sans);font-size:1.15rem;color:var(--text-strong);margin:30px 0 10px}
+.canvas p{margin:0 0 14px}.canvas a{color:var(--accent)}.hook{margin:22px 0 40px;padding:22px 26px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:22px 0;padding:14px 18px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.callout{margin:22px 0;padding:14px 18px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase}.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}
+.feynman{margin:18px 0;padding:12px 16px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}.feynman::before{content:"🧒 Explain in one sentence:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase}
+.premortem{margin:22px 0;padding:18px 22px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px}.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}
+.scaffold{margin:26px 0;padding:18px 22px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.05rem;color:var(--text-strong);margin:0 0 6px}.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px;margin:10px 0}.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm)}.scaffold__probe>summary{padding:10px 12px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong)}.scaffold__resolve{padding:12px;background:var(--accent2-soft);font-family:var(--font-sans);font-size:14px}
+.checkpoint{margin:28px 0;padding:18px 22px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}.deep-dive{margin:22px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated)}.deep-dive>summary{padding:12px 16px;cursor:pointer;font-family:var(--font-sans);font-weight:600}.deep-dive>*:not(summary){padding:0 16px 14px}
+.bar-chart{margin:28px 0;padding:18px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px}.bar-row{display:grid;grid-template-columns:150px 1fr 52px;gap:10px;margin:8px 0;font-family:var(--font-sans);font-size:14px}.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong))}.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;margin:26px 0}.concept-flow__step{padding:14px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px}.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;align-self:center}@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}.bar-row{grid-template-columns:100px 1fr 44px}}
+.flip-card{perspective:1000px;height:170px;margin:22px 0;cursor:pointer}.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms;transform-style:preserve-3d}.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:18px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border)}.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:#fff;transform:rotateY(180deg)}.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--accent);margin-bottom:6px}.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.glossary dt{font-family:var(--font-sans);font-weight:700;margin-top:12px}.quiz{margin:48px 0 22px;padding:26px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.quiz__option{display:block;padding:10px 14px 10px 42px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px;position:relative}.quiz__option input{position:absolute;opacity:0}.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success)}.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}.quiz__explanation{display:none;font-family:var(--font-sans);font-size:13px;background:var(--sidenote-bg);padding:8px 12px;border-radius:var(--radius-sm)}.quiz.is-graded .quiz__explanation{display:block}.btn{font-family:var(--font-sans);font-weight:600;padding:9px 18px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}.btn--ghost{background:transparent;color:var(--accent)}
+.launchpad{margin:40px 0 20px;padding:24px 28px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius)}.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:#fff;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}.launchpad__hint{display:none;margin:8px 0;padding:12px 14px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:14px}.launchpad__hint.is-visible{display:block}
+.sidenote{margin:20px 0;padding:10px 12px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px}.toc{list-style:none;padding:0}.toc a{display:block;padding:5px 10px;color:var(--text-muted);text-decoration:none;border-left:2px solid transparent}.toc a.is-active{color:var(--accent);border-left-color:var(--accent)}
+.controls{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:50}.control-btn{width:42px;height:42px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;font-family:var(--font-sans)}
+@media print{.navigator,.marginalia,.controls{display:none!important}.app{display:block}.flip-card{height:auto}.flip-card__face{position:static}.flip-card__back{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="navigator" aria-label="Table of contents">
+<div style="font-family:var(--font-sans);font-size:13px;padding:8px 0 12px;border-bottom:1px solid var(--border);margin-bottom:12px">⏱ ~14 min · MEDIUM · narrative</div>
+<nav><ul class="toc" id="toc"></ul></nav>
+</aside>
+<main class="canvas" id="canvas">
+<h1>Khi cung và cầu BĐS gặp nhau: giá và khối lượng được tạo ra như thế nào?</h1>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted);margin:0 0 18px">Chuỗi Cung–Cầu Bất động sản · Bài 2/6 · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a></p>
+<div class="hook"><span class="hook__label">🎣 The hook</span>
+<p>Cuối năm 2023, bảng giá chung cư Hà Nội vẫn treo 60–70 triệu đồng/m². Sàn giao dịch thì vắng tanh. Không ai mua.</p>
+<p>Cuối năm 2025, giá sơ cấp vọt lên khoảng 100 triệu đồng/m². Vậy mà vẫn có người xếp hàng đặt cọc. Tại sao giá cao hơn lại bán được, còn giá thấp hơn lại đóng băng? Câu trả lời nằm ở điểm giao cung–cầu, nơi sinh ra giá và khối lượng cùng lúc.</p>
+</div>
+<div class="meta-block"><h4>Prerequisites</h4><ul><li>Cung dốc lên, cầu dốc xuống trong kinh tế phổ thông.</li><li>Giá niêm yết khác giá khớp thực tế.</li><li>Khái niệm chung cư, đất nền, tồn kho dự án.</li></ul></div>
+<div class="meta-block"><h4>By the end you will be able to…</h4><ul><li>Xác định điểm giao qua hai đầu ra: giá và khối lượng.</li><li>Giải thích vì sao giá đứng yên mà giao dịch sụp đổ.</li><li>Phân biệt điểm giao thực với điểm giao kỳ vọng.</li><li>Đối chiếu ba phân kỳ giá–khối lượng với sức khỏe thị trường.</li><li>Đánh giá một bảng giá bằng giao dịch thực và kỳ vọng.</li></ul></div>
+
+<h2 id="baseline">Nền tảng: một điểm giao, hai đầu ra</h2>
+<p>Phần này đặt viên gạch đầu tiên. Mọi trạng thái sau đây đều quay về nó.</p>
+<p><strong>Giao dịch</strong> chỉ xảy ra khi khoảng giá người mua chấp nhận giao với khoảng giá người bán chấp nhận. Bên mua nói: “Mức này tôi xuống tiền.” Bên bán nói: “Mức này tôi nhả hàng.”</p>
+<p>Mỗi lần chạm tạo ra hai con số, không phải một. <strong>Giá cân bằng</strong> (mức giá mà lượng mua dự định bằng lượng bán dự định) cho biết hai bên gặp ở đâu. <strong>Khối lượng cân bằng</strong> (số giao dịch thành công trong một kỳ) cho biết cuộc gặp đó rộng hay hẹp.</p>
+<p>Nếu một bên đổi kỳ vọng, điểm chạm dịch chuyển. Giá có thể đứng yên trong khi khối lượng rơi tự do. Đó là chuyện thường ngày của bất động sản.</p>
+<p>Móng đã đặt xong: một điểm giao, hai đầu ra. Câu hỏi tiếp theo là hình dung nó mà không cần đồ thị. Chợ rau buổi sáng sẽ làm việc đó.</p>
+
+<h2 id="bridge">Cây cầu quen: Mô hình Chợ Phiên</h2>
+<p>Phần này mượn một khu chợ quen thuộc. Bạn sẽ dùng nó để gọi tên mọi khái niệm khó.</p>
+<p>Gọi đây là <strong>Mô hình Chợ Phiên</strong>. Mỗi sáng, tiểu thương dọn sạp rau. Người đi chợ đảo một vòng rồi trả giá. Người đi chợ là bên cầu. Tiểu thương là bên cung.</p>
+<p>Giá ghi trên tấm bìa là giá niêm yết. Giá tiền trao tay sau mặc cả là giá khớp. Cuối buổi còn hai rổ ế, đó là tồn kho. Hôm chợ đông, rau hết sớm và giá nhích lên. Hôm chợ vắng, sạp vẫn treo giá cao nhưng không ai dừng lại.</p>
+<div class="concept-flow"><div class="concept-flow__step">01 · Người đi chợ<br>Bên cầu</div><div class="concept-flow__arrow">→</div><div class="concept-flow__step">02 · Mặc cả<br>Điểm giao</div><div class="concept-flow__arrow">→</div><div class="concept-flow__step">03 · Tiền và rau sang tay<br>Giá + khối lượng</div></div>
+<p>Chợ phiên khác nhà đất ở một điểm lớn. Rau héo sau một buổi nên tiểu thương phải hạ giá. Nhà không héo nên chủ nhà có thể treo giá ba năm.</p>
+<div class="premortem"><span class="premortem__label">⚠️ Before we build further — most people leave this bridge thinking…</span>
+<p><span class="premortem__wrong">Giá là do bên bán quyết định, cứ treo giá nào thì thị trường ghi nhận giá đó.</span></p>
+<p>This is wrong because giá treo không tạo giao dịch nếu không ai chấp nhận.</p>
+<p><strong>What's actually true:</strong> Chỉ giá khớp kèm khối lượng mới mô tả thị trường. Giá rao đứng một mình chỉ là lời đề nghị.</p></div>
+
+<h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+<p>Mỗi khái niệm dưới đây đi qua <strong>State → Illustrate → Probe → Resolve</strong>. Hãy thử trả lời Probe trong đầu trước khi mở đáp án.</p>
+
+<section class="scaffold"><h3 class="scaffold__concept">1 · Giá cân bằng và khối lượng cân bằng</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Giá cân bằng</strong> hình thành cùng <strong>khối lượng cân bằng</strong>. Một căn hộ Hà Đông rao 3,2 tỷ, ba người trả 2,9–3,0 tỷ, chủ đồng ý 3,0 tỷ với một người. Giá của cuộc gặp là 3,0 tỷ. Khối lượng là một giao dịch.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Cùng mức rao 3,2 tỷ, khối lượng có thể là 100 giao dịch hoặc bằng 0. Năm mươi căn cùng tòa rao 3,2 tỷ nhưng cả quý chỉ khớp 2 căn ở 2,9 tỷ: giá được xác nhận là 2,9 tỷ. Số 3,2 tỷ là kỳ vọng của bên bán.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Vì sao giá rao 3,2 tỷ không được gọi là giá thị trường?</summary><div class="scaffold__resolve">💡 Vì thị trường chỉ ghi nhận điều đã khớp. Giá rao chưa ai chấp nhận thì chưa có khối lượng đi kèm. Thiếu khối lượng, giá chưa có con dấu.</div></details></section>
+<div class="feynman">Giá là số tiền hai bên đồng ý. Khối lượng là số lần cái bắt tay đó xảy ra.</div>
+<div class="checkpoint"><strong>🛑 Pause &amp; reflect.</strong> Hãy nhắm mắt và giải thích giá cân bằng bằng ngôn ngữ Chợ Phiên: giá bìa là gì, tiền trao tay là gì? Nếu chưa gọi tên được, đọc lại một lượt trước khi đi tiếp.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">2 · Bốn trạng thái thường gặp và ba cực đoan</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Dịch chuyển cung–cầu</strong> (toàn bộ đường cung hoặc cầu trượt sang vị trí mới) tạo bốn trạng thái thường gặp và ba cực đoan. Cầu tăng mà cung chưa kịp tăng: giá tăng, khối lượng tăng đầu kỳ. Cầu giảm mà cung còn cao: giá chịu áp lực giảm, tồn kho tăng.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Cung tăng mạnh mà cầu cũng tăng: khối lượng tăng mạnh, giá chỉ tăng nhẹ. Cung giảm mà cầu cũng giảm: giá đôi khi không rơi nhiều, nhưng giao dịch sụt mạnh. Đây là nét riêng của nhà đất. Ba cực đoan: cầu mạnh gặp cung thấp sinh sợ bỏ lỡ; cung thấp gặp cầu thấp sinh thị trường đắt nhưng chết; cung lớn gặp cầu thấp sinh tồn kho phình và chiết khấu.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Vì sao cung giảm + cầu giảm giữ được giá treo mà mất thanh khoản?</summary><div class="scaffold__resolve">💡 Vì nhà không héo như rau. Chủ nhà rút chào thay vì hạ giá. Bên mua cũng lùi lại chờ. Hai khoảng chấp nhận tách nhau. Giá đứng, khối lượng rơi.</div></details></section>
+<div class="feynman">Đông người mà ít hàng thì giá lên. Vắng người mà ít hàng thì chợ vắng, giá treo vẫn cao.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">3 · Điểm giao kỳ vọng và điểm chết thanh khoản</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Điểm giao kỳ vọng</strong> (mức chấp nhận hôm nay vì tin vào giá ngày mai) khác <strong>điểm giao thực tế</strong> (mức chấp nhận vì thu nhập và giá thuê hôm nay cho phép). Người mua tin năm sau từ 5 tỷ lên 6 tỷ nên thấy 5 tỷ hôm nay vẫn rẻ. Người bán cũng tin tăng nên giữ hàng. Hai lực cộng hưởng đẩy giá xa nền tảng thu nhập.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Chiều ngược lại: mua tin giảm nên lùi lại, bán thấy giá thấp nên rút hàng. Giá không nhất thiết rơi mạnh. Khối lượng mới là thứ sụp đổ. Khi hai khoảng chấp nhận tách hẳn, thị trường bước vào <strong>điểm chết thanh khoản</strong> (giá treo cao, thời gian bán dài, giao dịch gần bằng 0). Giá giữ. Giao dịch chết.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Cả mua và bán cùng tin giá giảm, vì sao giá không giảm ngay cho khớp?</summary><div class="scaffold__resolve">💡 Vì mua chờ thấp hơn mới mua, bán từ chối thấp nên rút chào. Hai khoảng không còn giao nhau. Thị trường cân bằng bằng cách không giao dịch.</div></details></section>
+<div class="feynman">Hôm nay mua hay không tùy thuộc bạn nghĩ ngày mai đắt hay rẻ hơn.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">4 · Phân kỳ giá–khối lượng và bàn tay hành vi</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Phân kỳ giá–khối lượng</strong> (giá và số giao dịch đi ngược hướng) là tín hiệu sớm về sức khỏe. Giá tăng kèm khối lượng giảm: cung cạn hoặc giữ hàng. Giá đi ngang kèm khối lượng giảm mạnh: tìm giá bị kẹt. Giá giảm kèm khối lượng tăng đôi khi tích cực: giá mới đủ hấp dẫn.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div><strong>Méo hành vi</strong> gồm năm lực: <strong>sợ lỗ</strong> (ngại hiện thực hóa lỗ), <strong>neo giá</strong> (dính mốc cũ), <strong>sợ bỏ lỡ</strong>, <strong>ngoại suy</strong> (tin đà tăng tiếp diễn), <strong>bầy đàn</strong>. Chủ mua đỉnh 3,5 tỷ từ chối bán 2,9 tỷ là sợ lỗ. Neo giá đỉnh xóm bên nới rộng điểm chết. Sợ bỏ lỡ và bầy đàn dịch chuyển điểm giao rất nhanh.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Hai khu cùng tăng 10%, khu A khớp 200 căn, khu B khớp 5 căn. Khu nào đáng tin?</summary><div class="scaffold__resolve">💡 Khu A. Giá được nhiều lần bắt tay xác nhận. Khu B có thể chỉ là giao dịch cá biệt. Khối lượng là con dấu của giá.</div></details></section>
+<div class="feynman">Giá cao mà đông người mua mới khỏe. Giá cao mà vắng tanh thì nên dè chừng.</div>
+
+<details class="deep-dive"><summary>🔴 Deep dive: Vì sao BĐS đóng băng trước khi giảm giá?</summary><p>Nhà khác rau ở chi phí giữ hàng thấp và niềm tin đất không đẻ thêm. Bên bán rút chào thay vì hạ giá. Bên mua chờ vì gửi tiết kiệm và thuê rẻ hơn trả lãi vay. Khi cả hai cùng chờ, khối lượng rơi trước, giá rơi sau. Chỉ khi áp lực dòng tiền thắng sợ lỗ — đáo hạn nợ, cần tiền gấp — giá khớp mới lộ ra.</p></details>
+
+<h2 id="application">Ra thực địa: Việt Nam 2023–2025</h2>
+<p>Phần này mang mô hình ra chợ thật. Ba năm này là một vòng đầy đủ: đóng băng, phục hồi lệch, rồi giá neo cao.</p>
+<p>Năm 2023 là điểm chết trên diện rộng. Niềm tin suy giảm, tín dụng bị siết, lãi vay cao. Tỷ lệ hấp thụ quý I chỉ khoảng một trên mười căn chào. Số giao dịch 9 tháng chỉ bằng khoảng bốn phần mười cả năm 2022. Đất nền giảm sâu nhất. (<a href="https://vnexpressnews.net/real-estate-liquidity-falls-in-6-months/" target="_blank" rel="noopener">VnExpress</a>, <a href="https://theinvestor.vn/no-massive-improvements-expected-for-real-estate-market-in-2024-d8490.html" target="_blank" rel="noopener">The Investor</a>, 2023)</p>
+<p>Năm 2024 phục hồi lệch. Cả năm ghi nhận khoảng 125.545 giao dịch chung cư và nhà riêng lẻ, xấp xỉ năm 2023, cùng khoảng 412.448 giao dịch đất nền, tăng khoảng một phần ba so với 2023. Tồn kho quý IV còn khoảng 17.058 căn/nền, giảm so với quý III. Giá chung cư Hà Nội và TP.HCM tiếp tục tăng ở cả hàng mới và hàng cũ.</p>
+<p>Năm 2025 giao dịch tăng nhưng tồn kho quay đầu. Tổng giao dịch đạt khoảng 579.718, tăng gần 8%. Chung cư và nhà riêng lẻ khoảng 138.025, đất nền khoảng 441.693. Tồn kho quý IV vọt lên khoảng 32.894 căn/nền. Giá sơ cấp bình quân 100–111 triệu đồng/m², tăng 20–40% trong năm. Đây là dạng giá tăng kèm tồn kho tăng.</p>
+<div class="bar-chart"><div class="bar-chart__title">Vòng quay 2024–2025 · minh họa từ số Bộ Xây dựng</div>
+<div class="bar-row"><div>Đất nền 2024 (vs 2023)</div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><div>~134%</div></div>
+<div class="bar-row"><div>Chung cư 2024 (vs 2023)</div><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><div>~98%</div></div>
+<div class="bar-row"><div>Tổng GD 2025 (vs 2024)</div><div class="bar-track"><div class="bar-fill" style="width:35%"></div></div><div>~108%</div></div>
+<div class="bar-row"><div>Giá sơ cấp 2025 (tăng)</div><div class="bar-track"><div class="bar-fill" style="width:45%"></div></div><div>+20–40%</div></div>
+<p class="bar-chart__caption">Nguồn: Bộ Xây dựng, Báo cáo 21/BC-BXD 2025 và thông cáo Q4/2025. Xem Sources.</p></div>
+<p>Bài học rút ra rất gọn. Năm 2023: giá rao không khớp thì chưa phải giá. Năm 2024: đất nền chạy trước, chung cư đi ngang. Năm 2025: hàng mới từ tháo gỡ pháp lý chảy vào nhanh hơn hấp thụ, nên tồn kho tăng cùng giao dịch.</p>
+<div class="flip-card" tabindex="0"><div class="flip-card__inner"><div class="flip-card__face flip-card__front"><span class="flip-card__label">Active recall — Question</span>Vì sao 2025 vừa tăng giao dịch vừa tăng tồn kho mà không mâu thuẫn?</div><div class="flip-card__face flip-card__back"><span class="flip-card__label">Answer</span>Vì hàng mới được kích hoạt chảy vào rổ chào nhanh hơn tốc độ hấp thụ. Tồn kho gồm nhiều hàng đang xây, không chỉ hàng ế.</div></div></div>
+<p>Mô hình đã đi qua thực địa. Việc còn lại là vạch biên: đâu là hiểu lầm hay gặp, đâu là biên mô hình không bao phủ.</p>
+
+<h2 id="boundary">Biên của mô hình: nơi nó mờ dần</h2>
+<p>Phần này chỉ hai vấp phổ biến. Đọc kỹ, bạn tránh được đa số lỗi đọc thị trường.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Common misconception</span>“Giữ giá là khỏe; giảm giá là yếu.” Sai vì khỏe phải đo bằng cặp giá–khối lượng. Giá tăng kèm khối lượng teo thường là cung cạn hoặc giữ hàng. Giá giảm kèm khối lượng bật lại đôi khi là cân bằng mới lành mạnh hơn.</div>
+<p>Nhầm lẫn thứ hai là tin cung thấp thì giá tăng bền. Cung thấp gặp cầu thấp sinh thị trường đắt nhưng chết. Điểm giao vẽ được trên giấy nhưng không có thanh khoản kiểm chứng.</p>
+<div class="callout callout--danger"><span class="callout__label">🚫 Edge case</span>Thị trường “đắt nhưng chết”: cung rất thấp, cầu rất thấp, giá treo cao, giao dịch gần bằng 0. Đọc giá ở đó như đọc nhiệt kế đặt ngoài nắng.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Predict</span>Lần tới thấy tin “giá lập đỉnh mới”, bạn kiểm tra số nào trước: giá trung bình hay số giao dịch khớp và tồn kho cùng kỳ? Viết câu trả lời một câu.</div>
+
+<h2 id="connections">Mắt lưới bên cạnh</h2>
+<p>Ghi chú này là một mắt lưới. Ba mắt bên cạnh giúp bạn đi tiếp mà không lạc.</p>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">Trong chuỗi này: vòng xoáy đóng băng ở <a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">Bài 1</a> · bản đồ actor ở <a href="2026-09-09-cung-cau-bds-ai-đứng-ở-hai-phía.html">Bài 3</a> · cân bằng đa van ở <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">Bài 6</a>.</p>
+<p><strong>Định giá dòng tiền.</strong> Giá thuê ròng chia giá mua cho biết điểm giao kỳ vọng rời xa giá trị sử dụng bao nhiêu. <strong>Tín dụng.</strong> Tiền vay rẻ nới khoảng chấp nhận của mua, tiền đắt thu hẹp nó ngay cả khi giá rao đứng yên. <strong>Pháp lý nguồn cung.</strong> Gỡ vướng một loạt dự án đẩy tồn kho lên cùng lúc với giao dịch, như năm 2025.</p>
+
+<h2 id="synthesis">Bức tranh chung</h2>
+<p>Phần này thu toàn bộ ghi chú về một câu. Cái chợ vắng năm 2023 và hàng xếp cọc năm 2025 là cùng một cơ chế.</p>
+<p>Điểm giao cung–cầu sinh ra giá và khối lượng cùng lúc. Giá cho biết hai bên gặp ở đâu. Khối lượng cho biết cuộc gặp đó có thật hay không. Kỳ vọng về ngày mai kéo điểm giao rời khỏi thu nhập và giá thuê hôm nay. Sợ lỗ, neo giá và bầy đàn giữ giá treo ở cao trong khi giao dịch biến mất.</p>
+<p>Vì vậy đừng chỉ hỏi giá tăng hay giảm. Hãy hỏi bao nhiêu giao dịch xác nhận mức giá đó, và điểm giao hiện tại dựa vào nhu cầu ở thực hay kỳ vọng. Đọc được hai câu này, bạn đọc được sức khỏe của bất động sản.</p>
+<blockquote><strong>Nếu chỉ nhớ một điều:</strong> Giá không có khối lượng đi kèm chỉ là lời đề nghị — thị trường thật nằm ở số lần bắt tay đã xảy ra.</blockquote>
+<div class="launchpad"><span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+<h3>Bài toán chợ vắng</h3>
+<p>Một dãy phố rao 15 căn suốt hai quý, giá rao tăng 5% nhưng không khớp căn nào. Môi giới nói “khu này đang lên”. Một nhà đầu tư định mua vì sợ bỏ lỡ. Đây là lên giá hay điểm chết, và cần thêm dữ liệu nào?</p>
+<button class="launchpad__reveal" id="hintBtn" type="button">Reveal hint 1</button>
+<div class="launchpad__hint" data-hint="1"><strong>Hint 1 — reframe.</strong> Đặt mình vào Chợ Phiên cuối buổi: sạp treo giá cao mà không ai dừng. Bạn gọi đó là chợ đắt hàng hay chợ vắng?</div>
+<div class="launchpad__hint" data-hint="2"><strong>Hint 2 — key concept.</strong> Dùng phân kỳ giá tăng kèm khối lượng giảm và điểm chết thanh khoản. Kiểm tra thời gian bán và giá khớp gần nhất.</div>
+<div class="launchpad__hint" data-hint="3"><strong>Hint 3 — setup.</strong> Xin ba số: giao dịch khớp 12 tháng, tồn kho và thời gian bán, tỷ suất thuê trên giá rao. Ba số yếu mà giá rao tăng: gọi tên lực hành vi đang lái.</div>
+</div>
+
+<h2 id="glossary">Glossary</h2>
+<p>Bảng từ vựng dưới đây đi kèm cầu nối Chợ Phiên. Đọc cột cầu nối để thấy trực giác đứng sau thuật ngữ.</p>
+<dl class="glossary">
+<dt>Giá cân bằng</dt><dd>Mức giá mà lượng mua dự định bằng lượng bán dự định. <i>Trong Chợ Phiên: tiền trao tay sau mặc cả.</i></dd>
+<dt>Khối lượng cân bằng</dt><dd>Số giao dịch thành công tại mức giá đó trong một kỳ. <i>Trong Chợ Phiên: số bó rau bán được.</i></dd>
+<dt>Dịch chuyển cung–cầu</dt><dd>Toàn bộ đường cung hoặc cầu trượt sang vị trí mới. <i>Trong Chợ Phiên: buổi chợ bỗng đông hoặc mưa vắng.</i></dd>
+<dt>Điểm giao kỳ vọng</dt><dd>Mức chấp nhận hôm nay dựa vào giá ngày mai được tin sẽ tới. <i>Trong Chợ Phiên: mua sớm vì nghe tin chiều mất mùa.</i></dd>
+<dt>Điểm chết thanh khoản</dt><dd>Giá treo cao nhưng giao dịch gần bằng 0. <i>Trong Chợ Phiên: chợ vắng mà sạp vẫn treo giá cao.</i></dd>
+<dt>Phân kỳ giá–khối lượng</dt><dd>Giá và số giao dịch đi ngược hướng. <i>Trong Chợ Phiên: giá rau lên mà rổ bán được ít dần.</i></dd>
+<dt>Sợ lỗ</dt><dd>Ngại hiện thực hóa lỗ nên giữ giá cao. <i>Trong Chợ Phiên: tiếc vốn nhập đắt nên không hạ.</i></dd>
+<dt>Neo giá</dt><dd>Dính vào mốc giá cũ khi định giá. <i>Trong Chợ Phiên: nhớ giá hôm qua để ra giá hôm nay.</i></dd>
+<dt>Sợ bỏ lỡ</dt><dd>Mua vì sợ người khác mua mất. <i>Trong Chợ Phiên: chen vào hàng vì đám đông chen.</i></dd>
+<dt>Bầy đàn</dt><dd>Làm theo đám đông thay vì tính riêng. <i>Trong Chợ Phiên: mua vì cả chợ cùng mua.</i></dd>
+</dl>
+
+<section class="quiz" id="quiz"><h2>Knowledge check</h2>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">3 câu. Chọn đáp án rồi bấm Chấm điểm.</p>
+<fieldset data-answer="1"><legend>1. Tòa rao 100 căn giá 3,5 tỷ, cả quý khớp 3 căn ở 3,1 tỷ. Đọc nào đúng?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Giá thị trường là 3,5 tỷ vì đa số chào</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Giá 3,1 tỷ với khối lượng mỏng, cần thêm dữ liệu</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Thị trường nóng vì giá rao cao</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Không thể nói gì vì thiếu đồ thị</label>
+<div class="quiz__explanation"><strong>Why:</strong> Giá khớp 3,1 tỷ mới được xác nhận, nhưng 3 giao dịch là mỏng. Giá rao chỉ là kỳ vọng.</div></fieldset>
+<fieldset data-answer="1"><legend>2. Giá đi ngang, khối lượng giảm mạnh, thời gian bán dài. Tín hiệu nào khớp?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Cầu thực mạnh, cung thiếu</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Điểm chết: mua chờ, bán giữ, tìm giá kẹt</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Lành mạnh vì giá ổn định</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Bên bán đã giảm đủ sâu</label>
+<div class="quiz__explanation"><strong>Why:</strong> Bộ ba giá đứng + giao dịch teo + thời gian dài là dấu vân tay điểm chết. Giữ giá chưa chắc khỏe.</div></fieldset>
+<fieldset data-answer="1"><legend>3. Chủ mua 3,5 tỷ từ chối bán 2,9 tỷ dù giá thuê chỉ đỡ 2,6 tỷ. Lực nào giải thích?</legend>
+<label class="quiz__option"><input type="radio" name="q3" value="0"> Cung tăng mạnh</label>
+<label class="quiz__option"><input type="radio" name="q3" value="1"> Sợ lỗ và neo giá giữ cung ở lại</label>
+<label class="quiz__option"><input type="radio" name="q3" value="2"> Lãi suất giảm làm cầu tăng</label>
+<label class="quiz__option"><input type="radio" name="q3" value="3"> Pháp lý tháo gỡ làm tồn kho tăng</label>
+<div class="quiz__explanation"><strong>Why:</strong> Từ chối lỗ và dính mốc cũ là sợ lỗ cộng neo giá, giữ cung co cùng nhịp với cầu.</div></fieldset>
+<div><button class="btn" id="quizCheck" type="button">Chấm điểm</button> <button class="btn btn--ghost" id="quizReset" type="button">Reset</button><p id="quizScore" style="font-family:var(--font-sans)"></p></div></section>
+
+<h2 id="sources">Sources &amp; further reading</h2>
+<p style="font-size:15px">Dữ liệu và khung hành vi trong bài dựa trên các nguồn dưới đây. Số liệu Việt Nam lấy từ công bố của Bộ Xây dựng; cơ chế hành vi lấy từ nghiên cứu đã bình duyệt.</p>
+<ul style="font-size:14px;font-family:var(--font-sans)">
+<li>Bộ Xây dựng, Báo cáo 21/BC-BXD 2025 (Q4/2024 và cả năm 2024). <a href="https://luatvietnam.vn/dat-dai/bao-cao-21-bc-bxd-cua-bo-xay-dung-ve-viec-cong-bo-thong-tin-ve-nha-o-va-thi-truong-bat-dong-san-trong-quy-iv-2024-va-ca-nam-2024-388116-d6.html" target="_blank" rel="noopener">LuatVietnam</a></li>
+<li>Tổng hợp giao dịch và tồn kho 2024. <a href="https://thuviennhadat.vn/thi-truong-bat-dong-san/so-luong-giao-dich-chung-cu-nha-o-rieng-le-dat-nen-quy-iv-2024-va-ca-nam-2024-641394.html" target="_blank" rel="noopener">Thư viện Nhà đất</a></li>
+<li>Thông tin Q4/2025: ~579.718 giao dịch, tồn kho ~32.894, giá sơ cấp 100–111 tr/m². <a href="https://vn.stockproxx.com/gan-600.000-giao-dich-nhung-ton-kho-van-tang-bo-xay-dung-canh-bao-gi-ve-nghich-ly-nay" target="_blank" rel="noopener">StockProXX</a></li>
+<li>Leung &amp; Tsang (2013), Anchoring and loss aversion in the housing market. <a href="https://ideas.repec.org/a/eee/chieco/v24y2013icp42-54.html" target="_blank" rel="noopener">IDEAS</a></li>
+<li>Singh et al. (2023), Behavioural biases in real estate investment. <a href="https://doi.org/10.1057/s41599-023-02366-7" target="_blank" rel="noopener">DOI</a></li>
+<li>Số liệu 2023: hấp thụ quý I ~11%, giao dịch 9 tháng ~41% cả năm 2022 (DKRA, VnExpress). <a href="https://vnexpressnews.net/real-estate-liquidity-falls-in-6-months/" target="_blank" rel="noopener">VnExpress</a> · <a href="https://theinvestor.vn/no-massive-improvements-expected-for-real-estate-market-in-2024-d8490.html" target="_blank" rel="noopener">The Investor</a></li>
+</ul>
+<div style="text-align:center;color:var(--text-muted);font-family:var(--font-sans);font-size:13px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px">Chuỗi Cung–Cầu Bất động sản · Bài 2/6<br><a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">← Bài 1: Giảm giá mà mất thanh khoản</a> · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a> · <a href="2026-09-09-cung-cau-bds-ai-đứng-ở-hai-phía.html">Bài 3: Ai ở phe nào →</a><br><span>Nội dung chỉ mang tính tham khảo, không phải khuyến nghị đầu tư. Ngày cập nhật: 2026-09-09.</span></div>
+</main>
+<aside class="marginalia"><div class="sidenote"><strong>Sidenote · Marshall</strong>Khung cân bằng từng phần do Alfred Marshall hệ thống cuối thế kỷ 19. Nhà đất dùng chung khung nhưng ma sát cao hơn hàng hóa thông thường.</div>
+<div class="sidenote"><strong>Sidenote · Hong Kong 1992–2006</strong>Neo giá và sợ lỗ làm giá và khối lượng cùng lên xuống theo chu kỳ. Giao dịch của tài sản mới mua nhạy hơn với hai thiên lệch này.</div>
+<div class="sidenote"><strong>Cách đọc nhanh</strong>Mỗi lần thấy giá mới: hỏi số giao dịch khớp, tồn kho và thời gian bán cùng kỳ. Ba số này là con dấu của giá.</div></aside>
+</div>
+<div class="controls"><button class="control-btn" id="topBtn" title="Top">↑</button><button class="control-btn" id="focusBtn" title="Focus">◐</button><button class="control-btn" id="themeBtn" title="Theme">◑</button></div>
+<script>
+document.querySelectorAll('.flip-card').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('is-flipped')));
+document.getElementById('themeBtn').addEventListener('click',()=>{const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark')});
+document.getElementById('focusBtn').addEventListener('click',()=>document.body.classList.toggle('focus-mode'));
+document.getElementById('topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+(function(){const t=document.getElementById('toc');document.querySelectorAll('#canvas h2').forEach(h=>{if(!h.id)return;const li=document.createElement('li');const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);t.appendChild(li)})})();
+(function(){const q=document.getElementById('quiz');if(!q)return;const sc=document.getElementById('quizScore');document.getElementById('quizCheck').addEventListener('click',()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{t++;const a=parseInt(fs.dataset.answer,10);const s=fs.querySelector('input:checked');fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const co=fs.querySelector('input[value="'+a+'"]');if(co)co.closest('.quiz__option').classList.add('correct-answer');if(s&&parseInt(s.value,10)!==a)s.closest('.quiz__option').classList.add('incorrect-answer');if(s&&parseInt(s.value,10)===a)c++});q.classList.add('is-graded');sc.textContent=c+' / '+t+' đúng.'});document.getElementById('quizReset').addEventListener('click',()=>{q.querySelectorAll('input').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');sc.textContent=''})})();
+(function(){let n=0;const b=document.getElementById('hintBtn');if(!b)return;b.addEventListener('click',()=>{n++;const h=document.querySelector('.launchpad__hint[data-hint="'+n+'"]');if(h)h.classList.add('is-visible');b.textContent=n>=3?'Hết gợi ý':'Reveal hint '+(n+1);if(n>=3)b.disabled=true})})();
+</script>
+</body>
+</html>

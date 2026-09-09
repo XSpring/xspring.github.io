@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tại sao BĐS càng giảm giá càng mất thanh khoản?</title>
+<meta name="description" content="Bài luận tương tác: nghịch lý thanh khoản bất động sản — cầu kỳ vọng, đòn bẩy ngược, neo giá và vòng xoáy chờ đợi.">
+<meta name="iterator-cycles" content="0">
+<meta name="iterator-stopped-by" content="skipped">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}img,svg{max-width:100%;height:auto;display:block}
+:root{--font-serif:'Merriweather',Georgia,serif;--font-sans:'Inter',-apple-system,sans-serif;--font-mono:'JetBrains Mono',monospace;
+--bg:#FDFBF7;--bg-elevated:#fff;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;
+--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;
+--border:#E4DFD5;--sidenote-bg:#EDF2F7;--code-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;
+--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;--radius:10px;--radius-sm:6px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 4px 12px rgba(0,0,0,.08);
+--measure:65ch;--line:1.75;--transition:200ms cubic-bezier(.4,0,.2,1);--reading-scale:1}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;
+--accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--code-bg:#2A2F3A;
+--success:#68D391;--success-bg:#22543D;--danger:#FC8181;--danger-bg:#63171B;--warn:#F6AD55;--warn-bg:#7B341E;--info:#63B3ED;--info-bg:#2A4365}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:calc(18px * var(--reading-scale));line-height:var(--line);-webkit-font-smoothing:antialiased;transition:background var(--transition),color var(--transition)}
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100}.progress-bar__fill{height:100%;width:0%;background:var(--accent)}
+.app{display:grid;grid-template-columns:minmax(220px,20%) minmax(0,1fr) minmax(240px,20%);gap:48px;max-width:1400px;margin:0 auto;padding:32px 32px 128px}
+.navigator{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow-y:auto;font-family:var(--font-sans);font-size:14px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}.marginalia{font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;gap:24px;padding:24px 20px 96px}.navigator{position:relative;max-height:none;border-bottom:1px solid var(--border);padding-bottom:16px}}
+.navigator__meta{padding:8px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px}.navigator__title{font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 4px}
+.toc{list-style:none;padding:0;margin:0}.toc a{display:block;padding:6px 10px;border-left:2px solid transparent;color:var(--text-muted);text-decoration:none;border-radius:0 6px 6px 0;line-height:1.4}
+.toc a:hover{color:var(--text);background:var(--sidenote-bg)}.toc a.is-active{color:var(--accent);border-left-color:var(--accent);background:var(--sidenote-bg);font-weight:500}.toc .toc-l3{padding-left:20px;font-size:13px}
+.orbit{margin:0 0 20px;padding:12px 0;border-bottom:1px solid var(--border)}.orbit__title{font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin:0 0 10px}
+.orbit__track{position:relative;padding-left:22px}.orbit__track::before{content:"";position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--border)}
+.orbit__node{position:relative;display:flex;margin:8px 0;color:var(--text-muted);font-size:12px;cursor:pointer;user-select:none}.orbit__node::before{content:"";position:absolute;left:-22px;width:14px;height:14px;border-radius:50%;background:var(--bg-elevated);border:2px solid var(--border)}
+.orbit__node[data-reached="true"]::before{background:var(--accent);border-color:var(--accent)}.orbit__node[data-active="true"]{color:var(--text-strong);font-weight:600}
+.canvas h1{font-family:var(--font-sans);font-weight:700;font-size:2.2rem;line-height:1.25;color:var(--text-strong);margin:8px 0 16px;letter-spacing:-.02em}
+.canvas h2{font-family:var(--font-sans);font-weight:700;font-size:1.55rem;color:var(--text-strong);margin:56px 0 16px;padding-top:24px;border-top:1px solid var(--border);scroll-margin-top:24px;cursor:pointer}
+.canvas h3{font-family:var(--font-sans);font-weight:600;font-size:1.15rem;color:var(--text-strong);margin:32px 0 12px;scroll-margin-top:24px;cursor:pointer}
+.canvas p{margin:0 0 16px}.canvas strong{color:var(--text-strong)}.canvas a{color:var(--accent);text-decoration:underline;text-underline-offset:3px}
+.source{font-family:var(--font-sans);font-size:12px;font-weight:500;color:var(--text-muted);margin-left:4px;padding:1px 6px;border-radius:4px;background:var(--sidenote-bg);white-space:nowrap}.source::before{content:"↗ "}
+.canvas ul,.canvas ol{margin:0 0 16px;padding-left:24px}.canvas li{margin:4px 0}.canvas blockquote{margin:24px 0;padding:12px 20px;border-left:3px solid var(--accent);background:var(--sidenote-bg);border-radius:0 10px 10px 0;font-style:italic}
+.canvas pre{font-family:var(--font-mono);background:var(--code-bg);padding:16px 20px;border-radius:10px;overflow-x:auto;font-size:14px}
+.tldr{margin:16px 0 24px;padding:14px 20px;background:var(--accent2-soft);border-left:4px solid var(--accent2);border-radius:6px;font-family:var(--font-sans);font-size:15px;color:var(--text-strong)}
+.tldr strong{color:var(--accent2-strong)}
+.hook{margin:24px 0 40px;padding:24px 28px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:10px;font-style:italic;box-shadow:var(--shadow-sm)}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:24px 0;padding:16px 20px;background:var(--sidenote-bg);border-radius:10px;font-family:var(--font-sans);font-size:14px}
+.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.meta-block ul{margin:0;padding-left:20px}
+.callout{margin:24px 0;padding:16px 20px;border-radius:10px;border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}
+.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}
+.feynman{margin:20px 0;padding:14px 18px;border:1px dashed var(--accent);border-radius:10px;font-family:var(--font-sans);font-size:14px}
+.feynman::before{content:"🧒 Giải thích trong một câu:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:center;gap:8px;margin:28px 0}
+.concept-flow__step{padding:14px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;text-align:center;font-family:var(--font-sans);font-size:14px;min-height:86px;display:flex;flex-direction:column;justify-content:center}
+.concept-flow__num{color:var(--accent);font-weight:700;font-size:12px;display:block;margin-bottom:4px}.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px}
+@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}}
+.premortem{margin:24px 0;padding:20px 24px;border-radius:10px;background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px}
+.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}
+.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}.premortem__truth{font-weight:600;color:var(--text-strong)}
+.scaffold{margin:28px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow-sm)}
+.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.02rem;color:var(--text-strong);margin:0 0 6px;display:flex;gap:10px;align-items:center}
+.scaffold__concept::before{content:"◆";color:var(--accent);font-size:12px}
+.scaffold__row{display:grid;grid-template-columns:90px 1fr;gap:12px 16px;margin:12px 0}
+.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}
+.scaffold__row-body{font-size:15px;line-height:1.65;font-family:var(--font-sans)}
+.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:6px;overflow:hidden}
+.scaffold__probe>summary{padding:12px 14px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong);list-style:none}
+.scaffold__probe>summary:hover{background:var(--accent2-soft)}
+.scaffold__resolve{padding:12px 14px;background:var(--accent2-soft);border-top:1px solid var(--accent2);font-family:var(--font-sans);font-size:14px}
+.checkpoint{margin:32px 0;padding:20px 24px;border-radius:10px;background:var(--sidenote-bg);border:1px solid var(--border)}
+.checkpoint__label{display:block;font-family:var(--font-sans);font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.checkpoint__question{font-family:var(--font-sans);font-size:15px;color:var(--text-strong);margin:0 0 12px}
+.checkpoint textarea{width:100%;min-height:80px;padding:12px 14px;font-family:var(--font-serif);font-size:15px;background:var(--bg);color:var(--text);border:1px solid var(--border);border-radius:6px;resize:vertical}
+.checkpoint__expert{margin-top:14px;padding:14px 16px;background:var(--bg);border-radius:6px;border-left:3px solid var(--accent);font-family:var(--font-sans);font-size:14px;display:none}
+.checkpoint.is-revealed .checkpoint__expert{display:block}
+.deep-dive{margin:24px 0;border:1px solid var(--border);border-radius:10px;background:var(--bg-elevated);overflow:hidden}
+.deep-dive>summary{padding:14px 18px;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:15px;list-style:none}
+.deep-dive>summary::-webkit-details-marker{display:none}.deep-dive>*:not(summary){padding:0 18px 16px;font-family:var(--font-sans);font-size:14px}
+.bar-chart{margin:32px 0;padding:20px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px}
+.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:16px}
+.bar-row{display:grid;grid-template-columns:190px 1fr 64px;align-items:center;gap:12px;margin:10px 0;font-family:var(--font-sans);font-size:13px}
+.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong));border-radius:4px}
+.bar-value{color:var(--text-muted);font-weight:600;text-align:right}
+@media(max-width:640px){.bar-row{grid-template-columns:110px 1fr 48px}}
+.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.flip-card{perspective:1000px;height:190px;margin:24px 0;cursor:pointer}.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms;transform-style:preserve-3d}
+.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:20px;border-radius:10px;display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border)}
+.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:#fff;transform:rotateY(180deg)}
+.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:8px}
+.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}.flip-card__content{font-family:var(--font-sans);font-size:15px}
+.launchpad{margin:48px 0 24px;padding:28px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:10px;box-shadow:var(--shadow)}
+.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:#fff;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.launchpad__title{font-family:var(--font-sans);font-weight:700;font-size:1.25rem;color:var(--text-strong);margin:0 0 12px}
+.launchpad__problem{font-size:16px;margin:0 0 20px}.launchpad__hint{margin:10px 0;padding:14px 16px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:6px;font-size:14px;font-family:var(--font-sans);display:none}
+.launchpad__hint.is-visible{display:block}
+.launchpad__reveal{padding:8px 16px;background:transparent;border:1px solid var(--accent2);color:var(--accent2-strong);border-radius:6px;cursor:pointer;font-family:var(--font-sans);font-weight:600;font-size:13px}
+.launchpad__reveal:disabled{opacity:.4;cursor:not-allowed}
+.glossary dl{margin:0}.glossary dt{font-family:var(--font-sans);font-weight:700;color:var(--text-strong);margin-top:16px;font-size:15px}
+.glossary dd{margin:4px 0 0;font-size:15px}
+.quiz{margin:56px 0 24px;padding:28px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px}
+.quiz fieldset{border:none;padding:0;margin:0 0 26px}.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:12px}
+.quiz__option{display:block;padding:12px 16px 12px 44px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:6px;cursor:pointer;font-family:var(--font-sans);font-size:15px;position:relative}
+.quiz__option::before{content:"";position:absolute;left:14px;top:50%;transform:translateY(-50%);width:18px;height:18px;border:2px solid var(--border);border-radius:50%}
+.quiz__option input{position:absolute;opacity:0}.quiz__option:has(input:checked){border-color:var(--accent);background:var(--sidenote-bg)}
+.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success)}.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}
+.quiz__explanation{margin-top:8px;padding:10px 14px;font-family:var(--font-sans);font-size:13px;color:var(--text-muted);background:var(--sidenote-bg);border-radius:6px;display:none}
+.quiz.is-graded .quiz__explanation{display:block}
+.btn{font-family:var(--font-sans);font-weight:600;padding:10px 20px;border-radius:6px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;font-size:14px}
+.btn--ghost{background:transparent;color:var(--accent)}.quiz__score{font-family:var(--font-sans);font-weight:600;display:none}
+.quiz.is-graded .quiz__score{display:block}
+.controls{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:50}
+.control-group{display:flex;flex-direction:column;background:var(--bg-elevated);border:1px solid var(--border);border-radius:22px;overflow:hidden}
+.control-group .control-btn{width:44px;height:36px;border:0;background:transparent}
+.control-btn{width:44px;height:44px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:var(--font-sans);font-size:14px;font-weight:600}
+.control-btn:hover{color:var(--accent)}.control-btn svg{width:18px;height:18px}.control-btn--top{opacity:0;pointer-events:none}.control-btn--top.is-visible{opacity:1;pointer-events:auto}
+.control-btn--theme .icon-sun{display:none}html[data-theme="dark"] .control-btn--theme .icon-moon{display:none}html[data-theme="dark"] .control-btn--theme .icon-sun{display:block}
+.reading-badge{position:fixed;bottom:24px;left:24px;padding:6px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:999px;font-family:var(--font-sans);font-size:12px;color:var(--text-muted);z-index:50}
+.reading-badge__pct{font-weight:700;color:var(--accent-strong)}body.focus-mode .reading-badge{display:none}
+.shortcuts{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:100;padding:20px}
+.shortcuts[hidden]{display:none}.shortcuts__panel{background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;padding:24px 28px;max-width:460px;width:100%;font-family:var(--font-sans)}
+.search-bar{position:fixed;top:8px;left:50%;transform:translateX(-50%);display:flex;gap:10px;padding:8px 12px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;font-family:var(--font-sans);font-size:14px;z-index:90;min-width:420px;max-width:calc(100vw - 32px)}
+.search-bar[hidden]{display:none}.search-bar__input{flex:1;border:0;outline:none;background:transparent;color:var(--text);font:inherit}
+mark.search-hit{background:var(--accent2-soft)}mark.search-hit--current{background:var(--accent2);color:#fff}
+.sidenote{margin:24px 0;padding:12px 14px;background:var(--sidenote-bg);border-radius:6px;font-size:13px;line-height:1.5}
+.sidenote strong{color:var(--text);display:block;margin-bottom:4px}
+.amplifier{position:sticky;top:24px;margin:0 0 24px;padding:16px 18px;background:var(--accent2-soft);border:1px solid var(--accent2);border-radius:10px;font-size:13px;min-height:96px}
+.amplifier__label{display:block;font-weight:700;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:6px}
+.amp-notes{display:none}.term-amp{border-bottom:1px dashed var(--accent2);cursor:help}.term-amp:hover{background:var(--accent2-soft)}
+.footer{max-width:var(--measure);margin:64px auto 0;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-family:var(--font-sans);font-size:13px;text-align:center}
+@media print{.navigator,.marginalia,.controls,.progress-bar,.reading-badge,.shortcuts,.search-bar{display:none!important}.app{display:block;max-width:none}.canvas{max-width:none}details{display:block!important}a{color:#000}}
+</style>
+</head>
+<body>
+<div class="progress-bar"><div class="progress-bar__fill" id="progressFill"></div></div>
+<div class="app">
+<aside class="navigator" aria-label="Mục lục">
+<div class="navigator__meta"><p class="navigator__title">Thời gian đọc</p><p id="readingTime">~ 14 phút</p></div>
+<div class="orbit" aria-label="Lộ trình học"><p class="orbit__title">Lộ trình học</p><div class="orbit__track">
+<div class="orbit__node" data-target="baseline">1 · Neo</div><div class="orbit__node" data-target="bridge">2 · Cầu</div>
+<div class="orbit__node" data-target="exposition">3 · Dựng</div><div class="orbit__node" data-target="application">4 · Dụng</div>
+<div class="orbit__node" data-target="boundary">5 · Biên</div><div class="orbit__node" data-target="synthesis">6 · Thu</div>
+</div></div>
+<nav><ul class="toc" id="toc"></ul></nav>
+</aside>
+<main class="canvas" id="canvas">
+<h1>Tại sao bất động sản càng giảm giá càng mất thanh khoản?</h1>
+<div class="tldr"><strong>TL;DR.</strong> Ở thị trường đầu cơ, người mua trả tiền cho kỳ vọng giá ngày mai, không phải giá hôm nay. Giá giảm xóa kỳ vọng, đòn bẩy ngược (giá −20% thì vốn −67%) bào mòn người vay, neo giá khiến người bán rút hàng. Ba lực này khóa chặt giao dịch.</div>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted);margin:0 0 18px">Chuỗi Cung–Cầu Bất động sản · Bài 1/6 · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a></p>
+<div class="hook"><span class="hook__label">🎣 Mở đầu</span>Cuối năm 2022, một căn hộ ở TP. HCM rao giảm 2 tỷ đồng mà điện thoại môi giới vẫn im lặng. Chủ nhà càng hạ giá, khách càng biến mất. Hàng rẻ vẫn ế. Rau hạ giá buổi chiều thì có người mua. Nhà thì không. Vì sao?</div>
+<div class="meta-block"><h4>Bạn cần biết trước</h4><ul>
+<li>Cung – cầu cơ bản: giá giảm thường kích thích mua vào.</li>
+<li>Lãi suất và tiền vay: vay càng đắt, gánh trả nợ càng nặng.</li>
+<li>Thị trường Việt Nam 2022–2024 từng đóng băng rồi phân hóa.</li>
+</ul></div>
+<div class="meta-block"><h4>Đọc xong bạn sẽ có thể…</h4><ul>
+<li><strong>Giải thích</strong> nghịch lý “giảm giá mà mất thanh khoản” trong một phút.</li>
+<li><strong>Tính</strong> tác động của đòn bẩy ngược lên vốn tự có qua ví dụ 10 tỷ.</li>
+<li><strong>Nhận diện</strong> ba tín hiệu thị trường đóng băng sớm để tư vấn.</li>
+<li><strong>Phân biệt</strong> tài sản đầu cơ với tài sản ở thực khi ra quyết định.</li>
+</ul></div>
+
+<h2 id="baseline">⚓ Sự thật nền: mua kỳ vọng, không mua giá</h2>
+<p>Đây là phần neo toàn bài, nên ta đi thẳng vào câu trả lời.</p>
+<p>Ở phân khúc đầu cơ, người mua không trả tiền cho mái nhà hôm nay. Họ trả tiền cho niềm tin rằng ngày mai có người trả cao hơn.</p>
+<blockquote>⚓ <strong>Neo.</strong> Thanh khoản của bất động sản đầu cơ sống bằng kỳ vọng giá tương lai, không sống bằng mức giá tuyệt đối.</blockquote>
+<p>Bạn làm môi giới hoặc đi mua ở thực thì đã thấy cảnh này. Khách ở thực chờ. Khách đầu tư rút. Cùng một bảng giá giảm, cả hai đứng yên.</p>
+<p>Giá còn tăng thì yield thấp không ai quan tâm. Một căn 10 tỷ cho thuê 20 triệu một tháng chỉ đạt <strong>rental yield</strong> (tỷ suất cho thuê trên giá mua) khoảng 2,4% một năm. Lãi vay 10–12% trừ yield 2,4% để lại khoảng chênh âm 8–10 điểm phần trăm mỗi năm. Người mua vẫn xuống tiền vì họ chờ bán lại 13–15 tỷ.</p>
+<p>Kỳ vọng đổi chiều thì mọi tính toán đổi chiều. Giá rẻ hôm nay trở thành tín hiệu rằng ngày mai còn rẻ hơn.</p>
+
+<h2 id="bridge">🌉 Cây cầu quen: mô hình Chợ Chiều</h2>
+<p>Bỏ lý thuyết sang một bên. Ra chợ.</p>
+<p>Gọi đây là <strong>mô hình Chợ Chiều</strong>. Buổi sáng chợ đông, rau tươi, giá cao. Buổi chiều sạp còn ít hàng, chủ sạp hạ giá để bán nốt. Người đi chợ buổi chiều có hai loại: người cần ăn ngay và người săn rẻ.</p>
+<p>Bất động sản đầu cơ giống sạp hàng chiều nhưng khác một điểm quyết định. Mớ rau chiều vẫn ăn được tối nay, còn căn hộ mua hôm nay chỉ có lãi nếu bán được giá cao hơn sau này.</p>
+<div class="concept-flow">
+<div class="concept-flow__step"><span class="concept-flow__num">01</span>Sáng: tin tăng giá, chợ đông, tranh mua</div><div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">02</span>Chiều: giá hạ, người mua nghi hàng héo, đứng chờ</div><div class="concept-flow__arrow">→</div>
+<div class="concept-flow__step"><span class="concept-flow__num">03</span>Càng hạ càng vắng, chủ sạp dọn hàng về</div>
+</div>
+<p>Cầu nối trên cho ta bốn cặp tương ứng để dùng cho cả bài. Giá sáng là giá đỉnh kỳ vọng, sạp hạ giá chiều là đợt cắt lỗ, nỗi sợ rau héo là nỗi sợ mua xong còn giảm, chủ sạp dọn hàng về là người bán rút tài sản khỏi thị trường.</p>
+<div class="premortem"><span class="premortem__label">⚠️ Dừng một nhịp — nhiều người rời cây cầu này với suy nghĩ…</span>
+<p><span class="premortem__wrong">Cứ giảm đủ sâu thì kiểu gì cũng có người mua, như rau rẻ buổi chiều.</span></p>
+<p>Suy nghĩ này sai vì rau phục vụ bữa tối nay, còn tài sản đầu cơ phục vụ giá bán lại. Hạ giá rau giải quyết cơn đói, hạ giá nhà xác nhận xu hướng giảm.</p>
+<p><span class="premortem__truth">Điều đúng là:</span> khi kỳ vọng tăng giá vỡ, mỗi lần hạ giá lại nuôi thêm chờ đợi thay vì kích thêm cầu.</p></div>
+<p>Cây cầu đã có đủ các bộ phận: kỳ vọng, vốn vay, người bán. Giờ ta gọi tên từng bộ phận bằng thuật ngữ của thị trường.</p>
+
+<h2 id="exposition">🧱 Dựng mô hình, từng mảnh một</h2>
+<p>Mỗi khái niệm dưới đây đi qua bốn nhịp: nêu, minh họa, đố bạn, gỡ. Trả lời trong đầu trước khi mở.</p>
+
+<section class="scaffold" id="exposition-1">
+<h3 class="scaffold__concept">1 · Cầu kỳ vọng — mua ngày mai, không mua hôm nay</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Cầu kỳ vọng</strong> (lực mua dẫn dắt bởi niềm tin giá tương lai) chỉ xuất hiện khi người mua tin giá sẽ tăng tiếp. Cầu này co giãn theo kỳ vọng, không theo giá tuyệt đối. Giá quay đầu là nó biến mất, dù giá đã rẻ hơn trước.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Căn hộ 10 tỷ, thuê 20 triệu một tháng, yield 2,4% một năm. Năm 2021 nhiều người vẫn xếp hàng đặt cọc vì bài toán của họ là bán lại 13–15 tỷ, tức lãi 30–50% trên giá mua. Tiền thuê chỉ là khoản phụ bù chi phí chờ.</div></div>
+<details class="scaffold__probe"><summary>🤔 Đố bạn: yield chỉ 2,4% mà lãi gửi tiết kiệm 6–7%, sao năm 2021 họ vẫn mua?</summary><div class="scaffold__resolve">💡 Vì họ không mua dòng tiền thuê. Họ mua chênh lệch giá kỳ vọng. Khi chênh lệch kỳ vọng dương và lớn, yield thấp trở nên chấp nhận được. Khi chênh lệch kỳ vọng âm, yield thấp lộ nguyên hình là khoản bù lỗ.</div></details>
+</section>
+<div class="feynman">Nói cho bé 10 tuổi: mua nhà lúc sốt giống mua vé xem phim vì tin mai vé hiếm, không phải vì phim hay hơn hôm nay.</div>
+<div class="checkpoint" data-checkpoint-id="cp1"><span class="checkpoint__label">🛑 Dừng &amp; ngẫm</span>
+<p class="checkpoint__question">Vì sao giá giảm 10% lại khiến cầu đầu cơ giảm thay vì tăng? Trả lời bằng một câu có chữ “ngày mai”.</p>
+<textarea placeholder="Viết câu trả lời của bạn trước khi đối chiếu…"></textarea>
+<div class="checkpoint__actions"><button type="button" class="btn btn--ghost" data-checkpoint-reveal>Đối chiếu đáp án</button></div>
+<div class="checkpoint__expert"><strong>Đáp án tham khảo.</strong> Vì người mua đầu cơ mua giá ngày mai, nên giảm 10% hôm nay khiến họ tin ngày mai còn giảm tiếp và họ chọn chờ.</div></div>
+
+<section class="scaffold" id="exposition-2">
+<h3 class="scaffold__concept">2 · Đòn bẩy ngược và bẫy lãi suất</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Đòn bẩy ngược</strong> (tác động khuếch đại chiều giảm của tiền vay) khiến vốn tự có bốc hơi nhanh gấp nhiều lần mức giảm giá tài sản. <strong>LTV</strong> (tỷ lệ khoản vay trên giá trị tài sản) xấu đi khi giá giảm, và có thể kích hoạt yêu cầu bổ sung tài sản giống <span class="term-amp" data-note="margincall">margin call</span> trong chứng khoán.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Mua nhà 10 tỷ bằng 3 tỷ vốn và 7 tỷ vay. Giá lên 12 tỷ thì vốn thành 5 tỷ, tăng 67% trong khi nhà chỉ tăng 20%. Giá xuống 8 tỷ thì vốn còn 1 tỷ, mất 67% trong khi nhà chỉ giảm 20%. Khoản vay 7 tỷ với lãi 12% đốt 840 triệu một năm, tức 70 triệu một tháng, trong khi tiền thuê chỉ 20 triệu. Mỗi tháng nắm giữ là một tháng âm dòng tiền.</div></div>
+<details class="scaffold__probe"><summary>🤔 Đố bạn: đang lỗ, sao nhà đầu tư không bán ngay để giữ lại 1 tỷ vốn còn lại?</summary><div class="scaffold__resolve">💡 Vì bán là ghi nhận lỗ thật và mất quyền chờ hồi. Nhiều người chọn gồng lãi với hy vọng giá quay lại. Lãi suất cao kéo dài bào mòn đúng hy vọng đó, đến khi kiệt sức mới bán ép với giá thấp nhất.</div></details>
+</section>
+<div class="feynman">Nói cho bé 10 tuổi: vay tiền mua nhà lúc giá xuống giống đội thúng nặng leo dốc trơn, càng cố càng tụt.</div>
+
+<section class="scaffold" id="exposition-3">
+<h3 class="scaffold__concept">3 · Neo giá và rút hàng — người bán biến mất</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">Nêu</div><div class="scaffold__row-body"><strong>Neo giá</strong> (tâm lý bám mức giá đỉnh đã thấy) khiến chủ nhà từ chối giá mới thấp hơn. <strong>Hiệu ứng xử lý</strong> (xu hướng giữ khoản lỗ quá lâu) khiến họ rút hàng khỏi thị trường thay vì ghi nhận lỗ.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Minh họa</div><div class="scaffold__row-body">Năm ngoái căn nhà được trả 15 tỷ. Nay khách trả 12 tỷ, chủ nhà thấy mất 3 tỷ nên gỡ biển, khóa cửa, chờ. Bất động sản không có bảng giá từng giây và không xé lẻ bán dần được. Rút hàng là lựa chọn dễ nhất về mặt cảm xúc.</div></div>
+<details class="scaffold__probe"><summary>🤔 Đố bạn: cổ phiếu lỗ 20% vẫn khớp lệnh ầm ầm, sao nhà lỗ 20% lại không ai bán?</summary><div class="scaffold__resolve">💡 Vì cổ phiếu có giá liên tục, phí thấp, bán lẻ từng phần được. Nhà là một lô nguyên, phí cao, lại ở được nên chủ gồng được lâu. Thanh khoản vì thế biến mất thay vì chuyển thành giao dịch giá thấp hàng loạt.</div></details>
+</section>
+<div class="feynman">Nói cho bé 10 tuổi: bán nhà lỗ giống thừa nhận mình mua đắt, nên nhiều người chọn giấu món đồ đi thay vì bán rẻ.</div>
+
+<details class="deep-dive"><summary><span style="color:var(--accent);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.08em">🔴 Đào sâu</span> Vì sao LTV xấu đi nguy hiểm hơn lãi suất cao?</summary>
+<p>Lãi suất cao làm bạn mất tiền từ từ mỗi tháng. LTV xấu đi có thể bắt bạn nộp ngay một khoản lớn.</p>
+<p>Ví dụ khoản vay 7 tỷ trên nhà 10 tỷ, LTV là 70%. Nhà còn 8 tỷ thì LTV vọt lên 87,5%. Ngân hàng thận trọng có thể yêu cầu trả bớt nợ hoặc bổ sung tài sản. Ngưỡng thực hành: LTV vượt 80% thì chuẩn bị sẵn tiền mặt. Người kiệt dòng tiền không xoay được khoản này nên buộc bán ép.</p>
+<p>Cơ chế này gần giống margin call trong chứng khoán, chỉ khác là nhà bán chậm hơn nhiều. Chậm mà chắc.</p>
+</details>
+<p>Đủ ba mảnh: cầu chờ, vốn kiệt, hàng rút. Xem chúng khóa nhau ngoài đời thực.</p>
+
+<h2 id="application">🎯 Ngoài đời thực: Việt Nam 2022–2024 và hai bài học cũ</h2>
+<p>Phần này rời khỏi sạp rau buổi chiều để bước vào số liệu thật. Mỗi con số dưới đây đều có nguồn đi kèm.</p>
+<p>Cuối quý 2/2022 thị trường đổi gió. Chính sách kiểm soát tín dụng và trái phiếu khiến tâm lý e ngại lan rộng, giao dịch bị hoãn hàng loạt. Nguồn cung mới năm 2022 chỉ khoảng 48.500 sản phẩm, bằng 28% năm 2018, tỷ lệ tiêu thụ toàn thị trường khoảng 39% với gần 19.000 giao dịch, riêng quý 4 chỉ hấp thụ 14% <a href="https://congluan.vn/bat-dong-san-dot-quy-trong-nam-2022-nam-2023-cho-giai-cuu-post195431.html" target="_blank" rel="noopener">VARS, 2023<span class="source">VARS</span></a>.</p>
+<p>Lãi suất là cú siết thứ hai. Tháng 12/2022 lãi vay mua nhà phổ biến 10–13% một năm, có ngân hàng lên 13% <a href="https://vietnammoi.vn/lai-suat-vay-mua-nha-co-tiep-tuc-tang-trong-thang-122022-202212100352849.htm" target="_blank" rel="noopener">khảo sát 12 ngân hàng<span class="source">Vietnammoi</span></a>. Dư nợ tín dụng bất động sản cuối 2022 đạt 2,58 triệu tỷ đồng, tăng 24,27% so với 2021, nhưng dòng tiền mới chảy chậm vì chuẩn vay không nới <a href="https://doanhnhanvn.vn/cac-ngan-hang-co-dang-siet-tin-dung-cho-vay-bat-dong-san.html" target="_blank" rel="noopener">NHNN, 2023<span class="source">NHNN</span></a>.</p>
+<p>Sang 2023 vòng xoáy hiện nguyên hình. Hết quý 3 cả nước chỉ có hơn 320.000 giao dịch thành công, bằng khoảng 41% cả năm 2022 <a href="https://vietnammoi.vn/bat-dong-san-ba-quy-nam-nay-giao-dich-chua-bang-mot-nua-2022-20231224102844384.htm" target="_blank" rel="noopener">Bộ Xây dựng<span class="source">Bộ Xây dựng</span></a>. Cả năm tỷ lệ hấp thụ đạt 33% với khoảng 18.600 sản phẩm nhà ở, chỉ bằng 17% năm 2018 <a href="https://congluan.vn/lai-suat-cho-vay-mua-nha-giam-mot-nua-trong-nam-quy-mao-2023-post240216.html" target="_blank" rel="noopener">VARS, 2024<span class="source">VARS</span></a>. Lãi suất đã giảm gần một nửa cuối 2023 mà thị trường vẫn chưa tan băng, vì giá nhà neo cao hơn đà giảm của lãi.</p>
+<p>Điểm sáng duy nhất xác nhận lý thuyết: phân khúc phục vụ ở thực, pháp lý sạch vẫn có giao dịch. Năm 2024 nguồn cung hồi lên 81.000 sản phẩm, giao dịch đạt hơn 47.000, hấp thụ 72%, trong đó căn hộ chiếm 75% lượng giao dịch <a href="https://vietnammoi.vn/luong-giao-dich-bds-dang-chung-lai-do-thi-truong-thieu-von-hay-gia-nha-tang-qua-cao-202412307235117.htm" target="_blank" rel="noopener">VARS, 2024<span class="source">VARS</span></a>. Người dân không thiếu nhu cầu, họ thiếu mức giá khớp với thu nhập sau 23,5 năm tích lũy mới mua nổi nhà <a href="https://vietnammoi.vn/luong-giao-dich-bds-dang-chung-lai-do-thi-truong-thieu-von-hay-gia-nha-tang-qua-cao-202412307235117.htm" target="_blank" rel="noopener">TS. Cấn Văn Lực<span class="source">Cấn Văn Lực</span></a>.</p>
+<p>Lịch sử từng chiếu lại thước phim này hai lần. Năm 2008 lãi huy động vọt lên 19% một năm, lãi vay thực trên 21%, giá nhà lao dốc 30–40% trong thời gian ngắn <a href="https://vietnamfinance.vn/ds-5-nam-dien-dao-cua-thi-truong-bds-viet-khung-hoang-guong-day-lai-khung-hoang-d105075.html" target="_blank" rel="noopener">VietnamFinance<span class="source">VNF</span></a>. Giai đoạn 2011–2013 siết tín dụng khiến giao dịch gần như tê liệt, tồn kho và nợ xấu phình to <a href="https://dantri.com.vn/bat-dong-san/thi-truong-bat-dong-san-dong-bang-kich-ban-co-lap-lai-20112013-20200320214153224.htm" target="_blank" rel="noopener">Dân trí<span class="source">Dân trí</span></a>. Nghiên cứu 28 năm ghi nhận sốt đất lặp lại sau 7 năm và đóng băng sau 8 năm, lần dài nhất 2009–2013 <a href="https://vnexpress.net/chu-ky-sot-dat-dong-bang-lap-lai-sau-7-nam-4355652.html" target="_blank" rel="noopener">Propzy via VnExpress<span class="source">VnExpress</span></a>.</p>
+<p>Mỗi vòng lặp đều trả bằng tiền thật. Đọc kỹ số liệu trên.</p>
+<div class="bar-chart"><div class="bar-chart__title">Sức hấp thụ thị trường qua các mốc (tỷ lệ tiêu thụ / hấp thụ)</div>
+<div class="bar-row"><div class="bar-label">2022 tiêu thụ</div><div class="bar-track"><div class="bar-fill" style="width:39%"></div></div><div class="bar-value">39%</div></div>
+<div class="bar-row"><div class="bar-label">Q4/2022 hấp thụ</div><div class="bar-track"><div class="bar-fill" style="width:14%"></div></div><div class="bar-value">14%</div></div>
+<div class="bar-row"><div class="bar-label">2023 hấp thụ</div><div class="bar-track"><div class="bar-fill" style="width:33%"></div></div><div class="bar-value">33%</div></div>
+<div class="bar-row"><div class="bar-label">2024 hấp thụ</div><div class="bar-track"><div class="bar-fill" style="width:72%"></div></div><div class="bar-value">72%</div></div>
+<p class="bar-chart__caption">Nguồn: <a href="https://congluan.vn/bat-dong-san-dot-quy-trong-nam-2022-nam-2023-cho-giai-cuu-post195431.html" target="_blank" rel="noopener">VARS 2023</a>, <a href="https://congluan.vn/lai-suat-cho-vay-mua-nha-giam-mot-nua-trong-nam-quy-mao-2023-post240216.html" target="_blank" rel="noopener">VARS 2024</a>, <a href="https://vietnammoi.vn/luong-giao-dich-bds-dang-chung-lai-do-thi-truong-thieu-von-hay-gia-nha-tang-qua-cao-202412307235117.htm" target="_blank" rel="noopener">VARS 2024</a>.</p></div>
+<p>Biểu đồ trên kể đúng vòng xoáy: rơi sâu nhất cuối 2022, lẹt đẹt 2023, chỉ phân khúc ở thực kéo thị trường lên 2024. Số liệu đã rõ, giờ ta lật mặt những hiểu lầm còn sót lại.</p>
+<div class="flip-card" tabindex="0"><div class="flip-card__inner">
+<div class="flip-card__face flip-card__front"><span class="flip-card__label">Nhớ nhanh — câu hỏi</span><div class="flip-card__content">Vì sao lãi suất đã giảm gần một nửa cuối 2023 mà giao dịch vẫn không bật lên?</div></div>
+<div class="flip-card__face flip-card__back"><span class="flip-card__label">Đáp án</span><div class="flip-card__content">Vì giá neo cao hơn đà giảm của lãi, kỳ vọng tăng giá chưa quay lại và chuẩn vay vẫn chặt. Tiền rẻ hơn chưa đủ khi niềm tin chưa về.</div></div>
+</div></div>
+
+<h2 id="boundary">⚠️ Ranh giới: mô hình đúng ở đâu và vỡ ở đâu</h2>
+<p>Mô hình này có biên. Chỉ rõ biên thì mô hình mới dùng được.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Hiểu lầm phổ biến</span><strong>Rẻ là bán được.</strong> Sai ở thị trường đầu cơ, vì người mua chờ rẻ hơn nữa. Đúng một phần ở thị trường ở thực, nơi người mua cần chỗ ở ngay và giá vừa túi tiền vẫn khớp.</div>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Hiểu lầm thứ hai</span><strong>Ngân hàng siết vay là nguyên nhân duy nhất.</strong> Sai, vì 9 tháng đầu năm tín dụng bất động sản vẫn tăng 9,15% mà vay mua nhà chỉ tăng 4,6%. Vốn có, nhưng người dân chưa muốn vay khi giá quá cao.</div>
+<div class="callout callout--danger"><span class="callout__label">🚫 Trường hợp biên</span>Chung cư Hà Nội tăng giá sơ cấp 20 quý liên tiếp nhờ khan nguồn cung ở thực. Cùng một thị trường, đất nền đầu cơ đóng băng mà căn hộ vừa túi tiền vẫn khớp. Mô hình “càng giảm càng ế” chỉ bao phủ tài sản kỳ vọng, không bao phủ tài sản ở thực khan hiếm.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Đoán trước khi đọc tiếp</span>Nếu ngày mai lãi suất về 5% nhưng ai cũng tin giá còn giảm thêm 15%, giao dịch sẽ tăng hay tiếp tục đứng yên? Giữ câu trả lời để đối chiếu với phần tổng kết.</div>
+<p>Biên đã rõ: mô hình giải thích tài sản đầu cơ, không phủ nhận nhu cầu ở thực. Giờ ta đặt nó cạnh các lĩnh vực lân cận.</p>
+
+<h2 id="connections">🔗 Nối sang các chủ đề kề bên</h2>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">Trong chuỗi này: điểm chết thanh khoản ở <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">Bài 2</a> · cầu kỳ vọng và FOMO ở <a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">Bài 5</a> · mười van tự cân bằng ở <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">Bài 6</a>.</p>
+<p>Bốn cầu nối để tra cứu khi cần. Không cần đọc ngay.</p>
+<ul>
+<li><strong>Chứng khoán:</strong> margin call là bản sao tốc độ cao của LTV xấu đi trong nhà đất.</li>
+<li><strong>Kinh tế hành vi:</strong> neo giá và hiệu ứng xử lý giải thích vì sao chủ nhà gỡ biển thay vì hạ giá.</li>
+<li><strong>Chính sách tiền tệ:</strong> lãi suất quyết định chi phí gồng, tín dụng quyết định số người đủ điều kiện vay.</li>
+<li><strong>Trái phiếu doanh nghiệp:</strong> kênh vốn tắc cùng lúc với tín dụng năm 2022–2023 khiến chủ đầu tư cạn dòng tiền.</li>
+</ul>
+
+<h2 id="synthesis">🚀 Bức tranh đầy đủ</h2>
+<p>Phần này tháo bỏ hình ảnh sạp rau và giữ lại cơ chế khô.</p>
+<p>Thanh khoản đầu cơ là hàm số của kỳ vọng, đòn bẩy và hành vi người bán. Giá giảm xóa kỳ vọng nên cầu chờ. Lãi cao bào mòn vốn vay nên cung ép nhưng ra hàng nhỏ giọt. Neo giá khiến đa số rút hàng nên thị trường còn lại toàn giao dịch ép giá thấp, kéo kỳ vọng xuống tiếp.</p>
+<p>Công thức một dòng: thanh khoản = kỳ vọng dương × vốn vay khỏe × người bán chịu khớp. Một thừa số bằng không là tích bằng không.</p>
+<p>Câu trả lời cho căn hộ giảm 2 tỷ mà không ai hỏi nằm ở đây. Rẻ mà không ai tin mai đắt hơn thì vẫn ế.</p>
+<p>Vậy là nghịch lý đã có lời giải. Còn một bài toán thực tế dành cho bạn ngay dưới đây.</p>
+<blockquote><strong>Nếu chỉ nhớ một điều:</strong> giá rẻ không tạo thanh khoản khi niềm tin giá ngày mai đã vỡ.</blockquote>
+
+<div class="launchpad"><span class="launchpad__label">🚀 Bệ phóng · một bước xa hơn</span>
+<h3 class="launchpad__title">Có nên “bắt đáy” căn 2PN từ 10 tỷ còn 8,2 tỷ?</h3>
+<p class="launchpad__problem">Gia đình bạn có 3 tỷ tiền mặt, thu nhập 60 triệu một tháng. Căn hộ cần mua ở 10 năm, giá chào từ 10 tỷ còn 8,2 tỷ, cần vay 5,2 tỷ với lãi 11% một năm. Tiền thuê căn tương đương là 18 triệu một tháng. Bạn mua để ở, nhưng vẫn sợ mua xong giá còn xuống 7 tỷ. Hãy ra quyết định có lập luận, không đoán mò.</p>
+<div><span style="font-family:var(--font-sans);font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.08em">Bí khi kẹt? Mở từng gợi ý theo thứ tự.</span><br><br>
+<button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+<div class="launchpad__hint" data-hint="1"><strong>Gợi ý 1 — đặt khung:</strong> tách quyết định ở (10 năm, so thuê 18 triệu với trả nợ) khỏi quyết định đầu cơ (sợ xuống 7 tỷ). Hai bài toán khác nhau cần hai đáp số khác nhau.</div>
+<div class="launchpad__hint" data-hint="2"><strong>Gợi ý 2 — khái niệm chính:</strong> dùng đòn bẩy ngược và LTV. Nếu giá về 7 tỷ, vốn 3 tỷ còn 1,8 tỷ, tức mất 40%. So dòng tiền vay với tiền thuê trước khi quyết.</div>
+<div class="launchpad__hint" data-hint="3"><strong>Gợi ý 3 — dựng đáp số:</strong> vay 5,2 tỷ lãi 11% tức 572 triệu tiền lãi năm đầu. Riêng lãi đã gần 48 triệu một tháng, gấp 2,6 lần tiền thuê 18 triệu. Chịu được chênh này trong 10 năm thì mua ở. Không thì chờ.</div>
+</div></div>
+
+<h2 id="glossary">📖 Thuật ngữ</h2>
+<div class="glossary"><dl>
+<dt><strong>Cầu kỳ vọng</strong></dt><dd>Lực mua chỉ xuất hiện khi tin giá tương lai tăng tiếp. <em>(Trong mô hình Chợ Chiều: đám đông buổi sáng tin rau mai hiếm.)</em></dd>
+<dt><strong>Rental yield</strong></dt><dd>Tỷ suất tiền thuê một năm trên giá mua. <em>(Trong mô hình Chợ Chiều: độ tươi của mớ rau so với giá.)</em></dd>
+<dt><strong>Đòn bẩy ngược</strong></dt><dd>Tiền vay khuếch đại chiều giảm lên vốn tự có. <em>(Trong mô hình Chợ Chiều: tiền vay nhập hàng khiến sạp lỗ nhanh gấp nhiều lần.)</em></dd>
+<dt><strong>LTV</strong></dt><dd>Tỷ lệ khoản vay trên giá trị tài sản. <em>(Trong mô hình Chợ Chiều: phần hàng đang nợ so với cả sạp.)</em></dd>
+<dt><strong>Neo giá</strong></dt><dd>Tâm lý bám mức giá đỉnh đã thấy. <em>(Trong mô hình Chợ Chiều: nhớ giá rau buổi sáng.)</em></dd>
+<dt><strong>Hiệu ứng xử lý</strong></dt><dd>Xu hướng giữ khoản lỗ quá lâu, bán khoản lãi quá sớm. <em>(Trong mô hình Chợ Chiều: dọn hàng về thay vì bán lỗ.)</em></dd>
+</dl></div>
+
+<section class="quiz" id="quiz"><h2 id="knowledge-check">Kiểm tra nhanh</h2>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">3 câu. Chọn đáp án rồi bấm <em>Chấm điểm</em>.</p>
+<fieldset data-answer="1"><legend>1. Vì sao giá giảm 10% có thể làm giao dịch giảm thay vì tăng?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Vì nhà xấu đi theo thời gian nên giảm 10% vẫn đắt.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Vì người mua đầu cơ đọc đợt giảm như tín hiệu còn giảm tiếp nên chờ.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Vì ngân hàng tịch thu hết nhà giảm giá.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Vì môi giới giấu hàng giảm giá.</label>
+<div class="quiz__explanation"><strong>Giải thích:</strong> đáp án đúng phản ánh cầu kỳ vọng. Các đáp án sai là suy diễn phổ biến nhưng không khớp cơ chế chờ đợi.</div></fieldset>
+<fieldset data-answer="2"><legend>2. Nhà 10 tỷ, vốn 3 tỷ, vay 7 tỷ. Giá về 8 tỷ thì vốn còn bao nhiêu?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Còn 2,4 tỷ vì mất 20% theo giá nhà.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Còn 1 tỷ vì mất 2 tỷ trên 3 tỷ vốn.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Còn 3 tỷ vì ngân hàng chịu phần lỗ.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Còn 0 đồng vì bị tịch thu.</label>
+<div class="quiz__explanation"><strong>Giải thích:</strong> 8 tỷ trừ 7 tỷ nợ còn 1 tỷ. Nhà giảm 20% nhưng vốn mất 67%. Đó là đòn bẩy ngược.</div></fieldset>
+<fieldset data-answer="3"><legend>3. Môi giới nên ưu tiên tín hiệu nào để nhận biết đóng băng sắp tới?</legend>
+<label class="quiz__option"><input type="radio" name="q3" value="0"> Lãi vay tăng, LTV xấu đi, chủ nhà gỡ biển rút hàng.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="1"> Nhiều biển quảng cáo dự án mới.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="2"> Giá thuê tăng nhẹ một tháng.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="3"> Một căn bán chênh cao cá biệt.</label>
+<div class="quiz__explanation"><strong>Giải thích:</strong> bộ ba lãi – LTV – rút hàng báo trước vòng xoáy. Các tín hiệu còn lại là nhiễu ngắn hạn.</div></fieldset>
+<div class="quiz__actions"><button type="button" class="btn" id="quizCheck">Chấm điểm</button>
+<button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button><p class="quiz__score" id="quizScore"></p></div></section>
+
+<h2 id="sources">📚 Nguồn &amp; đọc thêm</h2>
+<ul>
+<li><a href="https://congluan.vn/bat-dong-san-dot-quy-trong-nam-2022-nam-2023-cho-giai-cuu-post195431.html" target="_blank" rel="noopener">VARS via Công Luận, 2023</a> — nguồn cung 48.500 sản phẩm, tiêu thụ 19.000, hấp thụ Q4 14%.</li>
+<li><a href="https://vietnammoi.vn/bat-dong-san-ba-quy-nam-nay-giao-dich-chua-bang-mot-nua-2022-20231224102844384.htm" target="_blank" rel="noopener">Bộ Xây dựng via Vietnammoi, 2023</a> — 9 tháng 320.000 giao dịch bằng 41% năm 2022.</li>
+<li><a href="https://congluan.vn/lai-suat-cho-vay-mua-nha-giam-mot-nua-trong-nam-quy-mao-2023-post240216.html" target="_blank" rel="noopener">VARS via Công Luận, 2024</a> — hấp thụ 2023 đạt 33%, lãi vay giảm gần một nửa.</li>
+<li><a href="https://vietnammoi.vn/luong-giao-dich-bds-dang-chung-lai-do-thi-truong-thieu-von-hay-gia-nha-tang-qua-cao-202412307235117.htm" target="_blank" rel="noopener">VARS / TS. Cấn Văn Lực via Vietnammoi, 2024</a> — 2024: 81.000 sản phẩm, 47.000 giao dịch, 23,5 năm thu nhập mua nhà.</li>
+<li><a href="https://vietnammoi.vn/lai-suat-vay-mua-nha-co-tiep-tuc-tang-trong-thang-122022-202212100352849.htm" target="_blank" rel="noopener">Vietnammoi, 2022</a> — lãi vay mua nhà 10–13%, đỉnh 13%.</li>
+<li><a href="https://doanhnhanvn.vn/cac-ngan-hang-co-dang-siet-tin-dung-cho-vay-bat-dong-san.html" target="_blank" rel="noopener">NHNN via Doanh Nhân VN, 2023</a> — dư nợ BĐS 2,58 triệu tỷ, tăng 24,27%.</li>
+<li><a href="https://vnexpress.net/chu-ky-sot-dat-dong-bang-lap-lai-sau-7-nam-4355652.html" target="_blank" rel="noopener">Propzy via VnExpress, 2021</a> — chu kỳ sốt 7 năm, đóng băng 8 năm.</li>
+<li><a href="https://dantri.com.vn/bat-dong-san/thi-truong-bat-dong-san-dong-bang-kich-ban-co-lap-lai-20112013-20200320214153224.htm" target="_blank" rel="noopener">Dân trí, 2020</a> — so sánh đóng băng 2011–2013.</li>
+<li><a href="https://vietnamfinance.vn/ds-5-nam-dien-dao-cua-thi-truong-bds-viet-khung-hoang-guong-day-lai-khung-hoang-d105075.html" target="_blank" rel="noopener">VietnamFinance, 2024</a> — 2008: lãi huy động 19%, vay trên 21%, giá giảm 30–40%.</li>
+</ul>
+<p style="font-family:var(--font-sans);font-size:13px;color:var(--text-muted)">Bài viết của chuyên gia do bạn cung cấp được dùng làm khung lập luận (cầu kỳ vọng, ví dụ 10 tỷ, LTV, neo giá, vòng xoáy). Số liệu và mốc lịch sử đã đối chiếu với các nguồn trên; nhận định còn lại là tổng hợp của người viết.</p>
+<div class="footer"><p>Phím tắt: J/K cuộn · F tập trung · T giao diện · P in · / tìm kiếm · ? trợ giúp</p></div>
+<div style="text-align:center;color:var(--text-muted);font-family:var(--font-sans);font-size:13px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px">Chuỗi Cung–Cầu Bất động sản · Bài 1/6<br><a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a> · <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">Bài 2: Giá và khối lượng →</a><br><span>Nội dung chỉ mang tính tham khảo, không phải khuyến nghị đầu tư. Ngày cập nhật: 2026-09-09.</span></div>
+</main>
+<aside class="marginalia" aria-label="Ghi bên lề">
+<div class="amplifier" id="amplifier"><span class="amplifier__label">Khuếch đại thuật ngữ</span><p style="font-style:italic">Di chuột lên chữ <span class="term-amp" data-note="margincall">margin call</span> trong bài để xem giải thích tại đây.</p></div>
+<div class="amp-notes" id="ampNotes">
+<div data-note-id="margincall"><span class="amplifier__term">Margin call</span><p>Ngân hàng hoặc công ty chứng khoán yêu cầu nộp thêm tiền hoặc tài sản khi giá trị thế chấp xuống dưới ngưỡng. Trong nhà đất, LTV vọt lên sau khi giá giảm tạo áp lực tương tự.</p></div>
+<div data-note-id="ltv"><span class="amplifier__term">LTV</span><p>Khoản vay chia cho giá trị tài sản. Vay 7 tỷ trên nhà 10 tỷ là LTV 70%. Nhà còn 8 tỷ thì LTV thành 87,5%.</p></div>
+<div data-note-id="yield"><span class="amplifier__term">Rental yield</span><p>Tiền thuê ròng một năm chia cho giá mua. 20 triệu một tháng trên căn 10 tỷ là khoảng 2,4% một năm trước chi phí.</p></div>
+</div>
+<div class="sidenote"><strong>Ghi bên 1 · Con số đáng nhớ</strong>Q4/2022 tỷ lệ hấp thụ toàn thị trường chỉ 14%. Đây là đáy thanh khoản của vòng này.</div>
+<div class="sidenote"><strong>Ghi bên 2 · Đối chiếu</strong>9 tháng đầu năm tín dụng bất động sản tăng 9,15% nhưng vay mua nhà chỉ tăng 4,6%. Vốn có, cầu vay yếu vì giá cao.</div>
+<div class="sidenote"><strong>Chuyện cũ · 2008</strong>Lãi huy động 19% một năm, vay thực trên 21%. Giá lao dốc 30–40% mà giao dịch vẫn đứng yên.</div>
+</aside>
+</div>
+<div class="controls"><button type="button" class="control-btn control-btn--top" id="topBtn" aria-label="Về đầu trang"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<div class="control-group"><button type="button" class="control-btn" id="fontDownBtn" aria-label="Chữ nhỏ hơn"><span>A−</span></button><button type="button" class="control-btn" id="fontUpBtn" aria-label="Chữ lớn hơn"><span>A+</span></button></div>
+<button type="button" class="control-btn" id="focusBtn" aria-label="Chế độ tập trung" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></button>
+<button type="button" class="control-btn control-btn--theme" id="themeBtn" aria-label="Đổi giao diện"><svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg></button>
+<button type="button" class="control-btn" id="searchBtn" aria-label="Tìm kiếm"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></button>
+<button type="button" class="control-btn" id="printBtn" aria-label="In"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg></button>
+<button type="button" class="control-btn" id="helpBtn" aria-label="Phím tắt"><span>?</span></button></div>
+<div class="reading-badge" id="readingBadge"><span class="reading-badge__pct" id="readingPct">0%</span> <span>đã đọc</span></div>
+<div class="search-bar" id="searchBar" hidden><input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong bài — Enter tới kết quả tiếp theo" autocomplete="off"><span id="searchCount"></span><button type="button" id="searchPrev">↑</button><button type="button" id="searchNext">↓</button><button type="button" id="searchClose">✕</button></div>
+<div class="shortcuts" id="shortcuts" hidden><div class="shortcuts__panel"><h3>Phím tắt</h3><p style="font-size:14px">J/K cuộn · N/P tới tiêu đề · F tập trung · T giao diện · +/− cỡ chữ · P in · / tìm kiếm · ? bảng này · Esc đóng</p><button type="button" class="btn" id="shortcutsClose">Đóng</button></div></div>
+<script>
+const STORAGE_KEY='edu-notes:bds-thanh-khoan';
+const store={get(k){try{return JSON.parse(localStorage.getItem(STORAGE_KEY+':'+k))}catch{return null}},set(k,v){try{localStorage.setItem(STORAGE_KEY+':'+k,JSON.stringify(v))}catch{}}};
+(function(){const s=store.get('theme');if(s)document.documentElement.setAttribute('data-theme',s);else if(matchMedia('(prefers-color-scheme: dark)').matches)document.documentElement.setAttribute('data-theme','dark')})();
+document.getElementById('themeBtn').onclick=()=>{const c=document.documentElement.getAttribute('data-theme');const n=c==='dark'?'light':'dark';document.documentElement.setAttribute('data-theme',n);store.set('theme',n)};
+document.getElementById('focusBtn').onclick=function(){document.body.classList.toggle('focus-mode');const on=document.body.classList.contains('focus-mode');this.setAttribute('aria-pressed',on);store.set('focus',on)};
+if(store.get('focus')){document.body.classList.add('focus-mode')}
+const STEPS=[0.88,1,1.15,1.3,1.5];function applyFont(i){i=Math.max(0,Math.min(4,i));document.documentElement.style.setProperty('--reading-scale',STEPS[i]);store.set('font',i)}
+(function(){applyFont(typeof store.get('font')==='number'?store.get('font'):1)})();
+document.getElementById('fontUpBtn').onclick=()=>applyFont((store.get('font')??1)+1);
+document.getElementById('fontDownBtn').onclick=()=>applyFont((store.get('font')??1)-1);
+document.getElementById('printBtn').onclick=()=>window.print();
+(function(){const b=document.getElementById('topBtn');addEventListener('scroll',()=>{b.classList.toggle('is-visible',scrollY>400)},{passive:true});b.onclick=()=>scrollTo({top:0,behavior:'smooth'})})();
+(function(){const c=document.getElementById('canvas'),t=document.getElementById('toc');c.querySelectorAll('h2,h3').forEach(h=>{if(!h.id)h.id=h.textContent.toLowerCase().replace(/[^a-z0-9à-ỹ\s-]/gi,'').trim().replace(/\s+/g,'-').slice(0,60);const li=document.createElement('li');if(h.tagName==='H3')li.className='toc-l3';const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);t.appendChild(li);h.onclick=()=>{try{navigator.clipboard.writeText(location.href.split('#')[0]+'#'+h.id)}catch{}}})})();
+(function(){const f=document.getElementById('progressFill'),p=document.getElementById('readingPct');addEventListener('scroll',()=>{const t=document.documentElement.scrollHeight-innerHeight;const v=t>0?scrollY/t*100:0;f.style.width=v+'%';p.textContent=Math.round(v)+'%'},{passive:true})})();
+(function(){const o=new IntersectionObserver(es=>{es.forEach(e=>{document.querySelectorAll('.orbit__node').forEach(n=>{if(n.dataset.target===e.target.id){n.dataset.reached=e.isIntersecting||n.dataset.reached;if(e.isIntersecting){document.querySelectorAll('.orbit__node').forEach(x=>x.dataset.active='false');n.dataset.active='true'}}})})},{rootMargin:'-20% 0px -70% 0px'});['baseline','bridge','exposition','application','boundary','synthesis'].forEach(id=>{const el=document.getElementById(id);if(el)o.observe(el)});document.querySelectorAll('.orbit__node').forEach(n=>n.onclick=()=>document.getElementById(n.dataset.target)?.scrollIntoView({behavior:'smooth'}))})();
+document.querySelectorAll('.flip-card').forEach(c=>c.onclick=()=>c.classList.toggle('is-flipped'));
+document.querySelectorAll('[data-checkpoint-reveal]').forEach(b=>b.onclick=()=>b.closest('.checkpoint').classList.toggle('is-revealed'));
+(function(){let n=0;const btn=document.getElementById('hintBtn');btn.onclick=()=>{n++;document.querySelectorAll('.launchpad__hint').forEach(h=>{if(+h.dataset.hint<=n)h.classList.add('is-visible')});btn.textContent=n>=3?'Đã mở hết gợi ý':'Mở gợi ý '+(n+1);if(n>=3)btn.disabled=true}})();
+(function(){const q=document.getElementById('quiz');if(!q)return;document.getElementById('quizCheck').onclick=()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{const a=+fs.dataset.answer,s=fs.querySelector('input:checked');t++;fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const ok=fs.querySelector('input[value="'+a+'"]');if(ok)ok.closest('.quiz__option').classList.add('correct-answer');if(s&&+s.value!==a)s.closest('.quiz__option').classList.add('incorrect-answer');if(s&&+s.value===a)c++});q.classList.add('is-graded');document.getElementById('quizScore').textContent=c+' / '+t+' đúng ('+Math.round(c/t*100)+'%)';document.getElementById('quizScore').style.display='block'};document.getElementById('quizReset').onclick=()=>{q.querySelectorAll('input').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');document.getElementById('quizScore').style.display='none'}})();
+(function(){const dlg=document.getElementById('shortcuts');document.getElementById('helpBtn').onclick=()=>dlg.hidden=false;document.getElementById('shortcutsClose').onclick=()=>dlg.hidden=true;dlg.onclick=e=>{if(e.target===dlg)dlg.hidden=true}})();
+(function(){const bar=document.getElementById('searchBar'),inp=document.getElementById('searchInput'),cv=document.getElementById('canvas');let hits=[],cur=-1;function clear(){hits.forEach(m=>{const p=m.parentNode;if(p)p.replaceChild(document.createTextNode(m.textContent),m)});hits=[];cur=-1}
+document.getElementById('searchBtn').onclick=()=>{bar.hidden=false;inp.focus()};document.getElementById('searchClose').onclick=()=>{bar.hidden=true;clear();inp.value=''};
+inp.oninput=()=>{clear();const q=inp.value.trim().toLowerCase();if(q.length<2)return;const w=document.createTreeWalker(cv,NodeFilter.SHOW_TEXT);const nodes=[];while(w.nextNode())nodes.push(w.currentNode);nodes.forEach(nd=>{const t=nd.nodeValue,lo=t.toLowerCase();let s=0,i;const fr=document.createDocumentFragment();let hit=false;while((i=lo.indexOf(q,s))!==-1){hit=true;if(i>s)fr.appendChild(document.createTextNode(t.slice(s,i)));const mk=document.createElement('mark');mk.className='search-hit';mk.textContent=t.slice(i,i+q.length);fr.appendChild(mk);hits.push(mk);s=i+q.length}if(hit){if(s<t.length)fr.appendChild(document.createTextNode(t.slice(s)));nd.parentNode.replaceChild(fr,nd)}});if(hits.length){cur=0;hits[0].classList.add('search-hit--current');hits[0].scrollIntoView({block:'center'})}};
+function move(d){if(!hits.length)return;hits[cur]?.classList.remove('search-hit--current');cur=(cur+d+hits.length)%hits.length;hits[cur].classList.add('search-hit--current');hits[cur].scrollIntoView({block:'center'})}
+document.getElementById('searchNext').onclick=()=>move(1);document.getElementById('searchPrev').onclick=()=>move(-1)})();
+(function(){const amp=document.getElementById('amplifier');const notes={};document.querySelectorAll('#ampNotes [data-note-id]').forEach(d=>notes[d.dataset.noteId]=d.innerHTML);document.querySelectorAll('.term-amp').forEach(t=>{t.onmouseenter=()=>{const h=notes[t.dataset.note];if(h)amp.innerHTML='<span class="amplifier__label">Khuếch đại thuật ngữ</span>'+h}})})();
+document.addEventListener('keydown',e=>{if(e.target.matches('input,textarea'))return;if(e.key==='f')document.getElementById('focusBtn').click();else if(e.key==='t')document.getElementById('themeBtn').click();else if(e.key==='P')print();else if(e.key==='/'){e.preventDefault();document.getElementById('searchBar').hidden=false;document.getElementById('searchInput').focus()}else if(e.key==='?')document.getElementById('shortcuts').hidden=false;else if(e.key==='Escape')document.getElementById('shortcuts').hidden=true});
+</script>
+</body>
+</html>

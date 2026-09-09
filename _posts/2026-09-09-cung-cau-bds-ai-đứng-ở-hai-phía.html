@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cung – cầu BĐS: ai thực sự đứng ở hai phía thị trường?</title>
+<meta name="description" content="Trước khi nói thừa hay thiếu: cung của ai, cầu của ai, mục đích gì. Nhà đầu tư đổi phe, NHTW đứng trên hệ thống.">
+<meta name="artifact-length" content="MEDIUM">
+<meta name="iterator-cycles" content="0">
+<meta name="iterator-stopped-by" content="skipped">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}
+:root{--font-serif:'Merriweather',Georgia,serif;--font-sans:'Inter',-apple-system,sans-serif;--bg:#FDFBF7;--bg-elevated:#fff;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;--border:#E4DFD5;--sidenote-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;--radius:10px;--radius-sm:6px;--measure:68ch;--line:1.75}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;--accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--success-bg:#22543D;--danger-bg:#63171B;--warn-bg:#7B341E;--info-bg:#2A4365}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line)}
+.app{display:grid;grid-template-columns:minmax(200px,18%) minmax(0,1fr) minmax(230px,20%);gap:40px;max-width:1380px;margin:0 auto;padding:28px 28px 120px}
+.navigator{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow-y:auto;font-family:var(--font-sans);font-size:14px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}.marginalia{font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;padding:20px 18px 90px}.navigator{position:relative;max-height:none;border-bottom:1px solid var(--border)}}
+.canvas h1{font-family:var(--font-sans);font-size:2.05rem;line-height:1.25;color:var(--text-strong);margin:8px 0 14px}
+.canvas h2{font-family:var(--font-sans);font-size:1.5rem;color:var(--text-strong);margin:50px 0 14px;padding-top:22px;border-top:1px solid var(--border)}
+.canvas h2:first-of-type{border-top:none;padding-top:0}.canvas h3{font-family:var(--font-sans);font-size:1.12rem;color:var(--text-strong);margin:28px 0 10px}
+.canvas p{margin:0 0 14px}.canvas a{color:var(--accent)}
+.hook{margin:22px 0 40px;padding:22px 26px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:22px 0;padding:14px 18px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.callout{margin:22px 0;padding:14px 18px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase}.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}
+.feynman{margin:18px 0;padding:12px 16px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}.feynman::before{content:"🧒 Một câu cho bé 10 tuổi:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase}
+.premortem{margin:22px 0;padding:18px 22px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px}.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}
+.scaffold{margin:26px 0;padding:18px 22px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.02rem;color:var(--text-strong);margin:0 0 6px}.scaffold__row{display:grid;grid-template-columns:88px 1fr;gap:12px;margin:10px 0}.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm)}.scaffold__probe>summary{padding:10px 12px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong)}.scaffold__resolve{padding:12px;background:var(--accent2-soft);font-family:var(--font-sans);font-size:14px}
+.checkpoint{margin:28px 0;padding:18px 22px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}.deep-dive{margin:22px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated)}.deep-dive>summary{padding:12px 16px;cursor:pointer;font-family:var(--font-sans);font-weight:600}.deep-dive>*:not(summary){padding:0 16px 14px}
+.bar-chart{margin:28px 0;padding:18px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px}.bar-row{display:grid;grid-template-columns:190px 1fr 60px;gap:10px;margin:8px 0;font-family:var(--font-sans);font-size:14px}.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong))}.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;margin:26px 0}.concept-flow__step{padding:14px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px}.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;align-self:center}@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}.bar-row{grid-template-columns:120px 1fr 50px}}
+.flip-card{perspective:1000px;height:170px;margin:22px 0;cursor:pointer}.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms;transform-style:preserve-3d}.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:18px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border)}.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:#fff;transform:rotateY(180deg)}.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--accent);margin-bottom:6px}.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.glossary dt{font-family:var(--font-sans);font-weight:700;margin-top:12px}.quiz{margin:48px 0 22px;padding:26px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.quiz__option{display:block;padding:10px 14px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px}.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success)}.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}.quiz__explanation{display:none;font-family:var(--font-sans);font-size:13px;background:var(--sidenote-bg);padding:8px 12px;border-radius:var(--radius-sm)}.quiz.is-graded .quiz__explanation{display:block}.btn{font-family:var(--font-sans);font-weight:600;padding:9px 18px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}.btn--ghost{background:transparent;color:var(--accent)}
+.launchpad{margin:40px 0 20px;padding:24px 28px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius)}.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:#fff;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}.launchpad__hint{display:none;margin:8px 0;padding:12px 14px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:14px}.launchpad__hint.is-visible{display:block}
+.sidenote{margin:20px 0;padding:10px 12px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px}.toc{list-style:none;padding:0}.toc a{display:block;padding:5px 10px;color:var(--text-muted);text-decoration:none;border-left:2px solid transparent}.toc a.is-active{color:var(--accent);border-left-color:var(--accent)}
+.controls{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:50}.control-btn{width:42px;height:42px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;font-family:var(--font-sans)}
+@media print{.navigator,.marginalia,.controls{display:none!important}.app{display:block}.flip-card{height:auto}.flip-card__face{position:static}.flip-card__back{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="navigator"><div style="font-family:var(--font-sans);font-size:13px;padding:8px 0 12px;border-bottom:1px solid var(--border);margin-bottom:12px">⏱ ~17 min · MEDIUM · narrative</div><nav><ul class="toc" id="toc"></ul></nav></aside>
+<main class="canvas" id="canvas">
+<h1>Cung – cầu BĐS: ai thực sự đứng ở hai phía thị trường?</h1>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted);margin:0 0 18px">Chuỗi Cung–Cầu Bất động sản · Bài 3/6 · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a></p>
+<div class="hook"><span class="hook__label">🎣 The hook</span>
+<p>Phút 60 của một trận bóng lạ: tiền đạo đội đỏ bỗng chạy sang đá cho đội xanh. Khán giả ngoài sân hò hét mà không ai cho vào. Rồi ban tổ chức tưới nước làm sân trơn, cả hai đội cùng đổi chiến thuật.</p>
+<p>Bình luận viên bối rối: đội nào đang tấn công, đội nào đang thủ? Thị trường nhà đất cũng bình luận sai y như vậy mỗi ngày. Trước khi nói thừa cung hay thiếu cầu, phải hỏi cầu thủ nào đang đá cánh nào.</p></div>
+<div class="meta-block"><h4>Prerequisites</h4><ul><li>Điểm giao sinh ra giá và khối lượng.</li><li>Cầu hiệu lực, cung lệch, cân bằng đa van.</li><li>Khái niệm lãi suất, tín dụng, lợi suất thuê.</li></ul></div>
+<div class="meta-block"><h4>By the end you will be able to…</h4><ul><li>Phân biệt cầu ở thực với cầu đầu tư.</li><li>Phân biệt cung phục vụ ở với cung phục vụ đầu tư.</li><li>Xác định lúc một actor đổi phe.</li><li>Giải thích vị trí của NHTW.</li><li>Vẽ bản đồ 5 actor khi đọc tin thị trường.</li></ul></div>
+
+<h2 id="baseline">Nền tảng: hỏi actor trước khi nói thừa thiếu</h2>
+<p>Phần này đặt viên gạch duy nhất. Mọi actor sau đây đều đứng lên nó.</p>
+<p>Trước khi nói thừa hay thiếu, phải hỏi cung của ai, cầu của ai và với mục đích gì. Một căn nhà vừa là chỗ ở vừa là tài sản nên người trong cuộc đổi phe giữa trận.</p>
+<p>Công thức cung ít cầu nhiều thì giá tăng đúng mà rỗng. Nhà đầu tư lúc mua tạo cầu, lúc cho thuê tạo cung thuê, lúc bán tạo cung thứ cấp. Ngân hàng trung ương không mua bán căn nào mà đổi giá của tiền cho cả sân.</p>
+<p>Móng đã đặt: hỏi actor trước khi nói thừa thiếu. Câu hỏi tiếp theo là hình dung sân đấu đổi phe mà không cần sơ đồ. Một trận bóng sẽ làm việc đó.</p>
+
+<h2 id="bridge">Cây cầu quen: Trận Bóng Đổi Cánh</h2>
+<p>Phần này mượn một trận bóng quen thuộc. Bạn sẽ dùng nó để gọi tên mọi vị trí khó.</p>
+<p>Gọi đây là <strong>Mô hình Trận Bóng Đổi Cánh</strong>. Hai đội tấn công và phòng ngự hai khung thành. Giữa trận, vài cầu thủ đổi cánh sang đội kia. Khán giả muốn vào sân phải có vé và đủ sức khỏe. Ban tổ chức tưới nước làm sân trơn thì cả hai đội cùng đổi chiến thuật.</p>
+<p>Đội tấn công là phe cầu, đội phòng ngự là phe cung. Cầu thủ đổi cánh là nhà đầu tư và người ở bán nhà cũ. Khán giả cần vé và sức khỏe là người ở cần chi trả. Thời tiết và ban tổ chức là ngân hàng trung ương.</p>
+<div class="concept-flow"><div class="concept-flow__step">01 · Khán giả + vé<br>Người ở và chi trả</div><div class="concept-flow__arrow">→</div><div class="concept-flow__step">02 · Sân đổi cánh<br>Mua giữ thuê bán</div><div class="concept-flow__arrow">→</div><div class="concept-flow__step">03 · Tỉ số + thế trận<br>Giá và khối lượng</div></div>
+<p>Trận bóng khác nhà đất ở một điểm. Trọng tài thổi còi hết giờ rõ ràng. Thị trường không có tiếng còi chung cuộc, cầu thủ đổi cánh liên tục nhiều năm.</p>
+<div class="premortem"><span class="premortem__label">⚠️ Before we build further…</span>
+<p><span class="premortem__wrong">Nhà đầu tư đứng hẳn phe cầu, tổng nhà trong thành phố là tổng cung.</span></p>
+<p>This is wrong because cầu thủ trong trận này đổi cánh giữa giờ, và khán giả ngoài sân dù đông mấy cũng chưa phải đội hình.</p>
+<p><strong>What's actually true:</strong> Cùng một nhà đầu tư lúc mua tạo cầu, lúc cho thuê tạo cung thuê, lúc bán tạo cung thứ cấp. Cung chỉ tính căn đang chào bán hoặc cho thuê.</p></div>
+
+<h2 id="exposition">Dựng mô hình, từng cụm một</h2>
+<p>Mỗi cụm dưới đây đi qua <strong>State → Illustrate → Probe → Resolve</strong>. Hãy thử trả lời Probe trong đầu trước khi mở đáp án.</p>
+
+<section class="scaffold"><h3 class="scaffold__concept">1 · Cầu của ai</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Cầu ở thực</strong> (mua để sử dụng, xét bằng thu nhập và khả năng trả nợ) bị chặn cứng bởi chi trả: cần mấy vẫn chưa thành cầu mua nếu giá vượt thu nhập và chuẩn vay. <strong>Cầu đầu tư</strong> (mua như tài sản, xét bằng lợi suất, chi phí vốn, kỳ vọng và cửa bán lại) có đoạn giá tăng nuôi kỳ vọng tăng tiếp rồi kéo cầu tăng theo.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Sân 2025 cho thấy đội nào đông hơn. Trong hơn 2.000 giao dịch phía Nam, nhà đầu tư chiếm khoảng 70%, người ở chỉ khoảng 30%. Lợi suất cho thuê Hà Nội khoảng 3,7%, TP.HCM khoảng 3,6% rồi về khoảng 2,2%, phổ biến dưới gửi tiết kiệm. Dòng tiền thuê mỏng mà đội đầu tư vẫn đông, vì họ đá bằng kỳ vọng tăng giá. Tổng lợi suất gộp 12,5–17% gồm cả tăng giá xác nhận điều này.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Lợi suất thua gửi tiết kiệm mà nhà đầu tư vẫn mua. Vô lý không?</summary><div class="scaffold__resolve">💡 Không vô lý với cầu tài sản. Họ mua kỳ vọng bán lại cao hơn, tiền thuê chỉ là vé vớt chi phí chờ. Chừng nào niềm tin tăng giá còn, đội tấn công còn đông.</div></details></section>
+<div class="feynman">Người ở mua mái nhà để chui vào. Nhà đầu tư mua mái nhà để bán lại cho người khác.</div>
+<div class="checkpoint"><strong>🛑 Pause &amp; reflect.</strong> Hãy giải thích hai loại cầu bằng ngôn ngữ Trận Bóng: khán giả và tiền đạo khác nhau ở đâu? Nếu chưa gọi tên được, đọc lại một lượt.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">2 · Cung của ai và người đổi phe</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Cung phục vụ ở</strong> (nhà phổ thông, căn hộ gia đình, nhà ở xã hội, thuê dài hạn) khác <strong>cung phục vụ đầu tư</strong> (căn hộ cho thuê, nghỉ dưỡng, tài sản dòng tiền, hàng chờ tăng giá). Tổng cung có thể lớn mà cung phù hợp vẫn thiếu. Kịch bản minh họa: kệ đầy căn 8–10 tỷ trong khi nhu cầu thực với tới căn 2–4 tỷ.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Sân 2025 xác nhận kệ lệch: hơn 128.000 sản phẩm chào mới, hấp thụ khoảng 68%, mà hơn 75% giao dịch từ mua căn thứ hai trở lên, khoảng 10% dùng đòn bẩy ngắn hạn. Lướt sóng tăng từ 9% lên gần 12%, mua ở giảm, tích sản rơi từ 24% xuống 17%. Cùng một cầu thủ đổi cánh liên tục trong trận.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Một nhà đầu tư vừa mua 3 căn, vừa rao bán 2 căn, vừa cho thuê 5 căn. Anh ta ở phe nào?</summary><div class="scaffold__resolve">💡 Ở cả ba phe cùng lúc: 3 đơn vị cầu đã khớp, 2 đơn vị cung bán, 5 đơn vị cung thuê. Gắn nhãn cả con người vào một phe là dán sai áo đấu.</div></details></section>
+<div class="feynman">Cầu thủ đổi cánh thì áo đấu đổi theo. Nhìn áo hiện tại, đừng nhìn áo lúc khai mạc.</div>
+<section class="scaffold"><h3 class="scaffold__concept">3 · Người đứng trên hệ thống</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div>Ngân hàng trung ương không mua nhà cũng không xây nhà. Cơ quan này đổi <strong>giá của tiền</strong> nên tác động tới cả hai phía, không đứng hẳn phe nào. Lãi giảm thì người mua vay dễ hơn, nhà đầu tư thêm đòn bẩy, chủ đầu tư vay rẻ hơn. Thắt lại thì cầu giảm trước, cung tương lai giảm sau.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Quý IV/2025 minh họa cú đánh hai phía: nguồn tăng nhanh gặp lãi suất nhích lên, nhóm đòn bẩy thận trọng lại, thanh khoản chững dù ba quý trước hấp thụ tốt. Bản đồ tổng kết gom năm actor: người ở tạo cầu sử dụng, nhà đầu tư tạo cầu tài sản rồi có thể thành cung thuê hoặc cung bán, chủ đầu tư tạo nguồn cung, ngân hàng biến muốn mua thành mua được, NHTW đổi giá vốn toàn hệ thống.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Hạ lãi suất để cứu người mua. Vì sao chủ đầu tư cũng hưởng lợi và giá có thể không giảm?</summary><div class="scaffold__resolve">💡 Vì van tiền mở cho cả sân. Cầu chi trả được tăng một nấc, van nguồn tương lai cũng mở vì vay rẻ hơn. Hai đội cùng mạnh lên.</div></details></section>
+<div class="feynman">Ban tổ chức không đá thay ai. Nhưng tưới sân trơn thì cả hai đội đều phải đổi giày.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">4 · Sơ đồ bốn ô đầy đủ</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Sơ đồ bốn ô</strong> (mô hình 1992 nối hai thị trường thành một vòng) đặt mỗi actor vào đúng ô của mình. Thị trường không gian quyết giá thuê từ tồn lượng. Vốn hóa đổi thuê thành giá tài sản. Giá gọi xây mới, xây mới trừ hao mòn đổi tồn lượng. Cân bằng dài hạn khi xây mới đúng bằng hao mòn.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Đi một vòng bốn ô, bắt đầu từ phía đông bắc. Ô đông bắc: trục đứng là giá thuê, trục ngang là tồn lượng. Ngắn hạn tồn lượng cố định nên cầu sử dụng quyết giá thuê. Người ở thật sống ở ô này. Ô tây bắc: trục đứng là giá tài sản, trục ngang là giá thuê. Tia vốn hóa P = R / i đổi thuê thành giá. Nhà đầu tư sống ở ô này. Lãi suất, rủi ro và kỳ vọng tăng giá nằm ở độ dốc của tia.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Ô tây nam: giá tài sản đổi thành xây mới. Giá cao hơn chi phí thay thế thì chủ đầu tư xây thêm. Ô đông nam khép vòng: xây mới trừ hao mòn thành tồn lượng mới. Cân bằng dài hạn nằm trên tia mà xây mới đúng bằng hao mòn. Vòng chạy chuẩn: thu nhập tăng thì thuê tăng, giá tài sản tăng, xây tăng, tồn lượng tăng, rồi thuê dịu lại.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Cú sốc lãi suất đi đường khác. Lãi suất giảm làm tia vốn hóa dốc hơn: cùng một giá thuê cho giá tài sản cao hơn. Xây tăng theo, tồn lượng tăng sau cùng, giá thuê hạ dần khép vòng. Ngân hàng trung ương xoay tia tây bắc, không chạm trực tiếp ba ô còn lại. Quý IV/2025 là ví dụ ngược: tia vốn hóa thoải dần khi lãi nhích lên. Trong khi đó ô xây mới vẫn đẩy hàng nên thanh khoản chững lại.</div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:22px 0;font-family:var(--font-sans);font-size:14px;line-height:1.6">
+<div style="padding:14px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-top:4px solid var(--accent);border-radius:8px"><strong>② Ô tây bắc · Vốn hóa</strong><br>Giá tài sản P = R / i<br><span style="color:var(--text-muted)">Actor: nhà đầu tư. NHTW xoay tia này qua lãi suất.</span></div>
+<div style="padding:14px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-top:4px solid var(--accent);border-radius:8px"><strong>① Ô đông bắc · Giá thuê</strong><br>Giá thuê R từ cầu sử dụng và tồn lượng S<br><span style="color:var(--text-muted)">Actor: người ở thật.</span></div>
+<div style="padding:14px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-top:4px solid var(--accent);border-radius:8px"><strong>③ Ô tây nam · Xây mới</strong><br>Xây mới C từ giá tài sản<br><span style="color:var(--text-muted)">Actor: chủ đầu tư.</span></div>
+<div style="padding:14px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-top:4px solid var(--accent);border-radius:8px"><strong>④ Ô đông nam · Tồn lượng</strong><br>ΔS = xây mới − hao mòn<br><span style="color:var(--text-muted)">Cân bằng dài hạn khi xây mới = hao mòn.</span></div>
+</div>
+<p style="font-family:var(--font-sans);font-size:14px">Vòng đọc: ① → ② → ③ → ④ rồi quay về ①. Thu nhập vào ở ô ①, lãi suất vào ở ô ②, thợ xây vào ở ô ③, kho hàng đổi ở ô ④.</p>
+<p>Sơ đồ trên là khung sư phạm, không theo tỉ lệ thật. Đọc kèm đoạn vòng chạy ở trên, đừng đọc hình rời.</p>
+<details class="scaffold__probe"><summary>🤔 Probe: Hạ lãi suất, ô nào xoay trước và ô nào khép vòng sau cùng?</summary><div class="scaffold__resolve">💡 Tia vốn hóa tây bắc xoay trước nên giá tài sản nhảy ngay trên cùng giá thuê. Xây mới phản ứng sau vì cần năm giấy phép và thi công. Tồn lượng tăng cuối cùng rồi giá thuê dịu lại khép vòng.</div></details></section>
+<div class="feynman">Tiền thuê quyết giá nhà qua lãi suất, giá nhà gọi thợ xây, thợ xây thêm nhà làm thuê rẻ lại.</div>
+
+<details class="deep-dive"><summary>🔴 Deep dive: Vì sao giá cao mà vẫn cháy hàng?</summary><p>Giá cao không làm giảm cầu mà sàng lọc cầu. Thuyết phục 100 người thu nhập trung bình khó hơn bán cho 20 người giàu quyết đoán. Người không mua được không biến mất mà thành lực lượng thuê khổng lồ, nhu cầu thuê này quay lại nuôi lý do mua cho thuê của người có tiền. Dòng tiền quay vòng giữa giới đầu tư với nhau trong khi người ở đứng ngoài.</p></details>
+
+<h2 id="application">Ra thực địa: sân Việt 2025</h2>
+<p>Phần này mang bản đồ actor ra sân thật. Mỗi con số là một vị trí đang đứng.</p>
+<p>Đội tấn công do đầu tư dẫn dắt. Mua đầu tư chiếm 28%, tăng 27% so với 2024. Lướt sóng gần 12%. Hơn 75% giao dịch từ căn thứ hai trở lên, 10% đòn bẩy ngắn hạn. DKRA: 70% đầu tư vs 30% ở thực phía Nam. Đội đông là đội đá bằng kỳ vọng.</p>
+<p>Khung thành phòng ngự lệch về tài sản. Hơn 128.000 sản phẩm chào mới, hấp thụ khoảng 68%. Nguồn mới dồn cao cấp, 85% chung cư mới HN/HCM trên 80 triệu đồng/m². Đội thủ giữ khung thành của đội bạn.</p>
+<p>Thời tiết đổi cuối trận. Quý IV/2025 nguồn tăng nhanh gặp lãi suất nhích lên, nhóm đòn bẩy thận trọng, thanh khoản chững lại. Lợi suất thuê về đáy 2,2% mà tổng lợi suất gộp vẫn 12,5–17% nhờ tăng giá. Cả hai đội cùng đổi chiến thuật khi sân trơn.</p>
+<div class="bar-chart"><div class="bar-chart__title">Ai đang đá chính · 2025</div>
+<div class="bar-row"><div>GD căn thứ 2+</div><div class="bar-track"><div class="bar-fill" style="width:75%"></div></div><div>75%</div></div>
+<div class="bar-row"><div>GD là NĐT (Nam)</div><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div><div>70%</div></div>
+<div class="bar-row"><div>Lướt sóng</div><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><div>~12%</div></div>
+<div class="bar-row"><div>Yield HCM Q3/25</div><div class="bar-track"><div class="bar-fill" style="width:10%"></div></div><div>2,2%</div></div>
+<p class="bar-chart__caption">Nguồn: VARS/DXS, DKRA, Batdongsan.com.vn. Thang minh họa.</p></div>
+<p>Bài học rút ra rất gọn. Cầu đầu tư dẫn dắt, cung mới phục vụ đầu tư, tiền thuê mỏng nhưng kỳ vọng dày. Người ở không biến mất mà thành lực lượng thuê, nuôi ngược lại lý do mua của đội đầu tư. Sân quay vòng giữa các cầu thủ với nhau.</p>
+<div class="flip-card" tabindex="0"><div class="flip-card__inner"><div class="flip-card__face flip-card__front"><span class="flip-card__label">Active recall — Question</span>Vì sao hơn 75% giao dịch từ mua căn thứ hai mà vẫn gọi là thiếu cung?</div><div class="flip-card__face flip-card__back"><span class="flip-card__label">Answer</span>Vì thiếu ở đây là thiếu cung phù hợp với người ở. Đội thủ đông nhưng giữ khung thành của đội bạn.</div></div></div>
+<p>Mô hình đã đi qua thực địa. Việc còn lại là vạch biên: đâu là hiểu lầm hay gặp, đâu là biên mô hình không bao phủ.</p>
+
+<h2 id="boundary">Biên của mô hình</h2>
+<p>Phần này chỉ hai vấp phổ biến. Đọc kỹ, bạn tránh được đa số lỗi đọc sân.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Common misconception</span>“Nhà đầu tư là phe cầu; tổng nhà trong thành phố là tổng cung.” Sai cả hai vế. Nhà đầu tư đổi phe theo hành động mua, giữ, cho thuê, bán. Tổng nhà chỉ thành cung khi được chào bán hoặc cho thuê.</div>
+<p>Vấp thứ hai là tưởng NHTW đứng về phe mình muốn. Ban tổ chức tưới sân thì cả hai đội cùng trơn. Đọc chính sách phải hỏi đội nào hưởng trước: cầu chi trả được, cầu đầu tư hay nguồn tương lai.</p>
+<div class="callout callout--danger"><span class="callout__label">🚫 Edge case</span>Dòng tiền quay vòng giữa giới đầu tư: người ở thành lực lượng thuê khổng lồ, tiền thuê nuôi lý do mua cho thuê, giá tăng nuôi kỳ vọng. Sân vẫn sôi mà khán giả không vào được.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Predict</span>Lần tới thấy tin hạ lãi suất kèm địa ốc hưởng lợi, bạn hỏi đội nào hưởng trước: cầu chi trả được, cầu đầu tư hay nguồn tương lai? Viết câu trả lời một câu.</div>
+
+<h2 id="connections">Mắt lưới bên cạnh</h2>
+<p>Ghi chú này là một mắt lưới. Ba mắt bên cạnh giúp bạn đi tiếp mà không lạc.</p>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">Trong chuỗi này: vé trên tay ở <a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">Bài 5</a> · kệ hàng lệch ở <a href="2026-09-09-cung-bds-thiếu-nhà-hay-cung-bị-lệch.html">Bài 4</a> · điểm giao giá–khối lượng ở <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">Bài 2</a>.</p>
+<p><strong>Điểm giao.</strong> Mỗi hành động mua, bán, cho thuê ở đây là một đơn vị khối lượng khớp ở ghi chú đầu. <strong>Cầu hiệu lực.</strong> Vé trên tay chính là suất vào sân. <strong>Cung lệch.</strong> Kệ hàng lệch chính là đội thủ giữ nhầm khung thành.</p>
+
+<h2 id="synthesis">Bức tranh chung</h2>
+<p>Phần này thu toàn bộ ghi chú về trận bóng đổi cánh trong Hook. Cùng một cơ chế giải thích cả tỉ số lẫn thế trận.</p>
+<p>Công thức cung ít cầu nhiều đúng mà rỗng nếu thiếu actor. Người ở tạo cầu sử dụng và bị chặn bởi chi trả. Nhà đầu tư tạo cầu tài sản rồi có thể thành cung thuê và cung bán. Chủ đầu tư tạo nguồn cung, lệch hay cân tùy thực đơn. Ngân hàng biến muốn mua thành mua được. Ngân hàng trung ương đổi giá của tiền cho cả sân. Bốn ô giá thuê, giá tài sản, xây mới và tồn lượng khóa nhau thành một vòng. Thuê quyết giá, giá gọi xây, xây đổi tồn lượng, tồn lượng dìm thuê.</p>
+<p>Vì vậy nghe thiếu cung thì hỏi thiếu cung nào. Nghe nhu cầu lớn thì hỏi nhu cầu ở, cầu chi trả được hay cầu đầu tư. Chỉ cần gắn đúng áo đấu cho từng hành động, bức tranh cung cầu đã khác đi rất nhiều.</p>
+<blockquote><strong>Nếu chỉ nhớ một điều:</strong> Đừng gắn nhãn cả con người vào một phe — hãy gắn nhãn từng hành động mua, giữ, cho thuê, bán của họ.</blockquote>
+<div class="launchpad"><span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+<h3>Nghịch lý cầu thủ ba áo</h3>
+<p>Một nhà đầu tư vừa mua 3 căn, vừa rao bán 2 căn, vừa cho thuê 5 căn trong cùng một quý. Báo chí viết nhà đầu tư gom hàng nên cầu tăng. Tin này đúng, sai hay thiếu, và bạn cần thêm dữ liệu nào để gắn đúng áo đấu?</p>
+<button class="launchpad__reveal" id="hintBtn" type="button">Reveal hint 1</button>
+<div class="launchpad__hint" data-hint="1"><strong>Hint 1 — reframe.</strong> Một cầu thủ mặc ba áo trong một trận. Bạn đếm anh ta cho đội nào? Áp cách đếm sang nhà đầu tư.</div>
+<div class="launchpad__hint" data-hint="2"><strong>Hint 2 — key concept.</strong> Dùng vị trí di động: mua là cầu đã khớp, rao bán là cung bán, cho thuê là cung thuê. Hỏi thêm thời gian nắm giữ và đòn bẩy.</div>
+<div class="launchpad__hint" data-hint="3"><strong>Hint 3 — setup.</strong> Xin tỷ trọng giữ dài so với lướt sóng, tỷ trọng vay ngắn hạn, và giá thuê trên giá mua. Giữ dài vay ít là cầu bền; lướt nhiều vay ngắn là cầu sắp đổi cánh.</div></div>
+
+<h2 id="glossary">Glossary</h2>
+<p>Bảng từ vựng đi kèm cầu nối Trận Bóng. Đọc cột cầu nối để thấy trực giác sau thuật ngữ.</p>
+<dl class="glossary">
+<dt>Cầu ở thực</dt><dd>Mua để sử dụng, chặn bởi chi trả. <i>Trong Trận Bóng: khán giả cần vé và sức khỏe.</i></dd>
+<dt>Cầu đầu tư</dt><dd>Mua như tài sản bằng lợi suất, vốn và kỳ vọng. <i>Trong Trận Bóng: tiền đạo đá bằng niềm tin ghi bàn.</i></dd>
+<dt>Cung phục vụ ở</dt><dd>Nhà đúng giá đúng nơi đúng công năng sử dụng. <i>Trong Trận Bóng: khung thành đội nhà cần giữ.</i></dd>
+<dt>Cung phục vụ đầu tư</dt><dd>Sản phẩm hấp thụ như tài sản dòng tiền. <i>Trong Trận Bóng: khung thành đội bạn đang giữ hộ.</i></dd>
+<dt>Vị trí di động</dt><dd>Cùng một người đổi phe theo hành động. <i>Trong Trận Bóng: cầu thủ đổi cánh giữa trận.</i></dd>
+<dt>Giá của tiền</dt><dd>Lãi suất và chi phí vốn toàn hệ. <i>Trong Trận Bóng: thời tiết và điều kiện sân.</i></dd>
+<dt>Sàng lọc cầu</dt><dd>Giá cao loại ví mỏng, giữ ví dày. <i>Trong Trận Bóng: vé đắt lọc khán giả còn đại gia.</i></dd>
+<dt>Dòng tiền quay vòng</dt><dd>Tiền thuê nuôi lý do mua, giá tăng nuôi kỳ vọng. <i>Trong Trận Bóng: bóng lăn giữa cầu thủ mà khán giả không chạm được.</i></dd>
+<dt>Thị trường không gian</dt><dd>Mua bán quyền sử dụng, giá là giá thuê. <i>Trong Trận Bóng: khán đài cho thuê chỗ ngồi.</i></dd>
+<dt>Thị trường tài sản</dt><dd>Mua bán quyền sở hữu chờ dòng tiền và tăng giá. <i>Trong Trận Bóng: thị trường chuyển nhượng cầu thủ.</i></dd>
+<dt>Tỉ suất vốn hóa</dt><dd>Tỉ số giá thuê trên giá tài sản, đổi thuê thành giá. <i>Trong Trận Bóng: tỉ giá giữa vé lẻ từng trận và vé cả mùa.</i></dd>
+</dl>
+
+<section class="quiz" id="quiz"><h2>Knowledge check</h2>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">3 câu. Chọn rồi bấm Chấm điểm.</p>
+<fieldset data-answer="1"><legend>1. Nhà đầu tư vừa mua 3 căn, vừa rao bán 2 căn, vừa cho thuê 5 căn. Đọc nào đúng?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Đứng hẳn phe cầu vì đang gom hàng</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Ở cả ba vị trí: 3 cầu đã khớp, 2 cung bán, 5 cung thuê</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Đứng hẳn phe cung vì đang rao bán</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Không xác định được vì thiếu giá mua</label>
+<div class="quiz__explanation"><strong>Why:</strong> Nhãn gắn theo hành động, không theo con người. Mua là cầu đã khớp, rao là cung bán, cho thuê là cung thuê.</div></fieldset>
+<fieldset data-answer="1"><legend>2. Lợi suất thua gửi tiết kiệm mà nhà đầu tư vẫn mua mạnh. Vì sao?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Họ tính sai lợi suất</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Họ đá bằng kỳ vọng tăng giá và tổng lợi suất gộp</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Họ không biết lãi tiết kiệm</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Cung đã hết nên giá nào cũng mua</label>
+<div class="quiz__explanation"><strong>Why:</strong> Cầu tài sản tính bằng tổng lợi suất gộp gồm tăng giá. Niềm tin tăng giá còn thì đội tấn công còn đông.</div></fieldset>
+<fieldset data-answer="1"><legend>3. Hạ lãi suất, thanh khoản tăng nhưng nguồn tương lai cũng dày thêm. Vì sao?</legend>
+<label class="quiz__option"><input type="radio" name="q3" value="0"> Chính sách vô tác dụng</label>
+<label class="quiz__option"><input type="radio" name="q3" value="1"> Giá của tiền mở van cho cả hai phía</label>
+<label class="quiz__option"><input type="radio" name="q3" value="2"> Người mua hết nhu cầu</label>
+<label class="quiz__option"><input type="radio" name="q3" value="3"> Chủ đầu tư ngừng vay khi lãi giảm</label>
+<div class="quiz__explanation"><strong>Why:</strong> NHTW đứng trên hệ thống. Van cầu và van nguồn cùng mở nên tỉ số chưa chắc đổi chiều.</div></fieldset>
+<div><button class="btn" id="quizCheck" type="button">Chấm điểm</button> <button class="btn btn--ghost" id="quizReset" type="button">Reset</button><p id="quizScore" style="font-family:var(--font-sans)"></p></div></section>
+
+<h2 id="sources">Sources &amp; further reading</h2>
+<ul style="font-size:14px;font-family:var(--font-sans)">
+<li>VARS/DXS FERI 2025–2026: đầu tư 28%, lướt sóng ~12%; 75% GD từ căn thứ hai+. <a href="https://nhipsongnhadat.vn/co-cau-nhu-cau-mua-nha-dao-chieu-dau-tu-luot-song-tang-tro-lai.html" target="_blank" rel="noopener">NSNĐ</a> · <a href="https://tctd.vn/dong-tien-dau-tu-ap-dao-thi-truong-hon-75-giao-dich-la-mua-can-thu-hai-10-giao-dich-dung-don-bay-ngan-han-a7778.html" target="_blank" rel="noopener">TCTD</a> · <a href="https://cafef.vn/cu-3-nguoi-mua-chung-cu-thi-co-den-2-nguoi-mua-de-dau-tu-dau-coky-vong-gia-se-con-tang-nua-khien-nhieu-du-an-gia-cao-nhung-van-chay-hang-188260119080557177.chn" target="_blank" rel="noopener">CafeF</a></li>
+<li>VARS 2025: 128.000 sản phẩm chào mới; 85% chung cư mới HN/HCM trên 80tr/m². <a href="https://doanhnghiepphattrien.vn/dong-tien-dau-tu-ap-dao-thi-truong-bat-dong-san/" target="_blank" rel="noopener">DNPT</a></li>
+<li>Batdongsan.com.vn 2025: yield HN 3,7%, HCM về 2,2%. <a href="https://dantri.com.vn/bat-dong-san/gia-can-ho-o-muc-cao-mua-de-cho-thue-can-luu-y-gi-20250226112119562.htm" target="_blank" rel="noopener">Dân Trí</a> · <a href="https://vnexpress.net/ty-suat-cho-thue-can-ho-tp-hcm-cham-day-4985472.html" target="_blank" rel="noopener">VnExpress</a></li>
+<li>DiPasquale &amp; Wheaton (1992), Real Estate Economics. <a href="https://doi.org/10.1111/1540-6229.00579" target="_blank" rel="noopener">DOI</a></li>
+<li>DeSalvo (2017), Teaching the DiPasquale-Wheaton Model, J. Real Estate Practice and Education. <a href="https://doi.org/10.1080/10835547.2017.12091767" target="_blank" rel="noopener">DOI</a></li>
+</ul>
+<div style="text-align:center;color:var(--text-muted);font-family:var(--font-sans);font-size:13px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px">Chuỗi Cung–Cầu Bất động sản · Bài 3/6<br><a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">← Bài 2: Giá và khối lượng</a> · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a> · <a href="2026-09-09-cung-bds-thiếu-nhà-hay-cung-bị-lệch.html">Bài 4: Thiếu nhà hay lệch cung →</a><br><span>Nội dung chỉ mang tính tham khảo, không phải khuyến nghị đầu tư. Ngày cập nhật: 2026-09-09.</span></div>
+</main>
+<aside class="marginalia"><div class="sidenote"><strong>Sidenote · Đội nào đông?</strong>Phía Nam: 70% nhà đầu tư vs 30% ở thực. Cả nước: hơn 75% giao dịch từ mua căn thứ hai trở lên.</div>
+<div class="sidenote"><strong>Sidenote · Hai thị trường</strong>DiPasquale–Wheaton chia thị trường không gian (thuê) và tài sản (giá, xây, tồn lượng). Mục Sơ đồ bốn ô đầy đủ dựng lại toàn bộ khung gốc.</div>
+<div class="sidenote"><strong>Cách đọc nhanh</strong>Mỗi lần thấy tin thừa hay thiếu: hỏi cung của ai, cầu của ai, hành động nào. Ba câu này gắn đúng áo đấu.</div></aside>
+</div>
+<div class="controls"><button class="control-btn" id="topBtn" title="Top">↑</button><button class="control-btn" id="focusBtn" title="Focus">◐</button><button class="control-btn" id="themeBtn" title="Theme">◑</button></div>
+<script>
+document.querySelectorAll('.flip-card').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('is-flipped')));
+document.getElementById('themeBtn').addEventListener('click',()=>{const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark')});
+document.getElementById('focusBtn').addEventListener('click',()=>document.body.classList.toggle('focus-mode'));
+document.getElementById('topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+(function(){const t=document.getElementById('toc');document.querySelectorAll('#canvas h2').forEach(h=>{if(!h.id)return;const li=document.createElement('li');const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);t.appendChild(li)})})();
+(function(){const q=document.getElementById('quiz');if(!q)return;const sc=document.getElementById('quizScore');document.getElementById('quizCheck').addEventListener('click',()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{t++;const a=parseInt(fs.dataset.answer,10);const s=fs.querySelector('input:checked');fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const co=fs.querySelector('input[value="'+a+'"]');if(co)co.closest('.quiz__option').classList.add('correct-answer');if(s&&parseInt(s.value,10)!==a)s.closest('.quiz__option').classList.add('incorrect-answer');if(s&&parseInt(s.value,10)===a)c++});q.classList.add('is-graded');sc.textContent=c+' / '+t+' đúng.'});document.getElementById('quizReset').addEventListener('click',()=>{q.querySelectorAll('input').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');sc.textContent=''})})();
+(function(){let n=0;const b=document.getElementById('hintBtn');if(!b)return;b.addEventListener('click',()=>{n++;const h=document.querySelector('.launchpad__hint[data-hint="'+n+'"]');if(h)h.classList.add('is-visible');b.textContent=n>=3?'Hết gợi ý':'Reveal hint '+(n+1);if(n>=3)b.disabled=true})})();
+</script>
+</body>
+</html>

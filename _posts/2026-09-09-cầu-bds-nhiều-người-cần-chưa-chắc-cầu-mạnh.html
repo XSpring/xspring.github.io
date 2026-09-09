@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cầu BĐS: nhiều người cần nhà chưa chắc là cầu mạnh</title>
+<meta name="description" content="Nhu cầu chỉ thành cầu khi có tiền, vay được và chịu giá. Cầu còn lệch cấu trúc, bị lấn át và khuếch đại.">
+<meta name="artifact-length" content="MEDIUM">
+<meta name="iterator-cycles" content="0">
+<meta name="iterator-stopped-by" content="skipped">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}
+:root{--font-serif:'Merriweather',Georgia,serif;--font-sans:'Inter',-apple-system,sans-serif;--bg:#FDFBF7;--bg-elevated:#fff;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;--border:#E4DFD5;--sidenote-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;--radius:10px;--radius-sm:6px;--measure:68ch;--line:1.75}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;--accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--success-bg:#22543D;--danger-bg:#63171B;--warn-bg:#7B341E;--info-bg:#2A4365}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line)}
+.app{display:grid;grid-template-columns:minmax(200px,18%) minmax(0,1fr) minmax(230px,20%);gap:40px;max-width:1380px;margin:0 auto;padding:28px 28px 120px}
+.navigator{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow-y:auto;font-family:var(--font-sans);font-size:14px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}.marginalia{font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;padding:20px 18px 90px}.navigator{position:relative;max-height:none;border-bottom:1px solid var(--border)}}
+.canvas h1{font-family:var(--font-sans);font-size:2.1rem;line-height:1.25;color:var(--text-strong);margin:8px 0 14px}
+.canvas h2{font-family:var(--font-sans);font-size:1.5rem;color:var(--text-strong);margin:50px 0 14px;padding-top:22px;border-top:1px solid var(--border)}
+.canvas h2:first-of-type{border-top:none;padding-top:0}.canvas h3{font-family:var(--font-sans);font-size:1.12rem;color:var(--text-strong);margin:28px 0 10px}
+.canvas p{margin:0 0 14px}.canvas a{color:var(--accent)}
+.hook{margin:22px 0 40px;padding:22px 26px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:22px 0;padding:14px 18px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.callout{margin:22px 0;padding:14px 18px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase}.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}
+.feynman{margin:18px 0;padding:12px 16px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}.feynman::before{content:"🧒 Một câu cho bé 10 tuổi:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase}
+.premortem{margin:22px 0;padding:18px 22px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px}.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}
+.scaffold{margin:26px 0;padding:18px 22px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.02rem;color:var(--text-strong);margin:0 0 6px}.scaffold__row{display:grid;grid-template-columns:88px 1fr;gap:12px;margin:10px 0}.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm)}.scaffold__probe>summary{padding:10px 12px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong)}.scaffold__resolve{padding:12px;background:var(--accent2-soft);font-family:var(--font-sans);font-size:14px}
+.checkpoint{margin:28px 0;padding:18px 22px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}.deep-dive{margin:22px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated)}.deep-dive>summary{padding:12px 16px;cursor:pointer;font-family:var(--font-sans);font-weight:600}.deep-dive>*:not(summary){padding:0 16px 14px}
+.bar-chart{margin:28px 0;padding:18px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px}.bar-row{display:grid;grid-template-columns:170px 1fr 110px;gap:10px;margin:8px 0;font-family:var(--font-sans);font-size:14px}.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong))}.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;margin:26px 0}.concept-flow__step{padding:14px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px}.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;align-self:center}@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}.bar-row{grid-template-columns:110px 1fr 80px}}
+.flip-card{perspective:1000px;height:170px;margin:22px 0;cursor:pointer}.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms;transform-style:preserve-3d}.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:18px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border)}.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:#fff;transform:rotateY(180deg)}.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--accent);margin-bottom:6px}.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.glossary dt{font-family:var(--font-sans);font-weight:700;margin-top:12px}.quiz{margin:48px 0 22px;padding:26px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.quiz__option{display:block;padding:10px 14px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px}.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success)}.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}.quiz__explanation{display:none;font-family:var(--font-sans);font-size:13px;background:var(--sidenote-bg);padding:8px 12px;border-radius:var(--radius-sm)}.quiz.is-graded .quiz__explanation{display:block}.btn{font-family:var(--font-sans);font-weight:600;padding:9px 18px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}.btn--ghost{background:transparent;color:var(--accent)}
+.launchpad{margin:40px 0 20px;padding:24px 28px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius)}.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:#fff;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}.launchpad__hint{display:none;margin:8px 0;padding:12px 14px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:14px}.launchpad__hint.is-visible{display:block}
+.sidenote{margin:20px 0;padding:10px 12px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px}.toc{list-style:none;padding:0}.toc a{display:block;padding:5px 10px;color:var(--text-muted);text-decoration:none;border-left:2px solid transparent}.toc a.is-active{color:var(--accent);border-left-color:var(--accent)}
+.controls{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:50}.control-btn{width:42px;height:42px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;font-family:var(--font-sans)}
+@media print{.navigator,.marginalia,.controls{display:none!important}.app{display:block}.flip-card{height:auto}.flip-card__face{position:static}.flip-card__back{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="navigator"><div style="font-family:var(--font-sans);font-size:13px;padding:8px 0 12px;border-bottom:1px solid var(--border);margin-bottom:12px">⏱ ~15 min · MEDIUM · narrative</div><nav><ul class="toc" id="toc"></ul></nav></aside>
+<main class="canvas" id="canvas">
+<h1>Cầu BĐS: nhiều người cần nhà chưa chắc là cầu mạnh</h1>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted);margin:0 0 18px">Chuỗi Cung–Cầu Bất động sản · Bài 5/6 · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a></p>
+<div class="hook"><span class="hook__label">🎣 The hook</span>
+<p>Sáng 27 Tết, hàng nghìn người xếp hàng trước phòng vé ga lớn. Ai cũng cần về quê. Nhưng khi tàu lăn bánh, nhiều người vẫn ở lại sân ga.</p>
+<p>Vì sao hàng dài mà ghế sang còn trống, ghế phổ thông hết sớm? Và vì sao cảnh này giống hệt nhà đất: đông người cần nhà, giá vẫn cao, giao dịch vẫn thấp? Cầu không đếm bằng hàng người xếp, mà bằng vé trên tay.</p></div>
+<div class="meta-block"><h4>Prerequisites</h4><ul><li>Điểm giao sinh ra giá và khối lượng cùng lúc.</li><li>Điểm chết thanh khoản và cân bằng đa van.</li><li>Khái niệm lãi suất, tín dụng, tồn kho.</li></ul></div>
+<div class="meta-block"><h4>By the end you will be able to…</h4><ul><li>Phân biệt nhu cầu với cầu hiệu lực.</li><li>Giải thích lấn át cầu ở thực.</li><li>Đối chiếu cầu nền tảng với cầu khuếch đại.</li><li>Phát hiện sáu điểm mù khi đo cầu.</li><li>Phân biệt trượt trên đường cầu với dịch chuyển đường cầu.</li></ul></div>
+
+<h2 id="baseline">Nền tảng: vé trên tay, không phải hàng người xếp</h2>
+<p>Phần này đặt viên gạch duy nhất. Mọi tầng cầu sau đây đều gắn lên nó.</p>
+<p>Nhu cầu chỉ thành cầu khi có tiền tự có, vay được và chịu giá. Thiếu một trong ba, hàng người xếp vẫn chưa phải cầu. Câu hỏi đúng không phải có bao nhiêu người muốn nhà.</p>
+<p>Câu hỏi đúng là ai muốn mua, mua để làm gì, mua được bao nhiêu và tiền từ đâu. Bốn câu này là khung đọc của cả ghi chú.</p>
+<p>Móng đã đặt: vé trên tay, không phải hàng người xếp. Câu hỏi tiếp theo là hình dung bốn thành phần mà không cần công thức. Phòng vé ngày Tết sẽ làm việc đó.</p>
+
+<h2 id="bridge">Cây cầu quen: Phòng Vé Ngày Tết</h2>
+<p>Phần này mượn một phòng vé quen thuộc. Bạn sẽ dùng nó để gọi tên mọi tầng cầu khó.</p>
+<p>Gọi đây là <strong>Mô hình Phòng Vé Ngày Tết</strong>. Hàng nghìn người xếp hàng vì ai cũng cần về quê. Nhưng lên được tàu chỉ có người đủ bốn thứ: muốn đi, đủ tiền vé, còn chỗ đúng chuyến và chịu giá ngày cao điểm.</p>
+<p>Người xếp hàng là nhu cầu. Tiền và vé trên tay là cầu hiệu lực. Phe vé ôm nhiều vé bán lại là đầu cơ lấn át. Hạng ghế phổ thông hết sớm còn ghế sang trống là lệch vị trí và phân khúc.</p>
+<div class="concept-flow"><div class="concept-flow__step">01 · Hàng người xếp<br>Nhu cầu</div><div class="concept-flow__arrow">→</div><div class="concept-flow__step">02 · Cửa soát vé<br>Khả năng chi trả</div><div class="concept-flow__arrow">→</div><div class="concept-flow__step">03 · Vé trên tay<br>Cầu hiệu lực</div></div>
+<p>Phòng vé khác nhà đất ở một điểm. Vé có chuyến cố định và giá trần công khai. Nhà đất không có chuyến cuối, người bán có thể đóng cửa phòng vé của mình nhiều năm.</p>
+<div class="premortem"><span class="premortem__label">⚠️ Before we build further…</span>
+<p><span class="premortem__wrong">Hàng xếp càng dài thì cầu càng mạnh, dân số đông thì cầu mua tự khắc cao.</span></p>
+<p>This is wrong because hàng dài đếm mong muốn, còn tàu chỉ chạy bằng vé đã trả tiền.</p>
+<p><strong>What's actually true:</strong> Cầu đo bằng giao dịch có tiền đứng sau. Đông người cần mà thiếu tiền, thiếu vay hoặc chê giá thì cầu hiệu lực vẫn yếu.</p></div>
+
+<h2 id="exposition">Dựng mô hình, từng cụm một</h2>
+<p>Mỗi cụm dưới đây đi qua <strong>State → Illustrate → Probe → Resolve</strong>. Hãy thử trả lời Probe trong đầu trước khi mở đáp án.</p>
+
+<section class="scaffold"><h3 class="scaffold__concept">1 · Từ nhu cầu tới cầu</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Cầu sử dụng</strong> (mua vì cần nơi ở, dựa vào thu nhập và việc làm) khác <strong>cầu đầu tư</strong> (mua như tài sản, tính bằng lợi suất và chi phí vốn) và khác <strong>cầu đầu cơ</strong> (mua vì tin sẽ có người trả cao hơn sau). Ba tầng cùng tồn tại nhưng chất lượng khác nhau.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Công thức bốn thành phần: nhu cầu cộng tiền tự có, cộng khả năng vay, cộng sẵn sàng mua thì thành cầu hiệu lực. Kịch bản minh họa: 100.000 hộ muốn nhà, 40.000 thiếu vốn, 30.000 rớt chuẩn vay, 15.000 chê giá mà chờ. Cầu thực nhỏ hơn nhiều. Hà Nội 2024: giá sơ cấp khoảng 70 triệu đồng/m², hộ hai lao động khoảng 21,4 triệu đồng/tháng, ngưỡng mua từ 45 triệu đồng/tháng trở lên.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Dự án báo 5.000 lượt đăng ký quan tâm. Có nên ghi cầu 5.000 căn?</summary><div class="scaffold__resolve">💡 Không nên. Đăng ký đếm nhu cầu và tò mò. Cầu hiệu lực chỉ đếm người qua được cửa soát vé: đủ vốn, đạt chuẩn vay và chịu giá.</div></details></section>
+<div class="feynman">Muốn nhà là xếp hàng. Mua được nhà là có vé trên tay.</div>
+<div class="checkpoint"><strong>🛑 Pause &amp; reflect.</strong> Hãy giải thích ba tầng cầu bằng ngôn ngữ Phòng Vé: ai cần về quê, ai ôm vé, ai tính hạng ghế? Nếu chưa gọi tên được, đọc lại một lượt.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">2 · Cầu lệch và cầu bị khuếch đại</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Lệch cấu trúc cầu</strong> (tổng đủ lớn nhưng phân bổ sai: sai túi tiền, sai mục đích, sai vị trí, sai thời điểm, sai nguồn vốn) có thể đi kèm <strong>hiệu ứng lấn át</strong> (nhóm vốn khỏe đẩy giá, đuổi nhóm ở thực khỏi thị trường). Đồng thời tách <strong>cầu nền tảng</strong> (từ thu nhập và hộ gia đình, đổi chậm) khỏi <strong>cầu khuếch đại</strong> (từ tín dụng dễ, lãi thấp, đòn bẩy và kỳ vọng, lên nhanh xuống nhanh).</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Nhà đầu tư vốn lớn hơn, vay được nhiều hơn, chịu giá cao hơn, mua nhiều căn một lúc. Giá lên nhanh hơn thu nhập, tiền cọc phình, trả nợ phình, chi trả của người ở teo lại. Tổng giao dịch vẫn mạnh, cơ cấu lệch về đầu tư. Bằng chứng Mỹ đo trên thị trường khác thể chế Việt Nam. Vùng tín dụng rẻ hơn có giá tăng thêm 12,1 điểm phần trăm. Trong đó 40–70% mức tăng giao dịch đến từ đầu cơ, rồi các vùng này sụp sâu hơn. Con số Mỹ không bê nguyên sang được. Giữ lại cơ chế; mức độ trong nước chưa có số liệu bóc tách.</div></div>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Đọc thận trọng</span>Mọi con số Mỹ trong cụm này đến từ thị trường khác thể chế Việt Nam. Dùng chúng để hiểu cơ chế, không dùng để kết luận mức độ trong nước.</div>
+<details class="scaffold__probe"><summary>🤔 Probe: Giao dịch tăng mà người ở thực khó mua hơn. Mâu thuẫn không?</summary><div class="scaffold__resolve">💡 Không mâu thuẫn. Tổng cầu đếm vé bán ra, cơ cấu cầu đếm ai cầm vé. Đầu cơ ôm nhiều vé một lúc thì tổng tăng trong khi toa phổ thông hết chỗ.</div></details></section>
+<div class="feynman">Tàu đông không có nghĩa ai cũng về được quê. Phe vé càng khỏe, người về quê thật càng khó lên tàu.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">3 · Đọc sai cầu và đường cầu dịch chuyển</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div>Sáu điểm mù đo cầu gom thành hai nhóm. Đo sai tử số: dân số tăng suy ra cầu tăng; nhu cầu ở lớn suy ra giao dịch lớn; lượt hỏi mua suy ra cầu. Đọc sai tín hiệu: giao dịch tăng suy ra ở thực tăng; giá tăng suy ra nền tảng mạnh; đếm đầu người thay vì đếm căn hấp thụ.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div><strong>Dịch chuyển đường cầu</strong> (cả đường trượt khi yếu tố ngoài giá đổi) khác <strong>di chuyển trên đường cầu</strong> (giá đổi, trượt dọc đường cũ). Lãi suất và tín dụng làm cầu đổi mạnh ngay cả khi nhu cầu ở đứng yên. Cầu dịch phải khi thu nhập, việc làm, hộ gia đình, tín dụng, kỳ vọng và hạ tầng tốt lên. Cầu dịch trái khi các chiều này đảo ngược.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Lãi giảm, giao dịch tăng, thu nhập và dân số đứng yên. Dịch chuyển hay trượt trên đường cũ?</summary><div class="scaffold__resolve">💡 Đường cầu dịch phải. Nhu cầu ở không đổi mà lượng đổi vì van tiền đã xoay. Đây là cầu khuếch đại, không phải nền tảng mới.</div></details></section>
+<div class="feynman">Tàu chạy nhanh hơn không có nghĩa quê đông người hơn. Có thể chỉ là ga mở thêm cửa soát vé.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">4 · Cầu hành vi và cầu chu kỳ</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Cầu tự khuếch đại</strong> (giá tăng nuôi kỳ vọng tăng tiếp, kéo người mới vào, đẩy giá lên nữa) khiến nhà đất đi ngược hàng hóa thường một đoạn. Vòng này quay nhanh vì <strong>độ trễ bất đối xứng</strong> (cầu đổi trong tuần hoặc tháng, cung đáp trong nhiều năm).</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Giá tăng làm người ta thấy người khác kiếm tiền, sợ bỏ lỡ bùng lên, nhà đầu tư mới vào, cầu tăng, giá lại tăng. Bằng chứng Mỹ đo ở Los Angeles, San Francisco và Boston. Có hàng xóm đầu tư trong 0,1 dặm làm xác suất một hộ cũng đầu tư tăng 8% trong một năm. Mức tăng lên tới 14% trong ba năm. Con số Mỹ không bê nguyên sang được. Kênh lây ở Việt Nam có thể khác: nhóm chat, môi giới, họ hàng. Giữ lại cơ chế; mức độ trong nước chưa được đo. Vòng đầy đủ: thu nhập lên, cầu ở lên, giá lên, kỳ vọng lên, cầu đầu tư lên, tín dụng lên, giá lên nữa. Tới ngưỡng thì chi trả gãy, cầu ở yếu trước, kỳ vọng đảo, cầu đầu tư rơi mạnh.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Giá ngừng tăng hai quý mà giao dịch rơi thẳng đứng. Cầu ở thực rơi nhanh vậy không?</summary><div class="scaffold__resolve">💡 Thường không. Cầu ở gắn với thu nhập nên đổi chậm. Thứ rơi nhanh là cầu khuếch đại: kỳ vọng đảo, đòn bẩy rút, phe vé rời ga.</div></details></section>
+<div class="feynman">Ga đông rồi vắng đột ngột thường không phải vì quê hết người. Mà vì phe vé đã đi hết.</div>
+
+<details class="deep-dive"><summary>🔴 Deep dive: Một người mua, mười căn hấp thụ</summary><p>Đếm đầu người mua và đếm tài sản hấp thụ là hai phép đo khác nhau. Một nhà đầu tư mua 5–10 căn thì một đầu người tạo mười đơn vị hấp thụ. Nhóm đầu cơ nhỏ có thể gánh 40–70% mức tăng giao dịch ở vùng tín dụng rẻ, nhưng đó là số Mỹ. Áp sang Việt Nam phải thận trọng vì thiếu số liệu bóc tách tương đương. Vì vậy hãy hỏi thêm cơ cấu ai mua và mua mấy căn. Tàu đầy vì dân về quê hay vì phe vé ôm toa, hai chuyện khác nhau.</p></details>
+
+<h2 id="application">Ra thực địa: ga Việt Nam 2024–2025</h2>
+<p>Phần này mang phòng vé ra ga thật. Mỗi con số là một cửa soát vé.</p>
+<p>Cửa thứ nhất là chi trả. Giá sơ cấp Hà Nội 2024 khoảng 70 triệu đồng/m², hộ hai lao động khoảng 21,4 triệu đồng/tháng, ngưỡng mua từ 45 triệu đồng/tháng trở lên. Tỷ số giá trên thu nhập cả nước khoảng 23,7 lần so với 14,6 toàn cầu. TP.HCM cần khoảng 34 năm thu nhập. Hàng xếp rất dài, vé trên tay rất ít.</p>
+<p>Cửa thứ hai là cơ cấu hàng. Giá chung cư Hà Nội tăng 40–50%, TP.HCM tăng 20–30% trong 2024. Hơn 70% nguồn mới TP.HCM là cao cấp tới hạng sang. Toa phổ thông ít, toa sang nhiều. Người cần vé phổ thông đứng nhìn tàu chạy.</p>
+<p>Cửa thứ ba là dòng tiền khuếch đại. Tín dụng rẻ và gỡ pháp lý mở van hàng lẫn van cầu cùng lúc. Van tiền mở thì toa đầu cơ đầy trước vì nhóm này qua cửa soát nhanh nhất. Đây là lấn át bằng tốc độ, không chỉ bằng giá.</p>
+<div class="bar-chart"><div class="bar-chart__title">Độ vênh nhu cầu – cầu · 2024–2025</div>
+<div class="bar-row"><div>Thu nhập hộ HN</div><div class="bar-track"><div class="bar-fill" style="width:30%"></div></div><div>~21,4 tr/th</div></div>
+<div class="bar-row"><div>Ngưỡng mua tối thiểu</div><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div><div>45+ tr/th</div></div>
+<div class="bar-row"><div>Giá/thu nhập VN–TG</div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><div>23,7–14,6</div></div>
+<div class="bar-row"><div>Năm mua nhà HCM</div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><div>~34 năm</div></div>
+<p class="bar-chart__caption">Nguồn: VARS, Numbeo, Bộ Xây dựng 2024–2025. Thang minh họa.</p></div>
+<p>Bài học rút ra rất gọn. Nhu cầu ở rất lớn nhưng cửa soát hẹp: giá vượt thu nhập nhiều lần, nguồn mới lệch sang cao, vé phổ thông hiếm. Giao dịch vẫn chạy vì toa đầu cơ đầy nhanh. Đó là cầu mạnh tổng lượng đi cùng cầu yếu cơ cấu.</p>
+<div class="flip-card" tabindex="0"><div class="flip-card__inner"><div class="flip-card__face flip-card__front"><span class="flip-card__label">Active recall — Question</span>Vì sao giao dịch tăng mà người mua ở thực vẫn khó mua hơn?</div><div class="flip-card__face flip-card__back"><span class="flip-card__label">Answer</span>Vì tổng cầu đếm vé bán ra, cơ cấu cầu đếm ai cầm vé. Đầu cơ ôm nhiều vé một lúc thì tổng tăng trong khi toa phổ thông hết chỗ.</div></div></div>
+<p>Mô hình đã đi qua thực địa. Việc còn lại là vạch biên: đâu là hiểu lầm hay gặp, đâu là biên mô hình không bao phủ.</p>
+
+<h2 id="boundary">Biên của mô hình</h2>
+<p>Phần này chỉ hai vấp phổ biến. Đọc kỹ, bạn tránh được đa số lỗi đếm cầu.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Common misconception</span>“Cầu đầu tư là cầu giả, chỉ cầu ở thực mới tính.” Sai vì tiền thật xuống là cầu thật, vẫn khớp lệnh và đẩy giá. Điều cần tách là nguồn tài trợ: thu nhập thì bền, tín dụng và kỳ vọng thì mong manh khi giá ngừng tăng.</div>
+<p>Vấp thứ hai là tưởng giá tăng luôn chứng minh nền tảng mạnh. Giá tăng vì cung kém co giãn trong khi cầu hiệu lực yếu vẫn xảy ra: ít giao dịch nhưng mỗi giao dịch chốt cao vì hết hàng phù hợp.</p>
+<div class="callout callout--danger"><span class="callout__label">🚫 Edge case</span>Giá tăng vì hết hàng phù hợp trong khi phòng vé vắng. Bảng ga hiện giá cao nhưng không đọc khối lượng và cơ cấu người mua thì nhầm toa sang hết chỗ với cả tàu đông.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Predict</span>Lần tới thấy tin lượt quan tâm tăng gấp đôi, bạn kiểm tra số nào trước: lượt xem hay tỷ lệ qua cửa soát vé gồm vốn, chuẩn vay và chịu giá? Viết câu trả lời một câu.</div>
+
+<h2 id="connections">Mắt lưới bên cạnh</h2>
+<p>Ghi chú này là một mắt lưới. Ba mắt bên cạnh giúp bạn đi tiếp mà không lạc.</p>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">Trong chuỗi này: vé trên tay thành khối lượng khớp ở <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">Bài 2</a> · món bình dân thiếu ở <a href="2026-09-09-cung-bds-thiếu-nhà-hay-cung-bị-lệch.html">Bài 4</a> · cầu đầu tư đổi phe ở <a href="2026-09-09-cung-cau-bds-ai-đứng-ở-hai-phía.html">Bài 3</a>.</p>
+<p><strong>Điểm giao.</strong> Vé trên tay ở đây chính là khối lượng khớp ở ghi chú đầu. <strong>Đa van.</strong> Tín dụng, kỳ vọng và thời gian chờ chính là ba cửa soát vé. <strong>Dòng tiền.</strong> Lợi suất cho thuê chia giá mua cho biết vé bán đúng giá chuyến đi hay chỉ bán kỳ vọng chuyến sau.</p>
+
+<h2 id="synthesis">Bức tranh chung</h2>
+<p>Phần này thu toàn bộ ghi chú về sân ga 27 Tết trong Hook. Cùng một cơ chế giải thích cả ga đông lẫn tàu vắng.</p>
+<p>Đông người cần nhà chưa chắc cầu mạnh. Cầu đo bằng vé trên tay: nhu cầu cộng tiền tự có, cộng vay được, cộng chịu giá. Vé lệch toa khi đầu cơ vốn khỏe lấn chỗ người ở thực. Vé phình khi tín dụng và kỳ vọng bơm vào, xẹp nhanh khi giá ngừng tăng. Bảng ga đọc sai khi đếm hàng người thay vì đếm vé.</p>
+<p>Vì vậy khi nghe nhu cầu rất lớn, đừng dừng ở đó. Hãy hỏi vé của ai, toa nào, tiền từ đâu và vé có còn hiệu lực khi tàu ngừng tăng tốc. Đọc được bốn câu này, bạn biết ga đông vì dân về quê hay vì phe vé đang ôm toa.</p>
+<blockquote><strong>Nếu chỉ nhớ một điều:</strong> Hàng người xếp đếm mong muốn; chỉ vé trên tay mới đếm thành cầu — và vé phải còn hiệu lực khi giá ngừng tăng.</blockquote>
+<div class="launchpad"><span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+<h3>Nghịch lý thành phố 100.000 hộ</h3>
+<p>Một thành phố có 100.000 hộ muốn nhà, giá tăng 15%, giao dịch tăng 20%. Báo chí kết luận cầu rất mạnh. Bạn chỉ được xin thêm ba con số để kiểm tra. Bạn xin số nào, và kết quả nào thì kết luận đây là cầu khuếch đại đang lấn át?</p>
+<button class="launchpad__reveal" id="hintBtn" type="button">Reveal hint 1</button>
+<div class="launchpad__hint" data-hint="1"><strong>Hint 1 — reframe.</strong> Ga đông, tàu chạy nhanh, nhưng ai đang ngồi trên tàu? Áp câu hỏi đó sang thành phố.</div>
+<div class="launchpad__hint" data-hint="2"><strong>Hint 2 — key concept.</strong> Dùng cặp nền tảng vs khuếch đại và hiệu ứng lấn át. Ba số cần hỏi về cơ cấu người mua, nguồn tài trợ và chi trả.</div>
+<div class="launchpad__hint" data-hint="3"><strong>Hint 3 — setup.</strong> Xin tỷ trọng đầu cơ và số căn mỗi nhà đầu tư, tỷ trọng vay trên giá trị, và tỷ số giá trên thu nhập. Đầu cơ cao, vay cao, giá xa thu nhập mà tổng vẫn tăng: đó là khuếch đại lấn át.</div></div>
+
+<h2 id="glossary">Glossary</h2>
+<p>Bảng từ vựng đi kèm cầu nối Phòng Vé. Đọc cột cầu nối để thấy trực giác sau thuật ngữ.</p>
+<dl class="glossary">
+<dt>Cầu sử dụng</dt><dd>Mua vì cần nơi ở, dựa vào thu nhập. <i>Trong Phòng Vé: người cần về quê.</i></dd>
+<dt>Cầu đầu tư</dt><dd>Mua như tài sản, tính bằng lợi suất. <i>Trong Phòng Vé: người tính giá từng hạng ghế.</i></dd>
+<dt>Cầu đầu cơ</dt><dd>Mua vì tin sẽ có người trả cao hơn sau. <i>Trong Phòng Vé: phe vé ôm nhiều vé.</i></dd>
+<dt>Cầu hiệu lực</dt><dd>Nhu cầu có tiền, vay được và chịu giá. <i>Trong Phòng Vé: vé trên tay.</i></dd>
+<dt>Lệch cấu trúc cầu</dt><dd>Tổng đủ lớn nhưng phân bổ sai chỗ. <i>Trong Phòng Vé: toa sang trống, toa phổ thông hết.</i></dd>
+<dt>Hiệu ứng lấn át</dt><dd>Nhóm vốn khỏe đẩy giá, đuổi nhóm ở thực. <i>Trong Phòng Vé: phe vé ôm hết vé phổ thông.</i></dd>
+<dt>Cầu nền tảng</dt><dd>Từ thu nhập và hộ gia đình, đổi chậm. <i>Trong Phòng Vé: lượng người quê cần về.</i></dd>
+<dt>Cầu khuếch đại</dt><dd>Từ tín dụng dễ và kỳ vọng, lên nhanh xuống nhanh. <i>Trong Phòng Vé: vé chợ đen lúc cao điểm.</i></dd>
+<dt>Dịch chuyển đường cầu</dt><dd>Cả đường trượt khi yếu tố ngoài giá đổi. <i>Trong Phòng Vé: ga mở thêm cửa soát vé.</i></dd>
+<dt>Cầu tự khuếch đại</dt><dd>Giá tăng nuôi kỳ vọng, kéo người mới vào. <i>Trong Phòng Vé: đám đông chen nhau vì tàu sắp chạy.</i></dd>
+</dl>
+
+<section class="quiz" id="quiz"><h2>Knowledge check</h2>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">3 câu. Chọn rồi bấm Chấm điểm.</p>
+<fieldset data-answer="1"><legend>1. Dự án báo 5.000 lượt quan tâm, giá gấp nhiều lần thu nhập, vay siết. Đọc nào đúng?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Cầu là 5.000 căn</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Đó là nhu cầu; cầu hiệu lực cần qua cửa vốn, vay và chịu giá</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Dân đông nên cầu tự mạnh</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Giá tăng chứng tỏ nền tảng mạnh</label>
+<div class="quiz__explanation"><strong>Why:</strong> Lượt quan tâm đếm hàng người xếp. Vé trên tay cần vốn, chuẩn vay và chịu giá.</div></fieldset>
+<fieldset data-answer="1"><legend>2. Giao dịch tăng 20% nhưng người ở thực khó mua hơn. Vì sao?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Số liệu mâu thuẫn</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Tổng đếm vé bán ra, cơ cấu đếm ai cầm vé; đầu cơ lấn át</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Cầu đầu tư là cầu giả</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Cung đã đáp ứng đủ</label>
+<div class="quiz__explanation"><strong>Why:</strong> Một đầu người ôm nhiều vé thì tổng tăng trong khi toa phổ thông hết chỗ. Tiền thật vẫn là cầu thật.</div></fieldset>
+<fieldset data-answer="1"><legend>3. Lãi giảm, giao dịch tăng, thu nhập và dân số đứng yên. Đây là gì?</legend>
+<label class="quiz__option"><input type="radio" name="q3" value="0"> Cầu nền tảng mới</label>
+<label class="quiz__option"><input type="radio" name="q3" value="1"> Đường cầu dịch phải do van tiền; cầu khuếch đại</label>
+<label class="quiz__option"><input type="radio" name="q3" value="2"> Trượt trên đường cầu cũ</label>
+<label class="quiz__option"><input type="radio" name="q3" value="3"> Nhu cầu ở tăng mạnh</label>
+<div class="quiz__explanation"><strong>Why:</strong> Nhu cầu ở đứng yên mà lượng đổi vì yếu tố ngoài giá đã xoay. Đó là khuếch đại, không phải nền tảng mới.</div></fieldset>
+<div><button class="btn" id="quizCheck" type="button">Chấm điểm</button> <button class="btn btn--ghost" id="quizReset" type="button">Reset</button><p id="quizScore" style="font-family:var(--font-sans)"></p></div></section>
+
+<h2 id="sources">Sources &amp; further reading</h2>
+<ul style="font-size:14px;font-family:var(--font-sans)">
+<li>Mian &amp; Sufi (2022), Credit Supply and Housing Speculation, RFS. <a href="https://doi.org/10.1093/rfs/hhab034" target="_blank" rel="noopener">DOI</a> · NBER. <a href="https://www.nber.org/papers/w24823" target="_blank" rel="noopener">w24823</a></li>
+<li>Bayer, Mangum &amp; Roberts (2021), Speculative Fever, AER. <a href="https://doi.org/10.1257/aer.20171611" target="_blank" rel="noopener">DOI</a></li>
+<li>VARS 02/2025: ngưỡng mua HN từ 45tr/tháng. <a href="https://diaocnet.vn/vars---nguoi-thu-nhap-toi-thieu-45-trieu-dong-thang-moi-co-the-du-tien-mua-chung-cu-ha-noi-5620.htm" target="_blank" rel="noopener">Địa ốc Net</a></li>
+<li>Numbeo Q1/2025 + Bộ Xây dựng 9T/2025. <a href="https://vietnambiz.vn/mat-binh-quan-34-nam-thu-nhap-de-mua-nha-tai-tp-hcm-2025422152229954.htm" target="_blank" rel="noopener">VietnamBiz</a> · <a href="https://thanhnien.vn/gia-nha-tren-thu-nhap-binh-quan-ho-gia-dinh-cao-gap-doi-the-gioi-185250925113926279.htm" target="_blank" rel="noopener">Thanh Niên</a></li>
+<li>Bộ Xây dựng 2024: HN +40–50%, HCM +20–30%. <a href="https://diaocnet.vn/bo-xay-dung--gia-chung-cu-o-ha-noi-va-tp-hcm-tang-30-50--trong-nam-2024-5564.htm" target="_blank" rel="noopener">Địa ốc Net</a></li>
+</ul>
+<div style="text-align:center;color:var(--text-muted);font-family:var(--font-sans);font-size:13px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px">Chuỗi Cung–Cầu Bất động sản · Bài 5/6<br><a href="2026-09-09-cung-bds-thiếu-nhà-hay-cung-bị-lệch.html">← Bài 4: Thiếu nhà hay lệch cung</a> · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a> · <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">Bài 6: Tự cân bằng →</a><br><span>Nội dung chỉ mang tính tham khảo, không phải khuyến nghị đầu tư. Ngày cập nhật: 2026-09-09.</span></div>
+</main>
+<aside class="marginalia"><div class="sidenote"><strong>Sidenote · Mỹ 2003–06</strong>Số Mỹ: tiền mới vào qua đầu cơ trước, giá và xây bùng theo, rồi sụp sâu hơn ở chính các vùng đó. Giữ cơ chế, bỏ con số; mức độ trong nước chưa được đo.</div>
+<div class="sidenote"><strong>Sidenote · Lây lan 8–14%</strong>Số Mỹ: có hàng xóm đầu tư trong 0,1 dặm làm xác suất một hộ cũng đầu tư tăng 8% sau một năm. Con số không bê nguyên sang được; giữ lại cơ chế lây lan.</div>
+<div class="sidenote"><strong>Cách đọc nhanh</strong>Mỗi lần thấy lượt quan tâm: hỏi vốn, chuẩn vay và chịu giá. Ba cửa này mới biến hàng người xếp thành vé.</div></aside>
+</div>
+<div class="controls"><button class="control-btn" id="topBtn" title="Top">↑</button><button class="control-btn" id="focusBtn" title="Focus">◐</button><button class="control-btn" id="themeBtn" title="Theme">◑</button></div>
+<script>
+document.querySelectorAll('.flip-card').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('is-flipped')));
+document.getElementById('themeBtn').addEventListener('click',()=>{const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark')});
+document.getElementById('focusBtn').addEventListener('click',()=>document.body.classList.toggle('focus-mode'));
+document.getElementById('topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+(function(){const t=document.getElementById('toc');document.querySelectorAll('#canvas h2').forEach(h=>{if(!h.id)return;const li=document.createElement('li');const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);t.appendChild(li)})})();
+(function(){const q=document.getElementById('quiz');if(!q)return;const sc=document.getElementById('quizScore');document.getElementById('quizCheck').addEventListener('click',()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{t++;const a=parseInt(fs.dataset.answer,10);const s=fs.querySelector('input:checked');fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const co=fs.querySelector('input[value="'+a+'"]');if(co)co.closest('.quiz__option').classList.add('correct-answer');if(s&&parseInt(s.value,10)!==a)s.closest('.quiz__option').classList.add('incorrect-answer');if(s&&parseInt(s.value,10)===a)c++});q.classList.add('is-graded');sc.textContent=c+' / '+t+' đúng.'});document.getElementById('quizReset').addEventListener('click',()=>{q.querySelectorAll('input').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');sc.textContent=''})})();
+(function(){let n=0;const b=document.getElementById('hintBtn');if(!b)return;b.addEventListener('click',()=>{n++;const h=document.querySelector('.launchpad__hint[data-hint="'+n+'"]');if(h)h.classList.add('is-visible');b.textContent=n>=3?'Hết gợi ý':'Reveal hint '+(n+1);if(n>=3)b.disabled=true})})();
+</script>
+</body>
+</html>

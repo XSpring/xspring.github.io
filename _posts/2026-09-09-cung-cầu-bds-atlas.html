@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Atlas chuỗi Cung–Cầu Bất động sản: bản đồ 6 bài viết</title>
+<meta name="description" content="Atlas hệ thống chuỗi 6 ghi chú cung-cầu bất động sản: tóm tắt, khái niệm xuyên chuỗi, số liệu then chốt, lộ trình đọc và liên kết nhanh.">
+<meta name="artifact-length" content="MEDIUM">
+<meta name="iterator-cycles" content="0">
+<meta name="iterator-stopped-by" content="skipped">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}
+:root{--font-serif:'Merriweather',Georgia,serif;--font-sans:'Inter',-apple-system,sans-serif;--bg:#FDFBF7;--bg-elevated:#fff;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-soft:#FEEBC8;--border:#E4DFD5;--sidenote-bg:#EDF2F7;--radius:10px;--radius-sm:6px;--shadow-sm:0 1px 2px rgba(0,0,0,.05);--shadow:0 4px 12px rgba(0,0,0,.08);--measure:72ch;--line:1.75}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;--accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line)}
+.wrap{max-width:var(--measure);margin:0 auto;padding:32px 24px 90px}
+.wrap h1{font-family:var(--font-sans);font-size:2.1rem;line-height:1.25;color:var(--text-strong);margin:8px 0 12px}
+.wrap h2{font-family:var(--font-sans);font-size:1.45rem;color:var(--text-strong);margin:48px 0 12px;padding-top:20px;border-top:1px solid var(--border)}
+.wrap h2:first-of-type{border-top:none;padding-top:0}
+.wrap p{margin:0 0 14px}.wrap a{color:var(--accent)}
+.kicker{font-family:var(--font-sans);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent)}
+.tldr{margin:18px 0 26px;padding:14px 20px;background:var(--accent2-soft);border-left:4px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:15px;color:var(--text-strong)}
+.path{display:grid;grid-template-columns:1fr;gap:0;margin:24px 0}
+.step{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);margin:6px 0}
+.step:hover{box-shadow:var(--shadow)}
+.step__num{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--accent);color:#fff;font-family:var(--font-sans);font-weight:700;display:flex;align-items:center;justify-content:center}
+.step__body{font-family:var(--font-sans);font-size:15px}
+.step__body strong a{color:var(--text-strong);text-decoration:none}
+.step__body strong a:hover{color:var(--accent)}
+.step__meta{color:var(--text-muted);font-size:13px}
+.card{margin:22px 0;padding:20px 24px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.card h3{font-family:var(--font-sans);font-size:1.1rem;margin:0 0 8px;color:var(--text-strong)}
+.card h3 a{color:var(--text-strong);text-decoration:none}
+.card h3 a:hover{color:var(--accent)}
+.card p, .card li{font-family:var(--font-sans);font-size:15px}
+.card ul{margin:8px 0;padding-left:20px}
+.tag{display:inline-block;padding:2px 10px;border-radius:12px;background:var(--sidenote-bg);color:var(--text-muted);font-family:var(--font-sans);font-size:12px;margin:2px 4px 2px 0}
+table{width:100%;border-collapse:collapse;font-family:var(--font-sans);font-size:14px;margin:18px 0}
+th,td{border:1px solid var(--border);padding:10px 12px;text-align:left;vertical-align:top}
+th{background:var(--sidenote-bg);color:var(--text-strong)}
+.callout{margin:22px 0;padding:14px 18px;border-radius:var(--radius);border-left:4px solid var(--accent2);background:var(--accent2-soft);font-family:var(--font-sans);font-size:15px}
+.controls{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:50}
+.control-btn{width:42px;height:42px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;font-family:var(--font-sans)}
+@media print{.controls{display:none!important}body{font-size:12pt}}
+.quiz{margin:40px 0 20px;padding:26px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}
+.quiz h2{border-top:none;padding-top:0;margin-top:0}
+.quiz fieldset{border:none;padding:0;margin:0 0 24px}
+.quiz legend{font-family:var(--font-sans);font-weight:600;color:var(--text-strong);margin-bottom:10px;font-size:16px}
+.quiz__tag{display:inline-block;padding:1px 9px;border-radius:10px;background:var(--sidenote-bg);color:var(--accent-strong);font-family:var(--font-sans);font-size:11px;font-weight:700;margin-bottom:6px}
+.quiz__option{display:block;padding:10px 14px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px}
+.quiz__option input{position:absolute;opacity:0}
+.quiz__option.correct-answer{background:#C6F6D5;border-color:#38A169}
+.quiz__option.incorrect-answer{background:#FED7D7;border-color:#C53030}
+html[data-theme="dark"] .quiz__option.correct-answer{background:#22543D}
+html[data-theme="dark"] .quiz__option.incorrect-answer{background:#63171B}
+.quiz__explanation{display:none;font-family:var(--font-sans);font-size:13px;background:var(--sidenote-bg);padding:8px 12px;border-radius:var(--radius-sm);margin-top:6px}
+.quiz.is-graded .quiz__explanation{display:block}
+.btn{font-family:var(--font-sans);font-weight:600;padding:9px 18px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;font-size:14px}
+.btn--ghost{background:transparent;color:var(--accent)}
+#quizScore{font-family:var(--font-sans);font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap" id="canvas">
+<p class="kicker">Atlas chuỗi · 6 ghi chú · ~90 phút đọc hết</p>
+<h1>Cung–Cầu Bất động sản: bản đồ toàn chuỗi</h1>
+<p>Chuỗi này trả lời một câu hỏi duy nhất bằng sáu lát cắt: <strong>thị trường nhà đất vận hành thế nào, và đọc nó bằng biến số nào cho đúng?</strong> Mỗi bài là một ghi chú học tập độc lập, nhưng đọc theo thứ tự 1 → 6 thì các khái niệm khóa vào nhau: thanh khoản mở màn, điểm giao đặt nền, actor–cung–cầu mổ chi tiết, tự cân bằng đóng nắp.</p>
+<div class="tldr"><strong>Đọc 60 giây.</strong> Giá không có khối lượng đi kèm chỉ là lời đề nghị. Cầu đo bằng vé trên tay, không phải hàng người xếp. Cung chỉ giải bài toán nhà ở khi đúng giá, đúng nơi, đúng loại, đúng thời điểm. Không ai điều khiển tuyệt đối thị trường; nó tự cân bằng qua nhiều van và điểm dừng chưa chắc đã tốt.</div>
+
+<h2>Bản đồ đọc: 6 điểm dừng</h2>
+<p>Bấm vào bất kỳ điểm nào để nhảy tới bài. Thứ tự khuyên đọc là 1 → 6.</p>
+<div class="path">
+<div class="step"><div class="step__num">1</div><div class="step__body"><strong><a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">Vì sao càng giảm giá càng mất thanh khoản?</a></strong><br>Nghịch lý mở màn: cầu kỳ vọng, đòn bẩy ngược, neo giá. Chợ Chiều.<br><span class="step__meta">Luận điểm: giá rẻ không tạo thanh khoản khi niềm tin giá ngày mai đã vỡ.</span></div></div>
+<div class="step"><div class="step__num">2</div><div class="step__body"><strong><a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">Khi cung và cầu gặp nhau: giá và khối lượng</a></strong><br>Nền tảng: điểm giao sinh hai đầu ra, điểm chết thanh khoản, phân kỳ giá–khối lượng. Chợ Phiên.<br><span class="step__meta">Luận điểm: giá không có khối lượng đi kèm chỉ là lời đề nghị.</span></div></div>
+<div class="step"><div class="step__num">3</div><div class="step__body"><strong><a href="2026-09-09-cung-cau-bds-ai-đứng-ở-hai-phía.html">Ai thực sự đứng ở hai phía thị trường?</a></strong><br>Bản đồ actor: cầu–cung hai nhóm, vị trí di động, NHTW, sơ đồ bốn ô đầy đủ. Trận Bóng Đổi Cánh.<br><span class="step__meta">Luận điểm: gắn nhãn từng hành động, không gắn nhãn con người.</span></div></div>
+<div class="step"><div class="step__num">4</div><div class="step__body"><strong><a href="2026-09-09-cung-bds-thiếu-nhà-hay-cung-bị-lệch.html">Thiếu nhà hay cung đang bị lệch?</a></strong><br>Phía cung: chuỗi 8 khâu, 5 lớp cung, lấn át cấu trúc, chu kỳ trễ pha. Bếp Quán Cơm.<br><span class="step__meta">Luận điểm: cung chỉ giải bài toán nhà ở khi đúng giá, đúng nơi, đúng loại, đúng thời điểm.</span></div></div>
+<div class="step"><div class="step__num">5</div><div class="step__body"><strong><a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">Nhiều người cần nhà chưa chắc là cầu mạnh</a></strong><br>Phía cầu: cầu hiệu lực, lệch và lấn át, điểm mù đo cầu, cầu khuếch đại. Phòng Vé Ngày Tết.<br><span class="step__meta">Luận điểm: hàng người xếp đếm mong muốn; vé trên tay mới đếm thành cầu.</span></div></div>
+<div class="step"><div class="step__num">6</div><div class="step__body"><strong><a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">Không ai điều khiển tuyệt đối: thị trường tự cân bằng</a></strong><br>Tổng hợp: giới hạn từng chủ thể, 10 van, cân bằng không qua giá, cân bằng mới, cân bằng ≠ tốt. Hồ Nước Nhiều Van.<br><span class="step__meta">Luận điểm: bảng giá đứng yên thì hỏi các van còn lại đang xoay hướng nào.</span></div></div>
+</div>
+
+<h2>Các bài khóa vào nhau thế nào</h2>
+<p>Bốn mối nối đọc nhanh trước khi đi sâu. Mỗi mối nối là một cặp bài viết về cùng một cơ chế từ hai phía.</p>
+<table>
+<tr><th>Mối nối</th><th>Cặp bài</th><th>Ý khóa</th></tr>
+<tr><td>Thanh khoản ↔ Điểm giao</td><td><a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">Bài 1</a> ↔ <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">Bài 2</a></td><td>Điểm chết thanh khoản của Bài 2 chính là vòng xoáy Bài 1 mô tả: giao dịch rơi trước, giá rơi sau.</td></tr>
+<tr><td>Cầu hiệu lực ↔ Actor</td><td><a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">Bài 5</a> ↔ <a href="2026-09-09-cung-cau-bds-ai-đứng-ở-hai-phía.html">Bài 3</a></td><td>Vé trên tay (Bài 5) chính là suất vào sân; vị trí di động (Bài 3) cho biết ai đang cầm vé phe nào.</td></tr>
+<tr><td>Cung lệch ↔ Tự cân bằng</td><td><a href="2026-09-09-cung-bds-thiếu-nhà-hay-cung-bị-lệch.html">Bài 4</a> ↔ <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">Bài 6</a></td><td>Pháp lý, tiến độ xây và kỳ vọng người bán là ba van cung trong mười van của Bài 6.</td></tr>
+<tr><td>Kỳ vọng ↔ Mọi bài</td><td><a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">1</a> · <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">2</a> · <a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">5</a> · <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">6</a></td><td>Kỳ vọng là sợi chỉ đỏ: cầu kỳ vọng, điểm giao kỳ vọng, cầu khuếch đại, van kỳ vọng.</td></tr>
+</table>
+
+<h2>Khái niệm xuyên chuỗi</h2>
+<p>Tra cứu nhanh: một thuật ngữ xuất hiện ở những bài nào, với tên gọi nào.</p>
+<table>
+<tr><th>Khái niệm</th><th>Các bài</th><th>Ghi chú tên gọi</th></tr>
+<tr><td>Giá khớp vs giá rao; khối lượng xác nhận giá</td><td><a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">2</a> · <a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">1</a></td><td>Bài 1 gọi là “giá rẻ vẫn ế”; Bài 2 đặt tên điểm chết thanh khoản.</td></tr>
+<tr><td>Sợ lỗ, neo giá, rút hàng</td><td><a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">1</a> · <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">2</a> · <a href="2026-09-09-cung-bds-thiếu-nhà-hay-cung-bị-lệch.html">4</a> · <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">6</a></td><td>Bài 1 gọi “hiệu ứng xử lý”; các bài sau gọi sợ lỗ. Cùng một cơ chế.</td></tr>
+<tr><td>Cầu đầu tư / đầu cơ / kỳ vọng / FOMO</td><td><a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">1</a> · <a href="2026-09-09-cung-cau-bds-ai-đứng-ở-hai-phía.html">3</a> · <a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">5</a></td><td>Bài 5 phân tầng đầy đủ nhất: sử dụng – đầu tư – đầu cơ.</td></tr>
+<tr><td>Tín dụng, lãi suất, đòn bẩy, LTV</td><td><a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">1</a> · <a href="2026-09-09-cung-cau-bds-ai-đứng-ở-hai-phía.html">3</a> · <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">6</a></td><td>Bài 1 tính đòn bẩy ngược; Bài 3–6 đặt vào van tiền và tia vốn hóa.</td></tr>
+<tr><td>Cung lệch, lấn át, pháp lý</td><td><a href="2026-09-09-cung-bds-thiếu-nhà-hay-cung-bị-lệch.html">4</a> · <a href="2026-09-09-cung-cau-bds-ai-đứng-ở-hai-phía.html">3</a> · <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">6</a></td><td>Bài 4 là bản đầy đủ: chuỗi 8 khâu, 5 lớp cung, hiệu ứng lấn át.</td></tr>
+<tr><td>Cân bằng đa van / cân bằng mới</td><td><a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">6</a></td><td>Tổng hợp toàn chuỗi; đọc sau cùng.</td></tr>
+</table>
+
+<h2>Số liệu then chốt và lưu ý phạm vi</h2>
+<p>Bốn con số dùng nhiều nhất chuỗi, kèm phạm vi để không đọc nhầm. Chi tiết nguồn nằm trong từng bài.</p>
+<table>
+<tr><th>Con số</th><th>Phạm vi đúng</th></tr>
+<tr><td>Hấp thụ 2023 ~33%; 2024 ~68–72%</td><td>VARS đo trên nguồn cung sơ cấp chào bán mới, không phải toàn bộ giao dịch thị trường (Bộ Xây dựng đếm cả đất nền thứ cấp nên số lớn hơn nhiều).</td></tr>
+<tr><td>23,5 năm vs 34 năm thu nhập để mua nhà</td><td>23,5 năm là căn tầm trung giá 3 tỷ (Batdongsan.com.vn, 2023); 34 năm là chung cư TP.HCM giá bình quân thị trường (Numbeo, Q1/2025). Khác năm, khác mẫu, không thay thế nhau.</td></tr>
+<tr><td>Hơn 75% giao dịch từ mua căn thứ hai trở lên</td><td>VARS/DXS 2025, thị trường sơ cấp. Không đồng nghĩa 75% người dân đầu cơ.</td></tr>
+<tr><td>Lợi suất cho thuê HN ~3,7%, TP.HCM ~2,2–3,6%</td><td>Batdongsan.com.vn 2024–2025, bình quân thị trường; từng dự án chênh lệch lớn.</td></tr>
+</table>
+
+<h2>Chuẩn thận trọng chung của chuỗi</h2>
+<div class="callout">Mọi con số rút từ nghiên cứu ngoại (Boston, Hong Kong, Mỹ) trong chuỗi chỉ dùng để hiểu <strong>cơ chế</strong>, không dùng để kết luận <strong>mức độ</strong> ở Việt Nam. Số trong nước thiếu tới đâu, các bài ghi mở tới đó. Danh sách “van”, “lớp cung”, “cửa soát vé” là khung tổng hợp của tác giả dàn ý, không phải trích dẫn học thuật.</div>
+
+<h2>Lộ trình đọc theo nhu cầu</h2>
+<div class="card"><h3>Đường ngắn (~35 phút): nghịch lý → nền → tổng hợp</h3>
+<p><a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">Bài 1</a> → <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">Bài 2</a> → <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">Bài 6</a>. Đủ để trả lời mọi câu hỏi “giá thế này thì thị trường khỏe hay yếu”.</p></div>
+<div class="card"><h3>Đường đầy đủ (~90 phút): cả chuỗi 1 → 6</h3>
+<p>Đi hết bản đồ actor (Bài 3), phía cung (Bài 4) và phía cầu (Bài 5) ở giữa. Mỗi bài có quiz 3 câu để tự kiểm tra. Atlas này có quiz tổng hợp 6 câu ở cuối — mỗi bài một câu.</p></div>
+<div class="card"><h3>Đường theo vai trò</h3>
+<ul>
+<li><strong>Môi giới:</strong> Bài 1 (tín hiệu đóng băng) → Bài 2 (đọc giá–khối lượng) → Bài 5 (ai là cầu thật).</li>
+<li><strong>Nhà đầu tư:</strong> Bài 1 (đòn bẩy ngược) → Bài 3 (bản đồ actor, bốn ô) → Bài 5 (khuếch đại) → Bài 6 (cân bằng xấu).</li>
+<li><strong>Người mua ở thực:</strong> Bài 4 (cung nào dành cho mình) → Bài 5 (vé trên tay) → Bài 2 (giá nào đáng tin).</li>
+</ul></div>
+
+<section class="quiz" id="quiz">
+<h2>Quiz tổng hợp: 6 câu cho cả chuỗi</h2>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">Mỗi bài một câu. Chọn đáp án rồi bấm Chấm điểm. Đáp án và giải thích hiện sau khi chấm.</p>
+<fieldset data-answer="1"><div class="quiz__tag">Bài 1 · Thanh khoản</div><legend>1. Căn 10 tỷ, cho thuê 20 triệu/tháng (yield 2,4%), lãi vay 10–12%. Vì sao năm 2021 người ta vẫn xếp hàng mua?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Vì tiền thuê 20 triệu đủ trả lãi vay.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Vì họ mua chênh lệch giá kỳ vọng 13–15 tỷ; tiền thuê chỉ bù chi phí chờ.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Vì ngân hàng ép khách phải mua.</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Vì nhà lúc đó rẻ hơn giá trị thực.</label>
+<div class="quiz__explanation"><strong>Giải thích:</strong> yield 2,4% thua xa lãi vay — động cơ là chênh lệch kỳ vọng, không phải dòng tiền thuê. Đáp án A nhầm tiền thuê với khả năng trả nợ.</div></fieldset>
+<fieldset data-answer="2"><div class="quiz__tag">Bài 2 · Điểm giao</div><legend>2. Tòa rao 100 căn giá 3,5 tỷ, cả quý khớp 3 căn ở 3,1 tỷ. Đâu là đọc đúng?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Giá thị trường là 3,5 tỷ vì đó là giá đa số chào.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Thị trường đang nóng vì giá rao cao.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Giá được xác nhận là 3,1 tỷ nhưng khối lượng mỏng, cần thêm dữ liệu.</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Không thể nói gì nếu chưa biết lãi suất.</label>
+<div class="quiz__explanation"><strong>Giải thích:</strong> chỉ giá khớp mới được xác nhận, mà 3 giao dịch là mỏng. Giá rao 3,5 tỷ chỉ là kỳ vọng của bên bán.</div></fieldset>
+<fieldset data-answer="0"><div class="quiz__tag">Bài 3 · Actor</div><legend>3. Một nhà đầu tư vừa mua 3 căn, vừa rao bán 2 căn, vừa cho thuê 5 căn. Anh ta ở phe nào?</legend>
+<label class="quiz__option"><input type="radio" name="q3" value="0"> Ở cả ba vị trí: 3 đơn vị cầu đã khớp, 2 đơn vị cung bán, 5 đơn vị cung thuê.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="1"> Đứng hẳn phe cầu vì đang gom hàng.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="2"> Đứng hẳn phe cung vì đang rao bán.</label>
+<label class="quiz__option"><input type="radio" name="q3" value="3"> Không xác định được vì thiếu giá mua.</label>
+<div class="quiz__explanation"><strong>Giải thích:</strong> nhãn gắn theo hành động, không theo con người. Mua là cầu đã khớp, rao là cung bán, cho thuê là cung thuê.</div></fieldset>
+<fieldset data-answer="1"><div class="quiz__tag">Bài 4 · Phía cung</div><legend>4. Thành phố xây đúng 80.000 căn như cầu mà dân phổ thông vẫn thiếu, cao cấp tồn kho. Đây là gì?</legend>
+<label class="quiz__option"><input type="radio" name="q4" value="0"> Thị trường thiếu số lượng, cần xây thêm mọi loại.</label>
+<label class="quiz__option"><input type="radio" name="q4" value="1"> Mất cân bằng cấu trúc: dư thứ không với tới, thiếu thứ đang cần.</label>
+<label class="quiz__option"><input type="radio" name="q4" value="2"> Cầu đã biến mất nên hàng tồn.</label>
+<label class="quiz__option"><input type="radio" name="q4" value="3"> Giá sẽ tự giảm ngay vì tổng đã cân.</label>
+<div class="quiz__explanation"><strong>Giải thích:</strong> tổng cân mà cơ cấu ngược nhu cầu. Kệ đầy món sang, khách cần cơm bình dân — hỏi “tăng cung loại nào”, không phải “tăng bao nhiêu”.</div></fieldset>
+<fieldset data-answer="3"><div class="quiz__tag">Bài 5 · Phía cầu</div><legend>5. Dự án báo 5.000 lượt quan tâm, giá gấp nhiều lần thu nhập, chuẩn vay siết. Đâu là đọc đúng?</legend>
+<label class="quiz__option"><input type="radio" name="q5" value="0"> Cầu của dự án là 5.000 căn.</label>
+<label class="quiz__option"><input type="radio" name="q5" value="1"> Dân số đông nên cầu tự khắc mạnh.</label>
+<label class="quiz__option"><input type="radio" name="q5" value="2"> Giá tăng chứng tỏ nền tảng cầu mạnh.</label>
+<label class="quiz__option"><input type="radio" name="q5" value="3"> Đó là nhu cầu; cầu hiệu lực cần qua cửa vốn, chuẩn vay và chịu giá.</label>
+<div class="quiz__explanation"><strong>Giải thích:</strong> lượt quan tâm đếm hàng người xếp. Vé trên tay cần vốn, chuẩn vay và chịu giá — thiếu một cửa là chưa thành cầu.</div></fieldset>
+<fieldset data-answer="2"><div class="quiz__tag">Bài 6 · Tự cân bằng</div><legend>6. Giá đứng yên một năm, giao dịch teo dần, thời gian bán gấp đôi. Đọc nào đúng?</legend>
+<label class="quiz__option"><input type="radio" name="q6" value="0"> Thị trường chưa điều chỉnh vì giá chưa giảm.</label>
+<label class="quiz__option"><input type="radio" name="q6" value="1"> Người bán đã mất quyền giữ giá.</label>
+<label class="quiz__option"><input type="radio" name="q6" value="2"> Thị trường đang cân bằng lại qua khối lượng, thời gian và rút lui — không qua giá.</label>
+<label class="quiz__option"><input type="radio" name="q6" value="3"> Ngân hàng trung ương đã thất bại.</label>
+<div class="quiz__explanation"><strong>Giải thích:</strong> giá chỉ là một van trong mười van. Khối lượng, thời gian bán và rút lui đã xoay nghĩa là hệ đã cân bằng lại — bẫy ở đáp án A.</div></fieldset>
+<div><button class="btn" id="quizCheck" type="button">Chấm điểm</button> <button class="btn btn--ghost" id="quizReset" type="button">Làm lại</button><p id="quizScore"></p></div>
+</section>
+
+<div style="text-align:center;color:var(--text-muted);font-family:var(--font-sans);font-size:13px;margin-top:48px;border-top:1px solid var(--border);padding-top:16px">Chuỗi Cung–Cầu Bất động sản · Atlas hệ thống 6 bài viết<br><a href="2026-09-09-bất-động-sản-và-mất-thanh-khoản.html">Bài 1</a> · <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">Bài 2</a> · <a href="2026-09-09-cung-cau-bds-ai-đứng-ở-hai-phía.html">Bài 3</a> · <a href="2026-09-09-cung-bds-thiếu-nhà-hay-cung-bị-lệch.html">Bài 4</a> · <a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">Bài 5</a> · <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">Bài 6</a><br><span>Nội dung chỉ mang tính tham khảo, không phải khuyến nghị đầu tư. Ngày cập nhật: 2026-09-09.</span></div>
+</div>
+<div class="controls" role="toolbar" aria-label="Reading controls"><button type="button" class="control-btn" id="topBtn" title="Về đầu trang">↑</button><button type="button" class="control-btn" id="themeBtn" title="Đổi giao diện">◑</button></div>
+<script>
+document.getElementById('topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+document.getElementById('themeBtn').addEventListener('click',()=>{const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark')});
+(function(){const q=document.getElementById('quiz');if(!q)return;const sc=document.getElementById('quizScore');document.getElementById('quizCheck').addEventListener('click',()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{t++;const a=parseInt(fs.dataset.answer,10);const s=fs.querySelector('input:checked');fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const co=fs.querySelector('input[value="'+a+'"]');if(co)co.closest('.quiz__option').classList.add('correct-answer');if(s&&parseInt(s.value,10)!==a)s.closest('.quiz__option').classList.add('incorrect-answer');if(s&&parseInt(s.value,10)===a)c++});q.classList.add('is-graded');let msg=c+' / '+t+' đúng.';if(c===t)msg+=' — đủ vé đi hết 6 bài.';else if(c>=4)msg+=' — vững, xem lại bài của câu sai.';else msg+=' — nên đọc lại theo lộ trình ngắn 1 → 2 → 6.';sc.textContent=msg});document.getElementById('quizReset').addEventListener('click',()=>{q.querySelectorAll('input').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');sc.textContent=''})})();
+</script>
+</body>
+</html>

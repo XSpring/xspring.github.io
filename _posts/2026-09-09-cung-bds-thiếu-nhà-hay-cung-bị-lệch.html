@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cung BĐS: thiếu nhà hay cung đang bị lệch?</title>
+<meta name="description" content="Cung không chỉ có số lượng mà còn có cấu trúc: đúng giá, đúng nơi, đúng loại, đúng thời điểm.">
+<meta name="artifact-length" content="MEDIUM">
+<meta name="iterator-cycles" content="0">
+<meta name="iterator-stopped-by" content="skipped">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}html,body{margin:0;padding:0}
+:root{--font-serif:'Merriweather',Georgia,serif;--font-sans:'Inter',-apple-system,sans-serif;--bg:#FDFBF7;--bg-elevated:#fff;--bg-sunken:#F5F1EA;--text:#2D3748;--text-muted:#718096;--text-strong:#1A202C;--accent:#319795;--accent-strong:#285E61;--accent2:#B7791F;--accent2-strong:#975A16;--accent2-soft:#FEEBC8;--border:#E4DFD5;--sidenote-bg:#EDF2F7;--success:#38A169;--success-bg:#C6F6D5;--danger:#C53030;--danger-bg:#FED7D7;--warn:#B7791F;--warn-bg:#FEEBC8;--info:#2B6CB0;--info-bg:#BEE3F8;--radius:10px;--radius-sm:6px;--measure:68ch;--line:1.75}
+html[data-theme="dark"]{--bg:#1A202C;--bg-elevated:#2D3748;--bg-sunken:#171923;--text:#E2E8F0;--text-muted:#A0AEC0;--text-strong:#F7FAFC;--accent:#4FD1C5;--accent-strong:#81E6D9;--accent2:#F6AD55;--accent2-strong:#FBD38D;--accent2-soft:#4A2E14;--border:#2D3748;--sidenote-bg:#2A2F3A;--success-bg:#22543D;--danger-bg:#63171B;--warn-bg:#7B341E;--info-bg:#2A4365}
+body{background:var(--bg);color:var(--text);font-family:var(--font-serif);font-size:18px;line-height:var(--line)}
+.app{display:grid;grid-template-columns:minmax(200px,18%) minmax(0,1fr) minmax(230px,20%);gap:40px;max-width:1380px;margin:0 auto;padding:28px 28px 120px}
+.navigator{position:sticky;top:20px;align-self:start;max-height:calc(100vh - 40px);overflow-y:auto;font-family:var(--font-sans);font-size:14px}
+.canvas{max-width:var(--measure);margin:0 auto;width:100%}.marginalia{font-family:var(--font-sans);font-size:14px;color:var(--text-muted)}
+body.focus-mode .navigator,body.focus-mode .marginalia{display:none}body.focus-mode .app{grid-template-columns:1fr;max-width:780px}
+@media(max-width:960px){.app{grid-template-columns:1fr;padding:20px 18px 90px}.navigator{position:relative;max-height:none;border-bottom:1px solid var(--border)}}
+.canvas h1{font-family:var(--font-sans);font-size:2.1rem;line-height:1.25;color:var(--text-strong);margin:8px 0 14px}
+.canvas h2{font-family:var(--font-sans);font-size:1.5rem;color:var(--text-strong);margin:50px 0 14px;padding-top:22px;border-top:1px solid var(--border)}
+.canvas h2:first-of-type{border-top:none;padding-top:0}.canvas h3{font-family:var(--font-sans);font-size:1.12rem;color:var(--text-strong);margin:28px 0 10px}
+.canvas p{margin:0 0 14px}.canvas a{color:var(--accent)}
+.hook{margin:22px 0 40px;padding:22px 26px;background:var(--bg-elevated);border:1px solid var(--border);border-left:4px solid var(--accent);border-radius:var(--radius);font-style:italic}
+.hook__label{font-family:var(--font-sans);font-style:normal;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:block;margin-bottom:8px}
+.meta-block{margin:22px 0;padding:14px 18px;background:var(--sidenote-bg);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}.meta-block h4{margin:0 0 8px;font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent)}
+.callout{margin:22px 0;padding:14px 18px;border-radius:var(--radius);border-left:4px solid var(--info);background:var(--info-bg);font-family:var(--font-sans);font-size:15px}.callout__label{font-weight:700;display:block;margin-bottom:4px;font-size:12px;text-transform:uppercase}.callout--tip{border-left-color:var(--success);background:var(--success-bg)}.callout--warn{border-left-color:var(--warn);background:var(--warn-bg)}.callout--danger{border-left-color:var(--danger);background:var(--danger-bg)}
+.feynman{margin:18px 0;padding:12px 16px;border:1px dashed var(--accent);border-radius:var(--radius);font-family:var(--font-sans);font-size:14px}.feynman::before{content:"🧒 Một câu cho bé 10 tuổi:";display:block;font-weight:700;color:var(--accent);margin-bottom:4px;font-size:12px;text-transform:uppercase}
+.premortem{margin:22px 0;padding:18px 22px;border-radius:var(--radius);background:var(--accent2-soft);border-left:4px solid var(--accent2);font-family:var(--font-sans);font-size:15px}.premortem__label{display:block;font-weight:700;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2-strong);margin-bottom:8px}.premortem__wrong{text-decoration:line-through;color:var(--text-muted)}
+.scaffold{margin:26px 0;padding:18px 22px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.scaffold__concept{font-family:var(--font-sans);font-weight:700;font-size:1.02rem;color:var(--text-strong);margin:0 0 6px}.scaffold__row{display:grid;grid-template-columns:88px 1fr;gap:12px;margin:10px 0}.scaffold__row-label{font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:4px}.scaffold__probe{margin:8px 0 0;border:1px dashed var(--accent2);border-radius:var(--radius-sm)}.scaffold__probe>summary{padding:10px 12px;cursor:pointer;font-family:var(--font-sans);font-size:14px;font-weight:600;color:var(--accent2-strong)}.scaffold__resolve{padding:12px;background:var(--accent2-soft);font-family:var(--font-sans);font-size:14px}
+.checkpoint{margin:28px 0;padding:18px 22px;border-radius:var(--radius);background:var(--sidenote-bg);border:1px solid var(--border)}.deep-dive{margin:22px 0;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg-elevated)}.deep-dive>summary{padding:12px 16px;cursor:pointer;font-family:var(--font-sans);font-weight:600}.deep-dive>*:not(summary){padding:0 16px 14px}
+.bar-chart{margin:28px 0;padding:18px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.bar-chart__title{font-family:var(--font-sans);font-size:13px;font-weight:600;color:var(--text-muted);text-transform:uppercase;margin-bottom:12px}.bar-row{display:grid;grid-template-columns:190px 1fr 90px;gap:10px;margin:8px 0;font-family:var(--font-sans);font-size:14px}.bar-track{background:var(--sidenote-bg);height:22px;border-radius:4px;overflow:hidden}.bar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent-strong))}.bar-chart__caption{font-family:var(--font-sans);font-size:12px;color:var(--text-muted);font-style:italic}
+.concept-flow{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:8px;margin:26px 0}.concept-flow__step{padding:14px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius);text-align:center;font-family:var(--font-sans);font-size:14px}.concept-flow__arrow{color:var(--accent);font-weight:700;font-size:20px;align-self:center}@media(max-width:640px){.concept-flow{grid-template-columns:1fr}.concept-flow__arrow{transform:rotate(90deg);justify-self:center}.bar-row{grid-template-columns:120px 1fr 70px}}
+.flip-card{perspective:1000px;height:170px;margin:22px 0;cursor:pointer}.flip-card__inner{position:relative;width:100%;height:100%;transition:transform 500ms;transform-style:preserve-3d}.flip-card.is-flipped .flip-card__inner{transform:rotateY(180deg)}.flip-card__face{position:absolute;inset:0;backface-visibility:hidden;padding:18px;border-radius:var(--radius);display:flex;flex-direction:column;justify-content:center;border:1px solid var(--border)}.flip-card__front{background:var(--bg-elevated)}.flip-card__back{background:var(--accent);color:#fff;transform:rotateY(180deg)}.flip-card__label{font-family:var(--font-sans);font-size:11px;font-weight:700;text-transform:uppercase;color:var(--accent);margin-bottom:6px}.flip-card__back .flip-card__label{color:rgba(255,255,255,.85)}
+.glossary dt{font-family:var(--font-sans);font-weight:700;margin-top:12px}.quiz{margin:48px 0 22px;padding:26px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:var(--radius)}.quiz__option{display:block;padding:10px 14px;margin:6px 0;background:var(--bg);border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;font-family:var(--font-sans);font-size:15px}.quiz__option.correct-answer{background:var(--success-bg);border-color:var(--success)}.quiz__option.incorrect-answer{background:var(--danger-bg);border-color:var(--danger)}.quiz__explanation{display:none;font-family:var(--font-sans);font-size:13px;background:var(--sidenote-bg);padding:8px 12px;border-radius:var(--radius-sm)}.quiz.is-graded .quiz__explanation{display:block}.btn{font-family:var(--font-sans);font-weight:600;padding:9px 18px;border-radius:var(--radius-sm);border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}.btn--ghost{background:transparent;color:var(--accent)}
+.launchpad{margin:40px 0 20px;padding:24px 28px;background:linear-gradient(135deg,var(--bg-elevated),var(--sidenote-bg));border:1px solid var(--border);border-radius:var(--radius)}.launchpad__label{display:inline-block;padding:3px 10px;border-radius:12px;background:var(--accent2);color:#fff;font-family:var(--font-sans);font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:10px}.launchpad__hint{display:none;margin:8px 0;padding:12px 14px;background:var(--bg);border-left:3px solid var(--accent2);border-radius:var(--radius-sm);font-family:var(--font-sans);font-size:14px}.launchpad__hint.is-visible{display:block}
+.sidenote{margin:20px 0;padding:10px 12px;background:var(--sidenote-bg);border-radius:var(--radius-sm);font-size:13px}.toc{list-style:none;padding:0}.toc a{display:block;padding:5px 10px;color:var(--text-muted);text-decoration:none;border-left:2px solid transparent}.toc a.is-active{color:var(--accent);border-left-color:var(--accent)}
+.controls{position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:50}.control-btn{width:42px;height:42px;border:1px solid var(--border);background:var(--bg-elevated);color:var(--text);border-radius:50%;cursor:pointer;font-family:var(--font-sans)}
+@media print{.navigator,.marginalia,.controls{display:none!important}.app{display:block}.flip-card{height:auto}.flip-card__face{position:static}.flip-card__back{background:#fff;color:#000}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="navigator"><div style="font-family:var(--font-sans);font-size:13px;padding:8px 0 12px;border-bottom:1px solid var(--border);margin-bottom:12px">⏱ ~15 min · MEDIUM · narrative</div><nav><ul class="toc" id="toc"></ul></nav></aside>
+<main class="canvas" id="canvas">
+<h1>Cung BĐS: thiếu nhà hay cung đang bị lệch?</h1>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted);margin:0 0 18px">Chuỗi Cung–Cầu Bất động sản · Bài 4/6 · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a></p>
+<div class="hook"><span class="hook__label">🎣 The hook</span>
+<p>Một quán cơm dọn ra 100 món mỗi trưa. Khách vẫn bỏ về vì đói. Nhìn thực đơn mới rõ: 90 món bào ngư vi cá, 10 món cơm bình dân mà hết từ 11 giờ.</p>
+<p>Nhiều thành phố đang dọn đúng thực đơn đó. Tổng cung tăng, giá phân khúc cao vẫn tăng, mà người cần nhà vừa túi tiền không có gì để mua. Thiếu nhà hay cung bị lệch? Chuỗi từ luống đất tới mâm cơm sẽ trả lời.</p></div>
+<div class="meta-block"><h4>Prerequisites</h4><ul><li>Điểm giao sinh ra giá và khối lượng.</li><li>Cân bằng đa van và cầu hiệu lực.</li><li>Khái niệm tồn kho, hấp thụ, pháp lý.</li></ul></div>
+<div class="meta-block"><h4>By the end you will be able to…</h4><ul><li>Phân biệt năm lớp cung.</li><li>Giải thích mất cân bằng cấu trúc bằng số.</li><li>Chỉ ra lấn át khi nguồn lực chạy về lợi nhuận cao.</li><li>Phân biệt thiếu vật lý với thiếu giao dịch.</li><li>Mô tả chu kỳ trễ pha và đường cung ba lớp.</li></ul></div>
+
+<h2 id="baseline">Nền tảng: cung là chuỗi, không phải con số</h2>
+<p>Phần này đặt viên gạch duy nhất. Mọi lớp cung sau đây đều gắn lên nó.</p>
+<p>Cung tới tay người mua phải qua chuỗi đất, quy hoạch, pháp lý, vốn, xây dựng, hoàn thành, chào bán và phù hợp nhu cầu. Nghẽn bất kỳ khâu nào cũng làm kệ hàng trống dù kho còn đầy.</p>
+<p>Thành phố có 2 triệu căn không đồng nghĩa có 2 triệu căn để mua. Thiếu pháp lý thì nằm trên giấy. Chủ không muốn bán thì nằm ngoài thị trường. Sai giá, sai nơi thì nằm ngoài tầm với.</p>
+<p>Móng đã đặt: cung là chuỗi, không phải con số. Câu hỏi tiếp theo là hình dung chuỗi tám khâu mà không cần lưu đồ. Một bếp quán cơm sẽ làm việc đó.</p>
+
+<h2 id="bridge">Cây cầu quen: Bếp Quán Cơm</h2>
+<p>Phần này mượn một bếp quán cơm quen thuộc. Bạn sẽ dùng nó để gọi tên mọi khâu cung khó.</p>
+<p>Gọi đây là <strong>Mô hình Bếp Quán Cơm</strong>. Món tới miệng khách phải qua chuỗi: có nguyên liệu, sơ chế ướp, nổi lửa nấu, dọn ra bàn và hợp khẩu vị lẫn túi tiền. Hỏng bất kỳ khâu nào, khách đói dù kho đầy ắp.</p>
+<p>Nguyên liệu là quỹ đất. Sơ chế ướp là pháp lý và vốn, khâu tốn nhiều thời gian nhất. Bếp nấu là xây dựng, đã nổi lửa thì phải chờ chín. Món dọn ra là cung giao dịch, còn thực đơn toàn món sang là lệch cơ cấu và lấn át.</p>
+<div class="concept-flow"><div class="concept-flow__step">01 · Nguyên liệu + sơ chế<br>Đất, pháp lý, vốn</div><div class="concept-flow__arrow">→</div><div class="concept-flow__step">02 · Bếp nấu<br>Xây dựng chờ chín</div><div class="concept-flow__arrow">→</div><div class="concept-flow__step">03 · Món dọn ra<br>Cung giao dịch</div></div>
+<p>Bếp cơm khác nhà đất ở một điểm. Món nấu hỏng thì bỏ, nấu lại trong giờ. Dự án dở dang nằm nhiều năm, nuốt vốn và không nấu lại ngay được.</p>
+<div class="premortem"><span class="premortem__label">⚠️ Before we build further…</span>
+<p><span class="premortem__wrong">Cứ nấu thêm món là hết đói, thiếu cung chỉ là bài toán số lượng.</span></p>
+<p>This is wrong because thêm 90 món sang không giải cơn đói cơm bình dân, và món đặt bếp hôm nay ba năm sau mới dọn.</p>
+<p><strong>What's actually true:</strong> Cung cần đúng giá, đúng nơi, đúng loại và đúng thời điểm. Dư thứ không với tới đi cùng thiếu thứ ai cũng cần là bình thường.</p></div>
+
+<h2 id="exposition">Dựng mô hình, từng cụm một</h2>
+<p>Mỗi cụm dưới đây đi qua <strong>State → Illustrate → Probe → Resolve</strong>. Hãy thử trả lời Probe trong đầu trước khi mở đáp án.</p>
+
+<section class="scaffold"><h3 class="scaffold__concept">1 · Cung không phải tổng số căn</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div>Chuỗi cung gồm tám khâu gom thành ba chặng. Chặng đất và giấy tờ: quỹ đất, quy hoạch, pháp lý. Chặng tiền và xây: cấp vốn, khởi công, hoàn thành. Chặng bán: chào bán hoặc cho thuê, rồi phù hợp với người mua. Nghẽn bất kỳ chặng nào cũng chặn dòng chảy.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Từ chuỗi sinh ra năm lớp cung, mỗi lớp nhỏ hơn lớp trước: tồn lượng, cung mới, cung giao dịch, cung thuê, cung phù hợp. Kịch bản minh họa: cần 50.000 căn dưới 3 tỷ, 20.000 căn 3–5 tỷ, 10.000 căn trên 5 tỷ. Thị trường xây đúng 80.000 nhưng cơ cấu 5.000, 15.000 và 60.000. Tổng cân mà dân phổ thông vẫn thiếu, cao cấp tồn kho. Thực địa: 9 tháng 2025 cung mới vượt 100.000 căn mà chỉ khoảng 6% vừa túi tiền.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Tổng cung bằng tổng cầu trên giấy mà dân vẫn kêu thiếu. Thiếu ở đâu?</summary><div class="scaffold__resolve">💡 Thiếu ở chặng cuối: phù hợp. Hàng dồn vào lớp giá cao, lớp vừa túi tiền rỗng. Kệ đầy món sang, khách cần cơm bình dân.</div></details></section>
+<div class="feynman">Đếm món trong kho khác đếm món dọn ra bàn. Khách chỉ ăn được món đã dọn và hợp túi tiền.</div>
+<div class="checkpoint"><strong>🛑 Pause &amp; reflect.</strong> Hãy giải thích năm lớp cung bằng ngôn ngữ Bếp Quán: kho, món đang nấu, món đã dọn là gì? Nếu chưa gọi tên được, đọc lại một lượt.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">2 · Lấn át và lệch đa chiều</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Hiệu ứng lấn át cấu trúc cung</strong> (nguồn lực hữu hạn chạy về phân khúc lời cao hơn, triệt khả năng tạo phân khúc khác) là động cơ chính của lệch cơ cấu. Một khu đất làm trung cấp hay cao cấp chỉ chọn được một. Chọn cao cấp thì đất, tín dụng, thợ, hạ tầng và thời gian pháp lý của lựa chọn kia biến mất theo.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Căn hộ bình dân dưới 25 triệu đồng/m² vắng bóng ở TP.HCM từ 2021 và Hà Nội từ 2023. Năm 2024 khoảng 65% nguồn mới từ 50 triệu đồng/m², gần 10.000 căn từ 80 triệu đồng/m², gấp 3 lần năm trước. Biên vừa túi tiền chỉ khoảng 15%, tồn đọng vốn 1–2 năm là lỗ. Bếp dồn lửa cho món sang vì món bình dân nấu càng lâu càng lỗ. Lệch còn ở vị trí, loại hình, diện tích, thời điểm và pháp lý.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Tổng cung tăng mà chi trả ngày càng xấu. Vô lý không?</summary><div class="scaffold__resolve">💡 Không vô lý. Tổng tăng nhờ món sang, món bình dân teo vì bị lấn át. Kệ nhiều món hơn nhưng ví khách mua được ít món hơn.</div></details></section>
+<div class="feynman">Bếp chỉ có bốn lò. Nấu toàn bào ngư thì không còn lò nấu cơm. Khách đói không phải vì bếp lười.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">3 · Cung nhìn thấy và cung thật</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Thiếu cấu trúc</strong> (thực sự không tạo đủ nhà) khác <strong>thiếu giao dịch</strong> (nhà tồn tại nhưng chủ không muốn bán). Thị trường xuống là lúc thiếu giao dịch bùng lên: mua 5 tỷ, thị trường trả 4,5 tỷ, chủ rút hàng vì không bán dưới vốn. Tổng nhà không đổi, cung chào bán giảm.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Ở đáy chu kỳ Boston 1990–1997, hơn một nửa tin rao bị rút khỏi thị trường từ 6 tháng trở lên không bán. Nhóm rút hàng nhạy với lỗ hơn nhóm bán được. Chủ vay sát giá trị treo giá cao hơn 4% và bán chậm hơn 15%. Con số Boston không bê nguyên sang Việt Nam được, vì khác thể chế về thế chấp, sàn niêm yết và chi phí giao dịch. Điều mượn được là cơ chế, không phải con số. Giá chào neo theo lỗ tiềm năng thì thời gian bán dài ra. Ở Việt Nam, rút hàng còn đi qua tin rao ảo, môi giới giữ hàng, sổ hồng vướng pháp lý. Mức độ rút hàng trong nước chưa có số liệu công bố tương đương. Món đã dọn bị bưng vào bếp vì khách trả dưới giá vốn. Kệ trống mà kho đầy. Thêm vào đó là neo giá, kỳ vọng phục hồi và bầy đàn chủ đầu tư cùng lao vào phân khúc đang nóng.</div></div>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Đọc thận trọng</span>Mọi con số rút hàng trong cụm này đến từ Boston 1990–1997, thể chế khác Việt Nam. Dùng chúng để hiểu cơ chế, không dùng để kết luận mức độ ở trong nước.</div>
+<details class="scaffold__probe"><summary>🤔 Probe: Giá chưa giảm mà giao dịch đã giảm một nửa. Cung thiếu hay cầu thiếu?</summary><div class="scaffold__resolve">💡 Có thể cả hai cùng co, nhưng van rơi trước thường là cung giao dịch: một nhóm chủ rút hàng vì né lỗ. Tổng nhà vật lý không mất căn nào. Đây là đọc theo cơ chế Boston, chưa có số đo tương đương trong nước.</div></details></section>
+<div class="feynman">Món bị bưng vào bếp không có nghĩa quán hết nguyên liệu. Chỉ là chủ quán chưa muốn bán giá đó.</div>
+
+<section class="scaffold"><h3 class="scaffold__concept">4 · Chu kỳ và đường cung ba lớp</h3>
+<div class="scaffold__row"><div class="scaffold__row-label">State</div><div><strong>Chu kỳ cung trễ pha</strong> (hàng về lúc cầu đã đổi vì độ trễ xây dựng) khiến thị trường đều đặn đi từ thiếu hàng sang tồn kho trong vài năm. Cần ba đường riêng: cung vật lý, cung xây mới và cung giao dịch. Ba đường không chuyển động cùng nhau.</div></div>
+<div class="scaffold__row"><div class="scaffold__row-label">Illustrate</div><div>Cầu tăng thì giá tăng, developer mua đất, xin phép, vay vốn và xây tăng. Vài năm sau cung mới xuất hiện. Trong khoảng chờ, lãi có thể tăng, kinh tế có thể yếu, cầu đầu tư có thể biến mất. Cung tăng mạnh đúng lúc cầu bắt đầu giảm. Ngắn hạn cung gần như đứng yên vì không xây ngay được. Dài hạn đáp tốt hơn vì đủ thời gian xây.</div></div>
+<details class="scaffold__probe"><summary>🤔 Probe: Năm nay thiếu hàng, ba năm nữa thừa hàng, mà không ai làm sai. Giải thích thế nào?</summary><div class="scaffold__resolve">💡 Không ai sai, chỉ là lò chậm. Quyết định nổi lửa hôm nay dựa vào giá hôm nay, món chín ba năm sau gặp đúng lúc khách đổi món.</div></details></section>
+<div class="feynman">Đặt nồi cơm lúc đói không có cơm ăn ngay. Cơm chín thì có khi đã no món khác.</div>
+
+<details class="deep-dive"><summary>🔴 Deep dive: Vì sao hấp thụ 70% mà vẫn kêu lệch?</summary><p>Hấp thụ trên 70% đo trên rổ hàng đã lệch sang cao cấp. Rổ lệch bán chạy không có nghĩa bài toán nhà ở được giải. Nhu cầu cao cấp thật nhưng nhỏ so với số đông. Món sang bán chạy, cơn đói món bình dân còn nguyên.</p></details>
+
+<h2 id="application">Ra thực địa: bếp Việt 2024–2026</h2>
+<p>Phần này mang bếp ra chợ thật. Mỗi con số là một khâu chuỗi đang nghẽn hoặc đang lệch.</p>
+<p>Khâu lệch món hiện rõ nhất. Chín tháng 2025, tổng cung mới vượt 100.000 căn mà chỉ khoảng 6% vừa túi tiền. 63–80% căn mới HN/HCM từ 50–80 triệu đồng/m² trở lên. Giá trung bình 91–95 triệu đồng/m², tăng 21–23%. Năm 2025, gần 40% nguồn mới là thấp tầng giá cao và 42% là chung cư trên 50 triệu đồng/m². Thực đơn toàn món sang.</p>
+<p>Khâu sơ chế nghẽn lâu năm. TP.HCM 11 tháng 2024 chỉ 12 dự án được chấp thuận chủ trương, 4 dự án đủ điều kiện huy động vốn với 1.611 căn. 86 dự án tồn kho 54.051 căn trên 964ha vì vướng pháp lý. Tới 2026 thành phố rà soát 838 dự án tồn đọng. Nguyên liệu có, ướp mãi chưa xong.</p>
+<p>Khâu lò lửa giải thích vì sao kêu thiếu mà vẫn có hàng. Chung cư chiếm 70% nguồn mới 2024, hấp thụ trên 70%, nhưng rổ hàng lệch nên cơn đói phổ thông còn nguyên. Kệ vơi vì món sang bán chạy, kho đầy món chưa đủ điều kiện dọn.</p>
+<div class="bar-chart"><div class="bar-chart__title">Thực đơn lệch và khâu nghẽn · 2024–2026</div>
+<div class="bar-row"><div>Cung mới vừa túi tiền</div><div class="bar-track"><div class="bar-fill" style="width:12%"></div></div><div>~6%</div></div>
+<div class="bar-row"><div>Căn mới ≥50tr/m²</div><div class="bar-track"><div class="bar-fill" style="width:80%"></div></div><div>~80%</div></div>
+<div class="bar-row"><div>Dự án đủ ĐK vốn</div><div class="bar-track"><div class="bar-fill" style="width:10%"></div></div><div>4 dự án</div></div>
+<div class="bar-row"><div>Tồn kho chờ gỡ</div><div class="bar-track"><div class="bar-fill" style="width:85%"></div></div><div>54k căn</div></div>
+<p class="bar-chart__caption">Nguồn: VARS, Thương Trường, Lao Động, Dân Trí. Thang minh họa.</p></div>
+<p>Bài học rút ra rất gọn. Lò dồn lửa món sang vì biên mỏng và tồn đọng vốn là lỗ. Sơ chế nghẽn vì pháp lý, tiền sử dụng đất và quy hoạch. Kệ bán chạy không đồng nghĩa bài toán nhà ở được giải. Đó là dư mà thiếu đúng nghĩa.</p>
+<div class="flip-card" tabindex="0"><div class="flip-card__inner"><div class="flip-card__face flip-card__front"><span class="flip-card__label">Active recall — Question</span>Vì sao hấp thụ trên 70% mà người mua phổ thông vẫn thiếu lựa chọn?</div><div class="flip-card__face flip-card__back"><span class="flip-card__label">Answer</span>Vì hấp thụ đo trên rổ đã lệch sang cao cấp. Món sang bán chạy không lấp chỗ món bình dân.</div></div></div>
+<p>Mô hình đã đi qua thực địa. Việc còn lại là vạch biên: đâu là hiểu lầm hay gặp, đâu là biên mô hình không bao phủ.</p>
+
+<h2 id="boundary">Biên của mô hình</h2>
+<p>Phần này chỉ hai vấp phổ biến. Đọc kỹ, bạn tránh được đa số lỗi đọc cung.</p>
+<div class="callout callout--warn"><span class="callout__label">⚠️ Common misconception</span>“Thiếu cung thì cứ tăng nguồn cung, xây nhiều giá khắc giảm.” Sai vì cung cần đúng loại. Thêm món sang không hạ giá món bình dân, nhất là khi lò hữu hạn và món sang ăn hết lửa.</div>
+<p>Vấp thứ hai là tưởng cung cao cấp hấp thụ tốt thì cơ cấu đã ổn. Kệ vơi không có nghĩa quán khỏe. Quán khỏe là thực đơn cân với túi tiền đa số khách.</p>
+<div class="callout callout--danger"><span class="callout__label">🚫 Edge case</span>Phân khúc cao cấp hấp thụ tốt trên rổ lệch: giá neo cao, thanh khoản xoay quanh nhóm khách hẹp, nền tảng mong manh trước cú sốc thu nhập và lãi suất.</div>
+<div class="callout callout--tip"><span class="callout__label">🔮 Predict</span>Lần tới thấy tin nguồn cung tăng mạnh, bạn kiểm tra số nào trước: tổng căn mở bán hay tỷ trọng vừa túi tiền, pháp lý và thời gian bàn giao? Viết câu trả lời một câu.</div>
+
+<h2 id="connections">Mắt lưới bên cạnh</h2>
+<p>Ghi chú này là một mắt lưới. Ba mắt bên cạnh giúp bạn đi tiếp mà không lạc.</p>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">Trong chuỗi này: hàng người xếp dài ví mỏng gặp điểm chết ở <a href="2026-09-09-cung-cầu-bds-giá-và-khối-lượng.html">Bài 2</a> · vé trên tay ở <a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">Bài 5</a> · van cung trong mười van ở <a href="2026-09-09-thị-trường-tự-cân-bằng-như-thế-nào.html">Bài 6</a>.</p>
+<p><strong>Phòng vé cầu.</strong> Món bình dân thiếu gặp hàng người xếp dài bằng ví mỏng thì điểm chết xuất hiện. <strong>Điểm giao.</strong> Cung giao dịch ở đây chính là một nửa của khối lượng khớp. <strong>Đa van.</strong> Pháp lý, tiến độ xây và kỳ vọng người bán là ba van cung trong mười van.</p>
+
+<h2 id="synthesis">Bức tranh chung</h2>
+<p>Phần này thu toàn bộ ghi chú về quán cơm 100 món trong Hook. Cùng một cơ chế giải thích cả kệ đầy lẫn khách đói.</p>
+<p>Cung không phải tổng số căn. Nó là chuỗi từ đất tới tay người mua, với năm lớp nhỏ dần và nghẽn ở bất kỳ khâu nào. Lò bếp hữu hạn chạy về món lời cao nên thực đơn lệch, món bình dân bị lấn át. Kệ trống có thể vì kho hết, cũng có thể vì một nhóm chủ rút hàng theo cơ chế né lỗ. Cơ chế này đo được ở Boston, chưa có số đo tương đương trong nước. Lò chậm nên thiếu hàng hôm nay thành tồn kho vài năm sau.</p>
+<p>Vì vậy khi nghe thiếu cung, đừng dừng ở đó. Hãy hỏi thiếu số lượng hay thiếu đúng phân khúc, thiếu nhà thật hay thiếu nhà đang bán, lò có bị hút vào món lời cao không, và món đang nói là món đã dọn hay mới nằm trên giấy. Đọc được năm câu này, bạn biết quán đông món mà khách đói vì đâu.</p>
+<blockquote><strong>Nếu chỉ nhớ một điều:</strong> Quán có thể đầy món mà khách vẫn đói — cung chỉ giải được bài toán nhà ở khi đúng giá, đúng nơi, đúng loại và đúng thời điểm.</blockquote>
+<div class="launchpad"><span class="launchpad__label">🚀 Launch pad · one step beyond</span>
+<h3>Nghịch lý thành phố 80.000 căn</h3>
+<p>Một thành phố xây đúng 80.000 căn mà dân vẫn kêu thiếu, tồn kho cao cấp tăng, giá phổ thông không giảm. Bạn chỉ được xin thêm ba con số để chỉ ra chỗ nghẽn. Bạn xin số nào, và kết quả nào thì kết luận đây là lấn át cấu trúc?</p>
+<button class="launchpad__reveal" id="hintBtn" type="button">Reveal hint 1</button>
+<div class="launchpad__hint" data-hint="1"><strong>Hint 1 — reframe.</strong> Kệ đầy món sang, khách cần cơm bình dân. Bạn hỏi đầu bếp câu nào trước: nấu thêm hay đổi thực đơn?</div>
+<div class="launchpad__hint" data-hint="2"><strong>Hint 2 — key concept.</strong> Dùng cặp số lượng vs cơ cấu và hiệu ứng lấn át. Ba số cần hỏi về tỷ trọng vừa túi tiền, pháp lý và thời gian bàn giao.</div>
+<div class="launchpad__hint" data-hint="3"><strong>Hint 3 — setup.</strong> Xin tỷ trọng cung mới vừa túi tiền, số dự án đủ điều kiện bán trên tổng dự án, và thời gian bán theo phân khúc. Vừa túi tiền teo, pháp lý ít, món sang bán chậm dần: đó là lấn át.</div></div>
+
+<h2 id="glossary">Glossary</h2>
+<p>Bảng từ vựng đi kèm cầu nối Bếp Quán. Đọc cột cầu nối để thấy trực giác sau thuật ngữ.</p>
+<dl class="glossary">
+<dt>Tổng tồn lượng nhà</dt><dd>Mọi căn đã tồn tại trong thành phố. <i>Trong Bếp Quán: nguyên liệu đầy kho.</i></dd>
+<dt>Cung mới</dt><dd>Căn đang xây hoặc vừa hoàn thành. <i>Trong Bếp Quán: món đang nấu.</i></dd>
+<dt>Cung giao dịch</dt><dd>Căn chủ thực sự muốn bán ở giá hiện tại. <i>Trong Bếp Quán: món đã dọn ra bàn.</i></dd>
+<dt>Cung cho thuê</dt><dd>Nhà được đưa vào thị trường thuê. <i>Trong Bếp Quán: món bán mang về.</i></dd>
+<dt>Cung phù hợp</dt><dd>Nhà đúng giá, đúng nơi, đúng loại mà cầu cần. <i>Trong Bếp Quán: món hợp túi tiền khách.</i></dd>
+<dt>Mất cân bằng cấu trúc cung</dt><dd>Tổng đủ mà cơ cấu sai chỗ. <i>Trong Bếp Quán: thực đơn toàn món sang.</i></dd>
+<dt>Hiệu ứng lấn át cấu trúc cung</dt><dd>Nguồn lực chạy về phân khúc lời cao. <i>Trong Bếp Quán: lò dồn lửa cho bào ngư.</i></dd>
+<dt>Thiếu cấu trúc</dt><dd>Thực sự không tạo đủ nhà. <i>Trong Bếp Quán: hết gạo.</i></dd>
+<dt>Thiếu giao dịch</dt><dd>Nhà có mà chủ không bán ở giá hiện tại. <i>Trong Bếp Quán: món bị bưng vào bếp.</i></dd>
+<dt>Chu kỳ cung trễ pha</dt><dd>Hàng về lúc cầu đã đổi. <i>Trong Bếp Quán: cơm chín lúc khách đã no.</i></dd>
+</dl>
+
+<section class="quiz" id="quiz"><h2>Knowledge check</h2>
+<p style="font-family:var(--font-sans);font-size:14px;color:var(--text-muted)">3 câu. Chọn rồi bấm Chấm điểm.</p>
+<fieldset data-answer="1"><legend>1. Xây đúng 80.000 căn như cầu mà dân phổ thông vẫn thiếu, cao cấp tồn kho. Đây là gì?</legend>
+<label class="quiz__option"><input type="radio" name="q1" value="0"> Thiếu số lượng, cần xây thêm mọi loại</label>
+<label class="quiz__option"><input type="radio" name="q1" value="1"> Mất cân bằng cấu trúc: dư thứ không với tới, thiếu thứ đang cần</label>
+<label class="quiz__option"><input type="radio" name="q1" value="2"> Cầu đã biến mất</label>
+<label class="quiz__option"><input type="radio" name="q1" value="3"> Giá sẽ tự giảm ngay</label>
+<div class="quiz__explanation"><strong>Why:</strong> Tổng cân mà cơ cấu ngược nhu cầu. Kệ đầy món sang, khách cần cơm bình dân.</div></fieldset>
+<fieldset data-answer="1"><legend>2. Vì sao hấp thụ trên 70% mà bài toán nhà ở vẫn chưa được giải?</legend>
+<label class="quiz__option"><input type="radio" name="q2" value="0"> Số liệu hấp thụ sai</label>
+<label class="quiz__option"><input type="radio" name="q2" value="1"> Hấp thụ đo trên rổ đã lệch sang cao cấp</label>
+<label class="quiz__option"><input type="radio" name="q2" value="2"> Dân không còn nhu cầu ở</label>
+<label class="quiz__option"><input type="radio" name="q2" value="3"> Pháp lý đã thông nên cung đã đủ</label>
+<div class="quiz__explanation"><strong>Why:</strong> Rổ lệch bán chạy không xóa cơn đói phổ thông. Kệ vơi khác quán khỏe.</div></fieldset>
+<fieldset data-answer="1"><legend>3. Giá chưa giảm mà giao dịch đã giảm một nửa, chủ rút hàng vì né lỗ. Đây là gì?</legend>
+<label class="quiz__option"><input type="radio" name="q3" value="0"> Thiếu vật lý</label>
+<label class="quiz__option"><input type="radio" name="q3" value="1"> Thiếu giao dịch: nhà còn mà cung chào bán co lại</label>
+<label class="quiz__option"><input type="radio" name="q3" value="2"> Cung co giãn hoàn hảo</label>
+<label class="quiz__option"><input type="radio" name="q3" value="3"> Cầu nền tảng tăng mạnh</label>
+<div class="quiz__explanation"><strong>Why:</strong> Tổng nhà vật lý không mất căn nào, cung chào bán co vì một nhóm chủ rút hàng. Giá phản ứng sau khối lượng. Đây là đọc theo cơ chế Boston, áp thận trọng vì thiếu số liệu trong nước.</div></fieldset>
+<div><button class="btn" id="quizCheck" type="button">Chấm điểm</button> <button class="btn btn--ghost" id="quizReset" type="button">Reset</button><p id="quizScore" style="font-family:var(--font-sans)"></p></div></section>
+
+<h2 id="sources">Sources &amp; further reading</h2>
+<ul style="font-size:14px;font-family:var(--font-sans)">
+<li>Thương Trường 01/2026: cung mới vượt 100.000 căn, ~6% vừa túi tiền. <a href="https://thuongtruong.com.vn/news/lech-pha-cung-cau-thua-nha-cao-cap-thieu-nha-vua-tui-tien-158260.html" target="_blank" rel="noopener">Thương Trường</a> · Nhịp Sống Nhà Đất 03/2026. <a href="https://nhipsongnhadat.vn/thi-truong-bat-dong-san-chua-thoat-lech-pha-cung-cau-san-pham-cao-cap-van-la-chu-dao.html" target="_blank" rel="noopener">NSNĐ</a></li>
+<li>VARS 11/2024: bình dân tuyệt chủng; 65% nguồn mới từ 50tr/m². <a href="https://nhadautu.vn/lech-pha-cung-cau--can-benh-tram-kha-cua-thi-truong-bat-dong-san-d91142.html" target="_blank" rel="noopener">Nhà Đầu Tư</a> · eTime 01/2025. <a href="https://etime.danviet.vn/nguyen-nhan-khien-so-luong-can-ho-hang-sang-lan-at-hoan-toan-nha-o-gia-re-d136628.html" target="_blank" rel="noopener">eTime</a></li>
+<li>Lao Động 01/2025: 86 dự án tồn kho 54.051 căn. <a href="https://laodong.vn/kinh-doanh/van-con-nhieu-du-an-bat-dong-san-cho-thao-go-phap-ly-1445345.ldo" target="_blank" rel="noopener">Lao Động</a> · Dân Trí 05/2026: rà 838 dự án. <a href="https://dantri.com.vn/bat-dong-san/tphcm-mo-chien-dich-go-nghen-phap-ly-hang-tram-du-an-cho-hoi-sinh-20260527183904745.htm" target="_blank" rel="noopener">Dân Trí</a></li>
+<li>Genesove &amp; Mayer (2001), Loss Aversion and Seller Behavior, QJE. <a href="https://doi.org/10.1162/003355301753265561" target="_blank" rel="noopener">DOI</a></li>
+</ul>
+<div style="text-align:center;color:var(--text-muted);font-family:var(--font-sans);font-size:13px;margin-top:40px;border-top:1px solid var(--border);padding-top:16px">Chuỗi Cung–Cầu Bất động sản · Bài 4/6<br><a href="2026-09-09-cung-cau-bds-ai-đứng-ở-hai-phía.html">← Bài 3: Ai ở phe nào</a> · <a href="2026-09-09-cung-cầu-bds-atlas.html">Atlas chuỗi</a> · <a href="2026-09-09-cầu-bds-nhiều-người-cần-chưa-chắc-cầu-mạnh.html">Bài 5: Cần nhà ≠ cầu mạnh →</a><br><span>Nội dung chỉ mang tính tham khảo, không phải khuyến nghị đầu tư. Ngày cập nhật: 2026-09-09.</span></div>
+</main>
+<aside class="marginalia"><div class="sidenote"><strong>Sidenote · Rổ lệch 2025</strong>Cung mới vượt 100.000 căn mà chỉ ~6% vừa túi tiền. 63–80% căn mới từ 50–80 triệu đồng/m² trở lên.</div>
+<div class="sidenote"><strong>Sidenote · Rút hàng Boston</strong>Số Boston: hơn một nửa tin rao bị rút khỏi thị trường từ 6 tháng trở lên. Nhóm lỗ sâu rút nhiều nhất. Số này không bê sang Việt Nam được; giữ lại cơ chế, mức độ trong nước còn là câu hỏi mở.</div>
+<div class="sidenote"><strong>Cách đọc nhanh</strong>Mỗi lần thấy tổng cung: hỏi tỷ trọng vừa túi tiền, pháp lý và thời gian bàn giao. Ba số này mới thấy thực đơn.</div></aside>
+</div>
+<div class="controls"><button class="control-btn" id="topBtn" title="Top">↑</button><button class="control-btn" id="focusBtn" title="Focus">◐</button><button class="control-btn" id="themeBtn" title="Theme">◑</button></div>
+<script>
+document.querySelectorAll('.flip-card').forEach(c=>c.addEventListener('click',()=>c.classList.toggle('is-flipped')));
+document.getElementById('themeBtn').addEventListener('click',()=>{const h=document.documentElement;h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark')});
+document.getElementById('focusBtn').addEventListener('click',()=>document.body.classList.toggle('focus-mode'));
+document.getElementById('topBtn').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+(function(){const t=document.getElementById('toc');document.querySelectorAll('#canvas h2').forEach(h=>{if(!h.id)return;const li=document.createElement('li');const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;li.appendChild(a);t.appendChild(li)})})();
+(function(){const q=document.getElementById('quiz');if(!q)return;const sc=document.getElementById('quizScore');document.getElementById('quizCheck').addEventListener('click',()=>{let c=0,t=0;q.querySelectorAll('fieldset').forEach(fs=>{t++;const a=parseInt(fs.dataset.answer,10);const s=fs.querySelector('input:checked');fs.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));const co=fs.querySelector('input[value="'+a+'"]');if(co)co.closest('.quiz__option').classList.add('correct-answer');if(s&&parseInt(s.value,10)!==a)s.closest('.quiz__option').classList.add('incorrect-answer');if(s&&parseInt(s.value,10)===a)c++});q.classList.add('is-graded');sc.textContent=c+' / '+t+' đúng.'});document.getElementById('quizReset').addEventListener('click',()=>{q.querySelectorAll('input').forEach(i=>i.checked=false);q.querySelectorAll('.quiz__option').forEach(o=>o.classList.remove('correct-answer','incorrect-answer'));q.classList.remove('is-graded');sc.textContent=''})})();
+(function(){let n=0;const b=document.getElementById('hintBtn');if(!b)return;b.addEventListener('click',()=>{n++;const h=document.querySelector('.launchpad__hint[data-hint="'+n+'"]');if(h)h.classList.add('is-visible');b.textContent=n>=3?'Hết gợi ý':'Reveal hint '+(n+1);if(n>=3)b.disabled=true})})();
+</script>
+</body>
+</html>
