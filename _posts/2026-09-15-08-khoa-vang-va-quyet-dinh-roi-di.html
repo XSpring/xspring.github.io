@@ -11,8 +11,2096 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/series.css">
-<link rel="stylesheet" href="assets/series-ui.css">
+<style>
+
+/* ============================================================
+   RESET & TOKENS
+============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+img,svg{max-width:100%;height:auto;display:block}
+
+:root{
+  --font-serif: 'Merriweather', Georgia, serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --bg:            #FDFBF7;
+  --bg-elevated:   #FFFFFF;
+  --bg-sunken:     #F5F1EA;
+  --text:          #2D3748;
+  --text-muted:    #718096;
+  --text-strong:   #1A202C;
+  --accent:        #319795;
+  --accent-strong: #285E61;
+  /* Secondary accent — used for interactive elements (probes, hints, checkpoints)
+     so structural accents (teal) stay visually separate from "try this" accents (amber). */
+  --accent2:        #B7791F;
+  --accent2-strong: #975A16;
+  --accent2-soft:   #FEEBC8;
+  --border:        #E4DFD5;
+  --sidenote-bg:   #EDF2F7;
+  --code-bg:       #EDF2F7;
+  --success:       #38A169;
+  --success-bg:    #C6F6D5;
+  --danger:        #C53030;
+  --danger-bg:     #FED7D7;
+  --warn:          #B7791F;
+  --warn-bg:       #FEEBC8;
+  --info:          #2B6CB0;
+  --info-bg:       #BEE3F8;
+
+  --radius: 10px;
+  --radius-sm: 6px;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.05);
+  --shadow: 0 4px 12px rgba(0,0,0,.08);
+
+  --measure: 65ch;
+  --line: 1.7;
+  --transition: 200ms cubic-bezier(.4,0,.2,1);
+}
+
+html[data-theme="dark"]{
+  --bg:            #1A202C;
+  --bg-elevated:   #2D3748;
+  --bg-sunken:     #171923;
+  --text:          #E2E8F0;
+  --text-muted:    #A0AEC0;
+  --text-strong:   #F7FAFC;
+  --accent:        #4FD1C5;
+  --accent-strong: #81E6D9;
+  --accent2:        #F6AD55;
+  --accent2-strong: #FBD38D;
+  --accent2-soft:   #4A2E14;
+  --border:        #2D3748;
+  --sidenote-bg:   #2A2F3A;
+  --code-bg:       #2A2F3A;
+  --success:       #68D391;
+  --success-bg:    #22543D;
+  --danger:        #FC8181;
+  --danger-bg:     #63171B;
+  --warn:          #F6AD55;
+  --warn-bg:       #7B341E;
+  --info:          #63B3ED;
+  --info-bg:       #2A4365;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3);
+  --shadow: 0 4px 12px rgba(0,0,0,.4);
+}
+
+body{
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: var(--line);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* ============================================================
+   PROGRESS BAR (fixed top)
+============================================================ */
+.progress-bar{
+  position: fixed; top:0; left:0; right:0;
+  height: 3px;
+  background: transparent;
+  z-index: 100;
+}
+.progress-bar__fill{
+  height:100%;
+  width:0%;
+  background: var(--accent);
+  transition: width 80ms linear;
+}
+
+/* ============================================================
+   LAYOUT — 3 column grid
+============================================================ */
+.app{
+  display:grid;
+  grid-template-columns: minmax(220px, 20%) minmax(0, 1fr) minmax(240px, 20%);
+  gap: 48px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px 32px 128px;
+}
+
+.navigator{
+  position: sticky;
+  top: 24px;
+  align-self: start;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding-right: 8px;
+}
+.navigator::-webkit-scrollbar{width:6px}
+.navigator::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+.canvas{
+  max-width: var(--measure);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.marginalia{
+  position: relative;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* Focus mode: collapse side panels */
+body.focus-mode .navigator,
+body.focus-mode .marginalia{
+  display:none;
+}
+body.focus-mode .app{
+  grid-template-columns: 1fr;
+  max-width: 780px;
+}
+
+/* Mobile */
+@media (max-width: 960px){
+  .app{
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px 20px 96px;
+  }
+  .navigator{
+    position: relative;
+    top: 0;
+    max-height: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 16px;
+  }
+  .marginalia{
+    order: 3;
+    border-top: 1px solid var(--border);
+    padding-top: 16px;
+  }
+}
+
+/* ============================================================
+   NAVIGATOR
+============================================================ */
+.navigator__meta{
+  padding: 8px 0 16px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.navigator__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+.navigator__reading-time{
+  color: var(--text);
+  font-size: 13px;
+}
+
+.toc{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.toc li{margin: 2px 0}
+.toc a{
+  display: block;
+  padding: 6px 10px;
+  border-left: 2px solid transparent;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  transition: all var(--transition);
+  line-height: 1.4;
+}
+.toc a:hover{
+  color: var(--text);
+  background: var(--sidenote-bg);
+}
+.toc a.is-active{
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--sidenote-bg);
+  font-weight: 500;
+}
+.toc .toc-l3{ padding-left: 20px; font-size: 13px }
+
+/* ============================================================
+   CANVAS (main reading area)
+============================================================ */
+.canvas h1{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 2.4rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin: 8px 0 16px;
+  letter-spacing: -.02em;
+}
+.canvas h2{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.3;
+  color: var(--text-strong);
+  margin: 56px 0 16px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 24px;
+}
+.canvas h2:first-of-type{ border-top: none; padding-top: 0 }
+.canvas h3{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: var(--text-strong);
+  margin: 32px 0 12px;
+  scroll-margin-top: 24px;
+}
+.canvas p{ margin: 0 0 16px }
+.canvas strong{ color: var(--text-strong); font-weight: 700 }
+.canvas em{ font-style: italic }
+.canvas a{
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.canvas a:hover{ color: var(--accent-strong) }
+
+/* Source citation — subtle inline badge for linked evidence */
+.source{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-left: 4px;
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: var(--sidenote-bg);
+  text-decoration: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  vertical-align: baseline;
+  transition: all var(--transition);
+}
+.source::before{ content: "↗ "; opacity: .6 }
+.source:hover{
+  color: var(--accent);
+  border-color: var(--accent);
+  background: transparent;
+}
+/* Chart caption line — usually holds the data source */
+.bar-chart__caption{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 12px;
+  font-style: italic;
+}
+.bar-chart__caption a{ color: var(--text-muted); text-decoration: underline dotted }
+.bar-chart__caption a:hover{ color: var(--accent) }
+/* Provenance footer — printed when the note was generated without live web tools */
+.provenance-note{
+  margin: 32px 0 0;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  background: var(--sidenote-bg);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  border-left: 3px solid var(--text-muted);
+}
+
+.canvas ul, .canvas ol{
+  margin: 0 0 16px;
+  padding-left: 24px;
+}
+.canvas li{ margin: 4px 0 }
+
+.canvas blockquote{
+  margin: 24px 0;
+  padding: 12px 20px;
+  border-left: 3px solid var(--accent);
+  background: var(--sidenote-bg);
+  color: var(--text);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+}
+
+.canvas code{
+  font-family: var(--font-mono);
+  font-size: .9em;
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+.canvas pre{
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  overflow-x: auto;
+  margin: 24px 0;
+  font-size: 14px;
+  line-height: 1.5;
+  position: relative;
+}
+.canvas pre code{ background: transparent; padding: 0 }
+
+/* TL;DR banner (Part 7.2) — 30-word takeaway above the Hook.
+   Include only when READING_MEDIUM is mobile/print/slide or when the
+   user opted in. Delete the DOM node entirely when not used. */
+.tldr{
+  margin: 16px 0 24px;
+  padding: 14px 20px;
+  background: var(--accent2-soft);
+  border-left: 4px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--text-strong);
+}
+.tldr strong{
+  color: var(--accent2-strong);
+  letter-spacing: .02em;
+}
+
+/* Hook block (curiosity primer at the top) */
+.hook{
+  margin: 24px 0 48px;
+  padding: 24px 28px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+}
+.hook__label{
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Prerequisites and objectives blocks */
+.meta-block{
+  margin: 24px 0;
+  padding: 16px 20px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.meta-block h4{
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  font-weight: 700;
+}
+.meta-block ul{ margin: 0; padding-left: 20px }
+.meta-block li{ margin: 4px 0; color: var(--text) }
+
+/* Callouts */
+.callout{
+  margin: 24px 0;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--info);
+  background: var(--info-bg);
+  font-family: var(--font-sans);
+  font-size: 15px;
+}
+.callout__label{
+  font-weight: 700;
+  display: block;
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+.callout--tip{ border-left-color: var(--success); background: var(--success-bg) }
+.callout--tip .callout__label{ color: var(--success) }
+.callout--warn{ border-left-color: var(--warn); background: var(--warn-bg) }
+.callout--warn .callout__label{ color: var(--warn) }
+.callout--danger{ border-left-color: var(--danger); background: var(--danger-bg) }
+.callout--danger .callout__label{ color: var(--danger) }
+
+/* Feynman check */
+.feynman{
+  margin: 20px 0;
+  padding: 14px 18px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--text);
+  background: transparent;
+}
+.feynman::before{
+  content: "🧒 Explain in one sentence:";
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+/* Tooltips on vocabulary */
+.term{
+  border-bottom: 1px dotted var(--accent);
+  cursor: help;
+  position: relative;
+}
+.term:hover::after{
+  content: attr(data-def);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--text-strong);
+  color: var(--bg);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-style: normal;
+  white-space: normal;
+  width: max-content;
+  max-width: 280px;
+  z-index: 10;
+  box-shadow: var(--shadow);
+  line-height: 1.4;
+}
+
+/* Marginalia sidenotes */
+.sidenote{
+  margin: 24px 0;
+  padding: 12px 14px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+.sidenote strong{ color: var(--text); display: block; margin-bottom: 4px; font-weight: 600 }
+
+/* ============================================================
+   FLIP CARD (active recall)
+============================================================ */
+.flip-card{
+  perspective: 1000px;
+  height: 180px;
+  margin: 24px 0;
+  cursor: pointer;
+}
+.flip-card__inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 500ms cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.flip-card:hover .flip-card__inner,
+.flip-card.is-flipped .flip-card__inner{ transform: rotateY(180deg) }
+
+.flip-card__face{
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  padding: 20px;
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.flip-card__front{
+  background: var(--bg-elevated);
+}
+.flip-card__back{
+  background: var(--accent);
+  color: white;
+  transform: rotateY(180deg);
+}
+.flip-card__label{
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+.flip-card__back .flip-card__label{ color: rgba(255,255,255,.85) }
+.flip-card__content{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   PROGRESSIVE DISCLOSURE (details/summary)
+============================================================ */
+.deep-dive{
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  overflow: hidden;
+}
+.deep-dive > summary{
+  padding: 14px 18px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  user-select: none;
+  transition: background var(--transition);
+}
+.deep-dive > summary::-webkit-details-marker{ display: none }
+.deep-dive > summary::before{
+  content: "▶";
+  color: var(--accent);
+  font-size: 10px;
+  transition: transform var(--transition);
+}
+.deep-dive[open] > summary::before{ transform: rotate(90deg) }
+.deep-dive > summary:hover{ background: var(--sidenote-bg) }
+.deep-dive__label{
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent);
+  margin-right: auto;
+}
+.deep-dive > *:not(summary){
+  padding: 0 18px 16px;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideDown{
+  from{ opacity: 0; transform: translateY(-8px) }
+  to  { opacity: 1; transform: translateY(0) }
+}
+
+/* ============================================================
+   CSS-ONLY BAR CHART
+============================================================ */
+.bar-chart{
+  margin: 32px 0;
+  padding: 20px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.bar-chart__title{
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  margin-bottom: 16px;
+}
+.bar-row{
+  display: grid;
+  grid-template-columns: 140px 1fr 48px;
+  align-items: center;
+  gap: 12px;
+  margin: 10px 0;
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+.bar-label{ color: var(--text) }
+.bar-track{
+  background: var(--sidenote-bg);
+  height: 22px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.bar-fill{
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  border-radius: 4px;
+  transition: width 400ms cubic-bezier(.4,0,.2,1);
+}
+.bar-row:hover .bar-fill{ filter: brightness(1.15) }
+.bar-value{ color: var(--text-muted); font-weight: 600; text-align: right }
+
+@media (max-width: 640px){
+  .bar-row{ grid-template-columns: 100px 1fr 40px; font-size: 13px }
+}
+
+/* ============================================================
+   CONCEPT FLOW (3-step)
+============================================================ */
+.concept-flow{
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: center;
+  gap: 8px;
+  margin: 32px 0;
+}
+.concept-flow__step{
+  padding: 16px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: transform var(--transition), box-shadow var(--transition);
+}
+.concept-flow__step:hover{
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+.concept-flow__num{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 12px;
+  display: block;
+  margin-bottom: 4px;
+}
+.concept-flow__arrow{
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 20px;
+  user-select: none;
+}
+@media (max-width: 640px){
+  .concept-flow{ grid-template-columns: 1fr; }
+  .concept-flow__arrow{ transform: rotate(90deg); justify-self: center }
+}
+
+/* ============================================================
+   GLOSSARY
+============================================================ */
+.glossary{ margin: 32px 0 }
+.glossary dl{ margin: 0 }
+.glossary dt{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-top: 16px;
+  font-size: 15px;
+}
+.glossary dd{
+  margin: 4px 0 0;
+  color: var(--text);
+  font-size: 15px;
+  padding-left: 0;
+}
+
+/* ============================================================
+   QUIZ
+============================================================ */
+.quiz{
+  margin: 56px 0 24px;
+  padding: 32px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.quiz h2{
+  font-family: var(--font-sans);
+  border-top: none;
+  padding-top: 0;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.quiz__intro{
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+.quiz fieldset{
+  border: none;
+  padding: 0;
+  margin: 0 0 28px;
+}
+.quiz legend{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  color: var(--text-strong);
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+.quiz__option{
+  display: block;
+  padding: 12px 16px;
+  margin: 6px 0;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 15px;
+  transition: all var(--transition);
+  position: relative;
+  padding-left: 44px;
+}
+.quiz__option::before{
+  content: "";
+  position: absolute;
+  left: 14px; top: 50%;
+  transform: translateY(-50%);
+  width: 18px; height: 18px;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  transition: all var(--transition);
+}
+.quiz__option:hover{ border-color: var(--accent); background: var(--sidenote-bg) }
+.quiz__option input{
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.quiz__option:has(input:checked){
+  border-color: var(--accent);
+  background: var(--sidenote-bg);
+}
+.quiz__option:has(input:checked)::before{
+  border-color: var(--accent);
+  background: var(--accent);
+  box-shadow: inset 0 0 0 3px var(--bg-elevated);
+}
+.quiz__option.correct-answer{
+  background: var(--success-bg);
+  border-color: var(--success);
+  color: var(--text-strong);
+}
+.quiz__option.correct-answer::before{
+  border-color: var(--success);
+  background: var(--success);
+  box-shadow: inset 0 0 0 3px var(--success-bg);
+}
+.quiz__option.incorrect-answer{
+  background: var(--danger-bg);
+  border-color: var(--danger);
+}
+.quiz__option.incorrect-answer::before{
+  border-color: var(--danger);
+  background: var(--danger);
+  box-shadow: inset 0 0 0 3px var(--danger-bg);
+}
+
+.quiz__explanation{
+  margin-top: 8px;
+  padding: 10px 14px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__explanation{ display: block }
+
+.quiz__actions{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.btn{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--accent);
+  background: var(--accent);
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--transition);
+}
+.btn:hover{ background: var(--accent-strong); border-color: var(--accent-strong) }
+.btn--ghost{ background: transparent; color: var(--accent) }
+.btn--ghost:hover{ background: var(--sidenote-bg); color: var(--accent-strong) }
+
+.quiz__score{
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0;
+  padding: 12px 16px;
+  background: var(--sidenote-bg);
+  border-radius: var(--radius-sm);
+  display: none;
+}
+.quiz.is-graded .quiz__score{ display: block }
+
+/* ============================================================
+   FLOATING CONTROLS
+   Dock at bottom-right. Small circular buttons; the two font-size
+   buttons share a rounded pill so they read as one control group.
+   Back-to-top fades in only after ~400px of scroll (see JS).
+============================================================ */
+.controls{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 50;
+}
+.control-group{
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.control-group .control-btn{
+  width: 44px; height: 36px;
+  border: 0;
+  box-shadow: none;
+  border-radius: 0;
+  background: transparent;
+}
+.control-group .control-btn + .control-btn{ border-top: 1px solid var(--border) }
+.control-btn{
+  width: 44px; height: 44px;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+  color: var(--text);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  transition: opacity var(--transition), transform var(--transition), color var(--transition), background var(--transition);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 0;
+}
+.control-btn:hover{
+  color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+.control-btn:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.control-btn svg{ width: 18px; height: 18px }
+.control-btn[data-active="true"],
+.control-btn[aria-pressed="true"]{ background: var(--accent); color: white; border-color: var(--accent) }
+.control-btn--top{
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+}
+.control-btn--top.is-visible{
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.control-btn--fs span{ font-size: 12px; letter-spacing: -0.02em }
+
+/* Theme icon swap: moon in light mode ("switch to dark"), sun in dark mode
+   ("switch to light"). Selector reads the data-theme attribute on <html>. */
+.control-btn--theme .icon-sun{ display: none }
+html[data-theme="dark"] .control-btn--theme .icon-moon{ display: none }
+html[data-theme="dark"] .control-btn--theme .icon-sun{ display: block }
+
+/* ============================================================
+   FONT SIZE CASCADE
+   Body font-size scales with --reading-scale (JS-driven).
+   Everything else is relative (rem/em), so headings, callouts,
+   sidenotes track. Persists to localStorage.
+============================================================ */
+:root{ --reading-scale: 1 }
+body{ font-size: calc(18px * var(--reading-scale)) }
+
+/* ============================================================
+   READING BADGE
+   Small live badge at bottom-left showing % of the artifact
+   scrolled through. Complements the top progress bar for readers
+   who want a numeric marker.
+============================================================ */
+.reading-badge{
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+  font-family: var(--font-sans);
+  /* Scales with --reading-scale so it stays readable at large body text,
+     but capped so the badge does not dominate at 1.5×. */
+  font-size: min(16px, calc(12px * var(--reading-scale)));
+  color: var(--text-muted);
+  z-index: 50;
+  user-select: none;
+}
+.reading-badge__pct{
+  font-weight: 700;
+  color: var(--accent-strong);
+  font-variant-numeric: tabular-nums;
+}
+.reading-badge__label{ text-transform: uppercase; letter-spacing: .08em }
+
+/* Focus mode hides the badge — the point of focus mode is nothing but text. */
+body.focus-mode .reading-badge{ display: none }
+
+/* ============================================================
+   SHORTCUTS MODAL
+   Overlay dialog with the keyboard-shortcut cheat sheet.
+   Opened via helpBtn or "?"; closed via Escape, click-outside,
+   or the Close button.
+============================================================ */
+.shortcuts{
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 20px;
+}
+.shortcuts[hidden]{ display: none }
+.shortcuts__panel{
+  background: var(--bg-elevated);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  max-width: 460px;
+  width: 100%;
+  box-shadow: 0 12px 40px rgba(0,0,0,.25);
+  font-family: var(--font-sans);
+}
+.shortcuts__panel h3{
+  margin: 0 0 16px;
+  font-size: 16px;
+  color: var(--text-strong);
+}
+.shortcuts__list{
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 8px 20px;
+  margin: 0;
+  font-size: 14px;
+}
+.shortcuts__list dt{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.shortcuts__list dd{ margin: 0; color: var(--text) }
+.shortcuts__list kbd{
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-sunken);
+  color: var(--text);
+  min-width: 20px;
+  text-align: center;
+}
+.shortcuts__hint{
+  margin: 16px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.shortcuts__close{
+  margin-top: 16px;
+  padding: 8px 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-sunken);
+  color: var(--text);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  cursor: pointer;
+}
+.shortcuts__close:hover{ background: var(--accent); color: white; border-color: var(--accent) }
+
+/* ============================================================
+   HEADING ANCHOR-COPY AFFORDANCE
+   Every h2/h3 gets a subtle link-icon on hover; clicking copies
+   the anchor URL. The JS attaches the click handler; the CSS
+   just gives the affordance a hover state.
+============================================================ */
+.canvas h2, .canvas h3{ position: relative; cursor: pointer }
+.canvas h2::after, .canvas h3::after{
+  content: "🔗";
+  position: absolute;
+  left: -28px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  font-size: 14px;
+  transition: opacity var(--transition);
+}
+.canvas h2:hover::after, .canvas h3:hover::after,
+.canvas h2:focus-visible::after, .canvas h3:focus-visible::after{
+  opacity: .6;
+}
+.canvas h2.anchor-copied::after, .canvas h3.anchor-copied::after{
+  content: "✓ copied";
+  opacity: 1;
+  color: var(--accent-strong);
+  font-size: 11px;
+  font-family: var(--font-sans);
+  left: -66px;
+}
+
+/* ============================================================
+   SEARCH BAR — fixed strip at the top of the viewport, opened
+   with "/", slides in from the top. Matches inside #canvas get
+   .search-hit; the current match adds .search-hit--current.
+============================================================ */
+.search-bar{
+  position: fixed;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgba(0,0,0,.15);
+  font-family: var(--font-sans);
+  /* Scales with --reading-scale but capped so the bar never dominates. */
+  font-size: min(18px, calc(14px * var(--reading-scale)));
+  z-index: 90;
+  min-width: 420px;
+  max-width: calc(100vw - 32px);
+}
+.search-bar[hidden]{ display: none }
+.search-bar__icon{ width: 16px; height: 16px; color: var(--text-muted); flex-shrink: 0 }
+.search-bar__input{
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: inherit;
+  color: var(--text);
+  padding: 4px 0;
+  min-width: 0;
+}
+.search-bar__input::placeholder{ color: var(--text-muted); opacity: .7 }
+.search-bar__count{
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+.search-bar__btn{
+  border: 0;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  font: inherit;
+}
+.search-bar__btn:hover{ background: var(--bg-sunken); color: var(--text) }
+
+/* Search matches. The current match gets a stronger highlight. */
+mark.search-hit{
+  background: var(--accent2-soft);
+  color: var(--text-strong);
+  padding: 0 1px;
+  border-radius: 2px;
+}
+mark.search-hit--current{
+  background: var(--accent2);
+  color: white;
+  outline: 2px solid var(--accent2-strong);
+  outline-offset: 1px;
+}
+
+/* ============================================================
+   USER HIGHLIGHTS — reader-selected passages saved to
+   localStorage. Distinct color from search hits so they do not
+   confuse each other. Click a mark to remove it.
+============================================================ */
+.mark-btn{
+  position: absolute;
+  z-index: 80;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  background: var(--text-strong);
+  color: var(--bg-elevated);
+  border: 0;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 4px 12px rgba(0,0,0,.25);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transform: translate(-50%, -100%);
+  margin-top: -8px;
+}
+.mark-btn[hidden]{ display: none }
+.mark-btn svg{ width: 14px; height: 14px }
+.mark-btn:hover{ background: var(--accent-strong) }
+
+mark.user-mark{
+  background: linear-gradient(180deg, transparent 55%, rgba(199, 154, 0, .35) 55%);
+  color: inherit;
+  padding: 0 1px;
+  cursor: pointer;
+  transition: background 200ms;
+}
+mark.user-mark:hover{
+  background: linear-gradient(180deg, transparent 55%, rgba(199, 154, 0, .55) 55%);
+}
+html[data-theme="dark"] mark.user-mark{
+  background: linear-gradient(180deg, transparent 55%, rgba(246, 173, 85, .40) 55%);
+}
+html[data-theme="dark"] mark.user-mark:hover{
+  background: linear-gradient(180deg, transparent 55%, rgba(246, 173, 85, .60) 55%);
+}
+
+/* ============================================================
+   VISITED-SECTION MARKERS — a checkmark next to TOC entries
+   whose heading has been dwelt on for ≥5s cumulative.
+============================================================ */
+.toc a.is-visited::before{
+  content: "✓";
+  color: var(--success);
+  font-size: 11px;
+  margin-right: 4px;
+  font-weight: 700;
+}
+
+/* Shortcuts modal — action buttons under the hint. */
+.shortcuts__actions{
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.shortcuts__link{
+  border: 0;
+  background: transparent;
+  color: var(--accent-strong);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  padding: 0;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.shortcuts__link:hover{ color: var(--danger) }
+
+/* Mobile: shrink and re-anchor the badge; hide anchor-copy icons */
+@media (max-width: 720px){
+  .controls{ bottom: 16px; right: 16px; gap: 6px }
+  .control-btn{ width: 40px; height: 40px }
+  .control-group .control-btn{ height: 32px }
+  .reading-badge{ bottom: 16px; left: 16px; font-size: 11px; padding: 4px 10px }
+  .canvas h2::after, .canvas h3::after{ display: none }
+  .search-bar{ min-width: 0; width: calc(100vw - 32px); left: 16px; transform: none }
+  .search-bar__input::placeholder{ font-size: 12px }
+}
+
+/* ============================================================
+   PRINT (Part 7.8)
+   Hide every interactive control, unfold every collapsible so
+   answers/probes/deep-dives print inline, prevent callouts from
+   splitting across pages, and append link URLs after each link
+   so a print reader can still follow references.
+============================================================ */
+@media print{
+  html, body{ background: white; color: black; font-size: 12pt }
+  .app{ display: block; max-width: none; padding: 0; margin: 0 }
+  .canvas{ max-width: none; width: 100% }
+  /* Hide all interactive chrome. */
+  .navigator, .marginalia, .controls, .progress-bar,
+  .reading-badge, .shortcuts, .search-bar, .mark-btn,
+  .quiz__actions, .orbit, .checkpoint__actions{ display: none !important }
+  /* Search-hit highlights: printed as plain text — no colored background. */
+  mark.search-hit, mark.search-hit--current{ background: transparent; color: inherit; outline: none }
+  /* Unfold every collapsible so answers, probes, deep-dives print inline. */
+  details{ display: block !important }
+  details > summary{ display: block; font-weight: 700; margin-bottom: 6px; cursor: default; list-style: none }
+  details > summary::-webkit-details-marker{ display: none }
+  details[open] > *,
+  details:not([open]) > *{ display: revert !important }
+  /* Flip cards: static, both faces visible. */
+  .flip-card{ height: auto }
+  .flip-card__inner{ transform: none !important; height: auto }
+  .flip-card__face{ position: static; padding: 8px 0; box-shadow: none; border: none }
+  .flip-card__back{ display: block; background: white; color: black }
+  /* Never split a callout or a scaffold row across pages. */
+  .hook, .tldr, .premortem, .checkpoint, .scaffold, .feynman, .callout,
+  .knowledge-check__q, .quiz__q, .misconception{ break-inside: avoid }
+  .canvas h1, .canvas h2, .canvas h3{ break-after: avoid; page-break-after: avoid }
+  .deep-dive[open] > *:not(summary){ animation: none }
+  /* Show link targets in print — the reader loses hover. Add class
+     `print-url-hide` on any link whose visible text is already the URL,
+     so the URL does not print twice. */
+  a{ color: black; text-decoration: underline }
+  a[href^="http"]:not(.print-url-hide)::after{ content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all }
+}
+
+/* ============================================================
+   PHASE ORBIT (6-node progress in left navigator)
+============================================================ */
+.orbit{
+  margin: 0 0 20px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.orbit__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--text-muted);
+  margin: 0 0 10px;
+}
+.orbit__track{
+  position: relative;
+  padding-left: 22px;
+}
+.orbit__track::before{
+  content: "";
+  position: absolute;
+  left: 6px; top: 6px; bottom: 6px;
+  width: 2px;
+  background: var(--border);
+}
+.orbit__node{
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 8px 0;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 12px;
+  cursor: pointer;
+  transition: color var(--transition);
+  user-select: none;
+}
+.orbit__node::before{
+  content: "";
+  position: absolute;
+  left: -22px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--bg-elevated);
+  border: 2px solid var(--border);
+  transition: all var(--transition);
+  box-sizing: border-box;
+}
+.orbit__node[data-reached="true"]::before{
+  background: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.orbit__node[data-active="true"]{
+  color: var(--text-strong);
+  font-weight: 600;
+}
+.orbit__node[data-active="true"]::before{
+  transform: scale(1.15);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.orbit__node:hover{ color: var(--text) }
+
+/* ============================================================
+   MISCONCEPTION PRE-MORTEM (State 2 tail)
+============================================================ */
+.premortem{
+  margin: 24px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--accent2-soft);
+  border-left: 4px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text);
+}
+.premortem__label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 8px;
+}
+.premortem__wrong{ text-decoration: line-through; color: var(--text-muted) }
+.premortem__truth{ font-weight: 600; color: var(--text-strong) }
+
+/* ============================================================
+   SCAFFOLD CARD (S/I/P/R micro-loop, State 3)
+============================================================ */
+.scaffold{
+  margin: 28px 0;
+  padding: 20px 24px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+}
+.scaffold__concept{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text-strong);
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.scaffold__concept::before{
+  content: "◆";
+  color: var(--accent);
+  font-size: 12px;
+}
+.scaffold__row{
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 12px 16px;
+  margin: 12px 0;
+  align-items: start;
+}
+.scaffold__row-label{
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-top: 4px;
+}
+.scaffold__row-body{ font-size: 15px; line-height: 1.65 }
+.scaffold__row-body p:last-child{ margin-bottom: 0 }
+
+/* Probe/Resolve details — nested within the scaffold card */
+.scaffold__probe{
+  margin: 8px 0 0;
+  border: 1px dashed var(--accent2);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  overflow: hidden;
+}
+.scaffold__probe > summary{
+  padding: 12px 14px;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent2-strong);
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  user-select: none;
+  transition: background var(--transition);
+}
+.scaffold__probe > summary::-webkit-details-marker{ display: none }
+.scaffold__probe > summary::before{
+  content: "🤔 Probe";
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2-soft);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--accent2-strong);
+}
+.scaffold__probe[open] > summary::after{
+  content: "";
+  position: absolute;
+}
+.scaffold__probe > summary:hover{ background: var(--accent2-soft) }
+.scaffold__resolve{
+  padding: 12px 14px 14px 14px;
+  background: var(--accent2-soft);
+  border-top: 1px solid var(--accent2);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.scaffold__resolve::before{
+  content: "💡 Resolve";
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: var(--accent2);
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINT (textarea + reveal)
+============================================================ */
+.checkpoint{
+  margin: 32px 0;
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+}
+.checkpoint__label{
+  display: block;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.checkpoint__question{
+  font-family: var(--font-sans);
+  font-size: 15px;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.5;
+}
+.checkpoint textarea{
+  width: 100%;
+  min-height: 90px;
+  padding: 12px 14px;
+  font-family: var(--font-serif);
+  font-size: 15px;
+  line-height: 1.5;
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  resize: vertical;
+  transition: border-color var(--transition);
+  box-sizing: border-box;
+}
+.checkpoint textarea:focus{
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 20%, transparent);
+}
+.checkpoint__actions{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.checkpoint__expert{
+  margin-top: 14px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--accent);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  display: none;
+}
+.checkpoint.is-revealed .checkpoint__expert{ display: block; animation: slideDown 300ms cubic-bezier(.4,0,.2,1) }
+.checkpoint__expert-label{
+  display: block;
+  font-weight: 700;
+  color: var(--accent);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 4px;
+}
+.checkpoint__saved{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ============================================================
+   LAUNCH PAD (Extension Problem, State 6)
+============================================================ */
+.launchpad{
+  margin: 48px 0 24px;
+  padding: 28px 32px;
+  background: linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.launchpad::before{
+  content: "🚀";
+  position: absolute;
+  top: -16px; right: -8px;
+  font-size: 96px;
+  opacity: .06;
+  transform: rotate(-15deg);
+  pointer-events: none;
+}
+.launchpad__label{
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: var(--accent2);
+  color: white;
+  font-family: var(--font-sans);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.launchpad__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  line-height: 1.3;
+}
+.launchpad__problem{
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text);
+  margin: 0 0 24px;
+}
+.launchpad__hints{
+  border-top: 1px dashed var(--border);
+  padding-top: 20px;
+  font-family: var(--font-sans);
+}
+.launchpad__hints-label{
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 12px;
+  display: block;
+}
+.launchpad__hint{
+  margin: 10px 0;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-left: 3px solid var(--accent2);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text);
+  display: none;
+  animation: slideDown 300ms cubic-bezier(.4,0,.2,1);
+}
+.launchpad__hint.is-visible{ display: block }
+.launchpad__hint-label{
+  display: block;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 4px;
+  letter-spacing: .08em;
+}
+.launchpad__reveal{
+  padding: 8px 16px;
+  background: transparent;
+  border: 1px solid var(--accent2);
+  color: var(--accent2-strong);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all var(--transition);
+}
+.launchpad__reveal:hover{
+  background: var(--accent2);
+  color: white;
+}
+.launchpad__reveal:disabled{
+  opacity: .4;
+  cursor: not-allowed;
+  background: transparent;
+  color: var(--text-muted);
+  border-color: var(--border);
+}
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER (right-panel hover-to-elaborate)
+============================================================ */
+/* Terms in the canvas that are wired to amplifier notes */
+.canvas .term-amp{
+  border-bottom: 1px dashed var(--accent2);
+  cursor: help;
+  transition: background var(--transition);
+}
+.canvas .term-amp:hover,
+.canvas .term-amp.is-active{
+  background: var(--accent2-soft);
+  border-bottom-color: var(--accent2-strong);
+}
+/* The sticky slot at the top of the marginalia column */
+.amplifier{
+  position: sticky;
+  top: 24px;
+  margin: 0 0 24px;
+  padding: 16px 18px;
+  background: var(--accent2-soft);
+  border: 1px solid var(--accent2);
+  border-radius: var(--radius);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text);
+  min-height: 96px;
+  transition: opacity var(--transition);
+}
+.amplifier__label{
+  display: block;
+  font-weight: 700;
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent2-strong);
+  margin-bottom: 6px;
+}
+.amplifier__term{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--text-strong);
+  margin-bottom: 6px;
+  display: block;
+  font-size: 14px;
+}
+.amplifier__body{ margin: 0 }
+.amplifier__empty{ color: var(--text-muted); font-style: italic }
+/* Hidden data pool — right-panel notes stored here, activated by JS */
+.amp-notes{ display: none }
+
+/* ============================================================
+   MISC
+============================================================ */
+.footer{
+  max-width: var(--measure);
+  margin: 64px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  text-align: center;
+}
+.kbd{
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 1px 6px;
+  border: 1px solid var(--border);
+  border-bottom-width: 2px;
+  border-radius: 4px;
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+
+/* (Print styles consolidated above in the PRINT (Part 7.8) block.) */
+</style>
+<style>
+/* ============================================================
+   SERIES UI — layered on top of series.css (extracted from the
+   educational-notes HTML template). Adds the shared chrome that
+   turns a single artifact into a linked 7-node series:
+   top series bar, node badge, prev/next, shared footer, atlas hub.
+   ============================================================ */
+
+/* ---------- TOP SERIES BAR (sticky) ---------- */
+.series-bar{
+  position: sticky;
+  top: 0;
+  z-index: 70;
+  background: color-mix(in srgb, var(--bg-elevated) 92%, transparent);
+  backdrop-filter: saturate(140%) blur(8px);
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 13px;
+}
+.series-bar__inner{
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 9px 32px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.series-bar__home{
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  white-space: nowrap;
+}
+.series-bar__home:hover{ color: var(--accent-strong) }
+.series-bar__sep{ color: var(--text-muted); opacity: .6 }
+.series-bar__current{ color: var(--text); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis }
+.series-bar__nav{ margin-left: auto; display: flex; align-items: center; gap: 6px }
+.series-bar__link{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all var(--transition);
+}
+.series-bar__link:hover{ border-color: var(--accent); color: var(--accent); background: var(--sidenote-bg) }
+.series-bar__link[aria-disabled="true"]{ opacity: .35; pointer-events: none }
+
+/* ---------- NODE BADGE (under the h1) ---------- */
+.node-badge{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--accent-strong);
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  margin: 0 0 14px;
+}
+.node-badge__num{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 11px;
+}
+.node-kicker{
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: -6px 0 18px;
+}
+
+/* ---------- PREV / NEXT ---------- */
+.prevnext{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 48px 0 8px;
+  font-family: var(--font-sans);
+}
+.prevnext__item{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  text-decoration: none;
+  color: var(--text);
+  transition: all var(--transition);
+  min-height: 74px;
+  justify-content: center;
+}
+.prevnext__item:hover{ border-color: var(--accent); box-shadow: var(--shadow-sm) }
+.prevnext__item--next{ text-align: right; align-items: flex-end }
+.prevnext__dir{
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.prevnext__title{ font-size: 14px; font-weight: 600; color: var(--text-strong); line-height: 1.35 }
+.prevnext__item--empty{ opacity: .35; pointer-events: none }
+@media (max-width: 640px){ .prevnext{ grid-template-columns: 1fr } .prevnext__item--next{ text-align: left; align-items: flex-start } }
+
+/* ---------- SHARED SERIES FOOTER ---------- */
+.series-footer{
+  max-width: var(--measure);
+  margin: 48px auto 0;
+  padding: 24px 0 8px;
+  border-top: 2px solid var(--border);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.series-footer__series{
+  font-weight: 700;
+  color: var(--text-strong);
+  font-size: 14px;
+  margin: 0 0 4px;
+}
+.series-footer__desc{ margin: 0 0 14px; line-height: 1.5 }
+.series-footer__tags{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0 0 16px;
+  padding: 0;
+  list-style: none;
+}
+.series-footer__tags li{
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+.series-footer__links{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  margin: 0 0 14px;
+  padding: 0;
+  list-style: none;
+}
+.series-footer__links a{ color: var(--accent); text-decoration: none; font-weight: 600 }
+.series-footer__links a:hover{ text-decoration: underline }
+.series-footer__meta{
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.series-footer__meta a{ color: var(--text-muted) }
+
+/* ---------- ATLAS / INDEX HUB ---------- */
+.atlas-hero{
+  padding: 28px 30px;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  box-shadow: var(--shadow-sm);
+  margin: 8px 0 32px;
+}
+.atlas-hero__kicker{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+.atlas-hero__title{
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 2rem;
+  line-height: 1.2;
+  color: var(--text-strong);
+  margin: 0 0 12px;
+  letter-spacing: -.02em;
+}
+.atlas-hero__sub{ font-size: 1.05rem; color: var(--text); margin: 0 0 16px; max-width: 60ch }
+.atlas-stats{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+.atlas-stat{
+  font-family: var(--font-sans);
+  font-size: 12px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--sidenote-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+.atlas-stat strong{ color: var(--accent-strong) }
+
+.atlas-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+  padding: 0;
+  list-style: none;
+}
+.atlas-card{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-elevated);
+  text-decoration: none;
+  color: var(--text);
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  position: relative;
+}
+.atlas-card:hover{ transform: translateY(-3px); box-shadow: var(--shadow); border-color: var(--accent) }
+.atlas-card__top{ display: flex; align-items: center; gap: 10px }
+.atlas-card__num{
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--accent); color: white;
+  font-family: var(--font-sans); font-size: 12px; font-weight: 700; flex-shrink: 0;
+}
+.atlas-card__kicker{
+  font-family: var(--font-sans); font-size: 11px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
+}
+.atlas-card__title{
+  font-family: var(--font-sans); font-weight: 700; font-size: 1.05rem;
+  color: var(--text-strong); line-height: 1.3; margin: 0;
+}
+.atlas-card__desc{ font-size: 14px; line-height: 1.55; margin: 0; color: var(--text) }
+.atlas-card__cta{
+  font-family: var(--font-sans); font-size: 12px; font-weight: 700;
+  color: var(--accent); margin-top: auto; padding-top: 6px;
+}
+.atlas-card--read{ border-color: var(--accent); background: linear-gradient(135deg, var(--bg-elevated), var(--sidenote-bg)) }
+
+.path-list{
+  counter-reset: path;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  font-family: var(--font-sans);
+}
+.path-list > li{
+  position: relative;
+  padding: 12px 16px 12px 54px;
+  border-left: 2px solid var(--border);
+  margin-left: 14px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.path-list > li::before{
+  counter-increment: path;
+  content: counter(path);
+  position: absolute;
+  left: -14px; top: 10px;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.path-list > li strong{ color: var(--text-strong) }
+
+.audience-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-sans);
+  font-size: 13.5px;
+  margin: 20px 0;
+}
+.audience-table th, .audience-table td{
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.audience-table th{
+  font-size: 11px; text-transform: uppercase; letter-spacing: .06em;
+  color: var(--text-muted); font-weight: 700;
+}
+.audience-table tr:hover td{ background: var(--sidenote-bg) }
+.audience-table a{ color: var(--accent); font-weight: 600; text-decoration: none }
+.audience-table a:hover{ text-decoration: underline }
+
+/* ---------- INLINE SERIES CROSS-LINK ---------- */
+.xlink{
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+  border-bottom: 1px dotted var(--accent);
+}
+.xlink:hover{ color: var(--accent-strong); border-bottom-style: solid }
+
+/* ---------- PRINT ---------- */
+@media print{
+  .series-bar, .prevnext, .series-footer__links{ display: none !important }
+  .series-footer{ border-top-width: 1px }
+}
+</style>
 </head>
 <body>
 
@@ -485,6 +2573,914 @@
   </div>
 </div>
 
-<script src="assets/series.js"></script>
+<script>
+
+/* ============================================================
+   PERSISTENCE — theme + reading position + quiz state
+   Uses localStorage. This file is saved to disk and opened
+   directly in a browser, so localStorage is available.
+============================================================ */
+const STORAGE_KEY = 'edu-notes:' + (document.title || 'untitled');
+const store = {
+  get(k){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY + ':' + k)); }catch{ return null; } },
+  set(k,v){ try{ localStorage.setItem(STORAGE_KEY + ':' + k, JSON.stringify(v)); }catch{} },
+};
+
+/* ============================================================
+   THEME
+============================================================ */
+(function initTheme(){
+  const saved = store.get('theme');
+  if(saved) document.documentElement.setAttribute('data-theme', saved);
+  else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches){
+    document.documentElement.setAttribute('data-theme','dark');
+  }
+})();
+document.getElementById('themeBtn').addEventListener('click', () => {
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  store.set('theme', next);
+});
+
+/* ============================================================
+   FOCUS MODE
+============================================================ */
+(function initFocus(){
+  if(store.get('focus')){
+    document.body.classList.add('focus-mode');
+    const btn = document.getElementById('focusBtn');
+    btn.setAttribute('data-active','true');
+    btn.setAttribute('aria-pressed','true');
+  }
+})();
+document.getElementById('focusBtn').addEventListener('click', () => {
+  document.body.classList.toggle('focus-mode');
+  const on = document.body.classList.contains('focus-mode');
+  const btn = document.getElementById('focusBtn');
+  btn.setAttribute('data-active', on ? 'true' : 'false');
+  btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  store.set('focus', on);
+});
+
+/* ============================================================
+   FONT SIZE — five steps, driven by --reading-scale on :root
+   0.88 / 1.00 / 1.15 / 1.30 / 1.50. Wraps at ends (no cycle).
+   Persists per-artifact as 'font'. `0` key resets to 1.00.
+============================================================ */
+const FONT_STEPS = [0.88, 1.00, 1.15, 1.30, 1.50];
+function applyFontStep(idx){
+  const step = FONT_STEPS[Math.max(0, Math.min(FONT_STEPS.length - 1, idx))];
+  document.documentElement.style.setProperty('--reading-scale', step);
+  store.set('font', idx);
+}
+(function initFont(){
+  const saved = store.get('font');
+  applyFontStep(typeof saved === 'number' ? saved : 1);
+})();
+document.getElementById('fontUpBtn').addEventListener('click', () => {
+  const cur = store.get('font');
+  applyFontStep((typeof cur === 'number' ? cur : 1) + 1);
+});
+document.getElementById('fontDownBtn').addEventListener('click', () => {
+  const cur = store.get('font');
+  applyFontStep((typeof cur === 'number' ? cur : 1) - 1);
+});
+
+/* ============================================================
+   BACK TO TOP — fades in after 400px of scroll; smooth-scrolls.
+============================================================ */
+(function initTopBtn(){
+  const btn = document.getElementById('topBtn');
+  function update(){
+    if(window.scrollY > 400) btn.classList.add('is-visible');
+    else btn.classList.remove('is-visible');
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  update();
+})();
+
+/* ============================================================
+   PRINT BUTTON — same effect as the P shortcut.
+============================================================ */
+document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+/* ============================================================
+   SHORTCUTS MODAL — open with helpBtn or "?", close with Esc,
+   click-outside, or the Close button. Focus is trapped
+   passively — Esc always closes.
+============================================================ */
+(function initHelp(){
+  const dlg = document.getElementById('shortcuts');
+  const openBtn = document.getElementById('helpBtn');
+  const closeBtn = document.getElementById('shortcutsClose');
+  function open(){ dlg.hidden = false; closeBtn.focus(); }
+  function close(){ dlg.hidden = true; openBtn.focus(); }
+  openBtn.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  dlg.addEventListener('click', e => { if(e.target === dlg) close(); });
+  window.helpDialog = { open, close, toggle: () => dlg.hidden ? open() : close() };
+})();
+
+/* ============================================================
+   HEADING ANCHOR COPY — click any h2/h3 to copy its anchor URL.
+   Falls back gracefully when the Clipboard API is unavailable.
+============================================================ */
+(function initAnchorCopy(){
+  document.querySelectorAll('#canvas h2, #canvas h3').forEach(h => {
+    h.addEventListener('click', async e => {
+      if(!h.id) return;
+      const url = window.location.href.split('#')[0] + '#' + h.id;
+      try{ await navigator.clipboard.writeText(url); }
+      catch{
+        const ta = document.createElement('textarea');
+        ta.value = url; document.body.appendChild(ta); ta.select();
+        try{ document.execCommand('copy'); }catch{}
+        ta.remove();
+      }
+      h.classList.add('anchor-copied');
+      setTimeout(() => h.classList.remove('anchor-copied'), 1400);
+    });
+  });
+})();
+
+/* ============================================================
+   PRINT-URL DEDUP — auto-mark links whose visible text is already
+   the URL, so the @media print rule does not print it twice.
+   Runs once at load; new links added by the reader would need a
+   re-run, but the template does not add links dynamically.
+============================================================ */
+(function markSelfLabeledLinks(){
+  document.querySelectorAll('#canvas a[href^="http"]').forEach(a => {
+    const label = (a.textContent || '').trim();
+    const href = a.getAttribute('href') || '';
+    // "self-labeled" if the text matches the href, or is the href
+    // minus a trailing slash / minus the protocol.
+    const stripped = href.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    const labelStripped = label.replace(/^https?:\/\//, '').replace(/\/$/, '');
+    if(label === href || labelStripped === stripped){
+      a.classList.add('print-url-hide');
+    }
+  });
+})();
+
+/* ============================================================
+   TABLE OF CONTENTS — auto-generate from h2/h3
+============================================================ */
+(function buildTOC(){
+  const canvas = document.getElementById('canvas');
+  const toc = document.getElementById('toc');
+  const headings = canvas.querySelectorAll('h2, h3');
+  headings.forEach(h => {
+    if(!h.id){
+      h.id = h.textContent.toLowerCase()
+        .replace(/[^a-z0-9\s-]/g,'')
+        .trim().replace(/\s+/g,'-').slice(0,60);
+    }
+    const li = document.createElement('li');
+    if(h.tagName === 'H3') li.className = 'toc-l3';
+    const a = document.createElement('a');
+    a.href = '#' + h.id;
+    a.textContent = h.textContent;
+    li.appendChild(a);
+    toc.appendChild(li);
+  });
+})();
+
+/* ============================================================
+   INTERSECTION OBSERVER — highlight current section
+============================================================ */
+(function initObserver(){
+  const links = document.querySelectorAll('.toc a');
+  const map = new Map();
+  links.forEach(a => map.set(a.getAttribute('href').slice(1), a));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const link = map.get(e.target.id);
+      if(!link) return;
+      if(e.isIntersecting){
+        document.querySelectorAll('.toc a.is-active').forEach(l => l.classList.remove('is-active'));
+        link.classList.add('is-active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+  document.querySelectorAll('#canvas h2, #canvas h3').forEach(h => observer.observe(h));
+})();
+
+/* ============================================================
+   PROGRESS BAR + reading badge + position restore
+   The badge and the top bar share the same scroll listener so
+   they stay in sync without adding a second observer.
+============================================================ */
+(function initProgress(){
+  const fill = document.getElementById('progressFill');
+  const pctEl = document.getElementById('readingPct');
+  let scrollThrottle = null;
+  function update(){
+    const scrolled = window.scrollY;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    fill.style.width = pct + '%';
+    if(pctEl) pctEl.textContent = Math.round(pct) + '%';
+    // Throttle localStorage writes — every scroll event is too many.
+    if(scrollThrottle) return;
+    scrollThrottle = setTimeout(() => {
+      store.set('scroll', window.scrollY);
+      scrollThrottle = null;
+    }, 250);
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  update();
+  // Restore prior position after a beat so layout settles.
+  const saved = store.get('scroll');
+  if(typeof saved === 'number' && saved > 100){
+    setTimeout(() => window.scrollTo({ top: saved, behavior: 'instant' }), 60);
+  }
+})();
+
+/* ============================================================
+   FLIP CARDS — click + keyboard support
+============================================================ */
+document.querySelectorAll('.flip-card').forEach(card => {
+  card.addEventListener('click', () => card.classList.toggle('is-flipped'));
+  card.addEventListener('keydown', e => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      card.classList.toggle('is-flipped');
+    }
+  });
+});
+
+/* ============================================================
+   QUIZ — auto grade + persist
+============================================================ */
+(function initQuiz(){
+  const quiz = document.getElementById('quiz');
+  if(!quiz) return;
+  const check = document.getElementById('quizCheck');
+  const reset = document.getElementById('quizReset');
+  const score = document.getElementById('quizScore');
+
+  // Restore prior answers
+  const prior = store.get('quiz') || {};
+  Object.entries(prior).forEach(([name, val]) => {
+    const input = quiz.querySelector(`input[name="${name}"][value="${val}"]`);
+    if(input) input.checked = true;
+  });
+
+  quiz.addEventListener('change', () => {
+    const state = {};
+    quiz.querySelectorAll('input[type=radio]:checked').forEach(i => state[i.name] = i.value);
+    store.set('quiz', state);
+  });
+
+  check.addEventListener('click', () => {
+    let correct = 0, total = 0;
+    quiz.querySelectorAll('fieldset').forEach(fs => {
+      const answer = parseInt(fs.dataset.answer, 10);
+      const selected = fs.querySelector('input:checked');
+      total++;
+      // Reset styling on all options first
+      fs.querySelectorAll('.quiz__option').forEach(o => {
+        o.classList.remove('correct-answer','incorrect-answer');
+      });
+      // Mark the correct one green
+      const correctOption = fs.querySelector(`input[value="${answer}"]`);
+      if(correctOption) correctOption.closest('.quiz__option').classList.add('correct-answer');
+      // If the user picked wrong, mark theirs red
+      if(selected && parseInt(selected.value, 10) !== answer){
+        selected.closest('.quiz__option').classList.add('incorrect-answer');
+      }
+      if(selected && parseInt(selected.value, 10) === answer) correct++;
+    });
+    quiz.classList.add('is-graded');
+    const pct = Math.round((correct / total) * 100);
+    let msg = `${correct} / ${total} correct (${pct}%)`;
+    if(pct === 100) msg += ' — 🎯 nailed it';
+    else if(pct >= 66) msg += ' — solid';
+    else msg += ' — worth another pass through the boundaries section';
+    score.textContent = msg;
+  });
+
+  reset.addEventListener('click', () => {
+    quiz.querySelectorAll('input[type=radio]').forEach(i => i.checked = false);
+    quiz.querySelectorAll('.quiz__option').forEach(o => o.classList.remove('correct-answer','incorrect-answer'));
+    quiz.classList.remove('is-graded');
+    score.textContent = '';
+    store.set('quiz', {});
+  });
+})();
+
+/* ============================================================
+   KEYBOARD SHORTCUTS
+   Ignored inside form fields. Metakeys skip so browser shortcuts
+   (Ctrl-F find, Cmd-P print) still work as expected.
+
+   Vim-style: pressing `g` waits ~500ms for a second `g` (top of
+   page). Shift-G goes to bottom. `n`/`p` jump between headings.
+============================================================ */
+(function initShortcuts(){
+  const dlg = document.getElementById('shortcuts');
+  let gPending = false;
+  let gTimer = null;
+
+  function scrollToTop(){ window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  function scrollToBottom(){ window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' }); }
+
+  function headings(){ return Array.from(document.querySelectorAll('#canvas h2, #canvas h3')); }
+  function currentHeadingIndex(){
+    const hs = headings();
+    const y = window.scrollY + 80;
+    let idx = -1;
+    hs.forEach((h, i) => { if(h.getBoundingClientRect().top + window.scrollY <= y) idx = i; });
+    return { hs, idx };
+  }
+  function jumpHeading(delta){
+    const { hs, idx } = currentHeadingIndex();
+    const next = Math.max(0, Math.min(hs.length - 1, idx + delta));
+    if(hs[next]) hs[next].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.addEventListener('keydown', e => {
+    // Never intercept in form controls, in editable elements, or with modifiers.
+    if(e.target.matches('input, textarea, select')) return;
+    if(e.target.isContentEditable) return;
+    if(e.metaKey || e.ctrlKey || e.altKey) return;
+
+    // Escape closes the shortcuts dialog if open.
+    if(e.key === 'Escape' && !dlg.hidden){
+      window.helpDialog.close();
+      e.preventDefault();
+      return;
+    }
+
+    const k = e.key;
+    switch(k){
+      case 'j': window.scrollBy({ top: 200, behavior: 'smooth' }); break;
+      case 'k': window.scrollBy({ top: -200, behavior: 'smooth' }); break;
+      case 'f': document.getElementById('focusBtn').click(); break;
+      case 't': document.getElementById('themeBtn').click(); break;
+      case 'P': window.print(); break;                       // Shift-P prints
+      case 'n': jumpHeading(1); break;                       // n → next heading
+      case 'p': jumpHeading(-1); break;                      // p → previous heading
+      case '+': case '=': document.getElementById('fontUpBtn').click(); break;
+      case '-': case '_': document.getElementById('fontDownBtn').click(); break;
+      case '0': applyFontStep(1); break;                     // 0 → reset font
+      case '?': window.helpDialog.toggle(); e.preventDefault(); break;
+      case '/':                                              // / → open search
+        if(window.searchBar){ window.searchBar.open(); e.preventDefault(); }
+        break;
+      case 'Home': scrollToTop(); e.preventDefault(); break;
+      case 'End': scrollToBottom(); e.preventDefault(); break;
+      case 'G': scrollToBottom(); break;                     // Shift-G → bottom
+      case 'g':                                              // g g → top
+        if(gPending){
+          clearTimeout(gTimer); gPending = false;
+          scrollToTop();
+        } else {
+          gPending = true;
+          gTimer = setTimeout(() => { gPending = false; }, 500);
+        }
+        break;
+    }
+  });
+})();
+
+/* ============================================================
+   SEARCH-WITHIN-PAGE
+   / opens the bar; typing highlights every match inside #canvas;
+   Enter jumps to next, Shift-Enter to previous; Esc closes.
+   Auto-expands any <details> containing a match so the reader
+   sees hidden content (S/I/P/R probes, deep-dive expansions).
+============================================================ */
+(function initSearch(){
+  const bar = document.getElementById('searchBar');
+  const input = document.getElementById('searchInput');
+  const count = document.getElementById('searchCount');
+  const btnPrev = document.getElementById('searchPrev');
+  const btnNext = document.getElementById('searchNext');
+  const btnClose = document.getElementById('searchClose');
+  const btnOpen = document.getElementById('searchBtn');
+  const canvas = document.getElementById('canvas');
+  if(!bar || !canvas) return;
+
+  let hits = [];       // DOM <mark class="search-hit"> nodes
+  let cursor = -1;
+  let lastQuery = '';
+  let openedDetails = []; // details we auto-opened so we can leave them alone if user closes them
+
+  function clearHits(){
+    hits.forEach(m => {
+      const parent = m.parentNode;
+      if(!parent) return;
+      parent.replaceChild(document.createTextNode(m.textContent), m);
+      parent.normalize();
+    });
+    hits = [];
+    cursor = -1;
+    updateCount();
+  }
+  function updateCount(){
+    if(!hits.length) count.textContent = lastQuery ? '0 / 0' : '';
+    else count.textContent = (cursor + 1) + ' / ' + hits.length;
+  }
+  function markMatches(query){
+    if(!query || query.length < 2) return;
+    const q = query.toLowerCase();
+    // Walk text nodes inside canvas, skipping our own marks and script/style.
+    const walker = document.createTreeWalker(canvas, NodeFilter.SHOW_TEXT, {
+      acceptNode(node){
+        if(!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        let p = node.parentNode;
+        while(p && p !== canvas){
+          if(p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+          if(p.classList && (p.classList.contains('search-hit') || p.classList.contains('search-hit--current'))) return NodeFilter.FILTER_REJECT;
+          p = p.parentNode;
+        }
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    const targets = [];
+    while(walker.nextNode()) targets.push(walker.currentNode);
+    targets.forEach(node => {
+      const text = node.nodeValue;
+      const lower = text.toLowerCase();
+      let start = 0, idx;
+      const frag = document.createDocumentFragment();
+      let matched = false;
+      while((idx = lower.indexOf(q, start)) !== -1){
+        matched = true;
+        if(idx > start) frag.appendChild(document.createTextNode(text.slice(start, idx)));
+        const mk = document.createElement('mark');
+        mk.className = 'search-hit';
+        mk.textContent = text.slice(idx, idx + q.length);
+        frag.appendChild(mk);
+        hits.push(mk);
+        start = idx + q.length;
+      }
+      if(!matched) return;
+      if(start < text.length) frag.appendChild(document.createTextNode(text.slice(start)));
+      node.parentNode.replaceChild(frag, node);
+    });
+  }
+  function autoOpenDetails(){
+    openedDetails = [];
+    hits.forEach(m => {
+      let p = m.parentNode;
+      while(p && p !== canvas){
+        if(p.tagName === 'DETAILS' && !p.open){
+          p.open = true;
+          openedDetails.push(p);
+        }
+        p = p.parentNode;
+      }
+    });
+  }
+  function focusCurrent(){
+    hits.forEach(m => m.classList.remove('search-hit--current'));
+    if(cursor < 0 || cursor >= hits.length) return;
+    const m = hits[cursor];
+    m.classList.add('search-hit--current');
+    m.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+  function runSearch(){
+    clearHits();
+    lastQuery = input.value.trim();
+    if(lastQuery.length < 2){ updateCount(); return; }
+    markMatches(lastQuery);
+    autoOpenDetails();
+    cursor = hits.length ? 0 : -1;
+    updateCount();
+    focusCurrent();
+  }
+  function move(delta){
+    if(!hits.length) return;
+    cursor = (cursor + delta + hits.length) % hits.length;
+    focusCurrent();
+    updateCount();
+  }
+  function open(){
+    bar.hidden = false;
+    setTimeout(() => { input.focus(); input.select(); }, 0);
+  }
+  function close(){
+    bar.hidden = true;
+    clearHits();
+    input.value = '';
+    lastQuery = '';
+    updateCount();
+  }
+
+  btnOpen.addEventListener('click', open);
+  btnClose.addEventListener('click', close);
+  btnNext.addEventListener('click', () => move(1));
+  btnPrev.addEventListener('click', () => move(-1));
+  input.addEventListener('input', () => {
+    // Debounce a touch so typing "hello" doesn't rebuild the tree per keystroke.
+    clearTimeout(input._t);
+    input._t = setTimeout(runSearch, 120);
+  });
+  input.addEventListener('keydown', e => {
+    if(e.key === 'Enter'){
+      e.preventDefault();
+      move(e.shiftKey ? -1 : 1);
+    } else if(e.key === 'Escape'){
+      e.preventDefault();
+      close();
+    }
+  });
+  window.searchBar = { open, close, isOpen: () => !bar.hidden };
+})();
+
+/* ============================================================
+   USER HIGHLIGHTS
+   Reader selects text inside #canvas; a floating "Highlight"
+   button appears near the selection. Click wraps the selection
+   in <mark class="user-mark"> and saves it to localStorage.
+   Existing marks are restored on load; clicking a mark removes it.
+============================================================ */
+(function initHighlights(){
+  const canvas = document.getElementById('canvas');
+  const btn = document.getElementById('markBtn');
+  if(!canvas || !btn) return;
+
+  function loadStored(){
+    try{ return store.get('highlights') || []; }catch{ return []; }
+  }
+  function saveStored(list){
+    store.set('highlights', list);
+  }
+  function inCanvas(node){
+    let n = node.nodeType === 1 ? node : node.parentNode;
+    while(n){ if(n === canvas) return true; n = n.parentNode; }
+    return false;
+  }
+  function positionButton(range){
+    const rect = range.getBoundingClientRect();
+    if(!rect || (!rect.width && !rect.height)){ btn.hidden = true; return; }
+    btn.style.left = (rect.left + rect.width / 2 + window.scrollX) + 'px';
+    btn.style.top = (rect.top + window.scrollY) + 'px';
+    btn.hidden = false;
+  }
+  function currentSelection(){
+    const sel = window.getSelection();
+    if(!sel || sel.isCollapsed || sel.rangeCount === 0) return null;
+    const range = sel.getRangeAt(0);
+    const text = sel.toString().trim();
+    if(text.length < 3) return null;
+    if(!inCanvas(range.startContainer) || !inCanvas(range.endContainer)) return null;
+    return { range, text };
+  }
+  function wrapSelection(){
+    const cur = currentSelection();
+    if(!cur) return;
+    try{
+      const mark = document.createElement('mark');
+      mark.className = 'user-mark';
+      cur.range.surroundContents(mark);
+      const list = loadStored();
+      list.push(cur.text);
+      saveStored(list);
+      window.getSelection().removeAllRanges();
+      btn.hidden = true;
+    }catch{
+      // surroundContents fails if the range crosses element boundaries.
+      // Fall back to extractContents/appendChild.
+      try{
+        const mark = document.createElement('mark');
+        mark.className = 'user-mark';
+        mark.appendChild(cur.range.extractContents());
+        cur.range.insertNode(mark);
+        const list = loadStored();
+        list.push(cur.text);
+        saveStored(list);
+        window.getSelection().removeAllRanges();
+        btn.hidden = true;
+      }catch{ /* selection spans an unwrappable structure; give up quietly. */ }
+    }
+  }
+  function restoreHighlights(){
+    // v1 limitations, intentional:
+    //   (a) FIRST-MATCH ONLY. If the same text appears multiple times and
+    //       the user highlighted a later occurrence, restore lands on the
+    //       first one. A more robust design would store an occurrence index
+    //       or a small context window (leading/trailing chars).
+    //   (b) SINGLE TEXT-NODE ONLY. Highlights that cross element boundaries
+    //       (e.g. "the <strong>quick</strong> brown fox") do not restore —
+    //       the walker rejects text nodes that don't contain the full string.
+    //   Both are acceptable for a reading aid; upgrade only if user
+    //   feedback shows people notice.
+    const list = loadStored();
+    if(!list || !list.length) return;
+    list.forEach(text => {
+      if(!text || text.length < 3) return;
+      const walker = document.createTreeWalker(canvas, NodeFilter.SHOW_TEXT, {
+        acceptNode(node){
+          let p = node.parentNode;
+          while(p && p !== canvas){
+            if(p.tagName === 'SCRIPT' || p.tagName === 'STYLE') return NodeFilter.FILTER_REJECT;
+            if(p.classList && (p.classList.contains('user-mark') || p.classList.contains('search-hit'))) return NodeFilter.FILTER_REJECT;
+            p = p.parentNode;
+          }
+          return node.nodeValue && node.nodeValue.includes(text) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+        }
+      });
+      const node = walker.nextNode();
+      if(!node) return;
+      const idx = node.nodeValue.indexOf(text);
+      const range = document.createRange();
+      range.setStart(node, idx);
+      range.setEnd(node, idx + text.length);
+      const mark = document.createElement('mark');
+      mark.className = 'user-mark';
+      try{ range.surroundContents(mark); }catch{}
+    });
+  }
+  function removeMark(mark){
+    const parent = mark.parentNode;
+    if(!parent) return;
+    // Rebuild the stored list by re-reading current marks after removal.
+    parent.replaceChild(document.createTextNode(mark.textContent), mark);
+    parent.normalize();
+    const remaining = Array.from(canvas.querySelectorAll('mark.user-mark')).map(m => m.textContent);
+    saveStored(remaining);
+  }
+  function clearAll(){
+    canvas.querySelectorAll('mark.user-mark').forEach(m => {
+      const parent = m.parentNode;
+      if(!parent) return;
+      parent.replaceChild(document.createTextNode(m.textContent), m);
+      parent.normalize();
+    });
+    saveStored([]);
+  }
+
+  document.addEventListener('selectionchange', () => {
+    const cur = currentSelection();
+    if(!cur){ btn.hidden = true; return; }
+    positionButton(cur.range);
+  });
+  btn.addEventListener('mousedown', e => {
+    // mousedown fires before selectionchange collapses the selection.
+    e.preventDefault();
+    wrapSelection();
+  });
+  canvas.addEventListener('click', e => {
+    const m = e.target.closest('mark.user-mark');
+    if(m){ removeMark(m); }
+  });
+  window.addEventListener('scroll', () => { if(!btn.hidden) btn.hidden = true; }, { passive: true });
+  const clearBtn = document.getElementById('clearHighlightsBtn');
+  if(clearBtn) clearBtn.addEventListener('click', () => { clearAll(); });
+
+  // Restore after other init has completed (TOC, IntersectionObserver, etc.).
+  setTimeout(restoreHighlights, 100);
+})();
+
+/* ============================================================
+   SECTION-VISITED TRACKING
+   Each h2/h3 gets a cumulative timer that ticks while the
+   heading is inside the viewport. After ≥5s cumulative dwell,
+   the heading is marked visited and its TOC entry gets a ✓.
+   Persists per-artifact.
+============================================================ */
+(function initVisited(){
+  const canvas = document.getElementById('canvas');
+  const toc = document.getElementById('toc');
+  if(!canvas || !toc) return;
+
+  // Threshold scales by artifact length. SHORT readers scroll faster;
+  // LONG readers dwell longer. Read from <meta name="artifact-length">.
+  const lengthMeta = document.querySelector('meta[name="artifact-length"]');
+  const lengthVal = (lengthMeta && lengthMeta.content || 'MEDIUM').toUpperCase();
+  const DWELL_MS = { SHORT: 3000, MEDIUM: 5000, LONG: 8000 }[lengthVal] || 5000;
+  const stored = new Set(store.get('visited') || []);
+  const headings = Array.from(canvas.querySelectorAll('h2, h3'));
+  if(!headings.length) return;
+
+  const tocLinks = new Map();
+  toc.querySelectorAll('a').forEach(a => tocLinks.set(a.getAttribute('href').slice(1), a));
+  function markVisited(id){
+    if(stored.has(id)) return;
+    stored.add(id);
+    store.set('visited', Array.from(stored));
+    const link = tocLinks.get(id);
+    if(link) link.classList.add('is-visited');
+    const h = document.getElementById(id);
+    if(h) h.setAttribute('data-visited', 'true');
+  }
+  // Apply already-visited marks from prior sessions.
+  stored.forEach(markVisited);
+
+  const dwell = new Map();        // heading id → cumulative ms
+  const enteredAt = new Map();    // heading id → timestamp
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const id = e.target.id;
+      if(!id) return;
+      if(e.isIntersecting){
+        enteredAt.set(id, performance.now());
+      } else if(enteredAt.has(id)){
+        const start = enteredAt.get(id);
+        const ms = performance.now() - start;
+        enteredAt.delete(id);
+        dwell.set(id, (dwell.get(id) || 0) + ms);
+        if(dwell.get(id) >= DWELL_MS) markVisited(id);
+      }
+    });
+  }, { threshold: 0.1 });
+  headings.forEach(h => { if(h.id) observer.observe(h); });
+
+  // While hidden (unfocused tab, minimized window) do not accrue dwell.
+  document.addEventListener('visibilitychange', () => {
+    if(document.hidden){
+      enteredAt.forEach((start, id) => {
+        dwell.set(id, (dwell.get(id) || 0) + (performance.now() - start));
+        enteredAt.delete(id);
+      });
+    } else {
+      // Re-arm timers for headings still visible.
+      const seen = new Set();
+      const io2 = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if(e.isIntersecting && !seen.has(e.target.id)){
+            seen.add(e.target.id);
+            enteredAt.set(e.target.id, performance.now());
+          }
+        });
+        io2.disconnect();
+      }, { threshold: 0.1 });
+      headings.forEach(h => { if(h.id) io2.observe(h); });
+    }
+  });
+
+  // Periodic tick to mark long-dwelling visible headings without needing them to leave the viewport.
+  setInterval(() => {
+    enteredAt.forEach((start, id) => {
+      const ms = (dwell.get(id) || 0) + (performance.now() - start);
+      if(ms >= DWELL_MS) markVisited(id);
+    });
+  }, 1000);
+
+  const resetBtn = document.getElementById('clearVisitedBtn');
+  if(resetBtn) resetBtn.addEventListener('click', () => {
+    stored.clear();
+    store.set('visited', []);
+    toc.querySelectorAll('a.is-visited').forEach(a => a.classList.remove('is-visited'));
+    canvas.querySelectorAll('[data-visited]').forEach(h => h.removeAttribute('data-visited'));
+    dwell.clear();
+    enteredAt.clear();
+  });
+})();
+
+/* ============================================================
+   PHASE ORBIT — light up phase nodes as reader scrolls;
+   clicking a node smooth-scrolls to that phase.
+============================================================ */
+(function initOrbit(){
+  const nodes = Array.from(document.querySelectorAll('.orbit__node'));
+  if(!nodes.length) return;
+  const reached = new Set(store.get('reached') || []);
+  // Restore already-reached state
+  nodes.forEach(n => {
+    if(reached.has(n.dataset.target)) n.setAttribute('data-reached','true');
+  });
+  // Click to jump
+  nodes.forEach(n => {
+    n.addEventListener('click', () => {
+      const target = document.getElementById(n.dataset.target);
+      if(target) target.scrollIntoView({ behavior:'smooth', block:'start' });
+    });
+  });
+  // Observe each phase heading; mark reached + active on entry
+  const targets = nodes.map(n => document.getElementById(n.dataset.target)).filter(Boolean);
+  if(!targets.length) return;
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      const node = nodes.find(n => n.dataset.target === e.target.id);
+      if(!node) return;
+      if(e.isIntersecting){
+        node.setAttribute('data-reached','true');
+        reached.add(e.target.id);
+        store.set('reached', Array.from(reached));
+        nodes.forEach(n => n.removeAttribute('data-active'));
+        node.setAttribute('data-active','true');
+      }
+    });
+  }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+  targets.forEach(t => observer.observe(t));
+})();
+
+/* ============================================================
+   CONTEXTUAL AMPLIFIER — hover .term-amp[data-note] → fill #amplifier
+============================================================ */
+(function initAmplifier(){
+  const amp = document.getElementById('amplifier');
+  const pool = document.getElementById('ampNotes');
+  if(!amp || !pool) return;
+  const emptyHtml = amp.innerHTML;
+  let currentId = null;
+
+  function show(id){
+    if(id === currentId) return;
+    const note = pool.querySelector(`[data-note-id="${id}"]`);
+    if(!note) return;
+    currentId = id;
+    amp.innerHTML = '<span class="amplifier__label">Term amplifier</span>' + note.innerHTML;
+    // Mark the corresponding term active
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+    document.querySelectorAll(`.term-amp[data-note="${id}"]`).forEach(t => t.classList.add('is-active'));
+  }
+  function reset(){
+    currentId = null;
+    amp.innerHTML = emptyHtml;
+    document.querySelectorAll('.term-amp.is-active').forEach(t => t.classList.remove('is-active'));
+  }
+
+  document.querySelectorAll('.term-amp[data-note]').forEach(t => {
+    t.addEventListener('mouseenter', () => show(t.dataset.note));
+    t.addEventListener('focus', () => show(t.dataset.note));
+    t.setAttribute('tabindex','0');
+  });
+  const canvas = document.getElementById('canvas');
+  if(canvas){
+    canvas.addEventListener('mouseleave', reset);
+  }
+})();
+
+/* ============================================================
+   METACOGNITIVE CHECKPOINTS — textarea persistence + Compare to Expert
+============================================================ */
+(function initCheckpoints(){
+  document.querySelectorAll('.checkpoint').forEach(cp => {
+    const id = cp.dataset.checkpointId;
+    const ta = cp.querySelector('textarea');
+    const savedLabel = cp.querySelector('[data-checkpoint-saved]');
+    const revealBtn = cp.querySelector('[data-checkpoint-reveal]');
+    if(!id || !ta) return;
+
+    // Restore prior answer
+    const prior = store.get('cp:' + id);
+    if(prior){ ta.value = prior; if(savedLabel) savedLabel.textContent = 'Saved'; }
+
+    // Persist as user types (debounced)
+    let t;
+    ta.addEventListener('input', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        store.set('cp:' + id, ta.value);
+        if(savedLabel) savedLabel.textContent = 'Saved';
+      }, 400);
+    });
+
+    if(revealBtn){
+      revealBtn.addEventListener('click', () => {
+        cp.classList.toggle('is-revealed');
+        revealBtn.textContent = cp.classList.contains('is-revealed')
+          ? 'Hide expert answer'
+          : 'Compare to expert answer';
+      });
+    }
+  });
+})();
+
+/* ============================================================
+   LAUNCH PAD — progressive hint reveal
+============================================================ */
+(function initLaunchpad(){
+  const btn = document.getElementById('hintBtn');
+  if(!btn) return;
+  const hints = Array.from(document.querySelectorAll('.launchpad__hint'));
+  const total = hints.length;
+  let shown = 0;
+
+  // Restore prior state
+  const prior = parseInt(store.get('hints') || 0, 10);
+  for(let i=0; i<prior && i<total; i++){
+    hints[i].classList.add('is-visible');
+    shown = i + 1;
+  }
+  updateBtn();
+
+  btn.addEventListener('click', () => {
+    if(shown >= total) return;
+    hints[shown].classList.add('is-visible');
+    shown++;
+    store.set('hints', shown);
+    updateBtn();
+  });
+
+  function updateBtn(){
+    if(shown >= total){
+      btn.textContent = 'All hints revealed';
+      btn.disabled = true;
+    } else {
+      btn.textContent = `Reveal hint ${shown + 1} of ${total}`;
+    }
+  }
+})();
+</script>
 </body>
 </html>
