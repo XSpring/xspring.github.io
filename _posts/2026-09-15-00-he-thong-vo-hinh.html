@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hệ thống vô hình · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Nghèo bền vững phần lớn là sản phẩm của cấu trúc, không phải của tính cách. Node mở đầu của series 4 Cái Bẫy Nghèo Đói.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="bay-ngheo-doi-atlas.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Node 0 · Hệ thống vô hình</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">← Bản đồ</a>
+      <a class="series-bar__link" href="01-bay-giai-tri-mi-dan.html">Node 1 →</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 12 phút</p>
+    </div>
+    <div class="orbit" aria-label="Lộ trình bài học">
+      <p class="orbit__title">Lộ trình bài học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Thực địa</div>
+        <div class="orbit__node" data-target="boundary">5 · Giới hạn</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng hợp</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">0</span> Điểm khởi đầu</p>
+    <h1>Hệ thống vô hình</h1>
+    <p class="node-kicker">Nghèo đói bền vững phần lớn không phải là lỗi của riêng bạn — nhưng thoát khỏi nó lại là việc của bạn.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Nghèo bền vững phần lớn do bốn cơ chế tự củng cố, không phải do lười. Nhận diện đúng hệ thống là bước đầu để thoát khỏi nó.
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Câu hỏi mở đầu</span>
+      Hãy hình dung một người bơi rất giỏi. Anh ta bơi hết sức về phía bờ, nhưng càng bơi càng bị kéo ra xa. Người trên bờ hét vọng xuống: “Cố lên, chỉ cần nỗ lực thêm nữa!” Anh ta nỗ lực thêm. Và chết đuối. Ở đại dương, thứ giết chết người bơi giỏi không phải là sự lười biếng. Đó là một <strong>dòng nước xoáy</strong> (rip current — dòng chảy mạnh kéo ra biển) mà mắt thường không thấy. Câu hỏi của cả series này: nếu xã hội cũng có những dòng xoáy như vậy, làm sao bạn nhận ra chúng trước khi bị kéo ra quá xa?
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần biết trước</h4>
+      <ul>
+        <li>Không cần kiến thức kinh tế chuyên sâu. Mọi thuật ngữ đều được giải thích ngay tại chỗ.</li>
+        <li>Bài viết sẽ kiểm chứng niềm tin quen thuộc “nỗ lực quyết định thành công”.</li>
+        <li>Bạn nên giữ thái độ hoài nghi với chính bài viết này, không chỉ với xã hội.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li>Phân biệt <strong>nỗ lực cá nhân</strong> và <strong>cấu trúc hệ thống</strong>.</li>
+        <li>Giải thích cơ chế <strong>bẫy tự củng cố</strong> (self-reinforcing trap).</li>
+        <li>Nhận diện bốn bẫy sẽ được mổ xẻ ở các node tiếp theo.</li>
+        <li>Đánh giá luận điểm “nghèo là do lười” bằng bằng chứng thay vì cảm tính.</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Sự thật nền tảng</h2>
+    <p>Trước khi nói về bẫy, ta cần một điểm tựa. Sự thật nền tảng của cả series gói trong một câu: <strong>nghèo đói kéo dài phần lớn là sản phẩm của cấu trúc, không phải của tính cách.</strong></p>
+    <p>Bạn đã biết điều này qua trực giác. Ai cũng từng thấy một người làm việc mười hai tiếng mỗi ngày, quanh năm không nghỉ, mà cuối tháng vẫn không dư ra đồng nào. Ai cũng từng nghe câu “càng làm càng nghèo”. Bài viết này không kể lại cảm giác đó. Nó chỉ ra cơ chế đứng sau.</p>
+
+    <h2 id="bridge">Mô hình Dòng Xoáy</h2>
+    <p>Để giữ được mô hình trong đầu, ta mượn một hình ảnh từ biển. Gọi nó là <strong>Mô hình Dòng Xoáy</strong>.</p>
+    <p>Một dòng nước xoáy không kéo bạn xuống đáy. Nó kéo bạn ra xa bờ. Người bơi giỏi phản xạ bằng cách bơi ngược lại, thẳng về phía bờ — và đó chính là cách chết nhanh nhất. Cách sống là bơi <em>song song</em> với bờ cho tới khi ra khỏi dòng chảy, rồi mới quay vào. Nỗ lực không đổi. Hướng đi đổi.</p>
+    <p>Bốn phần của hình ảnh này khớp với bốn phần của bài toán:</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Nỗ lực của bạn</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Dòng chảy vô hình</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Hướng đi quyết định</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — nhiều người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">“Chỉ cần nhận ra mình đang bị bẫy là sẽ thoát được.”</span></p>
+      <p>Điều này sai vì nhận biết là điều kiện cần, không phải điều kiện đủ. Gọi tên dòng xoáy không làm nó biến mất.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> bạn phải đổi <em>hướng đi</em>, chứ không chỉ tăng <em>lực</em>. Nhận diện chỉ mở ra lựa chọn; hành động khác đi mới tạo ra kết quả khác.</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+    <p>Phần này lắp ba mảnh. Mảnh một định nghĩa cấu trúc. Mảnh hai định nghĩa bẫy. Mảnh ba ghép chúng thành vòng lặp. Đi chậm ở đây sẽ giúp bốn node sau nhẹ hơn nhiều.</p>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Mảnh 1 · Nỗ lực và cấu trúc</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Cấu trúc</strong> (structure) là tập hợp các luật chơi — ai sở hữu gì, ai định giá gì, ai chịu rủi ro — mà một cá nhân không thể tự thay đổi. Kết quả của một người là tích của hai thứ: nỗ lực của họ nhân với cấu trúc họ đang sống trong đó.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Năm 1998, nhà báo Mỹ Barbara Ehrenreich bỏ công việc viết lách để đi làm thử các nghề lương tối thiểu. Bà làm bồi bàn, dọn phòng khách sạn, lau nhà, chăm sóc viện dưỡng lão, bán hàng ở Wal-Mart. Bà làm đúng những gì xã hội dặn: chăm chỉ, đúng giờ, không kêu ca. Sau gần hai năm, bà kết luận rằng một người làm việc toàn thời gian ở mức lương tối thiểu vẫn không đủ sống.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu hoán đổi vị trí của một người nghèo và một người giàu, giữ nguyên tính cách của họ, thì sau năm năm ai sẽ giàu hơn?</summary>
+        <div class="scaffold__resolve">Phần lớn mọi người trả lời: người giàu. Điều đó chứng minh rằng ngay trong trực giác của chúng ta, cấu trúc đã thắng tính cách. Người đang ở vị trí giàu thừa hưởng quan hệ, tài sản, thông tin và thời gian — bốn thứ mà nỗ lực đơn thuần không tạo ra trong năm năm. Kết luận không phải là “nỗ lực vô nghĩa”. Kết luận là nỗ lực chỉ là một biến số trong phương trình, và nó bị cấu trúc nhân lên hoặc chia nhỏ.</div>
+      </details>
+    </section>
+    <div class="feynman">Muốn đổi đời thì phải chèo thuyền, nhưng nếu con nước chảy ngược thì chèo giỏi đến mấy cũng chỉ đứng yên.</div>
+
+    <div class="checkpoint" data-checkpoint-id="n0-cp1">
+      <span class="checkpoint__label">🛑 Dừng lại &amp; ngẫm</span>
+      <p class="checkpoint__question">Bằng lời của bạn, trong hai câu: vì sao tăng nỗ lực có thể không tạo ra thay đổi nào?</p>
+      <textarea name="reflection" placeholder="Viết câu trả lời của bạn trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So với đáp án mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án mẫu</span>
+        Vì nỗ lực chỉ khuếch đại hướng đi hiện tại. Nếu hướng đi ngược với cấu trúc — ví dụ làm thêm giờ để trả nợ lãi cao — thì càng nỗ lực, bạn càng tiến sâu vào vị trí cũ.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Mảnh 2 · Bẫy tự củng cố</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Bẫy tự củng cố</strong> (self-reinforcing trap) là một cơ chế mà càng ở trong lâu, cái giá để thoát ra càng cao. Nó khác với khó khăn thường: khó khăn thì giảm dần khi bạn tiến lên, còn bẫy thì tăng dần khi bạn chần chừ.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Một khoản vay tiêu dùng nhỏ với lãi suất cao. Tháng này bạn không trả nổi, nên tháng sau phải vay chỗ khác để trả chỗ cũ. Mỗi vòng xoay, số nợ gốc tăng, và lãi mới lại chồng lên. Người vay không hề lười — họ đang làm việc nhiều hơn trước. Nhưng cơ chế ăn hết phần chênh lệch.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Tại sao một khoản vay tưởng nhỏ lại có thể trói một người suốt nhiều năm?</summary>
+        <div class="scaffold__resolve">Vì lãi được tính trên số dư, không trên thu nhập. Thu nhập của bạn tăng chậm; số dư nợ của bạn tăng theo cấp số nhân khi bạn vay để trả nợ. Chỉ cần lãi suất vượt tốc độ tăng thu nhập, phần trả nợ mỗi tháng sẽ nuốt hết phần dư, và bạn mất khả năng tích lũy. Cùng một cơ chế đó vận hành ở quy mô xã hội — đó là lý do bốn bẫy ở các node sau móc vào nhau.</div>
+      </details>
+    </section>
+    <div class="feynman">Bẫy không phải là một bức tường bạn đâm vào; nó là một cái dốc trơn mà càng đứng lâu càng trượt nhanh.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Nghịch lý người bận rộn: vì sao người ít thời gian nhất lại khó lên kế hoạch nhất</summary>
+      <p>Nghịch lý này có tên trong hành vi học: <strong>sự khan hiếm</strong> (scarcity) chiếm hết băng thông nhận thức. Khi bạn thiếu tiền hoặc thiếu thời gian, não dồn tài nguyên cho việc đối phó tức thời. Phần dành cho kế hoạch dài hạn — học kỹ năng, tìm cơ hội, xây quan hệ — bị cắt trước tiên. Vì thế người đang chìm lại là người ít có khả năng nhất để tự kéo mình lên. Đây không phải lỗi đạo đức; đây là giới hạn băng thông.</p>
+      <p>Điều đáng chú ý: cơ chế này tự nuôi chính nó. Càng bận, càng ít thời gian suy nghĩ. Càng ít suy nghĩ, càng dễ chọn sai. Càng chọn sai, càng bận. Đó là lý do node 2 và node 3 của series này phải đọc cùng nhau.</p>
+    </details>
+
+    <h2 id="application">Trong thực tế</h2>
+    <p>Lý thuyết chỉ đáng tin khi nó chịu được một ca cụ thể. Ta lấy thí nghiệm của Ehrenreich và bóc tách con số.</p>
+    <p>Giả sử một người làm 40 giờ mỗi tuần với mức 7 đô-la một giờ. Trước thuế, đó là 280 đô-la một tuần, khoảng 1.120 đô-la một tháng. Tiền thuê một phòng trọ tối thiểu ở nhiều đô thị Mỹ khi đó đã ngốn một nửa hoặc hơn. Cộng thêm đi lại, ăn uống, điện nước — phần còn lại gần như bằng không. Không có quỹ dự phòng, một cú ốm hoặc một lần hỏng xe là đủ để đẩy người đó xuống một bậc nữa.</p>
+    <p>Điểm mấu chốt không nằm ở việc “7 đô-la là ít”. Điểm mấu chốt là cấu trúc: giá nhà tăng nhanh hơn lương, nên mỗi giờ làm việc mua được ít hơn trước. Bảng dưới đây minh họa một tuần của người lao động thu nhập thấp, để thấy chỗ nào bị ăn hết.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Một tuần của người thu nhập thấp (168 giờ, minh hoạ)</div>
+      <div class="bar-row">
+        <div class="bar-label">Làm việc + đi lại</div>
+        <div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>
+        <div class="bar-value">60h</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Ngủ</div>
+        <div class="bar-track"><div class="bar-fill" style="width:49%"></div></div>
+        <div class="bar-value">49h</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Việc nhà, cơm nước</div>
+        <div class="bar-track"><div class="bar-fill" style="width:12%"></div></div>
+        <div class="bar-value">12h</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Giải trí rẻ tiền</div>
+        <div class="bar-track"><div class="bar-fill" style="width:11%"></div></div>
+        <div class="bar-value">11h</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Học kỹ năng mới</div>
+        <div class="bar-track"><div class="bar-fill" style="width:2%"></div></div>
+        <div class="bar-value">3h</div>
+      </div>
+      <p class="bar-chart__caption">Sơ đồ minh hoạ dựa trên cấu trúc thời gian phổ biến; không phải số liệu khảo sát. Con số chính xác thay đổi theo quốc gia và ngành nghề.</p>
+    </div>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Tự kiểm tra — Câu hỏi</span>
+          <div class="flip-card__content">Trong tuần minh hoạ trên, nguồn lực nào bị tiêu hao nhiều nhất mà lại ít được chú ý nhất?</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Đáp án</span>
+          <div class="flip-card__content">Thời gian và sự tập trung. Cả hai bị chia nhỏ tới mức không còn đủ để học một kỹ năng mới — chính là thứ duy nhất có thể thay đổi cấu trúc thu nhập.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Nơi mô hình vỡ</h2>
+    <p>Một mô hình trung thực phải nói được cả chỗ nó sai. Mô hình Dòng Xoáy mạnh ở việc giải thích vì sao nỗ lực đơn thuần thất bại, nhưng nó có hai mép dễ bị lạm dụng.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      “Vì cấu trúc quyết định, nên nỗ lực vô nghĩa và tôi không cần cố gắng.” Đây là cách đọc ngược. Nếu cấu trúc quyết định tất cả, thì không ai thoát nghèo — nhưng thực tế vẫn có người thoát. Cấu trúc đặt ra <em>tỷ lệ cược</em>, không xóa bỏ <em>khả năng thắng</em>. Bỏ nỗ lực chỉ làm bạn chắc chắn thua.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Ca biên</span>
+      Có những người thoát nghèo nhờ đúng một cú may mắn — trúng thưởng, gặp ân nhân, hoặc một đòn bẩy thời cơ. Điều đó <em>không</em> chứng minh cấu trúc là công bằng; nó chỉ chứng minh cấu trúc có lỗ hổng. Đừng lấy một ca may mắn làm chuẩn mực cho số đông, và cũng đừng vì thế mà phủ nhận vai trò của hành động.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Trước khi sang node 1, thử đoán xem trong bốn nguồn lực — thời gian, năng lượng, tư duy, tiền — bẫy nào sẽ tấn công nguồn nào. Ghi lại dự đoán của bạn rồi đối chiếu ở cuối node 5.
+    </div>
+
+    <h2 id="connections">Bốn bẫy nối với nhau thế nào</h2>
+    <p>Bốn node tiếp theo không phải bốn bài rời. Chúng là bốn mắt xích của một vòng lặp, và mắt xích này khóa mắt xích kia.</p>
+    <ul>
+      <li><a class="xlink" href="01-bay-giai-tri-mi-dan.html">Node 1 — Bẫy giải trí mị dân</a>: ăn hết <strong>thời gian và sự tập trung</strong>, khiến bạn không còn đầu để nghĩ.</li>
+      <li><a class="xlink" href="02-bay-rat-race.html">Node 2 — Bẫy Rat Race</a>: ăn hết <strong>năng lượng và tiền dư</strong>, khiến bạn không còn lực để thoát.</li>
+      <li><a class="xlink" href="03-bay-shawshank.html">Node 3 — Bẫy Shawshank</a>: khóa <strong>tư duy</strong>, khiến bạn không còn dám nghĩ tới việc thoát.</li>
+      <li><a class="xlink" href="04-bay-tieu-dung-pho-truong.html">Node 4 — Bẫy tiêu dùng phô trương</a>: đốt <strong>tiền</strong>, khiến mọi nỗ lực tích lũy trôi đi.</li>
+    </ul>
+    <p>Cách thoát khỏi cả vòng lặp được gói ở <a class="xlink" href="05-pha-cuc.html">Node 5 — Phá cục</a>. Nhưng trước hết, hãy đi từng mắt xích.</p>
+
+    <h2 id="synthesis">Bức tranh toàn cảnh</h2>
+    <p>Nghèo bền vững là kết quả của một hệ thống gồm bốn cơ chế tự củng cố, vận hành đồng thời lên bốn nguồn lực: thời gian, năng lượng, tư duy và tiền. Mỗi cơ chế đều có một mục đích riêng trong nền kinh tế, và không cơ chế nào cần một kẻ chủ mưu để hoạt động. Chúng tồn tại vì chúng có lợi cho ai đó, và chúng tự duy trì vì người bị kẹt bên trong không có đủ nguồn lực để phản kháng. Hiểu điều này không làm bạn hết nghèo ngay. Nhưng nó đổi câu hỏi từ “tôi sai ở đâu?” sang “tôi đang chơi theo luật của ai?” — và đó là câu hỏi đầu tiên mà người thoát được phải trả lời.</p>
+
+    <blockquote>
+      <strong>Nếu bạn chỉ nhớ một điều:</strong> Đừng hỏi “tôi đã cố đủ chưa?”. Hãy hỏi “tôi đang bơi ngược dòng nào?”.
+    </blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Bài toán: Bản đồ dòng xoáy của chính bạn</h3>
+      <p class="launchpad__problem">Trong 30 phút, hãy vẽ một bản đồ gồm ba cột. Cột một: ba quyết định lớn nhất bạn đã đưa ra trong hai năm qua. Cột hai: cấu trúc nào đã định hình lựa chọn đó — thu nhập, hợp đồng lao động, chỗ ở, mạng lưới quan hệ. Cột ba: một quyết định mà nếu chỉ đổi <em>hướng</em> chứ không tăng <em>lực</em>, kết quả sẽ khác. Không cần giải pháp — chỉ cần nhìn ra dòng chảy.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+          Đừng liệt kê điều bạn <em>muốn</em>. Liệt kê điều bạn <em>đã chọn</em>. Cấu trúc chỉ lộ ra khi nhìn vào lựa chọn đã xảy ra, không phải ý định.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Dùng cặp nỗ lực/cấu trúc ở mảnh 1. Với mỗi quyết định, hỏi: “Nếu tôi nỗ lực gấp đôi mà giữ nguyên cấu trúc, kết quả đổi bao nhiêu phần trăm?”
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dựng bài</span>
+          Ở cột 3, chọn một quyết định có đòn bẩy rõ nhất — thường là nơi bạn đang bơi ngược dòng mạnh nhất. Viết một câu mô tả hướng mới, rồi để đó cho các node sau bổ sung công cụ.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Cấu trúc (structure)</dt>
+        <dd>Tập hợp luật chơi — sở hữu, giá cả, rủi ro — mà cá nhân không tự đổi được. <em>(Trong Mô hình Dòng Xoáy: đây là con nước.)</em></dd>
+        <dt>Dòng nước xoáy (rip current)</dt>
+        <dd>Dòng chảy mạnh kéo người bơi ra xa bờ; cách thoát là bơi song song bờ, không bơi ngược. <em>(Trong Mô hình Dòng Xoáy: đây là hình ảnh trung tâm.)</em></dd>
+        <dt>Bẫy tự củng cố (self-reinforcing trap)</dt>
+        <dd>Cơ chế mà càng ở trong lâu, cái giá để thoát ra càng cao. <em>(Trong Mô hình Dòng Xoáy: vùng nước càng xa bờ càng mạnh.)</em></dd>
+        <dt>Sự khan hiếm (scarcity)</dt>
+        <dd>Trạng thái thiếu hụt chiếm hết băng thông nhận thức, khiến người ta khó lên kế hoạch dài hạn. <em>(Trong Mô hình Dòng Xoáy: khi bị kéo, bạn chỉ còn phản xạ, không còn chiến lược.)</em></dd>
+        <dt>Nỗ lực (agency)</dt>
+        <dd>Khả năng hành động và chọn hướng của cá nhân; là biến số bị cấu trúc nhân lên hoặc chia nhỏ. <em>(Trong Mô hình Dòng Xoáy: sức bơi của bạn.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu. Chọn đáp án đúng nhất rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Theo Mô hình Dòng Xoáy, sai lầm chí mạng của người bơi giỏi là gì?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Bơi quá chậm nên bị nước cuốn</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Bơi ngược dòng xoáy, thẳng về phía bờ</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Không nhận ra mình đang bơi</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Bơi song song với bờ</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Dòng xoáy kéo ra xa bờ; bơi ngược lại làm bạn kiệt sức nhanh nhất. Cách đúng là bơi song song để thoát khỏi dòng, rồi mới quay vào.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>2. Điều gì phân biệt một “bẫy” với một “khó khăn” thường?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Bẫy thì do người khác tạo ra</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Khó khăn thì không thể vượt qua</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Trong bẫy, càng chần chừ thì cái giá thoát ra càng cao</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Bẫy chỉ xảy ra với người thu nhập thấp</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Định nghĩa của bẫy tự củng cố là chi phí thoát tăng theo thời gian. Đó là điểm khác biệt cốt lõi so với khó khăn giảm dần khi bạn tiến lên.</div>
+      </fieldset>
+
+      <fieldset data-answer="3">
+        <legend>3. Phát biểu nào đúng nhất về vai trò của nỗ lực cá nhân?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Nỗ lực là yếu tố duy nhất quyết định thành công</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Vì cấu trúc quyết định, nỗ lực là vô nghĩa</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Nỗ lực chỉ có tác dụng với người có may mắn</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Nỗ lực là biến số bị cấu trúc nhân lên hoặc chia nhỏ</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Nỗ lực quan trọng nhưng không độc lập với cấu trúc. Bỏ nỗ lực làm bạn chắc chắn thua; tăng nỗ lực mà giữ sai hướng chỉ làm bạn kiệt sức nhanh hơn.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Nickel_and_Dimed" target="_blank" rel="noopener">Wikipedia — Nickel and Dimed</a> — Barbara Ehrenreich, <em>Nickel and Dimed: On (Not) Getting By in America</em> (2001); thí nghiệm 1998–2000.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Conspicuous_consumption" target="_blank" rel="noopener">Wikipedia — Conspicuous consumption</a> — Thorstein Veblen, <em>The Theory of the Leisure Class</em> (1899).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/The_Global_Trap" target="_blank" rel="noopener">Wikipedia — The Global Trap</a> — nguồn gốc thuật ngữ “tittytainment” (1995).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Rich_Dad_Poor_Dad" target="_blank" rel="noopener">Wikipedia — Rich Dad Poor Dad</a> — Robert Kiyosaki &amp; Sharon Lechter (1997).</li>
+    </ul>
+
+    <nav class="prevnext" aria-label="Điều hướng series">
+      <a class="prevnext__item" href="bay-ngheo-doi-atlas.html">
+        <span class="prevnext__dir">← Bản đồ series</span>
+        <span class="prevnext__title">Đọc hướng dẫn &amp; lộ trình</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="01-bay-giai-tri-mi-dan.html">
+        <span class="prevnext__dir">Node 1 →</span>
+        <span class="prevnext__title">Bẫy giải trí mị dân</span>
+      </a>
+    </nav>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>cấu trúc hệ thống</li><li>bẫy tự củng cố</li><li>kinh tế học hành vi</li><li>dịch chuyển giai cấp</li><li>tư duy phản biện</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="bay-ngheo-doi-atlas.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Node 0/5 · Điểm khởi đầu · ~12 phút đọc</span>
+        <span><a href="bay-ngheo-doi-atlas.html">Về bản đồ series</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="structure">
+        <span class="amplifier__term">Cấu trúc</span>
+        <p class="amplifier__body">Luật chơi nằm ngoài tầm kiểm soát cá nhân: luật lao động, giá thuê nhà, lãi suất, quyền sở hữu vốn. Bạn có thể chọn cách chơi trong luật, nhưng không tự viết lại luật một mình.</p>
+      </div>
+      <div data-note-id="trap">
+        <span class="amplifier__term">Bẫy tự củng cố</span>
+        <p class="amplifier__body">Cấu trúc phản hồi dương (positive feedback loop): đầu ra của vòng này trở thành đầu vào của vòng sau, khuếch đại trạng thái ban đầu. Nợ sinh nợ; bận sinh bận.</p>
+      </div>
+      <div data-note-id="scarcity">
+        <span class="amplifier__term">Sự khan hiếm</span>
+        <p class="amplifier__body">Khi thiếu một nguồn lực, tâm trí bị nó chiếm trọn. Băng thông còn lại cho kế hoạch dài hạn giảm mạnh — đây là cơ chế, không phải khuyết điểm đạo đức.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Vì sao bắt đầu bằng một câu hỏi, không phải một định nghĩa</strong>
+      Nếu bài mở bằng “nghèo đói là gì”, bạn sẽ đọc bằng thói quen. Một hình ảnh cụ thể buộc bạn phải tự trả lời trước khi được cấp câu trả lời.
+    </div>
+    <div class="sidenote">
+      <strong>Về con số trong bài</strong>
+      Các con số có nguồn được gắn liên kết. Sơ đồ thời gian là minh hoạ có ghi chú, không phải khảo sát. Khi một con số chỉ có một nguồn thứ cấp, nó được nói ở dạng tương đối.
+    </div>
+    <div class="sidenote">
+      <strong>Bài tiếp theo</strong>
+      Node 1 mổ xẻ cơ chế đầu tiên: cách nền giải trí giá rẻ được thiết kế để tiêu hao sự tập trung — và vì sao đó là mắt xích đầu tiên trong vòng lặp.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>

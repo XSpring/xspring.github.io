@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Khóa vàng · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Tâm lý học của khóa vàng và quyết định rời đi: vì sao cái cân luôn nghiêng về phía ở lại.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="bay-ngheo-doi-atlas.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Phụ lục C · Khóa vàng</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="07-rct-va-nobel-2019.html">← Phụ lục B</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Bản đồ</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Kết thúc</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 15 phút</p>
+    </div>
+    <div class="orbit" aria-label="Lộ trình bài học">
+      <p class="orbit__title">Lộ trình bài học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Thực địa</div>
+        <div class="orbit__node" data-target="boundary">5 · Giới hạn</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng hợp</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">C</span> Phụ lục · Next Node cuối</p>
+    <h1>Khóa vàng</h1>
+    <p class="node-kicker">Tâm lý học của việc ở lại: vì sao cái cân luôn nghiêng về phía hiện tại, và làm sao để cân lại.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Khóa vàng giữ người ta bằng nỗi sợ mất mát. Quyết định rời đi không thất bại vì tính sai, mà vì cái cân đã bị lệch trước khi ta bắt đầu tính.
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Câu hỏi mở đầu</span>
+      Một người ghét công việc của mình. Không phải ghét kiểu mệt mỏi vài hôm — ghét đã nhiều năm. Mỗi sáng thứ Hai là một cục nặng trong ngực. Người đó biết rõ mình nên rời đi, đã tính toán nhiều lần, và vẫn ở lại. Không phải vì lười, không phải vì không biết. Vậy lực nào đang giữ họ lại — một lực mà chính họ cũng không gọi được tên?
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần biết trước</h4>
+      <ul>
+        <li>Node 3 — <a class="xlink" href="03-bay-shawshank.html">Bẫy Shawshank</a>: khái niệm khóa vàng được nêu ở đó.</li>
+        <li>Node 5 — <a class="xlink" href="05-pha-cuc.html">Phá cục</a>: đổi cấu trúc thay vì tăng nỗ lực.</li>
+        <li>Bạn đang có ít nhất một quyết định "ở lại hay rời đi" chưa ngã ngũ.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li>Giải thích <strong>ác cảm mất mát</strong> (loss aversion) và hệ số hai lần.</li>
+        <li>Mô tả <strong>hiệu ứng sở hữu</strong> và <strong>thiên lệch hiện trạng</strong>.</li>
+        <li>Nhận diện <strong>chi phí chìm</strong> và <strong>ngụy biện bỏ sót</strong> trong quyết định nghề nghiệp.</li>
+        <li>Áp dụng bốn công cụ để cân lại quyết định.</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Sự thật nền tảng</h2>
+    <p>Sự thật nền tảng của phụ lục này: <strong>quyết định rời đi không phải là một bài toán tính toán, mà là một bài toán nhận thức — và cái cân đã bị lệch trước khi bạn bắt đầu tính.</strong></p>
+    <p>Bạn đã biết điều này ở dạng câu nói: "biết vậy mà không làm được". Điều bài này thêm vào là cơ chế. Có bốn lực tâm lý cùng đẩy về phía ở lại, và chúng không phải là sự yếu đuối. Chúng là mặc định của bộ não người. Muốn ra quyết định khác, bạn phải sửa cái cân, không phải tự trách mình.</p>
+
+    <h2 id="bridge">Mô hình Cân Lệch</h2>
+    <p>Hãy hình dung một chiếc cân hai đĩa. Gọi nó là <strong>Mô hình Cân Lệch</strong>.</p>
+    <p>Đĩa bên trái đựng những gì bạn đang có: lương, sự quen thuộc, đồng nghiệp, danh tính. Đĩa bên phải đựng những gì bạn có thể có: công việc mới, tự do, cơ hội. Bạn đặt hai đĩa lên và chờ xem bên nào nặng hơn. Nhưng có một nam châm gắn dưới đĩa trái, không nhìn thấy được. Nó hút mọi thứ đang nằm trong đĩa đó xuống, khiến bên trái luôn trông nặng hơn thực tế. Bạn tính đúng, nhưng bạn cân sai.</p>
+    <p>Bốn phần của hình ảnh này khớp với bốn lực tâm lý:</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Đĩa "đang có"</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Nam châm vô hình</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Luôn nghiêng về ở lại</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — nhiều người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">“Người ta ở lại vì đã tính toán và thấy ở lại tốt hơn. Vậy ở lại là quyết định đúng.”</span></p>
+      <p>Điều này sai vì khi tính, người ta đã vô thức nhân giá trị của cái đang có lên, và coi cái đang có làm điểm neo. Kết quả không phải là một so sánh công bằng.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> không phải họ tính sai, mà cái cân bị lệch. Muốn biết mình thực sự muốn gì, phải sửa cái cân trước.</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+    <p>Bốn lực dưới đây không rời rạc. Chúng xếp lớp lên nhau: lực thứ nhất giải thích ba lực còn lại, và ba lực sau biến lực thứ nhất thành một cái bẫy cụ thể trong đời sống nghề nghiệp.</p>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Mảnh 1 · Ác cảm mất mát</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Ác cảm mất mát</strong> (loss aversion) là xu hướng cảm nhận một khoản mất đau hơn nhiều so với niềm vui của một khoản được tương đương. Về mặt thực nghiệm, mất mát thường được đối xử như thể lớn gấp đôi khoản được. Nó được Daniel Kahneman và Amos Tversky đưa vào năm 1979, trong lý thuyết triển vọng (prospect theory).</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Bạn nhặt được 1 triệu, rồi làm rơi mất 1 triệu. Về mặt con số, bạn trở về đúng chỗ cũ. Nhưng cảm giác thì không: phần lớn người ta thấy khó chịu dai dẳng hơn hẳn. Kahneman lý giải điều này bằng tiến hoá: sinh vật nào coi mối đe doạ là cấp bách hơn cơ hội thì có cơ hội sống sót cao hơn.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao mất một khoản lại đau hơn hẳn được một khoản bằng thế?</summary>
+        <div class="scaffold__resolve">Vì bộ não không đo giá trị tuyệt đối, mà đo so với một điểm tham chiếu — thường là những gì bạn đang có. Dưới điểm tham chiếu là vùng mất, và hàm giá trị dốc hơn nhiều so với vùng được. Nói cách khác: mất là một tín hiệu đe doạ, còn được là một tín hiệu cơ hội. Bộ não được lập trình để phản ứng với đe doạ mạnh hơn. Đây không phải lỗi; đây là mặc định cũ kỹ của một bộ máy sinh tồn.</div>
+      </details>
+    </section>
+    <div class="feynman">Mất đau gấp đôi được, nên cái bạn đang có luôn trông đắt hơn giá thật của nó.</div>
+
+    <div class="checkpoint" data-checkpoint-id="nC-cp1">
+      <span class="checkpoint__label">🛑 Dừng lại &amp; ngẫm</span>
+      <p class="checkpoint__question">Trong một câu: vì sao ác cảm mất mát khiến "giữ nguyên mọi thứ" luôn có lợi thế trong mọi so sánh?</p>
+      <textarea name="reflection" placeholder="Viết câu trả lời của bạn trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So với đáp án mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án mẫu</span>
+        Vì giữ nguyên không tạo ra cảm giác mất, còn thay đổi luôn tạo ra ít nhất một khoản mất. Nếu mất được nhân đôi còn được giữ nguyên, bên "không làm gì" thắng mặc định.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Mảnh 2 · Hiệu ứng sở hữu và thiên lệch hiện trạng</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Hiệu ứng sở hữu</strong> (endowment effect) là việc người ta định giá một vật cao hơn khi họ đang sở hữu nó so với khi họ chưa sở hữu. <strong>Thiên lệch hiện trạng</strong> (status quo bias) là xu hướng mặc định giữ nguyên trạng thái hiện tại, coi nó là điểm tham chiếu, và coi mọi thay đổi là một khoản mất tiềm năng.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Trong một thí nghiệm nổi tiếng, sinh viên Cornell được tặng một chiếc cốc, rồi được hỏi họ muốn bán nó với giá bao nhiêu. Một nhóm khác không có cốc được hỏi họ sẵn sàng trả bao nhiêu để mua. Người bán đòi trung bình khoảng 7 đô-la; người mua chỉ trả khoảng 3 đô-la. Cùng một chiếc cốc, chênh lệch gấp đôi — chỉ vì một nhóm đã sở hữu nó. Một thí nghiệm khác về vé trận chung kết bóng rổ ghi nhận người sở hữu vé đòi giá cao gấp mười bốn lần người muốn mua.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao chỉ cần "sở hữu" một thứ là nó đã tăng giá trong mắt bạn?</summary>
+        <div class="scaffold__resolve">Vì sở hữu làm thay đổi điểm tham chiếu. Khi chưa có, bạn đứng ở trạng thái "không có" và việc mua là một khoản được. Khi đã có, bạn đứng ở trạng thái "có" và việc bán là một khoản mất. Cùng một vật, hai khung khác nhau, hai mức giá khác nhau. Với công việc, điều này dịch thành: khi bạn đã ở trong một vị trí, mọi thứ bạn đang nhận — lương, thâm niên, sự quen — đều trở thành "cái tôi có", và rời đi đồng nghĩa với việc mất tất cả cùng lúc.</div>
+      </details>
+    </section>
+    <div class="feynman">Chưa có thì hỏi "đáng bao nhiêu"; đã có thì hỏi "mất nó tôi mất gì" — và hai câu trả lời khác nhau.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Sức mạnh của mặc định: thí nghiệm bảo hiểm ô tô</summary>
+      <p>Vào đầu thập niên 1990, hai bang của Mỹ vô tình tạo ra một thí nghiệm tự nhiên. New Jersey và Pennsylvania cùng cải cách luật, cho tài xế chọn giữa bảo hiểm đắt (được kiện đầy đủ) và bảo hiểm rẻ (hạn chế quyền kiện). Khác biệt duy nhất: ở New Jersey, gói rẻ là mặc định; ở Pennsylvania, gói đắt là mặc định.</p>
+      <p>Kết quả: chỉ khoảng 20% tài xế New Jersey đổi khỏi mặc định để mua gói đắt hơn, và chỉ khoảng 25% tài xế Pennsylvania đổi khỏi mặc định để mua gói rẻ hơn. Cùng một lựa chọn, cùng một con người, nhưng mặc định quyết định kết quả. Với một quyết định nghề nghiệp, mặc định của bạn chính là "vẫn đi làm như mọi ngày" — và mặc định luôn thắng nếu bạn không chủ động đổi nó.</p>
+    </details>
+
+    <section class="scaffold" id="exposition-3">
+      <h3 class="scaffold__concept">Mảnh 3 · Chi phí chìm và ngụy biện bỏ sót</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Chi phí chìm</strong> (sunk cost) là khoản đã bỏ ra và không thể lấy lại. <strong>Ngụy biện chi phí chìm</strong> là việc để khoản đó ảnh hưởng tới quyết định về tương lai, dù nó không còn liên quan. <strong>Ngụy biện bỏ sót</strong> (omission bias) là xu hướng thấy hành động gây hại tệ hơn không hành động gây hại cùng mức.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Dự án máy bay siêu thanh Concorde của Anh và Pháp bị gọi là "ngụy biện Concorde": cả hai chính phủ tiếp tục đổ tiền vào một dự án đã biết là lỗ, vì đã đổ quá nhiều tiền vào trước đó. Trong hàng không, "thiên lệch tiếp tục kế hoạch" (plan continuation bias) khiến phi công giữ đường bay cũ khi điều kiện đã đổi; một nghiên cứu của NASA năm 2004 tìm thấy dấu hiệu này trong 9 trên 19 tai nạn được xem xét.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao "tôi đã đầu tư quá nhiều để bỏ" lại là lý do tồi để ở lại?</summary>
+        <div class="scaffold__resolve">Vì khoản đã đầu tư không thay đổi điều gì trong tương lai. Dù bạn ở lại hay rời đi, số năm đã bỏ ra vẫn đã bỏ ra. Chỉ có các lựa chọn <em>tương lai</em> mới đáng đưa vào cân. Nhưng tâm trí lại gắn giá trị với thời gian đã qua, biến nó thành một cái neo. Thêm vào đó, ngụy biện bỏ sót khiến việc "không làm gì" trông an toàn hơn — dù không làm gì cũng là một lựa chọn, và cũng có cái giá. Bốn lực cộng lại tạo ra một nam châm rất mạnh: cái đang có tăng giá, mặc định thắng, và ở lại là "không làm gì" nên không có lỗi.</div>
+      </details>
+    </section>
+    <div class="feynman">Thời gian đã bỏ ra không phải là lý do để bỏ thêm thời gian — dù cảm giác nói ngược lại.</div>
+
+    <h2 id="application">Trong thực tế</h2>
+    <p>Ta hãy đặt cả bốn lực lên một quyết định cụ thể. Điều đáng chú ý là không lực nào trong số này là "phi lý" hoàn toàn — chúng đều có lý do tiến hoá hoặc thực tiễn. Chúng chỉ lệch khi bị đẩy quá mức.</p>
+    <p>Một người có tám năm ở một công ty. Mức lương cao hơn mặt bằng khoảng 20%. Quyền mua cổ phiếu ưu đãi sẽ "chín" sau hai năm nữa. Đồng nghiệp quen, công việc nhàm nhưng biết rõ. Bốn lực lần lượt xuất hiện. Ác cảm mất mát khiến mức lương cao trông như một tài sản sắp bị tước đi. Hiệu ứng sở hữu khiến vị trí hiện tại được định giá cao hơn thực tế. Chi phí chìm biến tám năm thành một lý do để ở thêm. Và ngụy biện bỏ sót khiến việc không quyết định trông như không mất gì. Bốn lực, cùng một hướng.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Giá người sở hữu đòi so với giá người mua trả cho cùng một vật (thí nghiệm chiếc cốc)</div>
+      <div class="bar-row">
+        <div class="bar-label">Người mua sẵn trả</div>
+        <div class="bar-track"><div class="bar-fill" style="width:43%"></div></div>
+        <div class="bar-value">~3$</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Người sở hữu đòi bán</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        <div class="bar-value">~7$</div>
+      </div>
+      <p class="bar-chart__caption">Nguồn: Kahneman, Knetsch &amp; Thaler (1990), thí nghiệm chiếc cốc tại Cornell. Giá trị là mức trung bình xấp xỉ; chênh lệch khoảng gấp đôi.</p>
+    </div>
+
+    <p>Điểm cần thấy: cái nam châm không biến mất khi bạn biết nó ở đó. Bạn có thể hiểu rõ ác cảm mất mát, và vẫn thấy đau khi nghĩ tới việc rời đi. Hiểu biết không sửa được cái cân. Chỉ có công cụ mới sửa được.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__face flip-card__front">
+        <span class="flip-card__label">Tự kiểm tra — Câu hỏi</span>
+        <div class="flip-card__content">Vì sao "không quyết định" cũng là một quyết định, và thường là quyết định đắt nhất?</div>
+      </div>
+      <div class="flip-card__face flip-card__back">
+        <span class="flip-card__label">Đáp án</span>
+        <div class="flip-card__content">Vì mặc định vẫn tiêu tốn thời gian và cơ hội — những thứ không lấy lại được. Ngụy biện bỏ sót khiến ta tưởng không hành động là miễn phí, nhưng cái giá chỉ là vô hình.</div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Nơi mô hình vỡ</h2>
+    <p>Phần này quan trọng vì chủ đề này rất dễ biến thành lời khuyên "cứ nghỉ việc đi". Mô hình Cân Lệch nói về một sự lệch, không nói rằng ở lại luôn sai.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      “Cứ rời đi là tốt, ở lại là hèn.” Sai, và đây là cách đọc nguy hiểm. Đôi khi trạng thái hiện tại thực sự tốt nhất, và giữ nó là quyết định đúng. Vấn đề không phải là ở lại hay rời đi, mà là <em>quyết định đó có được đưa ra trên một cái cân đã sửa</em> hay không. Sửa cân có thể dẫn tới kết luận "ở lại" — nhưng lần này là ở lại có chủ đích.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Ca biên</span>
+      Không phải mọi khoản mất đều là ảo giác. Rời một công việc có những cái giá thật: mất thu nhập, mất mạng lưới quan hệ, mất danh tính nghề nghiệp. Những cái đó không phải thiên lệch; chúng là chi phí thật và phải được đưa vào cân. Phân biệt cần làm là: đâu là <em>chi phí thật của tương lai</em>, đâu là <em>nỗi đau của một khoản đã qua</em>. Cái trước tính; cái sau bỏ.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Tranh cãi học thuật</span>
+      Ngay cả ác cảm mất mát cũng bị tranh luận. Một số nhà nghiên cứu cho rằng nhiều hiện tượng gán cho nó — kể cả thiên lệch hiện trạng và hiệu ứng sở hữu — có thể được giải thích gọn hơn bằng "quán tính tâm lý" (một xu hướng không can thiệp). Những người khác phản bác rằng ác cảm mất mát vẫn lặp lại được và biến thiên theo quy luật dự đoán được. Vì vậy hãy đọc đây là một khung giải thích mạnh và hữu ích, không phải một định luật bất khả tranh cãi.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Nếu cái cân bị lệch, thì công cụ nào có thể sửa nó mà không cần bạn trở nên "dũng cảm" hơn? Nghĩ một câu trả lời trước khi đọc phần tổng hợp.
+    </div>
+
+    <h2 id="connections">Mắt xích này nối với đâu</h2>
+    <p>Phụ lục này đào sâu tầng tâm lý của một khái niệm đã xuất hiện từ Node 3, và nối với cả chuỗi công cụ của Node 5.</p>
+    <ul>
+      <li><a class="xlink" href="03-bay-shawshank.html">Node 3 — Bẫy Shawshank</a>: khóa vàng và thể chế hóa; đây là cơ chế chi tiết.</li>
+      <li><a class="xlink" href="05-pha-cuc.html">Node 5 — Phá cục</a>: “đổi cấu trúc” là cách vô hiệu hoá cái nam châm.</li>
+      <li><a class="xlink" href="06-bang-thong-bi-danh-thue.html">Phụ lục A — Băng thông bị đánh thuế</a>: ác cảm mất mát là một phần của “thuế nhận thức”.</li>
+      <li><a class="xlink" href="07-rct-va-nobel-2019.html">Phụ lục B — Người đi tìm bằng chứng</a>: cách kiểm chứng một niềm tin về chính quyết định của mình.</li>
+    </ul>
+
+    <h2 id="synthesis">Bức tranh toàn cảnh</h2>
+    <p>Quay lại người ghét công việc của mình ở đầu bài. Họ không ở lại vì lười, cũng không vì không biết. Họ ở lại vì bốn lực cùng đẩy về một phía. Cái đang có được định giá cao hơn thực tế. Thay đổi bị coi là mất. Thời gian đã bỏ ra bị biến thành lý do. Và không quyết định trông như không mất gì. Cái cân đã bị lệch trước khi họ bắt đầu tính. Vì vậy lời khuyên "hãy dũng cảm lên" là vô dụng — nó đòi hỏi sức mạnh để nghiêng một cái cân đã gắn nam châm. Cách đúng là tháo nam châm: dùng những công cụ buộc bạn so sánh hai tương lai thay vì so hiện tại với quá khứ, và đặt ra một mốc thời gian để mặc định không tự thắng. Sửa được cái cân, bạn có thể vẫn chọn ở lại — nhưng đó sẽ là một lựa chọn, không phải một sự trôi dạt.</p>
+
+    <blockquote>
+      <strong>Nếu bạn chỉ nhớ một điều:</strong> Bạn không thiếu dũng khí. Bạn đang cân trên một chiếc cân có nam châm — và việc cần làm là tháo nam châm, không phải tự trách mình.
+    </blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Bài toán: Bốn công cụ để cân lại một quyết định</h3>
+      <p class="launchpad__problem">Chọn một quyết định "ở lại hay rời đi" của bạn. Áp bốn công cụ lên nó. Một, <strong>bài kiểm tra khởi đầu mới</strong>: nếu hôm nay bạn chưa ở trong tình huống này, bạn có chủ động chọn nó không? Hai, <strong>bài kiểm tra đảo chiều</strong>: nếu đang ở phía bên kia, bạn có muốn quay lại không? Ba, <strong>tối thiểu hoá hối tiếc</strong>: ở tuổi tám mươi, bạn hối tiếc vì đã đi hay vì đã không đi? Bốn, <strong>dây bẫy</strong>: đặt một mốc thời gian và một điều kiện cụ thể để tự động xem lại quyết định. Ghi lại kết quả của cả bốn — kể cả khi chúng mâu thuẫn nhau.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+          Cả bốn công cụ đều làm cùng một việc: kéo bạn ra khỏi điểm tham chiếu hiện tại. Nếu một công cụ cho kết quả lạ, đừng bỏ qua — đó thường là chỗ cái nam châm mạnh nhất.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Dùng mảnh 3: tách <em>chi phí thật của tương lai</em> khỏi <em>nỗi đau của khoản đã qua</em>. Chỉ cái thứ nhất được vào cân.
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dựng bài</span>
+          Dây bẫy quan trọng nhất. Đặt một mốc cụ thể (ví dụ: ba tháng nữa) và một điều kiện đo được. Nếu tới mốc mà điều kiện không đổi, bạn phải hành động — nếu không, mặc định sẽ thắng lần nữa.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Ác cảm mất mát (loss aversion)</dt>
+        <dd>Cảm nhận mất đau hơn được; mất thường được đối xử như lớn gấp đôi được. <em>(Trong Mô hình Cân Lệch: nam châm hút đĩa “đang có”.)</em></dd>
+        <dt>Hiệu ứng sở hữu (endowment effect)</dt>
+        <dd>Định giá một vật cao hơn khi đang sở hữu nó. <em>(Trong Mô hình Cân Lệch: vật trong đĩa trái tự nhiên nặng hơn.)</em></dd>
+        <dt>Thiên lệch hiện trạng (status quo bias)</dt>
+        <dd>Mặc định giữ nguyên trạng thái hiện tại và coi thay đổi là mất mát. <em>(Trong Mô hình Cân Lệch: xu hướng để cân đứng yên.)</em></dd>
+        <dt>Chi phí chìm (sunk cost)</dt>
+        <dd>Khoản đã bỏ ra và không thể lấy lại; không liên quan tới quyết định tương lai. <em>(Trong Mô hình Cân Lệch: trọng lượng cũ còn dính trên đĩa.)</em></dd>
+        <dt>Ngụy biện bỏ sót (omission bias)</dt>
+        <dd>Thấy hành động gây hại tệ hơn không hành động gây hại cùng mức. <em>(Trong Mô hình Cân Lệch: để cân đứng yên cảm giác “vô can” hơn là đặt tay lên.)</em></dd>
+        <dt>Bài kiểm tra đảo chiều (reversal test)</dt>
+        <dd>Nếu đổi chiều một thay đổi mà cả hai chiều đều bị coi là tệ, hãy nghi ngờ thiên lệch hiện trạng. <em>(Trong Mô hình Cân Lệch: thử xem nam châm còn ở đó khi lật ngược cân.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu. Chọn đáp án đúng nhất rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Ác cảm mất mát nói rằng con người thường…</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> thích rủi ro hơn an toàn trong mọi tình huống</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> cảm nhận một khoản mất đau hơn một khoản được tương đương</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> luôn tính toán tối ưu như lý thuyết kinh tế cổ điển</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> không bao giờ thay đổi quyết định</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Đây là lõi của lý thuyết triển vọng. Nó không nói người ta thích rủi ro, mà nói cách cảm nhận mất và được không đối xứng.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>2. Vì sao "tôi đã bỏ tám năm vào đây" là lý do tồi để ở lại?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Vì tám năm là quá ngắn để tính</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Vì ở lại luôn là lựa chọn sai</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Vì khoản đã qua không thay đổi dù bạn ở lại hay rời đi; chỉ tương lai mới đáng cân</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Vì tám năm không phải là chi phí chìm</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Đây là ngụy biện chi phí chìm. Khoản đã bỏ ra giống nhau ở cả hai lựa chọn, nên nó không giúp phân biệt phương án nào tốt hơn.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>3. Kết luận đúng nhất về "ở lại" và "rời đi" là gì?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Vấn đề không phải ở lại hay rời đi, mà là quyết định có được đưa ra trên một cái cân đã sửa hay không</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Rời đi luôn tốt hơn ở lại</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Ở lại luôn an toàn hơn nên luôn đúng</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Thiên lệch không ảnh hưởng tới quyết định nghề nghiệp</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Sửa cân có thể dẫn tới kết luận ở lại — nhưng đó là ở lại có chủ đích, khác với trôi dạt theo mặc định. Cả hai kết cục đều hợp lệ nếu cái cân đã được sửa.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Loss_aversion" target="_blank" rel="noopener">Wikipedia — Loss aversion</a> — Kahneman &amp; Tversky (1979); hệ số hai lần; phê bình của Gal.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Endowment_effect" target="_blank" rel="noopener">Wikipedia — Endowment effect</a> — Thaler (1980); thí nghiệm chiếc cốc của Kahneman, Knetsch &amp; Thaler (1990).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Status_quo_bias" target="_blank" rel="noopener">Wikipedia — Status quo bias</a> — Samuelson &amp; Zeckhauser (1988); thí nghiệm bảo hiểm New Jersey / Pennsylvania.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Sunk_cost" target="_blank" rel="noopener">Wikipedia — Sunk cost</a> — Arkes &amp; Blumer (1985); ngụy biện Concorde; thiên lệch tiếp tục kế hoạch.</li>
+    </ul>
+
+    <nav class="prevnext" aria-label="Điều hướng series">
+      <a class="prevnext__item" href="07-rct-va-nobel-2019.html">
+        <span class="prevnext__dir">← Phụ lục B</span>
+        <span class="prevnext__title">Người đi tìm bằng chứng</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="bay-ngheo-doi-atlas.html">
+        <span class="prevnext__dir">Kết thúc →</span>
+        <span class="prevnext__title">Về bản đồ series</span>
+      </a>
+    </nav>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>khóa vàng</li><li>ác cảm mất mát</li><li>kinh tế học hành vi</li><li>quyết định</li><li>nghề nghiệp</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="bay-ngheo-doi-atlas.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Phụ lục C · Next Node cuối · ~15 phút đọc</span>
+        <span><a href="bay-ngheo-doi-atlas.html">Về bản đồ series</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="loss">
+        <span class="amplifier__term">Ác cảm mất mát</span>
+        <p class="amplifier__body">Mất đau hơn được, thường khoảng gấp đôi. Vì điểm tham chiếu thường là “những gì tôi đang có”, mọi thay đổi đều bắt đầu bằng một khoản mất.</p>
+      </div>
+      <div data-note-id="endowment">
+        <span class="amplifier__term">Hiệu ứng sở hữu</span>
+        <p class="amplifier__body">Sở hữu làm tăng giá trị cảm nhận. Với công việc, điều này biến toàn bộ những gì bạn đang nhận thành “cái tôi có” — và rời đi thành mất tất cả cùng lúc.</p>
+      </div>
+      <div data-note-id="reversal">
+        <span class="amplifier__term">Bài kiểm tra đảo chiều</span>
+        <p class="amplifier__body">Nếu bạn cho rằng cả việc thêm lẫn việc bớt một thứ đều tệ, hãy nghi ngờ thiên lệch hiện trạng. Một tham số không thể có hai chiều đều tệ như nhau.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Vì sao dùng hình ảnh chiếc cân</strong>
+      Nó tách “tính toán” khỏi “dữ liệu đầu vào”. Bạn có thể tính rất đúng, nhưng nếu một đĩa bị gắn nam châm thì kết quả vẫn sai. Đó là điểm mà lời khuyên “hãy suy nghĩ kỹ hơn” bỏ qua.
+    </div>
+    <div class="sidenote">
+      <strong>Về các con số</strong>
+      Hệ số “gấp đôi” của ác cảm mất mát và chênh lệch 3$/7$ trong thí nghiệm chiếc cốc là các giá trị xấp xỉ được báo cáo; chúng thay đổi theo bối cảnh. Con số 14 lần với vé bóng rổ là một trường hợp đặc biệt, không phải mức chung.
+    </div>
+    <div class="sidenote">
+      <strong>Khép series</strong>
+      Đây là node cuối. Cả bốn bẫy và bốn phụ lục giờ đã khép thành một hệ thống. Nếu muốn dùng lại, hãy bắt đầu ở bản đồ series.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>

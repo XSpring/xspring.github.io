@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bản đồ series · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Atlas dẫn đường cho series 4 Cái Bẫy Nghèo Đói: tóm tắt, lộ trình đọc, đối tượng phù hợp và liên kết tới từng node.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="index.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Bản đồ series</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="00-he-thong-vo-hinh.html">Bắt đầu đọc →</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 8 phút</p>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">✦</span> Atlas · Bản đồ series</p>
+    <h1>4 Cái Bẫy Nghèo Đói</h1>
+    <p class="node-kicker">Giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội — và cách phá vòng lặp.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Nghèo bền vững là sản phẩm của bốn bẫy tự củng cố tác động lên thời gian, năng lượng, tư duy và tiền. Bản đồ này dẫn bạn qua từng bẫy.
+    </div>
+
+    <div class="atlas-hero">
+      <p class="atlas-hero__kicker">Series giáo dục · 6 node + 4 phụ lục</p>
+      <h2 class="atlas-hero__title" style="border:0;padding:0;margin:0 0 12px">Bốn cái bẫy, một vòng lặp</h2>
+      <p class="atlas-hero__sub">Mỗi node là một bài học độc lập, nhưng cả series đọc theo thứ tự sẽ cho bạn một mô hình hoàn chỉnh: bốn bẫy móc vào nhau, và bốn đối sách cũng phải chạy cùng nhau.</p>
+      <div class="atlas-stats">
+        <span class="atlas-stat"><strong>6</strong> node + 4 phụ lục</span>
+        <span class="atlas-stat"><strong>~125 phút</strong> đọc toàn bộ</span>
+        <span class="atlas-stat"><strong>4</strong> bẫy · <strong>4</strong> đối sách</span>
+        <span class="atlas-stat">Trình độ: <strong>phổ thông</strong></span>
+      </div>
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Vì sao có series này</span>
+      Có một câu hỏi mà rất nhiều người mang theo mà không biết gọi tên: tại sao mình càng cố, mọi thứ càng đứng yên? Series này không trả lời bằng lời động viên. Nó trả lời bằng bốn cơ chế cụ thể, có tên, có cơ chế, và có cách đo. Mục tiêu không phải khiến bạn cảm thấy tốt hơn trong một tối — mà là đưa bạn một bản đồ đủ rõ để dùng lại nhiều lần.
+    </div>
+
+    <h2 id="problem">Series này giải quyết vấn đề gì</h2>
+    <p>Vấn đề trung tâm là một nghịch lý quen thuộc: nỗ lực cao nhưng kết quả không đổi. Cách giải thích thông thường — “cố gắng chưa đủ” — không sai, nhưng vô dụng, vì nó không chỉ ra cần đổi cái gì. Series thay câu hỏi đó bằng một câu hỏi khác: cấu trúc nào đang giữ kết quả của bạn tại chỗ?</p>
+    <p>Để trả lời, mỗi node mổ xẻ một cơ chế, chỉ ra nó tác động lên nguồn lực nào, và để lại một bài tập áp dụng. Bốn cơ chế đó không rời rạc. Chúng nối thành một vòng lặp — và đó là lý do thứ tự đọc quan trọng.</p>
+
+    <h2 id="map">Bản đồ các node</h2>
+    <p>Sáu node dưới đây đi từ khung tổng thể, qua bốn bẫy, tới bộ đối sách. Mỗi thẻ dẫn thẳng tới bài tương ứng. Nếu bạn chỉ có thời gian cho một bài, hãy đọc node 0 trước — nó là chìa khoá để hiểu phần còn lại.</p>
+
+    <ul class="atlas-grid">
+      <li>
+        <a class="atlas-card atlas-card--read" href="00-he-thong-vo-hinh.html">
+          <span class="atlas-card__top"><span class="atlas-card__num">0</span><span class="atlas-card__kicker">Nền tảng</span></span>
+          <p class="atlas-card__title">Hệ thống vô hình</p>
+          <p class="atlas-card__desc">Phân biệt nỗ lực và cấu trúc; định nghĩa bẫy tự củng cố. Điểm khởi đầu bắt buộc.</p>
+          <span class="atlas-card__cta">Đọc node 0 →</span>
+        </a>
+      </li>
+      <li>
+        <a class="atlas-card" href="01-bay-giai-tri-mi-dan.html">
+          <span class="atlas-card__top"><span class="atlas-card__num">1</span><span class="atlas-card__kicker">Bẫy 1 · Thời gian</span></span>
+          <p class="atlas-card__title">Bẫy giải trí mị dân</p>
+          <p class="atlas-card__desc">Nền kinh tế chú ý, phần thưởng biến thiên, và thuật ngữ tittytainment.</p>
+          <span class="atlas-card__cta">Đọc node 1 →</span>
+        </a>
+      </li>
+      <li>
+        <a class="atlas-card" href="02-bay-rat-race.html">
+          <span class="atlas-card__top"><span class="atlas-card__num">2</span><span class="atlas-card__kicker">Bẫy 2 · Năng lượng</span></span>
+          <p class="atlas-card__title">Bẫy Rat Race</p>
+          <p class="atlas-card__desc">Thu nhập tuyến tính, trần thời gian, và sự khác biệt giữa đòn bẩy và làm việc chăm chỉ.</p>
+          <span class="atlas-card__cta">Đọc node 2 →</span>
+        </a>
+      </li>
+      <li>
+        <a class="atlas-card" href="03-bay-shawshank.html">
+          <span class="atlas-card__top"><span class="atlas-card__num">3</span><span class="atlas-card__kicker">Bẫy 3 · Tư duy</span></span>
+          <p class="atlas-card__title">Bẫy Shawshank</p>
+          <p class="atlas-card__desc">Thể chế hóa, học cách bất lực, khóa vàng. Vì sao cái lồng trở nên vô hình.</p>
+          <span class="atlas-card__cta">Đọc node 3 →</span>
+        </a>
+      </li>
+      <li>
+        <a class="atlas-card" href="04-bay-tieu-dung-pho-truong.html">
+          <span class="atlas-card__top"><span class="atlas-card__num">4</span><span class="atlas-card__kicker">Bẫy 4 · Tiền</span></span>
+          <p class="atlas-card__title">Bẫy tiêu dùng phô trương</p>
+          <p class="atlas-card__desc">Veblen, bắt chước tiền tệ, và nghịch lý người giàu chi kín đáo.</p>
+          <span class="atlas-card__cta">Đọc node 4 →</span>
+        </a>
+      </li>
+      <li>
+        <a class="atlas-card" href="05-pha-cuc.html">
+          <span class="atlas-card__top"><span class="atlas-card__num">5</span><span class="atlas-card__kicker">Tổng hợp</span></span>
+          <p class="atlas-card__title">Phá cục</p>
+          <p class="atlas-card__desc">Một nguyên lý chung và bốn đòn bẩy cho bốn bẫy, kèm giới hạn trung thực của hành động cá nhân.</p>
+          <span class="atlas-card__cta">Đọc node 5 →</span>
+        </a>
+      </li>
+      <li>
+        <a class="atlas-card" href="06-bang-thong-bi-danh-thue.html">
+          <span class="atlas-card__top"><span class="atlas-card__num">A</span><span class="atlas-card__kicker">Phụ lục · Cơ chế</span></span>
+          <p class="atlas-card__title">Băng thông bị đánh thuế</p>
+          <p class="atlas-card__desc">Kinh tế học của sự khan hiếm: vì sao thiếu thốn chiếm dụng băng thông nhận thức và tự tái tạo.</p>
+          <span class="atlas-card__cta">Đọc phụ lục A →</span>
+        </a>
+      </li>
+      <li>
+        <a class="atlas-card" href="07-rct-va-nobel-2019.html">
+          <span class="atlas-card__top"><span class="atlas-card__num">B</span><span class="atlas-card__kicker">Phụ lục · Phương pháp</span></span>
+          <p class="atlas-card__title">Người đi tìm bằng chứng</p>
+          <p class="atlas-card__desc">Lịch sử chống nghèo bằng thử nghiệm ngẫu nhiên (RCT), J-PAL, và giải Nobel Kinh tế 2019.</p>
+          <span class="atlas-card__cta">Đọc phụ lục B →</span>
+        </a>
+      </li>
+      <li>
+        <a class="atlas-card" href="08-khoa-vang-va-quyet-dinh-roi-di.html">
+          <span class="atlas-card__top"><span class="atlas-card__num">C</span><span class="atlas-card__kicker">Phụ lục · Quyết định</span></span>
+          <p class="atlas-card__title">Khóa vàng</p>
+          <p class="atlas-card__desc">Tâm lý học của việc ở lại: ác cảm mất mát, hiệu ứng sở hữu, chi phí chìm, và cách cân lại quyết định.</p>
+          <span class="atlas-card__cta">Đọc phụ lục C →</span>
+        </a>
+      </li>
+      <li>
+        <a class="atlas-card" href="09-tu-dong-hoa.html">
+          <span class="atlas-card__top"><span class="atlas-card__num">D</span><span class="atlas-card__kicker">Phụ lục · Cú sốc</span></span>
+          <p class="atlas-card__title">Cú sốc tự động hóa</p>
+          <p class="atlas-card__desc">Tự động hóa thay tác vụ, khoét rỗng tầng giữa, và vì sao người bị đánh ít tin nhất.</p>
+          <span class="atlas-card__cta">Đọc phụ lục D →</span>
+        </a>
+      </li>
+    </ul>
+
+    <h2 id="path">Lộ trình đọc</h2>
+    <p>Thứ tự dưới đây không tùy tiện. Nó đi theo chuỗi phụ thuộc: hiểu hệ thống trước, rồi từng bẫy, rồi mới tới đối sách — vì đối sách chỉ có nghĩa khi bạn đã thấy rõ cái cần phá.</p>
+    <ol class="path-list">
+      <li><strong><a class="xlink" href="00-he-thong-vo-hinh.html">Node 0 · Hệ thống vô hình</a></strong> — nắm khung nỗ lực/cấu trúc và định nghĩa bẫy. Không đọc node này trước thì bốn node sau sẽ rời rạc.</li>
+      <li><strong><a class="xlink" href="01-bay-giai-tri-mi-dan.html">Node 1 · Bẫy giải trí mị dân</a></strong> — bẫy đầu tiên vì nó lấy đi thứ mà mọi bẫy khác cần: sự tập trung.</li>
+      <li><strong><a class="xlink" href="02-bay-rat-race.html">Node 2 · Bẫy Rat Race</a></strong> — tiếp nối tự nhiên: sau khi thời gian bị lấy, năng lượng và tiền dư cũng bị lấy.</li>
+      <li><strong><a class="xlink" href="03-bay-shawshank.html">Node 3 · Bẫy Shawshank</a></strong> — tầng tâm lý. Đọc sau node 2 để thấy vì sao kiệt sức dẫn tới tê liệt tư duy.</li>
+      <li><strong><a class="xlink" href="04-bay-tieu-dung-pho-truong.html">Node 4 · Bẫy tiêu dùng phô trương</a></strong> — khép vòng lặp bằng cách rút nốt phần dư tài chính.</li>
+      <li><strong><a class="xlink" href="05-pha-cuc.html">Node 5 · Phá cục</a></strong> — tổng hợp và đối sách. Đây là node trả lời câu hỏi mở đầu của cả series.</li>
+      <li><strong><a class="xlink" href="06-bang-thong-bi-danh-thue.html">Phụ lục A · Băng thông bị đánh thuế</a></strong> — tùy chọn: cơ chế tâm lý đứng sau cả bốn bẫy. Đọc sau Node 5.</li>
+      <li><strong><a class="xlink" href="07-rct-va-nobel-2019.html">Phụ lục B · Người đi tìm bằng chứng</a></strong> — tùy chọn: lịch sử RCT và Nobel 2019. Đọc cuối cùng.</li>
+      <li><strong><a class="xlink" href="08-khoa-vang-va-quyet-dinh-roi-di.html">Phụ lục C · Khóa vàng</a></strong> — tùy chọn: tâm lý học của quyết định rời đi. Dành cho ai đang có một quyết định thật.</li>
+      <li><strong><a class="xlink" href="09-tu-dong-hoa.html">Phụ lục D · Cú sốc tự động hóa</a></strong> — tùy chọn: cú sốc cấu trúc tăng tốc ba bẫy đã học. Đọc cuối cùng.</li>
+    </ol>
+
+    <h2 id="audience">Đối tượng phù hợp</h2>
+    <p>Series viết cho người đọc phổ thông, không cần nền kinh tế học. Bảng dưới đây gợi ý điểm bắt đầu tùy theo bạn là ai và bạn muốn gì.</p>
+
+    <table class="audience-table">
+      <thead>
+        <tr><th>Bạn là…</th><th>Mối quan tâm chính</th><th>Nên bắt đầu ở</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Người đi làm cảm thấy bế tắc</td>
+          <td>Vì sao càng cố càng đứng yên</td>
+          <td><a href="02-bay-rat-race.html">Node 2</a> → <a href="00-he-thong-vo-hinh.html">Node 0</a></td>
+        </tr>
+        <tr>
+          <td>Phụ huynh lo con nghiện màn hình</td>
+          <td>Thiết kế gây nghiện của nền tảng</td>
+          <td><a href="01-bay-giai-tri-mi-dan.html">Node 1</a></td>
+        </tr>
+        <tr>
+          <td>Người trẻ mới đi làm</td>
+          <td>Tiêu dùng, nợ, thân phận</td>
+          <td><a href="04-bay-tieu-dung-pho-truong.html">Node 4</a> → <a href="05-pha-cuc.html">Node 5</a></td>
+        </tr>
+        <tr>
+          <td>Người muốn đổi nghề nhưng sợ</td>
+          <td>Vùng an toàn, khóa vàng</td>
+          <td><a href="03-bay-shawshank.html">Node 3</a></td>
+        </tr>
+        <tr>
+          <td>Người đọc để hiểu xã hội</td>
+          <td>Cơ chế hệ thống, bằng chứng</td>
+          <td><a href="00-he-thong-vo-hinh.html">Node 0</a> → đọc tuần tự</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 id="how">Cách đọc hiệu quả</h2>
+    <p>Mỗi bài được thiết kế để đọc chủ động, không phải đọc lướt. Dưới đây là cách dùng các thành phần trong bài để việc đọc biến thành việc học.</p>
+    <ul>
+      <li><strong>Làm các probe</strong> — mỗi khái niệm có một câu hỏi ẩn. Thử trả lời trước khi mở đáp án; đó là lúc việc học thực sự xảy ra.</li>
+      <li><strong>Viết vào ô "Dừng lại &amp; ngẫm"</strong> — câu trả lời được lưu tự động, nên bạn có thể quay lại đối chiếu.</li>
+      <li><strong>Đừng bỏ phần "Nơi mô hình vỡ"</strong> — đó là phần trung thực nhất, và cũng là phần dễ bị bỏ qua nhất.</li>
+      <li><strong>Làm bài ở Bệ phóng</strong> — mỗi node kết thúc bằng một bài tập áp dụng, có gợi ý mở dần.</li>
+      <li><strong>Làm quiz sau cùng</strong> — nó kiểm tra hiểu biết, không kiểm tra trí nhớ.</li>
+    </ul>
+
+    <h2 id="structure">Cấu trúc chung mỗi bài</h2>
+    <p>Mọi node đi theo cùng một khung sáu bước, gọi là FSM. Biết khung này giúp bạn định vị mình đang ở đâu trong bài và đọc nhanh hơn.</p>
+    <ol class="path-list">
+      <li><strong>Nền tảng</strong> — một sự thật duy nhất, nối với điều bạn đã biết.</li>
+      <li><strong>Cầu nối</strong> — một ẩn dụ đời thường, kèm một ngộ nhận phổ biến bị bác bỏ ngay.</li>
+      <li><strong>Dựng mô hình</strong> — hai đến ba khái niệm, mỗi khái niệm qua bốn nhịp: định nghĩa, ví dụ, câu hỏi, giải đáp.</li>
+      <li><strong>Thực địa</strong> — áp mô hình vào một ví dụ có thật, kèm số liệu.</li>
+      <li><strong>Giới hạn</strong> — nơi mô hình sai hoặc bị lạm dụng.</li>
+      <li><strong>Tổng hợp</strong> — nén lại thành một đoạn, một câu, và một bài tập vượt một bước.</li>
+    </ol>
+
+    <h2 id="terms">Thuật ngữ xuyên suốt</h2>
+    <p>Năm thuật ngữ dưới đây xuất hiện ở nhiều node. Nắm chúng trước sẽ giúp bạn đọc nhanh hơn.</p>
+    <div class="glossary">
+      <dl>
+        <dt>Cấu trúc (structure)</dt>
+        <dd>Luật chơi nằm ngoài tầm kiểm soát cá nhân — sở hữu, giá cả, rủi ro. Xuất hiện ở <a class="xlink" href="00-he-thong-vo-hinh.html">Node 0</a>.</dd>
+        <dt>Bẫy tự củng cố (self-reinforcing trap)</dt>
+        <dd>Cơ chế mà càng ở trong lâu, cái giá thoát ra càng cao. Khung chung của cả bốn bẫy.</dd>
+        <dt>Đòn bẩy (leverage)</dt>
+        <dd>Thứ cho phép một đơn vị công sức tạo ra nhiều đơn vị kết quả. Trung tâm ở <a class="xlink" href="02-bay-rat-race.html">Node 2</a>.</dd>
+        <dt>Học cách bất lực (learned helplessness)</dt>
+        <dd>Ngừng hành động vì đã học rằng hành động vô ích. Trung tâm ở <a class="xlink" href="03-bay-shawshank.html">Node 3</a>.</dd>
+        <dt>Tiêu dùng phô trương (conspicuous consumption)</dt>
+        <dd>Mua hàng để công khai thể hiện địa vị. Trung tâm ở <a class="xlink" href="04-bay-tieu-dung-pho-truong.html">Node 4</a>.</dd>
+      </dl>
+    </div>
+
+    <h2 id="sources">Nguồn chính của series</h2>
+    <p>Các nguồn dưới đây là những dữ kiện có thể kiểm chứng được dùng xuyên suốt. Con số không có nguồn được ghi rõ là minh hoạ ngay tại chỗ.</p>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Nickel_and_Dimed" target="_blank" rel="noopener">Nickel and Dimed</a> — Barbara Ehrenreich (2001).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Conspicuous_consumption" target="_blank" rel="noopener">Conspicuous consumption</a> — Thorstein Veblen (1899) và các nghiên cứu tiếp nối.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/The_Global_Trap" target="_blank" rel="noopener">The Global Trap</a> — nguồn gốc “tittytainment” (1995).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Rich_Dad_Poor_Dad" target="_blank" rel="noopener">Rich Dad Poor Dad</a> — Kiyosaki &amp; Lechter (1997).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Learned_helplessness" target="_blank" rel="noopener">Learned helplessness</a> — Seligman &amp; Maier (1967).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Nobel_Memorial_Prize_in_Economic_Sciences" target="_blank" rel="noopener">Nobel Kinh tế 2019</a> — Banerjee, Duflo &amp; Kremer.</li>
+    </ul>
+
+    <div class="prevnext" aria-label="Bắt đầu series">
+      <a class="prevnext__item" href="00-he-thong-vo-hinh.html">
+        <span class="prevnext__dir">Bắt đầu tại đây →</span>
+        <span class="prevnext__title">Node 0 · Hệ thống vô hình</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="05-pha-cuc.html">
+        <span class="prevnext__dir">Hoặc đọc phần kết →</span>
+        <span class="prevnext__title">Node 5 · Phá cục</span>
+      </a>
+    </div>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>cấu trúc hệ thống</li><li>kinh tế học hành vi</li><li>tư duy phản biện</li><li>dịch chuyển giai cấp</li><li>bẫy tự củng cố</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="index.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Atlas · Bản đồ series · ~8 phút đọc</span>
+        <span><a href="00-he-thong-vo-hinh.html">Bắt đầu đọc node 0 →</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="fsm">
+        <span class="amplifier__term">Khung FSM</span>
+        <p class="amplifier__body">Sáu bước: nền tảng → cầu nối → dựng mô hình → thực địa → giới hạn → tổng hợp. Mỗi node đi hết khung này một lần.</p>
+      </div>
+      <div data-note-id="trap">
+        <span class="amplifier__term">Bẫy tự củng cố</span>
+        <p class="amplifier__body">Cơ chế phản hồi dương: đầu ra của vòng này thành đầu vào của vòng sau. Nợ sinh nợ; bận sinh bận; tê liệt sinh tê liệt.</p>
+      </div>
+      <div data-note-id="loop">
+        <span class="amplifier__term">Vòng lặp bốn bẫy</span>
+        <p class="amplifier__body">Thời gian bị lấy → năng lượng và tiền bị lấy → tư duy bị khóa → tiền bị đốt → vòng lặp khép kín và tự nuôi.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Nên đọc theo thứ tự không?</strong>
+      Có, nếu đây là lần đầu. Nếu bạn đến với một vấn đề cụ thể, bảng “Đối tượng phù hợp” cho phép bạn nhảy thẳng tới node liên quan rồi quay lại node 0 sau.
+    </div>
+    <div class="sidenote">
+      <strong>Về nguồn và con số</strong>
+      Mọi dữ kiện có nguồn đều được gắn liên kết. Con số không có nguồn được ghi rõ là minh hoạ ngay dưới bảng. Series không tạo ra nguồn giả.
+    </div>
+    <div class="sidenote">
+      <strong>Điều nên nhớ nhất</strong>
+      Cả series quy về một ý: đừng cố bơi mạnh hơn trong một dòng chảy ngược. Hãy đổi hướng, và đổi cấu trúc để hướng đúng trở thành mặc định.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>

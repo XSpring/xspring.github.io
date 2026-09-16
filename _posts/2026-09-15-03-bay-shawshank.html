@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bẫy Shawshank · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Vì sao ở trong một môi trường cố định quá lâu có thể làm mất khả năng tưởng tượng một lối ra — và cách học lại khả năng đó.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="bay-ngheo-doi-atlas.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Node 3 · Bẫy Shawshank</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="02-bay-rat-race.html">← Node 2</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Bản đồ</a>
+      <a class="series-bar__link" href="04-bay-tieu-dung-pho-truong.html">Node 4 →</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 13 phút</p>
+    </div>
+    <div class="orbit" aria-label="Lộ trình bài học">
+      <p class="orbit__title">Lộ trình bài học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Thực địa</div>
+        <div class="orbit__node" data-target="boundary">5 · Giới hạn</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng hợp</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">3</span> Bẫy 3/4 · Tư duy &amp; ý chí</p>
+    <h1>Bẫy Shawshank</h1>
+    <p class="node-kicker">Nhà tù nguy hiểm nhất là nhà tù bạn không còn nhận ra mình đang ở trong đó.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Ở trong một môi trường cố định quá lâu, con người mất dần khả năng tưởng tượng lối ra — không vì hèn, mà vì tư duy đã được định hình lại theo cái lồng.
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Câu hỏi mở đầu</span>
+      Một người đàn ông ở tù năm mươi năm. Khi được trả tự do, ông không mừng. Ông sợ. Thế giới bên ngoài không còn là tự do; nó là một nơi xa lạ không có chỗ cho ông. Ông không biết cách sống ở đó, và ông chọn cách kết thúc. Câu hỏi đáng sợ hơn: điều gì khiến một người sợ chính tự do của mình?
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần biết trước</h4>
+      <ul>
+        <li>Node 0 — <a class="xlink" href="00-he-thong-vo-hinh.html">Hệ thống vô hình</a> và hai node bẫy trước.</li>
+        <li>Bạn đã từng nghe tới phim <em>Nhà tù Shawshank</em> hoặc nhân vật Brooks.</li>
+        <li>Bài nói về tư duy, không nói về sự hèn nhát.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li>Giải thích hiện tượng <strong>thể chế hóa</strong> (institutionalization).</li>
+        <li>Mô tả thí nghiệm <strong>học cách bất lực</strong> (learned helplessness).</li>
+        <li>Nhận diện <strong>khóa vàng</strong> (golden handcuffs).</li>
+        <li>Thiết kế một bài luyện nhỏ để mở rộng vùng quen thuộc.</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Sự thật nền tảng</h2>
+    <p>Sự thật nền tảng của node này: <strong>môi trường không chỉ chứa con người — nó định hình con người, tới mức khả năng tưởng tượng một lựa chọn khác có thể biến mất.</strong></p>
+    <p>Bạn đã biết điều này ở dạng câu cửa miệng: “ở lâu thành quen”, “ra ngoài không biết làm gì”. Điều bài này thêm vào là cơ chế. Vùng an toàn không phải một nơi thoải mái; nó là một khuôn mẫu thần kinh được luyện tập mỗi ngày, cho tới khi nó trở thành phản xạ mặc định.</p>
+
+    <h2 id="bridge">Mô hình Cây Trong Chậu</h2>
+    <p>Hãy hình dung một cái cây trồng trong chậu nhỏ. Gọi nó là <strong>Mô hình Cây Trong Chậu</strong>.</p>
+    <p>Cây vẫn sống, vẫn ra lá. Nhưng bộ rễ dần quấn tròn theo thành chậu. Khi bạn muốn chuyển nó ra đất, rễ đã thành một khối rối — và việc thay chậu trở thành một cú sốc, có khi làm cây chết. Cây không yếu. Nó chỉ được nuôi trong một không gian nhỏ tới mức hình dạng của nó đã khớp với không gian đó.</p>
+    <p>Bốn phần của hình ảnh này khớp với bốn phần của bài toán:</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Chậu cố định</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Rễ quấn theo chậu</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Thay chậu thành sốc</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — nhiều người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">“Muốn thay đổi thì chỉ cần dũng khí. Ai không dám là do hèn.”</span></p>
+      <p>Điều này sai vì vấn đề không nằm ở can đảm, mà ở kỹ năng và khả năng tưởng tượng. Bạn không thể dũng cảm bước vào một con đường mà bạn không hình dung nổi.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> khả năng rời khỏi vùng quen thuộc được xây bằng những bước nhỏ lặp lại, không bằng một cú nhảy vọt. Dũng khí đến sau, không phải trước.</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+    <p>Ba mảnh dưới đây đi từ hiện tượng quan sát được, qua thí nghiệm tâm lý, rồi tới dạng tinh vi nhất của cái lồng. Mảnh ba là lý do bẫy này khó phá nhất trong bốn bẫy.</p>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Mảnh 1 · Thể chế hóa</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Thể chế hóa</strong> (institutionalization) là quá trình một người sống trong một hệ thống quy tắc cố định đủ lâu đến mức hệ thống đó trở thành bản sắc của họ. Họ không còn phân biệt đâu là mình, đâu là vai trò được giao.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Trong phim <em>Nhà tù Shawshank</em> (1994, dựa trên truyện ngắn của Stephen King năm 1982), nhân vật Brooks Hatlen ở tù năm mươi năm. Khi được thả, ông được giao một việc bình thường và một căn phòng nhỏ. Ông không chịu nổi. Ông viết lên tường “Brooks was here” rồi kết thúc cuộc đời. Nhà tù đã dạy ông mọi thứ trừ cách sống tự do.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao một người có ba mươi năm kinh nghiệm đôi khi lại khó tuyển hơn một người mới?</summary>
+        <div class="scaffold__resolve">Vì kinh nghiệm có hai loại. Một loại là <em>kỹ năng chuyển đổi</em> — áp dụng được ở nhiều nơi. Một loại là <em>kỹ năng gắn chỗ</em> — chỉ có giá trị trong đúng hệ thống đó. Ba mươi năm trong một quy trình cố định có thể chỉ tạo ra loại thứ hai. Khi hệ thống biến mất, phần “kinh nghiệm” đi cùng nó. Đây không phải lỗi của người lao động; đây là rủi ro cấu trúc của việc chỉ luyện một kỹ năng gắn chỗ.</div>
+      </details>
+    </section>
+    <div class="feynman">Ở trong lồng lâu thì không phải bạn sợ bay, mà là bạn quên mất mình có cánh.</div>
+
+    <div class="checkpoint" data-checkpoint-id="n3-cp1">
+      <span class="checkpoint__label">🛑 Dừng lại &amp; ngẫm</span>
+      <p class="checkpoint__question">Trong một câu: phân biệt kỹ năng chuyển đổi và kỹ năng gắn chỗ bằng một ví dụ của chính bạn.</p>
+      <textarea name="reflection" placeholder="Viết câu trả lời của bạn trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So với đáp án mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án mẫu</span>
+        Kỹ năng chuyển đổi là thứ mang sang nơi khác vẫn dùng được — viết rõ ràng, đàm phán, phân tích số liệu. Kỹ năng gắn chỗ là thao tác đúng một phần mềm nội bộ hoặc một quy trình chỉ tồn tại ở công ty hiện tại.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Mảnh 2 · Học cách bất lực</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Học cách bất lực</strong> (learned helplessness) là trạng thái một người ngừng hành động vì đã học rằng hành động không tạo ra thay đổi — ngay cả khi hoàn cảnh đã đổi và lối ra đã mở.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Năm 1967, Martin Seligman và Steven Maier công bố các thí nghiệm trên chó. Những con vật bị sốc điện không thể tránh được, về sau không còn cố tránh nữa — kể cả khi có một lối thoát rõ ràng. Kinh nghiệm “cố cũng vô ích” đã ghi đè lên khả năng phản ứng. Ở người, cơ chế tương tự xuất hiện sau những chuỗi thất bại lặp lại không kiểm soát được.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao trải nghiệm thất bại lặp lại có thể làm tê liệt hành động, dù lối ra đã mở?</summary>
+        <div class="scaffold__resolve">Vì não học từ <em>kết quả trung bình</em>, không từ lần thử cuối. Nếu trong nhiều năm, nỗ lực của bạn không tạo ra thay đổi, não kết luận “hành động vô ích” và cắt năng lượng cho việc thử. Kết luận đó được lưu lại và tự động áp dụng, kể cả khi hoàn cảnh mới cho phép thành công. Đây là lý do thoát bẫy cần một trải nghiệm nhỏ thành công trước — để ghi đè kết luận cũ.</div>
+      </details>
+    </section>
+    <div class="feynman">Nếu bạn từng thử mãi mà không đổi được gì, não sẽ dạy bạn rằng đừng thử nữa — kể cả khi cửa đã mở.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Khóa vàng: khi cái lồng được mạ vàng</summary>
+      <p><strong>Khóa vàng</strong> (golden handcuffs) là tình huống phần thưởng của công việc hiện tại — lương, phúc lợi, thâm niên, sự quen thuộc — khiến việc rời đi trở nên đắt đỏ. Cái lồng không còn là nỗi sợ; nó là sự thoải mái. Và sự thoải mái khó nhận diện hơn nỗi sợ nhiều.</p>
+      <p>Nghịch lý: khóa vàng thường chặt nhất với người có thu nhập khá, không phải người nghèo. Người có nhiều thứ để mất thì ngại mất hơn. Đây là lý do bẫy Shawshank không chỉ là câu chuyện của tầng đáy. Nó là câu chuyện của bất kỳ ai đã ở đủ lâu tới mức lối ra trông như một sự đánh đổi quá lớn.</p>
+    </details>
+
+    <h2 id="application">Trong thực tế</h2>
+    <p>Hai ví dụ dưới đây — một hư cấu, một đời thực — cho thấy cùng một cơ chế. Điều đáng chú ý không nằm ở bi kịch, mà ở chỗ cả hai người đều <em>không hề lười</em>.</p>
+    <p>Ở dạng hư cấu, Brooks là người tù gương mẫu suốt năm mươi năm. Ở dạng đời thực, có một câu chuyện lan truyền rộng rãi ở Trung Quốc vào khoảng năm 2019, khi các trạm thu phí cao tốc chuyển sang thu tự động. Một nữ nhân viên thu phí gần bốn mươi tuổi bật khóc trước ống kính, nói rằng chị đã làm nghề này từ năm mười chín tuổi và ngoài thu phí ra thì không biết làm gì.</p>
+    <p>Cần nói rõ: đây là một clip lan truyền, không phải phóng sự đã kiểm chứng độc lập. Nhưng dù chi tiết có bị làm tròn, phản ứng của công chúng — rất nhiều người nhận ra chính mình — mới là dữ kiện đáng chú ý. Nó cho thấy cơ chế này phổ biến tới mức ai cũng thấy quen.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Số năm ở một vị trí và tỷ lệ kỹ năng chuyển đổi được (minh hoạ)</div>
+      <div class="bar-row">
+        <div class="bar-label">1–3 năm</div>
+        <div class="bar-track"><div class="bar-fill" style="width:80%"></div></div>
+        <div class="bar-value">Cao</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">4–10 năm</div>
+        <div class="bar-track"><div class="bar-fill" style="width:60%"></div></div>
+        <div class="bar-value">Trung bình</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Trên 10 năm</div>
+        <div class="bar-track"><div class="bar-fill" style="width:35%"></div></div>
+        <div class="bar-value">Thấp</div>
+      </div>
+      <p class="bar-chart__caption">Sơ đồ minh hoạ mang tính khái niệm, không phải số liệu khảo sát. Xu hướng phụ thuộc vào ngành nghề và việc người lao động có chủ động học kỹ năng mới hay không.</p>
+    </div>
+
+    <p>Điểm mấu chốt: thời gian không tự động tạo ra giá trị chuyển đổi. Mười năm lặp lại một thao tác không tạo ra mười năm kinh nghiệm — nó tạo ra một năm kinh nghiệm lặp lại mười lần. Đó là lý do bẫy này nguy hiểm: nó trả thưởng cho sự ổn định trong khi âm thầm rút đi khả năng rời đi.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__face flip-card__front">
+        <span class="flip-card__label">Tự kiểm tra — Câu hỏi</span>
+        <div class="flip-card__content">Vì sao bẫy Shawshank thường chặt nhất với người có thu nhập khá, chứ không phải người nghèo nhất?</div>
+      </div>
+      <div class="flip-card__face flip-card__back">
+        <span class="flip-card__label">Đáp án</span>
+        <div class="flip-card__content">Vì khóa vàng hoạt động bằng thứ để mất, không bằng nỗi sợ. Càng nhiều phúc lợi và thâm niên, cái giá tâm lý của việc rời đi càng lớn — dù năng lực chuyển đổi vẫn đang cạn dần.</div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Nơi mô hình vỡ</h2>
+    <p>Mô hình Cây Trong Chậu giải thích vì sao ổn định lâu dài có thể là một cái bẫy. Nhưng nó có hai mép cần nói rõ, nếu không bạn sẽ hiểu sai thành “ổn định là xấu”.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      “Cứ dám nghỉ việc và nhảy ra là sẽ ổn.” Sai. Nhảy mà không có kỹ năng chuyển đổi và không có đệm tài chính chỉ đổi cái lồng này sang cái lồng khác, kèm thêm rủi ro. Vấn đề không phải là ở lại hay rời đi, mà là <em>bạn có khả năng rời đi khi muốn</em> hay không.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Ca biên</span>
+      Ổn định là một tài sản thật. Có người phát triển tốt nhất trong môi trường có cấu trúc rõ ràng, và việc gắn bó lâu dài giúp họ thăng tiến. Bẫy không nằm ở sự ổn định, mà ở chỗ <em>lựa chọn rời đi bị đóng lại mà bạn không hay biết</em>. Cùng một hoàn cảnh, hai người khác nhau: một người ở lại vì chọn, một người ở lại vì không còn cách nào.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Bẫy 1 lấy thời gian, bẫy 2 lấy năng lượng và tiền, bẫy 3 lấy tư duy. Bẫy cuối cùng sẽ lấy gì? Và vì sao nó cần cả ba bẫy trước làm tiền đề? Ghi lại dự đoán trước khi sang node 4.
+    </div>
+
+    <h2 id="connections">Mắt xích này nối với đâu</h2>
+    <p>Bẫy 3 là mắt xích tâm lý của cả vòng lặp. Nó không cần khóa bạn bằng vật chất; nó khóa bạn bằng chính điều bạn tin là có thể và không thể.</p>
+    <ul>
+      <li><a class="xlink" href="01-bay-giai-tri-mi-dan.html">Node 1 — Giải trí mị dân</a>: giải trí gây tê làm yếu dần khả năng tư duy độc lập.</li>
+      <li><a class="xlink" href="02-bay-rat-race.html">Node 2 — Bẫy Rat Race</a>: kiệt sức làm tăng học cách bất lực.</li>
+      <li><a class="xlink" href="04-bay-tieu-dung-pho-truong.html">Node 4 — Tiêu dùng phô trương</a>: khi tư duy đã bị khóa, tiêu dùng thay thế cho việc đặt câu hỏi.</li>
+      <li><a class="xlink" href="05-pha-cuc.html">Node 5 — Phá cục</a>: chủ động phá vỡ vùng quen thuộc bằng thay đổi nhỏ là đối sách cho bẫy này.</li>
+    </ul>
+
+    <h2 id="synthesis">Bức tranh toàn cảnh</h2>
+    <p>Bẫy Shawshank là cái lồng được xây từ chính sự quen thuộc. Nó hoạt động bằng thể chế hóa — biến hệ thống thành bản sắc — và bằng học cách bất lực — dạy tâm trí rằng hành động vô ích. Dạng tinh vi nhất của nó là khóa vàng, nơi phần thưởng thay cho song sắt. Điều làm nó khó phá nhất trong bốn bẫy là nó không chặn đường bạn đi; nó làm bạn ngừng tưởng tượng rằng có đường để đi. Và khi tưởng tượng đã cạn, mọi công cụ ở các node sau đều vô nghĩa — vì bạn sẽ không mở chúng ra.</p>
+
+    <blockquote>
+      <strong>Nếu bạn chỉ nhớ một điều:</strong> Nhà tù nguy hiểm nhất là nhà tù bạn không còn nhận ra mình đang ở trong đó.
+    </blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Bài toán: Bài luyện mở rộng vùng quen thuộc</h3>
+      <p class="launchpad__problem">Chọn một việc bạn luôn né vì nó nằm ngoài vùng quen thuộc — không phải việc lớn như đổi nghề, mà một việc nhỏ đủ để gây khó chịu. Làm nó mỗi ngày trong hai tuần. Ghi lại cảm giác trước và sau mỗi lần. Cuối hai tuần, trả lời: kết luận “tôi không làm được” trước đây dựa trên dữ liệu gì, và dữ liệu mới nói gì? Đề xuất một việc lớn hơn cho hai tuần tiếp theo.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+          Đừng chọn việc “quan trọng”. Chọn việc “khó chịu nhưng vô hại”. Mục tiêu là ghi đè kết luận “tôi không làm được”, không phải tạo kết quả lớn ngay.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Dùng cơ chế học cách bất lực ở mảnh 2 theo chiều ngược lại: não học từ kết quả trung bình. Bạn đang tạo ra một chuỗi kết quả mới để thay đổi trung bình đó.
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dựng bài</span>
+          Ghi cảm giác trước mỗi lần làm — thường là kháng cự. So với cảm giác sau khi làm xong. Khoảng cách giữa hai cảm giác đó chính là bằng chứng cho thấy nỗi sợ bị phóng đại.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Thể chế hóa (institutionalization)</dt>
+        <dd>Quá trình hệ thống quy tắc trở thành bản sắc của một người. <em>(Trong Mô hình Cây Trong Chậu: rễ đã quấn theo thành chậu.)</em></dd>
+        <dt>Học cách bất lực (learned helplessness)</dt>
+        <dd>Ngừng hành động vì đã học rằng hành động không tạo ra thay đổi. <em>(Trong Mô hình Cây Trong Chậu: cây ngừng vươn vì chậu không cho vươn.)</em></dd>
+        <dt>Khóa vàng (golden handcuffs)</dt>
+        <dd>Phần thưởng của hiện tại khiến việc rời đi trở nên đắt đỏ. <em>(Trong Mô hình Cây Trong Chậu: chậu được mạ vàng nên không ai muốn thay.)</em></dd>
+        <dt>Kỹ năng chuyển đổi vs. gắn chỗ</dt>
+        <dd>Chuyển đổi dùng được ở nhiều nơi; gắn chỗ chỉ có giá trị trong một hệ thống. <em>(Trong Mô hình Cây Trong Chậu: rễ khỏe cấy đi đâu cũng sống, so với rễ chỉ hợp một loại đất.)</em></dd>
+        <dt>Vùng quen thuộc (comfort zone)</dt>
+        <dd>Tập hợp hành vi và tình huống mà một người cảm thấy an toàn, thường được hình thành do lặp lại. <em>(Trong Mô hình Cây Trong Chậu: kích thước chậu.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu. Chọn đáp án đúng nhất rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="2">
+        <legend>1. Học cách bất lực gây tê liệt hành động vì…</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> con người sinh ra đã thiếu dũng khí</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> họ chưa bao giờ thất bại đủ nhiều</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> não học từ kết quả trung bình của nhiều lần thử, không từ lần gần nhất</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> họ thiếu thông tin về lối ra</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Chuỗi thất bại không kiểm soát được khiến não kết luận “hành động vô ích” và áp dụng kết luận đó cả khi hoàn cảnh đã đổi.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>2. Khóa vàng khiến bẫy Shawshank nguy hiểm hơn vì…</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> phần thưởng và sự thoải mái khó nhận diện hơn nỗi sợ</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> nó chỉ xảy ra với người giàu</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> nó tước đi thu nhập của người lao động</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> nó buộc người ta phải nghỉ việc</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Song sắt thì dễ thấy; sự thoải mái thì không. Càng nhiều thứ để mất, việc rời đi càng khó về mặt tâm lý.</div>
+      </fieldset>
+
+      <fieldset data-answer="3">
+        <legend>3. Đâu là cách phá bẫy Shawshank đúng nhất theo bài?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Chờ đủ dũng khí rồi nhảy một bước lớn</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Ở lại vì ổn định luôn tốt hơn rủi ro</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Đổi môi trường ngay lập tức, không cần chuẩn bị</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Luyện những bước nhỏ ngoài vùng quen thuộc để ghi đè kết luận “tôi không làm được”</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Não cần dữ liệu mới để đổi kết luận cũ. Các bước nhỏ lặp lại tạo ra dữ liệu đó; dũng khí đến sau, không phải trước.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/The_Shawshank_Redemption" target="_blank" rel="noopener">Wikipedia — The Shawshank Redemption</a> — phim 1994, dựa trên truyện ngắn của Stephen King (1982); nhân vật Brooks Hatlen.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Learned_helplessness" target="_blank" rel="noopener">Wikipedia — Learned helplessness</a> — Seligman &amp; Maier (1967).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Golden_handcuffs" target="_blank" rel="noopener">Wikipedia — Golden handcuffs</a> — cơ chế giữ chân bằng phần thưởng.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Comfort_zone" target="_blank" rel="noopener">Wikipedia — Comfort zone</a> — khái niệm vùng quen thuộc và việc mở rộng nó.</li>
+    </ul>
+
+    <nav class="prevnext" aria-label="Điều hướng series">
+      <a class="prevnext__item" href="02-bay-rat-race.html">
+        <span class="prevnext__dir">← Node 2</span>
+        <span class="prevnext__title">Bẫy Rat Race</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="04-bay-tieu-dung-pho-truong.html">
+        <span class="prevnext__dir">Node 4 →</span>
+        <span class="prevnext__title">Bẫy tiêu dùng phô trương</span>
+      </a>
+    </nav>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>tư duy</li><li>thể chế hóa</li><li>học cách bất lực</li><li>khóa vàng</li><li>vùng an toàn</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="bay-ngheo-doi-atlas.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Node 3/5 · Bẫy 3/4 · ~13 phút đọc</span>
+        <span><a href="bay-ngheo-doi-atlas.html">Về bản đồ series</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="institution">
+        <span class="amplifier__term">Thể chế hóa</span>
+        <p class="amplifier__body">Khi hệ thống quy tắc sống cùng bạn đủ lâu, nó trở thành một phần con người bạn. Rời hệ thống không chỉ là đổi việc — nó là mất một phần bản sắc đã xây.</p>
+      </div>
+      <div data-note-id="helpless">
+        <span class="amplifier__term">Học cách bất lực</span>
+        <p class="amplifier__body">Không phải sự lười. Là kết luận được rút ra từ dữ liệu thật: “nỗ lực của tôi không tạo ra thay đổi”. Để xóa kết luận đó cần dữ liệu mới, không cần lời động viên.</p>
+      </div>
+      <div data-note-id="golden">
+        <span class="amplifier__term">Khóa vàng</span>
+        <p class="amplifier__body">Phần thưởng giữ chân: lương cao, phúc lợi, thâm niên. Nó không ngăn bạn rời đi bằng bạo lực, mà bằng việc làm cho việc rời đi trông như một sự đánh đổi phi lý.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Vì sao dùng hình ảnh cây trong chậu</strong>
+      Nó không nói cây “yếu” hay “lười lớn”. Nó chỉ ra rằng hình dạng của cây phản ánh kích thước của chậu. Đổi chậu là việc làm được, nhưng cần làm từ từ.
+    </div>
+    <div class="sidenote">
+      <strong>Về câu chuyện nhân viên thu phí</strong>
+      Đây là clip lan truyền, không phải phóng sự đã kiểm chứng. Bài giữ nó ở dạng giai thoại và nói rõ điều đó. Dữ kiện đáng lưu tâm là phản ứng đồng cảm của công chúng, không phải chi tiết cá nhân.
+    </div>
+    <div class="sidenote">
+      <strong>Bài tiếp theo</strong>
+      Node 4 khép vòng lặp: khi thời gian, năng lượng và tư duy đều đã bị chiếm, thứ còn lại để tiêu là tiền — và tiêu dùng biến thành cách chứng minh thân phận.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>

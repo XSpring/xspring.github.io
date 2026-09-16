@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cú sốc tự động hóa · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Tự động hóa tái cấu trúc cái bẫy như thế nào — vì sao nó đánh vào tầng giữa, và vì sao người bị đánh ít tin nhất.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="bay-ngheo-doi-atlas.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Phụ lục D · Cú sốc tự động hóa</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="08-khoa-vang-va-quyet-dinh-roi-di.html">← Phụ lục C</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Bản đồ</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Kết thúc</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 15 phút</p>
+    </div>
+    <div class="orbit" aria-label="Lộ trình bài học">
+      <p class="orbit__title">Lộ trình bài học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Thực địa</div>
+        <div class="orbit__node" data-target="boundary">5 · Giới hạn</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng hợp</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">D</span> Phụ lục · Cú sốc cấu trúc</p>
+    <h1>Cú sốc tự động hóa</h1>
+    <p class="node-kicker">Tự động hóa không thay thế con người — nó thay thế tác vụ. Và nó không đánh vào đáy, mà khoét rỗng tầng giữa.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Tự động hóa đánh vào công việc thường quy ở giữa mạnh hơn ở đáy. Cái bị thay là tác vụ, và cái quyết định là tốc độ tái cấu trúc, không phải tổng số việc làm.
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Câu hỏi mở đầu</span>
+      Khi các cuộc khảo sát hỏi người ta nghĩ gì về tự động hóa, đa số nói nó sẽ thay thế nhiều việc làm. Nhưng khi hỏi về chính công việc của họ, đa số lại nói nó sẽ không sao. Cùng một người, hai câu trả lời trái ngược. Câu hỏi không phải là "ai đúng". Câu hỏi là: nếu cú sốc này thật, vì sao người nằm ngay trong vùng nguy hiểm nhất lại cảm thấy an toàn nhất?
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần biết trước</h4>
+      <ul>
+        <li>Node 2 — <a class="xlink" href="02-bay-rat-race.html">Bẫy Rat Race</a>: thu nhập gắn với lao động.</li>
+        <li>Node 3 — <a class="xlink" href="03-bay-shawshank.html">Bẫy Shawshank</a>: kỹ năng gắn chỗ và nhân viên thu phí.</li>
+        <li>Node 5 — <a class="xlink" href="05-pha-cuc.html">Phá cục</a>: đòn bẩy và đổi cấu trúc.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li>Phân biệt tự động hóa <strong>tác vụ</strong> với thay thế <strong>nghề</strong>.</li>
+        <li>Giải thích <strong>phân cực thị trường lao động</strong>.</li>
+        <li>Đọc đúng hai con số mâu thuẫn (47% và 9%).</li>
+        <li>Nhận diện thiên lệch "không phải tôi" và cách bù nó.</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Sự thật nền tảng</h2>
+    <p>Sự thật nền tảng của phụ lục này: <strong>tự động hóa không thay thế con người — nó thay thế tác vụ. Và nó không đánh vào tầng đáy một cách đều nhau; nó khoét rỗng tầng giữa.</strong></p>
+    <p>Bạn đã biết điều này ở dạng quan sát: máy tự thanh toán ở siêu thị, tổng đài tự động, dịch máy. Nhưng phản xạ thông thường là nghĩ nó chỉ ảnh hưởng tới người ít kỹ năng. Dữ liệu nói khác. Những việc bị thay thế nhiều nhất thường là việc <em>thường quy, lặp lại, lương trung bình</em> — không phải việc lương thấp nhất, cũng không phải việc đòi hỏi chuyên môn cao nhất.</p>
+
+    <h2 id="bridge">Mô hình Đổi Dòng</h2>
+    <p>Hãy hình dung một con sông đổi dòng. Gọi nó là <strong>Mô hình Đổi Dòng</strong>.</p>
+    <p>Nước vẫn chảy, tổng lượng nước không giảm. Nhưng bờ sông cũ dần khô, còn một bờ mới trở nên phì nhiêu. Người đứng trên bờ cũ không mất nước từ từ — họ khô hạn, trong khi cách đó vài trăm mét đất đang mọc lên cây. Vấn đề không phải là thiếu nước. Vấn đề là dòng chảy đã đi chỗ khác, và bạn đang đứng ở bờ cũ.</p>
+    <p>Bốn phần của hình ảnh này khớp với bốn phần của cú sốc:</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Dòng chảy việc làm</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Đổi hướng đột ngột</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Bờ cũ khô hạn</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — nhiều người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">“Tự động hóa đánh vào người ít kỹ năng nhất. Nên cứ học thêm kỹ năng là an toàn.”</span></p>
+      <p>Điều này sai vì nó đánh vào công việc <em>thường quy</em> ở giữa, và "học thêm kỹ năng" chung chung không nói được kỹ năng nào, cho tác vụ nào.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> cái bị thay là <em>tác vụ</em>, không phải trình độ. Một nghề là một chùm tác vụ, và chỉ một phần trong đó bị tự động hóa — nên câu hỏi đúng là "tác vụ nào", không phải "nghề nào".</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+    <p>Ba mảnh dưới đây đi từ đơn vị bị thay thế, qua hình dạng của cú sốc, rồi tới việc đọc đúng các con số đang tranh cãi. Mảnh hai là mảnh ít trực giác nhất, và cũng là mảnh quan trọng nhất.</p>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Mảnh 1 · Tác vụ, không phải nghề</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p>Một <strong>tác vụ</strong> (task) là một đơn vị công việc cụ thể. Một <strong>nghề</strong> là một chùm nhiều tác vụ. Tự động hóa thường không thay cả nghề — nó thay những tác vụ có thể mô tả thành quy tắc rõ ràng. Phần còn lại của nghề thay đổi theo, thường đòi hỏi nhiều kỹ năng phán đoán hơn.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Nghề kế toán gồm nhiều tác vụ: nhập liệu, đối chiếu, lập báo cáo, tư vấn thuế, đàm phán với cơ quan thuế. Các tác vụ đầu dễ tự động hóa; các tác vụ cuối khó. Kết quả điển hình không phải "kế toán biến mất", mà là "kế toán ít nhập liệu hơn, làm nhiều tư vấn hơn". Cùng một nghề, nội dung đổi. Với người chỉ có kỹ năng nhập liệu, cú sốc là thật. Với người đã có kỹ năng tư vấn, cú sốc nhẹ hơn.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao "sẽ không còn việc cho con người" là câu sai, nhưng "việc này sẽ đổi nội dung" là câu đúng?</summary>
+        <div class="scaffold__resolve">Vì tự động hóa nhắm vào tác vụ, không nhắm vào con người. Khi một tác vụ được máy làm, phần việc còn lại thường vẫn cần người — nhưng đòi hỏi kỹ năng khác. Vì vậy tổng số việc có thể vẫn còn, trong khi nội dung của từng việc đổi tới mức người đang làm nó không còn phù hợp. Đây là lý do cú sốc không hiện ra ở con số thất nghiệp, mà hiện ra ở chỗ người ta bị đẩy sang công việc trả thấp hơn.</div>
+      </details>
+    </section>
+    <div class="feynman">Máy không lấy nghề của bạn; nó lấy một phần việc trong nghề, rồi để lại phần khó hơn.</div>
+
+    <div class="checkpoint" data-checkpoint-id="nD-cp1">
+      <span class="checkpoint__label">🛑 Dừng lại &amp; ngẫm</span>
+      <p class="checkpoint__question">Trong một câu: vì sao phân biệt "tác vụ" và "nghề" lại quan trọng cho việc chuẩn bị?</p>
+      <textarea name="reflection" placeholder="Viết câu trả lời của bạn trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So với đáp án mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án mẫu</span>
+        Vì chuẩn bị đúng không phải là "đổi nghề", mà là nhận diện tác vụ nào trong nghề mình sắp bị thay, và chuyển sang tác vụ khó tự động hóa hơn — phán đoán, quan hệ, sáng tạo.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Mảnh 2 · Phân cực thị trường lao động</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Phân cực</strong> (polarization) là hiện tượng việc làm ở giữa biến mất nhanh hơn việc ở hai đầu. Việc đòi kỹ năng cao và việc đòi kỹ năng thấp đều tăng; việc đòi kỹ năng trung bình — thường là việc thường quy, lặp lại — co lại.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>David Autor và các cộng sự mô tả xu hướng này ở Mỹ từ thập niên 2000. Việc thường quy ở giữa — như nhiều công đoạn sản xuất, nhập liệu, xử lý hồ sơ — dễ bị máy làm hoặc chuyển ra nước ngoài. Ở hai đầu, việc đòi phán đoán (chuyên môn cao) và việc đòi hiện diện (chăm sóc, dịch vụ) khó tự động hóa hơn. Tỷ lệ dân số nằm gần mức thu nhập trung vị ở Mỹ đã giảm từ khoảng hơn 50% xuống khoảng 42% kể từ năm 1970.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao tự động hóa lại đánh vào việc lương trung bình mạnh hơn việc lương thấp?</summary>
+        <div class="scaffold__resolve">Vì tính <em>thường quy</em>, không phải mức lương, mới là yếu tố quyết định. Một việc lương thấp nhưng biến đổi liên tục — dọn phòng, phục vụ, chăm trẻ — rất khó mô tả thành quy tắc cố định, nên khó tự động hóa. Một việc lương trung bình nhưng lặp lại theo quy trình — nhập liệu, kiểm tra hồ sơ — lại dễ mô tả thành quy tắc, nên dễ bị thay. Nghịch lý là: chính tính ổn định và quy củ khiến một công việc trông "an toàn" lại là đặc điểm khiến nó dễ bị thay thế nhất. Đây là lý do phụ lục này gắn chặt với khái niệm <em>kỹ năng gắn chỗ</em> ở Node 3.</div>
+      </details>
+    </section>
+    <div class="feynman">Việc càng dễ mô tả thành quy tắc, càng dễ bị máy làm — dù lương cao hay thấp.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Hai con số mâu thuẫn: 47% và 9%</summary>
+      <p>Năm 2013, Carl Benedikt Frey và Michael Osborne công bố một con số gây chú ý: khoảng 47% việc làm ở Mỹ có nguy cơ cao bị tự động hóa trong một vài thập kỷ. Con số này được trích dẫn khắp nơi. Nhưng khi OECD và các nhóm khác làm lại bằng cách nhìn vào <em>tác vụ</em> thay vì <em>nghề</em>, họ thu được con số thấp hơn nhiều — có nghiên cứu chỉ khoảng 9%.</p>
+      <p>Hai con số không mâu thuẫn về sự thật; chúng đo hai thứ khác nhau. Một bên hỏi "nghề này có thể bị tự động hóa không". Bên kia hỏi "bao nhiêu phần trăm tác vụ trong nghề này thực sự bị thay". Nghề có thể bị đe dọa mà vẫn không biến mất, vì phần tác vụ còn lại vẫn cần người. Vì vậy khi ai đó trích "47%" hay "9%" để chứng minh một kết luận, hãy hỏi họ đang đo cái gì. Con số đáng tin không phải con số lớn, mà con số có định nghĩa rõ.</p>
+    </details>
+
+    <section class="scaffold" id="exposition-3">
+      <h3 class="scaffold__concept">Mảnh 3 · Tốc độ quan trọng hơn tổng số</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Tốc độ tái cấu trúc</strong> là khoảng thời gian để một tác vụ bị thay và người lao động chuyển sang tác vụ khác. Tổng số việc làm ròng có thể không đổi, nhưng nếu tốc độ vượt quá tốc độ con người học lại, cú sốc vẫn rất thật với từng cá nhân.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Keynes, từ thập niên 1930, gọi hiện tượng này là "một giai đoạn điều chỉnh tạm thời". Ở cấp độ nền kinh tế, ông có thể đúng. Nhưng "tạm thời" ở cấp độ nền kinh tế có thể là "cả đời" ở cấp độ một người. Một công nhân bốn mươi lăm tuổi mất việc vào tay máy không sống đủ lâu để chờ nền kinh tế tạo ra việc mới phù hợp với mình.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu số liệu mâu thuẫn và chuyên gia bất đồng, ta nên tin điều gì?</summary>
+        <div class="scaffold__resolve">Tin vào cấu trúc, không tin vào con số dự báo. Các nhà kinh tế bất đồng về <em>tổng số</em> việc làm trong hai mươi năm tới — đó là câu hỏi dự báo, và dự báo dài hạn vốn dở. Họ ít bất đồng hơn về <em>cơ chế</em>: tác vụ thường quy bị thay, tầng giữa bị khoét, và người có phần dư mỏng chịu trước. Vì vậy đừng xây kế hoạch trên một con số (47% hay 9%). Hãy xây nó trên cơ chế — thứ không phụ thuộc vào việc dự báo nào đúng.</div>
+      </details>
+    </section>
+    <div class="feynman">Nền kinh tế có thể ổn sau hai mươi năm; một người bốn mươi lăm tuổi thì không có hai mươi năm.</div>
+
+    <h2 id="application">Trong thực tế</h2>
+    <p>Ta hãy ghép cú sốc vào đúng bốn bẫy của series, để thấy nó không phải một chủ đề rời. Tự động hóa không tạo ra một cái bẫy mới; nó <em>tăng tốc</em> ba cái bẫy đã có.</p>
+    <p>Với Node 2, nó tấn công thẳng vào thu nhập tuyến tính: khi tác vụ chính bị thay, phần dư sụp trước tiên. Với Node 3, nó biến kỹ năng gắn chỗ thành rủi ro sống còn — đúng như câu chuyện nhân viên thu phí ở node đó, nay lan sang nhiều nghề văn phòng. Với Node 1, nó làm việc học lại khó hơn, vì sự tập trung vốn đã bị ăn mòn. Và Node 4 khiến người ta khó chuyển hướng hơn, vì phần dư đã bị tiêu vào biểu tượng thay vì thành đệm.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Nguy cơ tự động hóa: hai cách đo (minh hoạ)</div>
+      <div class="bar-row">
+        <div class="bar-label">Theo nghề (Frey &amp; Osborne, 2013)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:94%"></div></div>
+        <div class="bar-value">~47%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Theo tác vụ (OECD và cộng sự)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:18%"></div></div>
+        <div class="bar-value">~9%</div>
+      </div>
+      <p class="bar-chart__caption">Sơ đồ minh hoạ hai cách ước lượng khác nhau về cùng một hiện tượng. Chúng không phủ định nhau: một bên đo rủi ro của cả nghề, bên kia đo phần tác vụ thực sự có thể bị thay. Giá trị là xấp xỉ.</p>
+    </div>
+
+    <p>Điều cần nhớ không phải là con số nào đúng. Mà là: khi hai cách đo khác nhau tới vậy, bất kỳ ai khẳng định chắc chắn về tương lai đều đang bán cho bạn một sự tự tin mà dữ liệu không có.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__face flip-card__front">
+        <span class="flip-card__label">Tự kiểm tra — Câu hỏi</span>
+        <div class="flip-card__content">Vì sao "học thêm một kỹ năng" là lời khuyên chưa đủ, nhưng "học một kỹ năng khó tự động hóa" thì tốt hơn?</div>
+      </div>
+      <div class="flip-card__face flip-card__back">
+        <span class="flip-card__label">Đáp án</span>
+        <div class="flip-card__content">Vì kỹ năng cũng có thể thường quy. Giá trị nằm ở kỹ năng đòi phán đoán, quan hệ, hoặc hiện diện — những thứ khó mô tả thành quy tắc, nên khó bị máy làm.</div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Nơi mô hình vỡ</h2>
+    <p>Phần này quan trọng vì chủ đề tự động hóa rất dễ biến thành một lời tiên tri hù dọa. Mô hình Đổi Dòng nói về một cơ chế, không phải một bản án.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      “Cứ học code là không bị thay thế.” Không có kỹ năng nào miễn nhiễm. Viết code cũng có phần thường quy, và chính các công cụ AI đang thay phần đó. Câu hỏi đúng không phải "học ngành gì", mà là "tác vụ nào trong công việc của tôi khó mô tả thành quy tắc".
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Ca biên</span>
+      Các dự báo thường phóng đại. Kinh tế học đã tranh luận về "thất nghiệp công nghệ" từ thời Keynes, và trong quá khứ nó chưa từng gây thất nghiệp hàng loạt kéo dài — Ngân hàng Thế giới lập luận rằng đổi mới công nghệ nhìn chung tạo ra nhiều ngành và việc làm mới. Nhưng "nhìn chung" ở cấp nền kinh tế che giấu "cụ thể" ở cấp cá nhân. Người bị đẩy sang việc trả thấp hơn không được an ủi bởi một con số tổng hợp đẹp.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Tranh cãi học thuật</span>
+      Chuyên gia bất đồng sâu sắc. Một số, như Geoffrey Hinton, cho rằng AI và robot tiên tiến có thể dần thay được mọi tác vụ, và gợi ý cần một khoản thu nhập cơ bản cho người không còn việc. Những người khác, như Daron Acemoglu, cho rằng con người vẫn cần thiết ở nhiều tác vụ hoặc bổ trợ cho AI, nên thị trường lao động bị xáo trộn mà không nhất thiết mất việc hàng loạt. Đây là một tranh luận mở, không phải một kết luận. Vì vậy hãy chuẩn bị cho cơ chế, đừng đặt cược vào một dự báo.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Quay lại câu hỏi đầu bài: vì sao người ở vùng nguy hiểm nhất lại cảm thấy an toàn nhất? Nghĩ một câu trả lời trước khi đọc phần tổng hợp.
+    </div>
+
+    <h2 id="connections">Mắt xích này nối với đâu</h2>
+    <p>Phụ lục này không phải một chủ đề mới. Nó là một cú sốc cấu trúc đánh vào đúng ba mắt xích đã học, và vì vậy nó thuộc tầng phụ lục chứ không phải một "bẫy thứ năm".</p>
+    <ul>
+      <li><a class="xlink" href="02-bay-rat-race.html">Node 2 — Bẫy Rat Race</a>: tự động hóa cắt phần dư trước tiên.</li>
+      <li><a class="xlink" href="03-bay-shawshank.html">Node 3 — Bẫy Shawshank</a>: kỹ năng gắn chỗ trở thành rủi ro sống còn.</li>
+      <li><a class="xlink" href="05-pha-cuc.html">Node 5 — Phá cục</a>: đòn bẩy và tác vụ khó tự động hóa là đối sách.</li>
+      <li><a class="xlink" href="07-rct-va-nobel-2019.html">Phụ lục B — Người đi tìm bằng chứng</a>: cách đọc một con số gây tranh cãi.</li>
+    </ul>
+
+    <h2 id="synthesis">Bức tranh toàn cảnh</h2>
+    <p>Quay lại người ở đầu bài, người tin tự động hóa sẽ thay nhiều việc làm nhưng không thay việc của mình. Họ không hề giả vờ. Thiên lệch "không phải tôi" khiến mỗi người nhìn thấy rủi ro ở nơi khác. Điều đó dễ hiểu. Nghề của họ là một chùm tác vụ, và hầu hết tác vụ vẫn diễn ra bình thường. Cảm giác an toàn vì thế được nuôi dưỡng mỗi ngày. Cú sốc tự động hóa không đến dưới dạng một thông báo. Nó đến dưới dạng những tác vụ lặng lẽ biến mất, rồi nội dung công việc đổi tới mức người cũ không còn khớp. Nó không đánh vào đáy như ta tưởng; nó khoét rỗng tầng giữa, nơi công việc thường quy trông an toàn nhất. Và nó không cần làm tổng số việc giảm để gây hại — chỉ cần chạy nhanh hơn tốc độ một người học lại. Đó là lý do câu trả lời không nằm ở một con số dự báo. Nó nằm ở việc nhìn vào chính công việc của mình. Hỏi: tác vụ nào ở đây dễ mô tả thành quy tắc, và tôi đang xây phần nào khó bị thay?</p>
+
+    <blockquote>
+      <strong>Nếu bạn chỉ nhớ một điều:</strong> Đừng hỏi "nghề của tôi có bị thay không". Hãy hỏi "tác vụ nào trong nghề tôi sắp bị thay, và tôi đang chuyển sang tác vụ nào".
+    </blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Bài toán: Bản đồ tác vụ của chính bạn</h3>
+      <p class="launchpad__problem">Liệt kê mười tác vụ chiếm phần lớn thời gian làm việc của bạn. Với mỗi tác vụ, chấm hai điểm từ 1 đến 5. Một: mức độ <strong>thường quy</strong> — nó có lặp lại và dễ mô tả thành quy tắc không? Hai: mức độ <strong>cần phán đoán, quan hệ, hoặc hiện diện</strong>. Tác vụ điểm cao ở cột một và thấp ở cột hai là vùng nguy hiểm. Sau đó chọn một tác vụ ở vùng nguy hiểm và đề xuất cách chuyển thời gian sang một tác vụ khó tự động hóa hơn trong cùng nghề.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+          Đừng liệt kê chức danh. Liệt kê việc bạn thực sự làm trong một ngày. Tự động hóa không nhìn thấy chức danh; nó nhìn thấy tác vụ.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Dùng mảnh 1 và mảnh 2: tác vụ thường quy ở giữa là vùng bị khoét. Nếu phần lớn thời gian của bạn là loại đó, đó chính là tín hiệu, không phải nỗi sợ.
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dựng bài</span>
+          Đừng đặt mục tiêu "học kỹ năng mới" chung chung. Chọn đúng một tác vụ khó tự động hóa trong chính nghề bạn, và tìm cách làm nó nhiều hơn mỗi tuần. Chuyển dịch bền vững thường xảy ra trong nghề, không phải bằng cách nhảy sang nghề khác.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Tác vụ (task)</dt>
+        <dd>Một đơn vị công việc cụ thể; nghề là một chùm nhiều tác vụ. <em>(Trong Mô hình Đổi Dòng: một nhánh nước, không phải cả con sông.)</em></dd>
+        <dt>Thất nghiệp công nghệ (technological unemployment)</dt>
+        <dd>Mất việc do thay đổi công nghệ; thuật ngữ được Keynes phổ biến từ thập niên 1930. <em>(Trong Mô hình Đổi Dòng: bờ cũ khô đi.)</em></dd>
+        <dt>Phân cực (polarization)</dt>
+        <dd>Việc làm ở giữa co lại, việc ở hai đầu tăng. <em>(Trong Mô hình Đổi Dòng: dòng chảy tách về hai bên bờ.)</em></dd>
+        <dt>Công việc thường quy (routine work)</dt>
+        <dd>Công việc lặp lại, dễ mô tả thành quy tắc; dễ bị tự động hóa nhất. <em>(Trong Mô hình Đổi Dòng: đoạn sông thẳng, dễ bị đổi hướng.)</em></dd>
+        <dt>Tốc độ tái cấu trúc</dt>
+        <dd>Khoảng thời gian để một tác vụ bị thay và người lao động chuyển sang tác vụ khác. <em>(Trong Mô hình Đổi Dòng: tốc độ dòng chảy đổi, nhanh hơn tốc độ người ta kịp đi theo.)</em></dd>
+        <dt>Thiên lệch "không phải tôi"</dt>
+        <dd>Xu hướng cho rằng một rủi ro chung sẽ ảnh hưởng tới người khác, không tới mình. <em>(Trong Mô hình Đổi Dòng: đứng ở bờ cũ mà tin mình đang ở bờ mới.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu. Chọn đáp án đúng nhất rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="2">
+        <legend>1. Tự động hóa thay thế cái gì trước tiên?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Cả một nghề, ngay lập tức</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Những việc lương thấp nhất</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Những tác vụ thường quy, dễ mô tả thành quy tắc</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Những việc đòi hỏi phán đoán cao</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Đơn vị bị thay là tác vụ, và tính thường quy — không phải mức lương hay trình độ — mới quyết định mức độ dễ bị thay.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>2. Vì sao tự động hóa lại khoét rỗng tầng giữa?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Vì việc ở giữa thường mang tính thường quy, nên dễ bị máy làm hoặc chuyển đi</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Vì người ở giữa lười học kỹ năng mới</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Vì việc ở giữa trả lương quá thấp</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Vì việc ở hai đầu không thể tự động hóa</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Tính thường quy khiến việc ở giữa dễ bị thay. Việc ở hai đầu thường đòi phán đoán hoặc hiện diện, nên khó tự động hóa hơn.</div>
+      </fieldset>
+
+      <fieldset data-answer="1">
+        <legend>3. Hai con số 47% và 9% khác nhau vì…</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> một con số sai hoàn toàn</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> chúng đo hai thứ khác nhau: rủi ro của cả nghề so với phần tác vụ thực sự bị thay</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> chúng đo cùng một thứ nhưng ở hai quốc gia</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> con số lớn luôn đáng tin hơn</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Một bên đo rủi ro ở cấp nghề, bên kia đo ở cấp tác vụ. Nghề có thể bị đe dọa mà vẫn không biến mất. Vì vậy hãy hỏi "con số này đo cái gì".</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Technological_unemployment" target="_blank" rel="noopener">Wikipedia — Technological unemployment</a> — Keynes; Frey &amp; Osborne (2013); Hinton vs Acemoglu; Ngân hàng Thế giới 2019; thiên lệch “không phải tôi”.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Polarization_(economics)" target="_blank" rel="noopener">Wikipedia — Polarization (economics)</a> — Autor, Katz &amp; Kearney; việc thường quy ở giữa co lại; tỷ lệ thu nhập quanh trung vị giảm từ hơn 50% xuống khoảng 42%.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Technological_change" target="_blank" rel="noopener">Wikipedia — Technological change</a> — đổi mới và lan truyền công nghệ.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Automation" target="_blank" rel="noopener">Wikipedia — Automation</a> — bối cảnh chung về tự động hóa.</li>
+    </ul>
+
+    <nav class="prevnext" aria-label="Điều hướng series">
+      <a class="prevnext__item" href="08-khoa-vang-va-quyet-dinh-roi-di.html">
+        <span class="prevnext__dir">← Phụ lục C</span>
+        <span class="prevnext__title">Khóa vàng</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="bay-ngheo-doi-atlas.html">
+        <span class="prevnext__dir">Kết thúc →</span>
+        <span class="prevnext__title">Về bản đồ series</span>
+      </a>
+    </nav>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>tự động hóa</li><li>thị trường lao động</li><li>phân cực</li><li>tác vụ</li><li>tương lai việc làm</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="bay-ngheo-doi-atlas.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Phụ lục D · Cú sốc cấu trúc · ~15 phút đọc</span>
+        <span><a href="bay-ngheo-doi-atlas.html">Về bản đồ series</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="task">
+        <span class="amplifier__term">Tác vụ</span>
+        <p class="amplifier__body">Đơn vị bị tự động hóa. Một nghề là chùm tác vụ; máy lấy phần thường quy, để lại phần đòi phán đoán. Vì vậy câu hỏi đúng là “tác vụ nào”, không phải “nghề nào”.</p>
+      </div>
+      <div data-note-id="polarization">
+        <span class="amplifier__term">Phân cực</span>
+        <p class="amplifier__body">Việc ở giữa co lại, việc ở hai đầu tăng. Đây là lý do tự động hóa không hiện ra ở tỷ lệ thất nghiệp, mà ở chỗ người ta bị đẩy sang việc trả thấp hơn.</p>
+      </div>
+      <div data-note-id="notme">
+        <span class="amplifier__term">Thiên lệch “không phải tôi”</span>
+        <p class="amplifier__body">Người ta cho rằng rủi ro chung sẽ rơi vào người khác. Vì hầu hết tác vụ vẫn diễn ra bình thường mỗi ngày, cảm giác an toàn được nuôi dưỡng cho tới khi đã quá muộn.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Vì sao dùng hình ảnh đổi dòng</strong>
+      Nó tách “tổng lượng nước” khỏi “vị trí bờ”. Tổng số việc làm có thể không đổi, trong khi bờ bạn đang đứng vẫn khô. Đó chính là khoảng cách giữa con số vĩ mô và trải nghiệm cá nhân.
+    </div>
+    <div class="sidenote">
+      <strong>Về hai con số 47% và 9%</strong>
+      Đây là hai ước lượng khác nhau về cùng một hiện tượng, không phải hai phiên bản của một sự thật. Bài giữ cả hai để cho thấy mức độ bất định, thay vì chọn một con số nghe kịch tính hơn.
+    </div>
+    <div class="sidenote">
+      <strong>Khép phần phụ lục</strong>
+      Đây là phụ lục cuối. Nó không mở thêm một bẫy mới — nó cho thấy một cú sốc cấu trúc đang tăng tốc ba bẫy đã học. Nếu muốn dùng lại, hãy bắt đầu ở bản đồ series.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>

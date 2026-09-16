@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phá cục · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Một nguyên lý chung và bốn đòn bẩy để phá vòng lặp bốn bẫy — kết lại toàn bộ series.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="bay-ngheo-doi-atlas.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Node 5 · Phá cục</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="04-bay-tieu-dung-pho-truong.html">← Node 4</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Bản đồ</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Kết thúc</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 14 phút</p>
+    </div>
+    <div class="orbit" aria-label="Lộ trình bài học">
+      <p class="orbit__title">Lộ trình bài học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Thực địa</div>
+        <div class="orbit__node" data-target="boundary">5 · Giới hạn</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng hợp</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">5</span> Tổng hợp · Đối sách</p>
+    <h1>Phá cục</h1>
+    <p class="node-kicker">Một vòng lặp không gỡ bằng cách kéo mạnh hơn. Nó gỡ bằng cách tìm đúng đầu dây.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Bốn bẫy được dệt cùng nhau, nên phá bằng bốn thay đổi nhỏ đồng thời theo một nguyên lý chung: đổi cấu trúc, đừng tăng nỗ lực.
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Câu hỏi mở đầu</span>
+      Ở node 0, ta gặp một người bơi giỏi bị dòng xoáy kéo ra xa, và câu hỏi đặt ra là: làm sao nhận ra dòng xoáy trước khi bị kéo quá xa? Bốn node vừa rồi đã chỉ ra bốn dòng chảy: thời gian, năng lượng, tư duy, tiền. Giờ tới câu hỏi cuối: bạn thoát ra bằng cách nào — và vì sao cố bơi mạnh hơn lại là cách chết nhanh nhất?
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần biết trước</h4>
+      <ul>
+        <li>Toàn bộ bốn node bẫy: <a class="xlink" href="01-bay-giai-tri-mi-dan.html">1</a>, <a class="xlink" href="02-bay-rat-race.html">2</a>, <a class="xlink" href="03-bay-shawshank.html">3</a>, <a class="xlink" href="04-bay-tieu-dung-pho-truong.html">4</a>.</li>
+        <li>Nguyên lý nỗ lực/cấu trúc ở <a class="xlink" href="00-he-thong-vo-hinh.html">Node 0</a>.</li>
+        <li>Bạn sẵn sàng thử một thay đổi nhỏ trong hai tuần tới.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li>Áp dụng nguyên lý <strong>đổi cấu trúc thay vì tăng nỗ lực</strong>.</li>
+        <li>Ghép bốn <strong>đòn bẩy</strong> với bốn bẫy tương ứng.</li>
+        <li>Giải thích vì sao thay đổi nhỏ lặp lại thắng nỗ lực lớn một lần.</li>
+        <li>Nhận diện giới hạn của hành động cá nhân trước rào cản cấu trúc.</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Sự thật nền tảng</h2>
+    <p>Sự thật nền tảng của node này: <strong>bạn không phá một hệ thống bằng cách làm việc chăm chỉ hơn trong hệ thống đó — bạn phá nó bằng cách đổi quan hệ của mình với hệ thống.</strong></p>
+    <p>Bạn đã biết điều này ở dạng câu nói: “làm thông minh hơn, không chỉ chăm hơn”. Điều bài này thêm vào là cấu trúc: bốn bẫy móc vào nhau, nên bốn đối sách cũng phải móc vào nhau. Một thay đổi đơn lẻ sẽ bị ba bẫy còn lại kéo ngược trở về.</p>
+
+    <h2 id="bridge">Mô hình Gỡ Nút</h2>
+    <p>Hãy hình dung một sợi dây thắt thành một nút chặt. Gọi nó là <strong>Mô hình Gỡ Nút</strong>.</p>
+    <p>Nếu bạn kéo hai đầu dây mạnh hơn, nút siết lại. Cách gỡ đúng là tìm một đầu dây lỏng, đẩy nó ngược qua vòng, và nới từng lớp một. Sức mạnh không giúp ích; hướng và thứ tự mới giúp ích. Nút càng chặt thì càng cần kiên nhẫn thay vì cố sức.</p>
+    <p>Bốn phần của hình ảnh này khớp với bốn phần của bài toán:</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Nút thắt nhiều lớp</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Tìm đầu dây lỏng</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Nới từng lớp</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — nhiều người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">“Thoát bẫy cần một cú đột phá lớn — nghỉ việc, khởi nghiệp, đổi đời trong một lần.”</span></p>
+      <p>Điều này sai vì bốn bẫy được dệt cùng nhau; không có hành động đơn lẻ nào tháo được cả bốn. Và những cú nhảy lớn thường thất bại vì thiếu nền.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> thoát bẫy là một chuỗi thay đổi nhỏ, đồng thời, lặp lại. Cú đột phá đến sau khi nền đã được xây, không phải trước.</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+    <p>Ba mảnh dưới đây đi từ nguyên lý chung, qua bốn đòn bẩy cụ thể, rồi tới cơ chế khiến thay đổi nhỏ tích lũy thành kết quả lớn. Mảnh ba là lý do bạn không cần một cú nhảy vọt.</p>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Mảnh 1 · Đổi cấu trúc, đừng tăng nỗ lực</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Đổi cấu trúc</strong> (structural change) nghĩa là thay đổi luật chơi của chính bạn — môi trường, lịch trình, dòng tiền, mạng lưới quan hệ — thay vì cố gắng nhiều hơn trong luật chơi cũ. Ý chí là tài nguyên có hạn; cấu trúc là tài nguyên lặp lại.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Ở node 1, ta thấy ý chí thường thua thiết kế gây nghiện. Giải pháp không phải “mạnh mẽ hơn”, mà là xoá ứng dụng khỏi màn hình chính, đặt giới hạn ở tầng hệ điều hành, và lên lịch trước cho khung giờ đó. Bạn đổi luật chơi để không phải thắng cuộc chiến ý chí mỗi tối.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu bạn không thể dựa vào ý chí, thì dựa vào gì?</summary>
+        <div class="scaffold__resolve">Dựa vào <em>mặc định</em>. Con người phần lớn hành động theo lựa chọn dễ nhất trong môi trường hiện tại. Nếu bạn sắp đặt để lựa chọn đúng trở thành lựa chọn dễ nhất — sách để trên bàn, điện thoại để phòng khác, tiền tự động chuyển sang tài khoản tiết kiệm trước khi kịp tiêu — thì bạn không cần ý chí nữa. Bạn đã chuyển cuộc chiến từ trong đầu ra ngoài môi trường, nơi bạn mạnh hơn.</div>
+      </details>
+    </section>
+    <div class="feynman">Đừng cố thắng cơn cám dỗ mỗi lần. Hãy sắp xếp để cám dỗ không xuất hiện.</div>
+
+    <div class="checkpoint" data-checkpoint-id="n5-cp1">
+      <span class="checkpoint__label">🛑 Dừng lại &amp; ngẫm</span>
+      <p class="checkpoint__question">Trong một câu: nêu một thay đổi môi trường có thể thay bạn ra khỏi một cuộc chiến ý chí hằng ngày.</p>
+      <textarea name="reflection" placeholder="Viết câu trả lời của bạn trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So với đáp án mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án mẫu</span>
+        Ví dụ: đặt lệnh chuyển khoản tự động 10% thu nhập vào một tài khoản khó rút ngay khi nhận lương. Bạn không phải quyết định tiết kiệm mỗi tháng — cấu trúc đã quyết định thay.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Mảnh 2 · Bốn đòn bẩy cho bốn bẫy</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p>Mỗi bẫy tấn công một nguồn lực, nên mỗi đòn bẩy nhắm vào đúng nguồn lực đó. Nhưng chúng phải chạy <em>đồng thời</em>, vì bốn bẫy móc vào nhau.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body">
+          <ul>
+            <li><strong>Tập trung sâu</strong> (vs bẫy 1): mỗi ngày 1–2 giờ học sâu, tắt thông báo, một kỹ năng duy nhất.</li>
+            <li><strong>Tư duy thay cần cù</strong> (vs bẫy 2): mỗi tuần một buổi nhìn lại, và biến phần dư thành tài sản nhỏ.</li>
+            <li><strong>Phá vùng quen</strong> (vs bẫy 3): mỗi ngày một việc nhỏ ngoài vùng thoải mái.</li>
+            <li><strong>Tiêu dùng tỉnh táo</strong> (vs bẫy 4): ba câu hỏi lọc trước mỗi khoản chi không thiết yếu.</li>
+          </ul>
+        </div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao làm cả bốn đòn bẩy lại dễ hơn làm một?</summary>
+        <div class="scaffold__resolve">Vì chúng tiếp sức cho nhau. Tập trung sâu tạo ra kỹ năng mới; kỹ năng mới làm phần dư tăng; phần dư chuyển thành tài sản, giảm áp lực tiền; ít áp lực tiền làm việc phá vùng quen bớt đáng sợ. Làm một cái mà bỏ ba cái kia thì ba bẫy còn lại kéo bạn về. Làm cả bốn, bạn tạo ra một vòng phản hồi dương mới — lần này nghiêng về phía bạn.</div>
+      </details>
+    </section>
+    <div class="feynman">Một sợi dây không kéo được cả nút; bốn sợi cùng lúc thì nút lỏng ra.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Vì sao thay đổi nhỏ lặp lại thắng nỗ lực lớn một lần</summary>
+      <p>Một nỗ lực lớn một lần — nghỉ việc, học liền một tháng, thay đổi tất cả cùng lúc — thường thất bại vì hai lý do. Thứ nhất, nó đòi hỏi một lượng ý chí lớn hơn mức con người duy trì được. Thứ hai, nếu nó thất bại, nó để lại một kết luận tiêu cực củng cố chính học cách bất lực ở node 3.</p>
+      <p>Thay đổi nhỏ lặp lại hoạt động ngược lại. Mỗi lần lặp là một điểm dữ liệu mới cho não, và chuỗi điểm dữ liệu đó dần ghi đè kết luận cũ. Nó không đòi hỏi một cú nhảy; nó đòi hỏi sự đều đặn. Nghiên cứu của Esther Duflo, Abhijit Banerjee và Michael Kremer — nhận giải Nobel Kinh tế năm 2019 — cho thấy điều tương tự ở quy mô chính sách: những can thiệp nhỏ, cụ thể, được đo lường kỹ thường hiệu quả hơn những chương trình lớn dựa trên giả định.</p>
+    </details>
+
+    <h2 id="application">Trong thực tế</h2>
+    <p>Ta hãy ghép bốn đòn bẩy thành một lộ trình mười hai tháng, có con số. Đây là một kịch bản minh hoạ — không phải lời hứa, mà là một cách kiểm tra xem mô hình có đứng vững khi áp vào thực tế.</p>
+    <p>Giả sử một người dành 1,5 giờ mỗi ngày cho video ngắn và chuyển một nửa trong đó sang học một kỹ năng. Sau sáu tháng, họ có khoảng 135 giờ luyện tập — đủ để đạt mức cơ bản có thể bán được ở nhiều kỹ năng. Song song, họ tự động chuyển 10% thu nhập vào một quỹ dự phòng. Sau mười hai tháng, họ có một đệm nhỏ — đủ để dám từ chối một công việc tệ hoặc thử một hướng mới mà không sợ mất nhà.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Tích lũy sau 12 tháng với thay đổi nhỏ hằng ngày (minh hoạ)</div>
+      <div class="bar-row">
+        <div class="bar-label">Giờ luyện kỹ năng</div>
+        <div class="bar-track"><div class="bar-fill" style="width:68%"></div></div>
+        <div class="bar-value">~270h</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Quỹ dự phòng (10%)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:50%"></div></div>
+        <div class="bar-value">~1,2 tháng</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Việc nhỏ ngoài vùng quen</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        <div class="bar-value">~300 lần</div>
+      </div>
+      <p class="bar-chart__caption">Sơ đồ minh hoạ dựa trên giả định 1,5 giờ/ngày và tiết kiệm 10% thu nhập; không phải kết quả được khảo sát. Kết quả thực tế phụ thuộc vào hoàn cảnh và mức thu nhập.</p>
+    </div>
+
+    <p>Điều đáng chú ý không nằm ở ba con số, mà ở chỗ chúng đến từ những hành động nhỏ tới mức không đáng kể vào ngày đầu tiên. Không hành động nào trong số đó cần một cú đột phá. Chúng chỉ cần cấu trúc để tự xảy ra.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__face flip-card__front">
+        <span class="flip-card__label">Tự kiểm tra — Câu hỏi</span>
+        <div class="flip-card__content">Vì sao bốn đòn bẩy phải chạy đồng thời thay vì lần lượt?</div>
+      </div>
+      <div class="flip-card__face flip-card__back">
+        <span class="flip-card__label">Đáp án</span>
+        <div class="flip-card__content">Vì bốn bẫy móc vào nhau. Một đòn bẩy đơn lẻ bị ba bẫy còn lại kéo ngược về. Chạy đồng thời tạo ra một vòng phản hồi dương mới nghiêng về phía bạn.</div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Nơi mô hình vỡ</h2>
+    <p>Đây là phần quan trọng nhất của cả series. Mô hình Gỡ Nút trao cho bạn quyền hành động, nhưng nó không được phép biến thành một lời đổ lỗi mới.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      “Ai không thoát được là do không làm đủ bốn đòn bẩy.” Sai. Cấu trúc bên ngoài — luật lao động, chi phí y tế, chăm sóc con cái, phân biệt đối xử — có thể chặn đứng hành động cá nhân dù nỗ lực lớn tới đâu. Hành động cá nhân là cần thiết, nhưng không đủ, và không phải ai cũng xuất phát từ cùng một vạch.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Ca biên</span>
+      Có những rào cản chỉ phá được bằng thay đổi tập thể hoặc chính sách, không bằng kỷ luật cá nhân. Một người có thể tự học tập trung sâu, nhưng không thể tự tạo ra một hệ thống y tế công bằng hay một mức lương đủ sống. Ghi nhận giới hạn này là trung thực, không phải bi quan.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Hãy nhìn lại dự đoán bạn ghi ở node 0, node 1, node 2, node 3 và node 4. Dự đoán nào đúng, dự đoán nào sai? Chỗ bạn đoán sai thường là chỗ bạn đã hiểu sai một cơ chế — và đó là chỗ đáng đọc lại.
+    </div>
+
+    <h2 id="connections">Toàn cảnh series nối lại</h2>
+    <p>Node 5 không phải một bài độc lập. Nó là mắt khoá nối tất cả các node thành một hệ thống hoàn chỉnh, nơi mỗi đối sách trả lời một bẫy đã học.</p>
+    <ul>
+      <li><a class="xlink" href="00-he-thong-vo-hinh.html">Node 0 — Hệ thống vô hình</a>: nguyên lý nỗ lực/cấu trúc mà node 5 triển khai thành hành động.</li>
+      <li><a class="xlink" href="01-bay-giai-tri-mi-dan.html">Node 1 — Giải trí mị dân</a>: đối sách là tập trung sâu.</li>
+      <li><a class="xlink" href="02-bay-rat-race.html">Node 2 — Bẫy Rat Race</a>: đối sách là tư duy thay cần cù và xây tài sản nhỏ.</li>
+      <li><a class="xlink" href="03-bay-shawshank.html">Node 3 — Bẫy Shawshank</a>: đối sách là phá vùng quen bằng bước nhỏ.</li>
+      <li><a class="xlink" href="04-bay-tieu-dung-pho-truong.html">Node 4 — Tiêu dùng phô trương</a>: đối sách là tiêu dùng tỉnh táo.</li>
+    </ul>
+
+    <h2 id="synthesis">Bức tranh toàn cảnh</h2>
+    <p>Bốn bẫy không phải bốn kẻ thù riêng lẻ mà là bốn sợi của cùng một nút: một hệ thống lấy thời gian, năng lượng, tư duy và tiền của người ở đáy, và tự duy trì vì người bên trong không còn đủ nguồn lực để phản kháng. Cách thoát không nằm ở việc kéo mạnh hơn — điều đó chỉ siết nút chặt thêm. Nó nằm ở việc đổi cấu trúc: sắp đặt môi trường, dòng tiền và lịch trình để hành động đúng trở thành mặc định; rồi nới từng lớp bằng những thay đổi nhỏ, đồng thời, đủ lâu để tích lũy. Điều này không hứa hẹn một cú đổi đời. Nó hứa hẹn một điều khiêm tốn hơn nhưng bền hơn: mỗi tháng bạn có thêm một chút tự do — và tự do tích lũy cũng giống như nợ, chỉ khác dấu. Quay lại câu hỏi ở đầu series: người bơi giỏi không chết vì thiếu sức. Anh ta chết vì không nhận ra mình đang bơi ngược một dòng chảy vô hình. Bạn giờ đã biết tên bốn dòng chảy. Việc còn lại không phải bơi mạnh hơn — mà là đổi hướng.</p>
+
+    <blockquote>
+      <strong>Nếu bạn chỉ nhớ một điều:</strong> Đừng kéo nút mạnh hơn. Hãy tìm đầu dây lỏng và nới từng lớp — bằng cấu trúc, không bằng ý chí.
+    </blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Bài toán: Bản kế hoạch 90 ngày cho cả bốn bẫy</h3>
+      <p class="launchpad__problem">Thiết kế một kế hoạch 90 ngày gồm bốn thay đổi cấu trúc, mỗi thay đổi nhắm vào một bẫy. Kế hoạch phải đạt ba tiêu chí. Một: mỗi thay đổi diễn ra tự động hoặc gần như tự động, không dựa vào ý chí hằng ngày. Hai: mỗi thay đổi đo được bằng một con số. Ba: bốn thay đổi hỗ trợ lẫn nhau. Sau 90 ngày, đánh giá bằng dữ liệu, không bằng cảm giác.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+          Đừng đặt mục tiêu kết quả (kiếm thêm bao nhiêu). Đặt mục tiêu cấu trúc (mỗi ngày có bao nhiêu giờ học sâu, mỗi tháng chuyển bao nhiêu vào tài sản). Kết quả đến sau cấu trúc.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Dùng bốn đòn bẩy ở mảnh 2 làm khung. Mỗi đòn bẩy phải là một thay đổi môi trường, không phải một lời hứa với bản thân.
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dựng bài</span>
+          Kiểm tra tính hỗ trợ: kỹ năng mới có làm tăng phần dư không? Phần dư có giảm áp lực tiền để bạn dám phá vùng quen không? Nếu một thay đổi không giúp thay đổi nào khác, nó có thể là thay đổi sai chỗ.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Đổi cấu trúc (structural change)</dt>
+        <dd>Thay đổi luật chơi của chính mình — môi trường, dòng tiền, lịch trình — thay vì cố gắng nhiều hơn trong luật cũ. <em>(Trong Mô hình Gỡ Nút: tìm đầu dây lỏng thay vì kéo mạnh.)</em></dd>
+        <dt>Mặc định (default)</dt>
+        <dd>Lựa chọn dễ nhất trong môi trường hiện tại; con người phần lớn hành động theo nó. <em>(Trong Mô hình Gỡ Nút: hướng dây tự nhiên trước khi siết.)</em></dd>
+        <dt>Đòn bẩy (leverage)</dt>
+        <dd>Thay đổi nhỏ tạo hiệu ứng lớn khi được tích lũy hoặc khuếch đại. <em>(Trong Mô hình Gỡ Nút: mỗi lớp nút nới ra làm cả nút lỏng dần.)</em></dd>
+        <dt>Tích lũy</dt>
+        <dd>Hiệu ứng cộng dồn của những thay đổi nhỏ lặp lại theo thời gian. <em>(Trong Mô hình Gỡ Nút: nới một lớp hôm nay làm lớp sau dễ hơn.)</em></dd>
+        <dt>Giới hạn cấu trúc</dt>
+        <dd>Rào cản bên ngoài mà hành động cá nhân không thể tự vượt qua; cần thay đổi tập thể hoặc chính sách. <em>(Trong Mô hình Gỡ Nút: có nút cần nhiều người cùng gỡ.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu. Chọn đáp án đúng nhất rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Vì sao “cố gắng nhiều hơn” không phá được nút?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Vì nỗ lực luôn vô nghĩa</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Vì kéo mạnh hơn chỉ siết nút chặt thêm; cần đổi hướng và thứ tự</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Vì nút không bao giờ gỡ được</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Vì chỉ người có vốn mới gỡ được</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Nút là một hệ thống nhiều lớp. Sức mạnh không thay đổi cấu trúc; đổi hướng và thứ tự mới tháo được lớp.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>2. Vì sao bốn đòn bẩy nên chạy đồng thời?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Vì làm nhiều thứ cùng lúc luôn nhanh hơn</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Vì mỗi đòn bẩy yếu nên cần bù nhau</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Vì chúng tiếp sức cho nhau và chặn ba bẫy còn lại kéo ngược</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Vì luật yêu cầu làm đủ bốn</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Bốn bẫy móc vào nhau, nên một đòn bẩy đơn lẻ bị ba bẫy kia kéo về. Chạy đồng thời tạo ra một vòng phản hồi dương mới.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>3. Phát biểu nào trung thực nhất về giới hạn của hành động cá nhân?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Hành động cá nhân là cần thiết nhưng không đủ; có rào cản cần thay đổi tập thể hoặc chính sách</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Ai không thoát được là do không đủ kỷ luật</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Hành động cá nhân là vô ích, chỉ chính sách mới quan trọng</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Rào cản cấu trúc không tồn tại, chỉ có lựa chọn cá nhân</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Cấu trúc bên ngoài có thể chặn hành động cá nhân. Ghi nhận điều đó là trung thực, và nó không phủ nhận giá trị của hành động — chỉ đặt nó đúng chỗ.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Nobel_Memorial_Prize_in_Economic_Sciences" target="_blank" rel="noopener">Wikipedia — Nobel Memorial Prize in Economic Sciences</a> — Banerjee, Duflo &amp; Kremer, giải 2019 cho phương pháp thực nghiệm giảm nghèo.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Deep_work" target="_blank" rel="noopener">Wikipedia — Deep work</a> — Cal Newport (2016); khái niệm làm việc tập trung sâu.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Learned_helplessness" target="_blank" rel="noopener">Wikipedia — Learned helplessness</a> — cơ chế ghi đè kết luận cũ bằng dữ liệu mới.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Compound_interest" target="_blank" rel="noopener">Wikipedia — Compound interest</a> — cơ chế tích lũy theo thời gian.</li>
+    </ul>
+
+    <nav class="prevnext" aria-label="Điều hướng series">
+      <a class="prevnext__item" href="04-bay-tieu-dung-pho-truong.html">
+        <span class="prevnext__dir">← Node 4</span>
+        <span class="prevnext__title">Bẫy tiêu dùng phô trương</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="bay-ngheo-doi-atlas.html">
+        <span class="prevnext__dir">Kết thúc series →</span>
+        <span class="prevnext__title">Về bản đồ series</span>
+      </a>
+    </nav>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>phá bẫy</li><li>đổi cấu trúc</li><li>thay đổi nhỏ</li><li>tích lũy</li><li>giới hạn cấu trúc</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="bay-ngheo-doi-atlas.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Node 5/5 · Tổng hợp · ~14 phút đọc</span>
+        <span><a href="bay-ngheo-doi-atlas.html">Về bản đồ series</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="structure">
+        <span class="amplifier__term">Đổi cấu trúc</span>
+        <p class="amplifier__body">Thay vì thắng cuộc chiến ý chí mỗi ngày, bạn đổi luật chơi để lựa chọn đúng là lựa chọn dễ nhất. Ý chí có hạn; cấu trúc lặp lại.</p>
+      </div>
+      <div data-note-id="default">
+        <span class="amplifier__term">Mặc định</span>
+        <p class="amplifier__body">Con người phần lớn đi theo lựa chọn dễ nhất. Thiết kế mặc định của môi trường mạnh hơn lời hứa với bản thân — nên hãy thiết kế môi trường.</p>
+      </div>
+      <div data-note-id="limit">
+        <span class="amplifier__term">Giới hạn cấu trúc</span>
+        <p class="amplifier__body">Có rào cản mà kỷ luật cá nhân không phá nổi: y tế, nhà ở, phân biệt đối xử. Ghi nhận điều này để mô hình không biến thành lời đổ lỗi mới.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Vì sao dùng hình ảnh gỡ nút</strong>
+      Nó tách “sức mạnh” khỏi “hướng và thứ tự”. Người ta hay cố kéo mạnh hơn khi bí, nhưng với một nút nhiều lớp, kéo mạnh là phản ứng sai.
+    </div>
+    <div class="sidenote">
+      <strong>Về con số trong kế hoạch 12 tháng</strong>
+      Đây là kịch bản minh hoạ với giả định nêu rõ, không phải kết quả khảo sát. Mục đích là cho thấy thay đổi nhỏ tích lũy thành gì, không phải hứa hẹn một kết quả.
+    </div>
+    <div class="sidenote">
+      <strong>Kết series</strong>
+      Bạn đã đi hết bốn bẫy và bốn đối sách. Nếu muốn đào sâu, hãy quay lại node nào bạn thấy mơ hồ nhất — chỗ đó thường là chỗ mô hình chưa thực sự vào đầu.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bẫy tiêu dùng phô trương · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Vì sao người ta vay tiền để mua biểu tượng thân phận — và cách phân biệt tiêu dùng đầu tư với tiêu dùng phô trương.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="bay-ngheo-doi-atlas.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Node 4 · Bẫy tiêu dùng phô trương</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="03-bay-shawshank.html">← Node 3</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Bản đồ</a>
+      <a class="series-bar__link" href="05-pha-cuc.html">Node 5 →</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 13 phút</p>
+    </div>
+    <div class="orbit" aria-label="Lộ trình bài học">
+      <p class="orbit__title">Lộ trình bài học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Thực địa</div>
+        <div class="orbit__node" data-target="boundary">5 · Giới hạn</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng hợp</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">4</span> Bẫy 4/4 · Tiền</p>
+    <h1>Bẫy tiêu dùng phô trương</h1>
+    <p class="node-kicker">Khi bạn dùng tiền của tương lai để mua một thân phận không thuộc về mình.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Quảng cáo gắn thân phận vào món đồ. Kết quả là người thu nhập thấp chi cho biểu tượng nhiều hơn người giàu — thường bằng tiền vay.
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Câu hỏi mở đầu</span>
+      Một người lương ba đến bốn triệu một tháng, nhưng điện thoại phải là đời mới nhất, cà phê phải đúng thương hiệu, quần áo phải có logo. Thu nhập không cao, nhưng mức tiêu dùng còn cao hơn cả tầng lớp trung lưu. Câu hỏi không phải “sao họ hoang”. Câu hỏi là: ai đã dạy họ rằng món đồ quyết định giá trị con người — và dạy hiệu quả tới mức nào?
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần biết trước</h4>
+      <ul>
+        <li>Ba node trước, đặc biệt Node 2 — <a class="xlink" href="02-bay-rat-race.html">Rat Race</a>.</li>
+        <li>Bạn phân biệt được <em>chi tiêu</em> và <em>đầu tư</em>.</li>
+        <li>Bài không nói “đừng mua đồ”; bài nói về <em>vì sao</em> bạn mua.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li>Giải thích <strong>tiêu dùng phô trương</strong> (conspicuous consumption).</li>
+        <li>Mô tả <strong>bắt chước tiền tệ</strong> (pecuniary emulation) và hiệu ứng bắt chước.</li>
+        <li>Phân biệt tiêu dùng đầu tư với tiêu dùng phô trương.</li>
+        <li>Áp dụng ba câu hỏi lọc trước khi mua.</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Sự thật nền tảng</h2>
+    <p>Sự thật nền tảng của node này: <strong>tiêu dùng hiện đại không chỉ để thoả mãn nhu cầu — nó là một cách báo hiệu thân phận, và báo hiệu thân phận rất tốn kém.</strong></p>
+    <p>Bạn đã biết điều này ở dạng quan sát: “hàng hiệu là để đánh dấu đẳng cấp”. Nhà kinh tế học Thorstein Veblen đã hệ thống hoá nó từ năm 1899. Ông gọi việc mua hàng hoá như một màn trình diễn sức mạnh kinh tế là <strong>tiêu dùng phô trương</strong>. Điều đã thay đổi sau hơn một thế kỷ không phải là bản chất, mà là <em>quy mô và tốc độ</em> của màn trình diễn đó.</p>
+
+    <h2 id="bridge">Mô hình Áo Giáp Giấy</h2>
+    <p>Hãy hình dung một bộ áo giáp làm bằng giấy. Gọi nó là <strong>Mô hình Áo Giáp Giấy</strong>.</p>
+    <p>Bộ giáp trông oai, đắt, và khiến người mặc cảm thấy an toàn. Nhưng nó không chắn được gì. Gặp mưa — một biến cố tài chính, một lần mất việc, một cơn ốm — nó tan ra, để lại người mặc trần trụi và còn nợ tiền mua nó. Bộ giáp không bảo vệ bạn khỏi cuộc đời; nó chỉ bảo vệ cảm giác của bạn trong lúc bình yên.</p>
+    <p>Bốn phần của hình ảnh này khớp với bốn phần của bài toán:</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Biểu tượng đắt đỏ</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Cảm giác an toàn</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Không chắn nổi biến cố</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — nhiều người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">“Mua đồ tốt là đầu tư cho bản thân. Tôi xứng đáng với nó.”</span></p>
+      <p>Điều này sai vì phần lớn hàng tiêu dùng mất giá ngay khi rời cửa hàng. Nó không phải đầu tư — nó là chi phí được dán nhãn “đầu tư cho bản thân”.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> đầu tư làm tăng năng lực hoặc tài sản; phô trương làm tăng cảm giác được công nhận. Hai thứ khác nhau, dù chúng ta hay gộp chúng lại để tự cho phép mình.</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+    <p>Ba mảnh dưới đây đi từ định nghĩa cổ điển, qua cơ chế bắt chước xã hội, rồi tới một phát hiện ngược trực giác về người giàu thật. Mảnh ba là mảnh dễ gây ngạc nhiên nhất.</p>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Mảnh 1 · Tiêu dùng phô trương</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Tiêu dùng phô trương</strong> (conspicuous consumption) là việc mua và sử dụng hàng hoá đắt đỏ hơn mức cần thiết, chủ yếu để công khai thể hiện sức mạnh kinh tế và địa vị xã hội. Người mua không trả tiền cho công dụng; họ trả tiền cho <em>thông điệp</em> mà món đồ gửi đi.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Veblen mô tả tầng lớp “nouveau riche” (giàu mới) của cuối thế kỷ 19, những người dùng tài sản để phô bày quyền lực xã hội. Ngày nay, cơ chế giống hệt nhưng dân chủ hơn: một chiếc điện thoại có thể làm được điều mà trước đây chỉ một cỗ xe ngựa đắt tiền làm được — báo cho người xung quanh biết bạn “thuộc về đâu”.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao người ta sẵn sàng trả giá cao gấp nhiều lần cho một món đồ có công dụng gần như tương đương món rẻ hơn?</summary>
+        <div class="scaffold__resolve">Vì họ không mua công dụng — họ mua tín hiệu. Nếu hai món có cùng công dụng nhưng chỉ một món phát ra tín hiệu “tôi ở đẳng cấp này”, thì phần chênh lệch giá chính là giá của tín hiệu đó. Veblen chỉ ra rằng giá trị nằm ở chỗ nó được <em>nhìn thấy</em>. Đây là lý do cùng một chiếc túi, khi bị bỏ logo, mất phần lớn giá trị — công dụng không đổi, tín hiệu biến mất.</div>
+      </details>
+    </section>
+    <div class="feynman">Bạn không mua món đồ; bạn mua thứ món đồ nói về bạn.</div>
+
+    <div class="checkpoint" data-checkpoint-id="n4-cp1">
+      <span class="checkpoint__label">🛑 Dừng lại &amp; ngẫm</span>
+      <p class="checkpoint__question">Trong một câu: phân biệt tiêu dùng đầu tư và tiêu dùng phô trương bằng một ví dụ.</p>
+      <textarea name="reflection" placeholder="Viết câu trả lời của bạn trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So với đáp án mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án mẫu</span>
+        Một khoá học dạy kỹ năng bán được là đầu tư: nó làm tăng thu nhập tương lai. Một chiếc điện thoại mua để gây ấn tượng là phô trương: nó mất giá và không tạo ra thu nhập.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Mảnh 2 · Bắt chước tiền tệ</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Bắt chước tiền tệ</strong> (pecuniary emulation) là việc người ta điều chỉnh mức tiêu dùng theo nhóm mà họ muốn thuộc về hoặc muốn được so sánh. Năm 1949, nhà kinh tế James Duesenberry gọi hiện tượng này là <strong>hiệu ứng bắt chước</strong> (demonstration effect): mức chi của một người phụ thuộc vào mức chi của những người quanh họ.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Một nghiên cứu năm 2020 của Sheheryar Banuri và Ha Nguyen, tên “Borrowing to Keep Up (with the Joneses)”, tìm ra ba điều. Thứ nhất, tiêu dùng mang tính phô bày làm tín hiệu thân phận. Thứ hai, nó làm tăng tần suất vay mượn. Thứ ba, người thu nhập thấp vay để bắt kịp chuẩn tiêu dùng. Khi tín dụng dễ tiếp cận, bất bình đẳng càng nặng thêm.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao vay tiền để mua biểu tượng dễ hơn nhiều so với vay tiền để đầu tư?</summary>
+        <div class="scaffold__resolve">Vì phần thưởng của biểu tượng đến ngay và được nhìn thấy, còn phần thưởng của đầu tư đến muộn và vô hình. Tín dụng tiêu dùng được thiết kế để bạn thấy phần thưởng ngay — nhận hàng hôm nay, trả sau. Đầu tư không có cơ chế đó. Não thiên về phần thưởng tức thời, nên biểu tượng thắng. Đây là lý do các sản phẩm “mua trước trả sau” bùng nổ, và cũng là lý do chúng nguy hiểm với người không có đệm tài chính.</div>
+      </details>
+    </section>
+    <div class="feynman">Bạn không so mình với người giàu nhất; bạn so với người hàng xóm — và đó là cách cuộc đua không bao giờ kết thúc.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Nghịch lý: người giàu thật thường chi tiêu kín đáo</summary>
+      <p>Trong cuốn <em>The Millionaire Next Door</em> (1996), Thomas Stanley và William Danko khảo sát những người có tài sản ròng trên một triệu đô-la. Phát hiện trung tâm: phần lớn họ <em>tránh</em> tiêu dùng phô trương. Họ mua xe đã qua sử dụng, trả tiền mặt, sống trong những ngôi nhà khiêm tốn so với thu nhập. Hai tác giả gọi đó là “tiêu dùng phô trương ngược” (conspicuous frugality).</p>
+      <p>Điều này lật ngược hình dung thông thường. Người mới giàu thường dùng biểu tượng để xác nhận vị thế; người đã vững thì không cần xác nhận. Và người thu nhập thấp — chịu áp lực thân phận mạnh nhất — lại chi cho biểu tượng nhiều nhất. Cái bẫy không nằm ở việc tiêu tiền. Nó nằm ở chỗ tiêu tiền để trả cho một tín hiệu mà người nhận tín hiệu không thực sự quan tâm.</p>
+    </details>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Tiêu sản ẩn: món đồ còn rút tiền sau khi đã mua</summary>
+      <p>Hầu hết mọi người tính giá của một món đồ bằng con số trên hoá đơn. Nhưng nhiều món đồ còn tiếp tục rút tiền sau khi đã mua: bảo trì, nâng cấp, bảo hiểm, phụ kiện, và áp lực thay mới. Một chiếc xe không chỉ là giá mua, mà là xăng, sửa chữa, và một dòng xe mới khiến chiếc cũ trông lỗi thời.</p>
+      <p>Đây là mặt kia của cách phân loại ở <a class="xlink" href="02-bay-rat-race.html">Node 2</a>. Tiêu dùng phô trương không chỉ là một khoản chi một lần — nó thường mở ra một dòng chi phí dài hạn. Trước khi mua để báo hiệu thân phận, câu hỏi đúng không phải “tôi có đủ tiền mua không”, mà là “tôi có đủ tiền để <em>nuôi</em> nó trong nhiều năm không”.</p>
+    </details>
+
+    <h2 id="application">Trong thực tế</h2>
+    <p>Ta hãy ghép mô hình với một bức tranh có thật. Trung Quốc là thị trường hàng xa xỉ lớn thứ hai thế giới, trong khi cũng là nơi có một tầng dân số đông đảo có thu nhập rất thấp.</p>
+    <p>Tháng 5 năm 2020, tại họp báo Đại hội Đại biểu Nhân dân Toàn quốc, Thủ tướng Lý Khắc Cường phát biểu một con số. Trung Quốc có khoảng 600 triệu người thu nhập hàng tháng quanh mức 1.000 nhân dân tệ — tương đương khoảng 140 đô-la. Con số này được truyền thông quốc tế đưa lại rộng rãi. Khi đặt cạnh vị trí thị trường xa xỉ thứ hai toàn cầu, nó cho thấy một nghịch lý: tiêu dùng biểu tượng không tỉ lệ với thu nhập.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Tiêu dùng xa xỉ so với cơ cấu thu nhập (minh hoạ)</div>
+      <div class="bar-row">
+        <div class="bar-label">Dân số thu nhập thấp</div>
+        <div class="bar-track"><div class="bar-fill" style="width:43%"></div></div>
+        <div class="bar-value">~600 triệu</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Vị thế thị trường xa xỉ</div>
+        <div class="bar-track"><div class="bar-fill" style="width:90%"></div></div>
+        <div class="bar-value">Hạng 2</div>
+      </div>
+      <p class="bar-chart__caption">Sơ đồ minh hoạ ghép hai dữ kiện được báo cáo rộng rãi: con số ~600 triệu người (phát biểu 5/2020, được truyền thông đưa lại) và vị trí thị trường xa xỉ của Trung Quốc. Đây là so sánh khái niệm, không phải một chỉ số thống kê duy nhất.</p>
+    </div>
+
+    <p>Điểm cần thấy: đây không phải câu chuyện về một quốc gia cụ thể. Đây là cơ chế chung. Nơi nào quảng cáo gắn thân phận vào hàng hoá, nơi đó xuất hiện một dòng chảy tiền từ người ít tiền sang người bán biểu tượng. Và khi tín dụng tiêu dùng phổ biến, dòng chảy đó được cấp vốn bằng tiền của tương lai.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__face flip-card__front">
+        <span class="flip-card__label">Tự kiểm tra — Câu hỏi</span>
+        <div class="flip-card__content">Vì sao “mua đồ tốt cho bản thân” có thể là một cái bẫy tài chính?</div>
+      </div>
+      <div class="flip-card__face flip-card__back">
+        <span class="flip-card__label">Đáp án</span>
+        <div class="flip-card__content">Vì phần lớn hàng tiêu dùng mất giá ngay, không tạo thu nhập. Khi nó được mua bằng tiền vay, bạn trả lãi cho một tài sản đang giảm giá — đúng cấu trúc của một khoản lỗ kép.</div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Nơi mô hình vỡ</h2>
+    <p>Mô hình Áo Giáp Giấy mạnh ở việc giải thích vì sao chi cho biểu tượng không bảo vệ bạn. Nhưng nó có hai mép cần nói rõ, nếu không bạn sẽ hiểu sai thành “mọi chi tiêu đều là bẫy”.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      “Người giàu tiêu hoang, người nghèo tiết kiệm.” Thực tế thường ngược lại: người giàu thật chi tiêu kín đáo và mua tài sản, còn áp lực phô trương nặng nhất lại đè lên người thu nhập thấp. Đừng lấy hình ảnh trên mạng xã hội làm chuẩn mực về cách người giàu tiêu tiền.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Ca biên</span>
+      Không phải mọi chi tiêu biểu tượng đều vô ích. Trang phục phù hợp có thể mở cửa phỏng vấn; một món quà tốt có thể giữ một mối quan hệ. Tín hiệu thân phận đôi khi là một khoản đầu tư xã hội hợp lý. Cái bẫy nằm ở việc chi bằng tiền vay, vượt xa khả năng, cho một tín hiệu mà người nhận không thực sự đánh giá cao.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Bốn bẫy đã khép kín vòng lặp: thời gian, năng lượng, tư duy, tiền. Trước khi sang node 5, thử đoán xem đối sách cho bốn bẫy có cùng một nguyên lý chung hay là bốn cách rời rạc.
+    </div>
+
+    <h2 id="connections">Mắt xích này nối với đâu</h2>
+    <p>Bẫy 4 đóng vòng lặp bằng cách rút cạn phần dư tài chính — đúng thứ cần để thoát ba bẫy trước. Nó là mắt xích khép kín.</p>
+    <ul>
+      <li><a class="xlink" href="01-bay-giai-tri-mi-dan.html">Node 1 — Giải trí mị dân</a>: quảng cáo và mạng xã hội là kênh phát tín hiệu thân phận.</li>
+      <li><a class="xlink" href="02-bay-rat-race.html">Node 2 — Bẫy Rat Race</a>: phần dư bị tiêu hết nên không thể chuyển thành tài sản.</li>
+      <li><a class="xlink" href="03-bay-shawshank.html">Node 3 — Bẫy Shawshank</a>: khi tư duy bị khóa, mua sắm thay thế cho việc đặt câu hỏi.</li>
+      <li><a class="xlink" href="05-pha-cuc.html">Node 5 — Phá cục</a>: tiêu dùng tỉnh táo và phân biệt cần/muốn là đối sách cho bẫy này.</li>
+    </ul>
+
+    <h2 id="synthesis">Bức tranh toàn cảnh</h2>
+    <p>Tiêu dùng phô trương biến tiền thành tín hiệu thân phận, và biến tín hiệu thân phận thành một khoản chi thường xuyên. Cơ chế này cũ hơn một thế kỷ, nhưng tín dụng hiện đại đã biến nó thành một dòng chảy liên tục từ tương lai về hiện tại. Người bị kẹt không mua vì ngu ngốc; họ mua vì bị dạy rằng giá trị con người nằm ở món đồ, và vì phần thưởng của tín hiệu đến ngay trong khi cái giá đến sau. Bẫy này khép vòng lặp bốn bẫy: nó lấy đi đúng khoản tiền mà ba bẫy kia để lại, và biến mọi nỗ lực tích lũy thành một màn trình diễn ngắn ngủi. Phá nó không cần khổ hạnh — chỉ cần trả tiền cho thứ tạo ra giá trị, thay vì cho thứ báo hiệu giá trị.</p>
+
+    <blockquote>
+      <strong>Nếu bạn chỉ nhớ một điều:</strong> Người giàu thật mua tài sản; người muốn trông giàu mua tín hiệu — thường bằng tiền vay.
+    </blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Bài toán: Ba câu hỏi lọc trước khi mua</h3>
+      <p class="launchpad__problem">Trong một tháng, mỗi lần chuẩn bị chi một khoản không thiết yếu, hãy dừng lại và trả lời ba câu: (1) Đây có phải đồ thiết yếu không? (2) Nó tạo ra giá trị thực hay chỉ tạo ra tín hiệu? (3) Nếu không có nó, cuộc sống của tôi có bị ảnh hưởng thật không? Ghi lại số tiền bạn tiết kiệm được, rồi quyết định xem bao nhiêu trong đó sẽ chuyển thành một tài sản nhỏ.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+          Đừng hỏi “tôi có đủ tiền không”. Hỏi “tôi đang trả tiền cho công dụng hay cho tín hiệu”. Câu thứ hai lộ ra bẫy nhanh hơn.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Dùng phân biệt đầu tư/phô trương ở mảnh 1. Một phép thử nhanh: sau một năm, món này tăng giá trị hay giảm?
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dựng bài</span>
+          Đừng cấm bản thân. Chỉ cần đổi đích: phần tiết kiệm được chuyển vào một tài sản nhỏ. Nếu không có đích mới, tiền tiết kiệm sẽ tự tìm đường quay lại tiêu dùng.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Tiêu dùng phô trương (conspicuous consumption)</dt>
+        <dd>Mua hàng đắt hơn mức cần để công khai thể hiện địa vị. <em>(Trong Mô hình Áo Giáp Giấy: bộ giáp đắt tiền nhưng rỗng.)</em></dd>
+        <dt>Bắt chước tiền tệ (pecuniary emulation)</dt>
+        <dd>Điều chỉnh chi tiêu theo nhóm mình muốn thuộc về. <em>(Trong Mô hình Áo Giáp Giấy: chọn giáp giống người mình muốn giống.)</em></dd>
+        <dt>Hiệu ứng bắt chước (demonstration effect)</dt>
+        <dd>Mức chi của một người phụ thuộc vào mức chi của người quanh họ. <em>(Trong Mô hình Áo Giáp Giấy: cả làng cùng đổi giáp.)</em></dd>
+        <dt>Tiêu dùng phô trương ngược (conspicuous frugality)</dt>
+        <dd>Người giàu thật chi tiêu kín đáo và mua tài sản thay vì tín hiệu. <em>(Trong Mô hình Áo Giáp Giấy: người hiểu trận chiến không mặc giáp giấy.)</em></dd>
+        <dt>Tín dụng tiêu dùng</dt>
+        <dd>Vay để mua hàng tiêu dùng; cấp vốn cho hiện tại bằng thu nhập tương lai. <em>(Trong Mô hình Áo Giáp Giấy: mua giáp bằng tiền chưa kiếm được.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu. Chọn đáp án đúng nhất rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Trong tiêu dùng phô trương, người mua thực chất trả tiền cho gì?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Công dụng vượt trội của sản phẩm</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Tín hiệu thân phận mà món đồ gửi tới người khác</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Chất lượng vật liệu</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Bảo hành dài hạn</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Phần chênh lệch giá nằm ở giá trị được nhìn thấy, không ở công dụng. Bỏ logo đi, công dụng giữ nguyên nhưng giá trị sụp đổ.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>2. Vì sao người thu nhập thấp đôi khi chi cho biểu tượng nhiều hơn người giàu?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Vì họ không biết tính toán</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Vì hàng hiệu rẻ hơn với họ</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Vì áp lực chứng minh thân phận nặng hơn khi vị thế chưa vững</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Vì họ không có nhu cầu thiết yếu nào khác</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Người đã vững vị thế không cần xác nhận; người đang loay hoay thì cần. Nghiên cứu về “tiêu dùng phô trương ngược” cho thấy người giàu thật thường chi kín đáo.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>3. Phép thử nhanh nào phân biệt tiêu dùng đầu tư với phô trương?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Sau một năm, khoản chi đó làm tăng giá trị/năng lực hay giảm giá trị?</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Món đồ có đắt không?</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Người khác có khen không?</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Có đang giảm giá không?</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Đầu tư làm tăng năng lực hoặc tài sản theo thời gian; phô trương mất giá ngay. Giá cao hay được khen không phân biệt được hai loại.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Conspicuous_consumption" target="_blank" rel="noopener">Wikipedia — Conspicuous consumption</a> — Veblen (1899); Duesenberry (1949); Banuri &amp; Nguyen (2020).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/The_Millionaire_Next_Door" target="_blank" rel="noopener">Wikipedia — The Millionaire Next Door</a> — Stanley &amp; Danko (1996); “tiêu dùng phô trương ngược”.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/The_Theory_of_the_Leisure_Class" target="_blank" rel="noopener">Wikipedia — The Theory of the Leisure Class</a> — nguồn gốc khái niệm.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Li_Keqiang" target="_blank" rel="noopener">Wikipedia — Li Keqiang</a> — phát biểu 5/2020 về ~600 triệu người thu nhập quanh 1.000 tệ/tháng (được truyền thông đưa lại).</li>
+    </ul>
+
+    <nav class="prevnext" aria-label="Điều hướng series">
+      <a class="prevnext__item" href="03-bay-shawshank.html">
+        <span class="prevnext__dir">← Node 3</span>
+        <span class="prevnext__title">Bẫy Shawshank</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="05-pha-cuc.html">
+        <span class="prevnext__dir">Node 5 →</span>
+        <span class="prevnext__title">Phá cục</span>
+      </a>
+    </nav>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>tiêu dùng phô trương</li><li>Veblen</li><li>tín dụng tiêu dùng</li><li>thân phận</li><li>quảng cáo</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="bay-ngheo-doi-atlas.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Node 4/5 · Bẫy 4/4 · ~13 phút đọc</span>
+        <span><a href="bay-ngheo-doi-atlas.html">Về bản đồ series</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="conspicuous">
+        <span class="amplifier__term">Tiêu dùng phô trương</span>
+        <p class="amplifier__body">Veblen (1899): mua hàng để trình diễn sức mạnh kinh tế. Giá trị nằm ở chỗ được nhìn thấy, không ở công dụng — nên bỏ logo đi thì giá trị biến mất.</p>
+      </div>
+      <div data-note-id="emulation">
+        <span class="amplifier__term">Bắt chước tiền tệ</span>
+        <p class="amplifier__body">Bạn không so với người giàu nhất, mà với người gần bạn nhất. Đó là lý do cuộc đua tiêu dùng không có đích — luôn có người kế bên vừa nâng chuẩn.</p>
+      </div>
+      <div data-note-id="frugality">
+        <span class="amplifier__term">Tiêu dùng phô trương ngược</span>
+        <p class="amplifier__body">Stanley &amp; Danko (1996): phần lớn triệu phú tránh phô trương, mua xe cũ, trả tiền mặt. Sự kín đáo không phải khiêm tốn — nó là chiến lược tài chính.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Vì sao dùng hình ảnh áo giáp giấy</strong>
+      Nó không nói bạn dại khi mua đồ. Nó nói món đồ trông như bảo vệ bạn nhưng không chắn được biến cố — và đôi khi chính nó là khoản nợ làm biến cố nặng hơn.
+    </div>
+    <div class="sidenote">
+      <strong>Về con số 600 triệu</strong>
+      Đây là phát biểu tháng 5/2020 của Thủ tướng Lý Khắc Cường, được truyền thông quốc tế đưa lại. Bài dùng nó như một dữ kiện có nguồn, không phải số liệu khảo sát độc lập.
+    </div>
+    <div class="sidenote">
+      <strong>Bài tiếp theo</strong>
+      Node 5 khép series: một nguyên lý chung để phá cả bốn bẫy, và bốn hành động cụ thể tương ứng với từng bẫy.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>

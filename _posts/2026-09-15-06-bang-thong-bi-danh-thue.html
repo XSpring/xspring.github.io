@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Băng thông bị đánh thuế · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Kinh tế học của sự khan hiếm: vì sao thiếu thốn chiếm dụng băng thông nhận thức và tự tái tạo chính nó.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="bay-ngheo-doi-atlas.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Phụ lục A · Băng thông bị đánh thuế</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="05-pha-cuc.html">← Node 5</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Bản đồ</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Kết thúc</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 14 phút</p>
+    </div>
+    <div class="orbit" aria-label="Lộ trình bài học">
+      <p class="orbit__title">Lộ trình bài học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Thực địa</div>
+        <div class="orbit__node" data-target="boundary">5 · Giới hạn</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng hợp</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">A</span> Phụ lục · Next Node</p>
+    <h1>Băng thông bị đánh thuế</h1>
+    <p class="node-kicker">Kinh tế học của sự khan hiếm: vì sao thiếu thốn không chỉ lấy tài sản, mà còn lấy khả năng suy nghĩ.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Theo lý thuyết khan hiếm, thiếu thốn chiếm dụng băng thông nhận thức, đẩy con người vào quyết định ngắn hạn — và có xu hướng tự tái tạo.
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Câu hỏi mở đầu</span>
+      Cùng một người nông dân, cùng một bộ não, cùng một bài kiểm tra. Trước vụ thu hoạch, khi túi tiền cạn, anh ta làm bài kém hơn. Sau vụ thu hoạch, khi tiền về, anh ta làm bài tốt hơn. Bộ não không đổi trong vài tuần. Vậy cái gì đã đổi? Một cách giải thích nổi bật — nhưng chưa phải cách duy nhất — cho rằng thứ đã đổi là băng thông nhận thức. Bài này đi kiểm tra cách giải thích đó, kể cả những chỗ nó còn yếu.
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần biết trước</h4>
+      <ul>
+        <li>Node 0 — <a class="xlink" href="00-he-thong-vo-hinh.html">Hệ thống vô hình</a>: khái niệm sự khan hiếm được nhắc ở đó.</li>
+        <li>Node 2 — <a class="xlink" href="02-bay-rat-race.html">Rat Race</a>: vòng xoáy tài chính mà phụ lục này giải thích cơ chế.</li>
+        <li>Bạn từng có lúc cuối tháng hết tiền hoặc bị deadline dí.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li>Giải thích <strong>băng thông nhận thức</strong> và <strong>thuế băng thông</strong>.</li>
+        <li>Phân biệt <strong>đường hầm hóa</strong> với <strong>lợi tức tập trung</strong>.</li>
+        <li>Mô tả vai trò của <strong>chùng</strong> và <strong>cú sốc</strong> trong vòng xoáy khan hiếm.</li>
+        <li>Đánh giá cả điểm mạnh lẫn tranh cãi của lý thuyết này.</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Sự thật nền tảng</h2>
+    <p>Sự thật nền tảng của phụ lục này: <strong>khan hiếm là một trạng thái nhận thức, không chỉ là một tình trạng thiếu hụt nguồn lực.</strong></p>
+    <p>Bạn đã biết điều này ở dạng trải nghiệm: khi hết tiền hoặc hết thời gian, đầu óc bạn khác đi. Bạn quên nhiều hơn, nóng nảy hơn, và chỉ nhìn thấy vấn đề trước mắt. Nhà kinh tế học hành vi Sendhil Mullainathan và nhà tâm lý học Eldar Shafir đề xuất một khung giải thích cho cơ chế này trong cuốn <em>Scarcity</em> (2013). Ý chính: tâm trí có một dung lượng hữu hạn cho suy nghĩ có chủ đích, và theo lý thuyết này, khan hiếm tiêu hao dung lượng đó.</p>
+
+    <h2 id="bridge">Mô hình Đèn Pin</h2>
+    <p>Hãy hình dung bạn đứng trong đêm tối với một chiếc đèn pin. Gọi nó là <strong>Mô hình Đèn Pin</strong>.</p>
+    <p>Chiếc đèn có một luồng sáng duy nhất. Bạn chiếu nó vào thứ trước mặt — hoá đơn đến hạn, chuyến xe sắp trễ — và vùng đó sáng rõ. Nhưng mọi thứ ngoài luồng sáng biến mất vào bóng tối: sức khoẻ, kế hoạch dài hạn, người thân. Luồng sáng không yếu đi; nó chỉ bị dồn về một hướng. Và cánh tay giữ đèn thì mỏi dần.</p>
+    <p>Bốn phần của hình ảnh này khớp với bốn phần của cơ chế:</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Một luồng sáng</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Chiếu vào chỗ thiếu</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Bóng tối phần còn lại</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — nhiều người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">“Người nghèo ra quyết định dở vì thiếu hiểu biết hoặc thiếu ý chí.”</span></p>
+      <p>Điều này sai vì cùng một người, với cùng kiến thức, ra quyết định khác hẳn khi cơn khan hiếm tạm lắng. Nếu nguyên nhân là năng lực, kết quả đã không đổi.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> khan hiếm tiêu hao băng thông, và băng thông là điều kiện cần của mọi quyết định tốt. Vấn đề nằm ở trạng thái, không ở con người.</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+    <p>Ba mảnh dưới đây đi từ dung lượng nhận thức, qua hiệu ứng đường hầm, rồi tới cơ chế khiến khan hiếm tự tái tạo. Mảnh hai chứa nghịch lý thú vị nhất: khan hiếm vừa làm bạn sắc bén hơn, vừa làm bạn mù quáng hơn.</p>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Mảnh 1 · Băng thông và thuế băng thông</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Băng thông nhận thức</strong> (cognitive bandwidth) là dung lượng tâm trí dành cho việc suy nghĩ có chủ đích: tập trung, ghi nhớ, lập kế hoạch, kiểm soát bốc đồng. Nó hữu hạn, và mọi việc bạn làm đều rút từ cùng một quỹ đó. <strong>Thuế băng thông</strong> (bandwidth tax) là phần dung lượng bị chiếm bởi mối lo khan hiếm, kể cả khi bạn không chủ động nghĩ về nó.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Nghiên cứu năm 2013 của Mani, Mullainathan, Shafir và Zhao trên tạp chí <em>Science</em> theo dõi những người trồng mía ở Ấn Độ. Thu nhập của họ đến theo vụ. Trước thu hoạch, họ nghèo; sau thu hoạch, họ có tiền. Cùng một người được làm bài kiểm tra trí lực và kiểm soát nhận thức ở cả hai thời điểm. Kết quả: điểm trước thu hoạch thấp hơn rõ rệt so với sau thu hoạch.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Nếu cùng một người làm bài kém hơn khi nghèo, kết luận nào đúng: họ kém thông minh hơn, hay băng thông của họ bị chiếm?</summary>
+        <div class="scaffold__resolve">Cách giải thích được ủng hộ là cách thứ hai, nhưng cần nói ngay một điều: nghiên cứu này chưa khép lại tranh luận. Trí lực nền của họ không đổi trong vài tuần; chỉ túi tiền đổi. Điều thay đổi, theo giả thuyết, là phần dung lượng còn trống cho bài kiểm tra — vì phần lớn băng thông đang bận xử lý mối lo tiền bạc. Đó là ý nghĩa của chữ “thuế”: khan hiếm không lấy năng lực, nó chiếm dung lượng. Năng lực vẫn còn đó, chỉ không được dùng hết. Nhưng ta sẽ gặp những cách giải thích khác ở phần Giới hạn.</div>
+      </details>
+    </section>
+    <div class="feynman">Người ta không kém thông minh hơn khi nghèo; họ chỉ đang bận nghĩ về tiền.</div>
+
+    <div class="checkpoint" data-checkpoint-id="nA-cp1">
+      <span class="checkpoint__label">🛑 Dừng lại &amp; ngẫm</span>
+      <p class="checkpoint__question">Trong một câu: phân biệt “năng lực” và “dung lượng”, và vì sao khan hiếm tác động lên cái thứ hai?</p>
+      <textarea name="reflection" placeholder="Viết câu trả lời của bạn trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So với đáp án mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án mẫu</span>
+        Năng lực là khả năng tối đa; dung lượng là phần còn trống để dùng khả năng đó. Khan hiếm không lấy khả năng, nó chiếm phần còn trống bằng những mối lo lặp đi lặp lại.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Mảnh 2 · Đường hầm hóa và lợi tức tập trung</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Đường hầm hóa</strong> (tunneling) là xu hướng dồn chú ý vào nguồn lực đang khan hiếm và bỏ bê mọi thứ nằm ngoài “đường hầm”. Cái giá của những gì bị bỏ bê gọi là <strong>thuế đường hầm</strong> (tunneling tax). Mặt còn lại là <strong>lợi tức tập trung</strong> (focus dividend): sự tập trung cao độ vào một việc có thể làm tăng năng suất rõ rệt.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Một người đến hạn trả ba hoá đơn trong tuần này. Anh ta xoay tiền, trả cái gấp nhất, hoãn cái còn lại, vay nóng một ít. Anh ta rất tập trung — và trong tuần đó anh ta xử lý hoá đơn hiệu quả hơn bình thường. Nhưng anh ta bỏ qua cuộc hẹn khám sức khoẻ, quên gia hạn bảo hiểm, và không kịp nộp đơn xin học bổng cho con. Lợi tức nằm trong đường hầm; thuế nằm ngoài đường hầm.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao khan hiếm vừa làm bạn tập trung hơn, vừa làm bạn mù quáng hơn?</summary>
+        <div class="scaffold__resolve">Vì cả hai đều là cùng một cơ chế. Đường hầm hóa dồn toàn bộ chú ý vào một điểm, nên điểm đó được xử lý tốt hơn — đó là lợi tức. Nhưng chú ý là hữu hạn, nên phần dành cho mọi thứ khác giảm xuống — đó là thuế. Không có hai cơ chế tách biệt; có một cơ chế với hai mặt. Với khan hiếm ngắn hạn, lợi tức thường lớn hơn thuế. Với khan hiếm kéo dài, thuế vượt xa lợi tức, và cán cân nghiêng hẳn về phía mất mát.</div>
+      </details>
+    </section>
+    <div class="feynman">Đường hầm giúp bạn nhìn rõ một điểm và mù hẳn mọi hướng khác.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Chùng, tung hứng, và cú sốc: vì sao khan hiếm tự tái tạo</summary>
+      <p><strong>Chùng</strong> (slack) là phần nguồn lực dư ra để đối phó với việc bất ngờ. Người có chùng thì một cú sốc chỉ là bất tiện; người không có chùng thì một cú sốc là khủng hoảng. <strong>Tung hứng</strong> (juggling) là cách người thiếu thốn xoay nguồn lực liên tục để vá cái gấp nhất. <strong>Cú sốc</strong> (shock) là biến cố đòi hỏi nhiều chùng hơn mức đang có.</p>
+      <p>Vòng xoáy vận hành như sau. Không có chùng, nên một cú sốc nhỏ — hỏng xe, ốm một tuần — buộc phải vay. Khoản vay lấy đi phần chùng của tháng sau. Tháng sau ít chùng hơn, nên cú sốc kế tiếp gây thiệt hại lớn hơn. Mỗi vòng lặp, chùng giảm và thuế băng thông tăng. Đây chính là cơ chế mà Node 2 gọi là “xô thủng”: không phải lỗi ở tốc độ múc, mà ở chỗ không có phần nước dự trữ.</p>
+    </details>
+
+    <h2 id="application">Trong thực tế</h2>
+    <p>Ta hãy xem cơ chế này được đo như thế nào trong phòng thí nghiệm và ngoài đồng ruộng. Điều đáng chú ý là cùng một kết quả xuất hiện ở hai bối cảnh rất khác nhau.</p>
+    <p>Trong một loạt thí nghiệm của Mullainathan và Shafir, người tham gia được hỏi họ sẽ xử lý thế nào nếu xe hỏng và cần sửa. Với nhóm thu nhập thấp, chỉ việc <em>tưởng tượng</em> khoản chi đó — không phải chi thật — cũng làm giảm điểm trên các bài đo năng lực nhận thức. Nhóm thu nhập cao với cùng câu hỏi thì không suy giảm. Nghĩa là mối lo đủ để đánh thuế băng thông, ngay cả khi biến cố chưa xảy ra.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Hiệu suất nhận thức: trước và sau vụ thu hoạch (minh hoạ theo Mani và cộng sự, 2013)</div>
+      <div class="bar-row">
+        <div class="bar-label">Nông dân · trước thu hoạch</div>
+        <div class="bar-track"><div class="bar-fill" style="width:52%"></div></div>
+        <div class="bar-value">Thấp</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Nông dân · sau thu hoạch</div>
+        <div class="bar-track"><div class="bar-fill" style="width:82%"></div></div>
+        <div class="bar-value">Cao</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Nhóm thu nhập cao (đối chứng)</div>
+        <div class="bar-track"><div class="bar-fill" style="width:84%"></div></div>
+        <div class="bar-value">Ổn định</div>
+      </div>
+      <p class="bar-chart__caption">Sơ đồ minh hoạ xu hướng chính của nghiên cứu Mani, Mullainathan, Shafir &amp; Zhao, “Poverty Impedes Cognitive Function”, <em>Science</em> (2013). Giá trị là tương đối, không phải điểm số gốc. Nhiều tài liệu phổ biến quy đổi chênh lệch này thành khoảng 13 điểm IQ; con số đó là cách diễn giải, không phải kết luận chính thức của bài báo.</p>
+    </div>
+
+    <p>Kết quả này quan trọng vì nó gây khó cho một cách giải thích quen thuộc. Nếu người nghèo kém thông minh hơn một cách cố định, khoảng cách khó biến mất chỉ vì vụ mùa về. Khoảng cách biến mất, nên có cơ sở để cho rằng nguyên nhân là trạng thái, không phải con người. Đây là một trong những bằng chứng được trích dẫn nhiều nhất cho luận điểm của phụ lục — mạnh, nhưng không đơn độc và không khép lại tranh luận.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__face flip-card__front">
+        <span class="flip-card__label">Tự kiểm tra — Câu hỏi</span>
+        <div class="flip-card__content">Vì sao chỉ cần tưởng tượng một khoản chi lớn cũng đủ làm giảm hiệu suất nhận thức?</div>
+      </div>
+      <div class="flip-card__face flip-card__back">
+        <span class="flip-card__label">Đáp án</span>
+        <div class="flip-card__content">Vì băng thông bị chiếm bởi mối lo, không bởi biến cố. Não xử lý khả năng xảy ra như một gánh nặng thật, nên phần dung lượng còn lại cho việc khác giảm ngay.</div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Nơi mô hình vỡ</h2>
+    <p>Đây là phần quan trọng nhất, vì lý thuyết khan hiếm rất dễ bị dùng sai — hoặc để đổ lỗi, hoặc để biện minh. Mô hình Đèn Pin mạnh, nhưng nó có ba mép cần nói rõ.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      “Khan hiếm chỉ có hại.” Không hẳn. Nó tạo ra <strong>lợi tức tập trung</strong>: áp lực thời hạn và thiếu thốn có thể làm tăng năng suất trong ngắn hạn. Vấn đề không phải khan hiếm nói chung, mà là khan hiếm <em>kéo dài và không tự nguyện</em>, nơi thuế đường hầm vượt xa lợi tức. Deadline bạn tự đặt khác với cảnh thiếu tiền triền miên.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Ca biên</span>
+      Suy giảm băng thông không phải đặc quyền của người nghèo. Giám đốc bận rộn, cha mẹ có con nhỏ, sinh viên trước kỳ thi đều cho thấy cùng hiệu ứng. Đây là cơ chế chung của con người khi một nguồn lực bị khan hiếm — không phải khuyết điểm của riêng tầng lớp nào. Nói cách khác: người giàu chỉ ít gặp khan hiếm tiền hơn, chứ không miễn nhiễm với khan hiếm thời gian.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Tranh cãi học thuật</span>
+      Lý thuyết này có ảnh hưởng lớn nhưng không được đồng thuận hoàn toàn. Một số nhà phê bình cho rằng cuốn sách dàn trải và bằng chứng chưa đủ mạnh ở phần chính sách. Các hiệu ứng thuộc họ “mồi” (priming) trong tâm lý học xã hội cũng từng vấp phải lo ngại về khả năng lặp lại. Một số nhà nghiên cứu còn lưu ý rằng chênh lệch theo mùa vụ có thể đến từ những yếu tố khác: dinh dưỡng, giấc ngủ, hoặc căng thẳng sinh lý thay đổi theo mùa. Những yếu tố này không phủ nhận vai trò của băng thông, nhưng chúng nhắc ta rằng bức tranh có thể có nhiều nguyên nhân cùng lúc. Vì vậy, hãy đọc đây là một khung giải thích hữu ích, không phải một định luật đã khép lại.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Nếu khan hiếm là một khoản thuế nhận thức, thì cách giảm thuế hiệu quả nhất không phải là “cố gắng hơn”, mà là gì? Nghĩ một câu trả lời trước khi đọc phần tổng hợp.
+    </div>
+
+    <h2 id="connections">Mắt xích này nối với đâu</h2>
+    <p>Phụ lục này cung cấp cơ chế tâm lý đứng sau nhiều điều mà series đã mô tả ở tầng kinh tế. Đọc nó cạnh các node sau sẽ rõ hơn.</p>
+    <ul>
+      <li><a class="xlink" href="00-he-thong-vo-hinh.html">Node 0 — Hệ thống vô hình</a>: đây là cơ chế cụ thể của “sự khan hiếm” được nhắc ở đó.</li>
+      <li><a class="xlink" href="01-bay-giai-tri-mi-dan.html">Node 1 — Giải trí mị dân</a>: giải trí giá rẻ hoạt động mạnh nhất khi băng thông đã cạn.</li>
+      <li><a class="xlink" href="02-bay-rat-race.html">Node 2 — Bẫy Rat Race</a>: “xô thủng” chính là bài toán chùng và cú sốc.</li>
+      <li><a class="xlink" href="03-bay-shawshank.html">Node 3 — Bẫy Shawshank</a>: học cách bất lực và thuế băng thông củng cố lẫn nhau.</li>
+      <li><a class="xlink" href="05-pha-cuc.html">Node 5 — Phá cục</a>: “đổi cấu trúc” chính là cách giảm thuế băng thông.</li>
+    </ul>
+
+    <h2 id="synthesis">Bức tranh toàn cảnh</h2>
+    <p>Quay lại người nông dân ở đầu bài. Theo cách giải thích này, bộ não của anh ta không đổi; trạng thái khan hiếm đổi. Trước thu hoạch, một phần băng thông bị khoá vào mối lo tiền bạc, nên bài kiểm tra chỉ nhận được phần còn lại. Sau thu hoạch, mối lo tan, dung lượng trở về, điểm số trở về. Nếu mô hình đúng — và bằng chứng ủng hộ nó, dù chưa tuyệt đối — thì cơ chế vận hành ở mọi nơi có thiếu thốn kéo dài: nó dồn chú ý vào cái gấp, bỏ bê cái quan trọng, làm cạn phần chùng, và biến mỗi cú sốc nhỏ thành một vòng xoáy mới. Đó là lý do khan hiếm có xu hướng tự tái tạo — không phải vì người trong cuộc yếu kém, mà vì phần dung lượng nhận thức bị chiếm trước khi họ kịp quyết định. Hệ quả thực tiễn vẫn đáng cân nhắc: muốn giúp ai đó ra quyết định tốt hơn, đừng vội khuyên họ cố hơn. Hãy thử giảm khoản thuế — bằng cách tạo chùng, đơn giản hoá lựa chọn, và biến lựa chọn đúng thành mặc định.</p>
+
+    <blockquote>
+      <strong>Nếu bạn chỉ nhớ một điều:</strong> Khan hiếm không lấy năng lực của bạn; nó lấy phần dung lượng còn trống — và đó là lý do “cố hơn” hiếm khi đủ.
+    </blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Bài toán: Thiết kế để giảm thuế băng thông</h3>
+      <p class="launchpad__problem">Chọn một người hoặc một nhóm bạn muốn giúp ra quyết định tốt hơn — có thể là chính bạn. Xác định một quyết định quan trọng mà họ hay trì hoãn hoặc làm sai khi bị áp lực. Thiết kế một “bản vá nhỏ” giảm thuế băng thông cho quyết định đó, theo ba tiêu chí. Một: nó giảm số lựa chọn phải cân nhắc tại thời điểm quyết định. Hai: nó không đòi hỏi thêm ý chí hay kiến thức mới. Ba: nó biến lựa chọn đúng thành mặc định hoặc thành việc dễ nhất. Sau đó thử trong hai tuần và đo bằng một con số.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+          Đừng hỏi “làm sao để họ cố hơn”. Hỏi “cái gì đang chiếm băng thông của họ lúc ra quyết định”. Bản vá nhắm vào chỗ chiếm, không nhắm vào người.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Dùng cặp đường hầm/thuế ở mảnh 2. Bản vá tốt nhất thường là: tự động hoá, đặt mặc định, hoặc giảm số bước. Ví dụ: chuyển tiết kiệm tự động, hoặc một biểu mẫu điền sẵn.
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dựng bài</span>
+          Kiểm tra bản vá bằng câu hỏi: “Nếu người này đang kiệt sức và bị ba việc gấp dí cùng lúc, bản vá còn hoạt động không?” Nếu không, nó chưa đủ tự động — hãy đơn giản hoá thêm một bước.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Băng thông nhận thức (cognitive bandwidth)</dt>
+        <dd>Dung lượng tâm trí cho suy nghĩ có chủ đích: tập trung, ghi nhớ, lập kế hoạch. <em>(Trong Mô hình Đèn Pin: độ sáng của luồng đèn.)</em></dd>
+        <dt>Thuế băng thông (bandwidth tax)</dt>
+        <dd>Phần dung lượng bị chiếm bởi mối lo khan hiếm, kể cả khi không chủ động nghĩ tới. <em>(Trong Mô hình Đèn Pin: cánh tay mỏi vì phải giữ đèn.)</em></dd>
+        <dt>Đường hầm hóa (tunneling)</dt>
+        <dd>Dồn chú ý vào nguồn lực khan hiếm và bỏ bê phần còn lại. <em>(Trong Mô hình Đèn Pin: chỉ thấy vùng được chiếu sáng.)</em></dd>
+        <dt>Thuế đường hầm (tunneling tax)</dt>
+        <dd>Cái giá của những gì bị bỏ bê vì đường hầm hóa. <em>(Trong Mô hình Đèn Pin: mọi thứ trong bóng tối.)</em></dd>
+        <dt>Lợi tức tập trung (focus dividend)</dt>
+        <dd>Phần năng suất tăng thêm nhờ tập trung cao độ vào một việc. <em>(Trong Mô hình Đèn Pin: vùng sáng được nhìn rõ hơn bình thường.)</em></dd>
+        <dt>Chùng (slack)</dt>
+        <dd>Nguồn lực dư ra để đối phó biến cố bất ngờ. <em>(Trong Mô hình Đèn Pin: pin dự phòng.)</em></dd>
+        <dt>Tung hứng (juggling)</dt>
+        <dd>Xoay nguồn lực liên tục để vá việc gấp nhất. <em>(Trong Mô hình Đèn Pin: chuyển luồng sáng qua lại giữa các điểm.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu. Chọn đáp án đúng nhất rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Nghiên cứu nông dân trồng mía cho thấy điều gì?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Người nghèo có trí lực thấp hơn người giàu một cách cố định</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Cùng một người làm bài kém hơn khi nghèo và tốt hơn khi có tiền — nguyên nhân là trạng thái khan hiếm</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Nông dân không đủ kiến thức để làm bài kiểm tra</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Tiền không ảnh hưởng gì tới nhận thức</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Chính việc điểm số thay đổi theo mùa vụ trên cùng một người gây khó cho cách giải thích “năng lực cố định”, và ủng hộ cách giải thích theo trạng thái nhận thức — dù đây chưa phải bằng chứng khép lại mọi tranh luận.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>2. “Lợi tức tập trung” nghĩa là gì?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Khan hiếm luôn làm mọi thứ tệ hơn</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Tiền lãi thu được từ tiết kiệm khi nghèo</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Phần năng suất tăng thêm nhờ tập trung cao độ vào một việc</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Lợi ích của việc có nhiều lựa chọn</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Đây là mặt tích cực của đường hầm hóa. Với khan hiếm ngắn hạn, lợi tức có thể lớn hơn thuế; với khan hiếm kéo dài thì ngược lại.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>3. Vì sao “hãy cố gắng hơn” thường là lời khuyên sai?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Vì vấn đề nằm ở dung lượng bị chiếm, không ở nỗ lực; cần giảm thuế băng thông</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Vì nỗ lực chưa bao giờ giúp ích cho ai</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Vì người nghèo không muốn nghe lời khuyên</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Vì khan hiếm không thể thay đổi được</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Nếu băng thông đã bị chiếm, tăng nỗ lực chỉ rút từ quỹ đã cạn. Cách đúng là giảm khoản thuế: tạo chùng, đơn giản hoá, và đặt mặc định tốt.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Scarcity:_Why_Having_Too_Little_Means_So_Much" target="_blank" rel="noopener">Wikipedia — Scarcity (Mullainathan &amp; Shafir, 2013)</a> — tunneling, bandwidth, slack, juggling; và các phê bình (Harford, Gryniewicz).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Cognitive_load" target="_blank" rel="noopener">Wikipedia — Cognitive load</a> — giới hạn của bộ nhớ làm việc; mục “Poverty” dẫn Mani et al. (2013).</li>
+      <li><a class="source" href="https://www.science.org/doi/10.1126/science.1238041" target="_blank" rel="noopener">Science (2013) — “Poverty Impedes Cognitive Function”</a> — Mani, Mullainathan, Shafir &amp; Zhao.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Working_memory" target="_blank" rel="noopener">Wikipedia — Working memory</a> — nền tảng về dung lượng hữu hạn của nhận thức.</li>
+    </ul>
+
+    <nav class="prevnext" aria-label="Điều hướng series">
+      <a class="prevnext__item" href="05-pha-cuc.html">
+        <span class="prevnext__dir">← Node 5</span>
+        <span class="prevnext__title">Phá cục</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="bay-ngheo-doi-atlas.html">
+        <span class="prevnext__dir">Kết thúc →</span>
+        <span class="prevnext__title">Về bản đồ series</span>
+      </a>
+    </nav>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>khan hiếm</li><li>băng thông nhận thức</li><li>kinh tế học hành vi</li><li>đường hầm hóa</li><li>tâm lý học nhận thức</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="bay-ngheo-doi-atlas.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Phụ lục A · Next Node · ~14 phút đọc</span>
+        <span><a href="bay-ngheo-doi-atlas.html">Về bản đồ series</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="bandwidth">
+        <span class="amplifier__term">Băng thông nhận thức</span>
+        <p class="amplifier__body">Dung lượng hữu hạn cho suy nghĩ có chủ đích. Mọi việc — từ giải toán đến kiềm chế cơn nóng — đều rút từ cùng một quỹ. Khan hiếm chiếm quỹ đó trước.</p>
+      </div>
+      <div data-note-id="tunnel">
+        <span class="amplifier__term">Đường hầm hóa</span>
+        <p class="amplifier__body">Dồn chú ý vào cái đang thiếu và bỏ bê phần còn lại. Có lợi ngắn hạn (tập trung), có hại dài hạn (mù quáng). Cùng một cơ chế, hai mặt.</p>
+      </div>
+      <div data-note-id="slack">
+        <span class="amplifier__term">Chùng (slack)</span>
+        <p class="amplifier__body">Phần dư để hấp thụ biến cố. Người có chùng thì cú sốc là bất tiện; người không có chùng thì cú sốc là vòng xoáy mới. Đây là biến số trung tâm của cả lý thuyết.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Vì sao dùng hình ảnh đèn pin</strong>
+      Nó gộp hai ý trong một: luồng sáng hữu hạn (băng thông) và việc dồn sáng về một điểm (đường hầm). Và nó tránh ẩn dụ “não như máy tính” mà bạn đã loại.
+    </div>
+    <div class="sidenote">
+      <strong>Về con số 13 điểm IQ</strong>
+      Đây là cách diễn giải phổ biến của chênh lệch trong nghiên cứu Mani và cộng sự, không phải kết luận chính thức của bài báo. Bài giữ nó ở dạng “tương đương theo diễn giải” để không phóng đại.
+    </div>
+    <div class="sidenote">
+      <strong>Điều nên cẩn trọng nhất</strong>
+      Lý thuyết này có thể bị dùng để nói “người nghèo không thể ra quyết định”. Đó là cách đọc sai. Nó giải thích vì sao môi trường thiếu thốn gây hại, và chỉ ra cần thiết kế lại hệ thống — không phải quy tội cho cá nhân.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>

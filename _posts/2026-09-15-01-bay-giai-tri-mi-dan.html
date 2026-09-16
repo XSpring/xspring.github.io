@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bẫy giải trí mị dân · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Cách nền giải trí giá rẻ được thiết kế để tiêu hao thời gian và sự tập trung — mắt xích đầu tiên trong vòng lặp bốn bẫy.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="bay-ngheo-doi-atlas.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Node 1 · Bẫy giải trí mị dân</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="00-he-thong-vo-hinh.html">← Node 0</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Bản đồ</a>
+      <a class="series-bar__link" href="02-bay-rat-race.html">Node 2 →</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 13 phút</p>
+    </div>
+    <div class="orbit" aria-label="Lộ trình bài học">
+      <p class="orbit__title">Lộ trình bài học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Thực địa</div>
+        <div class="orbit__node" data-target="boundary">5 · Giới hạn</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng hợp</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">1</span> Bẫy 1/4 · Thời gian &amp; sự tập trung</p>
+    <h1>Bẫy giải trí mị dân</h1>
+    <p class="node-kicker">Khi niềm vui rẻ tiền ăn hết thứ đắt giá nhất bạn có — mà bạn lại thấy như mình đang được thưởng.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Giải trí giá rẻ không miễn phí: nó lấy sự tập trung, và sự tập trung là nguyên liệu thô của mọi thay đổi giai cấp.
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Câu hỏi mở đầu</span>
+      Bạn mở điện thoại “chỉ để xem năm phút”. Khi ngẩng lên, đã gần một giờ sáng. Bạn không thấy vui, cũng không thấy tệ. Bạn chỉ thấy trống. Thứ vừa biến mất không phải là tiền — nó miễn phí. Thứ biến mất là sự tập trung, và sự tập trung chính là thứ duy nhất có thể giúp bạn đổi đời. Vậy ai đã lấy nó, và lấy bằng cách nào?
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần biết trước</h4>
+      <ul>
+        <li>Node 0 — <a class="xlink" href="00-he-thong-vo-hinh.html">Hệ thống vô hình</a>: phân biệt nỗ lực và cấu trúc.</li>
+        <li>Bạn đang dùng ít nhất một nền tảng giải trí số (video ngắn, game, mạng xã hội).</li>
+        <li>Bài không kết tội bạn. Nó mô tả cơ chế.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li>Giải thích <strong>nền kinh tế chú ý</strong> (attention economy).</li>
+        <li>Nhận diện cơ chế <strong>phần thưởng biến thiên</strong> (variable reward) trong thiết kế sản phẩm.</li>
+        <li>Kể lại nguồn gốc và ý nghĩa của thuật ngữ <strong>tittytainment</strong>.</li>
+        <li>Phân biệt giải trí phục hồi và giải trí tiêu hao.</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Sự thật nền tảng</h2>
+    <p>Sự thật nền tảng của node này: <strong>trong nền kinh tế hiện đại, sự chú ý của bạn là hàng hoá được mua bán, và nó bị khai thác có chủ đích.</strong></p>
+    <p>Bạn đã biết điều này ở dạng mơ hồ: cảm giác “nghiện điện thoại”, cảm giác thời gian trôi vô ích. Nhà kinh tế học Herbert Simon đã nói rõ từ năm 1971: sự phong phú của thông tin tạo ra sự nghèo khó của sự chú ý. Thông tin thì vô hạn; sự chú ý thì hữu hạn. Nơi nào có sự khan hiếm, nơi đó có thị trường.</p>
+
+    <h2 id="bridge">Mô hình Calo Rỗng</h2>
+    <p>Hãy hình dung đồ ăn vặt. Gọi nó là <strong>Mô hình Calo Rỗng</strong>.</p>
+    <p>Một chiếc bánh ngọt làm bạn no ngay, nhưng không cho cơ thể chất gì để xây dựng. Bạn ăn để sống, nhưng thứ bạn ăn lại khiến bạn yếu đi. Đồ ăn vặt không độc ở một lần dùng; nó độc ở tần suất. Điều tương tự đúng với giải trí: nó cho bạn cảm giác thỏa mãn tức thời, nhưng không cho bạn nguyên liệu nào để phát triển.</p>
+    <p>Bốn phần của hình ảnh này khớp với bốn phần của cơ chế:</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Món ăn ngon, rẻ</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Cảm giác no giả</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Thiếu chất để lớn</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — nhiều người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">“Giải trí chỉ là thư giãn. Ai cũng cần thư giãn, và tôi hoàn toàn kiểm soát được.”</span></p>
+      <p>Điều này sai vì sản phẩm giải trí hiện đại không được thiết kế cho việc thư giãn của bạn. Nó được thiết kế cho thời gian sử dụng của bạn.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> vấn đề không phải là giải trí nói chung, mà là loại giải trí được tối ưu hoá để giữ chân bạn lâu nhất, và số giờ nó lấy đi.</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+    <p>Ba mảnh dưới đây đi từ kinh tế học, qua tâm lý học, rồi tới chính trị học. Chúng giải thích cùng một hiện tượng ở ba tầng khác nhau.</p>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Mảnh 1 · Nền kinh tế chú ý</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Nền kinh tế chú ý</strong> (attention economy) là mô hình mà sự chú ý của người dùng trở thành hàng hoá. Nền tảng cung cấp nội dung miễn phí, rồi bán thời gian và sự chú ý của bạn cho nhà quảng cáo. Doanh thu tính theo phút, nên mục tiêu tối ưu là số phút.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Một nền tảng video ngắn không cần bạn trả tiền để xem. Nó cần bạn ở lại. Càng ở lâu, càng nhiều quảng cáo được hiển thị. Vì thế thuật toán được tối ưu cho một chỉ số duy nhất: khả năng giữ bạn lại thêm một video nữa. Nội dung nào giữ chân tốt nhất thường không phải nội dung hay nhất, mà là nội dung gây cảm xúc mạnh nhất — tức giận, sợ hãi, hoặc thỏa mãn tức thời.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Câu nói “nếu bạn không trả tiền cho sản phẩm, bạn là sản phẩm” đúng hay sai?</summary>
+        <div class="scaffold__resolve">Đúng một nửa. Bạn không bị bán như một món hàng, nhưng <em>sự chú ý</em> của bạn thì có. Bạn trả giá bằng một loại tiền khác: thời gian, sự tập trung, và dữ liệu hành vi. Vì giao dịch bằng thứ vô hình, bạn không cảm thấy mình đang mua gì — và đó chính là điểm khiến nó hiệu quả.</div>
+      </details>
+    </section>
+    <div class="feynman">Nếu bạn không thấy hoá đơn, bạn vẫn đang trả — chỉ là bằng thứ bạn không để ý.</div>
+
+    <div class="checkpoint" data-checkpoint-id="n1-cp1">
+      <span class="checkpoint__label">🛑 Dừng lại &amp; ngẫm</span>
+      <p class="checkpoint__question">Trong một câu: chỉ số duy nhất mà thuật toán giải trí được tối ưu là gì, và vì sao chỉ số đó không trùng với lợi ích của bạn?</p>
+      <textarea name="reflection" placeholder="Viết câu trả lời của bạn trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So với đáp án mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án mẫu</span>
+        Chỉ số đó là thời gian sử dụng. Nó không trùng lợi ích của bạn vì nền tảng lãi khi bạn ở lại lâu, còn bạn lãi khi bạn rời đi để làm việc quan trọng.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Mảnh 2 · Phần thưởng biến thiên</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Phần thưởng biến thiên</strong> (variable reward) là kỹ thuật cho phần thưởng xuất hiện ngẫu nhiên, không đoán trước. Não phản ứng với <em>khả năng</em> nhận thưởng mạnh hơn với <em>phần thưởng chắc chắn</em>, nên hành vi lặp lại dai dẳng hơn.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Nhà tâm lý học B. F. Skinner mô tả cơ chế này từ những năm 1950: một con vật bấm cần gạt nhận thức ăn ngẫu nhiên sẽ bấm nhiều hơn hẳn so với khi luôn nhận đủ. Máy đánh bạc hoạt động đúng theo nguyên lý đó. Kéo-để-làm-mới (pull-to-refresh), cuộn vô hạn và tự động phát video đều là những chiếc máy đánh bạc thu nhỏ, không tốn tiền để chơi.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao thao tác “kéo để làm mới” gây nghiện hơn một nút bấm luôn cho kết quả giống nhau?</summary>
+        <div class="scaffold__resolve">Vì bạn không biết trước lần kéo này sẽ có gì. Sự không chắc chắn tạo ra một khoảng hồi hộp ngắn, và não giải phóng dopamine cho <em>kỳ vọng</em>, không chỉ cho phần thưởng. Khi kết quả luôn giống nhau, não ngừng chú ý. Khi kết quả ngẫu nhiên, não không bao giờ ngừng thử — đó là lý do cơ chế này không thể bị “ý chí” đánh bại một cách đơn giản.</div>
+      </details>
+    </section>
+    <div class="feynman">Thứ khiến bạn quay lại không phải là phần thưởng, mà là việc bạn không biết lần này có gì.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Tittytainment: nguồn gốc chính trị của một thuật ngữ gây tranh cãi</summary>
+      <p>Năm 1995, tại khách sạn Fairmont ở San Francisco, một hội nghị quy tụ nhiều cựu lãnh đạo thế giới. Nhà tư vấn an ninh quốc gia Zbigniew Brzezinski được cho là đã dùng từ <strong>tittytainment</strong> (ghép từ “titty” và “entertainment”) để mô tả một hỗn hợp “giải trí gây tê và dinh dưỡng vừa đủ” nhằm xoa dịu những tầng lớp bị bỏ lại. Thuật ngữ này được phổ biến qua cuốn <em>The Global Trap</em> (1996) của Hans-Peter Martin và Harald Schumann, với hình ảnh “xã hội 20/80”: 20% dân số làm việc, 80% còn lại được giữ yên bằng giải trí.</p>
+      <p>Cần nói rõ: đây là một tuyên bố được gán, không phải một quyết định chính sách được ghi chép đầy đủ. Nhưng ngay cả ở dạng giai thoại, nó đặt ra một câu hỏi đúng: nếu một xã hội có đông người bất mãn, thứ rẻ nhất để giữ trật tự là gì? Câu trả lời — nội dung gây tê, giá gần bằng không — đã trở thành mô hình kinh doanh của cả một ngành.</p>
+    </details>
+
+    <h2 id="application">Trong thực tế</h2>
+    <p>Ta hãy xem cơ chế vận hành ở quy mô dữ liệu. Điều đáng chú ý không phải là “mọi người dùng nhiều video ngắn”, mà là <em>ai</em> dùng nhiều hơn, và <em>khoảng cách</em> đó nói lên điều gì.</p>
+    <p>Các báo cáo ngành thường cho thấy nhóm thu nhập thấp dành nhiều thời gian hơn cho video ngắn so với nhóm thu nhập cao. Con số chính xác thay đổi theo khảo sát và quốc gia, nên ở đây ta chỉ giữ tương quan: chênh lệch thường ở mức một giờ mỗi ngày, và có xu hướng mở rộng.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Thời gian cho video ngắn mỗi ngày, theo nhóm thu nhập (minh hoạ)</div>
+      <div class="bar-row">
+        <div class="bar-label">Thu nhập cao</div>
+        <div class="bar-track"><div class="bar-fill" style="width:38%"></div></div>
+        <div class="bar-value">~1.2h</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Thu nhập trung bình</div>
+        <div class="bar-track"><div class="bar-fill" style="width:62%"></div></div>
+        <div class="bar-value">~2.0h</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Thu nhập thấp</div>
+        <div class="bar-track"><div class="bar-fill" style="width:88%"></div></div>
+        <div class="bar-value">~2.8h</div>
+      </div>
+      <p class="bar-chart__caption">Sơ đồ minh hoạ dựa trên xu hướng được báo cáo rộng rãi; không phải số liệu khảo sát cụ thể. Giá trị tuyệt đối thay đổi theo quốc gia và thời điểm.</p>
+    </div>
+
+    <p>Một giờ mỗi ngày là 365 giờ một năm — hơn chín tuần làm việc toàn thời gian. Đó là khoảng thời gian đủ để học một kỹ năng mới, hoặc để không học gì cả. Cơ chế ở đây không cần ai ra lệnh. Nó chỉ cần một sản phẩm rẻ, dễ tiếp cận, và một người mệt mỏi vào cuối ngày.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__inner">
+        <div class="flip-card__face flip-card__front">
+          <span class="flip-card__label">Tự kiểm tra — Câu hỏi</span>
+          <div class="flip-card__content">Vì sao “tự kỷ luật bằng ý chí” thường thất bại trước thiết kế của nền tảng giải trí?</div>
+        </div>
+        <div class="flip-card__face flip-card__back">
+          <span class="flip-card__label">Đáp án</span>
+          <div class="flip-card__content">Vì ý chí là tài nguyên có hạn và cạn dần trong ngày, còn cơ chế phần thưởng biến thiên chạy 24/7. Cuộc chiến được thiết kế để bạn thua vào lúc bạn kiệt sức nhất.</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Nơi mô hình vỡ</h2>
+    <p>Mô hình Calo Rỗng giải thích vì sao giải trí giá rẻ nguy hiểm ở tần suất. Nhưng nó có hai mép cần nói rõ, nếu không bạn sẽ hiểu sai thành “giải trí là kẻ thù”.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      “Mọi giải trí đều là bẫy, nên tôi phải cắt hết.” Sai. Nghỉ ngơi là điều kiện để học tập và làm việc bền vững. Vấn đề nằm ở loại giải trí <em>được tối ưu để giữ chân</em>, và ở số giờ nó chiếm. Một bộ phim bạn chủ động chọn khác hoàn toàn với ba giờ cuộn vô thức.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Ca biên</span>
+      Giải trí cũng là nguồn sống và nguồn cảm hứng. Nhiều người sáng tạo lấy ý tưởng từ game, phim, âm nhạc. Và với một số người, ngành giải trí chính là nghề nghiệp của họ. Cái bẫy không phải bản thân nội dung, mà là <em>quan hệ tiêu dùng thụ động, không chọn lọc, không giới hạn</em>.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Nếu bẫy 1 lấy đi thời gian và sự tập trung, thì bẫy 2 sẽ lấy gì? Ghi dự đoán trước khi sang node tiếp theo — và để ý xem hai bẫy có cùng một mục tiêu hay không.
+    </div>
+
+    <h2 id="connections">Mắt xích này nối với đâu</h2>
+    <p>Bẫy 1 không đứng một mình. Nó là cửa vào của cả vòng lặp, vì mọi bẫy khác đều cần một điều kiện: bạn không đủ tỉnh táo và thời gian để nhìn ra chúng.</p>
+    <ul>
+      <li><a class="xlink" href="00-he-thong-vo-hinh.html">Node 0 — Hệ thống vô hình</a>: khung tổng thể về nỗ lực và cấu trúc.</li>
+      <li><a class="xlink" href="02-bay-rat-race.html">Node 2 — Bẫy Rat Race</a>: khi thời gian đã bị ăn hết, bạn không còn dư để học kỹ năng thoát.</li>
+      <li><a class="xlink" href="03-bay-shawshank.html">Node 3 — Bẫy Shawshank</a>: giải trí gây tê làm suy yếu khả năng tư duy độc lập.</li>
+      <li><a class="xlink" href="05-pha-cuc.html">Node 5 — Phá cục</a>: chiến lược tập trung sâu là đối sách trực tiếp cho bẫy này.</li>
+    </ul>
+
+    <h2 id="synthesis">Bức tranh toàn cảnh</h2>
+    <p>Giải trí mị dân là bẫy rẻ nhất và hiệu quả nhất trong bốn bẫy, vì nó không cần ép buộc. Nó chỉ cần biến sự chú ý thành hàng hoá, dùng phần thưởng biến thiên để giữ chân, và tối ưu cho số phút thay vì cho lợi ích của người dùng. Người bị kẹt không cảm thấy bị tước đoạt; họ cảm thấy được thưởng. Đó là lý do bẫy này khó nhận ra hơn cả — và cũng là lý do nó là mắt xích đầu tiên. Muốn phá các bẫy sau, bạn cần lấy lại thứ bị lấy đi ở đây: khả năng tập trung trong một khoảng thời gian dài.</p>
+
+    <blockquote>
+      <strong>Nếu bạn chỉ nhớ một điều:</strong> Thứ giải trí giá rẻ lấy không phải tiền của bạn, mà là khả năng tập trung — nguyên liệu thô của mọi thay đổi.
+    </blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Bài toán: Kiểm toán 7 ngày sự chú ý</h3>
+      <p class="launchpad__problem">Trong một tuần, ghi lại thời gian bạn dành cho các nền tảng giải trí số. Không phán xét, chỉ đo. Cuối tuần, tính tổng số giờ, rồi trả lời hai câu: (1) bao nhiêu giờ trong đó bạn <em>chủ động chọn</em> và thấy hài lòng sau khi xong, và (2) bao nhiêu giờ là cuộn vô thức mà bạn không nhớ nổi nội dung? Sau đó đề xuất một thay đổi về <em>cấu trúc</em>, không phải về ý chí.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+          Đừng đặt mục tiêu “dùng ít hơn”. Đặt mục tiêu “đo chính xác hơn”. Con số trung thực tự tạo áp lực, mạnh hơn lời hứa với bản thân.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Dùng cặp chủ động/thụ động ở phần giới hạn. Chỉ số cần theo dõi là tỷ lệ giữa hai loại, không chỉ tổng thời gian.
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dựng bài</span>
+          Thay đổi cấu trúc có thể là: xoá ứng dụng khỏi màn hình chính, đặt giới hạn thời gian ở tầng hệ điều hành, hoặc thay thế một khung giờ bằng hoạt động đã lên lịch trước. Ý chí yếu; môi trường mạnh.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Nền kinh tế chú ý (attention economy)</dt>
+        <dd>Mô hình biến sự chú ý của người dùng thành hàng hoá bán cho nhà quảng cáo. <em>(Trong Mô hình Calo Rỗng: đây là chiếc bánh được bán cho người khác, còn bạn là người ăn.)</em></dd>
+        <dt>Phần thưởng biến thiên (variable reward)</dt>
+        <dd>Kỹ thuật cho phần thưởng xuất hiện ngẫu nhiên, khiến hành vi lặp lại dai dẳng. <em>(Trong Mô hình Calo Rỗng: vị ngọt bất chợt khiến bạn ăn tiếp.)</em></dd>
+        <dt>Tittytainment</dt>
+        <dd>Thuật ngữ chỉ hỗn hợp giải trí gây tê dùng để xoa dịu tầng lớp bất mãn. <em>(Trong Mô hình Calo Rỗng: món ăn được thiết kế để bạn quên cơn đói thật.)</em></dd>
+        <dt>Cuộn vô hạn (infinite scroll)</dt>
+        <dd>Thiết kế nạp nội dung không có điểm dừng tự nhiên. <em>(Trong Mô hình Calo Rỗng: chiếc đĩa không bao giờ trống.)</em></dd>
+        <dt>Giải trí phục hồi vs. tiêu hao</dt>
+        <dd>Phục hồi là chủ động chọn và thấy hài lòng sau khi xong; tiêu hao là thụ động cuộn và thấy trống. <em>(Trong Mô hình Calo Rỗng: bữa ăn thật so với đồ ăn vặt.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu. Chọn đáp án đúng nhất rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="2">
+        <legend>1. Vì sao nền tảng giải trí miễn phí lại tối ưu cho thời gian sử dụng?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Vì chúng muốn người dùng học hỏi nhiều hơn</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Vì thời gian dài giúp nội dung chất lượng hơn</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Vì doanh thu quảng cáo tăng theo số phút người dùng ở lại</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Vì luật bắt buộc như vậy</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Mô hình doanh thu quảng cáo biến số phút thành tiền. Mục tiêu của nền tảng vì thế lệch với lợi ích của người dùng.</div>
+      </fieldset>
+
+      <fieldset data-answer="1">
+        <legend>2. Phần thưởng biến thiên khiến hành vi khó bỏ hơn vì…</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> nó cho phần thưởng lớn hơn mỗi lần</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> não phản ứng mạnh với sự không chắc chắn, không chỉ với phần thưởng</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> nó luôn cho kết quả giống nhau nên dễ đoán</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> nó làm giảm dopamine trong não</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Chính khoảng hồi hộp trước kết quả ngẫu nhiên giữ bạn ở lại. Phần thưởng chắc chắn sẽ khiến não nhanh chán.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>3. Phát biểu nào phản ánh đúng nhất quan điểm của bài?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Giải trí nói chung không xấu; vấn đề là loại được tối ưu để giữ chân và số giờ nó chiếm</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Mọi giải trí đều là bẫy nên cần cắt bỏ hoàn toàn</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Chỉ người thu nhập thấp mới bị ảnh hưởng</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Ý chí cá nhân là đủ để chống lại mọi thiết kế gây nghiện</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Bài phân biệt giải trí phục hồi với giải trí tiêu hao. Cắt bỏ hoàn toàn là cách đọc cực đoan; giải trí chủ động vẫn cần thiết.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/The_Global_Trap" target="_blank" rel="noopener">Wikipedia — The Global Trap</a> — nguồn gốc “tittytainment”, hội nghị Fairmont 1995.</li>
+      <li><a class="source" href="https://en.wiktionary.org/wiki/tittytainment" target="_blank" rel="noopener">Wiktionary — tittytainment</a> — định nghĩa và nguồn gốc thuật ngữ.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Reinforcement" target="_blank" rel="noopener">Wikipedia — Reinforcement</a> — cơ chế phần thưởng biến thiên (Skinner).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Attention_economy" target="_blank" rel="noopener">Wikipedia — Attention economy</a> — khung kinh tế học về sự chú ý.</li>
+    </ul>
+
+    <nav class="prevnext" aria-label="Điều hướng series">
+      <a class="prevnext__item" href="00-he-thong-vo-hinh.html">
+        <span class="prevnext__dir">← Node 0</span>
+        <span class="prevnext__title">Hệ thống vô hình</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="02-bay-rat-race.html">
+        <span class="prevnext__dir">Node 2 →</span>
+        <span class="prevnext__title">Bẫy Rat Race</span>
+      </a>
+    </nav>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>kinh tế chú ý</li><li>nghiện số</li><li>tittytainment</li><li>thời gian</li><li>tập trung</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="bay-ngheo-doi-atlas.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Node 1/5 · Bẫy 1/4 · ~13 phút đọc</span>
+        <span><a href="bay-ngheo-doi-atlas.html">Về bản đồ series</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="attention">
+        <span class="amplifier__term">Nền kinh tế chú ý</span>
+        <p class="amplifier__body">Sự chú ý là nguồn lực khan hiếm nhất trong thời đại thông tin dư thừa. Nơi nào có khan hiếm, nơi đó hình thành thị trường — và giá cả được trả bằng thời gian sống.</p>
+      </div>
+      <div data-note-id="variable">
+        <span class="amplifier__term">Phần thưởng biến thiên</span>
+        <p class="amplifier__body">Kết quả ngẫu nhiên tạo ra hành vi dai dẳng hơn kết quả chắc chắn. Đây là nền tảng của máy đánh bạc, và cũng là nền tảng của bảng tin và video ngắn.</p>
+      </div>
+      <div data-note-id="titty">
+        <span class="amplifier__term">Tittytainment</span>
+        <p class="amplifier__body">Từ ghép chỉ giải trí gây tê. Được cho là do Brzezinski dùng năm 1995, phổ biến qua <em>The Global Trap</em> (1996). Là giai thoại được gán, không phải biên bản chính thức.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Vì sao dùng ẩn dụ đồ ăn vặt</strong>
+      Nó không kết tội bạn vì đã “chọn sai”. Nó chỉ ra rằng thứ bạn tiêu thụ được thiết kế để gây cảm giác no mà không nuôi dưỡng — một cơ chế, không phải một lỗi đạo đức.
+    </div>
+    <div class="sidenote">
+      <strong>Về các con số</strong>
+      Sơ đồ thời gian là minh hoạ có ghi chú. Tương quan “thu nhập thấp dùng nhiều hơn” được báo cáo rộng rãi nhưng độ lớn thay đổi theo khảo sát; vì vậy bài chỉ giữ hướng, không khẳng định con số tuyệt đối.
+    </div>
+    <div class="sidenote">
+      <strong>Bài tiếp theo</strong>
+      Node 2 chuyển từ thời gian sang năng lượng và tiền: vì sao làm việc chăm chỉ có thể là một vòng quay không lối ra.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>

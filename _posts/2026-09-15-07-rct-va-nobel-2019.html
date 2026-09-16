@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Người đi tìm bằng chứng · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Lịch sử chống nghèo bằng thử nghiệm ngẫu nhiên có đối chứng (RCT) và giải Nobel Kinh tế 2019.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="bay-ngheo-doi-atlas.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Phụ lục B · Người đi tìm bằng chứng</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="06-bang-thong-bi-danh-thue.html">← Phụ lục A</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Bản đồ</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Kết thúc</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 14 phút</p>
+    </div>
+    <div class="orbit" aria-label="Lộ trình bài học">
+      <p class="orbit__title">Lộ trình bài học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Thực địa</div>
+        <div class="orbit__node" data-target="boundary">5 · Giới hạn</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng hợp</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">B</span> Phụ lục · Next Node</p>
+    <h1>Người đi tìm bằng chứng</h1>
+    <p class="node-kicker">Lịch sử chống nghèo bằng thử nghiệm ngẫu nhiên — và vì sao một cuộc tranh cãi ý thức hệ lại kết thúc bằng những thí nghiệm nhỏ.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Thay vì tranh cãi "viện trợ có hiệu quả không", một nhóm nhà kinh tế đổi câu hỏi thành "can thiệp cụ thể nào hiệu quả, và bao nhiêu" — rồi trả lời bằng thí nghiệm.
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Câu hỏi mở đầu</span>
+      Hai nhóm chuyên gia thông minh nhìn cùng một dữ liệu về viện trợ toàn cầu. Một nhóm kết luận: cần một cú hích lớn, đủ tiền là xoá được đói nghèo. Nhóm kia kết luận: viện trợ chỉ nuôi bộ máy quan liêu, càng nhiều càng hại. Cả hai đều có số liệu, đều có lý lẽ. Cuộc tranh cãi kéo dài hàng thập kỷ mà không ai thắng. Vậy phải làm gì khi lập luận không thể phân xử?
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần biết trước</h4>
+      <ul>
+        <li>Node 0 — <a class="xlink" href="00-he-thong-vo-hinh.html">Hệ thống vô hình</a> và Node 5 — <a class="xlink" href="05-pha-cuc.html">Phá cục</a>.</li>
+        <li>Phụ lục A — <a class="xlink" href="06-bang-thong-bi-danh-thue.html">Băng thông bị đánh thuế</a>: nghiên cứu nông dân trồng mía cũng là một RCT.</li>
+        <li>Bạn không cần biết thống kê; mọi khái niệm được giải thích tại chỗ.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li>Giải thích <strong>thử nghiệm ngẫu nhiên có đối chứng</strong> (RCT) bằng ví dụ thử thuốc.</li>
+        <li>Phân biệt lập trường <strong>cú hích lớn</strong> và <strong>người đi tìm</strong>.</li>
+        <li>Kể lại mốc chính: J-PAL (2003), <em>Poor Economics</em> (2011), Nobel 2019.</li>
+        <li>Đánh giá giới hạn của RCT: giá trị ngoại suy, quy mô, và cái gì khó đo.</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Sự thật nền tảng</h2>
+    <p>Sự thật nền tảng của phụ lục này: <strong>khi một cuộc tranh cãi không thể phân xử bằng lập luận, cách duy nhất để tiến lên là đổi nó thành một câu hỏi đo được.</strong></p>
+    <p>Bạn đã biết điều này ở dạng thực dụng: khi hai người cãi nhau về một dự đoán, cách nhanh nhất là đặt cược rồi xem kết quả. Kinh tế học phát triển đã trải qua đúng một bước ngoặt như vậy. Trong nhiều thập kỷ, câu hỏi trung tâm là "viện trợ có hiệu quả không" — một câu hỏi quá rộng để có câu trả lời duy nhất. Một nhóm nhà kinh tế thay nó bằng hàng trăm câu hỏi nhỏ, mỗi câu có thể kiểm tra bằng thực nghiệm.</p>
+
+    <h2 id="bridge">Mô hình Thử Thuốc</h2>
+    <p>Hãy hình dung một cuộc thử thuốc. Gọi nó là <strong>Mô hình Thử Thuốc</strong>.</p>
+    <p>Bạn không tranh luận xem một loại thuốc có chữa được bệnh hay không. Bạn chia bệnh nhân thành hai nhóm ngẫu nhiên: một nhóm nhận thuốc, một nhóm nhận giả dược. Sau đó bạn so sánh kết quả. Nếu nhóm nhận thuốc khá hơn rõ rệt, bạn có bằng chứng. Nếu không, bạn loại bỏ giả thuyết. Điều làm nên sức mạnh không phải là thuốc, mà là cách chia nhóm và cách so sánh.</p>
+    <p>Bốn phần của hình ảnh này khớp với bốn phần của phương pháp:</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Chia nhóm ngẫu nhiên</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>So hai kết quả</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Loại bỏ giả thuyết</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — nhiều người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">“Chỉ cần thử nghiệm là biết chắc cái gì hiệu quả — và cái gì hiệu quả ở đây sẽ hiệu quả ở mọi nơi.”</span></p>
+      <p>Điều này sai vì kết quả đúng trong một bối cảnh có thể không đúng ở bối cảnh khác. Đó là vấn đề <strong>giá trị ngoại suy</strong> (external validity).</p>
+      <p><span class="premortem__truth">Sự thật là:</span> RCT là công cụ mạnh để trả lời một câu hỏi hẹp trong một bối cảnh cụ thể. Nó không phải cỗ máy cho ra chân lý phổ quát.</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+    <p>Ba mảnh dưới đây đi từ phương pháp, qua cuộc tranh cãi mà nó giải quyết, rồi tới những gì nó tìm ra. Mảnh ba chứa các kết quả phản trực giác — phần thú vị nhất của cả phụ lục.</p>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Mảnh 1 · Thử nghiệm ngẫu nhiên có đối chứng</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Thử nghiệm ngẫu nhiên có đối chứng</strong> (randomized controlled trial, RCT) là cách chia người tham gia thành hai nhóm ngẫu nhiên: một nhóm nhận can thiệp, một nhóm không. Vì việc chia là ngẫu nhiên, hai nhóm giống nhau ở mọi yếu tố khác. Khác biệt duy nhất còn lại là can thiệp — nên mọi chênh lệch kết quả có thể quy cho nó.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Phương pháp này đến từ y học, nơi nó trở thành tiêu chuẩn vàng từ giữa thế kỷ 20. Nếu bạn chỉ đưa thuốc cho những người tình nguyện, bạn không biết họ khá lên vì thuốc hay vì họ vốn khoẻ hơn. Chia ngẫu nhiên xoá bỏ vấn đề đó: hai nhóm tương đương nhau về mọi thứ, kể cả những thứ bạn không đo được.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao chỉ chia ngẫu nhiên mới tách được tác động của can thiệp khỏi mọi thứ khác?</summary>
+        <div class="scaffold__resolve">Vì nó phá vỡ mối liên hệ giữa can thiệp và mọi đặc điểm khác. Nếu bạn chọn nhóm theo tiêu chí nào đó — người tình nguyện, người giàu hơn, người ở gần trường hơn — thì chênh lệch kết quả có thể do chính tiêu chí đó, không do can thiệp. Ngẫu nhiên hoá khiến can thiệp trở thành yếu tố duy nhất khác biệt một cách có hệ thống. Đó là toàn bộ sức mạnh của phương pháp, và cũng là toàn bộ giới hạn của nó: nó chỉ trả lời được câu hỏi mà bạn đã ngẫu nhiên hoá.</div>
+      </details>
+    </section>
+    <div class="feynman">Muốn biết một việc có tác dụng không, hãy để ngẫu nhiên quyết định ai được làm và ai không.</div>
+
+    <div class="checkpoint" data-checkpoint-id="nB-cp1">
+      <span class="checkpoint__label">🛑 Dừng lại &amp; ngẫm</span>
+      <p class="checkpoint__question">Trong một câu: vì sao chia ngẫu nhiên quan trọng hơn việc chọn nhóm "hợp lý"?</p>
+      <textarea name="reflection" placeholder="Viết câu trả lời của bạn trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So với đáp án mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án mẫu</span>
+        Vì mọi cách chọn nhóm có lý đều mang theo một thiên lệch vô hình. Chia ngẫu nhiên loại bỏ thiên lệch đó mà không cần biết nó là gì.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Mảnh 2 · Cú hích lớn và người đi tìm</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Cú hích lớn</strong> (big push) là lập trường cho rằng nghèo đói là một cái bẫy hệ thống, và cần một lượng viện trợ đủ lớn đổ vào cùng lúc để phá nó. <strong>Người đi tìm</strong> (searchers) là lập trường cho rằng không có giải pháp chung, chỉ có những giải pháp cụ thể cần được tìm và kiểm chứng từng cái.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Jeffrey Sachs, trong <em>The End of Poverty</em> (2005), lập luận rằng nghèo cùng cực là một cái bẫy và cần một cú hích lớn để thoát. William Easterly, trong <em>The White Man's Burden</em> (2006), phản bác rằng những kế hoạch lớn thường thất bại vì thiếu phản hồi và trách nhiệm. Banerjee và Duflo chọn con đường thứ ba: không đứng về bên nào, mà thay câu hỏi lớn bằng nhiều câu hỏi nhỏ có thể kiểm chứng.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao cuộc tranh cãi "viện trợ có hiệu quả không" không thể giải quyết bằng lập luận?</summary>
+        <div class="scaffold__resolve">Vì "viện trợ" không phải một thứ — nó là hàng nghìn chương trình khác nhau trong hàng nghìn bối cảnh. Câu hỏi "viện trợ có hiệu quả không" giống như hỏi "thuốc có chữa bệnh không". Câu trả lời đúng là: thuốc nào, cho bệnh gì, ở giai đoạn nào. Khi câu hỏi quá rộng, mỗi bên có thể chọn ví dụ ủng hộ mình và tranh cãi vô tận. Thu hẹp câu hỏi là cách duy nhất để nó trở nên trả lời được.</div>
+      </details>
+    </section>
+    <div class="feynman">Đừng hỏi "viện trợ có ích không". Hãy hỏi "chương trình cụ thể này có ích không, và bao nhiêu".</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Ba cái bẫy của chính sách: dốt, giáo điều, và quán tính</summary>
+      <p>Trong <em>Poor Economics</em> (2011), Banerjee và Duflo chỉ ra ba lý do khiến các chương trình tốt thất bại. Thứ nhất là <strong>dốt</strong> (ignorance): người thiết kế không biết người nghèo thực sự hành xử thế nào. Thứ hai là <strong>giáo điều</strong> (ideology): chương trình được làm theo niềm tin sẵn có, không theo dữ liệu. Thứ ba là <strong>quán tính</strong> (inertia): chương trình cứ chạy như cũ vì không ai đo xem nó có hiệu quả không.</p>
+      <p>Ba cái bẫy này giải thích vì sao thử nghiệm có giá trị. Nó không chỉ kiểm tra chương trình — nó kiểm tra cả người thiết kế. Một kết quả phản trực giác là lời nhắc rằng giả định của chuyên gia cũng có thể sai, và cách duy nhất để biết là đo.</p>
+    </details>
+
+    <h2 id="application">Trong thực tế</h2>
+    <p>Ta hãy nhìn những gì phương pháp này tìm ra, và cách nó lan ra. Điều đáng chú ý không phải một phát hiện đơn lẻ, mà là việc cả một ngành đổi cách làm việc.</p>
+    <p>Một số kết quả nổi bật đi ngược trực giác. Cung cấp sách giáo khoa nhiều hơn ở Kenya không cải thiện điểm trung bình — vì sách không giải quyết vấn đề giảng dạy. Tẩy giun cho học sinh lại cho hiệu quả rõ rệt với chi phí rất thấp. Các chương trình tín dụng vi mô, từng được coi là phép màu, khi được kiểm tra ở sáu quốc gia lại cho tác động khiêm tốn hơn kỳ vọng. Một chương trình dạy theo trình độ thực tế của học sinh ("Teaching at the Right Level") cho kết quả tốt và sau đó được mở rộng ra nhiều nước.</p>
+    <p>Về phía tổ chức, năm 2003, Banerjee, Duflo và Sendhil Mullainathan lập Phòng thí nghiệm Hành động vì Người nghèo tại MIT, sau đổi tên thành J-PAL. Năm 2019, Duflo, Banerjee và Michael Kremer nhận giải Nobel Kinh tế "cho cách tiếp cận thực nghiệm nhằm giảm nghèo toàn cầu". Ủy ban Nobel ghi nhận J-PAL có vai trò then chốt trong việc đưa RCT trở thành phương pháp chuẩn của kinh tế học phát triển.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Tỷ lệ bài nghiên cứu của NBER sử dụng RCT (1980 vs 2018)</div>
+      <div class="bar-row">
+        <div class="bar-label">Năm 1980</div>
+        <div class="bar-track"><div class="bar-fill" style="width:5%"></div></div>
+        <div class="bar-value">&lt;5%</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Năm 2018</div>
+        <div class="bar-track"><div class="bar-fill" style="width:15%"></div></div>
+        <div class="bar-value">~15%</div>
+      </div>
+      <p class="bar-chart__caption">Nguồn: ước tính được trích trong Currie và cộng sự (kỷ yếu AEA), dẫn qua trang J-PAL. Giá trị là xấp xỉ.</p>
+    </div>
+
+    <p>Con số này quan trọng vì nó cho thấy thay đổi không chỉ ở một nhóm nghiên cứu. Nó là sự dịch chuyển của cả một ngành: từ tranh luận bằng uy tín sang tranh luận bằng thực nghiệm. Đó là điều mà nhà báo Nicholas Kristof gọi là một "cuộc cách mạng trong đánh giá".</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__face flip-card__front">
+        <span class="flip-card__label">Tự kiểm tra — Câu hỏi</span>
+        <div class="flip-card__content">Vì sao việc cung cấp thêm sách giáo khoa không cải thiện điểm số, theo cách giải thích của RCT?</div>
+      </div>
+      <div class="flip-card__face flip-card__back">
+        <span class="flip-card__label">Đáp án</span>
+        <div class="flip-card__content">Vì vấn đề không nằm ở thiếu sách, mà ở cách dạy. Kết quả phản trực giác này cho thấy giả định của chuyên gia cũng cần được kiểm tra, không chỉ được tin.</div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Nơi mô hình vỡ</h2>
+    <p>Phần này quan trọng vì RCT rất dễ bị biến thành một tôn giáo mới. Phương pháp mạnh, nhưng nó có ba giới hạn mà người trong cuộc thừa nhận.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      “Cái gì hiệu quả trong một thí nghiệm thì hiệu quả ở mọi nơi.” Không đúng. Kết quả phụ thuộc vào bối cảnh: văn hoá, thể chế, mức thu nhập, cách triển khai. Một chương trình hiệu quả ở Kenya có thể vô hiệu ở Ấn Độ, và ngược lại. Đây là vấn đề <strong>giá trị ngoại suy</strong>.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Ca biên</span>
+      Người ta chỉ đo được cái dễ đo. Điểm số, thu nhập, tỷ lệ mắc bệnh thì đo được; quyền lực chính trị, bất bình đẳng cấu trúc, hay sự tha hoá thì khó. Vì vậy RCT có xu hướng nghiên cứu những gì đo được, và có thể bỏ qua những nguyên nhân sâu hơn nhưng khó lượng hoá. Một ca biên khác: chương trình hiệu quả trong thí nghiệm nhỏ có thể thất bại khi mở rộng quy mô.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Tranh cãi học thuật</span>
+      Phương pháp này bị phê bình từ nhiều phía. Nhà kinh tế Sanjay Reddy gọi cách tiếp cận là "kỹ trị" và cho rằng nó có cái nhìn ngây thơ về chính trị và xã hội. Nhà báo Madeleine Bunting nhận xét rằng các tác giả thiếu hiểu biết về cách quyền lực vận hành. Bản thân một số thí nghiệm nổi tiếng — như nghiên cứu tẩy giun — cũng từng trải qua tranh cãi về khả năng lặp lại. Đọc đây là một bước tiến lớn, không phải một kết thúc.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Nếu RCT chỉ trả lời được những câu hỏi hẹp, thì điều gì vẫn cần một cách tiếp cận khác? Nghĩ một câu trả lời trước khi đọc phần tổng hợp.
+    </div>
+
+    <h2 id="connections">Mắt xích này nối với đâu</h2>
+    <p>Phụ lục này giải thích phương pháp đứng sau nhiều kết luận của cả series, và nối trực tiếp với các node bàn về giải pháp.</p>
+    <ul>
+      <li><a class="xlink" href="00-he-thong-vo-hinh.html">Node 0 — Hệ thống vô hình</a>: vì sao cần bằng chứng thay cho lập luận về cấu trúc.</li>
+      <li><a class="xlink" href="02-bay-rat-race.html">Node 2 — Bẫy Rat Race</a>: các chương trình tín dụng vi mô là một trong những chủ đề được kiểm chứng nhiều nhất.</li>
+      <li><a class="xlink" href="05-pha-cuc.html">Node 5 — Phá cục</a>: “thay đổi nhỏ, hiệu ứng lớn” là bài học chung của cả hai node.</li>
+      <li><a class="xlink" href="06-bang-thong-bi-danh-thue.html">Phụ lục A — Băng thông bị đánh thuế</a>: nghiên cứu nông dân trồng mía chính là một RCT.</li>
+    </ul>
+
+    <h2 id="synthesis">Bức tranh toàn cảnh</h2>
+    <p>Quay lại hai nhóm chuyên gia ở đầu bài, mỗi bên khăng khăng một lập trường về viện trợ. Bế tắc của họ không đến từ thiếu thông minh, mà từ việc câu hỏi được đặt quá rộng để có thể trả lời. Bước ngoặt của Banerjee, Duflo và Kremer không phải là tìm ra một câu trả lời vĩ đại, mà là đổi câu hỏi thành hàng trăm câu nhỏ có thể đo được. Mỗi thí nghiệm chỉ trả lời một mảnh, trong một bối cảnh cụ thể. Nhưng cộng lại, chúng đã thay đổi cách cả một ngành tranh luận — và đưa những phát hiện phản trực giác trở thành cơ sở cho chính sách. Đó là lý do giải Nobel 2019 không trao cho một học thuyết, mà trao cho một cách làm việc. Và đó cũng là lời nhắc cho phần còn lại của chúng ta: khi bế tắc giữa hai niềm tin, đôi khi cách tiến lên không phải là chọn bên, mà là thiết kế một phép thử đủ nhỏ để có thể sai.</p>
+
+    <blockquote>
+      <strong>Nếu bạn chỉ nhớ một điều:</strong> Khi lập luận bế tắc, đừng chọn bên — hãy thu nhỏ câu hỏi cho tới khi nó trở nên đo được.
+    </blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Bài toán: Thiết kế một phép thử nhỏ cho một niềm tin của bạn</h3>
+      <p class="launchpad__problem">Chọn một niềm tin bạn đang dựa vào để ra quyết định — về công việc, sức khoẻ, hay cách chi tiêu. Viết nó thành một dự đoán kiểm chứng được. Rồi thiết kế một phép thử nhỏ tại nhà theo ba tiêu chí. Một: có một nhóm can thiệp và một nhóm đối chứng. Hai: có một chỉ số đo được, và một mốc thời gian. Ba: bạn sẵn sàng chấp nhận kết quả trái với niềm tin ban đầu. Sau đó thực hiện và ghi lại điều bạn học được — kể cả khi phép thử "thất bại".</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+          Đừng biến nó thành thí nghiệm khoa học. Chỉ cần một cách so sánh công bằng: làm việc X trong hai tuần, không làm trong hai tuần, và ghi lại cùng một chỉ số.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Dùng logic ở mảnh 1: điều quan trọng là loại bỏ yếu tố gây nhiễu. Nếu hai giai đoạn khác nhau ở nhiều thứ, bạn không tách được tác động của X.
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dựng bài</span>
+          Chọn chỉ số bạn có thể ghi trong 30 giây mỗi ngày. Nếu việc đo tốn công, bạn sẽ bỏ. Và nhớ điều ở phần giới hạn: kết quả đúng cho bạn, ở bối cảnh của bạn — đừng vội ngoại suy cho người khác.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Thử nghiệm ngẫu nhiên có đối chứng (RCT)</dt>
+        <dd>Chia người tham gia thành nhóm can thiệp và nhóm đối chứng một cách ngẫu nhiên, rồi so sánh kết quả. <em>(Trong Mô hình Thử Thuốc: chia bệnh nhân thành hai nhóm, một nhận thuốc, một nhận giả dược.)</em></dd>
+        <dt>Nhóm đối chứng (control group)</dt>
+        <dd>Nhóm không nhận can thiệp, dùng làm mốc so sánh. <em>(Trong Mô hình Thử Thuốc: nhóm nhận giả dược.)</em></dd>
+        <dt>Giá trị ngoại suy (external validity)</dt>
+        <dd>Mức độ kết quả của một thí nghiệm áp dụng được cho bối cảnh khác. <em>(Trong Mô hình Thử Thuốc: thuốc hiệu quả trên nhóm này có hiệu quả trên nhóm khác không.)</em></dd>
+        <dt>Cú hích lớn (big push)</dt>
+        <dd>Lập trường cho rằng cần một lượng viện trợ lớn đổ vào cùng lúc để phá bẫy nghèo. <em>(Trong Mô hình Thử Thuốc: chữa cả căn bệnh bằng một liệu trình mạnh.)</em></dd>
+        <dt>Người đi tìm (searchers)</dt>
+        <dd>Lập trường cho rằng chỉ có các giải pháp cụ thể, cần tìm và kiểm chứng từng cái. <em>(Trong Mô hình Thử Thuốc: thử từng loại thuốc cho từng triệu chứng.)</em></dd>
+        <dt>Ba cái bẫy chính sách</dt>
+        <dd>Dốt (ignorance), giáo điều (ideology), quán tính (inertia) — ba lý do chương trình tốt thất bại. <em>(Trong Mô hình Thử Thuốc: kê thuốc theo thói quen thay vì theo kết quả.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu. Chọn đáp án đúng nhất rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="1">
+        <legend>1. Điều gì làm nên sức mạnh của một RCT?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Số người tham gia rất lớn</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Việc chia nhóm ngẫu nhiên, khiến can thiệp thành khác biệt duy nhất có hệ thống</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Người nghiên cứu có uy tín cao</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Kết quả luôn đúng ở mọi nơi</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Ngẫu nhiên hoá loại bỏ thiên lệch mà không cần biết nó là gì. Số lượng lớn giúp ích, nhưng không thay thế được việc chia ngẫu nhiên.</div>
+      </fieldset>
+
+      <fieldset data-answer="2">
+        <legend>2. Vì sao câu hỏi "viện trợ có hiệu quả không" khó trả lời?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Vì không ai thu thập dữ liệu về viện trợ</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Vì viện trợ luôn thất bại</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Vì "viện trợ" gồm hàng nghìn chương trình khác nhau trong hàng nghìn bối cảnh</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Vì các nhà kinh tế không quan tâm</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Câu hỏi quá rộng để có một câu trả lời duy nhất. Cách tiến lên là thu hẹp thành các câu hỏi cụ thể, đo được.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>3. Giới hạn chính của RCT là gì?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Kết quả gắn với bối cảnh, và người ta chỉ đo được cái dễ đo</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Nó không bao giờ cho kết quả đáng tin</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Nó chỉ áp dụng được cho nước giàu</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Nó quá rẻ nên không đáng tin</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Giá trị ngoại suy hạn chế và xu hướng chỉ nghiên cứu cái dễ đo là hai giới hạn được chính người trong cuộc thừa nhận. Đó là lý do RCT là một công cụ, không phải một tôn giáo.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Abdul_Latif_Jameel_Poverty_Action_Lab" target="_blank" rel="noopener">Wikipedia — J-PAL</a> — thành lập 2003; Nobel 2019; “Teaching at the Right Level”; tỷ lệ RCT trong NBER.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Poor_Economics" target="_blank" rel="noopener">Wikipedia — Poor Economics</a> — Banerjee &amp; Duflo (2011); ba cái bẫy; phê bình của Reddy và Bunting.</li>
+      <li><a class="source" href="https://www.nobelprize.org/prizes/economic-sciences/2019/summary/" target="_blank" rel="noopener">Nobel Prize (2019)</a> — công bố giải cho Duflo, Banerjee &amp; Kremer, 14/10/2019.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Randomized_controlled_trial" target="_blank" rel="noopener">Wikipedia — Randomized controlled trial</a> — nguồn gốc phương pháp từ y học.</li>
+    </ul>
+
+    <nav class="prevnext" aria-label="Điều hướng series">
+      <a class="prevnext__item" href="06-bang-thong-bi-danh-thue.html">
+        <span class="prevnext__dir">← Phụ lục A</span>
+        <span class="prevnext__title">Băng thông bị đánh thuế</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="bay-ngheo-doi-atlas.html">
+        <span class="prevnext__dir">Kết thúc →</span>
+        <span class="prevnext__title">Về bản đồ series</span>
+      </a>
+    </nav>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>RCT</li><li>Nobel 2019</li><li>kinh tế học phát triển</li><li>bằng chứng</li><li>chính sách</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="bay-ngheo-doi-atlas.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Phụ lục B · Next Node · ~14 phút đọc</span>
+        <span><a href="bay-ngheo-doi-atlas.html">Về bản đồ series</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="rct">
+        <span class="amplifier__term">RCT</span>
+        <p class="amplifier__body">Chia ngẫu nhiên thành nhóm can thiệp và đối chứng. Sức mạnh nằm ở sự ngẫu nhiên, không ở quy mô hay uy tín người nghiên cứu.</p>
+      </div>
+      <div data-note-id="external">
+        <span class="amplifier__term">Giá trị ngoại suy</span>
+        <p class="amplifier__body">Kết quả đúng trong một bối cảnh không tự động đúng ở bối cảnh khác. Đây là giới hạn bị phê bình nhiều nhất của phong trào RCT.</p>
+      </div>
+      <div data-note-id="searchers">
+        <span class="amplifier__term">Người đi tìm</span>
+        <p class="amplifier__body">Lập trường cho rằng không có giải pháp chung cho nghèo đói — chỉ có nhiều giải pháp cụ thể, mỗi cái cần được kiểm chứng riêng. Đối lập với “cú hích lớn”.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Vì sao dùng hình ảnh thử thuốc</strong>
+      Vì phương pháp này thực sự đến từ y học. Dùng đúng nguồn gốc giúp người đọc thấy logic chia nhóm ngẫu nhiên, thay vì nghe một thuật ngữ trừu tượng.
+    </div>
+    <div class="sidenote">
+      <strong>Về các con số</strong>
+      Tỷ lệ RCT trong NBER (dưới 5% năm 1980, khoảng 15% năm 2018) là ước tính được trích dẫn, không phải số liệu chính thức của NBER. Các kết quả nghiên cứu được nêu ở dạng xu hướng.
+    </div>
+    <div class="sidenote">
+      <strong>Điều nên cẩn trọng nhất</strong>
+      Đừng đọc phụ lục này như một lời ca ngợi tuyệt đối. RCT là một công cụ mạnh, và phần Giới hạn nêu rõ ba điểm yếu. Cả những người đoạt giải cũng nói vậy.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>

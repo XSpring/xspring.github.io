@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="vi" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bẫy Rat Race · 4 Cái Bẫy Nghèo Đói</title>
+<meta name="description" content="Vì sao làm việc chăm chỉ có thể là một vòng quay không lối ra — và sự khác biệt giữa thu nhập tuyến tính và thu nhập có đòn bẩy.">
+<meta name="artifact-length" content="LONG">
+<meta name="iterator-cycles" content="2">
+<meta name="iterator-stopped-by" content="limit_reached">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/series.css">
+<link rel="stylesheet" href="assets/series-ui.css">
+</head>
+<body>
+
+<div class="progress-bar" aria-hidden="true"><div class="progress-bar__fill" id="progressFill"></div></div>
+
+<header class="series-bar">
+  <div class="series-bar__inner">
+    <a class="series-bar__home" href="bay-ngheo-doi-atlas.html">4 Cái Bẫy Nghèo Đói</a>
+    <span class="series-bar__sep">/</span>
+    <span class="series-bar__current">Node 2 · Bẫy Rat Race</span>
+    <nav class="series-bar__nav">
+      <a class="series-bar__link" href="01-bay-giai-tri-mi-dan.html">← Node 1</a>
+      <a class="series-bar__link" href="bay-ngheo-doi-atlas.html">Bản đồ</a>
+      <a class="series-bar__link" href="03-bay-shawshank.html">Node 3 →</a>
+    </nav>
+  </div>
+</header>
+
+<div class="app">
+
+  <aside class="navigator" aria-label="Mục lục">
+    <div class="navigator__meta">
+      <p class="navigator__title">Thời gian đọc</p>
+      <p class="navigator__reading-time" id="readingTime">~ 13 phút</p>
+    </div>
+    <div class="orbit" aria-label="Lộ trình bài học">
+      <p class="orbit__title">Lộ trình bài học</p>
+      <div class="orbit__track">
+        <div class="orbit__node" data-target="baseline">1 · Nền tảng</div>
+        <div class="orbit__node" data-target="bridge">2 · Cầu nối</div>
+        <div class="orbit__node" data-target="exposition">3 · Dựng mô hình</div>
+        <div class="orbit__node" data-target="application">4 · Thực địa</div>
+        <div class="orbit__node" data-target="boundary">5 · Giới hạn</div>
+        <div class="orbit__node" data-target="synthesis">6 · Tổng hợp</div>
+      </div>
+    </div>
+    <nav><ul class="toc" id="toc"></ul></nav>
+  </aside>
+
+  <main class="canvas" id="canvas">
+
+    <p class="node-badge"><span class="node-badge__num">2</span> Bẫy 2/4 · Năng lượng &amp; tiền</p>
+    <h1>Bẫy Rat Race</h1>
+    <p class="node-kicker">Vòng quay chuột chạy: càng nỗ lực, bạn càng chắc chắn đứng yên — chỉ là mệt hơn.</p>
+
+    <div class="tldr" role="note" aria-label="TL;DR">
+      <strong>TL;DR.</strong> Khi thu nhập được tính theo giờ còn chi phí được tính theo tháng, làm thêm giờ chỉ giữ bạn nguyên chỗ. Lối ra không phải chạy nhanh hơn, mà là đổi cấu trúc thu nhập.
+    </div>
+
+    <div class="hook">
+      <span class="hook__label">🎣 Câu hỏi mở đầu</span>
+      Báo thức 7 giờ. Về đến nhà 10 giờ đêm. Cuối tuần tăng ca. Nhận lương, trả nhà, trả điện, mua đồ ăn, đổ xăng — hết. Không dư một đồng. Tháng sau lặp lại y hệt. Người này không lười; người này kiệt sức. Vậy nếu nỗ lực không phải là biến số còn thiếu, thì biến số còn thiếu là gì?
+    </div>
+
+    <div class="meta-block">
+      <h4>Bạn cần biết trước</h4>
+      <ul>
+        <li>Node 0 — <a class="xlink" href="00-he-thong-vo-hinh.html">Hệ thống vô hình</a> và Node 1 — <a class="xlink" href="01-bay-giai-tri-mi-dan.html">Giải trí mị dân</a>.</li>
+        <li>Bạn từng nghe cụm “vòng quay chuột chạy” hoặc “rat race”.</li>
+        <li>Bài phân biệt <em>thu nhập</em> với <em>tài sản</em> — hai khái niệm khác nhau.</li>
+      </ul>
+    </div>
+    <div class="meta-block">
+      <h4>Đọc xong bạn sẽ có thể…</h4>
+      <ul>
+        <li>Giải thích <strong>thu nhập tuyến tính</strong> và trần thời gian của nó.</li>
+        <li>Phân biệt <strong>đòn bẩy</strong> (leverage) với làm việc chăm chỉ.</li>
+        <li>Tính điểm hòa vốn thời gian của chính mình.</li>
+        <li>Nhận diện vì sao “cần cù vô hiệu” không tạo ra tài sản.</li>
+      </ul>
+    </div>
+
+    <h2 id="baseline">Sự thật nền tảng</h2>
+    <p>Sự thật nền tảng của node này: <strong>thu nhập theo giờ có trần cứng, còn chi phí sinh hoạt thì không có trần.</strong></p>
+    <p>Bạn đã biết điều này ở dạng câu nói: “càng làm càng nghèo”. Điều bạn có thể chưa biết là cơ chế đứng sau nó rất đơn giản và có thể tính được. Một ngày có 24 giờ. Thu nhập bán thời gian của bạn bị chặn trên bởi con số 24. Chi phí của bạn thì không bị chặn trên bởi bất cứ thứ gì.</p>
+
+    <h2 id="bridge">Mô hình Xô Thủng</h2>
+    <p>Hãy hình dung một chiếc xô có lỗ thủng ở đáy. Gọi nó là <strong>Mô hình Xô Thủng</strong>.</p>
+    <p>Bạn múc nước đổ vào. Nước chảy ra qua các lỗ. Nếu bạn múc nhanh hơn, mực nước dâng lên một chút — nhưng các lỗ cũng giãn ra theo thời gian. Vấn đề không nằm ở tốc độ múc. Vấn đề nằm ở chỗ bạn đang cố đầy một chiếc xô thủng bằng sức tay.</p>
+    <p>Bốn phần của hình ảnh này khớp với bốn phần của bài toán:</p>
+
+    <div class="concept-flow">
+      <div class="concept-flow__step"><span class="concept-flow__num">01</span>Nước bạn múc</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">02</span>Lỗ thủng cố định</div>
+      <div class="concept-flow__arrow">→</div>
+      <div class="concept-flow__step"><span class="concept-flow__num">03</span>Mực nước không lên</div>
+    </div>
+
+    <div class="premortem">
+      <span class="premortem__label">⚠️ Trước khi đi tiếp — nhiều người rời khỏi cây cầu này với suy nghĩ…</span>
+      <p><span class="premortem__wrong">“Làm nhiều giờ hơn thì kiếm nhiều tiền hơn. Cứ chăm chỉ là sẽ khá.”</span></p>
+      <p>Điều này sai vì thu nhập theo giờ bị chặn trên bởi số giờ, và phần tăng thêm thường bị chi phí ăn hết trước khi kịp tích lũy.</p>
+      <p><span class="premortem__truth">Sự thật là:</span> vấn đề không phải là số giờ bạn làm, mà là <em>cấu trúc</em> thu nhập. Bán thời gian là cấu trúc tuyến tính; sở hữu thứ sinh lời khi bạn ngủ là cấu trúc có đòn bẩy.</p>
+    </div>
+
+    <h2 id="exposition">Dựng mô hình, từng mảnh một</h2>
+    <p>Ba mảnh dưới đây đi từ giới hạn của thời gian, qua khái niệm đòn bẩy, rồi tới lý do vòng lặp tự khóa chặt. Đi chậm ở mảnh hai — nó là chìa khoá của cả node.</p>
+
+    <section class="scaffold" id="exposition-1">
+      <h3 class="scaffold__concept">Mảnh 1 · Thu nhập tuyến tính và trần thời gian</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Thu nhập tuyến tính</strong> (linear income) là thu nhập tỉ lệ thuận với số giờ bạn bỏ ra. Bán một giờ được một đơn vị tiền; bán hai giờ được hai. Không có cơ chế nào khiến giờ thứ mười có giá gấp đôi giờ thứ nhất.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Một người làm 8 giờ mỗi ngày, 5 ngày mỗi tuần. Muốn tăng thu nhập 20%, họ phải làm thêm 8 giờ — tức gần một ngày làm việc nữa. Nhưng 8 giờ đó phải lấy từ đâu? Từ giấc ngủ, từ việc nhà, hoặc từ thời gian lẽ ra dành để học kỹ năng mới. Cái giá không nằm trên hoá đơn, nhưng vẫn được trả.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Vì sao tăng lương 10% thường không giúp ai thoát bẫy, nếu chi phí sinh hoạt cũng tăng khoảng 10%?</summary>
+        <div class="scaffold__resolve">Vì phần chênh lệch thực (thu nhập trừ chi phí) gần như đứng yên. Thoát bẫy không phụ thuộc vào mức thu nhập tuyệt đối, mà vào <em>phần dư</em> — khoản bạn giữ lại được sau khi trả hết chi phí. Nếu phần dư bằng không, lương gấp đôi vẫn cho ra kết quả bằng không. Đây là lý do nhiều người thu nhập khá vẫn không tích lũy được gì.</div>
+      </details>
+    </section>
+    <div class="feynman">Bán thời gian thì chỉ bán được đúng số giờ mình có — và không ai mua thêm được giờ thứ 25.</div>
+
+    <div class="checkpoint" data-checkpoint-id="n2-cp1">
+      <span class="checkpoint__label">🛑 Dừng lại &amp; ngẫm</span>
+      <p class="checkpoint__question">Trong một câu: vì sao “phần dư” quan trọng hơn “mức thu nhập”?</p>
+      <textarea name="reflection" placeholder="Viết câu trả lời của bạn trước khi xem gợi ý…"></textarea>
+      <div class="checkpoint__actions">
+        <button type="button" class="btn btn--ghost" data-checkpoint-reveal>So với đáp án mẫu</button>
+        <span class="checkpoint__saved" data-checkpoint-saved></span>
+      </div>
+      <div class="checkpoint__expert">
+        <span class="checkpoint__expert-label">Đáp án mẫu</span>
+        Vì chỉ phần dư mới có thể chuyển thành tài sản. Mức thu nhập cao mà chi phí cũng cao thì vẫn không tạo ra tài sản, nên vòng lặp không đổi.
+      </div>
+    </div>
+
+    <section class="scaffold" id="exposition-2">
+      <h3 class="scaffold__concept">Mảnh 2 · Đòn bẩy</h3>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Định nghĩa</div>
+        <div class="scaffold__row-body"><p><strong>Đòn bẩy</strong> (leverage) là bất cứ thứ gì cho phép một đơn vị công sức tạo ra nhiều hơn một đơn vị kết quả. Có bốn loại phổ biến: vốn, người, sản phẩm số, và thời gian của người khác.</p></div>
+      </div>
+      <div class="scaffold__row">
+        <div class="scaffold__row-label">Ví dụ</div>
+        <div class="scaffold__row-body"><p>Một người viết một cuốn sách mất 300 giờ. Cuốn sách đó có thể được bán 10.000 lần mà tác giả không phải viết lại. Một người thợ làm 300 giờ thì nhận đúng 300 giờ tiền công. Cùng một lượng công sức, hai cấu trúc khác nhau: một cái bán một lần, một cái bán nhiều lần. Kiyosaki gọi phần thu nhập không gắn với giờ làm là “dòng tiền đến từ tài sản”.</p></div>
+      </div>
+      <details class="scaffold__probe">
+        <summary>Một người có thể bán thời gian của mình bao nhiêu lần? Một tài sản thì sao?</summary>
+        <div class="scaffold__resolve">Thời gian chỉ bán được một lần: giờ đó trôi qua là hết. Một tài sản — cuốn sách, phần mềm, căn nhà cho thuê, cổ phần — có thể bán hoặc cho thuê nhiều lần, kể cả khi bạn đang ngủ. Đây là khác biệt cấu trúc cốt lõi giữa hai con đường. Nó không nói rằng ai cũng phải làm chủ; nó nói rằng chỉ làm công ăn lương theo giờ thì phần dư luôn bị chặn.</div>
+      </details>
+    </section>
+    <div class="feynman">Làm công là bán thời gian một lần. Xây tài sản là bán cùng một thứ nhiều lần.</div>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Vì sao vòng lặp tự khóa: hoá đơn theo tháng, cơ hội thì không</summary>
+      <p>Một người muốn thoát bẫy thường cần một khoảng nghỉ để học kỹ năng mới hoặc thử một hướng đi mới. Nhưng hoá đơn đến theo tháng, đều đặn, không chờ. Vì không có quỹ dự phòng, họ không thể nghỉ. Vì không thể nghỉ, họ không thể đổi hướng. Vì không đổi hướng, họ vẫn không có quỹ dự phòng.</p>
+      <p>Đây là cấu trúc phản hồi dương ở dạng thuần khiết nhất. Nó không cần một kẻ xấu nào vận hành. Chỉ cần một người sống sát mức thu nhập, cộng với việc học kỹ năng đòi hỏi thời gian — thứ mà người đó không có. Bẫy nằm ở chỗ hai điều kiện tầm thường đó gặp nhau.</p>
+    </details>
+
+    <details class="deep-dive">
+      <summary><span class="deep-dive__label">🔴 Đào sâu</span> Tài sản và tiêu sản: một cách phân loại, và chỗ nó sai</summary>
+      <p>Một cách phân loại phổ biến chia mọi thứ bạn sở hữu thành hai nhóm. <strong>Tài sản</strong> là thứ đưa tiền vào túi bạn hoặc tăng giá trị theo thời gian. <strong>Tiêu sản</strong> là thứ rút tiền ra khỏi túi bạn hoặc mất giá. Cách nói này phổ biến qua cuốn <em>Rich Dad Poor Dad</em> (1997) của Robert Kiyosaki.</p>
+      <p>Nhưng nhị phân đó quá gọn, và đó là chỗ nó bị phê bình. Một căn nhà bạn ở vừa là nơi trú ngụ vừa là khoản chi phí; một chiếc xe đi làm có thể là phương tiện tạo thu nhập; một tấm bằng có thể là tài sản hoặc không, tuỳ nó có tạo ra thu nhập hay không. Bản thân món đồ không quyết định nhãn — <em>dòng tiền</em> mới quyết định. Vì vậy hãy dùng nó như một câu hỏi, không phải một tín ngưỡng: khoản này đưa tiền vào hay rút tiền ra, và tôi có phần dư để chuyển vào đó không?</p>
+      <p>Câu hỏi thứ hai nối thẳng về phần trên: không có phần dư thì không có gì để chuyển. Với người thu nhập trung bình, bước đầu không phải là “mua tài sản”, mà là giữ lại một phần dư đủ lớn để khoản đầu tiên trở nên khả thi. Còn biến “cứ mua bất động sản là tài sản” thành chân lý là lúc khung này bị lạm dụng.</p>
+    </details>
+
+    <h2 id="application">Trong thực tế</h2>
+    <p>Ta hãy gắn mô hình vào một con số có thật. Ở Mỹ, mức lương tối thiểu liên bang là 7,25 đô-la một giờ, và con số này không đổi từ tháng 7 năm 2009. Trong cùng khoảng thời gian đó, giá thuê nhà và giá sinh hoạt đã tăng đáng kể.</p>
+    <p>Hệ quả là khái niệm “lương đủ sống cho nhà ở” (housing wage) mà các tổ chức nhà ở tính toán: số tiền một người cần kiếm mỗi giờ để thuê nổi một căn hộ mà không chi quá 30% thu nhập. Ở nhiều nơi, mức đó cao gấp hai đến ba lần lương tối thiểu — nghĩa là một người phải làm gần hai công việc toàn thời gian mới đủ. Bảng dưới minh họa khoảng cách đó.</p>
+
+    <div class="bar-chart">
+      <div class="bar-chart__title">Giờ làm mỗi tuần ở lương tối thiểu để thuê nhà 1 phòng ngủ (minh hoạ)</div>
+      <div class="bar-row">
+        <div class="bar-label">Khu vực chi phí thấp</div>
+        <div class="bar-track"><div class="bar-fill" style="width:55%"></div></div>
+        <div class="bar-value">~55h</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Mức trung bình toàn quốc</div>
+        <div class="bar-track"><div class="bar-fill" style="width:75%"></div></div>
+        <div class="bar-value">~75h</div>
+      </div>
+      <div class="bar-row">
+        <div class="bar-label">Đô thị lớn</div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        <div class="bar-value">~110h</div>
+      </div>
+      <p class="bar-chart__caption">Sơ đồ minh hoạ dựa trên khái niệm “housing wage” phổ biến trong nghiên cứu nhà ở; không phải trích dẫn số liệu cụ thể. Giá trị thay đổi theo năm và địa phương.</p>
+    </div>
+
+    <p>Con số 75 giờ mỗi tuần vượt qua giới hạn của một công việc toàn thời gian (khoảng 40 giờ). Nghĩa là ở mức lương tối thiểu, việc có một mái nhà đã đòi hỏi nhiều hơn một công việc — trước khi tính tới ăn uống, y tế, đi lại. Đây không phải câu chuyện về sự lười biếng. Đây là số học.</p>
+
+    <div class="flip-card" tabindex="0" role="button" aria-label="Lật để xem đáp án">
+      <div class="flip-card__face flip-card__front">
+        <span class="flip-card__label">Tự kiểm tra — Câu hỏi</span>
+        <div class="flip-card__content">Vì sao tăng ca thường không đưa ai thoát khỏi bẫy, dù nó làm tăng thu nhập ngay trước mắt?</div>
+      </div>
+      <div class="flip-card__face flip-card__back">
+        <span class="flip-card__label">Đáp án</span>
+        <div class="flip-card__content">Vì tăng ca tiêu thụ chính nguồn lực cần để đổi cấu trúc thu nhập: thời gian và sức lực. Nó chữa triệu chứng và làm nặng nguyên nhân.</div>
+      </div>
+    </div>
+
+    <h2 id="boundary">Nơi mô hình vỡ</h2>
+    <p>Mô hình Xô Thủng mạnh ở việc giải thích vì sao nỗ lực tuyến tính không tạo ra tài sản. Nhưng nó có hai mép cần nói rõ, nếu không bạn sẽ hiểu sai thành “làm công là vô nghĩa”.</p>
+
+    <div class="callout callout--warn">
+      <span class="callout__label">⚠️ Ngộ nhận phổ biến</span>
+      “Thu nhập tuyến tính là xấu, ai cũng phải bỏ việc để làm chủ.” Sai. Làm công ổn định là nền tảng hợp lý cho phần lớn người, đặc biệt khi chưa có vốn và chưa có kỹ năng hiếm. Vấn đề không phải là làm công, mà là <em>chỉ</em> có thu nhập tuyến tính và tiêu hết nó.
+    </div>
+
+    <div class="callout callout--danger">
+      <span class="callout__label">🚫 Ca biên</span>
+      Không phải ai tăng ca cũng bị kẹt. Nếu khoản tăng thêm được chuyển thành một tài sản nhỏ — một kỹ năng, một sản phẩm, một khoản đầu tư — thì tăng ca tạm thời là bàn đạp. Ca biên nguy hiểm là khi thu nhập tăng kéo theo chi phí tăng tương ứng, khiến phần dư không đổi. Đó là lúc nỗ lực trở thành cần cù vô hiệu.
+    </div>
+
+    <div class="callout callout--tip">
+      <span class="callout__label">🔮 Dự đoán</span>
+      Bẫy 1 lấy thời gian, bẫy 2 lấy năng lượng và tiền. Vậy bẫy 3 sẽ lấy gì — và tại sao nó có thể là bẫy khó phá nhất? Ghi lại dự đoán trước khi sang node tiếp theo.
+    </div>
+
+    <h2 id="connections">Mắt xích này nối với đâu</h2>
+    <p>Bẫy 2 khóa vòng lặp bằng hai nguồn lực: thời gian còn lại và phần dư tài chính. Không có cả hai, mọi lối thoát đều bị chặn về mặt vật chất.</p>
+    <ul>
+      <li><a class="xlink" href="01-bay-giai-tri-mi-dan.html">Node 1 — Giải trí mị dân</a>: thời gian bị giải trí ăn trước, rồi bị công việc ăn tiếp.</li>
+      <li><a class="xlink" href="03-bay-shawshank.html">Node 3 — Bẫy Shawshank</a>: khi đã kiệt sức, tâm trí học cách chấp nhận vòng lặp như điều bình thường.</li>
+      <li><a class="xlink" href="04-bay-tieu-dung-pho-truong.html">Node 4 — Tiêu dùng phô trương</a>: phần dư vừa nhú ra đã bị tiêu vào biểu tượng thân phận.</li>
+      <li><a class="xlink" href="05-pha-cuc.html">Node 5 — Phá cục</a>: tư duy thay thế cần cù và xây tài sản nhỏ là đối sách cho bẫy này.</li>
+    </ul>
+
+    <h2 id="synthesis">Bức tranh toàn cảnh</h2>
+    <p>Rat race không phải là một trò đùa về người bận rộn. Nó là tên gọi của một cấu trúc: thu nhập gắn với giờ, chi phí gắn với tháng, và phần dư bị ép về gần không. Trong cấu trúc đó, nỗ lực không tạo ra tài sản; nó chỉ giữ người lao động ở đúng vị trí cũ với mức tiêu hao cao hơn. Lối ra không nằm ở việc chạy nhanh hơn trên cùng đường đua, mà ở việc đổi đường đua: chuyển dần từ bán thời gian sang sở hữu thứ sinh lời khi bạn không làm việc. Điều đó không đòi hỏi bỏ việc. Nó đòi hỏi phần dư được giữ lại và chuyển thành đòn bẩy — và đó là lý do bẫy tiếp theo phải được nói tới.</p>
+
+    <blockquote>
+      <strong>Nếu bạn chỉ nhớ một điều:</strong> Đừng hỏi làm sao để làm nhiều hơn. Hãy hỏi làm sao để một giờ của mình được trả nhiều lần.
+    </blockquote>
+
+    <div class="launchpad">
+      <span class="launchpad__label">🚀 Bệ phóng · vượt một bước</span>
+      <h3 class="launchpad__title">Bài toán: Điểm hòa vốn thời gian của bạn</h3>
+      <p class="launchpad__problem">Tính thu nhập ròng theo giờ của bạn. Lấy thu nhập tháng trừ mọi chi phí liên quan tới công việc — đi lại, ăn ngoài, quần áo, chăm con ngoài giờ. Rồi chia cho tổng số giờ thực tế đã bỏ ra, kể cả thời gian đi lại và chuẩn bị. Sau đó trả lời: với mức ròng đó, một kỹ năng mới cần bao nhiêu giờ đầu tư để hoàn vốn? Đề xuất một cách chuyển một phần thời gian thành đòn bẩy trong ba tháng.</p>
+      <div class="launchpad__hints">
+        <span class="launchpad__hints-label">Bí? Mở từng gợi ý một.</span>
+        <button type="button" class="launchpad__reveal" id="hintBtn">Mở gợi ý 1</button>
+        <div class="launchpad__hint" data-hint="1">
+          <span class="launchpad__hint-label">Gợi ý 1 — đổi khung</span>
+          Đừng tính lương gộp. Tính lương ròng theo giờ, gồm cả giờ không được trả. Con số thường thấp hơn bạn tưởng đáng kể.
+        </div>
+        <div class="launchpad__hint" data-hint="2">
+          <span class="launchpad__hint-label">Gợi ý 2 — khái niệm then chốt</span>
+          Dùng khái niệm đòn bẩy ở mảnh 2. Câu hỏi trung tâm: thứ gì tôi tạo một lần mà bán được nhiều lần?
+        </div>
+        <div class="launchpad__hint" data-hint="3">
+          <span class="launchpad__hint-label">Gợi ý 3 — dựng bài</span>
+          Đòn bẩy nhỏ nhất và rẻ nhất là một kỹ năng hiếm có thể bán lại nhiều lần. Chọn một kỹ năng, ước lượng số giờ, rồi so với số giờ tăng ca cần để kiếm thêm cùng số tiền.
+        </div>
+      </div>
+    </div>
+
+    <h2 id="glossary">Thuật ngữ</h2>
+    <div class="glossary">
+      <dl>
+        <dt>Thu nhập tuyến tính (linear income)</dt>
+        <dd>Thu nhập tỉ lệ thuận với số giờ bỏ ra, không có cơ chế khuếch đại. <em>(Trong Mô hình Xô Thủng: số nước bạn múc được bằng tay.)</em></dd>
+        <dt>Đòn bẩy (leverage)</dt>
+        <dd>Thứ cho phép một đơn vị công sức tạo ra nhiều hơn một đơn vị kết quả. <em>(Trong Mô hình Xô Thủng: chiếc máy bơm thay cho gàu múc tay.)</em></dd>
+        <dt>Rat race</dt>
+        <dd>Vòng lặp làm việc để trả chi phí, rồi phải làm việc nhiều hơn để trả chi phí cao hơn. <em>(Trong Mô hình Xô Thủng: múc mãi mà mực nước không lên.)</em></dd>
+        <dt>Phần dư (surplus)</dt>
+        <dd>Khoản còn lại sau khi trừ mọi chi phí sinh hoạt; là nguyên liệu duy nhất để tạo tài sản. <em>(Trong Mô hình Xô Thủng: nước còn lại sau khi bù các lỗ.)</em></dd>
+        <dt>Cần cù vô hiệu</dt>
+        <dd>Nỗ lực cao nhưng không tạo ra tài sản hay năng lực mới, chỉ duy trì trạng thái hiện tại. <em>(Trong Mô hình Xô Thủng: múc nhanh hơn trong khi lỗ vẫn thủng.)</em></dd>
+      </dl>
+    </div>
+
+    <section class="quiz" id="quiz">
+      <h2 id="knowledge-check">Kiểm tra kiến thức</h2>
+      <p class="quiz__intro">3 câu. Chọn đáp án đúng nhất rồi bấm <em>Kiểm tra</em>.</p>
+
+      <fieldset data-answer="2">
+        <legend>1. Vì sao thu nhập tuyến tính có trần cứng?</legend>
+        <label class="quiz__option"><input type="radio" name="q1" value="0"> Vì luật giới hạn số giờ làm thêm</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="1"> Vì người lao động không muốn làm nhiều</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="2"> Vì nó gắn với số giờ, mà một ngày chỉ có 24 giờ</label>
+        <label class="quiz__option"><input type="radio" name="q1" value="3"> Vì lương tối thiểu không bao giờ tăng</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Giới hạn nằm ở thời gian, không ở luật. Không có cơ chế nào khiến giờ thứ 25 tồn tại, nên thu nhập tuyến tính luôn bị chặn trên.</div>
+      </fieldset>
+
+      <fieldset data-answer="1">
+        <legend>2. Điều gì thực sự quyết định khả năng thoát bẫy?</legend>
+        <label class="quiz__option"><input type="radio" name="q2" value="0"> Mức thu nhập tuyệt đối hằng tháng</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="1"> Phần dư giữ lại được và cách nó được chuyển thành tài sản</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="2"> Số giờ tăng ca mỗi tuần</label>
+        <label class="quiz__option"><input type="radio" name="q2" value="3"> Việc có bằng cấp cao hay không</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Thu nhập cao mà chi phí cũng cao thì phần dư vẫn bằng không. Chỉ phần dư mới chuyển hóa được thành tài sản, và tài sản mới phá được vòng lặp.</div>
+      </fieldset>
+
+      <fieldset data-answer="0">
+        <legend>3. Đòn bẩy khác làm việc chăm chỉ ở điểm nào?</legend>
+        <label class="quiz__option"><input type="radio" name="q3" value="0"> Một đơn vị công sức có thể tạo ra nhiều đơn vị kết quả, và bán được nhiều lần</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="1"> Nó đòi hỏi ít công sức hơn nên dễ hơn</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="2"> Nó chỉ dành cho người có vốn lớn</label>
+        <label class="quiz__option"><input type="radio" name="q3" value="3"> Nó loại bỏ hoàn toàn rủi ro</label>
+        <div class="quiz__explanation"><strong>Vì sao:</strong> Đòn bẩy thay đổi cấu trúc, không giảm công sức. Một cuốn sách vẫn mất 300 giờ để viết — nhưng nó bán được nhiều lần.</div>
+      </fieldset>
+
+      <div class="quiz__actions">
+        <button type="button" class="btn" id="quizCheck">Kiểm tra</button>
+        <button type="button" class="btn btn--ghost" id="quizReset">Làm lại</button>
+        <p class="quiz__score" id="quizScore"></p>
+      </div>
+    </section>
+
+    <h2 id="sources">Nguồn &amp; đọc thêm</h2>
+    <ul>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Rich_Dad_Poor_Dad" target="_blank" rel="noopener">Wikipedia — Rich Dad Poor Dad</a> — Kiyosaki &amp; Lechter (1997); khái niệm “rat race” được phổ biến qua sách.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Nickel_and_Dimed" target="_blank" rel="noopener">Wikipedia — Nickel and Dimed</a> — số học của lao động lương tối thiểu (Ehrenreich, 2001).</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Minimum_wage_in_the_United_States" target="_blank" rel="noopener">Wikipedia — Minimum wage in the United States</a> — mức 7,25 USD/giờ từ tháng 7/2009.</li>
+      <li><a class="source" href="https://en.wikipedia.org/wiki/Affordable_housing" target="_blank" rel="noopener">Wikipedia — Affordable housing</a> — khái niệm gánh nặng chi phí nhà ở trên 30% thu nhập.</li>
+    </ul>
+
+    <nav class="prevnext" aria-label="Điều hướng series">
+      <a class="prevnext__item" href="01-bay-giai-tri-mi-dan.html">
+        <span class="prevnext__dir">← Node 1</span>
+        <span class="prevnext__title">Bẫy giải trí mị dân</span>
+      </a>
+      <a class="prevnext__item prevnext__item--next" href="03-bay-shawshank.html">
+        <span class="prevnext__dir">Node 3 →</span>
+        <span class="prevnext__title">Bẫy Shawshank</span>
+      </a>
+    </nav>
+
+    <div class="series-footer">
+      <p class="series-footer__series">4 Cái Bẫy Nghèo Đói</p>
+      <p class="series-footer__desc">Series giáo dục dài kỳ giải mã bốn cơ chế khiến người bình thường khó thoát khỏi tầng đáy xã hội, và cách phá vòng lặp đó.</p>
+      <ul class="series-footer__tags">
+        <li>nghèo đói</li><li>rat race</li><li>thu nhập tuyến tính</li><li>đòn bẩy</li><li>tài sản</li><li>tài chính cá nhân</li>
+      </ul>
+      <ul class="series-footer__links">
+        <li><a href="bay-ngheo-doi-atlas.html">Bản đồ series</a></li>
+        <li><a href="00-he-thong-vo-hinh.html">0 · Hệ thống vô hình</a></li>
+        <li><a href="01-bay-giai-tri-mi-dan.html">1 · Giải trí mị dân</a></li>
+        <li><a href="02-bay-rat-race.html">2 · Rat Race</a></li>
+        <li><a href="03-bay-shawshank.html">3 · Shawshank</a></li>
+        <li><a href="04-bay-tieu-dung-pho-truong.html">4 · Tiêu dùng phô trương</a></li>
+        <li><a href="05-pha-cuc.html">5 · Phá cục</a></li>
+        <li><a href="06-bang-thong-bi-danh-thue.html">A · Khan hiếm &amp; băng thông</a></li>
+        <li><a href="07-rct-va-nobel-2019.html">B · RCT &amp; Nobel 2019</a></li>
+        <li><a href="08-khoa-vang-va-quyet-dinh-roi-di.html">C · Khóa vàng</a></li>
+        <li><a href="09-tu-dong-hoa.html">D · Cú sốc tự động hóa</a></li>
+      </ul>
+      <div class="series-footer__meta">
+        <span>Node 2/5 · Bẫy 2/4 · ~13 phút đọc</span>
+        <span><a href="bay-ngheo-doi-atlas.html">Về bản đồ series</a></span>
+      </div>
+    </div>
+
+  </main>
+
+  <aside class="marginalia" aria-label="Ghi chú lề">
+    <div class="amplifier" id="amplifier" aria-live="polite">
+      <span class="amplifier__label">Khuếch đại thuật ngữ</span>
+      <p class="amplifier__empty">Rê chuột lên một <span style="border-bottom:1px dashed var(--accent2)">thuật ngữ gạch chân</span> trong bài để mở rộng tại đây.</p>
+    </div>
+
+    <div class="amp-notes" id="ampNotes">
+      <div data-note-id="linear">
+        <span class="amplifier__term">Thu nhập tuyến tính</span>
+        <p class="amplifier__body">Thu nhập tỉ lệ thuận với thời gian. Nó an toàn và dễ hiểu, nhưng bị chặn trên bởi số giờ hữu hạn — và không bao giờ tạo ra tài sản tự sinh lời.</p>
+      </div>
+      <div data-note-id="leverage">
+        <span class="amplifier__term">Đòn bẩy</span>
+        <p class="amplifier__body">Bốn loại phổ biến: vốn, người, sản phẩm số, thời gian của người khác. Đòn bẩy biến công sức một lần thành thu nhập nhiều lần — nhưng cũng khuếch đại cả sai lầm.</p>
+      </div>
+      <div data-note-id="surplus">
+        <span class="amplifier__term">Phần dư</span>
+        <p class="amplifier__body">Khoản còn lại sau chi phí. Là nguyên liệu duy nhất để tạo tài sản. Nếu phần dư bằng không, mọi mức thu nhập đều dẫn tới cùng một kết quả.</p>
+      </div>
+    </div>
+
+    <div class="sidenote">
+      <strong>Vì sao dùng hình ảnh xô thủng</strong>
+      Nó tách “tốc độ múc” khỏi “cấu trúc của xô”. Bạn có thể múc nhanh gấp đôi mà vẫn không đầy, nếu các lỗ vẫn còn. Đó chính là điểm mà mọi lời khuyên “cố lên” bỏ qua.
+    </div>
+    <div class="sidenote">
+      <strong>Về các con số</strong>
+      Mức lương tối thiểu liên bang Mỹ 7,25 USD/giờ từ 7/2009 là dữ kiện có thể kiểm chứng. Sơ đồ giờ làm để thuê nhà là minh hoạ dựa trên khái niệm “housing wage”, không phải trích dẫn khảo sát cụ thể.
+    </div>
+    <div class="sidenote">
+      <strong>Bài tiếp theo</strong>
+      Node 3 chuyển từ thể xác sang tâm trí: vì sao sau một thời gian đủ dài trong một môi trường cố định, con người mất dần khả năng tưởng tượng một lối ra.
+    </div>
+  </aside>
+
+</div>
+
+<div class="controls" role="toolbar" aria-label="Điều khiển đọc">
+  <button type="button" class="control-btn control-btn--top" id="topBtn" title="Về đầu trang (Home)" aria-label="Về đầu trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
+  <div class="control-group" role="group" aria-label="Cỡ chữ">
+    <button type="button" class="control-btn control-btn--fs" id="fontDownBtn" title="Chữ nhỏ hơn (-)" aria-label="Chữ nhỏ hơn"><span aria-hidden="true">A−</span></button>
+    <button type="button" class="control-btn control-btn--fs" id="fontUpBtn" title="Chữ lớn hơn (+)" aria-label="Chữ lớn hơn"><span aria-hidden="true">A+</span></button>
+  </div>
+  <button type="button" class="control-btn" id="focusBtn" title="Chế độ tập trung (F)" aria-label="Bật chế độ tập trung" aria-pressed="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+  </button>
+  <button type="button" class="control-btn control-btn--theme" id="themeBtn" title="Sáng/tối (T)" aria-label="Đổi giao diện">
+    <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="searchBtn" title="Tìm trong trang (/)" aria-label="Tìm trong trang">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="printBtn" title="In (P)" aria-label="In">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8" rx="1"/></svg>
+  </button>
+  <button type="button" class="control-btn" id="helpBtn" title="Phím tắt (?)" aria-label="Xem phím tắt" aria-haspopup="dialog"><span aria-hidden="true">?</span></button>
+</div>
+
+<div class="reading-badge" id="readingBadge" aria-live="polite" aria-atomic="true">
+  <span class="reading-badge__pct" id="readingPct">0%</span>
+  <span class="reading-badge__label">đã đọc</span>
+</div>
+
+<div class="search-bar" id="searchBar" hidden role="search" aria-label="Tìm trong trang">
+  <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+  <input type="search" id="searchInput" class="search-bar__input" placeholder="Tìm trong trang — Enter để tới kết quả kế, Shift+Enter lùi lại" aria-label="Tìm trong trang" autocomplete="off" spellcheck="false">
+  <span class="search-bar__count" id="searchCount" aria-live="polite">0 / 0</span>
+  <button type="button" class="search-bar__btn" id="searchPrev" title="Kết quả trước (Shift+Enter)" aria-label="Kết quả trước">↑</button>
+  <button type="button" class="search-bar__btn" id="searchNext" title="Kết quả kế (Enter)" aria-label="Kết quả kế">↓</button>
+  <button type="button" class="search-bar__btn" id="searchClose" title="Đóng (Esc)" aria-label="Đóng tìm kiếm">✕</button>
+</div>
+
+<button type="button" class="mark-btn" id="markBtn" hidden aria-label="Đánh dấu đoạn chọn">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20l9-9-5-5-9 9v5h5z"/><path d="M14 6l4 4"/></svg>
+  <span>Đánh dấu</span>
+</button>
+
+<div class="shortcuts" id="shortcuts" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle" hidden>
+  <div class="shortcuts__panel" role="document">
+    <h3 id="shortcutsTitle">Phím tắt</h3>
+    <dl class="shortcuts__list">
+      <dt><kbd>/</kbd></dt><dd>Tìm trong trang</dd>
+      <dt><kbd>j</kbd> / <kbd>k</kbd></dt><dd>Cuộn xuống / lên</dd>
+      <dt><kbd>Space</kbd> / <kbd>Shift</kbd>+<kbd>Space</kbd></dt><dd>Xuống / lên một trang</dd>
+      <dt><kbd>Home</kbd> / <kbd>g</kbd> <kbd>g</kbd></dt><dd>Về đầu trang</dd>
+      <dt><kbd>End</kbd> / <kbd>G</kbd></dt><dd>Xuống cuối trang</dd>
+      <dt><kbd>n</kbd> / <kbd>p</kbd></dt><dd>Tiêu đề kế / trước</dd>
+      <dt><kbd>t</kbd></dt><dd>Đổi sáng / tối</dd>
+      <dt><kbd>f</kbd></dt><dd>Chế độ tập trung</dd>
+      <dt><kbd>+</kbd> / <kbd>−</kbd></dt><dd>Tăng / giảm cỡ chữ</dd>
+      <dt><kbd>0</kbd></dt><dd>Đặt lại cỡ chữ</dd>
+      <dt><kbd>P</kbd></dt><dd>In</dd>
+      <dt><kbd>?</kbd></dt><dd>Hiện / ẩn bảng này</dd>
+      <dt><kbd>Esc</kbd></dt><dd>Đóng bảng / tìm kiếm</dd>
+    </dl>
+    <p class="shortcuts__hint">Bôi đen văn bản để đánh dấu. Bấm vào dấu để bỏ. Bấm tiêu đề để sao chép liên kết neo. Mục đã đọc hiện dấu ✓ ở thanh bên.</p>
+    <div class="shortcuts__actions">
+      <button type="button" class="shortcuts__link" id="clearHighlightsBtn">Xoá mọi đánh dấu</button>
+      <button type="button" class="shortcuts__link" id="clearVisitedBtn">Đặt lại dấu đã đọc</button>
+    </div>
+    <button type="button" class="shortcuts__close" id="shortcutsClose">Đóng</button>
+  </div>
+</div>
+
+<script src="assets/series.js"></script>
+</body>
+</html>
